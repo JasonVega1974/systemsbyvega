@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Spreadsheet Chaos to a Live Operations Console — Jason Vega</title>
+<meta name="description" content="A real operations system built for a small service business — off spreadsheets and onto one connected console. See the before, click the live demo, and picture it for your shop.">
+<!-- Open Graph / Twitter: makes the link preview beautifully when texted or emailed -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="From spreadsheet chaos to a live operations console">
+<meta property="og:description" content="The system I build for owners still running on eleven spreadsheets and a whiteboard. Before, after, and a live demo you can click.">
+<meta property="og:site_name" content="Jason Vega · Systems & Operations">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From spreadsheet chaos to a live operations console">
+<meta name="twitter:description" content="The system I build for owners still running on spreadsheets. Before, after, and a live demo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF1F5; --panel:#FFFFFF; --ink:#1A1F27; --ink-soft:#4A5462; --hair:#D8DEE6;
+    --amber:#E8791B; --amber-deep:#C9620C; --green:#1F9D63; --red:#D6453F; --steel:#3B6EA5; --warn:#E0A12A;
+    --con:#171B22; --con-panel:#1F242E; --con-panel-2:#262C38; --con-hair:#323A48;
+    --con-text:#E7EBF1; --con-muted:#929CAC; --con-amber:#F3922F;
+    --shadow:0 1px 2px rgba(20,28,40,.06),0 8px 28px rgba(20,28,40,.07);
+    --shadow-con:0 18px 50px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--amber-deep);outline-offset:2px;border-radius:4px}
+
+  /* ---------- top bar ---------- */
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(238,241,245,.86);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
+  .topbar-in{max-width:980px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:15px;letter-spacing:-.01em}
+  .brand .dot{width:11px;height:11px;background:var(--amber);border-radius:2px;transform:rotate(45deg);flex:none}
+  .brand small{font-family:'IBM Plex Mono';font-weight:500;font-size:11px;color:var(--ink-soft);letter-spacing:.02em}
+  .topright{display:flex;align-items:center;gap:14px}
+  .prepared{font-family:'IBM Plex Mono';font-weight:500;font-size:11px;color:var(--amber-deep);background:#FBEBD9;
+    border:1px solid #F1D3B0;padding:5px 11px;border-radius:20px;white-space:nowrap}
+  .topcta{font-family:'Archivo';font-weight:700;font-size:13px;text-decoration:none;color:#fff;background:var(--ink);
+    padding:9px 16px;border-radius:7px;transition:background .2s,transform .15s;white-space:nowrap}
+  .topcta:hover{background:var(--amber-deep);transform:translateY(-1px)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:70px 0 44px}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--amber-deep);display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--amber)}
+  h1{font-family:'Archivo';font-weight:900;font-size:clamp(34px,6vw,60px);line-height:1.02;letter-spacing:-.025em;max-width:16ch}
+  h1 .hl{color:var(--amber-deep);position:relative;white-space:nowrap}
+  .lede{font-size:clamp(17px,2.3vw,20px);color:var(--ink-soft);max-width:60ch;margin-top:24px}
+  .greeting{font-size:clamp(16px,2vw,18px);color:var(--ink);max-width:62ch;margin-top:18px;
+    border-left:3px solid var(--amber);padding:4px 0 4px 16px}
+  .greeting b{font-weight:600}
+  .herometa{display:flex;flex-wrap:wrap;gap:30px;margin-top:38px;padding-top:26px;border-top:1px solid var(--hair)}
+  .herometa div{font-size:13px;color:var(--ink-soft)}
+  .herometa b{display:block;font-family:'Archivo';font-weight:800;font-size:16px;color:var(--ink);letter-spacing:-.01em;margin-bottom:1px}
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:46px 0}
+  .step{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  h2{font-family:'Archivo';font-weight:800;font-size:clamp(25px,4vw,36px);letter-spacing:-.02em;line-height:1.08;margin:12px 0 16px}
+  .stxt{font-size:16.5px;color:var(--ink-soft);max-width:64ch}
+
+  /* ---------- BEFORE: messy spreadsheet ---------- */
+  .sheet{margin-top:30px;background:var(--panel);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .sheet-bar{display:flex;align-items:center;gap:8px;padding:11px 15px;background:#E4E8EE;border-bottom:1px solid var(--hair);font-size:12px;color:var(--ink-soft);flex-wrap:wrap}
+  .sheet-bar .tab{font-family:'IBM Plex Mono';font-weight:500;background:#fff;padding:4px 11px;border-radius:5px 5px 0 0;border:1px solid var(--hair);border-bottom:none;color:var(--ink)}
+  .sheet-bar .tab.x{background:transparent;border:none;opacity:.6}
+  .sheet-scroll{overflow-x:auto}
+  table.ss{border-collapse:collapse;width:100%;min-width:680px;font-size:13px}
+  table.ss th{background:#F4F6F9;font-family:'IBM Plex Mono';font-weight:600;text-align:left;padding:8px 11px;border:1px solid var(--hair);color:var(--ink-soft);font-size:11.5px;white-space:nowrap}
+  table.ss td{padding:8px 11px;border:1px solid var(--hair);white-space:nowrap}
+  .cell-err{background:#FBE6E5;color:var(--red);position:relative}
+  .cell-warn{background:#FCF2DC}
+  .cell-blank{background:repeating-linear-gradient(45deg,#fff,#fff 6px,#F1F3F6 6px,#F1F3F6 12px)}
+  .flag{display:inline-flex;align-items:center;gap:5px;margin-top:18px;margin-right:10px;font-size:13px;color:var(--ink-soft);background:#FBE6E5;border:1px solid #F2C9C7;padding:5px 11px;border-radius:20px}
+  .flag b{color:var(--red);font-weight:600}
+  .flag.amber{background:#FCF2DC;border-color:#EAD9AE}
+  .flag.amber b{color:var(--amber-deep)}
+
+  /* ---------- approach ---------- */
+  .approach{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px}
+  .acard{background:var(--panel);border:1px solid var(--hair);border-radius:11px;padding:22px;box-shadow:var(--shadow)}
+  .acard .n{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;color:var(--amber-deep);margin-bottom:12px}
+  .acard h3{font-family:'Archivo';font-weight:700;font-size:17px;letter-spacing:-.01em;margin-bottom:7px}
+  .acard p{font-size:14.5px;color:var(--ink-soft)}
+
+  /* ---------- AFTER: dark console ---------- */
+  .console-wrap{background:var(--con);margin-top:8px;padding:54px 0 60px;position:relative}
+  .console-wrap::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(800px 320px at 78% -8%,rgba(243,146,47,.13),transparent 70%);pointer-events:none}
+  .console-head{max-width:1120px;margin:0 auto 26px;padding:0 28px;position:relative}
+  .console-head .step{color:var(--con-amber)}
+  .console-head h2{color:var(--con-text)}
+  .console-head p{color:var(--con-muted);max-width:60ch;font-size:16px}
+  .console{max-width:1120px;margin:0 auto;padding:0 28px;position:relative}
+  .app{background:var(--con-panel);border:1px solid var(--con-hair);border-radius:14px;box-shadow:var(--shadow-con);overflow:hidden}
+  .app-top{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--con-hair);background:linear-gradient(180deg,#222936,#1F242E)}
+  .app-top .logo{display:flex;align-items:center;gap:9px;font-family:'Archivo';font-weight:800;color:var(--con-text);font-size:14.5px}
+  .app-top .logo .sq{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--con-amber),var(--amber-deep));display:grid;place-items:center;color:#1a1206;font-size:12px;font-weight:900;font-family:'Archivo'}
+  .app-top .where{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--con-muted);padding-left:14px;border-left:1px solid var(--con-hair)}
+  .app-top .live{margin-left:auto;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono';font-size:11px;color:var(--con-muted)}
+  .app-top .live .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(31,157,99,.5);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,99,.5)}70%{box-shadow:0 0 0 7px rgba(31,157,99,0)}100%{box-shadow:0 0 0 0 rgba(31,157,99,0)}}
+
+  .tabs{display:flex;gap:2px;padding:0 12px;border-bottom:1px solid var(--con-hair);background:#1C212B;overflow-x:auto}
+  .tab-btn{font-family:'Archivo';font-weight:600;font-size:13px;color:var(--con-muted);background:none;border:none;padding:13px 16px;cursor:pointer;
+    border-bottom:2px solid transparent;transition:color .18s,border-color .18s;white-space:nowrap}
+  .tab-btn:hover{color:var(--con-text)}
+  .tab-btn.active{color:var(--con-text);border-bottom-color:var(--con-amber)}
+  .panel{display:none;padding:20px}
+  .panel.active{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* KPI row */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}
+  .kpi{background:var(--con-panel-2);border:1px solid var(--con-hair);border-radius:10px;padding:15px 16px;position:relative;overflow:hidden}
+  .kpi .lab{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.04em;color:var(--con-muted);text-transform:uppercase}
+  .kpi .val{font-family:'Archivo';font-weight:800;font-size:27px;color:var(--con-text);letter-spacing:-.02em;margin-top:7px;line-height:1}
+  .kpi .sub{font-size:11.5px;margin-top:6px;display:flex;align-items:center;gap:5px}
+  .kpi .sub.up{color:var(--green)} .kpi .sub.down{color:var(--red)} .kpi .sub.flat{color:var(--con-muted)}
+  .kpi .strip{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--con-amber)}
+
+  .grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+  .block{background:var(--con-panel-2);border:1px solid var(--con-hair);border-radius:10px;padding:16px}
+  .block h4{font-family:'Archivo';font-weight:700;font-size:13.5px;color:var(--con-text);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+  .block h4 .tagm{font-family:'IBM Plex Mono';font-weight:500;font-size:11px;color:var(--con-muted)}
+
+  /* chart */
+  .chart{display:flex;align-items:flex-end;gap:9px;height:150px;padding-top:8px}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+  .bar{width:100%;max-width:30px;background:linear-gradient(180deg,var(--con-amber),var(--amber-deep));border-radius:4px 4px 0 0;
+    transition:height 1s cubic-bezier(.2,.8,.2,1),background .2s;cursor:pointer;min-height:3px}
+  .bar:hover{filter:brightness(1.15)}
+  .bar-col span{font-family:'IBM Plex Mono';font-size:10px;color:var(--con-muted)}
+
+  /* dispatch list */
+  .disp{display:flex;flex-direction:column;gap:9px}
+  .disp-row{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#1B202A;border:1px solid var(--con-hair);border-radius:8px}
+  .disp-row .time{font-family:'IBM Plex Mono';font-size:12px;color:var(--con-text);font-weight:500;width:58px;flex:none}
+  .disp-row .who{flex:1;min-width:0}
+  .disp-row .who b{display:block;font-size:13px;color:var(--con-text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .disp-row .who small{font-size:11.5px;color:var(--con-muted)}
+  .pill{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;letter-spacing:.02em}
+  .p-site{background:rgba(31,157,99,.16);color:#4Fd28d;border:1px solid rgba(31,157,99,.3)}
+  .p-route{background:rgba(59,110,165,.18);color:#7fb0e0;border:1px solid rgba(59,110,165,.32)}
+  .p-sched{background:rgba(146,156,172,.14);color:#aab3c1;border:1px solid rgba(146,156,172,.26)}
+  .p-done{background:rgba(146,156,172,.1);color:#7f8a99;border:1px solid var(--con-hair)}
+  .p-warn{background:rgba(224,161,42,.16);color:#e8bd5f;border:1px solid rgba(224,161,42,.32)}
+
+  /* jobs table */
+  .jtools{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+  .search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:var(--con-panel-2);border:1px solid var(--con-hair);border-radius:8px;padding:9px 12px}
+  .search input{background:none;border:none;outline:none;color:var(--con-text);font-family:'IBM Plex Sans';font-size:13px;width:100%}
+  .search input::placeholder{color:var(--con-muted)}
+  .search svg{flex:none}
+  .fpill{font-family:'Archivo';font-weight:600;font-size:12px;color:var(--con-muted);background:var(--con-panel-2);border:1px solid var(--con-hair);
+    padding:8px 13px;border-radius:8px;cursor:pointer;transition:.18s}
+  .fpill:hover{color:var(--con-text)}
+  .fpill.on{background:var(--con-amber);color:#1a1206;border-color:var(--con-amber)}
+  .jt-scroll{overflow-x:auto}
+  table.jt{width:100%;border-collapse:collapse;min-width:620px}
+  table.jt th{font-family:'IBM Plex Mono';font-weight:600;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--con-muted);
+    text-align:left;padding:9px 12px;border-bottom:1px solid var(--con-hair);cursor:pointer;user-select:none;white-space:nowrap}
+  table.jt th:hover{color:var(--con-text)}
+  table.jt th .ar{opacity:.4;font-size:9px}
+  table.jt td{padding:11px 12px;border-bottom:1px solid #232a35;font-size:13px;color:var(--con-text)}
+  table.jt tr:hover td{background:#1B202A}
+  table.jt .id{font-family:'IBM Plex Mono';font-size:12px;color:var(--con-muted)}
+  table.jt .val{font-family:'IBM Plex Mono';font-weight:600;text-align:right}
+
+  /* inventory */
+  .inv{display:flex;flex-direction:column;gap:10px}
+  .inv-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:12px 14px;background:#1B202A;border:1px solid var(--con-hair);border-radius:9px}
+  .inv-row b{font-size:13.5px;color:var(--con-text);font-weight:600}
+  .inv-row small{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--con-muted)}
+  .gauge{grid-column:1/-1;height:6px;background:#11151c;border-radius:4px;overflow:hidden;margin-top:9px}
+  .gauge i{display:block;height:100%;border-radius:4px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+
+  .demo-note{font-family:'IBM Plex Mono';font-size:11px;color:var(--con-muted);text-align:center;margin-top:18px;letter-spacing:.02em}
+
+  /* results */
+  .results{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+  .rcard{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:24px 20px;box-shadow:var(--shadow);text-align:left}
+  .rcard .big{font-family:'Archivo';font-weight:900;font-size:38px;letter-spacing:-.03em;color:var(--amber-deep);line-height:1}
+  .rcard .cap{font-size:13.5px;color:var(--ink-soft);margin-top:9px}
+
+  /* how it works */
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .hstep{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:24px 22px;box-shadow:var(--shadow);position:relative}
+  .hstep .num{font-family:'Archivo';font-weight:900;font-size:15px;color:#fff;background:var(--amber-deep);width:30px;height:30px;border-radius:8px;display:grid;place-items:center;margin-bottom:14px}
+  .hstep h3{font-family:'Archivo';font-weight:700;font-size:17px;letter-spacing:-.01em;margin-bottom:7px}
+  .hstep p{font-size:14.5px;color:var(--ink-soft)}
+  .promise{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .promise span{font-size:13.5px;color:var(--ink);background:#E8F4ED;border:1px solid #BFE3CF;color:#15724A;
+    padding:7px 13px;border-radius:20px;font-weight:500;display:inline-flex;align-items:center;gap:7px}
+  .promise span::before{content:"✓";font-weight:800;color:var(--green)}
+
+  /* range strip — what I build beyond this one console */
+  .range{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
+  .range span{font-family:'Archivo';font-weight:600;font-size:14px;color:var(--ink);background:var(--panel);
+    border:1px solid var(--hair);box-shadow:var(--shadow);padding:11px 16px;border-radius:9px;
+    display:inline-flex;align-items:center;gap:9px}
+  .range span::before{content:"";width:7px;height:7px;background:var(--amber);border-radius:2px;transform:rotate(45deg);flex:none}
+
+  /* FAQ */
+  .faq{margin-top:26px;border-top:1px solid var(--hair)}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa button{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:20px 2px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;font-family:'Archivo';font-weight:700;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+  .qa button .pm{font-family:'IBM Plex Mono';font-weight:500;color:var(--amber-deep);font-size:22px;flex:none;transition:transform .25s}
+  .qa.open button .pm{transform:rotate(45deg)}
+  .qa .ans{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .qa.open .ans{max-height:600px}
+  .qa .ans p{font-size:15.5px;color:var(--ink-soft);padding:0 2px 22px;max-width:68ch}
+
+  /* CTA */
+  .cta{background:var(--ink);color:#fff;border-radius:16px;padding:48px 44px;margin:18px 0 60px;position:relative;overflow:hidden}
+  .cta::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;
+    background:radial-gradient(circle,rgba(232,121,27,.22),transparent 70%)}
+  .cta .step{color:var(--con-amber)}
+  .cta h2{color:#fff;max-width:18ch;margin-top:10px}
+  .cta p{color:#B9C1CC;max-width:54ch;font-size:16.5px;margin-top:6px}
+  .cta-actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:28px}
+  .btn-pri{font-family:'Archivo';font-weight:700;font-size:15px;text-decoration:none;color:#1a1206;background:var(--con-amber);
+    padding:14px 26px;border-radius:9px;transition:.18s}
+  .btn-pri:hover{background:#fff;transform:translateY(-2px)}
+  .btn-sec{font-family:'Archivo';font-weight:700;font-size:15px;text-decoration:none;color:#fff;border:1px solid #3A434F;
+    padding:14px 26px;border-radius:9px;transition:.18s}
+  .btn-sec:hover{border-color:var(--con-amber);color:var(--con-amber)}
+
+  footer{padding:34px 0 60px;border-top:1px solid var(--hair);font-size:13px;color:var(--ink-soft)}
+  footer .fbrand{font-family:'Archivo';font-weight:800;color:var(--ink);font-size:15px;margin-bottom:4px}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:760px){
+    .approach,.kpis,.results,.how{grid-template-columns:1fr 1fr}
+    .how{grid-template-columns:1fr}
+    .grid2{grid-template-columns:1fr}
+    .herometa{gap:20px}
+    .cta{padding:34px 24px}
+    .console-wrap,.console{padding-left:0;padding-right:0}
+    .console{padding:0 14px}
+  }
+  @media(max-width:480px){
+    .kpis,.results{grid-template-columns:1fr 1fr}
+    .approach{grid-template-columns:1fr}
+    .wrap{padding:0 20px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+  @media print{
+    .topbar,.cta-actions{display:none}
+    .console-wrap{background:#fff;color:#000}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><span class="dot"></span> Jason Vega <small>· Systems &amp; Operations</small></div>
+    <div class="topright">
+      <span class="prepared" id="prepared" hidden></span>
+      <a href="#contact" class="topcta">Fix my chaos →</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <div class="eyebrow">Operations Build · Live Demonstration</div>
+  <h1 id="heroTitle"></h1>
+  <p class="lede" id="heroLede"></p>
+  <p class="greeting" id="greeting" hidden></p>
+  <div class="herometa" id="herometa"></div>
+</header>
+
+<!-- BEFORE -->
+<section class="wrap reveal">
+  <div class="step">01 — The before</div>
+  <h2>Everything important lives in a file someone can overwrite by accident.</h2>
+  <p class="stxt" id="beforeTxt"></p>
+  <div class="sheet">
+    <div class="sheet-bar" id="sheetBar"></div>
+    <div class="sheet-scroll"><table class="ss" id="ssTable"></table></div>
+  </div>
+  <div style="margin-top:8px" id="flags"></div>
+</section>
+
+<!-- APPROACH -->
+<section class="wrap reveal">
+  <div class="step">02 — How I'd fix it</div>
+  <h2>I don't hand you software. I hand you your day back.</h2>
+  <p class="stxt">No giant platform to learn, no monthly seat fees, no migration nightmare. I move the chaos into one place, make the work impossible to double-book, and make every number update itself.</p>
+  <div class="approach">
+    <div class="acard"><div class="n">/ 01</div><h3>One source of truth</h3><p>Scattered spreadsheets become one connected database — jobs, customers, schedule, parts, and invoices that all talk to each other instead of living in separate files.</p></div>
+    <div class="acard"><div class="n">/ 02</div><h3>Mistakes made impossible</h3><p id="appr2"></p></div>
+    <div class="acard"><div class="n">/ 03</div><h3>Numbers that update themselves</h3><p>Revenue, outstanding invoices, and low stock no longer get retyped at 10pm. They recalculate the moment a job is marked done.</p></div>
+    <div class="acard"><div class="n">/ 04</div><h3>Built for the people using it</h3><p>The owner and the office learn it in an afternoon. It looks like the tool they wish they had, not enterprise software they have to fight.</p></div>
+  </div>
+</section>
+
+<!-- AFTER: live console -->
+<div class="console-wrap reveal">
+  <div class="console-head">
+    <div class="step">03 — The after · live demo</div>
+    <h2>The operations console — click around it.</h2>
+    <p>This is a working demonstration with realistic (made-up) data. Switch tabs, search the jobs, filter by status, hover the chart. This is the kind of system I build.</p>
+  </div>
+  <div class="console">
+    <div class="app">
+      <div class="app-top">
+        <div class="logo"><span class="sq" id="logoSq">S</span> <span id="logoName">Summit Mechanical</span></div>
+        <span class="where" id="where">ops / dispatch</span>
+        <span class="live"><span class="pulse"></span> LIVE · synced 12s ago</span>
+      </div>
+      <div class="tabs" id="tabs">
+        <button class="tab-btn active" data-p="overview">Overview</button>
+        <button class="tab-btn" data-p="jobs" id="tabJobs">Jobs</button>
+        <button class="tab-btn" data-p="dispatch" id="tabDispatch">Today's dispatch</button>
+        <button class="tab-btn" data-p="inv" id="tabInv">Parts &amp; inventory</button>
+      </div>
+
+      <div class="panel active" data-panel="overview">
+        <div class="kpis" id="kpis"></div>
+        <div class="grid2">
+          <div class="block">
+            <h4 id="chartTitle">Weekly revenue <span class="tagm">last 8 weeks</span></h4>
+            <div class="chart" id="chart"></div>
+          </div>
+          <div class="block">
+            <h4>Needs attention <span class="tagm">auto-flagged</span></h4>
+            <div class="disp" id="needs"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="jobs">
+        <div class="jtools">
+          <div class="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#929CAC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="jsearch" placeholder="Search customer or job type…">
+          </div>
+          <button class="fpill on" data-f="all">All</button>
+          <button class="fpill" data-f="On site">On site</button>
+          <button class="fpill" data-f="En route">En route</button>
+          <button class="fpill" data-f="Scheduled">Scheduled</button>
+          <button class="fpill" data-f="Done">Done</button>
+        </div>
+        <div class="jt-scroll">
+          <table class="jt" id="jtable">
+            <thead><tr>
+              <th data-s="id">Job <span class="ar">↕</span></th>
+              <th data-s="cust">Customer <span class="ar">↕</span></th>
+              <th data-s="type">Type <span class="ar">↕</span></th>
+              <th data-s="tech" id="thWorker">Tech <span class="ar">↕</span></th>
+              <th data-s="status">Status <span class="ar">↕</span></th>
+              <th data-s="val" style="text-align:right">Value <span class="ar">↕</span></th>
+            </tr></thead>
+            <tbody id="jbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="dispatch">
+        <div class="grid2">
+          <div class="block">
+            <h4 id="dispTitle">Schedule · today <span class="tagm">no double-books</span></h4>
+            <div class="disp" id="dispatch"></div>
+          </div>
+          <div class="block">
+            <h4 id="crewTitle">Crew status <span class="tagm">live</span></h4>
+            <div class="disp" id="crew"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="inv">
+        <div class="inv" id="inv"></div>
+      </div>
+    </div>
+    <div class="demo-note" id="demoNote">▲ Demonstration build · fictional company · sample data · designed &amp; built by Jason Vega</div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<section class="wrap reveal">
+  <div class="step">04 — What changes</div>
+  <h2>What a system like this changes.</h2>
+  <p class="stxt">Not metrics from a past job — these are the things a connected system like the one above is built to guarantee.</p>
+  <div class="results" id="results"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="wrap reveal">
+  <div class="step">05 — How it works</div>
+  <h2>Low risk, fast, and you own it at the end.</h2>
+  <p class="stxt">No long contracts, no learning curve, no IT department. Three steps from where you are now to a system that runs itself.</p>
+  <div class="how">
+    <div class="hstep"><div class="num">1</div><h3>Free walkthrough</h3><p>A 30-minute call where you show me the spreadsheets and the late-night workarounds. I tell you, free, exactly what I'd fix and what it's worth.</p></div>
+    <div class="hstep"><div class="num">2</div><h3>Fixed-scope build</h3><p>One agreed price, one timeline (usually 2–4 weeks). I build it around how you actually work — and your real data goes in, not a blank app.</p></div>
+    <div class="hstep"><div class="num">3</div><h3>You own it</h3><p>It's yours — no monthly seat fees, no lock-in. I train your team in an afternoon and you keep running long after I'm gone.</p></div>
+  </div>
+  <div class="promise">
+    <span>No monthly per-seat fees</span>
+    <span>You own the system</span>
+    <span>Fixed price, fixed timeline</span>
+    <span>No IT department needed</span>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="wrap reveal">
+  <div class="step">06 — Straight answers</div>
+  <h2>The questions every owner asks me.</h2>
+  <div class="faq" id="faq">
+    <div class="qa"><button>Isn't custom software expensive? <span class="pm">+</span></button><div class="ans"><p>Far less than you'd think — and a fraction of what the big platforms cost you over a few years in seat fees. It's one fixed price for a system built only for what you need, then it's yours with no recurring software bill.</p></div></div>
+    <div class="qa"><button>Will my team actually use it? <span class="pm">+</span></button><div class="ans"><p>That's the whole point. It's built around how your people already work, not how some software company thinks they should. A tool like this has only the buttons your team needs and none they don't — most owners and office staff pick it up in an afternoon.</p></div></div>
+    <div class="qa"><button>What about all my existing data? <span class="pm">+</span></button><div class="ans"><p>It moves with you. I take the spreadsheets you have now — messy tabs, duplicate files and all — and bring the real records in. You start on day one with your actual customers and jobs, not an empty app.</p></div></div>
+    <div class="qa"><button>Do I need an IT person or servers? <span class="pm">+</span></button><div class="ans"><p>No. It runs in a browser on the devices you already own, the data lives in the cloud and backs itself up, and there's nothing to install or maintain. If something needs a tweak later, you call me — not a help desk.</p></div></div>
+    <div class="qa"><button>How long until it's live? <span class="pm">+</span></button><div class="ans"><p>A build like this typically runs two to four weeks from first call to live on your real data — and you'd see working pieces along the way, not a black box for a month.</p></div></div>
+  </div>
+</section>
+
+<!-- RANGE: what I build beyond this one console -->
+<section class="wrap reveal">
+  <div class="step">Beyond this console</div>
+  <h2>This is one system. I build the others too.</h2>
+  <p class="stxt">If your bottleneck isn't scheduling, it's probably on this list — and it's the same approach every time: one connected tool, built around how you actually work.</p>
+  <div class="range">
+    <span>Custom databases</span>
+    <span>Automated reports</span>
+    <span>Inventory systems</span>
+    <span>Operations dashboards</span>
+    <span>Web design</span>
+    <span>SOPs &amp; policy docs</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="wrap" id="contact">
+  <div class="cta reveal">
+    <div class="step">Your business, next</div>
+    <h2 id="ctaTitle">If you run on spreadsheets and late nights, I can fix that.</h2>
+    <p id="ctaText">Processes, databases, dashboards, policies, websites — I build the systems small businesses can't justify hiring a whole IT team for. One person, real tools, no enterprise price tag. Tell me where it hurts and I'll show you what's possible.</p>
+    <div class="cta-actions">
+      <a href="#" id="ctaPrimary" class="btn-pri">Book a free walkthrough</a>
+      <a href="#" id="ctaEmail" class="btn-sec">info@kingdom-creatives.com</a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="fbrand">Jason Vega · Systems &amp; Operations</div>
+  Process improvement · custom databases · operations dashboards · web design · documentation &amp; policy.<br>
+  <span id="footNote">The company shown is fictional, created to demonstrate capability. All names and figures are illustrative.</span>
+</footer>
+
+<script>
+"use strict";
+/* =====================================================================
+   PERSONALIZE PER PROSPECT
+   ---------------------------------------------------------------------
+   Two ways to tailor this page to a specific business owner:
+   (A) Edit DEFAULTS below before sending the file, OR
+   (B) Append URL params to the link you send — these OVERRIDE the defaults:
+       ?owner=Dave&company=Acme%20Plumbing&city=Boise&industry=plumbing
+   industry ∈ hvac | plumbing | electrical | auto | landscaping
+   (anything else falls back to hvac). Contact details are in CONTACT.
+   ===================================================================== */
+const DEFAULTS = { owner:"", company:"", city:"", industry:"hvac" };
+const CONTACT  = {
+  email:"info@kingdom-creatives.com",
+  // Booking link shown on the primary button. Leave as "" to fall back to a pre-filled email.
+  bookingUrl:""
+};
+
+/* ---- industry presets (deep swap: each feels native to that owner) ---- */
+const INDUSTRIES = {
+  hvac:{
+    name:"heating & cooling", company:"Summit Mechanical", logo:"S",
+    worker:"Tech", vehicle:"Truck", where:"ops / dispatch",
+    heroValue:"$1.4M", heroPain:"losing jobs, double-booking trucks, and paying staff to retype the same numbers every night",
+    meta:["14 staff · 6 trucks","Database · dashboard · process","3 weeks, start to live","Web app · live data · no IT dept."],
+    beforeTxt:"This is the spreadsheet most heating & cooling shops are still running — scheduling, invoicing, parts, and customer notes scattered across tabs only one person fully understands. Two techs get booked to the same slot and nobody knows until a customer calls. If this looks like your back office, that's what I fix.",
+    sheetTabs:["SCHEDULE_v7_FINAL_use_this_one.xlsx","invoices_OLD","parts??","customers (Dave's copy)"],
+    ssHead:["Date","Time","Customer","Job","Tech","Truck","$ Quoted","Paid?"],
+    ssRows:[
+      ["6/24","8:00a","R. Hollis","AC not cooling",["Mike","err"],"3","$420",["?","warn"]],
+      ["6/24",["8:00a","err"],"Greenway Apts","Furnace insp.",["Mike","err"],["3","err"],["","blank"],["?","warn"]],
+      ["6/24","10:30a","D. Pruett","Drain clear","Sam","1","$190","Y"],
+      ["6/24","1:00p",["","blank"],'"the lake house"',"Sam","1",["—","err"],["?","warn"]],
+      ["6/25","9:00a","Castle Mgmt","5x unit tune-up","Tony",["","blank"],"$1,250","N"],
+      ["6/25","2:00p","J. Okafor","Thermostat",["","blank"],"2","$310",["?","warn"]]
+    ],
+    flags:[["2","double-bookings this week alone",""],["$3,100","in jobs with no recorded payment status","amber"],["1","person who knows how it all works",""]],
+    appr2:"The schedule physically won't let you book a tech or a truck into two places at once. The error that costs shops customers simply can't happen.",
+    kpis:[
+      {lab:"Revenue · this wk",count:38240,prefix:"$",sub:"▲ 18% vs last week",dir:"up"},
+      {lab:"Jobs scheduled",count:27,sub:"6 today · 21 this week",dir:"flat"},
+      {lab:"Outstanding inv.",count:6120,prefix:"$",sub:"▼ from $14,300",dir:"down"},
+      {lab:"Avg response",count:42,suffix:"m",sub:"▲ 1.5h faster",dir:"up"}
+    ],
+    chartTitle:"Weekly revenue", chart:[24100,21800,29400,26900,31200,28700,33500,38240],
+    needs:[
+      {pill:"UNPAID",c:"p-warn",t:"Castle Mgmt — $1,250",s:"14 days · invoice #1042"},
+      {pill:"LOW PART",c:"p-warn",t:"Capacitor 45/5 MFD",s:"2 left · 4 jobs need it this week"},
+      {pill:"FOLLOW-UP",c:"p-route",t:"R. Hollis — quote sent",s:"No reply · 3 days"}
+    ],
+    jobs:[
+      {id:"J-1042",cust:"Castle Mgmt",type:"5-unit tune-up",tech:"Tony",status:"Scheduled",val:1250},
+      {id:"J-1041",cust:"R. Hollis",type:"AC repair",tech:"Mike",status:"On site",val:420},
+      {id:"J-1040",cust:"D. Pruett",type:"Drain clearing",tech:"Sam",status:"En route",val:190},
+      {id:"J-1039",cust:"J. Okafor",type:"Thermostat swap",tech:"Lena",status:"Done",val:310},
+      {id:"J-1038",cust:"Greenway Apts",type:"Furnace inspection",tech:"Mike",status:"Scheduled",val:540},
+      {id:"J-1037",cust:"M. Avery",type:"AC install",tech:"Tony",status:"Done",val:4800},
+      {id:"J-1036",cust:"Riverside Cafe",type:"Walk-in cooler",tech:"Sam",status:"On site",val:880},
+      {id:"J-1035",cust:"K. Bauer",type:"Furnace repair",tech:"Lena",status:"Done",val:265},
+      {id:"J-1034",cust:"Old Mill HOA",type:"Seasonal tune-up x8",tech:"Tony",status:"Scheduled",val:1980}
+    ],
+    dispTitle:"Truck schedule · today",
+    dispatch:[
+      {time:"8:00a",who:"R. Hollis · AC repair",sub:"Mike · Truck 3",st:"On site",c:"p-site"},
+      {time:"8:30a",who:"Greenway Apts · Furnace insp.",sub:"Sam · Truck 1",st:"En route",c:"p-route"},
+      {time:"10:30a",who:"D. Pruett · Drain clearing",sub:"Sam · Truck 1",st:"Scheduled",c:"p-sched"},
+      {time:"1:00p",who:"M. Avery · AC install",sub:"Tony · Truck 2",st:"Scheduled",c:"p-sched"},
+      {time:"3:30p",who:"J. Okafor · Thermostat",sub:"Lena · Truck 5",st:"Scheduled",c:"p-sched"}
+    ],
+    crew:[
+      {who:"Mike",b:"Truck 3 · R. Hollis",s:"AC repair · on site 22 min",st:"ON SITE",c:"p-site"},
+      {who:"Sam",b:"Truck 1 · D. Pruett",s:"Drain clear · en route",st:"EN ROUTE",c:"p-route"},
+      {who:"Tony",b:"Truck 2 · Castle Mgmt",s:"5-unit tune-up · scheduled 9a",st:"SCHEDULED",c:"p-sched"},
+      {who:"Lena",b:"Truck 5 · J. Okafor",s:"Thermostat swap · done",st:"DONE",c:"p-done"}
+    ],
+    inv:[
+      {p:"Capacitor 45/5 MFD",on:2,re:8,need:"4 jobs need it this week"},
+      {p:"R-410A refrigerant",on:6,re:10,need:"~1.5 weeks left"},
+      {p:"Air filter 20x25x1",on:34,re:24,need:"healthy"},
+      {p:"Contactor 2-pole 40A",on:5,re:6,need:"reorder soon"},
+      {p:"Thermostat (smart)",on:11,re:8,need:"healthy"}
+    ],
+    results:[
+      {big:"0",cap:"double-bookings — the schedule physically won't allow them"},
+      {big:"Auto",cap:"every number updates itself — no retyping at 10pm"},
+      {big:"Instant",cap:"invoices go out the moment a job is marked done"},
+      {big:"1 day",cap:"for the owner and office to learn the whole thing"}
+    ]
+  },
+
+  plumbing:{
+    name:"plumbing", company:"Cascade Plumbing Co.", logo:"C",
+    worker:"Plumber", vehicle:"Van", where:"ops / dispatch",
+    heroValue:"$1.6M", heroPain:"missing service calls, sending two vans to the same street, and re-keying every invoice by hand at night",
+    meta:["12 staff · 5 vans","Database · dashboard · process","3 weeks, start to live","Web app · live data · no IT dept."],
+    beforeTxt:"This is the dispatch board most plumbing shops are still running — calls, parts, and customer history in separate tabs only the office manager can read. A second van gets sent to a job already covered and nobody knows until the plumber pulls up. If this looks like your back office, that's what I fix.",
+    sheetTabs:["DISPATCH_final_FINAL(2).xlsx","invoices_old","parts list??","customers_backup"],
+    ssHead:["Date","Time","Customer","Job","Plumber","Van","$ Quoted","Paid?"],
+    ssRows:[
+      ["6/24","8:00a","T. Reyes","Water heater leak",["Joe","err"],"2","$1,150",["?","warn"]],
+      ["6/24",["8:00a","err"],"Maple HOA","Backflow test",["Joe","err"],["2","err"],["","blank"],["?","warn"]],
+      ["6/24","11:00a","D. Pruett","Drain clog","Marco","1","$240","Y"],
+      ["6/24","1:30p",["","blank"],'"the rental"',"Marco","1",["—","err"],["?","warn"]],
+      ["6/25","9:00a","Riverside Apts","Repipe estimate","Will",["","blank"],"$6,400","N"],
+      ["6/25","2:00p","B. Nguyen","Faucet swap",["","blank"],"3","$185",["?","warn"]]
+    ],
+    flags:[["2","vans sent to overlapping jobs this week","",],["$4,200","in work with no recorded payment status","amber"],["1","person who knows the whole system",""]],
+    appr2:"The dispatch board physically won't let you send a plumber or a van to two jobs at once. The overlap that wastes a whole drive simply can't happen.",
+    kpis:[
+      {lab:"Revenue · this wk",count:41600,prefix:"$",sub:"▲ 14% vs last week",dir:"up"},
+      {lab:"Calls scheduled",count:31,sub:"7 today · 24 this week",dir:"flat"},
+      {lab:"Outstanding inv.",count:8400,prefix:"$",sub:"▼ from $17,900",dir:"down"},
+      {lab:"Avg response",count:38,suffix:"m",sub:"▲ 2h faster",dir:"up"}
+    ],
+    chartTitle:"Weekly revenue", chart:[27200,24800,30100,28600,33400,31000,36800,41600],
+    needs:[
+      {pill:"UNPAID",c:"p-warn",t:"Riverside Apts — $6,400",s:"18 days · invoice #2088"},
+      {pill:"LOW PART",c:"p-warn",t:"40-gal gas water heater",s:"1 left · 3 quotes pending"},
+      {pill:"FOLLOW-UP",c:"p-route",t:"T. Reyes — estimate sent",s:"No reply · 4 days"}
+    ],
+    jobs:[
+      {id:"J-2088",cust:"Riverside Apts",type:"Repipe estimate",tech:"Will",status:"Scheduled",val:6400},
+      {id:"J-2087",cust:"T. Reyes",type:"Water heater leak",tech:"Joe",status:"On site",val:1150},
+      {id:"J-2086",cust:"D. Pruett",type:"Drain clog",tech:"Marco",status:"En route",val:240},
+      {id:"J-2085",cust:"B. Nguyen",type:"Faucet swap",tech:"Lena",status:"Done",val:185},
+      {id:"J-2084",cust:"Maple HOA",type:"Backflow test",tech:"Joe",status:"Scheduled",val:520},
+      {id:"J-2083",cust:"M. Avery",type:"Sewer line repair",tech:"Will",status:"Done",val:3900},
+      {id:"J-2082",cust:"Riverside Cafe",type:"Grease trap",tech:"Marco",status:"On site",val:640},
+      {id:"J-2081",cust:"K. Bauer",type:"Sump pump",tech:"Lena",status:"Done",val:475},
+      {id:"J-2080",cust:"Old Mill HOA",type:"Fixture install x6",tech:"Will",status:"Scheduled",val:2280}
+    ],
+    dispTitle:"Van schedule · today",
+    dispatch:[
+      {time:"8:00a",who:"T. Reyes · Water heater",sub:"Joe · Van 2",st:"On site",c:"p-site"},
+      {time:"8:30a",who:"Maple HOA · Backflow test",sub:"Will · Van 4",st:"En route",c:"p-route"},
+      {time:"11:00a",who:"D. Pruett · Drain clog",sub:"Marco · Van 1",st:"Scheduled",c:"p-sched"},
+      {time:"1:30p",who:"M. Avery · Sewer repair",sub:"Will · Van 4",st:"Scheduled",c:"p-sched"},
+      {time:"3:00p",who:"B. Nguyen · Faucet swap",sub:"Lena · Van 3",st:"Scheduled",c:"p-sched"}
+    ],
+    crew:[
+      {who:"Joe",b:"Van 2 · T. Reyes",s:"Water heater · on site 30 min",st:"ON SITE",c:"p-site"},
+      {who:"Will",b:"Van 4 · Maple HOA",s:"Backflow test · en route",st:"EN ROUTE",c:"p-route"},
+      {who:"Marco",b:"Van 1 · D. Pruett",s:"Drain clog · scheduled 11a",st:"SCHEDULED",c:"p-sched"},
+      {who:"Lena",b:"Van 3 · B. Nguyen",s:"Faucet swap · done",st:"DONE",c:"p-done"}
+    ],
+    inv:[
+      {p:"40-gal gas water heater",on:1,re:4,need:"3 quotes pending"},
+      {p:'3/4" PEX (100ft roll)',on:5,re:8,need:"reorder soon"},
+      {p:"Wax ring kit",on:42,re:30,need:"healthy"},
+      {p:"1/2 HP sump pump",on:2,re:4,need:"low"},
+      {p:"Pressure-balance cartridge",on:14,re:10,need:"healthy"}
+    ],
+    results:[
+      {big:"0",cap:"overlapping dispatches — two vans can't be sent to one job"},
+      {big:"Auto",cap:"every number updates itself — no retyping at 10pm"},
+      {big:"Instant",cap:"invoices go out the moment a job is marked done"},
+      {big:"1 day",cap:"for the owner and office to learn the whole thing"}
+    ]
+  },
+
+  electrical:{
+    name:"electrical", company:"Brightline Electric", logo:"B",
+    worker:"Electrician", vehicle:"Van", where:"ops / dispatch",
+    heroValue:"$1.8M", heroPain:"losing track of permits, double-booking crews, and rebuilding the same job costs in a new spreadsheet every week",
+    meta:["16 staff · 7 vans","Database · dashboard · process","4 weeks, start to live","Web app · live data · no IT dept."],
+    beforeTxt:"This is the job board most electrical shops are still running — jobs, permits, material orders, and notes spread across tabs only the estimator can navigate. Two electricians get scheduled to the same panel job and it only surfaces on the truck. If this looks like your back office, that's what I fix.",
+    sheetTabs:["JOBS_2024_FINAL_v9.xlsx","permits_old","material orders??","bids (Mike's copy)"],
+    ssHead:["Date","Time","Customer","Job","Electrician","Van","$ Bid","Paid?"],
+    ssRows:[
+      ["6/24","8:00a","K. Patel","Panel upgrade",["Ray","err"],"4","$2,800",["?","warn"]],
+      ["6/24",["8:00a","err"],"Lofts on 3rd","Lighting retrofit",["Ray","err"],["4","err"],["","blank"],["?","warn"]],
+      ["6/24","11:00a","D. Pruett","Outlet add","Tony","2","$320","Y"],
+      ["6/24","1:30p",["","blank"],'"the shop"',"Tony","2",["—","err"],["?","warn"]],
+      ["6/25","9:00a","Summit HOA","EV charger x4","Dana",["","blank"],"$5,600","N"],
+      ["6/25","2:00p","B. Cole","Ceiling fan",["","blank"],"1","$240",["?","warn"]]
+    ],
+    flags:[["2","crews double-booked this week alone",""],["$5,400","in bids with no recorded payment status","amber"],["1","person who understands the whole sheet",""]],
+    appr2:"The job board physically won't let you book an electrician or a van into two jobs at once — and it flags a job before its permit is logged. The mistakes that cost real money can't happen.",
+    kpis:[
+      {lab:"Revenue · this wk",count:52800,prefix:"$",sub:"▲ 16% vs last week",dir:"up"},
+      {lab:"Jobs scheduled",count:24,sub:"5 today · 19 this week",dir:"flat"},
+      {lab:"Outstanding inv.",count:11200,prefix:"$",sub:"▼ from $22,400",dir:"down"},
+      {lab:"Permits open",count:7,sub:"all logged · 0 missed",dir:"flat"}
+    ],
+    chartTitle:"Weekly revenue", chart:[34200,31800,38400,36100,42800,39600,47200,52800],
+    needs:[
+      {pill:"UNPAID",c:"p-warn",t:"Summit HOA — $5,600",s:"21 days · invoice #3071"},
+      {pill:"LOW PART",c:"p-warn",t:"200A main breaker",s:"1 left · 2 panel jobs booked"},
+      {pill:"FOLLOW-UP",c:"p-route",t:"K. Patel — bid sent",s:"No reply · 5 days"}
+    ],
+    jobs:[
+      {id:"J-3071",cust:"Summit HOA",type:"EV charger x4",tech:"Dana",status:"Scheduled",val:5600},
+      {id:"J-3070",cust:"K. Patel",type:"Panel upgrade",tech:"Ray",status:"On site",val:2800},
+      {id:"J-3069",cust:"D. Pruett",type:"Outlet add",tech:"Tony",status:"En route",val:320},
+      {id:"J-3068",cust:"B. Cole",type:"Ceiling fan",tech:"Lena",status:"Done",val:240},
+      {id:"J-3067",cust:"Lofts on 3rd",type:"Lighting retrofit",tech:"Ray",status:"Scheduled",val:3400},
+      {id:"J-3066",cust:"M. Avery",type:"Service rewire",tech:"Dana",status:"Done",val:7200},
+      {id:"J-3065",cust:"Riverside Cafe",type:"Kitchen circuits",tech:"Tony",status:"On site",val:1480},
+      {id:"J-3064",cust:"K. Bauer",type:"GFCI replace x6",tech:"Lena",status:"Done",val:540},
+      {id:"J-3063",cust:"Old Mill HOA",type:"Exterior lighting",tech:"Dana",status:"Scheduled",val:2960}
+    ],
+    dispTitle:"Crew schedule · today",
+    dispatch:[
+      {time:"8:00a",who:"K. Patel · Panel upgrade",sub:"Ray · Van 4",st:"On site",c:"p-site"},
+      {time:"8:30a",who:"Lofts on 3rd · Lighting",sub:"Dana · Van 6",st:"En route",c:"p-route"},
+      {time:"11:00a",who:"D. Pruett · Outlet add",sub:"Tony · Van 2",st:"Scheduled",c:"p-sched"},
+      {time:"1:30p",who:"M. Avery · Service rewire",sub:"Dana · Van 6",st:"Scheduled",c:"p-sched"},
+      {time:"3:00p",who:"B. Cole · Ceiling fan",sub:"Lena · Van 1",st:"Scheduled",c:"p-sched"}
+    ],
+    crew:[
+      {who:"Ray",b:"Van 4 · K. Patel",s:"Panel upgrade · on site 45 min",st:"ON SITE",c:"p-site"},
+      {who:"Dana",b:"Van 6 · Lofts on 3rd",s:"Lighting retrofit · en route",st:"EN ROUTE",c:"p-route"},
+      {who:"Tony",b:"Van 2 · D. Pruett",s:"Outlet add · scheduled 11a",st:"SCHEDULED",c:"p-sched"},
+      {who:"Lena",b:"Van 1 · B. Cole",s:"Ceiling fan · done",st:"DONE",c:"p-done"}
+    ],
+    inv:[
+      {p:"200A main breaker",on:1,re:4,need:"2 panel jobs booked"},
+      {p:'12-2 Romex (250ft)',on:6,re:10,need:"reorder soon"},
+      {p:"GFCI outlet (spec)",on:38,re:30,need:"healthy"},
+      {p:"40A EV charger",on:2,re:4,need:"low"},
+      {p:"200A load center",on:5,re:5,need:"reorder soon"}
+    ],
+    results:[
+      {big:"0",cap:"crew double-bookings — the board won't allow them"},
+      {big:"Auto",cap:"every number updates itself — no nightly job-costing by hand"},
+      {big:"0",cap:"permits missed — every job is blocked until its permit is logged"},
+      {big:"1 day",cap:"for the owner and estimator to learn the whole thing"}
+    ]
+  },
+
+  auto:{
+    name:"auto repair", company:"Ironclad Auto", logo:"I",
+    worker:"Mechanic", vehicle:"Bay", where:"ops / service drive",
+    heroValue:"$2.1M", heroPain:"losing track of which car is in which bay, quoting from memory, and chasing approvals on sticky notes",
+    meta:["18 staff · 6 bays","Database · dashboard · process","3 weeks, start to live","Web app · live data · no IT dept."],
+    beforeTxt:"This is the bay board most repair shops are still running — work orders, parts, and approvals on a whiteboard and a stack of tabs only the service writer understands. Two cars get assigned to the same lift and it surfaces when a mechanic goes looking for a bay. If this looks like your shop, that's what I fix.",
+    sheetTabs:["BAYS_today_FINAL.xlsx","parts_old","approvals??","ROs (Steve's copy)"],
+    ssHead:["In","Bay","Customer","Vehicle / Job","Mechanic","Status","$ Quoted","Approved?"],
+    ssRows:[
+      ["7:40a","2","K. Diaz","Brake job",["Luis","err"],"In bay","$640",["?","warn"]],
+      [["7:55a","err"],["2","err"],"Walk-in","Check engine",["Luis","err"],["In bay","err"],["","blank"],["?","warn"]],
+      ["8:10a","4","D. Pruett","Oil + rotate","Sam","Done","$95","Y"],
+      ["9:00a",["","blank"],'"the truck"',"Transmission",["","blank"],["","blank"],["—","err"],["?","warn"]],
+      ["9:30a","1","Fleet — Apex","5x inspections","Tony","Waiting parts","$1,450","N"],
+      ["10:15a","3","B. Cole","Alignment",["","blank"],"In bay","$120",["?","warn"]]
+    ],
+    flags:[["2","cars assigned to the same bay this morning",""],["$3,800","in work orders with no recorded approval","amber"],["1","writer who knows where everything is",""]],
+    appr2:"The bay board physically won't let you assign two cars to one lift — and every quote needs a logged approval before work starts. The mix-ups that burn bay time can't happen.",
+    kpis:[
+      {lab:"Revenue · this wk",count:46300,prefix:"$",sub:"▲ 15% vs last week",dir:"up"},
+      {lab:"Cars in shop",count:22,sub:"6 in bays · 16 this week",dir:"flat"},
+      {lab:"Awaiting approval",count:4900,prefix:"$",sub:"▼ from $11,200",dir:"down"},
+      {lab:"Avg turnaround",count:5.4,suffix:"h",sub:"▲ 1.3h faster",dir:"up"}
+    ],
+    chartTitle:"Weekly revenue", chart:[30100,28400,33800,31600,37200,34900,41100,46300],
+    needs:[
+      {pill:"NO APPROVAL",c:"p-warn",t:"Fleet — Apex · $1,450",s:"5 inspections · waiting on sign-off"},
+      {pill:"LOW PART",c:"p-warn",t:"Ceramic brake pads (front)",s:"2 sets · 4 jobs need them"},
+      {pill:"FOLLOW-UP",c:"p-route",t:"K. Diaz — quote sent",s:"No reply · 2 days"}
+    ],
+    jobs:[
+      {id:"RO-5510",cust:"Fleet — Apex",type:"5x inspections",tech:"Tony",status:"Scheduled",val:1450},
+      {id:"RO-5509",cust:"K. Diaz",type:"Brake job",tech:"Luis",status:"On site",val:640},
+      {id:"RO-5508",cust:"B. Cole",type:"Alignment",tech:"Sam",status:"En route",val:120},
+      {id:"RO-5507",cust:"D. Pruett",type:"Oil + rotate",tech:"Lena",status:"Done",val:95},
+      {id:"RO-5506",cust:"M. Avery",type:"Transmission service",tech:"Tony",status:"Scheduled",val:2200},
+      {id:"RO-5505",cust:"R. Hollis",type:"Diagnostics",tech:"Luis",status:"Done",val:140},
+      {id:"RO-5504",cust:"Riverside Cafe",type:"Fleet brakes x2",tech:"Sam",status:"On site",val:1280},
+      {id:"RO-5503",cust:"K. Bauer",type:"Battery + alt",tech:"Lena",status:"Done",val:510},
+      {id:"RO-5502",cust:"Old Mill HOA",type:"Van tune-up x3",tech:"Tony",status:"Scheduled",val:1140}
+    ],
+    dispTitle:"Bay board · today",
+    dispatch:[
+      {time:"Bay 2",who:"K. Diaz · Brake job",sub:"Luis · in bay",st:"On site",c:"p-site"},
+      {time:"Bay 1",who:"Fleet Apex · Inspections",sub:"Tony · waiting parts",st:"En route",c:"p-route"},
+      {time:"Bay 3",who:"B. Cole · Alignment",sub:"Sam · next up",st:"Scheduled",c:"p-sched"},
+      {time:"Bay 4",who:"M. Avery · Transmission",sub:"Tony · 11:00a",st:"Scheduled",c:"p-sched"},
+      {time:"Bay 5",who:"R. Hollis · Diagnostics",sub:"Luis · 1:30p",st:"Scheduled",c:"p-sched"}
+    ],
+    crew:[
+      {who:"Luis",b:"Bay 2 · K. Diaz",s:"Brake job · in bay 40 min",st:"ON SITE",c:"p-site"},
+      {who:"Tony",b:"Bay 1 · Fleet Apex",s:"Inspections · waiting parts",st:"EN ROUTE",c:"p-route"},
+      {who:"Sam",b:"Bay 3 · B. Cole",s:"Alignment · next up",st:"SCHEDULED",c:"p-sched"},
+      {who:"Lena",b:"Bay 4 · D. Pruett",s:"Oil + rotate · done",st:"DONE",c:"p-done"}
+    ],
+    inv:[
+      {p:"Ceramic brake pads (front)",on:2,re:8,need:"4 jobs need them"},
+      {p:"5W-30 synthetic (bulk)",on:6,re:12,need:"reorder soon"},
+      {p:"Oil filter (common)",on:44,re:30,need:"healthy"},
+      {p:"Group 48 battery",on:3,re:6,need:"low"},
+      {p:"Serpentine belt (range)",on:9,re:8,need:"healthy"}
+    ],
+    results:[
+      {big:"0",cap:"two cars in one bay — the board won't allow it"},
+      {big:"Auto",cap:"every number updates itself — no nightly write-ups"},
+      {big:"Logged",cap:"every quote approved before work starts — nothing slips"},
+      {big:"1 day",cap:"for the owner and service writer to learn the whole thing"}
+    ]
+  },
+
+  landscaping:{
+    name:"landscaping", company:"Evergreen Grounds", logo:"E",
+    worker:"Crew", vehicle:"Crew", where:"ops / routing",
+    heroValue:"$1.3M", heroPain:"running routes off a whiteboard, sending crews backtracking across town, and forgetting to invoice half the visits",
+    meta:["20 crew · 5 trucks","Database · dashboard · process","3 weeks, start to live","Web app · live data · no IT dept."],
+    beforeTxt:"This is the route sheet most landscaping crews are still running — routes, properties, and billing in spreadsheets only the owner can read. Two crews get routed to overlapping stops and burn a half-hour of drive time before anyone notices. If this looks like your back office, that's what I fix.",
+    sheetTabs:["ROUTES_week_FINAL_v4.xlsx","billing_old","equipment??","props (Dave's copy)"],
+    ssHead:["Day","Stop","Property","Service","Crew","Truck","$ /visit","Billed?"],
+    ssRows:[
+      ["Mon","1","Maple HOA","Mow + edge",["Crew A","err"],"2","$380",["?","warn"]],
+      ["Mon",["1","err"],"Maple HOA (back)","Cleanup",["Crew A","err"],["2","err"],["","blank"],["?","warn"]],
+      ["Mon","2","D. Pruett","Mow","Crew B","1","$65","Y"],
+      ["Mon","3",["","blank"],'"the corner lot"',"Crew B","1",["—","err"],["?","warn"]],
+      ["Tue","1","Summit Plaza","Irrigation start","Crew C",["","blank"],"$1,200","N"],
+      ["Tue","2","B. Cole","Bed install",["","blank"],"3","$540",["?","warn"]]
+    ],
+    flags:[["2","crews routed to overlapping stops this week",""],["$2,700","in completed visits never billed","amber"],["1","person who knows the whole route book",""]],
+    appr2:"The route board physically won't let you send two crews to overlapping stops — and it sequences every truck so nobody backtracks. The wasted windshield time simply stops.",
+    kpis:[
+      {lab:"Revenue · this wk",count:29800,prefix:"$",sub:"▲ 12% vs last week",dir:"up"},
+      {lab:"Stops scheduled",count:86,sub:"22 today · 86 this week",dir:"flat"},
+      {lab:"Unbilled visits",count:2700,prefix:"$",sub:"▼ from $9,400",dir:"down"},
+      {lab:"Drive time saved",count:18,suffix:"%",sub:"▲ tighter routes",dir:"up"}
+    ],
+    chartTitle:"Weekly revenue", chart:[19200,17800,22400,20900,24600,22800,26900,29800],
+    needs:[
+      {pill:"UNBILLED",c:"p-warn",t:"Summit Plaza — $1,200",s:"Irrigation done · never invoiced"},
+      {pill:"LOW STOCK",c:"p-warn",t:"Bark mulch (yards)",s:"3 left · 2 installs this week"},
+      {pill:"FOLLOW-UP",c:"p-route",t:"B. Cole — estimate sent",s:"No reply · 3 days"}
+    ],
+    jobs:[
+      {id:"WO-7720",cust:"Summit Plaza",type:"Irrigation start-up",tech:"Crew C",status:"Scheduled",val:1200},
+      {id:"WO-7719",cust:"Maple HOA",type:"Mow + edge",tech:"Crew A",status:"On site",val:380},
+      {id:"WO-7718",cust:"D. Pruett",type:"Weekly mow",tech:"Crew B",status:"En route",val:65},
+      {id:"WO-7717",cust:"B. Cole",type:"Bed install",tech:"Crew D",status:"Done",val:540},
+      {id:"WO-7716",cust:"Old Mill HOA",type:"Spring cleanup",tech:"Crew A",status:"Scheduled",val:1850},
+      {id:"WO-7715",cust:"M. Avery",type:"Sod install",tech:"Crew C",status:"Done",val:2400},
+      {id:"WO-7714",cust:"Riverside Cafe",type:"Planter refresh",tech:"Crew D",status:"On site",val:420},
+      {id:"WO-7713",cust:"K. Bauer",type:"Tree trim x4",tech:"Crew B",status:"Done",val:680},
+      {id:"WO-7712",cust:"Castle Mgmt",type:"Mow route x12",tech:"Crew A",status:"Scheduled",val:1560}
+    ],
+    dispTitle:"Crew routes · today",
+    dispatch:[
+      {time:"7:30a",who:"Maple HOA · Mow + edge",sub:"Crew A · Truck 2",st:"On site",c:"p-site"},
+      {time:"8:00a",who:"Summit Plaza · Irrigation",sub:"Crew C · Truck 4",st:"En route",c:"p-route"},
+      {time:"9:30a",who:"D. Pruett · Weekly mow",sub:"Crew B · Truck 1",st:"Scheduled",c:"p-sched"},
+      {time:"11:00a",who:"Old Mill HOA · Cleanup",sub:"Crew A · Truck 2",st:"Scheduled",c:"p-sched"},
+      {time:"1:00p",who:"B. Cole · Bed install",sub:"Crew D · Truck 3",st:"Scheduled",c:"p-sched"}
+    ],
+    crew:[
+      {who:"Crew A",b:"Truck 2 · Maple HOA",s:"Mow + edge · on site 15 min",st:"ON SITE",c:"p-site"},
+      {who:"Crew C",b:"Truck 4 · Summit Plaza",s:"Irrigation · en route",st:"EN ROUTE",c:"p-route"},
+      {who:"Crew B",b:"Truck 1 · D. Pruett",s:"Weekly mow · scheduled 9:30a",st:"SCHEDULED",c:"p-sched"},
+      {who:"Crew D",b:"Truck 3 · Riverside Cafe",s:"Planter refresh · done",st:"DONE",c:"p-done"}
+    ],
+    inv:[
+      {p:"Bark mulch (yards)",on:3,re:10,need:"2 installs this week"},
+      {p:"Irrigation heads (case)",on:5,re:8,need:"reorder soon"},
+      {p:"Fescue sod (pallets)",on:2,re:4,need:"low"},
+      {p:"Slow-release fertilizer",on:18,re:12,need:"healthy"},
+      {p:"Trimmer line (spools)",on:22,re:15,need:"healthy"}
+    ],
+    results:[
+      {big:"0",cap:"overlapping routes — the board won't allow them"},
+      {big:"Auto",cap:"routes sequence themselves so crews don't backtrack"},
+      {big:"Every",cap:"completed visit gets invoiced — none slip through billing"},
+      {big:"1 day",cap:"for the owner and office to learn the whole thing"}
+    ]
+  }
+};
+
+/* ---- resolve prospect + active industry ---- */
+function qp(){ try{ return new URLSearchParams(location.search); }catch(e){ return new URLSearchParams(); } }
+const Q = qp();
+const ALIASES = {hvac:"hvac",heating:"hvac",cooling:"hvac",hcac:"hvac","heating & cooling":"hvac",
+  plumbing:"plumbing",plumber:"plumbing",plumb:"plumbing",
+  electrical:"electrical",electrician:"electrical",electric:"electrical",
+  auto:"auto","auto repair":"auto",automotive:"auto",mechanic:"auto",shop:"auto",
+  landscaping:"landscaping",landscape:"landscaping",lawn:"landscaping","lawn care":"landscaping",grounds:"landscaping"};
+function resolveIndustry(v){ if(!v)return DEFAULTS.industry; v=String(v).toLowerCase().trim(); return INDUSTRIES[v]?v:(ALIASES[v]||DEFAULTS.industry); }
+const indKey = resolveIndustry(Q.get("industry")||DEFAULTS.industry);
+const IND = INDUSTRIES[indKey];
+const prospect = {
+  owner:   (Q.get("owner")||Q.get("name")||DEFAULTS.owner||"").trim(),
+  company: (Q.get("company")||DEFAULTS.company||"").trim(),
+  city:    (Q.get("city")||DEFAULTS.city||"").trim()
+};
+
+/* ---- tiny helpers ---- */
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function $(id){ return document.getElementById(id); }
+
+/* ---- personalize static text ---- */
+(function personalize(){
+  // Prepared-for chip
+  if(prospect.company){ const p=$("prepared"); p.textContent="Prepared for "+prospect.company; p.hidden=false; }
+
+  // Hero — case-study framing, flavored by the prospect's trade
+  $("heroTitle").innerHTML = "Most "+esc(IND.name)+" shops still run on <span class=\"hl\">eleven spreadsheets</span> and a whiteboard — here's the system I'd build instead.";
+  $("heroLede").textContent = "Most "+IND.name+" shops are "+IND.heroPain+". Below is that messy 'before' — then a live console you can click through. It's the kind of system I'd build, shaped around how your shop actually runs.";
+
+  // Optional personal greeting when an owner name is provided
+  if(prospect.owner){
+    const where = prospect.city ? (" in "+esc(prospect.city)) : "";
+    $("greeting").innerHTML = esc(prospect.owner)+" — you run a "+esc(IND.name)+" shop"+where+", so I built this demo in your world. Picture the console below as <b>"+(prospect.company?esc(prospect.company):"yours")+"</b>.";
+    $("greeting").hidden=false;
+  }
+
+  // hero meta
+  $("herometa").innerHTML = IND.meta.map((m,i)=>{
+    const labels=["Business","Built solo","Timeline","Stack"];
+    return `<div><b>${esc(labels[i])}</b>${esc(m)}</div>`;
+  }).join("");
+
+  // before section
+  $("beforeTxt").textContent = IND.beforeTxt;
+  $("sheetBar").innerHTML = IND.sheetTabs.map((t,i)=>`<span class="tab${i?" x":""}">${esc(t)}</span>`).join("");
+  const cell=v=>{ const txt=Array.isArray(v)?v[0]:v, cls=Array.isArray(v)?v[1]:""; return `<td class="${cls?("cell-"+cls):""}">${esc(txt)}</td>`; };
+  $("ssTable").innerHTML = `<tr>${IND.ssHead.map(h=>`<th>${esc(h)}</th>`).join("")}</tr>`+
+    IND.ssRows.map(r=>`<tr>${r.map(cell).join("")}</tr>`).join("");
+  $("flags").innerHTML = IND.flags.map(f=>`<span class="flag${f[2]==="amber"?" amber":""}"><b>${esc(f[0])}</b>&nbsp;${esc(f[1])}</span>`).join("");
+  $("appr2").textContent = IND.appr2;
+
+  // console chrome
+  $("logoSq").textContent = IND.logo;
+  $("logoName").textContent = IND.company;
+  $("where").textContent = IND.where;
+  $("thWorker").innerHTML = esc(IND.worker)+' <span class="ar">↕</span>';
+  $("dispTitle").innerHTML = esc(IND.dispTitle)+' <span class="tagm">no double-books</span>';
+  $("chartTitle").innerHTML = esc(IND.chartTitle)+' <span class="tagm">last 8 weeks</span>';
+
+  // CTA + contact
+  const subj = encodeURIComponent((prospect.company?(prospect.company+" — "):"")+"operations / off spreadsheets");
+  const mailto = "mailto:"+CONTACT.email+"?subject="+subj;
+  $("ctaPrimary").href = CONTACT.bookingUrl || mailto;
+  if(!CONTACT.bookingUrl) $("ctaPrimary").textContent = "Email me to book a walkthrough";
+  $("ctaEmail").href = "mailto:"+CONTACT.email;
+  $("ctaEmail").textContent = CONTACT.email;
+  if(prospect.owner){
+    $("ctaTitle").textContent = prospect.owner+", if "+(prospect.company||"your shop")+" runs on spreadsheets and late nights, I can fix that.";
+  }
+  if(prospect.company){
+    $("ctaText").textContent = "Processes, databases, dashboards, policies, websites — I build the systems small businesses can't justify a whole IT team for. Tell me where it hurts at "+prospect.company+" and I'll show you, free, exactly what's possible.";
+  }
+  $("demoNote").innerHTML = "▲ Demonstration build · fictional company ("+esc(IND.company)+") · sample data · designed &amp; built by Jason Vega";
+  $("footNote").textContent = IND.company+" is a fictional company created to demonstrate capability. All names and figures are illustrative.";
+})();
+
+/* ---- jobs table (search / filter / sort) ---- */
+const jobs = IND.jobs.slice();
+const statusClass={"On site":"p-site","En route":"p-route","Scheduled":"p-sched","Done":"p-done"};
+let curFilter="all", curSearch="", sortKey="id", sortDir=1;
+function renderJobs(){
+  let rows=jobs.filter(j=>{
+    const okF = curFilter==="all"||j.status===curFilter;
+    const okS = (j.cust+" "+j.type).toLowerCase().includes(curSearch.toLowerCase());
+    return okF&&okS;
+  });
+  rows.sort((a,b)=>{ let x=a[sortKey],y=b[sortKey];
+    if(typeof x==="string"){x=x.toLowerCase();y=y.toLowerCase();}
+    return x<y?-1*sortDir:x>y?1*sortDir:0; });
+  $("jbody").innerHTML = rows.map(j=>`<tr>
+    <td class="id">${esc(j.id)}</td><td>${esc(j.cust)}</td><td>${esc(j.type)}</td><td>${esc(j.tech)}</td>
+    <td><span class="pill ${statusClass[j.status]}">${esc(j.status.toUpperCase())}</span></td>
+    <td class="val">$${j.val.toLocaleString()}</td></tr>`).join('')
+    || `<tr><td colspan="6" style="text-align:center;color:var(--con-muted);padding:26px">No jobs match. Try a different search.</td></tr>`;
+}
+$("jsearch").addEventListener('input',e=>{curSearch=e.target.value;renderJobs();});
+document.querySelectorAll('.fpill').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.fpill').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');curFilter=b.dataset.f;renderJobs();
+}));
+document.querySelectorAll('#jtable th').forEach(th=>th.addEventListener('click',()=>{
+  const k=th.dataset.s; if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1;} renderJobs();
+}));
+
+/* ---- overview: KPIs + chart + needs-attention ---- */
+$("kpis").innerHTML = IND.kpis.map(k=>`<div class="kpi"><span class="strip"></span>
+  <div class="lab">${esc(k.lab)}</div>
+  <div class="val" data-count="${k.count}" ${k.prefix?`data-prefix="${esc(k.prefix)}"`:""} ${k.suffix?`data-suffix="${esc(k.suffix)}"`:""}>${esc(k.prefix||"")}0${esc(k.suffix||"")}</div>
+  <div class="sub ${k.dir}">${esc(k.sub)}</div></div>`).join("");
+$("needs").innerHTML = IND.needs.map(n=>`<div class="disp-row"><span class="pill ${n.c}">${esc(n.pill)}</span>
+  <div class="who"><b>${esc(n.t)}</b><small>${esc(n.s)}</small></div></div>`).join("");
+
+/* ---- dispatch + crew ---- */
+$("dispatch").innerHTML = IND.dispatch.map(d=>`<div class="disp-row">
+  <span class="time">${esc(d.time)}</span>
+  <div class="who"><b>${esc(d.who)}</b><small>${esc(d.sub)}</small></div>
+  <span class="pill ${d.c}">${esc(d.st.toUpperCase())}</span></div>`).join('');
+$("crew").innerHTML = IND.crew.map(c=>`<div class="disp-row"><span class="time">${esc(c.who)}</span>
+  <div class="who"><b>${esc(c.b)}</b><small>${esc(c.s)}</small></div>
+  <span class="pill ${c.c}">${esc(c.st)}</span></div>`).join('');
+
+/* ---- inventory ---- */
+$("inv").innerHTML = IND.inv.map(i=>{
+  const pct=Math.min(100,Math.round(i.on/(i.re*1.6)*100));
+  const col=i.on<i.re?(i.on<=2?'var(--red)':'var(--warn)'):'var(--green)';
+  const pill=i.on<i.re?(i.on<=2?'<span class="pill p-warn">CRITICAL</span>':'<span class="pill p-warn">LOW</span>'):'<span class="pill p-site">OK</span>';
+  return `<div class="inv-row"><div><b>${esc(i.p)}</b><br><small>${i.on} on hand · reorder at ${i.re} · ${esc(i.need)}</small></div>${pill}
+    <div class="gauge"><i style="width:${pct}%;background:${col}"></i></div></div>`;
+}).join('');
+
+/* ---- chart ---- */
+const rev=IND.chart, max=Math.max(...rev);
+$("chart").innerHTML = rev.map((v,i)=>
+  `<div class="bar-col"><div class="bar" style="height:0" data-h="${Math.round(v/max*130)}" title="$${v.toLocaleString()}"></div><span>W${i+1}</span></div>`).join('');
+
+/* ---- results ---- */
+$("results").innerHTML = IND.results.map(r=>`<div class="rcard"><div class="big">${esc(r.big)}</div><div class="cap">${esc(r.cap)}</div></div>`).join("");
+
+/* ---- tabs (with aria state) ---- */
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.setAttribute('role','tab');
+  b.setAttribute('aria-selected', b.classList.contains('active')?'true':'false');
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); b.setAttribute('aria-selected','true');
+    document.querySelector(`[data-panel="${b.dataset.p}"]`).classList.add('active');
+  });
+});
+
+/* ---- FAQ accordion (with aria-expanded) ---- */
+document.querySelectorAll('.qa button').forEach(btn=>{
+  btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click',()=>{
+    const open=btn.parentElement.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open?'true':'false');
+  });
+});
+
+/* ---- animations: count-up + bars + reveal ---- */
+const REDUCE = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function fmtVal(el){ const tgt=+el.dataset.count, pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
+  const dec=(tgt%1!==0)?1:0; return pre+(dec?tgt.toFixed(1):Math.round(tgt).toLocaleString())+suf; }
+let consoleAnimated=false;
+function animateConsole(){
+  if(consoleAnimated) return; consoleAnimated=true;
+  if(REDUCE){ // honor reduced-motion: snap to final values (never leave 0 / empty bars)
+    document.querySelectorAll('.bar').forEach(b=>{b.style.height=b.dataset.h+'px';});
+    document.querySelectorAll('.val[data-count]').forEach(el=>{el.textContent=fmtVal(el);});
+    return;
+  }
+  document.querySelectorAll('.bar').forEach((b,i)=>setTimeout(()=>{b.style.height=b.dataset.h+'px';},80*i));
+  document.querySelectorAll('.val[data-count]').forEach(el=>{
+    const tgt=+el.dataset.count, pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
+    const dec=(tgt%1!==0)?1:0; let s=0; const step=tgt/45;
+    const t=setInterval(()=>{s+=step; if(s>=tgt){s=tgt;clearInterval(t);}
+      el.textContent=pre+(dec?s.toFixed(1):Math.round(s).toLocaleString())+suf;},18);
+  });
+}
+renderJobs();
+
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');
+    if(e.target.classList.contains('console-wrap'))animateConsole();
+    io.unobserve(e.target);}
+});},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+window.addEventListener('load',()=>{
+  const cw=document.querySelector('.console-wrap');
+  if(cw && cw.getBoundingClientRect().top<window.innerHeight){animateConsole();cw.classList.add('in');}
+});
+// safety net: if the console is on-screen but never animated (observer/load race), fill it in
+setTimeout(()=>{ const cw=document.querySelector('.console-wrap');
+  if(!consoleAnimated && cw && cw.getBoundingClientRect().top<window.innerHeight){ animateConsole(); }
+},1600);
+</script>
+</body>
+</html>
