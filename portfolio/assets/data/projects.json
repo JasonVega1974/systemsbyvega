@@ -7,7 +7,11 @@
     "url": "https://systemsbyvega.com",
     "thumb": "assets/img/systemsbyvega.png",
     "category": "Commercial",
-    "tags": ["Dashboards", "Databases", "Process"],
+    "tags": [
+      "Dashboards",
+      "Databases",
+      "Process"
+    ],
     "status": "Demo",
     "featured": true
   },
@@ -17,9 +21,13 @@
     "tagline": "Church digital services studio",
     "description": "The parent studio — websites, media, and digital services for churches and faith-driven organizations.",
     "url": "https://kingdom-creatives.com",
-    "thumb": "assets/img/kingdom-creatives.png",
+    "thumb": "portfolio/assets/img/kingdom-creatives.png",
     "category": "Faith & Family",
-    "tags": ["Studio", "Web", "Faith"],
+    "tags": [
+      "Studio",
+      "Web",
+      "Faith"
+    ],
     "status": "Live",
     "featured": true
   },
@@ -31,7 +39,11 @@
     "url": "https://yourlifecc.com",
     "thumb": "assets/img/yourlifecc.png",
     "category": "Faith & Family",
-    "tags": ["PWA", "Mobile", "Faith"],
+    "tags": [
+      "PWA",
+      "Mobile",
+      "Faith"
+    ],
     "status": "Live",
     "featured": false
   },
@@ -43,7 +55,11 @@
     "url": "https://yourlifecc.com/faith",
     "thumb": "assets/img/faith-journey.png",
     "category": "Faith & Family",
-    "tags": ["Faith", "Content", "Daily"],
+    "tags": [
+      "Faith",
+      "Content",
+      "Daily"
+    ],
     "status": "Live",
     "featured": false
   },
@@ -55,7 +71,11 @@
     "url": "https://yourlifecc.com/return",
     "thumb": "assets/img/return.png",
     "category": "Faith & Family",
-    "tags": ["Inventory", "Database", "Church"],
+    "tags": [
+      "Inventory",
+      "Database",
+      "Church"
+    ],
     "status": "Live",
     "featured": false
   },
@@ -67,7 +87,11 @@
     "url": "https://yourlifecc.com/legacy-vault",
     "thumb": "assets/img/legacy-vault.png",
     "category": "Faith & Family",
-    "tags": ["Vault", "Family", "Storage"],
+    "tags": [
+      "Vault",
+      "Family",
+      "Storage"
+    ],
     "status": "Live",
     "featured": false
   },
@@ -79,7 +103,11 @@
     "url": "https://estatesalebiz.com",
     "thumb": "assets/img/estatesalebiz.png",
     "category": "Commercial",
-    "tags": ["Web", "Listings", "Small business"],
+    "tags": [
+      "Web",
+      "Listings",
+      "Small business"
+    ],
     "status": "Live",
     "featured": false
   },
@@ -91,7 +119,11 @@
     "url": "https://domvegz.com",
     "thumb": "assets/img/domvegz.png",
     "category": "Music & Creative",
-    "tags": ["Music", "Web", "Brand"],
+    "tags": [
+      "Music",
+      "Web",
+      "Brand"
+    ],
     "status": "Live",
     "featured": false
   }
