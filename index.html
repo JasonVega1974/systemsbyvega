@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Systems by Vega — Get your business off spreadsheets</title>
-<meta name="description" content="I build the operations systems small businesses can't justify a whole IT team for — process, databases, dashboards, and websites. One person, real tools, no enterprise price tag.">
+<title>Systems by Vega — Custom software &amp; operations systems for small business</title>
+<meta name="description" content="Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites — the full operations toolkit small businesses can't justify a whole IT team for. One person, modern tools, no enterprise price tag.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Systems by Vega — get your business off spreadsheets">
-<meta property="og:description" content="Custom databases, operations dashboards, and process cleanup for small businesses. See a live demo.">
+<meta property="og:title" content="Systems by Vega — custom software &amp; operations systems">
+<meta property="og:description" content="Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites for small business. See a live demo.">
 <meta property="og:url" content="https://systemsbyvega.com">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,6 +110,19 @@
   .why li .ck{flex:none;width:22px;height:22px;border-radius:6px;background:rgba(232,121,27,.12);color:var(--amber-deep);display:grid;place-items:center;font-weight:700;font-size:13px;margin-top:1px}
   .why li b{color:var(--ink);font-weight:600}
 
+  /* capabilities */
+  .caps{background:var(--panel);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .capgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+  .capcard{background:var(--paper);border:1px solid var(--hair);border-radius:13px;padding:22px}
+  .capcard h3{font-family:'Archivo';font-weight:700;font-size:16px;letter-spacing:-.01em;margin-bottom:15px;display:flex;align-items:center;gap:9px}
+  .capcard h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none}
+  .capcard ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .capcard li{display:flex;gap:9px;font-size:13.5px;color:var(--ink-soft);line-height:1.38}
+  .ckg{flex:none;width:18px;height:18px;border-radius:5px;background:rgba(31,157,99,.13);color:var(--green);display:grid;place-items:center;font-weight:800;font-size:11px;margin-top:1px}
+  .tools-wrap{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .tool{font-family:'IBM Plex Mono';font-size:13px;padding:9px 14px;border-radius:8px;border:1px solid var(--hair);background:var(--paper);color:var(--ink-soft)}
+  .tool b{color:var(--ink);font-weight:600}
+
   /* faq */
   .faq{background:var(--panel);border-top:1px solid var(--hair)}
   .qa{border-bottom:1px solid var(--hair)}
@@ -136,12 +149,13 @@
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
 
+  @media(max-width:980px){.capgrid{grid-template-columns:1fr 1fr}}
   @media(max-width:820px){
     .psigns,.svc,.steps{grid-template-columns:1fr}
     .why .grid{grid-template-columns:1fr;gap:24px}
     .svc{grid-template-columns:1fr 1fr}
   }
-  @media(max-width:560px){.svc{grid-template-columns:1fr}.wrap,.hero-in,.nav-in{padding-left:22px;padding-right:22px}}
+  @media(max-width:560px){.svc,.capgrid{grid-template-columns:1fr}.wrap,.hero-in,.nav-in{padding-left:22px;padding-right:22px}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -156,9 +170,9 @@
 
 <header class="hero">
   <div class="hero-in">
-    <div class="eyebrow">Operations systems for small business</div>
-    <h1>Get your business <span class="hl">off spreadsheets</span> and into a system that runs itself.</h1>
-    <p>If your shop runs on eleven spreadsheets, sticky notes, and one person who knows how it all works — I fix that. Custom databases, dashboards, and process cleanup that save you hours and payroll. One person, real tools, no enterprise price tag.</p>
+    <div class="eyebrow">Software · systems · operations for small business</div>
+    <h1>The systems your business runs on — <span class="hl">designed, built, and shipped.</span></h1>
+    <p>Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites — the whole back office, built to fit how you actually work. Whether it's eleven spreadsheets held together by one person or a process that only lives in someone's head, I turn it into a real system. One person, modern tools, no enterprise price tag.</p>
     <div class="hero-cta">
       <a href="#contact" class="btn-pri">Book a free walkthrough</a>
       <a href="demo/" class="btn-sec">See a live demo →</a>
@@ -198,6 +212,88 @@
       <div class="scard"><div class="n">/ 04</div><h3>Websites &amp; web apps</h3><p>Fast, clean, custom-built sites and tools — not a bloated template. Made to do the one job your business needs done.</p></div>
       <div class="scard"><div class="n">/ 05</div><h3>SOPs &amp; documentation</h3><p>The processes and policies that live in someone's head, written down — so your business doesn't depend on any one person.</p></div>
       <div class="scard"><div class="n">/ 06</div><h3>Spreadsheet rescue</h3><p>Got a spreadsheet that's become a monster? I'll untangle it, fix it, or replace it with something that won't break when someone sneezes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- capabilities -->
+<section class="caps">
+  <div class="wrap reveal">
+    <div class="step">The full toolkit</div>
+    <h2>Everything I can build for your operation.</h2>
+    <p class="stxt">From the database underneath to the dashboard on top — plus the process, automation, analytics, and website around it. If it runs your business, it's on this list.</p>
+    <div class="capgrid">
+      <div class="capcard"><h3><span class="dot"></span>Databases &amp; Data</h3><ul>
+        <li><span class="ckg">✓</span>Custom database design &amp; build</li>
+        <li><span class="ckg">✓</span>One connected source of truth</li>
+        <li><span class="ckg">✓</span>Data cleanup &amp; migration</li>
+        <li><span class="ckg">✓</span>Spreadsheet rescue &amp; replacement</li>
+        <li><span class="ckg">✓</span>Inventory &amp; records systems</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>CRM &amp; Sales</h3><ul>
+        <li><span class="ckg">✓</span>CRM &amp; contact management</li>
+        <li><span class="ckg">✓</span>Pipeline &amp; deal tracking</li>
+        <li><span class="ckg">✓</span>Lead capture &amp; follow-up</li>
+        <li><span class="ckg">✓</span>Quotes, orders &amp; invoicing</li>
+        <li><span class="ckg">✓</span>Full customer history in one place</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>Dashboards &amp; Analytics</h3><ul>
+        <li><span class="ckg">✓</span>Live operations dashboards</li>
+        <li><span class="ckg">✓</span>KPI &amp; metric tracking</li>
+        <li><span class="ckg">✓</span>Graphs, charts &amp; statistics</li>
+        <li><span class="ckg">✓</span>Month-over-month &amp; year-over-year</li>
+        <li><span class="ckg">✓</span>Self-updating reports</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>Process &amp; Strategy</h3><ul>
+        <li><span class="ckg">✓</span>Policy &amp; procedure (SOP) development</li>
+        <li><span class="ckg">✓</span>Workflow strategy &amp; mapping</li>
+        <li><span class="ckg">✓</span>Onboarding &amp; implementation plans</li>
+        <li><span class="ckg">✓</span>Documentation that survives turnover</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>Scheduling &amp; Ops</h3><ul>
+        <li><span class="ckg">✓</span>Schedules &amp; calendars</li>
+        <li><span class="ckg">✓</span>Booking &amp; dispatch systems</li>
+        <li><span class="ckg">✓</span>Task &amp; assignment tracking</li>
+        <li><span class="ckg">✓</span>Territory &amp; route management</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>Automation</h3><ul>
+        <li><span class="ckg">✓</span>Automated invoicing &amp; billing</li>
+        <li><span class="ckg">✓</span>Recurring reports &amp; exports</li>
+        <li><span class="ckg">✓</span>Email &amp; notifications</li>
+        <li><span class="ckg">✓</span>Repetitive-task automation</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>Websites &amp; Web Apps</h3><ul>
+        <li><span class="ckg">✓</span>Custom websites &amp; landing pages</li>
+        <li><span class="ckg">✓</span>Web apps &amp; installable PWAs</li>
+        <li><span class="ckg">✓</span>Admin panels &amp; client portals</li>
+        <li><span class="ckg">✓</span>Fast, mobile-first builds</li>
+        <li><span class="ckg">✓</span>SEO-ready &amp; shareable</li>
+      </ul></div>
+      <div class="capcard"><h3><span class="dot"></span>Integrations &amp; Security</h3><ul>
+        <li><span class="ckg">✓</span>Payments (Stripe)</li>
+        <li><span class="ckg">✓</span>Email (Brevo / Resend)</li>
+        <li><span class="ckg">✓</span>Authentication &amp; access control</li>
+        <li><span class="ckg">✓</span>API &amp; third-party integrations</li>
+        <li><span class="ckg">✓</span>Role-based, RLS-hardened security</li>
+      </ul></div>
+    </div>
+
+    <div class="step" style="margin-top:56px">Tools I build with</div>
+    <h2 style="font-size:clamp(22px,3vw,30px)">A modern, production-grade stack.</h2>
+    <p class="stxt">The same tools used to ship real applications — not a page builder pretending to be software.</p>
+    <div class="tools-wrap">
+      <span class="tool"><b>Vercel</b></span>
+      <span class="tool"><b>Supabase</b></span>
+      <span class="tool"><b>PostgreSQL</b></span>
+      <span class="tool"><b>Stripe</b></span>
+      <span class="tool"><b>Brevo</b></span>
+      <span class="tool"><b>Resend</b></span>
+      <span class="tool"><b>Chart.js</b></span>
+      <span class="tool"><b>JavaScript</b></span>
+      <span class="tool"><b>GitHub</b></span>
+      <span class="tool"><b>Claude AI</b></span>
+      <span class="tool"><b>WordPress</b></span>
+      <span class="tool"><b>Elementor</b></span>
     </div>
   </div>
 </section>
@@ -281,7 +377,7 @@
   <div class="wrap reveal">
     <div class="step">Let's talk</div>
     <h2>Tell me where it hurts. The walkthrough's free.</h2>
-    <p>If your business runs on spreadsheets and late nights, send me a line about what's slowing you down. I'll tell you honestly whether I can help — no pitch, no pressure.</p>
+    <p>Whether it's spreadsheets and late nights, a process no one has written down, or a system you wish existed — send me a line about what's slowing you down. I'll tell you honestly whether I can help — no pitch, no pressure.</p>
     <div class="hero-cta">
       <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20-%20free%20walkthrough" class="btn-pri">Book a free walkthrough</a>
       <a href="demo/" class="btn-sec">See the live demo →</a>
