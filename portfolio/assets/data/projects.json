@@ -1,0 +1,98 @@
+[
+  {
+    "id": "systemsbyvega",
+    "name": "Systems by Vega",
+    "tagline": "Operations systems for small businesses",
+    "description": "Process, databases, and dashboards that get a business off spreadsheets. Includes a live, interactive demo console.",
+    "url": "https://systemsbyvega.com",
+    "thumb": "assets/img/systemsbyvega.png",
+    "category": "Commercial",
+    "tags": ["Dashboards", "Databases", "Process"],
+    "status": "Demo",
+    "featured": true
+  },
+  {
+    "id": "kingdom-creatives",
+    "name": "Kingdom Creatives",
+    "tagline": "Church digital services studio",
+    "description": "The parent studio — websites, media, and digital services for churches and faith-driven organizations.",
+    "url": "https://kingdom-creatives.com",
+    "thumb": "assets/img/kingdom-creatives.png",
+    "category": "Faith & Family",
+    "tags": ["Studio", "Web", "Faith"],
+    "status": "Live",
+    "featured": true
+  },
+  {
+    "id": "yourlifecc",
+    "name": "YourLife CC",
+    "tagline": "Faith & family progressive web app",
+    "description": "A faith & family PWA — installable, offline-capable, built to keep family life and faith in one place.",
+    "url": "https://yourlifecc.com",
+    "thumb": "assets/img/yourlifecc.png",
+    "category": "Faith & Family",
+    "tags": ["PWA", "Mobile", "Faith"],
+    "status": "Live",
+    "featured": false
+  },
+  {
+    "id": "faith-journey",
+    "name": "YourLife CC — Faith Journey",
+    "tagline": "A guided faith journey inside YourLife CC",
+    "description": "A guided, daily faith journey experience that lives inside the YourLife CC ecosystem.",
+    "url": "https://yourlifecc.com/faith",
+    "thumb": "assets/img/faith-journey.png",
+    "category": "Faith & Family",
+    "tags": ["Faith", "Content", "Daily"],
+    "status": "Live",
+    "featured": false
+  },
+  {
+    "id": "return",
+    "name": "Return",
+    "tagline": "Church inventory database",
+    "description": "Inventory system for our church — tracks stock for ordering, counting, and auditing.",
+    "url": "https://yourlifecc.com/return",
+    "thumb": "assets/img/return.png",
+    "category": "Faith & Family",
+    "tags": ["Inventory", "Database", "Church"],
+    "status": "Live",
+    "featured": false
+  },
+  {
+    "id": "legacy-vault",
+    "name": "Legacy Vault",
+    "tagline": "A secure vault for family legacy",
+    "description": "A private place to preserve family documents, memories, and legacy in one secure vault.",
+    "url": "https://yourlifecc.com/legacy-vault",
+    "thumb": "assets/img/legacy-vault.png",
+    "category": "Faith & Family",
+    "tags": ["Vault", "Family", "Storage"],
+    "status": "Live",
+    "featured": false
+  },
+  {
+    "id": "estatesalebiz",
+    "name": "Estate Sale Biz",
+    "tagline": "Estate sale business online",
+    "description": "Web presence and tooling for an estate-sale business — listings, scheduling, and a clean storefront.",
+    "url": "https://estatesalebiz.com",
+    "thumb": "assets/img/estatesalebiz.png",
+    "category": "Commercial",
+    "tags": ["Web", "Listings", "Small business"],
+    "status": "Live",
+    "featured": false
+  },
+  {
+    "id": "domvegz",
+    "name": "Dom Vegz",
+    "tagline": "EDM producer & DJ",
+    "description": "Music brand and site for Dom Vegz — EDM producer and DJ out of Nampa, Idaho.",
+    "url": "https://domvegz.com",
+    "thumb": "assets/img/domvegz.png",
+    "category": "Music & Creative",
+    "tags": ["Music", "Web", "Brand"],
+    "status": "Live",
+    "featured": false
+  }
+]

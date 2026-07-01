@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Portfolio Hub — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0F131A; --panel:#171C26; --panel-2:#1E2533; --hair:#2C3444;
+    --ink:#E8ECF2; --muted:#949EAE; --amber:#E8791B; --amber-deep:#C9620C;
+    --green:#1F9D63; --red:#D7504B; --blue:#5B8CFF;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:var(--amber)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+
+  /* top bar */
+  header{position:sticky;top:0;z-index:10;background:rgba(15,19,26,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:14px;height:60px}
+  .logo{font-family:'Archivo';font-weight:900;font-size:17px;letter-spacing:.2px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.5px}
+  .who{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .who img{width:26px;height:26px;border-radius:50%}
+
+  /* buttons */
+  button,.btn{font:inherit;font-weight:600;border:1px solid var(--hair);background:var(--panel-2);color:var(--ink);padding:9px 14px;border-radius:9px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+  button:hover,.btn:hover{border-color:var(--amber)}
+  .btn-pri{background:var(--amber);border-color:var(--amber);color:#1a1207}
+  .btn-pri:hover{background:var(--amber-deep);border-color:var(--amber-deep)}
+  .btn-pri:disabled{opacity:.5;cursor:not-allowed}
+  .btn-ghost{background:transparent}
+  .btn-danger:hover{border-color:var(--red);color:var(--red)}
+  .btn-sm{padding:6px 10px;font-size:13px;border-radius:8px}
+
+  /* login */
+  .login{max-width:560px;margin:7vh auto 0;background:var(--panel);border:1px solid var(--hair);border-radius:var(--radius);padding:30px}
+  .login h1{font-family:'Archivo';font-size:24px;margin-bottom:6px}
+  .login p{color:var(--muted);font-size:14px;margin-bottom:18px}
+  label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:14px 0 6px}
+  input[type=text],input[type=password],input[type=url],textarea,select{width:100%;background:var(--panel-2);border:1px solid var(--hair);color:var(--ink);border-radius:9px;padding:10px 12px;font:inherit}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--amber)}
+  textarea{resize:vertical;min-height:66px;line-height:1.5}
+  .row-check{display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--muted);font-size:13px}
+  .row-check input{width:auto}
+  details.help{margin-top:16px;border:1px solid var(--hair);border-radius:9px;padding:12px 14px;background:var(--panel-2)}
+  details.help summary{cursor:pointer;font-weight:600;font-size:13px}
+  details.help ol{margin:10px 0 0 18px;font-size:13px;color:var(--muted);line-height:1.8}
+  details.help code{background:#0c0f15;padding:1px 6px;border-radius:5px;font-family:'IBM Plex Mono';font-size:12px;color:var(--ink)}
+
+  /* editor */
+  .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0 10px}
+  .toolbar h2{font-family:'Archivo';font-size:20px}
+  .toolbar .right{display:flex;gap:8px;align-items:center}
+  .dirty{font-size:12px;color:var(--amber);font-weight:600}
+  .card{background:var(--panel);border:1px solid var(--hair);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+  .card.featured{border-left:3px solid var(--amber)}
+  .card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .card-head .title{font-weight:700;font-size:15px}
+  .card-head .ord{display:flex;gap:6px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid2 .full{grid-column:1/-1}
+  @media(max-width:620px){.grid2{grid-template-columns:1fr}}
+  .thumb-row{display:flex;align-items:center;gap:12px;margin-top:6px}
+  .thumb-prev{width:74px;height:48px;border-radius:7px;background:var(--panel-2);border:1px solid var(--hair);object-fit:cover;display:block;flex:none}
+  .thumb-prev.ph{display:grid;place-items:center;color:#3a4452;font-weight:800;font-size:18px;font-family:'Archivo'}
+  .hint{font-size:12px;color:var(--muted);margin-top:5px}
+
+  /* toast */
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);opacity:0;background:var(--panel-2);border:1px solid var(--hair);color:var(--ink);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;transition:.25s;pointer-events:none;z-index:50;max-width:90vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  #toast.ok{border-color:var(--green)} #toast.err{border-color:var(--red)}
+  .hidden{display:none!important}
+  .spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:var(--ink);border-radius:50%;display:inline-block;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .center-msg{text-align:center;color:var(--muted);padding:40px 0}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN VIEW ===================== -->
+<div id="loginView">
+  <div class="login">
+    <h1>Portfolio Hub — Admin</h1>
+    <p>Sign in with a GitHub token to edit your project cards and upload thumbnails. Changes commit straight to your live hub.</p>
+
+    <label for="tok">GitHub personal access token</label>
+    <input type="password" id="tok" placeholder="github_pat_… or ghp_…" autocomplete="off" spellcheck="false">
+
+    <div class="row-check">
+      <input type="checkbox" id="remember">
+      <label for="remember" style="margin:0;color:var(--muted)">Keep me signed in on this device</label>
+    </div>
+
+    <button class="btn-pri" id="signIn" style="margin-top:16px;width:100%;justify-content:center">Sign in</button>
+    <div id="loginErr" class="hint" style="color:var(--red);margin-top:10px"></div>
+
+    <details class="help">
+      <summary>How to create a token (1 min, do this once)</summary>
+      <ol>
+        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained tokens → Generate new</a>.</li>
+        <li><b>Resource owner:</b> JasonVega1974.</li>
+        <li><b>Repository access:</b> Only select repositories → <code>systemsbyvega</code>.</li>
+        <li><b>Permissions:</b> Repository permissions → <code>Contents</code> → <b>Read and write</b>.</li>
+        <li>Generate, copy the token, paste it above. It’s stored only in your browser — never shared.</li>
+      </ol>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== APP VIEW ===================== -->
+<div id="appView" class="hidden">
+  <header>
+    <div class="wrap bar">
+      <div class="logo">Portfolio Hub<small>ADMIN · systemsbyvega.com/portfolio</small></div>
+      <div class="who">
+        <a href="../" target="_blank" rel="noopener" class="btn btn-sm btn-ghost">View hub ↗</a>
+        <img id="meAvatar" alt="" hidden>
+        <span id="meName"></span>
+        <button class="btn-sm btn-ghost" id="signOut">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="toolbar">
+      <h2>Projects</h2>
+      <div class="right">
+        <span id="dirty" class="dirty hidden">● Unsaved changes</span>
+        <button class="btn-sm" id="addProject">+ Add project</button>
+        <button class="btn-pri btn-sm" id="saveAll" disabled>Save changes</button>
+      </div>
+    </div>
+    <div id="list"><div class="center-msg">Loading…</div></div>
+    <div style="height:40px"></div>
+  </div>
+</div>
+
+<datalist id="catList"></datalist>
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- config: which repo the hub data lives in ---------- */
+  var OWNER="JasonVega1974", REPO="systemsbyvega", BRANCH="main";
+  var DATA_PATH="portfolio/assets/data/projects.json", IMG_DIR="portfolio/assets/img";
+  var HUB_BASE="https://systemsbyvega.com/portfolio/";
+  var STATUSES=["Live","Demo","In progress"];
+  var API="https://api.github.com";
+
+  /* ---------- state ---------- */
+  var token=null, state=[], dataSha=null, dirty=false;
+
+  /* ---------- tiny helpers ---------- */
+  var $=function(s,r){return (r||document).querySelector(s)};
+  function b64encode(str){return btoa(unescape(encodeURIComponent(str)))}
+  function b64decode(b64){return decodeURIComponent(escape(atob(b64.replace(/\n/g,""))))}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
+  function slug(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}
+  function initials(n){return String(n||"?").replace(/[^A-Za-z0-9 ]/g,"").split(/\s+/).filter(Boolean).slice(0,2).map(function(w){return w[0].toUpperCase()}).join("")||"?"}
+
+  function toast(msg,kind){
+    var t=$("#toast"); t.textContent=msg; t.className="show "+(kind||"");
+    clearTimeout(toast._t); toast._t=setTimeout(function(){t.className=t.className.replace("show","").trim()},3200);
+  }
+
+  /* ---------- GitHub API wrapper ---------- */
+  function gh(path,opts){
+    opts=opts||{};
+    return fetch(API+path,{
+      method:opts.method||"GET",
+      headers:{
+        "Authorization":"Bearer "+token,
+        "Accept":"application/vnd.github+json",
+        "X-GitHub-Api-Version":"2022-11-28"
+      },
+      body:opts.body?JSON.stringify(opts.body):undefined
+    }).then(function(r){
+      if(r.status===204) return {};
+      return r.json().then(function(j){
+        if(!r.ok){ var e=new Error((j&&j.message)||("HTTP "+r.status)); e.status=r.status; throw e; }
+        return j;
+      });
+    });
+  }
+  function getContent(path){ return gh("/repos/"+OWNER+"/"+REPO+"/contents/"+path+"?ref="+BRANCH); }
+  function putContent(path,contentB64,message,sha){
+    var body={message:message,content:contentB64,branch:BRANCH};
+    if(sha) body.sha=sha;
+    return gh("/repos/"+OWNER+"/"+REPO+"/contents/"+path,{method:"PUT",body:body});
+  }
+
+  /* ---------- auth ---------- */
+  function storedToken(){ return sessionStorage.getItem("ghpat")||localStorage.getItem("ghpat"); }
+  function saveToken(t,remember){
+    (remember?localStorage:sessionStorage).setItem("ghpat",t);
+    (remember?sessionStorage:localStorage).removeItem("ghpat");
+  }
+  function clearToken(){ sessionStorage.removeItem("ghpat"); localStorage.removeItem("ghpat"); }
+
+  function signIn(t,remember){
+    token=t.trim();
+    if(!token){ $("#loginErr").textContent="Enter a token."; return; }
+    var btn=$("#signIn"); btn.disabled=true; btn.innerHTML='<span class="spin"></span> Checking…';
+    gh("/user").then(function(u){
+      saveToken(token,remember);
+      $("#meName").textContent=u.login;
+      if(u.avatar_url){ var a=$("#meAvatar"); a.src=u.avatar_url; a.hidden=false; }
+      $("#loginView").classList.add("hidden");
+      $("#appView").classList.remove("hidden");
+      loadData();
+    }).catch(function(e){
+      token=null;
+      $("#loginErr").textContent = e.status===401 ? "Invalid or expired token." : ("Sign-in failed: "+e.message);
+    }).then(function(){ btn.disabled=false; btn.textContent="Sign in"; });
+  }
+
+  /* ---------- load + render ---------- */
+  function loadData(){
+    $("#list").innerHTML='<div class="center-msg">Loading projects…</div>';
+    getContent(DATA_PATH).then(function(res){
+      dataSha=res.sha;
+      state=JSON.parse(b64decode(res.content));
+      setDirty(false);
+      render();
+    }).catch(function(e){
+      $("#list").innerHTML='<div class="center-msg" style="color:var(--red)">Couldn’t load data: '+esc(e.message)+
+        (e.status===404?"<br>(projects.json not found — check the repo path.)":"")+
+        (e.status===403?"<br>(Token lacks Contents write access to this repo.)":"")+"</div>";
+    });
+  }
+
+  function categories(){
+    var seen=[]; state.forEach(function(p){ if(p.category&&seen.indexOf(p.category)<0) seen.push(p.category); });
+    return seen;
+  }
+  function refreshCatList(){
+    $("#catList").innerHTML=categories().map(function(c){return '<option value="'+esc(c)+'">'}).join("");
+  }
+
+  function thumbURL(p){ return p.thumb ? (HUB_BASE+p.thumb+"?t="+Date.now()) : ""; }
+
+  function render(){
+    refreshCatList();
+    var list=$("#list");
+    if(!state.length){ list.innerHTML='<div class="center-msg">No projects yet. Click “+ Add project”.</div>'; return; }
+    list.innerHTML="";
+    state.forEach(function(p,i){ list.appendChild(cardEl(p,i)); });
+  }
+
+  function field(label,name,i,val,opts){
+    opts=opts||{};
+    var id="f_"+name+"_"+i;
+    var input;
+    if(opts.type==="textarea"){ input='<textarea id="'+id+'" data-i="'+i+'" data-k="'+name+'">'+esc(val)+'</textarea>'; }
+    else if(opts.type==="select"){
+      input='<select id="'+id+'" data-i="'+i+'" data-k="'+name+'">'+opts.options.map(function(o){
+        return '<option'+(o===val?' selected':'')+'>'+esc(o)+'</option>';}).join("")+'</select>';
+    } else {
+      input='<input type="'+(opts.type||"text")+'" id="'+id+'" data-i="'+i+'" data-k="'+name+'" value="'+esc(val)+'"'+
+        (opts.list?' list="'+opts.list+'"':'')+(opts.ph?' placeholder="'+esc(opts.ph)+'"':'')+'>';
+    }
+    return '<div'+(opts.full?' class="full"':'')+'><label for="'+id+'">'+esc(label)+'</label>'+input+'</div>';
+  }
+
+  function cardEl(p,i){
+    var d=document.createElement("div");
+    d.className="card"+(p.featured?" featured":"");
+    var tImg = p.thumb
+      ? '<img class="thumb-prev" id="prev_'+i+'" src="'+thumbURL(p)+'" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),{className:\'thumb-prev ph\',textContent:\''+initials(p.name)+'\'}))">'
+      : '<div class="thumb-prev ph">'+initials(p.name)+'</div>';
+    d.innerHTML=
+      '<div class="card-head">'+
+        '<div class="title">'+esc(p.name||"(untitled)")+'</div>'+
+        '<div class="ord">'+
+          '<button class="btn-sm btn-ghost" data-act="up" data-i="'+i+'" title="Move up">↑</button>'+
+          '<button class="btn-sm btn-ghost" data-act="down" data-i="'+i+'" title="Move down">↓</button>'+
+          '<button class="btn-sm btn-danger" data-act="del" data-i="'+i+'">Delete</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="grid2">'+
+        field("Name","name",i,p.name)+
+        field("Tagline","tagline",i,p.tagline)+
+        field("Category","category",i,p.category,{list:"catList"})+
+        field("Status","status",i,STATUSES.indexOf(p.status)>=0?p.status:"Live",{type:"select",options:STATUSES})+
+        field("Link (URL)","url",i,p.url,{type:"url",full:true,ph:"https://…"})+
+        field("Tags (comma-separated)","_tags",i,(p.tags||[]).join(", "),{full:true,ph:"Web, Database, Faith"})+
+        field("Description","description",i,p.description,{type:"textarea",full:true})+
+        '<div class="full"><label>Thumbnail</label><div class="thumb-row">'+
+          tImg+
+          '<div>'+
+            '<button class="btn-sm" data-act="upload" data-i="'+i+'">Upload photo…</button>'+
+            '<input type="file" accept="image/*" class="hidden" id="file_'+i+'" data-i="'+i+'">'+
+            '<div class="hint" id="thint_'+i+'">'+(p.thumb?esc(p.thumb):"No image — a letter tile shows on the card.")+'</div>'+
+          '</div>'+
+        '</div></div>'+
+        '<div class="row-check full"><input type="checkbox" id="feat_'+i+'" data-i="'+i+'" data-k="featured"'+(p.featured?" checked":"")+'><label for="feat_'+i+'" style="margin:0">Featured (shows larger, first)</label></div>'+
+      '</div>';
+    return d;
+  }
+
+  /* ---------- editing ---------- */
+  function setDirty(v){
+    dirty=v;
+    $("#dirty").classList.toggle("hidden",!v);
+    $("#saveAll").disabled=!v;
+  }
+
+  // delegated input/change for fields
+  document.addEventListener("input",function(e){
+    var el=e.target, i=el.getAttribute("data-i"), k=el.getAttribute("data-k");
+    if(i==null) return;
+    i=+i;
+    if(k==="featured"){ state[i].featured=el.checked; setDirty(true); return; }
+    if(!k) return;
+    if(k==="_tags"){ state[i].tags=el.value.split(",").map(function(s){return s.trim()}).filter(Boolean); }
+    else { state[i][k]=el.value; }
+    setDirty(true);
+  });
+  document.addEventListener("change",function(e){
+    var el=e.target;
+    if(el.tagName==="SELECT"&&el.getAttribute("data-k")){ var i=+el.getAttribute("data-i"); state[i][el.getAttribute("data-k")]=el.value; setDirty(true); }
+    if(el.type==="file"&&el.id&&el.id.indexOf("file_")===0){ handleFile(+el.getAttribute("data-i"),el.files[0]); }
+  });
+
+  // delegated button clicks
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    var act=b.getAttribute("data-act"); if(!act) return;
+    var i=+b.getAttribute("data-i");
+    if(act==="up"&&i>0){ state.splice(i-1,0,state.splice(i,1)[0]); setDirty(true); render(); }
+    else if(act==="down"&&i<state.length-1){ state.splice(i+1,0,state.splice(i,1)[0]); setDirty(true); render(); }
+    else if(act==="del"){ if(confirm("Delete “"+(state[i].name||"this project")+"” from the hub?")){ state.splice(i,1); setDirty(true); render(); } }
+    else if(act==="upload"){ $("#file_"+i).click(); }
+  });
+
+  $("#addProject").addEventListener("click",function(){
+    state.unshift({id:"new-"+Date.now(),name:"New Project",tagline:"",description:"",url:"https://",thumb:"",category:(categories()[0]||"Commercial"),tags:[],status:"In progress",featured:false});
+    setDirty(true); render(); window.scrollTo({top:0,behavior:"smooth"});
+  });
+
+  /* ---------- image upload ---------- */
+  function handleFile(i,file){
+    if(!file) return;
+    if(file.size>5*1024*1024){ toast("Image too large (max ~5 MB). Optimize it first.","err"); return; }
+    var p=state[i];
+    var ext=(file.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"")||"png";
+    var base=slug(p.id||p.name||("project-"+i))||("project-"+i);
+    var path=IMG_DIR+"/"+base+"."+ext;
+    var hint=$("#thint_"+i); hint.innerHTML='<span class="spin"></span> Uploading…';
+    var reader=new FileReader();
+    reader.onload=function(){
+      var b64=String(reader.result).split(",")[1];
+      // need existing sha if file already there
+      getContent(path).then(function(r){return r.sha;}).catch(function(e){ if(e.status===404) return null; throw e; })
+      .then(function(sha){ return putContent(path,b64,"Upload thumbnail: "+path,sha); })
+      .then(function(){
+        p.thumb=path; setDirty(true);
+        hint.innerHTML=esc(path)+' <span style="color:var(--green)">✓ uploaded</span>';
+        var prev=$("#prev_"+i);
+        var img=new Image(); img.className="thumb-prev"; img.id="prev_"+i; img.src=String(reader.result);
+        if(prev) prev.replaceWith(img);
+        toast("Photo uploaded — remember to Save changes.","ok");
+      })
+      .catch(function(e){ hint.innerHTML='<span style="color:var(--red)">Upload failed: '+esc(e.message)+'</span>'; toast("Upload failed: "+e.message,"err"); });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---------- save ---------- */
+  $("#saveAll").addEventListener("click",function(){
+    // light validation
+    for(var i=0;i<state.length;i++){ if(!state[i].name||!state[i].name.trim()){ toast("Project #"+(i+1)+" needs a name.","err"); return; }
+      if(!state[i].id||!state[i].id.trim()) state[i].id=slug(state[i].name)||("project-"+i); }
+    var btn=$("#saveAll"); btn.disabled=true; btn.innerHTML='<span class="spin"></span> Saving…';
+    var json=JSON.stringify(state,null,2)+"\n";
+    putContent(DATA_PATH,b64encode(json),"Update projects via admin",dataSha).then(function(res){
+      dataSha=res.content.sha; setDirty(false);
+      btn.innerHTML="Save changes";
+      toast("Saved ✓ Live in ~1 minute.","ok");
+      render();
+    }).catch(function(e){
+      btn.disabled=false; btn.innerHTML="Save changes";
+      if(e.status===409){ toast("Conflict — the data changed elsewhere. Reload and redo.","err"); }
+      else { toast("Save failed: "+e.message,"err"); }
+    });
+  });
+
+  /* ---------- wire login ---------- */
+  $("#signIn").addEventListener("click",function(){ signIn($("#tok").value,$("#remember").checked); });
+  $("#tok").addEventListener("keydown",function(e){ if(e.key==="Enter") signIn($("#tok").value,$("#remember").checked); });
+  $("#signOut").addEventListener("click",function(){
+    if(dirty&&!confirm("You have unsaved changes. Sign out anyway?")) return;
+    clearToken(); location.reload();
+  });
+  window.addEventListener("beforeunload",function(e){ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+
+  // auto sign-in if token stored
+  var st=storedToken();
+  if(st){ $("#remember").checked=!!localStorage.getItem("ghpat"); signIn(st,!!localStorage.getItem("ghpat")); }
+})();
+</script>
+</body>
+</html>
