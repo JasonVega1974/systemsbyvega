@@ -620,7 +620,7 @@ var drawerReopen=null;
 function openDrawer(html){killCharts('d_');var d=$('#drawer');d.innerHTML=html;d.classList.add('open');$('#overlay').classList.add('open');d.setAttribute('aria-hidden','false');d.scrollTop=0}
 function closeDrawer(){$('#drawer').classList.remove('open');$('#overlay').classList.remove('open');$('#drawer').setAttribute('aria-hidden','true');killCharts('d_');drawerReopen=null}
 $('#overlay').addEventListener('click',closeDrawer);
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawer()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDrawer();closeModal()}});
 function dwHead(eyebrow,title,sub){return '<div class="dw-head"><div><div class="eyebrow">'+esc(eyebrow)+'</div><h2>'+esc(title)+'</h2>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div><button class="dw-close" onclick="closeDrawer()">✕</button></div>'}
 function miniKpi(l,v){return '<div class="mini-kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div></div>'}
 
@@ -1448,10 +1448,9 @@ definePage('scheduling',
   '<div class="page-head"><div><h1>Scheduling</h1><p>Weekly crew shift schedule — week of Jul 13.</p></div><div class="tools"><button class="btn btn-sm btn-pri" id="schedPub">Publish schedule</button></div></div>'+
   '<div class="kpi-row" id="schedKpis"></div><div class="panel"><div class="sched" id="schedGrid"></div></div>',
   function(){
-    var crew=EMPLOYEES.filter(function(e){return e.dept!=='Dispatch'});
     var totalShifts=0,oncall=0;
     var rows=EMPLOYEES.map(function(e){var cells=SDAYS.map(function(_,di){var s=shiftFor(e,di)[0];if(s!=='Off')totalShifts++;if(s==='On-call')oncall++;return s});return {e:e,cells:cells}});
-    $('#schedKpis').innerHTML=[kpi('','Crew Scheduled',EMPLOYEES.length,'this week')+'',kpi('a','On-call Slots',oncall,'coverage'),kpi('g','Total Shifts',totalShifts,'assigned'),kpi('p','Coverage','100%','all days')].join('');
+    $('#schedKpis').innerHTML=[kpi('','Crew Scheduled',EMPLOYEES.length,'this week'),kpi('a','On-call Slots',oncall,'coverage'),kpi('g','Total Shifts',totalShifts,'assigned'),kpi('p','Coverage','100%','all days')].join('');
     $('#schedGrid').innerHTML='<table><thead><tr><th class="emp">Employee</th>'+SDAYS.map(function(d){return '<th>'+d+'</th>'}).join('')+'</tr></thead><tbody>'+
       rows.map(function(r){return '<tr><td class="emp"><b>'+esc(r.e.name)+'</b><div style="font-size:10.5px;color:var(--faint)">'+r.e.dept+'</div></td>'+r.cells.map(function(s){return '<td>'+(s==='Off'?'<span class="shift off">Off</span>':s==='On-call'?'<span class="shift oncall">On-call</span>':'<span class="shift">'+s+'</span>')+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
     $('#schedPub').onclick=function(){pushNotif('📅','Schedule published','Week of Jul 13 sent to '+EMPLOYEES.length+' crew');toast('Schedule published to crew','ok')};
@@ -1551,7 +1550,7 @@ function finNewInvoice(){
   openModal('<div class="modal-head"><h3>New Invoice</h3><button class="x" onclick="closeModal()">✕</button></div>'+
     '<div class="modal-body"><label>Client</label><input class="field" id="fiClient" placeholder="Client name"><label>Amount ($)</label><input class="field" type="number" id="fiAmt" value="0"><label>Status</label><select class="field" id="fiStatus"><option value="draft">Draft</option><option value="sent">Sent</option><option value="paid">Paid</option></select></div>'+
     '<div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="fiSave">Create invoice</button></div>');
-  $('#fiSave').onclick=function(){var cl=$('#fiClient').value.trim();if(!cl){toast('Client required','err');return}var id='INV-'+(1043+INVOICES.length);INVOICES.unshift({id:id,client:cl,amount:+$('#fiAmt').value||0,status:$('#fiStatus').value,date:'Jul 01',due:'Jul 31'});closeModal();finRender('Invoices');pushNotif('🧾','Invoice '+id+' created',cl+' · '+money(+$('#fiAmt').value||0));toast('Invoice '+id+' created','ok')};
+  $('#fiSave').onclick=function(){var cl=$('#fiClient').value.trim();if(!cl){toast('Client required','err');return}var amt=+$('#fiAmt').value||0;var id='INV-'+(1043+INVOICES.length);INVOICES.unshift({id:id,client:cl,amount:amt,status:$('#fiStatus').value,date:'Jul 01',due:'Jul 31'});closeModal();finStatusFilter='';finRender('Invoices');pushNotif('🧾','Invoice '+id+' created',cl+' · '+money(amt));toast('Invoice '+id+' created','ok')};
 }
 
 /* ============================================================
@@ -1575,18 +1574,18 @@ function invRender(){
   $('#invKpis').innerHTML=[kpi('','SKUs',INVENTORY.length,'tracked'),kpi('r','Low Stock',low,'need reorder'),kpi('g','Stock Value',money(val),'on hand'),kpi('p','Categories',INV_CATS.length,'')].join('');
   var q=invSearch.toLowerCase();
   var rows=INVENTORY.filter(function(x){var hay=(x.sku+' '+x.name+' '+x.loc).toLowerCase();return (!q||hay.indexOf(q)>=0)&&(!invCat||x.cat===invCat)});
-  $('#invBody').innerHTML=rows.map(function(x){var lowf=x.qty<=x.reorder;return '<tr class="clickable" data-sku="'+x.sku+'"><td class="mono">'+x.sku+'</td><td><b>'+esc(x.name)+'</b></td><td>'+x.cat+'</td><td class="num">'+x.qty+(lowf?' <span class="pill risk">reorder</span>':'')+'</td><td class="num">'+x.reorder+'</td><td class="num">'+money(x.cost)+'</td><td>'+x.loc+'</td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:18px">No items.</td></tr>';
+  $('#invBody').innerHTML=rows.map(function(x){var lowf=x.qty<=x.reorder;return '<tr class="clickable" data-sku="'+x.sku+'"><td class="mono">'+x.sku+'</td><td><b>'+esc(x.name)+'</b></td><td>'+x.cat+'</td><td class="num">'+x.qty+(lowf?' <span class="pill risk">reorder</span>':'')+'</td><td class="num">'+x.reorder+'</td><td class="num">'+money(x.cost)+'</td><td>'+esc(x.loc)+'</td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:18px">No items.</td></tr>';
   $$('#invBody tr[data-sku]').forEach(function(tr){tr.onclick=function(){invEdit(tr.dataset.sku)}});
 }
 function invAddItem(){
   openModal('<div class="modal-head"><h3>Add Inventory Item</h3><button class="x" onclick="closeModal()">✕</button></div>'+
     '<div class="modal-body"><label>Item name</label><input class="field" id="mName" placeholder="e.g. Blower Motor"><label>Category</label><select class="field" id="mCat">'+INV_CATS.map(function(cat){return '<option>'+cat+'</option>'}).join('')+'</select><label>Quantity on hand</label><input class="field" type="number" id="mQty" value="0"><label>Reorder at</label><input class="field" type="number" id="mReorder" value="10"><label>Unit cost ($)</label><input class="field" type="number" id="mCost" value="0"><label>Location</label><input class="field" id="mLoc" value="Warehouse A"></div>'+
     '<div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="mSave">Add item</button></div>');
-  $('#mSave').onclick=function(){var name=$('#mName').value.trim();if(!name){toast('Name required','err');return}var cat=$('#mCat').value;var sku=cat.slice(0,2).toUpperCase()+'-'+(7000+Math.floor(Math.random()*999));var qty=+$('#mQty').value||0,ro=+$('#mReorder').value||0;INVENTORY.unshift({sku:sku,name:name,cat:cat,qty:qty,reorder:ro,cost:+$('#mCost').value||0,loc:$('#mLoc').value||'Warehouse A'});closeModal();invRender();toast('Added '+name+' ('+sku+')','ok');if(qty<=ro)pushNotif('⚠️','Low stock: '+name,sku+' · '+qty+' on hand')};
+  $('#mSave').onclick=function(){var name=$('#mName').value.trim();if(!name){toast('Name required','err');return}var cat=$('#mCat').value;var sku=cat.slice(0,2).toUpperCase()+'-'+(7000+Math.floor(Math.random()*999));var qty=+$('#mQty').value||0,ro=+$('#mReorder').value||0;INVENTORY.unshift({sku:sku,name:name,cat:cat,qty:qty,reorder:ro,cost:+$('#mCost').value||0,loc:$('#mLoc').value||'Warehouse A'});closeModal();invSearch='';invCat='';if($('#invSearch'))$('#invSearch').value='';if($('#invCatSel'))$('#invCatSel').value='';invRender();toast('Added '+name+' ('+sku+')','ok');if(qty<=ro)pushNotif('⚠️','Low stock: '+name,sku+' · '+qty+' on hand')};
 }
 function invEdit(sku){var x=INVENTORY.filter(function(i){return i.sku===sku})[0];if(!x)return;
   openModal('<div class="modal-head"><h3>'+esc(x.name)+'</h3><button class="x" onclick="closeModal()">✕</button></div>'+
-    '<div class="modal-body"><dl class="dl"><dt>SKU</dt><dd class="mono">'+x.sku+'</dd><dt>Category</dt><dd>'+x.cat+'</dd><dt>Location</dt><dd>'+x.loc+'</dd><dt>Unit cost</dt><dd>'+money(x.cost)+'</dd></dl><label>Adjust quantity on hand</label><input class="field" type="number" id="eQty" value="'+x.qty+'"></div>'+
+    '<div class="modal-body"><dl class="dl"><dt>SKU</dt><dd class="mono">'+x.sku+'</dd><dt>Category</dt><dd>'+x.cat+'</dd><dt>Location</dt><dd>'+esc(x.loc)+'</dd><dt>Unit cost</dt><dd>'+money(x.cost)+'</dd></dl><label>Adjust quantity on hand</label><input class="field" type="number" id="eQty" value="'+x.qty+'"></div>'+
     '<div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="eSave">Save</button></div>');
   $('#eSave').onclick=function(){x.qty=+$('#eQty').value||0;closeModal();invRender();toast('Updated '+x.name,'ok')};
 }
@@ -1599,7 +1598,7 @@ definePage('policies',
   '<div class="page-head"><div><h1>Policies &amp; SOPs</h1><p>The playbook — click a document to read it.</p></div></div>'+
   '<div class="subtabs" id="sopTabs"></div><div class="course-grid" id="sopGrid"></div>',
   function(){
-    $('#sopTabs').innerHTML='<div class="subtab active" data-c="">All</div>'+SOP_CATS.map(function(cat){return '<div class="subtab" data-c="'+cat+'">'+cat+'</div>'}).join('');
+    $('#sopTabs').innerHTML=[['','All']].concat(SOP_CATS.map(function(cc){return [cc,cc]})).map(function(p){return '<div class="subtab '+(p[0]===sopCat?'active':'')+'" data-c="'+p[0]+'">'+p[1]+'</div>'}).join('');
     $$('#sopTabs .subtab').forEach(function(tb){tb.onclick=function(){sopCat=tb.dataset.c;$$('#sopTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.c===sopCat)});sopRender()}});
     sopRender();
   });
@@ -1620,15 +1619,17 @@ definePage('documents',
   function(){
     var dz=$('#dz');
     dz.onclick=function(){addDoc('Uploaded File '+(DOCS.length+1)+'.pdf','PDF',(80+Math.floor(Math.random()*900))+' KB')};
+    if(!dz.dataset.wired){
     dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag')});
     dz.addEventListener('dragleave',function(){dz.classList.remove('drag')});
     dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag');var n=(e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files.length)||1;for(var i=0;i<n;i++){var ff=e.dataTransfer.files[i];addDoc(ff?ff.name:'Dropped File.pdf',ff?(ff.name.split('.').pop()||'FILE').toUpperCase().slice(0,3):'PDF',ff?Math.round(ff.size/1024)+' KB':'120 KB')}});
+    dz.dataset.wired='1';}
     $('#docSearch').value=docSearch;$('#docSearch').oninput=function(){docSearch=this.value;docRender()};
     docRender();
   });
 function addDoc(name,type,size){DOCS.unshift({name:name,type:type,size:size,by:'Jason V.',date:'Jul 01'});docRender();pushNotif('📄','File uploaded',name);toast('Uploaded '+name,'ok')}
 function docRender(){var q=docSearch.toLowerCase();var rows=DOCS.filter(function(d){return !q||d.name.toLowerCase().indexOf(q)>=0});
-  $('#docList').innerHTML=rows.map(function(d){return '<div class="filerow"><span class="fileic">'+d.type+'</span><div style="flex:1"><div style="font-weight:600;font-size:13px">'+esc(d.name)+'</div><div style="font-size:11.5px;color:var(--faint)">'+d.size+' · '+d.by+' · '+d.date+'</div></div><button class="btn btn-sm" onclick="toast(\'Download started (demo)\',\'ok\')">Download</button></div>'}).join('')||'<div style="text-align:center;color:var(--muted);padding:18px">No files.</div>';
+  $('#docList').innerHTML=rows.map(function(d){return '<div class="filerow"><span class="fileic">'+esc(d.type)+'</span><div style="flex:1"><div style="font-weight:600;font-size:13px">'+esc(d.name)+'</div><div style="font-size:11.5px;color:var(--faint)">'+d.size+' · '+d.by+' · '+d.date+'</div></div><button class="btn btn-sm" onclick="toast(\'Download started (demo)\',\'ok\')">Download</button></div>'}).join('')||'<div style="text-align:center;color:var(--muted);padding:18px">No files.</div>';
 }
 
 /* ============================================================
