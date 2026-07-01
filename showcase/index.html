@@ -1485,29 +1485,85 @@ var PTO=[
   {emp:"Tara Vale",type:"Vacation",dates:"Aug 04–08",days:5,status:"new"},
   {emp:"Lena Park",type:"Personal",dates:"Jul 30",days:1,status:"quoted"}
 ];
-var hrTab='Directory';
+var PUNCHES=[
+  {emp:"Marcus Bell",date:"Jul 01",tin:"6:58a",tout:"3:12p",hours:8.2,status:"complete"},
+  {emp:"Priya Anand",date:"Jul 01",tin:"7:02a",tout:"—",hours:0,status:"active"},
+  {emp:"Owen Fields",date:"Jul 01",tin:"7:15a",tout:"—",hours:0,status:"active"},
+  {emp:"Dana Whitfield",date:"Jul 01",tin:"6:45a",tout:"4:05p",hours:9.3,status:"complete"},
+  {emp:"Lena Park",date:"Jul 01",tin:"8:01a",tout:"—",hours:0,status:"active"},
+  {emp:"Devon Cross",date:"Jul 01",tin:"7:22a",tout:"3:30p",hours:8.1,status:"complete"},
+  {emp:"Ruth Gaines",date:"Jun 30",tin:"7:00a",tout:"5:10p",hours:10.2,status:"complete"},
+  {emp:"Gil Ortiz",date:"Jun 30",tin:"7:30a",tout:"3:45p",hours:8.0,status:"complete"}
+];
+var BENEFITS=[
+  {plan:"Medical — PPO",carrier:"Anchor Health",cost:120,covers:"Employee + Family",status:"Enrolled"},
+  {plan:"Dental",carrier:"BrightSmile",cost:18,covers:"Employee + Family",status:"Enrolled"},
+  {plan:"Vision",carrier:"ClearView",cost:6,covers:"Employee",status:"Enrolled"},
+  {plan:"401(k) Retirement",carrier:"Summit Retirement",cost:0,covers:"6% company match",status:"Enrolled"},
+  {plan:"Life Insurance",carrier:"Beacon Life",cost:0,covers:"1× annual salary",status:"Enrolled"},
+  {plan:"HSA",carrier:"HealthVault",cost:0,covers:"$1,200 employer seed",status:"Eligible"}
+];
+function salaryFor(e){return ({"Lead Technician":78000,"Senior Technician":68000,"Technician":58000,"Apprentice":44000,"Dispatcher":52000})[e.role]||56000}
+function paystub(e){var annual=salaryFor(e),gross=annual/26;return {annual:annual,gross:gross,reg:gross*0.85,ot:gross*0.15,fed:gross*0.12,state:gross*0.04,ss:gross*0.062,med:gross*0.0145,k401:gross*0.06,medical:115,periods:13}}
+function d0(n){return '$'+Math.round(n).toLocaleString()}
+
+var hrTab='Directory',clockedIn=false,payEmp='E-01';
 definePage('hr',
-  '<div class="page-head"><div><h1>HR & Admin</h1><p>Directory, time off, and onboarding.</p></div></div>'+
+  '<div class="page-head"><div><h1>HR &amp; Admin</h1><p>Directory, time clock, PTO, benefits, and payroll.</p></div></div>'+
   '<div class="kpi-row" id="hrKpis"></div>'+
-  '<div class="subtabs" id="hrTabs">'+['Directory','Time Off','Onboarding'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div><div id="hrContent"></div>',
+  '<div class="subtabs" id="hrTabs">'+['Directory','Time Clock','Time Off','Benefits','Payroll','Onboarding'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div><div id="hrContent"></div>',
   function(){
-    var tenure=(2026-EMPLOYEES.reduce(function(a,e){return a+e.hired},0)/EMPLOYEES.length).toFixed(1);
+    var tenure=(2026-EMPLOYEES.reduce(function(a,x){return a+x.hired},0)/EMPLOYEES.length).toFixed(1);
     $('#hrKpis').innerHTML=[kpi('','Headcount',EMPLOYEES.length,'active'),kpi('a','Open Roles','3','recruiting'),kpi('g','Avg Tenure',tenure+' yrs','crew'),kpi('p','Retention','92%','12-mo')].join('');
     $$('#hrTabs .subtab').forEach(function(tb){tb.onclick=function(){hrRender(tb.dataset.t)}});hrRender(hrTab);
   });
 function hrRender(tab){hrTab=tab;$$('#hrTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.t===tab)});var c=$('#hrContent');
   if(tab==='Directory'){
     c.innerHTML='<div class="table-scroll"><table><thead><tr><th>Employee</th><th>Role</th><th>Dept</th><th>Hired</th><th>Rating</th></tr></thead><tbody>'+
-      EMPLOYEES.map(function(e){return '<tr class="clickable" data-id="'+e.id+'"><td><b>'+esc(e.name)+'</b></td><td>'+e.role+'</td><td>'+e.dept+'</td><td class="num">'+e.hired+'</td><td class="num">'+e.rating+' ★</td></tr>'}).join('')+'</tbody></table></div>';
+      EMPLOYEES.map(function(x){return '<tr class="clickable" data-id="'+x.id+'"><td><b>'+esc(x.name)+'</b></td><td>'+x.role+'</td><td>'+x.dept+'</td><td class="num">'+x.hired+'</td><td class="num">'+x.rating+' ★</td></tr>'}).join('')+'</tbody></table></div>';
     $$('#hrContent tr[data-id]').forEach(function(tr){tr.onclick=function(){openEmployee(tr.dataset.id)}});
+  } else if(tab==='Time Clock'){
+    var onclock=PUNCHES.filter(function(p){return p.status==='active'}).length;
+    var hoursToday=PUNCHES.filter(function(p){return p.date==='Jul 01'}).reduce(function(a,p){return a+p.hours},0);
+    var ot=PUNCHES.filter(function(p){return p.hours>8.5}).length;
+    c.innerHTML='<div class="kpi-row">'+kpi('g','On the Clock',onclock,'right now')+kpi('','Hours Today',hoursToday.toFixed(1),'logged')+kpi('a','Overtime Shifts',ot,'over 8.5h')+kpi('p','Punches',PUNCHES.length,'this period')+'</div>'+
+      '<div class="panel"><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><div style="width:11px;height:11px;border-radius:50%;background:'+(clockedIn?'var(--green)':'var(--faint)')+'"></div><div><div style="font-size:12px;color:var(--muted)">You · Jason V. · Field Supervisor</div><div style="font-family:Barlow Condensed;font-weight:800;font-size:22px" id="clockStatus">'+(clockedIn?'On the clock':'Clocked out')+'</div></div><button class="btn btn-sm '+(clockedIn?'':'btn-pri')+'" id="clockBtn" style="margin-left:auto">'+(clockedIn?'■ Clock out':'▶ Clock in')+'</button></div></div>'+
+      '<div class="panel"><div class="panel-head"><h3>Recent Punches</h3></div><div class="table-scroll"><table><thead><tr><th>Employee</th><th>Date</th><th>Clock in</th><th>Clock out</th><th>Hours</th><th>Status</th></tr></thead><tbody>'+
+      PUNCHES.map(function(p){return '<tr><td><b>'+esc(p.emp)+'</b></td><td>'+p.date+'</td><td class="mono">'+p.tin+'</td><td class="mono">'+p.tout+'</td><td class="num">'+(p.hours?p.hours.toFixed(1)+(p.hours>8.5?' <span class="pill med">OT</span>':''):'—')+'</td><td><span class="pill '+(p.status==='active'?'onboarding':'done')+'">'+(p.status==='active'?'On clock':'Complete')+'</span></td></tr>'}).join('')+'</tbody></table></div></div>';
+    $('#clockBtn').onclick=function(){clockedIn=!clockedIn;if(!clockedIn){PUNCHES.unshift({emp:"Jason V.",date:"Jul 01",tin:"9:00a",tout:"5:30p",hours:8.5,status:"complete"});pushNotif('⏱️','Shift complete','Jason V. · 8.5 hrs logged');toast('Clocked out — 8.5 hrs','ok')}else{toast('Clocked in','ok')}hrRender('Time Clock')};
   } else if(tab==='Time Off'){
-    c.innerHTML='<div class="table-scroll"><table><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th></tr></thead><tbody>'+
-      PTO.map(function(p,i){return '<tr><td><b>'+esc(p.emp)+'</b></td><td>'+p.type+'</td><td>'+p.dates+'</td><td class="num">'+p.days+'</td><td><select class="field pto-st" data-i="'+i+'" style="padding:5px 8px;font-size:12px"><option value="new"'+(p.status==='new'?' selected':'')+'>Requested</option><option value="quoted"'+(p.status==='quoted'?' selected':'')+'>Pending</option><option value="won"'+(p.status==='won'?' selected':'')+'>Approved</option><option value="lost"'+(p.status==='lost'?' selected':'')+'>Denied</option></select></td></tr>'}).join('')+'</tbody></table></div>';
-    $$('#hrContent .pto-st').forEach(function(sel){sel.onchange=function(){PTO[+sel.dataset.i].status=sel.value;toast('Time-off updated','ok')}});
+    c.innerHTML='<div class="panel"><div class="panel-head"><h3>PTO Balances</h3><span class="hint">accrued · used · available (days)</span></div><div class="table-scroll"><table><thead><tr><th>Employee</th><th>Accrued</th><th>Used</th><th>Available</th><th></th></tr></thead><tbody>'+
+      EMPLOYEES.slice(0,8).map(function(x){var used=Math.max(0,15-x.pto);return '<tr><td><b>'+esc(x.name)+'</b></td><td class="num">15</td><td class="num">'+used+'</td><td class="num" style="color:var(--green)">'+x.pto+'</td><td style="width:130px"><div class="lb-bar"><i style="width:'+Math.round(x.pto/15*100)+'%"></i></div></td></tr>'}).join('')+'</tbody></table></div></div>'+
+      '<div class="panel"><div class="panel-head"><h3>Requests</h3><button class="btn btn-sm btn-pri" id="ptoNew">+ Request Time Off</button></div><div class="table-scroll"><table><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th></tr></thead><tbody id="ptoBody"></tbody></table></div></div>';
+    var pr=function(){$('#ptoBody').innerHTML=PTO.map(function(p,i){return '<tr><td><b>'+esc(p.emp)+'</b></td><td>'+p.type+'</td><td>'+p.dates+'</td><td class="num">'+p.days+'</td><td><select class="field pto-st" data-i="'+i+'" style="padding:5px 8px;font-size:12px"><option value="new"'+(p.status==='new'?' selected':'')+'>Requested</option><option value="quoted"'+(p.status==='quoted'?' selected':'')+'>Pending</option><option value="won"'+(p.status==='won'?' selected':'')+'>Approved</option><option value="lost"'+(p.status==='lost'?' selected':'')+'>Denied</option></select></td></tr>'}).join('');$$('#ptoBody .pto-st').forEach(function(sel){sel.onchange=function(){PTO[+sel.dataset.i].status=sel.value;toast('Time-off updated','ok')}})};
+    $('#ptoNew').onclick=function(){openModal('<div class="modal-head"><h3>Request Time Off</h3><button class="x" onclick="closeModal()">✕</button></div><div class="modal-body"><label>Employee</label><select class="field" id="poEmp">'+EMPLOYEES.map(function(x){return '<option>'+esc(x.name)+'</option>'}).join('')+'</select><label>Type</label><select class="field" id="poType"><option>Vacation</option><option>Personal</option><option>Sick</option></select><label>Dates</label><input class="field" id="poDates" placeholder="e.g. Aug 12–14"><label>Days</label><input class="field" type="number" id="poDays" value="1"></div><div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="poSave">Submit request</button></div>');$('#poSave').onclick=function(){var emp=$('#poEmp').value,dates=$('#poDates').value||'TBD',days=+$('#poDays').value||1,type=$('#poType').value;PTO.unshift({emp:emp,type:type,dates:dates,days:days,status:'new'});closeModal();pr();pushNotif('🏖️','Time-off request',emp+' · '+type+' · '+days+'d');toast('Request submitted','ok')}};
+    pr();
+  } else if(tab==='Benefits'){
+    var enrolled=BENEFITS.filter(function(b){return b.status==='Enrolled'}).length;
+    var empCost=BENEFITS.reduce(function(a,b){return a+b.cost},0);
+    c.innerHTML='<div class="kpi-row">'+kpi('g','Enrollment','92%','of eligible')+kpi('','Plans Offered',BENEFITS.length,'benefits')+kpi('a','Your Cost',d0(empCost)+'/mo','pre-tax')+kpi('p','Employer Contribution','$640/mo','avg per employee')+'</div>'+
+      '<div class="capgrid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">'+BENEFITS.map(function(b){return '<div class="capcard"><h3><span class="dot" style="background:'+(b.status==='Enrolled'?'var(--green)':'var(--amber)')+'"></span>'+esc(b.plan)+'</h3><dl class="dl" style="margin:4px 0"><dt>Carrier</dt><dd>'+esc(b.carrier)+'</dd><dt>Coverage</dt><dd>'+esc(b.covers)+'</dd><dt>Your cost</dt><dd>'+(b.cost?d0(b.cost)+'/mo':'$0')+'</dd></dl><span class="cbadge '+(b.status==='Enrolled'?'done':'prog')+'">'+b.status+'</span></div>'}).join('')+'</div>';
+  } else if(tab==='Payroll'){
+    var e=empById(payEmp)||EMPLOYEES[0];var p=paystub(e);
+    var row=function(label,cur,ytd,bold){return '<tr'+(bold?' style="font-weight:700"':'')+'><td>'+label+'</td><td class="num" style="text-align:right">'+d0(cur)+'</td><td class="num" style="text-align:right;color:var(--muted)">'+d0(ytd)+'</td></tr>'};
+    c.innerHTML='<div class="toolbar"><label style="color:var(--muted);font-size:12px;font-weight:600;align-self:center">Employee</label><select class="field" id="payEmpSel">'+EMPLOYEES.map(function(x){return '<option value="'+x.id+'"'+(x.id===payEmp?' selected':'')+'>'+esc(x.name)+' · '+x.role+'</option>'}).join('')+'</select><span style="margin-left:auto;display:flex;gap:8px"><button class="btn btn-sm" onclick="toast(\'Downloading paystub PDF (demo)\',\'ok\')">⭳ Paystub PDF</button><button class="btn btn-sm" onclick="toast(\'Downloading W-2 (demo)\',\'ok\')">⭳ W-2</button></span></div>'+
+      '<div class="grid-2e"><div class="panel"><div class="panel-head"><h3>Paystub</h3><span class="hint">bi-weekly · pay date Jul 03</span></div>'+
+        '<div class="table-scroll"><table><thead><tr><th>Description</th><th style="text-align:right">Current</th><th style="text-align:right">YTD</th></tr></thead><tbody>'+
+        '<tr style="color:var(--muted)"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px">Earnings</td></tr>'+
+        row('Regular',p.reg,p.reg*p.periods)+row('Overtime',p.ot,p.ot*p.periods)+row('Gross pay',p.gross,p.gross*p.periods,true)+
+        '<tr style="color:var(--muted)"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px">Deductions</td></tr>'+
+        row('Federal tax',p.fed,p.fed*p.periods)+row('State tax',p.state,p.state*p.periods)+row('Social Security',p.ss,p.ss*p.periods)+row('Medicare',p.med,p.med*p.periods)+row('401(k)',p.k401,p.k401*p.periods)+row('Medical',p.medical,p.medical*p.periods)+
+        '<tr style="font-weight:800;border-top:2px solid var(--hair)"><td>Net pay</td><td class="num" style="text-align:right;color:var(--green)">'+d0(p.gross-p.fed-p.state-p.ss-p.med-p.k401-p.medical)+'</td><td class="num" style="text-align:right;color:var(--muted)">'+d0((p.gross-p.fed-p.state-p.ss-p.med-p.k401-p.medical)*p.periods)+'</td></tr>'+
+        '</tbody></table></div></div>'+
+      '<div class="panel"><div class="panel-head"><h3>Form W-2 · 2025</h3><span class="hint">wage &amp; tax statement</span></div>'+
+        '<div class="table-scroll"><table><tbody>'+
+        [['Box 1 — Wages, tips','#88'],['Box 2 — Federal income tax','#89'],['Box 3 — Social Security wages','#90'],['Box 4 — Social Security tax','#91'],['Box 5 — Medicare wages','#92'],['Box 6 — Medicare tax','#93'],['Box 16 — State wages','#94'],['Box 17 — State income tax','#95']].map(function(b,bi){var vals=[p.annual*0.94,p.annual*0.12,p.annual,p.annual*0.062,p.annual,p.annual*0.0145,p.annual,p.annual*0.04];return '<tr><td>'+b[0]+'</td><td class="num" style="text-align:right">'+d0(vals[bi])+'</td></tr>'}).join('')+
+        '</tbody></table></div><p style="font-size:11.5px;color:var(--faint);margin-top:10px">Employer: Northwind Field Services · EIN 00-0000000 (sample). Figures illustrative.</p></div></div>';
+    $('#payEmpSel').onchange=function(){payEmp=this.value;hrRender('Payroll')};
   } else {
     var steps=[["Offer accepted",true],["Paperwork & I-9",true],["Equipment issued",true],["Safety training",false],["Ride-along week",false],["30-day check-in",false]];
     c.innerHTML='<div class="panel"><div class="panel-head"><h3>New Hire · Jamie Foster (Plumbing)</h3><span class="hint">onboarding checklist</span></div>'+
-      steps.map(function(s){return '<div class="check"><span class="q">'+(s[1]?'✓ ':'○ ')+s[0]+'</span><span class="pill '+(s[1]?'done':'todo')+'">'+(s[1]?'Done':'Open')+'</span></div>'}).join('')+'</div>';
+      steps.map(function(st){return '<div class="check"><span class="q">'+(st[1]?'✓ ':'○ ')+st[0]+'</span><span class="pill '+(st[1]?'done':'todo')+'">'+(st[1]?'Done':'Open')+'</span></div>'}).join('')+'</div>';
   }
 }
 
