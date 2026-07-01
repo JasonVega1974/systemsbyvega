@@ -32,8 +32,16 @@
   .nav-in{max-width:1080px;margin:0 auto;padding:14px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .logo{display:flex;align-items:center;gap:10px;font-family:'Archivo';font-weight:800;font-size:16px;color:#fff;letter-spacing:-.01em}
   .logo .sq{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--con-amber),var(--amber-deep));display:grid;place-items:center;color:#1a1206;font-size:13px;font-weight:900;font-family:'Archivo'}
+  .nav-links{display:flex;align-items:center;gap:8px}
+  .nav a.nav-tab{font-family:'Archivo';font-weight:700;font-size:13.5px;text-decoration:none;color:#C2CAD6;padding:9px 14px;border-radius:7px;transition:.18s;white-space:nowrap}
+  .nav a.nav-tab:hover{color:#fff;background:rgba(255,255,255,.07)}
   .nav a.cta{font-family:'Archivo';font-weight:700;font-size:13.5px;text-decoration:none;color:#1a1206;background:var(--con-amber);padding:9px 17px;border-radius:7px;transition:.18s;white-space:nowrap}
   .nav a.cta:hover{background:#fff;transform:translateY(-1px)}
+  @media(max-width:640px){
+    .nav-in{flex-wrap:wrap;gap:10px}
+    .nav-links{gap:4px;flex-wrap:wrap}
+    .nav a.nav-tab{padding:8px 10px;font-size:12.5px}
+  }
 
   /* hero */
   .hero{background:var(--con);color:var(--con-text);padding:88px 0 92px;position:relative;overflow:hidden}
@@ -164,7 +172,11 @@
 <nav class="nav">
   <div class="nav-in">
     <div class="logo"><span class="sq">V</span> Systems by Vega</div>
-    <a href="#contact" class="cta">Book a free walkthrough</a>
+    <div class="nav-links">
+      <a href="https://systemsbyvega.com/showcase/" class="nav-tab">Sample Database</a>
+      <a href="/portfolio/" class="nav-tab">My Work</a>
+      <a href="#contact" class="cta">Book a free walkthrough</a>
+    </div>
   </div>
 </nav>
 
