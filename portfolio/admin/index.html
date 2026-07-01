@@ -361,7 +361,7 @@
       getContent(path).then(function(r){return r.sha;}).catch(function(e){ if(e.status===404) return null; throw e; })
       .then(function(sha){ return putContent(path,b64,"Upload thumbnail: "+path,sha); })
       .then(function(){
-        p.thumb=path; setDirty(true);
+        p.thumb=path.replace(/^portfolio\//,""); setDirty(true);
         hint.innerHTML=esc(path)+' <span style="color:var(--green)">✓ uploaded</span>';
         var prev=$("#prev_"+i);
         var img=new Image(); img.className="thumb-prev"; img.id="prev_"+i; img.src=String(reader.result);
