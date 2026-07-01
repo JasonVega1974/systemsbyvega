@@ -288,6 +288,60 @@
   .sbadge{font-family:var(--mono);font-size:11.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--hair);background:var(--surface-2);color:var(--muted)}
   .sbadge b{color:var(--text)}
 
+  /* schedule */
+  .sched{overflow-x:auto;border:1px solid var(--hair);border-radius:11px}
+  .sched table{min-width:820px}.sched th,.sched td{text-align:center;white-space:nowrap}
+  .sched td.emp,.sched th.emp{text-align:left;position:sticky;left:0;background:var(--surface-2);z-index:1;min-width:150px}
+  .shift{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;background:color-mix(in srgb,var(--cyan) 15%,transparent);color:var(--cyan)}
+  .shift.off{background:var(--surface-3);color:var(--faint)}.shift.oncall{background:color-mix(in srgb,var(--amber) 15%,transparent);color:var(--amber)}
+  /* leaderboard */
+  .lb-row{display:flex;align-items:center;gap:13px;padding:12px 14px;border:1px solid var(--hair);border-radius:11px;margin-bottom:9px;background:var(--surface);cursor:pointer;transition:.13s}
+  .lb-row:hover{border-color:var(--cyan)}
+  .lb-rank{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:800;font-size:16px;background:var(--surface-3);color:var(--muted);flex:none}
+  .lb-rank.g1{background:rgba(255,215,0,.16);color:#FFD700}.lb-rank.g2{background:rgba(192,192,192,.18);color:#C0C0C0}.lb-rank.g3{background:rgba(205,127,50,.18);color:#CD7F32}
+  .lb-bar{flex:1;height:8px;border-radius:5px;background:var(--surface-3);overflow:hidden;min-width:80px}.lb-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--green))}
+  /* dropzone + files */
+  .dropzone{border:2px dashed var(--hair-2);border-radius:12px;padding:34px;text-align:center;color:var(--muted);cursor:pointer;transition:.15s}
+  .dropzone:hover,.dropzone.drag{border-color:var(--cyan);background:color-mix(in srgb,var(--cyan) 6%,transparent);color:var(--text)}
+  .filerow{display:flex;align-items:center;gap:12px;padding:11px 13px;border-bottom:1px solid var(--hair)}
+  .fileic{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:700;font-family:'DM Mono';flex:none;background:var(--surface-3);color:var(--sky)}
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:14px}
+  .gtile{aspect-ratio:4/5;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;font-size:34px}
+  .gtile:hover{transform:translateY(-2px)}
+  .gtile .gmeta{position:absolute;left:0;right:0;bottom:0;padding:9px 11px;background:linear-gradient(transparent,rgba(0,0,0,.68));color:#fff;font-size:11.5px;font-weight:600}
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:var(--overlay);backdrop-filter:blur(2px);z-index:70;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--bg-2);border:1px solid var(--hair);border-radius:14px;width:min(460px,96vw);max-height:90vh;overflow-y:auto;box-shadow:var(--shadow)}
+  .modal-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--hair)}
+  .modal-head h3{font-size:18px}.modal-head .x{margin-left:auto;cursor:pointer;color:var(--muted);font-size:16px;background:none;border:none}
+  .modal-body{padding:16px 18px}
+  .modal-body label{display:block;font-size:12px;color:var(--muted);font-weight:600;margin:11px 0 5px}
+  .modal-body input,.modal-body select{width:100%}
+  .modal-foot{padding:14px 18px;border-top:1px solid var(--hair);display:flex;gap:8px;justify-content:flex-end}
+  /* notifications */
+  .bell{position:relative}
+  .bell .nbadge{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--red);color:#fff;font-size:9px;font-weight:700;display:none;place-items:center;padding:0 3px}
+  .bell .nbadge.show{display:grid}
+  .ndrop{position:fixed;top:52px;right:14px;width:min(360px,94vw);max-height:70vh;overflow-y:auto;background:var(--bg-2);border:1px solid var(--hair);border-radius:13px;box-shadow:var(--shadow);z-index:75;display:none}
+  .ndrop.open{display:block}
+  .ndrop .nh{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--hair);font-weight:700;position:sticky;top:0;background:var(--bg-2)}
+  .ndrop .nh button{background:none;border:none;color:var(--cyan);cursor:pointer;font:inherit;font-size:12px;font-weight:600}
+  .nitem{display:flex;gap:11px;padding:12px 15px;border-bottom:1px solid var(--hair);cursor:pointer}
+  .nitem:hover{background:var(--surface-2)}.nitem.unread{background:color-mix(in srgb,var(--cyan) 6%,transparent)}
+  .nitem .nic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;background:var(--surface-3);font-size:14px}
+  .nitem .nt{font-size:13px;font-weight:600}.nitem .nd{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .nitem time{margin-left:auto;font-size:10.5px;color:var(--faint);font-family:var(--mono);white-space:nowrap}
+  /* scorecard */
+  .score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:14px}
+  .scard2{background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:15px 16px}
+  .scard2 .sh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .scard2 .snm{font-size:12.5px;color:var(--muted);font-weight:600}
+  .scard2 .sv{font-family:'Barlow Condensed';font-weight:800;font-size:26px;margin:6px 0 2px}
+  .rag{width:9px;height:9px;border-radius:50%;flex:none}.rag.g{background:var(--green)}.rag.a{background:var(--amber)}.rag.r{background:var(--red)}
+  .scard2 .starg{font-size:11px;color:var(--faint)}
+  .spark2{margin-top:8px}
   .foot{margin-top:26px;padding:16px 18px;border:1px dashed var(--hair);border-radius:12px;color:var(--muted);font-size:12.5px;line-height:1.7}
   .foot b{color:var(--text)}.foot a{font-weight:600}
   @media(max-width:820px){:root{--sidebar:0px}.sidebar{display:none}main{margin-left:0;padding:16px}}
@@ -300,6 +354,7 @@
   <span class="demo-pill">● DEMO · fictional data</span>
   <div class="top-right">
     <div class="period">Period <select id="periodSel"><option>Last 12 months</option><option>Year to date</option><option>This quarter</option></select></div>
+    <button class="icon-btn bell" id="bellBtn" title="Notifications"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="nbadge" id="nbadge"></span></button>
     <button class="icon-btn" id="themeBtn" title="Toggle theme"></button>
     <a class="back-link" href="/portfolio/">← Portfolio</a>
     <div class="user"><span class="avatar">JV</span><span>Jason V.</span></div>
@@ -312,6 +367,8 @@
 
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<div class="modal-bg" id="modalBg"></div>
+<div class="ndrop" id="ndrop"></div>
 <div id="toast"></div>
 
 <script>
@@ -353,7 +410,16 @@ var ICONS={
   users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/>',
   route:'<circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M9 19h5a4 4 0 0 0 4-4V8"/>',
   code:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'
+  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  gauge:'<path d="M3 13a9 9 0 0 1 18 0"/><path d="M12 13l4-3"/><circle cx="12" cy="13" r="1.6"/>',
+  star:'<polygon points="12 2 15 9 22 9.3 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.3 9 9"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  award:'<circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/>',
+  dollar:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  box:'<path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v9"/>',
+  book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+  mega:'<path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/>'
 };
 function ic(n){return '<svg viewBox="0 0 24 24">'+(ICONS[n]||'')+'</svg>'}
 
@@ -506,11 +572,13 @@ var NET_SAV=VENDORS.reduce(function(a,v){return a+v.sav},0);
    NAV + ROUTING
    ============================================================ */
 var NAV=[
-  ["OVERVIEW",[["dashboard","Dashboard","grid",""],["territory","Territory Map","map",""]]],
-  ["SALES & CRM",[["crm","CRM & Sales","users",""],["pipeline","Contract Onboarding","flow",""]]],
-  ["OPERATIONS",[["sites","Locations","db",""],["tasks","Implementation","check",""],["visits","Job-Site Visits","clip",""],["calendar","Calendar","cal",""]]],
-  ["ANALYTICS",[["vendors","Supplier ROI","tag",""],["calc","Revenue Calculator","calc",""],["process","Process Flow","route",""]]],
-  ["ENABLEMENT",[["training","Training Academy","cap",""]]],
+  ["OVERVIEW",[["dashboard","Dashboard","grid",""],["kpi","KPI Scorecard","gauge",""],["territory","Territory Map","map",""]]],
+  ["SALES & CRM",[["crm","CRM & Sales","users",""],["pipeline","Contract Onboarding","flow",""],["marketing","Marketing","mega",""]]],
+  ["OPERATIONS",[["sites","Locations","db",""],["tasks","Implementation","check",""],["scheduling","Scheduling","clock",""],["visits","Job-Site Visits","clip",""],["calendar","Calendar","cal",""]]],
+  ["WORKFORCE",[["team","Team & Productivity","award",""],["hr","HR & Admin","users",""]]],
+  ["FINANCE",[["finance","Invoicing & Accounting","dollar",""],["vendors","Supplier ROI","tag",""],["calc","Job Margin Calc","calc",""]]],
+  ["INVENTORY & DOCS",[["inventory","Inventory","box",""],["policies","Policies & SOPs","book",""],["documents","Documents","file",""],["training","Training Academy","cap",""]]],
+  ["INSIGHTS",[["process","Process Flow","route",""]]],
   ["DEVELOPER",[["devtools","Developer Tools","code",""]]]
 ];
 $('#nav').innerHTML=NAV.map(function(g){
@@ -1195,6 +1263,373 @@ definePage('devtools',
     $$('#flagList .switch').forEach(function(sw){sw.onclick=function(){sw.classList.toggle('on');var f={};try{f=JSON.parse(localStorage.getItem('nw_flags')||'{}')}catch(e){}f[sw.dataset.f]=sw.classList.contains('on');try{localStorage.setItem('nw_flags',JSON.stringify(f))}catch(e){}toast('Flag '+(sw.classList.contains('on')?'enabled':'disabled')+' (demo)','ok')}});
     $('#pg-devtools').dataset.built='1';
   });
+
+/* ============================================================
+   MODALS + NOTIFICATIONS
+   ============================================================ */
+function openModal(html){$('#modalBg').innerHTML='<div class="modal">'+html+'</div>';$('#modalBg').classList.add('open')}
+function closeModal(){$('#modalBg').classList.remove('open');$('#modalBg').innerHTML=''}
+$('#modalBg').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+var NOTIFS=[
+  {ic:'💰',t:'Invoice INV-1042 paid',d:'Delgado Property Group · $8,400',time:'12m',read:false},
+  {ic:'📅',t:'Schedule published',d:'Week of Jul 13 sent to 12 crew',time:'1h',read:false},
+  {ic:'⚠️',t:'Low stock: Condenser Fan Motor',d:'HV-2201 · 8 left (reorder at 10)',time:'2h',read:false},
+  {ic:'🧾',t:'Invoice INV-1039 overdue',d:'Foster Manufacturing · 6 days',time:'3h',read:false},
+  {ic:'⭐',t:'New 5-star review',d:'Brookside Apartments',time:'5h',read:true},
+  {ic:'👤',t:'New-hire onboarding started',d:'Jamie Foster · Plumbing',time:'1d',read:true},
+  {ic:'📈',t:'Monthly revenue target met',d:'$437K vs $420K goal',time:'1d',read:true}
+];
+function nUnread(){return NOTIFS.filter(function(n){return !n.read}).length}
+function renderBadge(){var b=$('#nbadge'),u=nUnread();b.textContent=u;b.classList.toggle('show',u>0)}
+function renderNotifs(){
+  $('#ndrop').innerHTML='<div class="nh">Notifications <button id="markRead">Mark all read</button></div>'+
+    NOTIFS.map(function(n,i){return '<div class="nitem '+(n.read?'':'unread')+'" data-i="'+i+'"><span class="nic">'+n.ic+'</span><div><div class="nt">'+esc(n.t)+'</div><div class="nd">'+esc(n.d)+'</div></div><time>'+n.time+'</time></div>'}).join('');
+  $('#markRead').onclick=function(){NOTIFS.forEach(function(n){n.read=true});renderBadge();renderNotifs()};
+  $$('#ndrop .nitem').forEach(function(el){el.onclick=function(){NOTIFS[+el.dataset.i].read=true;renderBadge();renderNotifs()}});
+}
+function pushNotif(ic,t,d){NOTIFS.unshift({ic:ic,t:t,d:d,time:'now',read:false});renderBadge()}
+$('#bellBtn').addEventListener('click',function(e){e.stopPropagation();var d=$('#ndrop');if(d.classList.toggle('open'))renderNotifs()});
+document.addEventListener('click',function(e){if(!e.target.closest('#ndrop')&&!e.target.closest('#bellBtn'))$('#ndrop').classList.remove('open')});
+renderBadge();
+
+/* ============================================================
+   WORKFORCE DATA
+   ============================================================ */
+var DEPTS=["HVAC","Plumbing","Electrical","Facilities","Dispatch"];
+var EMPLOYEES=[
+  {id:"E-01",name:"Marcus Bell",role:"Lead Technician",dept:"HVAC",hired:2019,jobs:148,rating:4.9,util:94,rev:318,pto:6},
+  {id:"E-02",name:"Priya Anand",role:"Senior Technician",dept:"Electrical",hired:2020,jobs:136,rating:4.8,util:91,rev:296,pto:9},
+  {id:"E-03",name:"Owen Fields",role:"Technician",dept:"Plumbing",hired:2021,jobs:122,rating:4.6,util:88,rev:241,pto:4},
+  {id:"E-04",name:"Dana Whitfield",role:"Lead Technician",dept:"HVAC",hired:2018,jobs:141,rating:4.7,util:90,rev:305,pto:11},
+  {id:"E-05",name:"Joel Ramsey",role:"Technician",dept:"Facilities",hired:2022,jobs:98,rating:4.5,util:84,rev:188,pto:7},
+  {id:"E-06",name:"Lena Park",role:"Senior Technician",dept:"Electrical",hired:2020,jobs:129,rating:4.8,util:92,rev:274,pto:5},
+  {id:"E-07",name:"Tara Vale",role:"Technician",dept:"Plumbing",hired:2023,jobs:87,rating:4.4,util:82,rev:164,pto:3},
+  {id:"E-08",name:"Devon Cross",role:"Technician",dept:"HVAC",hired:2021,jobs:114,rating:4.6,util:87,rev:229,pto:8},
+  {id:"E-09",name:"Hana Ito",role:"Dispatcher",dept:"Dispatch",hired:2019,jobs:0,rating:4.9,util:96,rev:0,pto:6},
+  {id:"E-10",name:"Gil Ortiz",role:"Technician",dept:"Facilities",hired:2022,jobs:103,rating:4.5,util:85,rev:197,pto:5},
+  {id:"E-11",name:"Ruth Gaines",role:"Senior Technician",dept:"HVAC",hired:2019,jobs:133,rating:4.7,util:89,rev:281,pto:10},
+  {id:"E-12",name:"Sam Rivera",role:"Apprentice",dept:"Electrical",hired:2024,jobs:61,rating:4.3,util:78,rev:98,pto:2}
+];
+function empScore(e){return Math.round(e.jobs*0.5+e.rating*10+e.util*0.7)}
+function empById(id){return EMPLOYEES.filter(function(x){return x.id===id})[0]}
+function openEmployee(id){var e=empById(id);if(!e)return;
+  openDrawer(dwHead('Team · '+e.dept,e.name,e.role+' · since '+e.hired)+
+   '<div class="dw-body"><div class="mini-kpis">'+miniKpi('Prod. score',empScore(e))+miniKpi('Rating',e.rating+' ★')+miniKpi('Utilization',e.util+'%')+miniKpi('Jobs',e.jobs)+'</div>'+
+   '<dl class="dl"><dt>Department</dt><dd>'+e.dept+'</dd><dt>Role</dt><dd>'+e.role+'</dd><dt>Hired</dt><dd>'+e.hired+'</dd><dt>Revenue (yr)</dt><dd>'+(e.rev?k(e.rev):'—')+'</dd><dt>PTO balance</dt><dd>'+e.pto+' days</dd></dl>'+
+   '<div class="sec-title">Performance</div><p style="color:var(--muted);font-size:13px">'+e.name.split(" ")[0]+' ranks in the '+(empScore(e)>210?'top tier':'mid tier')+' with a '+e.rating+'★ customer rating and '+e.util+'% utilization.</p></div>');
+}
+
+var SDAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+function shiftFor(e,di){var r=seed(e.id+'d'+di)();if(e.dept==='Dispatch')return di<5?['7a-3p']:['Off'];if(di===6)return r<0.7?['Off']:['On-call'];if(di===5)return r<0.5?['Off']:['8a-2p'];return r<0.12?['Off']:r<0.22?['On-call']:r<0.6?['7a-3p']:['9a-5p']}
+
+/* ============================================================
+   FINANCE / INVENTORY / MARKETING / SOP / DOC / KPI DATA
+   ============================================================ */
+var INVOICES=[
+  {id:"INV-1042",client:"Delgado Property Group",amount:8400,status:"paid",date:"Jun 12",due:"Jul 12"},
+  {id:"INV-1041",client:"Vaughn Auto Group",amount:22800,status:"paid",date:"Jun 10",due:"Jul 10"},
+  {id:"INV-1040",client:"Brookside Apartments",amount:18400,status:"sent",date:"Jun 18",due:"Jul 18"},
+  {id:"INV-1039",client:"Foster Manufacturing",amount:31200,status:"overdue",date:"May 28",due:"Jun 27"},
+  {id:"INV-1038",client:"Willis Church Campus",amount:19700,status:"paid",date:"Jun 05",due:"Jul 05"},
+  {id:"INV-1037",client:"Kim Medical Plaza",amount:14900,status:"sent",date:"Jun 20",due:"Jul 20"},
+  {id:"INV-1036",client:"Salas Restaurant Group",amount:12600,status:"overdue",date:"May 30",due:"Jun 29"},
+  {id:"INV-1035",client:"Pratt Logistics",amount:27500,status:"draft",date:"Jun 22",due:"Jul 22"},
+  {id:"INV-1034",client:"Cedar Ridge HOA",amount:6200,status:"paid",date:"Jun 08",due:"Jul 08"},
+  {id:"INV-1033",client:"Lopez Retail Centers",amount:16800,status:"sent",date:"Jun 19",due:"Jul 19"}
+];
+var INV_ST={paid:"done",sent:"onboarding",overdue:"risk",draft:"todo"};
+var FIN_EXP=SALES_TY.map(function(v){return Math.round(v*0.68)});
+
+var INV_CATS=["HVAC","Plumbing","Electrical","Tools","Safety"];
+var INVENTORY=[
+  {sku:"HV-2201",name:"Condenser Fan Motor",cat:"HVAC",qty:8,reorder:10,cost:118,loc:"Warehouse A"},
+  {sku:"HV-2210",name:"Capacitor 45/5 MFD",cat:"HVAC",qty:64,reorder:25,cost:14,loc:"Warehouse A"},
+  {sku:"PL-3301",name:"1/2in Copper Pipe (10ft)",cat:"Plumbing",qty:120,reorder:40,cost:22,loc:"Warehouse B"},
+  {sku:"PL-3320",name:"Wax Ring Kit",cat:"Plumbing",qty:9,reorder:15,cost:6,loc:"Van Stock"},
+  {sku:"EL-4402",name:"12-2 Romex (250ft)",cat:"Electrical",qty:31,reorder:12,cost:89,loc:"Warehouse B"},
+  {sku:"EL-4410",name:"20A GFCI Outlet",cat:"Electrical",qty:78,reorder:30,cost:17,loc:"Warehouse A"},
+  {sku:"TL-5501",name:"Cordless Drill Kit",cat:"Tools",qty:14,reorder:6,cost:189,loc:"Tool Crib"},
+  {sku:"SF-6601",name:"Safety Glasses (12pk)",cat:"Safety",qty:5,reorder:8,cost:34,loc:"Van Stock"},
+  {sku:"SF-6610",name:"Work Gloves (L)",cat:"Safety",qty:42,reorder:20,cost:9,loc:"Warehouse A"},
+  {sku:"HV-2230",name:"Refrigerant R-410A (25lb)",cat:"HVAC",qty:11,reorder:8,cost:210,loc:"Warehouse A"}
+];
+
+var CAMPAIGNS=[
+  {name:"Spring Tune-Up Promo",channel:"Email",status:"Active",leads:142,cost:1200,roi:4.2},
+  {name:"Google Local Services",channel:"Search",status:"Active",leads:210,cost:3400,roi:3.6},
+  {name:"Facebook Retargeting",channel:"Social",status:"Active",leads:96,cost:900,roi:2.8},
+  {name:"Neighborhood Direct Mail",channel:"Print",status:"Paused",leads:54,cost:1600,roi:1.9},
+  {name:"Referral Rewards",channel:"Referral",status:"Active",leads:88,cost:600,roi:6.1},
+  {name:"Summer AC Bundle",channel:"Email",status:"Scheduled",leads:0,cost:800,roi:0}
+];
+var ASSETS=[["Spring Promo Flyer","🖼️","linear-gradient(135deg,#00C8FF,#38BDF8)"],["Summer Social Post","📱","linear-gradient(135deg,#00D68F,#0891B2)"],["Truck Wrap Design","🚚","linear-gradient(135deg,#A78BFA,#7C3AED)"],["Email Header","✉️","linear-gradient(135deg,#FFC13D,#FF7A45)"],["Yard Sign","🪧","linear-gradient(135deg,#FF4757,#FF7A45)"],["Logo Pack","⭐","linear-gradient(135deg,#38BDF8,#A78BFA)"],["Brochure","📄","linear-gradient(135deg,#00D68F,#00C8FF)"],["Google Banner","🔍","linear-gradient(135deg,#FF7A45,#FFC13D)"]];
+var MKT_PLAN=[["Q1","Brand refresh & new website","Launch referral program","SEO foundation"],["Q2","Spring tune-up campaign","Google Local Services ads","Review-generation push"],["Q3","Summer AC bundle","Neighborhood direct mail","Social retargeting"],["Q4","Maintenance-plan drive","Holiday goodwill campaign","2027 planning"]];
+
+var SOP_CATS=["Safety","Operations","HR","Customer","Compliance"];
+var SOPS=[
+  {cat:"Safety",title:"Job-Site Safety Protocol",body:"PPE requirements, hazard assessment, lockout/tagout, and incident reporting for every job site."},
+  {cat:"Safety",title:"Vehicle & Equipment Inspection",body:"Daily pre-trip inspection checklist for service vehicles, ladders, and lifts."},
+  {cat:"Operations",title:"Dispatch & Scheduling SOP",body:"How jobs are triaged, assigned, and routed; on-call rotation and emergency escalation."},
+  {cat:"Operations",title:"Job Close-Out Procedure",body:"Scope verification, customer walkthrough, photo documentation, and invoicing handoff."},
+  {cat:"HR",title:"Time-Off Request Policy",body:"How to request PTO, approval workflow, blackout periods, and accrual rules."},
+  {cat:"HR",title:"New-Hire Onboarding",body:"Paperwork, equipment issue, safety training, and 30/60/90 day check-ins."},
+  {cat:"Customer",title:"Service Standards",body:"Arrival windows, communication expectations, and the satisfaction-guarantee policy."},
+  {cat:"Customer",title:"Complaint Resolution",body:"Escalation path, make-it-right authority limits, and follow-up requirements."},
+  {cat:"Compliance",title:"Licensing & Permits",body:"Trade license renewals, permit pull process, and inspection scheduling."},
+  {cat:"Compliance",title:"Data & Privacy Policy",body:"How customer data is stored, accessed, and retained across systems."}
+];
+var DOCS=[
+  {name:"Service Agreement Template.pdf",type:"PDF",size:"240 KB",by:"Alex Rivera",date:"Jun 20"},
+  {name:"Q2 Safety Report.xlsx",type:"XLS",size:"88 KB",by:"Dana Whitfield",date:"Jun 18"},
+  {name:"Brand Guidelines.pdf",type:"PDF",size:"3.1 MB",by:"Morgan Diaz",date:"Jun 12"},
+  {name:"Crew Handbook 2026.docx",type:"DOC",size:"512 KB",by:"HR",date:"Jun 05"},
+  {name:"Warehouse Layout.png",type:"IMG",size:"1.4 MB",by:"Sam Carter",date:"May 30"},
+  {name:"Insurance Certificate.pdf",type:"PDF",size:"196 KB",by:"Admin",date:"May 22"}
+];
+var KPIS=[
+  {n:"Monthly Revenue",a:437,t:420,u:"$K",lb:false},{n:"Jobs Completed",a:1240,t:1200,u:"",lb:false},
+  {n:"First-Time Fix Rate",a:88,t:90,u:"%",lb:false},{n:"Avg Response Time",a:42,t:45,u:"m",lb:true},
+  {n:"Customer Satisfaction",a:4.7,t:4.5,u:"/5",lb:false},{n:"Technician Utilization",a:86,t:85,u:"%",lb:false},
+  {n:"Overdue Invoices",a:2,t:3,u:"",lb:true},{n:"Employee Retention",a:92,t:90,u:"%",lb:false},
+  {n:"Avg Ticket",a:512,t:480,u:"$",lb:false},{n:"Callback Rate",a:3.1,t:4,u:"%",lb:true}
+];
+function kMeets(k){return k.lb?k.a<=k.t:k.a>=k.t}
+function kNear(k){return Math.abs(k.a-k.t)/k.t<=0.06}
+function kFmt(v,k){return k.u==='$K'?'$'+v+'K':k.u==='$'?'$'+v:k.u==='/5'?v+'/5':k.u==='m'?v+'m':k.u==='%'?v+'%':(''+v)}
+function kPct(k){return +(((k.a-k.t)/k.t*100)*(k.lb?-1:1)).toFixed(1)}
+function sparkSVG(data,color){var w=200,hh=32,mn=Math.min.apply(null,data),mx=Math.max.apply(null,data),rng=(mx-mn)||1;
+  var pts=data.map(function(v,i){return (i/(data.length-1)*w).toFixed(1)+','+(hh-(v-mn)/rng*hh).toFixed(1)}).join(' ');
+  return '<svg class="spark2" viewBox="0 0 '+w+' '+hh+'" preserveAspectRatio="none" style="width:100%;height:32px"><polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="2"/></svg>'}
+function ktrend(k){var r=seed(k.n),o=[];for(var i=0;i<10;i++)o.push(k.a*(0.85+r()*0.3));o[9]=k.a;return o}
+
+/* ============================================================
+   PAGE: KPI SCORECARD
+   ============================================================ */
+definePage('kpi',
+  '<div class="page-head"><div><h1>KPI Scorecard</h1><p>Targets vs actuals across the business — green means on or above goal.</p></div></div>'+
+  '<div class="kpi-row" id="kpiSummary"></div><div class="score-grid" id="scoreGrid"></div>',
+  function(){
+    var on=KPIS.filter(kMeets).length;
+    $('#kpiSummary').innerHTML=[kpi('g','On Target',on+' / '+KPIS.length,'metrics'),kpi('a','Needs Watch',KPIS.length-on,'below goal'),kpi('','Tracked',KPIS.length,'KPIs'),kpi('p','Refresh','Live','auto')].join('');
+    $('#scoreGrid').innerHTML=KPIS.map(function(k){var ok=kMeets(k),rag=ok?'g':(kNear(k)?'a':'r');
+      return '<div class="scard2"><div class="sh"><span class="snm">'+k.n+'</span><span class="rag '+rag+'"></span></div><div class="sv">'+kFmt(k.a,k)+'</div><div class="starg">Target '+kFmt(k.t,k)+' · '+delta(kPct(k))+'</div>'+sparkSVG(ktrend(k),ok?'#00D68F':'#FF4757')+'</div>'}).join('');
+  });
+
+/* ============================================================
+   PAGE: MARKETING
+   ============================================================ */
+var mktTab='Campaigns';
+definePage('marketing',
+  '<div class="page-head"><div><h1>Marketing</h1><p>Campaigns, brand assets, and the plan.</p></div></div>'+
+  '<div class="subtabs" id="mktTabs">'+['Campaigns','Assets','Plan'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div><div id="mktContent"></div>',
+  function(){$$('#mktTabs .subtab').forEach(function(tb){tb.onclick=function(){mktRender(tb.dataset.t)}});mktRender(mktTab)});
+function mktRender(tab){mktTab=tab;killCharts('mk_');$$('#mktTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.t===tab)});var c=$('#mktContent');
+  if(tab==='Campaigns'){
+    var leads=CAMPAIGNS.reduce(function(a,x){return a+x.leads},0),cost=CAMPAIGNS.reduce(function(a,x){return a+x.cost},0),act=CAMPAIGNS.filter(function(x){return x.status==='Active'}).length;
+    c.innerHTML='<div class="kpi-row">'+kpi('','Leads (mo)',leads,delta(11)+' vs last')+kpi('a','Ad Spend',money(cost),'this month')+kpi('g','Avg ROI','3.6x','blended')+kpi('p','Active',act,'campaigns')+'</div>'+
+      '<div class="panel"><div class="panel-head"><h3>Leads by Channel</h3></div><div class="chart-wrap sm"><canvas id="mk_ch"></canvas></div></div>'+
+      '<div class="panel"><div class="panel-head"><h3>Campaigns</h3></div><div class="table-scroll"><table><thead><tr><th>Campaign</th><th>Channel</th><th>Status</th><th>Leads</th><th>Cost</th><th>ROI</th></tr></thead><tbody>'+
+      CAMPAIGNS.map(function(x){return '<tr><td><b>'+esc(x.name)+'</b></td><td>'+x.channel+'</td><td><span class="pill '+(x.status==='Active'?'done':x.status==='Paused'?'todo':'onboarding')+'">'+x.status+'</span></td><td class="num">'+x.leads+'</td><td class="num">'+money(x.cost)+'</td><td class="num" style="color:var(--green)">'+(x.roi?x.roi+'x':'—')+'</td></tr>'}).join('')+'</tbody></table></div></div>';
+    var byCh={};CAMPAIGNS.forEach(function(x){byCh[x.channel]=(byCh[x.channel]||0)+x.leads});
+    chart('mk_ch',{type:'bar',data:{labels:Object.keys(byCh),datasets:[{data:Object.values(byCh),backgroundColor:'#00C8FF',borderRadius:5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+  } else if(tab==='Assets'){
+    c.innerHTML='<div class="panel"><div class="panel-head"><h3>Brand & Campaign Assets</h3><span class="hint">click to preview</span></div><div class="gallery">'+
+      ASSETS.map(function(a){return '<div class="gtile" style="background:'+a[2]+'" onclick="toast(\''+a[0].replace(/'/g,"")+' — opened (demo)\',\'ok\')">'+a[1]+'<div class="gmeta">'+a[0]+'</div></div>'}).join('')+'</div></div>';
+  } else {
+    c.innerHTML='<div class="grid-2e">'+MKT_PLAN.map(function(q){return '<div class="panel"><div class="panel-head"><h3>'+q[0]+' — Marketing Plan</h3></div>'+q.slice(1).map(function(it){return '<div class="check"><span class="q">'+esc(it)+'</span><span class="pill '+(q[0]==='Q1'||q[0]==='Q2'?'done':'todo')+'">'+(q[0]==='Q1'||q[0]==='Q2'?'Done':'Planned')+'</span></div>'}).join('')+'</div>'}).join('')+'</div>';
+  }
+}
+
+/* ============================================================
+   PAGE: SCHEDULING
+   ============================================================ */
+definePage('scheduling',
+  '<div class="page-head"><div><h1>Scheduling</h1><p>Weekly crew shift schedule — week of Jul 13.</p></div><div class="tools"><button class="btn btn-sm btn-pri" id="schedPub">Publish schedule</button></div></div>'+
+  '<div class="kpi-row" id="schedKpis"></div><div class="panel"><div class="sched" id="schedGrid"></div></div>',
+  function(){
+    var crew=EMPLOYEES.filter(function(e){return e.dept!=='Dispatch'});
+    var totalShifts=0,oncall=0;
+    var rows=EMPLOYEES.map(function(e){var cells=SDAYS.map(function(_,di){var s=shiftFor(e,di)[0];if(s!=='Off')totalShifts++;if(s==='On-call')oncall++;return s});return {e:e,cells:cells}});
+    $('#schedKpis').innerHTML=[kpi('','Crew Scheduled',EMPLOYEES.length,'this week')+'',kpi('a','On-call Slots',oncall,'coverage'),kpi('g','Total Shifts',totalShifts,'assigned'),kpi('p','Coverage','100%','all days')].join('');
+    $('#schedGrid').innerHTML='<table><thead><tr><th class="emp">Employee</th>'+SDAYS.map(function(d){return '<th>'+d+'</th>'}).join('')+'</tr></thead><tbody>'+
+      rows.map(function(r){return '<tr><td class="emp"><b>'+esc(r.e.name)+'</b><div style="font-size:10.5px;color:var(--faint)">'+r.e.dept+'</div></td>'+r.cells.map(function(s){return '<td>'+(s==='Off'?'<span class="shift off">Off</span>':s==='On-call'?'<span class="shift oncall">On-call</span>':'<span class="shift">'+s+'</span>')+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
+    $('#schedPub').onclick=function(){pushNotif('📅','Schedule published','Week of Jul 13 sent to '+EMPLOYEES.length+' crew');toast('Schedule published to crew','ok')};
+  });
+
+/* ============================================================
+   PAGE: TEAM & PRODUCTIVITY
+   ============================================================ */
+definePage('team',
+  '<div class="page-head"><div><h1>Team & Productivity</h1><p>Crew leaderboard ranked by productivity score — click a name for detail.</p></div></div>'+
+  '<div class="kpi-row" id="teamKpis"></div>'+
+  '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Productivity Score</h3><span class="hint">ranked</span></div><div class="chart-wrap"><canvas id="tm_bar"></canvas></div></div>'+
+  '<div class="panel"><div class="panel-head"><h3>Leaderboard</h3></div><div id="lbList"></div></div></div>',
+  function(){
+    var ranked=EMPLOYEES.slice().sort(function(a,b){return empScore(b)-empScore(a)});
+    var avgR=(EMPLOYEES.reduce(function(a,e){return a+e.rating},0)/EMPLOYEES.length).toFixed(1);
+    var avgU=Math.round(EMPLOYEES.reduce(function(a,e){return a+e.util},0)/EMPLOYEES.length);
+    $('#teamKpis').innerHTML=[kpi('g','Top Performer',ranked[0].name.split(" ")[0],empScore(ranked[0])+' pts'),kpi('','Avg Rating',avgR+' ★','crew'),kpi('a','Avg Utilization',avgU+'%','billable'),kpi('p','Headcount',EMPLOYEES.length,'active')].join('');
+    var mx=empScore(ranked[0]);
+    $('#lbList').innerHTML=ranked.map(function(e,i){return '<div class="lb-row" data-id="'+e.id+'"><div class="lb-rank '+(i<3?'g'+(i+1):'')+'">'+(i+1)+'</div><div style="min-width:120px"><b>'+esc(e.name)+'</b><div style="font-size:11px;color:var(--faint)">'+e.role+' · '+e.dept+'</div></div><div class="lb-bar"><i style="width:'+Math.round(empScore(e)/mx*100)+'%"></i></div><div class="num" style="min-width:96px;text-align:right">'+empScore(e)+' pts · '+e.rating+'★</div></div>'}).join('');
+    $$('#lbList .lb-row').forEach(function(el){el.onclick=function(){openEmployee(el.dataset.id)}});
+    chart('tm_bar',{type:'bar',data:{labels:ranked.map(function(e){return e.name.split(" ")[0]}),datasets:[{data:ranked.map(empScore),backgroundColor:'#00C8FF',borderRadius:4}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+  });
+
+/* ============================================================
+   PAGE: HR & ADMIN
+   ============================================================ */
+var PTO=[
+  {emp:"Owen Fields",type:"Vacation",dates:"Jul 21–25",days:5,status:"quoted"},
+  {emp:"Ruth Gaines",type:"Personal",dates:"Jul 14",days:1,status:"won"},
+  {emp:"Devon Cross",type:"Sick",dates:"Jul 08",days:1,status:"won"},
+  {emp:"Tara Vale",type:"Vacation",dates:"Aug 04–08",days:5,status:"new"},
+  {emp:"Lena Park",type:"Personal",dates:"Jul 30",days:1,status:"quoted"}
+];
+var hrTab='Directory';
+definePage('hr',
+  '<div class="page-head"><div><h1>HR & Admin</h1><p>Directory, time off, and onboarding.</p></div></div>'+
+  '<div class="kpi-row" id="hrKpis"></div>'+
+  '<div class="subtabs" id="hrTabs">'+['Directory','Time Off','Onboarding'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div><div id="hrContent"></div>',
+  function(){
+    var tenure=(2026-EMPLOYEES.reduce(function(a,e){return a+e.hired},0)/EMPLOYEES.length).toFixed(1);
+    $('#hrKpis').innerHTML=[kpi('','Headcount',EMPLOYEES.length,'active'),kpi('a','Open Roles','3','recruiting'),kpi('g','Avg Tenure',tenure+' yrs','crew'),kpi('p','Retention','92%','12-mo')].join('');
+    $$('#hrTabs .subtab').forEach(function(tb){tb.onclick=function(){hrRender(tb.dataset.t)}});hrRender(hrTab);
+  });
+function hrRender(tab){hrTab=tab;$$('#hrTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.t===tab)});var c=$('#hrContent');
+  if(tab==='Directory'){
+    c.innerHTML='<div class="table-scroll"><table><thead><tr><th>Employee</th><th>Role</th><th>Dept</th><th>Hired</th><th>Rating</th></tr></thead><tbody>'+
+      EMPLOYEES.map(function(e){return '<tr class="clickable" data-id="'+e.id+'"><td><b>'+esc(e.name)+'</b></td><td>'+e.role+'</td><td>'+e.dept+'</td><td class="num">'+e.hired+'</td><td class="num">'+e.rating+' ★</td></tr>'}).join('')+'</tbody></table></div>';
+    $$('#hrContent tr[data-id]').forEach(function(tr){tr.onclick=function(){openEmployee(tr.dataset.id)}});
+  } else if(tab==='Time Off'){
+    c.innerHTML='<div class="table-scroll"><table><thead><tr><th>Employee</th><th>Type</th><th>Dates</th><th>Days</th><th>Status</th></tr></thead><tbody>'+
+      PTO.map(function(p,i){return '<tr><td><b>'+esc(p.emp)+'</b></td><td>'+p.type+'</td><td>'+p.dates+'</td><td class="num">'+p.days+'</td><td><select class="field pto-st" data-i="'+i+'" style="padding:5px 8px;font-size:12px"><option value="new"'+(p.status==='new'?' selected':'')+'>Requested</option><option value="quoted"'+(p.status==='quoted'?' selected':'')+'>Pending</option><option value="won"'+(p.status==='won'?' selected':'')+'>Approved</option><option value="lost"'+(p.status==='lost'?' selected':'')+'>Denied</option></select></td></tr>'}).join('')+'</tbody></table></div>';
+    $$('#hrContent .pto-st').forEach(function(sel){sel.onchange=function(){PTO[+sel.dataset.i].status=sel.value;toast('Time-off updated','ok')}});
+  } else {
+    var steps=[["Offer accepted",true],["Paperwork & I-9",true],["Equipment issued",true],["Safety training",false],["Ride-along week",false],["30-day check-in",false]];
+    c.innerHTML='<div class="panel"><div class="panel-head"><h3>New Hire · Jamie Foster (Plumbing)</h3><span class="hint">onboarding checklist</span></div>'+
+      steps.map(function(s){return '<div class="check"><span class="q">'+(s[1]?'✓ ':'○ ')+s[0]+'</span><span class="pill '+(s[1]?'done':'todo')+'">'+(s[1]?'Done':'Open')+'</span></div>'}).join('')+'</div>';
+  }
+}
+
+/* ============================================================
+   PAGE: INVOICING & ACCOUNTING
+   ============================================================ */
+var finTab='Invoices',finStatusFilter='';
+definePage('finance',
+  '<div class="page-head"><div><h1>Invoicing & Accounting</h1><p>Invoices, receivables, and the P&amp;L.</p></div></div>'+
+  '<div class="subtabs" id="finTabs">'+['Invoices','AR Aging','P&L'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div><div id="finContent"></div>',
+  function(){$$('#finTabs .subtab').forEach(function(tb){tb.onclick=function(){finRender(tb.dataset.t)}});finRender(finTab)});
+function finRender(tab){finTab=tab;killCharts('fin_');$$('#finTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.t===tab)});var c=$('#finContent');
+  var billed=INVOICES.reduce(function(a,x){return a+x.amount},0);
+  var collected=INVOICES.filter(function(x){return x.status==='paid'}).reduce(function(a,x){return a+x.amount},0);
+  var overdue=INVOICES.filter(function(x){return x.status==='overdue'}).reduce(function(a,x){return a+x.amount},0);
+  var outstanding=billed-collected;
+  if(tab==='Invoices'){
+    c.innerHTML='<div class="kpi-row">'+kpi('','Billed',money(billed),'this month')+kpi('g','Collected',money(collected),delta(4)+' MoM')+kpi('a','Outstanding',money(outstanding),'AR')+kpi('r','Overdue',money(overdue),INVOICES.filter(function(x){return x.status==='overdue'}).length+' invoices')+'</div>'+
+      '<div class="toolbar"><select class="field" id="finFilter"><option value="">All statuses</option><option>paid</option><option>sent</option><option>overdue</option><option>draft</option></select><button class="btn btn-sm btn-pri" id="finNew" style="margin-left:auto">+ New Invoice</button></div>'+
+      '<div class="table-scroll"><table><thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Status</th><th>Issued</th><th>Due</th></tr></thead><tbody id="finBody"></tbody></table></div>';
+    var render=function(){var rows=INVOICES.filter(function(x){return !finStatusFilter||x.status===finStatusFilter});
+      $('#finBody').innerHTML=rows.map(function(x){return '<tr><td class="mono">'+x.id+'</td><td>'+esc(x.client)+'</td><td class="num">'+money(x.amount)+'</td><td><span class="pill '+INV_ST[x.status]+'">'+x.status+'</span></td><td>'+x.date+'</td><td>'+x.due+'</td></tr>'}).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:18px">No invoices.</td></tr>'};
+    $('#finFilter').value=finStatusFilter;$('#finFilter').onchange=function(){finStatusFilter=this.value;render()};
+    $('#finNew').onclick=finNewInvoice;render();
+  } else if(tab==='AR Aging'){
+    var buckets=[["Current",0,0],["1–30 days",0,0],["31–60 days",0,0],["60+ days",0,0]];
+    INVOICES.forEach(function(x){if(x.status==='paid')return;var b=x.status==='overdue'?2:0;buckets[b][1]+=x.amount;buckets[b][2]++});
+    buckets[1][1]=Math.round(outstanding*0.28);buckets[3][1]=Math.round(overdue*0.4);
+    c.innerHTML='<div class="kpi-row">'+kpi('a','Total AR',money(outstanding),'outstanding')+kpi('r','60+ Days',money(buckets[3][1]),'at risk')+kpi('g','Current',money(buckets[0][1]),'not due')+'</div>'+
+      '<div class="panel"><div class="panel-head"><h3>Receivables Aging</h3></div><div class="chart-wrap sm"><canvas id="fin_aging"></canvas></div></div>';
+    chart('fin_aging',{type:'bar',data:{labels:buckets.map(function(b){return b[0]}),datasets:[{data:buckets.map(function(b){return b[1]}),backgroundColor:['#00D68F','#FFC13D','#FF7A45','#FF4757'],borderRadius:5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+  } else {
+    var rev=SALES_TY,exp=FIN_EXP,net=rev.map(function(v,i){return v-exp[i]}),ytdR=rev.reduce(function(a,b){return a+b},0),ytdE=exp.reduce(function(a,b){return a+b},0);
+    c.innerHTML='<div class="kpi-row">'+kpi('g','Revenue (YTD)','$'+ytdR+'K',delta(9.2))+kpi('a','Expenses (YTD)','$'+ytdE+'K','68% of rev')+kpi('','Net Profit','$'+(ytdR-ytdE)+'K',delta(12))+kpi('p','Net Margin',Math.round((ytdR-ytdE)/ytdR*100)+'%','YTD')+'</div>'+
+      '<div class="panel"><div class="panel-head"><h3>Revenue vs Expenses</h3><span class="hint">$K / mo</span></div><div class="chart-wrap"><canvas id="fin_pl"></canvas></div></div>';
+    chart('fin_pl',{type:'bar',data:{labels:SMONTHS,datasets:[{label:'Revenue',data:rev,backgroundColor:'#00C8FF',borderRadius:4},{label:'Expenses',data:exp,backgroundColor:'#2C3444',borderRadius:4},{label:'Net',type:'line',data:net,borderColor:'#00D68F',borderWidth:2.5,pointRadius:0,tension:.35}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{size:11}}}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+  }
+}
+function finNewInvoice(){
+  openModal('<div class="modal-head"><h3>New Invoice</h3><button class="x" onclick="closeModal()">✕</button></div>'+
+    '<div class="modal-body"><label>Client</label><input class="field" id="fiClient" placeholder="Client name"><label>Amount ($)</label><input class="field" type="number" id="fiAmt" value="0"><label>Status</label><select class="field" id="fiStatus"><option value="draft">Draft</option><option value="sent">Sent</option><option value="paid">Paid</option></select></div>'+
+    '<div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="fiSave">Create invoice</button></div>');
+  $('#fiSave').onclick=function(){var cl=$('#fiClient').value.trim();if(!cl){toast('Client required','err');return}var id='INV-'+(1043+INVOICES.length);INVOICES.unshift({id:id,client:cl,amount:+$('#fiAmt').value||0,status:$('#fiStatus').value,date:'Jul 01',due:'Jul 31'});closeModal();finRender('Invoices');pushNotif('🧾','Invoice '+id+' created',cl+' · '+money(+$('#fiAmt').value||0));toast('Invoice '+id+' created','ok')};
+}
+
+/* ============================================================
+   PAGE: INVENTORY
+   ============================================================ */
+var invSearch='',invCat='';
+definePage('inventory',
+  '<div class="page-head"><div><h1>Inventory</h1><p>Parts &amp; materials database — add items, track stock, flag reorders.</p></div><div class="tools"><button class="btn btn-sm btn-pri" id="invAdd">+ Add Item</button></div></div>'+
+  '<div class="kpi-row" id="invKpis"></div>'+
+  '<div class="toolbar"><div class="search">'+ic('search')+'<input class="field" id="invSearch" placeholder="Search parts, SKU, location…"></div><select class="field" id="invCatSel"></select></div>'+
+  '<div class="table-scroll"><table><thead><tr><th>SKU</th><th>Item</th><th>Category</th><th>On hand</th><th>Reorder</th><th>Unit cost</th><th>Location</th></tr></thead><tbody id="invBody"></tbody></table></div>',
+  function(){
+    var sel=$('#invCatSel');if(!sel.dataset.done){sel.innerHTML='<option value="">All categories</option>'+INV_CATS.map(function(cat){return '<option>'+cat+'</option>'}).join('');sel.dataset.done='1'}
+    $('#invSearch').value=invSearch;$('#invCatSel').value=invCat;
+    $('#invSearch').oninput=function(){invSearch=this.value;invRender()};$('#invCatSel').onchange=function(){invCat=this.value;invRender()};
+    $('#invAdd').onclick=invAddItem;invRender();
+  });
+function invRender(){
+  var low=INVENTORY.filter(function(x){return x.qty<=x.reorder}).length;
+  var val=INVENTORY.reduce(function(a,x){return a+x.qty*x.cost},0);
+  $('#invKpis').innerHTML=[kpi('','SKUs',INVENTORY.length,'tracked'),kpi('r','Low Stock',low,'need reorder'),kpi('g','Stock Value',money(val),'on hand'),kpi('p','Categories',INV_CATS.length,'')].join('');
+  var q=invSearch.toLowerCase();
+  var rows=INVENTORY.filter(function(x){var hay=(x.sku+' '+x.name+' '+x.loc).toLowerCase();return (!q||hay.indexOf(q)>=0)&&(!invCat||x.cat===invCat)});
+  $('#invBody').innerHTML=rows.map(function(x){var lowf=x.qty<=x.reorder;return '<tr class="clickable" data-sku="'+x.sku+'"><td class="mono">'+x.sku+'</td><td><b>'+esc(x.name)+'</b></td><td>'+x.cat+'</td><td class="num">'+x.qty+(lowf?' <span class="pill risk">reorder</span>':'')+'</td><td class="num">'+x.reorder+'</td><td class="num">'+money(x.cost)+'</td><td>'+x.loc+'</td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:18px">No items.</td></tr>';
+  $$('#invBody tr[data-sku]').forEach(function(tr){tr.onclick=function(){invEdit(tr.dataset.sku)}});
+}
+function invAddItem(){
+  openModal('<div class="modal-head"><h3>Add Inventory Item</h3><button class="x" onclick="closeModal()">✕</button></div>'+
+    '<div class="modal-body"><label>Item name</label><input class="field" id="mName" placeholder="e.g. Blower Motor"><label>Category</label><select class="field" id="mCat">'+INV_CATS.map(function(cat){return '<option>'+cat+'</option>'}).join('')+'</select><label>Quantity on hand</label><input class="field" type="number" id="mQty" value="0"><label>Reorder at</label><input class="field" type="number" id="mReorder" value="10"><label>Unit cost ($)</label><input class="field" type="number" id="mCost" value="0"><label>Location</label><input class="field" id="mLoc" value="Warehouse A"></div>'+
+    '<div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="mSave">Add item</button></div>');
+  $('#mSave').onclick=function(){var name=$('#mName').value.trim();if(!name){toast('Name required','err');return}var cat=$('#mCat').value;var sku=cat.slice(0,2).toUpperCase()+'-'+(7000+Math.floor(Math.random()*999));var qty=+$('#mQty').value||0,ro=+$('#mReorder').value||0;INVENTORY.unshift({sku:sku,name:name,cat:cat,qty:qty,reorder:ro,cost:+$('#mCost').value||0,loc:$('#mLoc').value||'Warehouse A'});closeModal();invRender();toast('Added '+name+' ('+sku+')','ok');if(qty<=ro)pushNotif('⚠️','Low stock: '+name,sku+' · '+qty+' on hand')};
+}
+function invEdit(sku){var x=INVENTORY.filter(function(i){return i.sku===sku})[0];if(!x)return;
+  openModal('<div class="modal-head"><h3>'+esc(x.name)+'</h3><button class="x" onclick="closeModal()">✕</button></div>'+
+    '<div class="modal-body"><dl class="dl"><dt>SKU</dt><dd class="mono">'+x.sku+'</dd><dt>Category</dt><dd>'+x.cat+'</dd><dt>Location</dt><dd>'+x.loc+'</dd><dt>Unit cost</dt><dd>'+money(x.cost)+'</dd></dl><label>Adjust quantity on hand</label><input class="field" type="number" id="eQty" value="'+x.qty+'"></div>'+
+    '<div class="modal-foot"><button class="btn btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-sm btn-pri" id="eSave">Save</button></div>');
+  $('#eSave').onclick=function(){x.qty=+$('#eQty').value||0;closeModal();invRender();toast('Updated '+x.name,'ok')};
+}
+
+/* ============================================================
+   PAGE: POLICIES & SOPs
+   ============================================================ */
+var sopCat='';
+definePage('policies',
+  '<div class="page-head"><div><h1>Policies &amp; SOPs</h1><p>The playbook — click a document to read it.</p></div></div>'+
+  '<div class="subtabs" id="sopTabs"></div><div class="course-grid" id="sopGrid"></div>',
+  function(){
+    $('#sopTabs').innerHTML='<div class="subtab active" data-c="">All</div>'+SOP_CATS.map(function(cat){return '<div class="subtab" data-c="'+cat+'">'+cat+'</div>'}).join('');
+    $$('#sopTabs .subtab').forEach(function(tb){tb.onclick=function(){sopCat=tb.dataset.c;$$('#sopTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.c===sopCat)});sopRender()}});
+    sopRender();
+  });
+function sopRender(){
+  var rows=SOPS.filter(function(s){return !sopCat||s.cat===sopCat});
+  $('#sopGrid').innerHTML=rows.map(function(s,i){return '<div class="course" data-i="'+SOPS.indexOf(s)+'"><div class="ci">📘</div><h4>'+esc(s.title)+'</h4><div class="cm">'+s.cat+'</div><span class="cbadge done">Published</span></div>'}).join('');
+  $$('#sopGrid .course').forEach(function(el){el.onclick=function(){var s=SOPS[+el.dataset.i];openDrawer(dwHead('SOP · '+s.cat,s.title,'Standard Operating Procedure')+'<div class="dw-body"><div class="sec-title">Purpose</div><p style="color:var(--muted);font-size:13.5px;line-height:1.7">'+esc(s.body)+'</p><div class="sec-title">Scope</div><p style="color:var(--muted);font-size:13px">Applies to all field crews and admin staff. Reviewed annually; owner: Operations.</p><div style="margin-top:16px"><button class="btn btn-sm btn-pri" onclick="toast(\'Acknowledged (demo)\',\'ok\')">Acknowledge</button></div></div>')}});
+}
+
+/* ============================================================
+   PAGE: DOCUMENTS
+   ============================================================ */
+var docSearch='';
+definePage('documents',
+  '<div class="page-head"><div><h1>Documents</h1><p>Upload, store, and share company files.</p></div></div>'+
+  '<div class="panel"><div class="dropzone" id="dz"><div style="font-size:26px;margin-bottom:8px">📤</div><b>Drag &amp; drop files here</b><div style="font-size:12px;margin-top:4px">or click to browse — PDF, DOCX, XLSX, images</div></div></div>'+
+  '<div class="panel"><div class="panel-head"><h3>Files</h3><div class="search" style="max-width:220px">'+ic('search')+'<input class="field" id="docSearch" placeholder="Search files…"></div></div><div id="docList"></div></div>',
+  function(){
+    var dz=$('#dz');
+    dz.onclick=function(){addDoc('Uploaded File '+(DOCS.length+1)+'.pdf','PDF',(80+Math.floor(Math.random()*900))+' KB')};
+    dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag')});
+    dz.addEventListener('dragleave',function(){dz.classList.remove('drag')});
+    dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag');var n=(e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files.length)||1;for(var i=0;i<n;i++){var ff=e.dataTransfer.files[i];addDoc(ff?ff.name:'Dropped File.pdf',ff?(ff.name.split('.').pop()||'FILE').toUpperCase().slice(0,3):'PDF',ff?Math.round(ff.size/1024)+' KB':'120 KB')}});
+    $('#docSearch').value=docSearch;$('#docSearch').oninput=function(){docSearch=this.value;docRender()};
+    docRender();
+  });
+function addDoc(name,type,size){DOCS.unshift({name:name,type:type,size:size,by:'Jason V.',date:'Jul 01'});docRender();pushNotif('📄','File uploaded',name);toast('Uploaded '+name,'ok')}
+function docRender(){var q=docSearch.toLowerCase();var rows=DOCS.filter(function(d){return !q||d.name.toLowerCase().indexOf(q)>=0});
+  $('#docList').innerHTML=rows.map(function(d){return '<div class="filerow"><span class="fileic">'+d.type+'</span><div style="flex:1"><div style="font-weight:600;font-size:13px">'+esc(d.name)+'</div><div style="font-size:11.5px;color:var(--faint)">'+d.size+' · '+d.by+' · '+d.date+'</div></div><button class="btn btn-sm" onclick="toast(\'Download started (demo)\',\'ok\')">Download</button></div>'}).join('')||'<div style="text-align:center;color:var(--muted);padding:18px">No files.</div>';
+}
 
 /* ============================================================
    BOOT
