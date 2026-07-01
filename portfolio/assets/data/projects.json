@@ -126,5 +126,21 @@
     ],
     "status": "Live",
     "featured": false
+  },
+  {
+    "id": "showcase",
+    "name": "Operations Command Center",
+    "tagline": "Enterprise ops & field-sales platform (demo)",
+    "description": "An interactive, fully genericized demo of the operations, analytics, and field-sales platforms I build for a national retail network — dashboards with live charts, a searchable/sortable sites database, an implementation task board, a vendor-ROI tracker, a partner-onboarding pipeline, a territory heatmap, a revenue calculator, and a training LMS. Every company, person, vendor, and metric is fictional sample data.",
+    "url": "https://systemsbyvega.com/showcase",
+    "thumb": "assets/img/showcase.png",
+    "category": "Commercial",
+    "tags": [
+      "Dashboards",
+      "Data",
+      "Demo"
+    ],
+    "status": "Demo",
+    "featured": true
   }
 ]
