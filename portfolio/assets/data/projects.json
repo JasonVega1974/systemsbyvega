@@ -69,7 +69,7 @@
     "tagline": "Church inventory database",
     "description": "Inventory system for our church — tracks stock for ordering, counting, and auditing.",
     "url": "https://yourlifecc.com/return",
-    "thumb": "assets/img/return.png",
+    "thumb": "assets/img/return.jpg",
     "category": "Faith & Family",
     "tags": [
       "Inventory",
@@ -85,7 +85,7 @@
     "tagline": "A secure vault for family legacy",
     "description": "A private place to preserve family documents, memories, and legacy in one secure vault.",
     "url": "https://yourlifecc.com/legacy-vault",
-    "thumb": "assets/img/legacy-vault.png",
+    "thumb": "assets/img/legacy-vault.jpg",
     "category": "Faith & Family",
     "tags": [
       "Vault",
@@ -117,7 +117,7 @@
     "tagline": "EDM producer & DJ",
     "description": "Music brand and site for Dom Vegz — EDM producer and DJ out of Nampa, Idaho.",
     "url": "https://domvegz.com",
-    "thumb": "assets/img/domvegz.png",
+    "thumb": "assets/img/domvegz.jpg",
     "category": "Music & Creative",
     "tags": [
       "Music",
