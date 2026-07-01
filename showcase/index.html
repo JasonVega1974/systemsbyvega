@@ -296,7 +296,7 @@
 <body>
 
 <div class="topbar">
-  <div class="brand"><span class="mark">NW</span><div>Northwind Retail<small>OPERATIONS COMMAND CENTER</small></div></div>
+  <div class="brand"><span class="mark">NW</span><div>Northwind Field Services<small>OPERATIONS COMMAND CENTER</small></div></div>
   <span class="demo-pill">● DEMO · fictional data</span>
   <div class="top-right">
     <div class="period">Period <select id="periodSel"><option>Last 12 months</option><option>Year to date</option><option>This quarter</option></select></div>
@@ -382,47 +382,47 @@ var SITES=NAMES.map(function(nm,i){
     rev:fuelRev+vendorRev+rewardsRev+insideRev,
     exit:Math.round(10+r()*380), phone:'(555) '+(200+Math.floor(r()*799))+'-'+(1000+Math.floor(r()*8999)),
     opened:2016+Math.floor(r()*9), score:Math.round(58+r()*40), rewardsRate:Math.round(52+r()*34),
-    diesel:(3.59+r()*0.7).toFixed(2), margin:Math.round(34+r()*16)
+    avgTicket:(3.59+r()*0.7).toFixed(2), margin:Math.round(34+r()*16)
   };
 });
 function siteById(id){return SITES.filter(function(s){return s.id===id})[0]}
 
-var VPROGS=["Beverage","Foodservice","Facilities","Payments","Maintenance","Compliance"];
+var VPROGS=["HVAC Parts","Electrical","Plumbing","Facilities","Tools","Safety"];
 var VENDORS=[
-  ["Summit Beverages","Beverage","High",184000,7.0,"Net 60 quarterly",12880,"Dana Whitfield","(555) 412-8890",11],
-  ["Cedar Foods","Foodservice","High",156000,6.0,"Net 45 monthly",9360,"Priya Anand","(555) 733-2201",9],
-  ["BluePoint Fuel Cards","Payments","High",0,0,"Per-gallon ACH",15200,"Marcus Bell","(555) 908-4412",14],
-  ["Harvest Snacks","Foodservice","Med",97000,5.5,"Net 30 monthly",5335,"Owen Fields","(555) 221-7788",8],
+  ["Summit HVAC Supply","HVAC Parts","High",184000,7.0,"Net 60 quarterly",12880,"Dana Whitfield","(555) 412-8890",11],
+  ["Cedar Electrical Wholesale","Electrical","High",156000,6.0,"Net 45 monthly",9360,"Priya Anand","(555) 733-2201",9],
+  ["BluePoint Fleet Fuel","Fleet Fuel","High",0,0,"Per-invoice ACH",15200,"Marcus Bell","(555) 908-4412",14],
+  ["Harvest Plumbing Supply","Plumbing","Med",97000,5.5,"Net 30 monthly",5335,"Owen Fields","(555) 221-7788",8],
   ["Meridian Facilities","Facilities","Med",64000,7.5,"Quarterly rebate",4800,"Lena Park","(555) 556-1042",7],
-  ["Apex Uniforms","Facilities","Med",42000,9.5,"Annual true-up",3990,"Ruth Gaines","(555) 340-9911",6],
-  ["Ironwood Supply","Maintenance","Low",28000,8.0,"Net 30",2240,"Gil Ortiz","(555) 662-5530",5],
-  ["Northstar Safety","Compliance","Low",19000,10.0,"Annual",1900,"Tara Vale","(555) 118-3376",4],
-  ["Riverbend Coffee","Beverage","Med",73000,6.5,"Monthly rebate",4745,"Joel Ramsey","(555) 447-2093",7],
-  ["Cascade Cleaning","Facilities","Low",34000,7.0,"Net 45",2380,"Hana Ito","(555) 771-6654",5],
+  ["Apex Uniforms","Uniforms","Med",42000,9.5,"Annual true-up",3990,"Ruth Gaines","(555) 340-9911",6],
+  ["Ironwood Tool Co","Tools","Low",28000,8.0,"Net 30",2240,"Gil Ortiz","(555) 662-5530",5],
+  ["Northstar Safety","Safety","Low",19000,10.0,"Annual",1900,"Tara Vale","(555) 118-3376",4],
+  ["Riverbend Refrigeration","HVAC Parts","Med",73000,6.5,"Monthly rebate",4745,"Joel Ramsey","(555) 447-2093",7],
+  ["Cascade Cleaning Supply","Facilities","Low",34000,7.0,"Net 45",2380,"Hana Ito","(555) 771-6654",5],
   ["Brightline Signage","Marketing","Low",22000,5.0,"Project-based",1100,"Devon Cross","(555) 902-3318",3],
-  ["PinePoint Produce","Foodservice","Med",58000,6.0,"Weekly settle",3480,"Mara Quinn","(555) 615-8842",6]
+  ["PinePoint PPE","Safety","Med",58000,6.0,"Weekly settle",3480,"Mara Quinn","(555) 615-8842",6]
 ].map(function(v){return {name:v[0],prog:v[1],pri:v[2],spend:v[3],reb:v[4],timing:v[5],sav:v[6],contact:v[7],phone:v[8],sites:v[9]}});
 function vendorByName(n){return VENDORS.filter(function(v){return v.name===n})[0]}
 
 var STAGES=["Agreement","Integration","Discounts","Testing","Training","Launch","Post-Launch"];
 var STEP_TPL={
-  Agreement:["NDA executed","Master agreement signed","Legal review complete"],
-  Integration:["API keys issued","Sandbox connected","Data mapping done"],
-  Discounts:["Discount model chosen","Terms approved","Rates loaded"],
-  Testing:["Test transactions","Reconciliation check","Sign-off"],
-  Training:["Staff session booked","Materials delivered","Manager certified"],
-  Launch:["Go-live checklist","Cutover","Launch comms"],
-  "Post-Launch":["30-day review","Optimization pass","Renewal set"]
+  Agreement:["NDA executed","Service agreement signed","Insurance verified"],
+  Integration:["Site survey completed","Crew & routes assigned","Access & keys arranged"],
+  Discounts:["Pricing model set","Rates approved","Contract loaded"],
+  Testing:["First service run","Quality check","Sign-off"],
+  Training:["Crew briefing booked","Materials delivered","Lead certified"],
+  Launch:["Go-live checklist","First scheduled service","Launch comms"],
+  "Post-Launch":["30-day review","Route optimization","Renewal set"]
 };
 var PIPELINE=[
-  ["Vega Freight Pay","Fleet card",6,"go-live checklist","ok","Marcus Bell"],
-  ["Coastal Logistics","Aggregator",4,"beta testing","ok","Priya Anand"],
-  ["Ironhorse Fuel Network","Aggregator",2,"discount terms","risk","Dana Whitfield"],
-  ["MetroHaul Cards","Fleet card",5,"staff training","ok","Owen Fields"],
-  ["Summit Route Pay","Aggregator",7,"post-launch monitoring","ok","Lena Park"],
-  ["Beacon Transport","Fleet card",1,"agreement review","ok","Joel Ramsey"],
-  ["Cross-Country Fuel","Aggregator",3,"rate loading","ok","Tara Vale"],
-  ["Redline Freight","Fleet card",5,"reconciliation","risk","Devon Cross"]
+  ["Delgado Property Group","Commercial",6,"go-live checklist","ok","Marcus Bell"],
+  ["Coastal Logistics Warehouse","Industrial",4,"first service run","ok","Priya Anand"],
+  ["Ironhorse Manufacturing","Industrial",2,"scope & pricing","risk","Dana Whitfield"],
+  ["MetroHaul Distribution","Commercial",5,"crew training","ok","Owen Fields"],
+  ["Summit Retail Centers","Commercial",7,"post-launch monitoring","ok","Lena Park"],
+  ["Beacon Medical Group","Healthcare",1,"agreement review","ok","Joel Ramsey"],
+  ["Cross-County Schools","Municipal",3,"rate loading","ok","Tara Vale"],
+  ["Redline Auto Group","Commercial",5,"equipment install","risk","Devon Cross"]
 ].map(function(p,pi){
   var r=seed('pipe'+pi), stage=p[2];
   var owners=MGRS;
@@ -442,16 +442,16 @@ var TASK_STATUS=[["todo","To Do","#8A97B0"],["prog","In Progress","#00C8FF"],["r
 var PROJECTS={
   "Northwind Station · Onboarding":[
     ["Kickoff & scope call","Alex Rivera","done","Reviewed site profile and goals with GM."],
-    ["Collect site profile","Alex Rivera","done","POS, tanks, canopy, amenities catalogued."],
+    ["Collect site profile","Alex Rivera","done","Site access, equipment, and assets catalogued."],
     ["Provision POS accounts","Sam Carter","done","3 lanes + back office provisioned."],
-    ["Configure fuel price feed","Sam Carter","prog","Diesel + DEF live; unleaded pending."],
+    ["Configure dispatch & scheduling","Sam Carter","prog","Crew routes live; on-call rotation pending."],
     ["Loyalty program setup","Jordan Lee","prog","Terminal shipped; enrollment flow tested."],
     ["Vendor enrollment (3 programs)","Morgan Diaz","prog","Beverage done; foodservice + facilities open."],
     ["Staff training session","Jordan Lee","review","Session held; certification quiz pending."],
     ["Signage & branding kit","Taylor Brooks","todo","Awaiting print proof approval."],
     ["Go-live checklist","Alex Rivera","todo","Blocked on price feed + signage."],
     ["Rewards terminal test","Morgan Diaz","review","End-to-end redemption verified."],
-    ["Fuel discount agreement","Taylor Brooks","done","Cost-plus terms countersigned."],
+    ["Service contract signed","Taylor Brooks","done","Service terms countersigned."],
     ["30-day performance review","Sam Carter","todo","Scheduled post go-live."]
   ],
   "Harbor West · Onboarding":[
@@ -468,9 +468,9 @@ var PROJECTS={
 };
 
 var COURSES=[
-  {t:"Fuel Programs 101",ic:"⛽",meta:"6 lessons · 25 min",prog:100,st:"done",
-   lessons:[["Retail-minus vs cost-plus","Retail-minus quotes a fixed cents-off-retail discount; cost-plus sets price at rack/cost plus a fixed margin. Cost-plus protects margin when fuel prices swing."],["Reading the rack","The rack price is the wholesale benchmark; your delivered cost adds freight and taxes."],["Margin math","Margin (¢/gal) × gallons = fuel gross profit. Small margin moves compound at high volume."],["DEF & ancillary","DEF and additives carry their own margins and should be modeled separately."],["Discount agreements","Every fleet/aggregator deal defines model, rate, and settlement timing."],["Putting it together","Model volume lift against margin give-up to find the break-even."]],
-   quiz:[["Which model quotes a fixed cents-off retail?",["Cost-plus","Retail-minus","Flat monthly"],1],["What most improves net fuel margin at higher volume?",["Lower inside sales","Volume lift with inside-sales capture","Fewer vendors"],1],["Cost-plus mainly protects against…",["Staff turnover","Fuel price swings","Signage costs"],1]]},
+  {t:"Service Pricing 101",ic:"📐",meta:"6 lessons · 25 min",prog:100,st:"done",
+   lessons:[["Flat-rate vs time & materials","Flat-rate quotes a fixed price per job; time & materials bills hours plus parts. Flat-rate protects margin and speeds customer approvals."],["Know your costs","Your loaded labor rate plus parts cost is your floor — never price below it."],["Margin math","Margin % × job value = gross profit. Small margin moves compound across many jobs."],["Add-ons & upsells","Maintenance plans, parts, and add-ons carry their own margins and should be modeled separately."],["Service agreements","Every contract defines scope, rate, and payment terms up front."],["Putting it together","Model volume lift against price give-up to find the break-even."]],
+   quiz:[["Which model quotes a fixed price per job?",["Time & materials","Flat-rate","Hourly only"],1],["What most improves net margin at higher volume?",["Lower add-ons","Volume lift with add-on capture","Fewer suppliers"],1],["Flat-rate pricing mainly protects…",["Staff turnover","Your margin","Signage costs"],1]]},
   {t:"Vendor Enrollment",ic:"🤝",meta:"5 lessons · 20 min",prog:72,st:"prog",
    lessons:[["Program tiers","Priority tiers focus reps on the highest-ROI programs first."],["Rebate structures","Rebates settle monthly, quarterly, or via annual true-up — timing affects cash flow."],["Enrollment flow","Capture the site, confirm eligibility, submit, then verify activation."],["Tracking ROI","Savings = contracted savings + rebate; track per site per month."],["Common blockers","Missing tax docs and unconfirmed contacts stall most enrollments."]],
    quiz:[["Where does vendor ROI mainly come from?",["Signage","Rebates + contracted savings","Parking"],1],["Priority tiers exist to…",["Slow reps down","Focus on highest-ROI programs","Replace training"],1]]},
@@ -479,12 +479,12 @@ var COURSES=[
    quiz:[["What ends the onboarding arc?",["Kickoff","30-day performance review","Signage"],1]]},
   {t:"Rewards & Loyalty",ic:"⭐",meta:"4 lessons · 15 min",prog:100,st:"done",
    lessons:[["Why loyalty","Enrolled members visit more often and spend more inside."],["Points & redemption","Clear earn/burn rules drive redemption rate — a key health metric."],["Signage that works","Point-of-decision signage lifts enrollment materially."],["Reading the dashboard","Watch adds, redemptions, and rate month over month."]],
-   quiz:[["A key loyalty health metric is…",["Canopy height","Redemption rate","Parking spots"],1]]},
+   quiz:[["A key loyalty health metric is…",["Office size","Repeat-customer rate","Parking spots"],1]]},
   {t:"Field Visit Standards",ic:"📋",meta:"5 lessons · 18 min",prog:20,st:"prog",
    lessons:[["Why standardize","Consistent reviews make sites comparable over time."],["The four review areas","Fuel, facility, rewards, and vendor programs."],["Scoring fairly","Yes/No items keep scoring objective."],["Following up","Turn findings into owned action items."],["Documentation","Save and share every visit for accountability."]],
    quiz:[["Standardized visits make sites…",["Prettier","Comparable over time","Cheaper"],1]]},
   {t:"Data & Reporting",ic:"📊",meta:"6 lessons · 30 min",prog:30,st:"prog",
-   lessons:[["KPIs that matter","Revenue, savings, gallons, and active counts drive decisions."],["MoM vs YoY","Month-over-month shows momentum; year-over-year removes seasonality."],["Reading trends","Look for direction and inflection, not single points."],["Segmenting","Break metrics by manager, state, and program."],["Telling the story","A dashboard should answer 'so what?' at a glance."],["Exporting","Clean CSVs let others build on your work."]],
+   lessons:[["KPIs that matter","Revenue, savings, jobs, and active counts drive decisions."],["MoM vs YoY","Month-over-month shows momentum; year-over-year removes seasonality."],["Reading trends","Look for direction and inflection, not single points."],["Segmenting","Break metrics by manager, state, and program."],["Telling the story","A dashboard should answer 'so what?' at a glance."],["Exporting","Clean CSVs let others build on your work."]],
    quiz:[["YoY comparison mainly removes…",["Seasonality","Staff","Signage"],0]]}
 ];
 
@@ -507,9 +507,9 @@ var NET_SAV=VENDORS.reduce(function(a,v){return a+v.sav},0);
    ============================================================ */
 var NAV=[
   ["OVERVIEW",[["dashboard","Dashboard","grid",""],["territory","Territory Map","map",""]]],
-  ["SALES & CRM",[["crm","CRM & Deals","users",""],["pipeline","Onboarding Pipeline","flow",""]]],
-  ["OPERATIONS",[["sites","Sites Database","db",""],["tasks","Implementation","check",""],["visits","Site Visits","clip",""],["calendar","Calendar","cal",""]]],
-  ["ANALYTICS",[["vendors","Vendor ROI","tag",""],["calc","Revenue Calculator","calc",""],["process","Process Flow","route",""]]],
+  ["SALES & CRM",[["crm","CRM & Sales","users",""],["pipeline","Contract Onboarding","flow",""]]],
+  ["OPERATIONS",[["sites","Locations","db",""],["tasks","Implementation","check",""],["visits","Job-Site Visits","clip",""],["calendar","Calendar","cal",""]]],
+  ["ANALYTICS",[["vendors","Supplier ROI","tag",""],["calc","Revenue Calculator","calc",""],["process","Process Flow","route",""]]],
   ["ENABLEMENT",[["training","Training Academy","cap",""]]],
   ["DEVELOPER",[["devtools","Developer Tools","code",""]]]
 ];
@@ -584,43 +584,43 @@ definePage('dashboard',
   '<div class="kpi-row" id="dashKpis"></div>'+
   '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Program Revenue Trend</h3><span class="hint">last 12 months · $K</span></div><div class="chart-wrap"><canvas id="cRevenue"></canvas></div></div>'+
   '<div class="panel"><div class="panel-head"><h3>Revenue Mix</h3><span class="hint">by program</span></div><div class="chart-wrap"><canvas id="cMix"></canvas></div></div></div>'+
-  '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Fuel Gallons Trend</h3><span class="hint">millions / mo</span></div><div class="chart-wrap sm"><canvas id="cGallons"></canvas></div></div>'+
+  '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Jobs Completed Trend</h3><span class="hint">jobs / mo (00s)</span></div><div class="chart-wrap sm"><canvas id="cJobs"></canvas></div></div>'+
   '<div class="panel"><div class="panel-head"><h3>Priority Alerts</h3><span class="hint">click to open record</span></div><div class="alerts" id="alerts"></div></div></div>'+
   '<div class="foot"><b>About this demo.</b> A genericized showcase of the operations, field-sales, and analytics platforms <b>Jason Vega</b> designs and builds — typically shipped solo on a modern stack (Vercel, Supabase, Chart.js). <b>Every company, person, vendor, location, and metric here is fictional.</b> Want something like this? <a href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>.</div>',
   function(){
     $('#dashKpis').innerHTML=[
       kpi('','Network Revenue / mo',k(Math.round(NET_REV)),delta(4.6)+' vs last mo'),
-      kpi('g','Vendor Savings / mo',money(NET_SAV),delta(3.1)+' YTD'),
-      kpi('a','Active Sites',SITES.filter(function(s){return s.status==='Active'}).length,delta(7.7)+' this qtr'),
-      kpi('p','Active Vendors',VENDORS.length,'across 6 programs'),
+      kpi('g','Supplier Savings / mo',money(NET_SAV),delta(3.1)+' YTD'),
+      kpi('a','Active Locations',SITES.filter(function(s){return s.status==='Active'}).length,delta(7.7)+' this qtr'),
+      kpi('p','Active Suppliers',VENDORS.length,'across 6 categories'),
       kpi('o','Open Tasks',countOpenTasks(),delta(-12)+' this wk'),
       kpi('r','Launches In Flight',PIPELINE.filter(function(p){return p.stage<7}).length,'2 nearing go-live')
     ].join('');
     var AL=[
-      ['red','Ironhorse Fuel Network at risk','Discount terms stalled 9 days past target.','2h ago',function(){go('pipeline');openPipeline('Ironhorse Fuel Network')}],
-      ['','Copper Valley Fuel — rewards dip','Redemption rate down 6% MoM.','5h ago',function(){var s=SITES.filter(function(x){return /Copper Valley/.test(x.name)})[0]||SITES[6];go('sites');openSite(s.id)}],
-      ['green','Summit Route Pay live','Post-launch monitoring started.','1d ago',function(){go('pipeline');openPipeline('Summit Route Pay')}],
-      ['','3 vendor rebates pending','Q2 rebate confirmations awaiting upload.','1d ago',function(){go('vendors')}]
+      ['red','Ironhorse Manufacturing at risk','Contract pricing stalled 9 days past target.','2h ago',function(){go('pipeline');openPipeline('Ironhorse Manufacturing')}],
+      ['','Copper Valley — repeat-rate dip','Repeat-customer rate down 6% MoM.','5h ago',function(){var s=SITES.filter(function(x){return /Copper Valley/.test(x.name)})[0]||SITES[6];go('sites');openSite(s.id)}],
+      ['green','Summit Retail Centers live','Post-launch monitoring started.','1d ago',function(){go('pipeline');openPipeline('Summit Retail Centers')}],
+      ['','3 supplier rebates pending','Q2 rebate confirmations awaiting upload.','1d ago',function(){go('vendors')}]
     ];
     window.__alerts=AL;
     $('#alerts').innerHTML=AL.map(function(a,i){return '<div class="alert '+a[0]+' clickable" data-al="'+i+'"><span class="dot"></span><div><div class="t">'+a[1]+'</div><div class="d">'+a[2]+'</div></div><time>'+a[3]+'</time></div>'}).join('');
     $$('#alerts .alert').forEach(function(el){el.onclick=function(){window.__alerts[+el.dataset.al][4]()}});
     var c=themeColors();
     chart('cRevenue',{type:'bar',data:{labels:MONTHS,datasets:[{data:REV_SERIES,backgroundColor:'#00C8FF',borderRadius:5,barPercentage:.6}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
-    chart('cMix',{type:'doughnut',data:{labels:['Fuel','Vendor Programs','Rewards','Inside Sales'],datasets:[{data:[52,23,14,11],backgroundColor:['#00C8FF','#00D68F','#A78BFA','#FFC13D'],borderColor:c.ring,borderWidth:2}]},options:{cutout:'62%',plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{size:11.5}}}},maintainAspectRatio:false}});
-    chart('cGallons',{type:'line',data:{labels:MONTHS,datasets:[{data:GAL_SERIES,borderColor:'#00D68F',backgroundColor:'rgba(0,214,143,.12)',fill:true,tension:.35,pointRadius:0,borderWidth:2.5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+    chart('cMix',{type:'doughnut',data:{labels:['Service Calls','Installations','Maintenance Plans','Parts & Materials'],datasets:[{data:[52,23,14,11],backgroundColor:['#00C8FF','#00D68F','#A78BFA','#FFC13D'],borderColor:c.ring,borderWidth:2}]},options:{cutout:'62%',plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{size:11.5}}}},maintainAspectRatio:false}});
+    chart('cJobs',{type:'line',data:{labels:MONTHS,datasets:[{data:GAL_SERIES,borderColor:'#00D68F',backgroundColor:'rgba(0,214,143,.12)',fill:true,tension:.35,pointRadius:0,borderWidth:2.5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
   });
 function countOpenTasks(){var n=0;Object.keys(PROJECTS).forEach(function(p){PROJECTS[p].forEach(function(t){if(t[2]!=='done')n++})});return n}
 
 /* ============================================================
    PAGE: SITES  (searchable / sortable / paginated / drill-down)
    ============================================================ */
-var SITE_COLS=[["id","Site ID"],["name","Company"],["type","Type"],["mgr","Manager"],["city","City"],["state","ST"],["status","Status"],["gal","Gal/mo (K)"],["rev","Rev/mo ($K)"]];
+var SITE_COLS=[["id","Loc ID"],["name","Location"],["type","Type"],["mgr","Manager"],["city","City"],["state","ST"],["status","Status"],["gal","Jobs/mo"],["rev","Rev/mo ($K)"]];
 var siteState={sort:'name',dir:1,page:1,per:9,q:'',st:'',stat:''};
 definePage('sites',
-  '<div class="page-head"><div><h1>Sites Database</h1><p>Searchable, sortable network directory — click any row to open the full site record.</p></div>'+
-  '<div class="tools"><button class="btn btn-sm" id="siteExport">'+ic('down')+'Export CSV</button><button class="btn btn-sm btn-pri">+ New Site</button></div></div>'+
-  '<div class="toolbar"><div class="search">'+ic('search')+'<input class="field" id="siteSearch" placeholder="Search sites, cities, managers…"></div>'+
+  '<div class="page-head"><div><h1>Locations</h1><p>Searchable, sortable branch directory — click any row to open the full location record.</p></div>'+
+  '<div class="tools"><button class="btn btn-sm" id="siteExport">'+ic('down')+'Export CSV</button><button class="btn btn-sm btn-pri">+ New Location</button></div></div>'+
+  '<div class="toolbar"><div class="search">'+ic('search')+'<input class="field" id="siteSearch" placeholder="Search locations, cities, managers…"></div>'+
   '<select class="field" id="siteStateSel"></select><select class="field" id="siteStatusSel"><option value="">All statuses</option><option>Active</option><option>Onboarding</option><option>Prospect</option><option>Paused</option></select></div>'+
   '<div class="table-scroll"><table id="siteTable"><thead></thead><tbody></tbody></table></div><div class="pager" id="sitePager"></div>',
   function(){
@@ -654,29 +654,29 @@ function openSite(id){
   var s=siteById(id);if(!s)return;
   var enrolled=VENDORS.filter(function(v,i){return (s.score+i)%3===0}).slice(0,4);
   var nr=seed(s.id+'n');
-  var body=dwHead('Site record · '+s.type,s.name,s.city+', '+s.state+' · Exit '+s.exit+' · Mgr '+s.mgr)+
+  var body=dwHead('Location · '+s.type,s.name,s.city+', '+s.state+' · Mgr '+s.mgr)+
     '<div class="dw-body">'+
-      '<div class="subtabs" id="sdTabs">'+['Overview','Fuel','Rewards','Vendors','Financials','Notes'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div>'+
+      '<div class="subtabs" id="sdTabs">'+['Overview','Jobs','Service','Suppliers','Financials','Notes'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div>'+
       /* Overview */
       '<div class="subpanel active" data-p="Overview">'+
-        '<div class="mini-kpis">'+miniKpi('Status','<span class="pill '+s.status.toLowerCase()+'">'+s.status+'</span>')+miniKpi('Revenue / mo',k(s.rev))+miniKpi('Gallons / mo',s.gal+'K')+miniKpi('Health score',s.score)+'</div>'+
+        '<div class="mini-kpis">'+miniKpi('Status','<span class="pill '+s.status.toLowerCase()+'">'+s.status+'</span>')+miniKpi('Revenue / mo',k(s.rev))+miniKpi('Jobs / mo',s.gal)+miniKpi('Health score',s.score)+'</div>'+
         '<div class="sec-title">Revenue breakdown</div><div class="chart-wrap sm"><canvas id="d_siteMix"></canvas></div>'+
         '<dl class="dl"><dt>Phone</dt><dd class="mono">'+s.phone+'</dd><dt>Opened</dt><dd>'+s.opened+'</dd><dt>Type</dt><dd>'+s.type+'</dd><dt>Manager</dt><dd>'+s.mgr+'</dd></dl>'+
       '</div>'+
       /* Fuel */
-      '<div class="subpanel" data-p="Fuel">'+
-        '<div class="mini-kpis">'+miniKpi('Gallons / mo',s.gal+'K')+miniKpi('Diesel','$'+s.diesel)+miniKpi('Margin ¢/gal',s.margin)+miniKpi('Fuel rev',k(s.fuelRev))+'</div>'+
-        '<div class="sec-title">Gallons — trailing 6 mo</div><div class="chart-wrap sm"><canvas id="d_siteGal"></canvas></div>'+
+      '<div class="subpanel" data-p="Jobs">'+
+        '<div class="mini-kpis">'+miniKpi('Jobs / mo',s.gal)+miniKpi('Avg ticket','$'+Math.round(s.rev*1000/Math.max(1,s.gal)))+miniKpi('Close rate',s.margin+'%')+miniKpi('Service rev',k(s.fuelRev))+'</div>'+
+        '<div class="sec-title">Jobs — trailing 6 mo</div><div class="chart-wrap sm"><canvas id="d_siteGal"></canvas></div>'+
       '</div>'+
       /* Rewards */
-      '<div class="subpanel" data-p="Rewards">'+
-        '<div class="mini-kpis">'+miniKpi('Redemption rate',s.rewardsRate+'%')+miniKpi('Rewards rev',k(s.rewardsRev))+miniKpi('Enrolled/mo',Math.round(s.gal*1.4))+'</div>'+
-        '<div class="sec-title">Program health</div><p style="color:var(--muted);font-size:13px">Redemption rate of '+s.rewardsRate+'% is '+(s.rewardsRate>66?'above':'below')+' the network median. '+(s.rewardsRate>66?'Healthy engagement.':'Point-of-decision signage recommended.')+'</p>'+
+      '<div class="subpanel" data-p="Service">'+
+        '<div class="mini-kpis">'+miniKpi('Repeat rate',s.rewardsRate+'%')+miniKpi('Service rev',k(s.rewardsRev))+miniKpi('Calls / mo',Math.round(s.gal*1.4))+'</div>'+
+        '<div class="sec-title">Program health</div><p style="color:var(--muted);font-size:13px">Repeat-customer rate of '+s.rewardsRate+'% is '+(s.rewardsRate>66?'above':'below')+' the network median. '+(s.rewardsRate>66?'Healthy loyalty.':'Follow-up program recommended.')+'</p>'+
       '</div>'+
       /* Vendors */
-      '<div class="subpanel" data-p="Vendors">'+
-        '<div class="sec-title">Enrolled programs ('+enrolled.length+')</div>'+
-        '<div class="table-scroll"><table><thead><tr><th>Vendor</th><th>Program</th><th>Savings/mo</th></tr></thead><tbody>'+
+      '<div class="subpanel" data-p="Suppliers">'+
+        '<div class="sec-title">Active suppliers ('+enrolled.length+')</div>'+
+        '<div class="table-scroll"><table><thead><tr><th>Supplier</th><th>Category</th><th>Savings/mo</th></tr></thead><tbody>'+
         enrolled.map(function(v){return '<tr class="clickable" onclick="openVendor(\''+v.name.replace(/'/g,"\\'")+'\')"><td class="lnk">'+v.name+'</td><td>'+v.prog+'</td><td class="num" style="color:var(--green)">'+money(Math.round(v.sav/v.sites))+'</td></tr>'}).join('')+
         '</tbody></table></div>'+
       '</div>'+
@@ -684,7 +684,7 @@ function openSite(id){
       '<div class="subpanel" data-p="Financials">'+
         '<div class="sec-title">Monthly contribution</div>'+
         '<div class="table-scroll"><table><tbody>'+
-        [['Fuel margin',s.fuelRev],['Vendor programs',s.vendorRev],['Rewards',s.rewardsRev],['Inside sales',s.insideRev]].map(function(r){return '<tr><td>'+r[0]+'</td><td class="num" style="text-align:right">'+k(r[1])+'</td></tr>'}).join('')+
+        [['Service calls',s.fuelRev],['Installations',s.vendorRev],['Maintenance plans',s.rewardsRev],['Parts & materials',s.insideRev]].map(function(r){return '<tr><td>'+r[0]+'</td><td class="num" style="text-align:right">'+k(r[1])+'</td></tr>'}).join('')+
         '<tr style="font-weight:700"><td>Total / mo</td><td class="num" style="text-align:right;color:var(--green)">'+k(s.rev)+'</td></tr>'+
         '<tr style="font-weight:700"><td>Annualized</td><td class="num" style="text-align:right">'+k(s.rev*12)+'</td></tr>'+
         '</tbody></table></div>'+
@@ -741,9 +741,9 @@ function openTask(proj,i){
 /* ============================================================
    PAGE: SITE VISITS
    ============================================================ */
-var SV={'Fuel Review':['Diesel & DEF pricing verified','Fuel islands clean & lit','Fleet card readers functional','Aggregator signage current','Canopy branding in good repair'],'Facility':['Restrooms clean & stocked','Showers operational','Parking lines visible','Lot lighting functional','Security cameras online'],'Rewards':['Loyalty terminal working','Enrollment signage posted','Staff trained on program','Points redemption tested'],'Vendor Programs':['Beverage cooler stocked','Foodservice program active','Uniform/facilities vendor current','Rebate paperwork on file']};
+var SV={'Safety':['PPE available & worn','First-aid kit stocked','Fire extinguishers current','Hazard signage posted','Lockout/tagout followed'],'Equipment & Vehicles':['Service vehicles inspected','Tools calibrated & tagged','Ladders/lifts certified','Diagnostic gear working','Fuel & fluids checked'],'Job Quality':['Work matches scope','Site cleanup completed','Customer walkthrough done','Photos documented','Warranty explained'],'Materials & Suppliers':['Parts stock adequate','Supplier orders current','Returns processed','Rebate paperwork on file']};
 definePage('visits',
-  '<div class="page-head"><div><h1>Site Visit Review</h1><p>Standardized field-inspection checklist.</p></div><div class="tools"><button class="btn btn-sm" id="svSave">'+ic('down')+'Save</button></div></div>'+
+  '<div class="page-head"><div><h1>Job-Site Inspection</h1><p>Standardized field-inspection checklist.</p></div><div class="tools"><button class="btn btn-sm" id="svSave">'+ic('down')+'Save</button></div></div>'+
   '<div class="panel"><div class="subtabs" id="svTabs"></div><div id="svPanels"></div><div class="progline" id="svProg" style="margin-top:14px"></div></div>',
   function(){
     if($('#svTabs').dataset.done)return;
@@ -784,16 +784,16 @@ function renderCal(){
 /* ============================================================
    PAGE: VENDORS
    ============================================================ */
-var VEND_COLS=[["name","Vendor"],["prog","Program"],["pri","Priority"],["spend","Spend/mo ($)"],["reb","Rebate %"],["sav","Savings/mo ($)"]];
+var VEND_COLS=[["name","Supplier"],["prog","Program"],["pri","Priority"],["spend","Spend/mo ($)"],["reb","Rebate %"],["sav","Savings/mo ($)"]];
 definePage('vendors',
-  '<div class="page-head"><div><h1>Vendor ROI</h1><p>Program spend, rebates, and monthly savings — click a vendor for detail.</p></div><div class="tools"><button class="btn btn-sm" id="vendExport">'+ic('down')+'Export CSV</button></div></div>'+
+  '<div class="page-head"><div><h1>Supplier ROI</h1><p>Supplier spend, rebates, and monthly savings — click a supplier for detail.</p></div><div class="tools"><button class="btn btn-sm" id="vendExport">'+ic('down')+'Export CSV</button></div></div>'+
   '<div class="kpi-row" id="vendKpis"></div>'+
   '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Savings by Program</h3><span class="hint">$ / mo</span></div><div class="chart-wrap"><canvas id="cVendor"></canvas></div></div>'+
   '<div class="panel"><div class="panel-head"><h3>Program Mix</h3><span class="hint">share of savings</span></div><div class="chart-wrap"><canvas id="cVendorMix"></canvas></div></div></div>'+
   '<div class="panel"><div class="panel-head"><h3>ROI Detail</h3><span class="hint">'+VENDORS.length+' vendors</span></div><div class="table-scroll"><table id="vendTable"><thead></thead><tbody></tbody></table></div></div>',
   function(){
     var totalSav=VENDORS.reduce(function(s,v){return s+v.sav},0),totalSpend=VENDORS.reduce(function(s,v){return s+v.spend},0);
-    $('#vendKpis').innerHTML=[kpi('g','Total Savings / mo',money(totalSav),delta(3.1)+' YTD'),kpi('','Monthly Spend',money(totalSpend),'across '+VENDORS.length+' vendors'),kpi('a','Avg Rebate','7.1%','weighted'),kpi('p','Programs','6','2 high-priority')].join('');
+    $('#vendKpis').innerHTML=[kpi('g','Total Savings / mo',money(totalSav),delta(3.1)+' YTD'),kpi('','Monthly Spend',money(totalSpend),'across '+VENDORS.length+' suppliers'),kpi('a','Avg Rebate','7.1%','weighted'),kpi('p','Categories','6','2 high-priority')].join('');
     var vr=VENDORS.slice().sort(function(a,b){return b.sav-a.sav});
     $('#vendTable thead').innerHTML='<tr>'+VEND_COLS.map(function(c){return '<th>'+c[1]+'</th>'}).join('')+'</tr>';
     $('#vendTable tbody').innerHTML=vr.map(function(v){return '<tr class="clickable" data-n="'+esc(v.name)+'"><td class="lnk">'+esc(v.name)+'</td><td>'+v.prog+'</td><td><span class="pill '+v.pri.toLowerCase()+'">'+v.pri+'</span></td><td class="num">'+(v.spend?money(v.spend):'—')+'</td><td class="num">'+(v.reb?v.reb+'%':'—')+'</td><td class="num" style="color:var(--green)">'+money(v.sav)+'</td></tr>'}).join('');
@@ -805,7 +805,7 @@ definePage('vendors',
   });
 function openVendor(name){
   var v=vendorByName(name);if(!v)return;
-  openDrawer(dwHead('Vendor · '+v.prog,v.name,'Priority '+v.pri+' · '+v.sites+' sites enrolled')+
+  openDrawer(dwHead('Supplier · '+v.prog,v.name,'Priority '+v.pri+' · '+v.sites+' sites enrolled')+
     '<div class="dw-body">'+
     '<div class="mini-kpis">'+miniKpi('Savings / mo',money(v.sav))+miniKpi('Spend / mo',v.spend?money(v.spend):'—')+miniKpi('Rebate',v.reb?v.reb+'%':'—')+miniKpi('Sites',v.sites)+'</div>'+
     '<div class="sec-title">Savings — trailing 6 mo</div><div class="chart-wrap sm"><canvas id="d_vendTrend"></canvas></div>'+
@@ -821,7 +821,7 @@ function openVendor(name){
    PAGE: PIPELINE
    ============================================================ */
 definePage('pipeline',
-  '<div class="page-head"><div><h1>Onboarding Pipeline</h1><p>Payment-partner launches across a 7-stage pipeline — click a partner for the stage breakdown.</p></div></div>'+
+  '<div class="page-head"><div><h1>Contract Onboarding</h1><p>New commercial-contract onboarding across a 7-stage pipeline — click a contract for the stage breakdown.</p></div></div>'+
   '<div class="kpi-row" id="pipeKpis"></div><div class="pipe-grid" id="pipeGrid"></div>',
   function(){
     var live=PIPELINE.filter(function(p){return p.stage>=7}).length,risk=PIPELINE.filter(function(p){return p.risk}).length;
@@ -836,7 +836,7 @@ definePage('pipeline',
 function openPipeline(name){
   var p=PIPELINE.filter(function(x){return x.name===name})[0];if(!p)return;
   var pct=Math.round(p.stage/STAGES.length*100);
-  openDrawer(dwHead('Partner · '+p.rail,p.name,'Stage '+Math.min(p.stage+1,7)+' of 7 · '+pct+'% complete'+(p.risk?' · <span style="color:var(--red)">at risk</span>':''))+
+  openDrawer(dwHead('Contract · '+p.rail,p.name,'Stage '+Math.min(p.stage+1,7)+' of 7 · '+pct+'% complete'+(p.risk?' · <span style="color:var(--red)">at risk</span>':''))+
     '<div class="dw-body">'+
     '<div class="mini-kpis">'+miniKpi('Progress',pct+'%')+miniKpi('Current',STAGES[Math.min(p.stage,6)])+miniKpi('Owner',p.contact.split(' ')[0])+'</div>'+
     '<div class="sec-title">Stage breakdown</div>'+
@@ -852,34 +852,46 @@ function openPipeline(name){
 /* ============================================================
    PAGE: TERRITORY
    ============================================================ */
-var TILES=[["AK",0,0],["ME",0,10],["VT",1,9],["NH",1,10],["WA",2,0],["ID",2,1],["MT",2,2],["ND",2,3],["MN",2,4],["WI",2,5],["MI",2,7],["NY",2,9],["MA",2,10],["OR",3,0],["NV",3,1],["WY",3,2],["SD",3,3],["IA",3,4],["IL",3,5],["IN",3,6],["OH",3,7],["PA",3,8],["NJ",3,9],["CT",3,10],["CA",4,0],["UT",4,1],["CO",4,2],["NE",4,3],["MO",4,4],["KY",4,5],["WV",4,6],["VA",4,7],["MD",4,8],["RI",4,10],["AZ",5,1],["NM",5,2],["KS",5,3],["AR",5,4],["TN",5,5],["NC",5,6],["SC",5,7],["DE",5,8],["OK",6,3],["LA",6,4],["MS",6,5],["AL",6,6],["GA",6,7],["HI",7,0],["TX",7,3],["FL",7,8]];
 definePage('territory',
-  '<div class="page-head"><div><h1>Territory Map</h1><p>Site activity by state — click an active state to view its sites.</p></div></div>'+
-  '<div class="panel"><div class="map-wrap"><div><div class="tilemap" id="tilemap"></div><div class="legend">Activity <div class="scale" id="legScale"></div><span>low → high</span></div></div><div id="terrSide"></div></div></div>',
+  '<div class="page-head"><div><h1>Territory Map</h1><p>Service activity by state — click an active state to view its locations.</p></div></div>'+
+  '<div class="panel"><div class="map-wrap"><div><div id="usmap" style="position:relative;min-height:300px">Loading map…</div><div class="legend">Activity <div class="scale" id="legScale"></div><span>low → high</span></div></div><div id="terrSide"></div></div></div>',
   function(){
-    var siteStates={};SITES.forEach(function(s){siteStates[s.state]=(siteStates[s.state]||0)+1});
-    function val(ab){var h=0;for(var i=0;i<ab.length;i++)h=(h*31+ab.charCodeAt(i))%97;return siteStates[ab]?55+(h%40):(h%30)}
-    function col(v){if(v<12)return '';var t=Math.min(1,v/95);var r=Math.round(0x1E+(0x00-0x1E)*t),g=Math.round(0x3A+(0xC8-0x3A)*t),b=Math.round(0x5F+(0xFF-0x5F)*t);if(t>0.7)g=Math.round(0xC8+(0xD6-0xC8)*((t-0.7)/0.3));return 'rgb('+r+','+g+','+b+')'}
-    $('#tilemap').innerHTML=TILES.map(function(t){var v=val(t[0]),has=siteStates[t[0]],c=col(v);return '<div class="tile '+(has?'has':'')+'" style="grid-column:'+(t[2]+1)+';grid-row:'+(t[1]+1)+';'+(c?'background:'+c:'')+'" data-st="'+t[0]+'" title="'+t[0]+(has?' · '+has+' site(s)':' · no sites')+'">'+t[0]+'</div>'}).join('');
-    $('#legScale').innerHTML=[20,40,60,80,95].map(function(v){return '<i style="background:'+col(v)+'"></i>'}).join('');
-    $$('#tilemap .tile.has').forEach(function(el){el.onclick=function(){var st=el.dataset.st;siteState.st=st;siteState.q='';siteState.stat='';siteState.page=1;go('sites');toast('Filtered to '+st)}});
-    $('#terrSide').innerHTML=[kpi('','States Active',Object.keys(siteStates).length,'of 50'),kpi('g','Top Region','Midwest','5 sites'),kpi('a','Expansion Targets',SITES.filter(function(s){return s.status==='Prospect'}).length,'prospect stage')].join('');
+    var siteStates={};SITES.forEach(function(x){siteStates[x.state]=(siteStates[x.state]||0)+1});
+    $('#terrSide').innerHTML=[kpi('','States Active',Object.keys(siteStates).length,'of 50'),kpi('g','Top Region','Midwest','5 locations'),kpi('a','Expansion Targets',SITES.filter(function(x){return x.status==='Prospect'}).length,'prospect stage')].join('');
+    if(window.__usStates){drawMap(siteStates);}
+    else{fetch('us-states.json',{cache:'force-cache'}).then(function(r){return r.json()}).then(function(d){window.__usStates=d;drawMap(siteStates)}).catch(function(){$('#usmap').innerHTML='<p style="color:var(--muted)">Map data unavailable.</p>'});}
   });
+function terrCol(v){var t=Math.min(1,v/95);var r=Math.round(0x1E+(0x00-0x1E)*t),g=Math.round(0x3A+(0xC8-0x3A)*t),b=Math.round(0x5F+(0xFF-0x5F)*t);if(t>0.7)g=Math.round(0xC8+(0xD6-0xC8)*((t-0.7)/0.3));return 'rgb('+r+','+g+','+b+')'}
+function drawMap(siteStates){
+  var d=window.__usStates;if(!d)return;
+  function val(ab){var hh=0;for(var i=0;i<ab.length;i++)hh=(hh*31+ab.charCodeAt(i))%97;return siteStates[ab]?55+(hh%40):(hh%28)}
+  var svg='<svg viewBox="'+d.viewBox+'" style="width:100%;height:auto;display:block;overflow:visible">';
+  Object.keys(d.paths).forEach(function(code){var has=siteStates[code],v=val(code);var fill=has?terrCol(v):'var(--surface-3)';
+    svg+='<path d="'+d.paths[code]+'" data-st="'+code+'" style="fill:'+fill+';stroke:var(--bg);stroke-width:1'+(has?';cursor:pointer':'')+'"><title>'+code+(has?' · '+has+' location(s)':' · no locations')+'</title></path>';});
+  svg+='</svg>';
+  $('#usmap').innerHTML=svg;
+  $('#legScale').innerHTML=[20,40,60,80,95].map(function(v){return '<i style="background:'+terrCol(v)+'"></i>'}).join('');
+  $$('#usmap path[data-st]').forEach(function(p){if(siteStates[p.dataset.st]){
+    p.addEventListener('mouseenter',function(){p.style.fillOpacity='.78'});
+    p.addEventListener('mouseleave',function(){p.style.fillOpacity='1'});
+    p.addEventListener('click',function(){var st=p.dataset.st;siteState.st=st;siteState.q='';siteState.stat='';siteState.page=1;go('sites');toast('Filtered to '+st)});
+  }});
+}
 
 /* ============================================================
    PAGE: CALCULATOR
    ============================================================ */
 definePage('calc',
-  '<div class="page-head"><div><h1>Revenue Calculator</h1><p>Model a fuel discount scenario — retail-minus vs cost-plus.</p></div></div>'+
+  '<div class="page-head"><div><h1>Job Margin Calculator</h1><p>Model a service-pricing scenario — margin and volume.</p></div></div>'+
   '<div class="panel"><div class="calc-grid"><div>'+
-  '<div class="calc-row"><label>Monthly gallons</label><input class="field" type="number" id="calcGal" value="185000"></div>'+
-  '<div class="calc-row"><label>Current margin (¢/gal)</label><input class="field" type="number" id="calcCur" value="41"></div>'+
-  '<div class="calc-row"><label>Proposed margin (¢/gal)</label><input class="field" type="number" id="calcNew" value="34"></div>'+
+  '<div class="calc-row"><label>Monthly job volume</label><input class="field" type="number" id="calcGal" value="3800"></div>'+
+  '<div class="calc-row"><label>Current margin (%)</label><input class="field" type="number" id="calcCur" value="41"></div>'+
+  '<div class="calc-row"><label>Proposed margin (%)</label><input class="field" type="number" id="calcNew" value="34"></div>'+
   '<div class="calc-row"><label>Volume lift (%)</label><input class="field" type="number" id="calcLift" value="18"></div>'+
-  '<div class="calc-row"><label>Inside-sales capture ($/gal)</label><input class="field" type="number" id="calcInside" value="0.09" step="0.01"></div></div>'+
+  '<div class="calc-row"><label>Add-on capture ($/unit)</label><input class="field" type="number" id="calcInside" value="14" step="1"></div></div>'+
   '<div class="calc-out"><div class="lbl" style="color:var(--muted);font-size:12px">Projected monthly margin change</div><div class="big" id="calcBig">$0</div>'+
-  '<div class="orow"><span>Current fuel margin</span><span id="oCur">—</span></div><div class="orow"><span>Proposed fuel margin (w/ lift)</span><span id="oNew">—</span></div>'+
-  '<div class="orow"><span>Inside-sales upside</span><span id="oInside">—</span></div><div class="orow"><span><b>Net monthly impact</b></span><span id="oNet"><b>—</b></span></div><div class="orow"><span>Annualized</span><span id="oYear">—</span></div></div></div></div>',
+  '<div class="orow"><span>Current margin</span><span id="oCur">—</span></div><div class="orow"><span>Proposed margin (w/ lift)</span><span id="oNew">—</span></div>'+
+  '<div class="orow"><span>Add-on upside</span><span id="oInside">—</span></div><div class="orow"><span><b>Net monthly impact</b></span><span id="oNet"><b>—</b></span></div><div class="orow"><span>Annualized</span><span id="oYear">—</span></div></div></div></div>',
   function(){$$('#pg-calc input').forEach(function(i){i.oninput=calc});calc()});
 function calc(){
   var g=+$('#calcGal').value||0,cur=+$('#calcCur').value||0,nw=+$('#calcNew').value||0,lift=+$('#calcLift').value||0,inside=+$('#calcInside').value||0;
@@ -916,53 +928,167 @@ function openCourse(i){
 }
 
 /* ============================================================
-   PAGE: CRM & DEALS
+   PAGE: CRM & SALES
    ============================================================ */
 var DEAL_STAGES=[["lead","Lead","#8A97B0",.1],["qual","Qualified","#38BDF8",.3],["prop","Proposal","#FFC13D",.5],["neg","Negotiation","#A78BFA",.75],["won","Won","#00D68F",1]];
 var DEALS=[
-  {co:"Ironhorse Fuel Network",ct:"Dana Whitfield",ti:"VP Partnerships",val:48000,stage:"neg",owner:"Alex Rivera",email:"dana@ironhorse.example",phone:"(555) 412-8890",note:"Discount terms in final review; legal countersign pending."},
-  {co:"Coastal Logistics",ct:"Priya Anand",ti:"Fleet Director",val:36000,stage:"prop",owner:"Jordan Lee",email:"priya@coastallog.example",phone:"(555) 733-2201",note:"Proposal delivered; awaiting board approval."},
-  {co:"Redline Freight",ct:"Devon Cross",ti:"Operations Manager",val:29000,stage:"qual",owner:"Sam Carter",email:"devon@redline.example",phone:"(555) 902-3318",note:"Qualified — 40-truck fleet, high DEF volume."},
-  {co:"Vega Freight Pay",ct:"Marcus Bell",ti:"Head of Payments",val:61000,stage:"won",owner:"Alex Rivera",email:"marcus@vegafp.example",phone:"(555) 908-4412",note:"Closed won — onboarding in progress."},
-  {co:"MetroHaul Cards",ct:"Owen Fields",ti:"Partnerships Lead",val:42000,stage:"neg",owner:"Taylor Brooks",email:"owen@metrohaul.example",phone:"(555) 221-7788",note:"Negotiating settlement timing."},
-  {co:"Summit Route Pay",ct:"Lena Park",ti:"General Manager",val:55000,stage:"won",owner:"Morgan Diaz",email:"lena@summitroute.example",phone:"(555) 556-1042",note:"Closed won — live and monitored."},
-  {co:"Beacon Transport",ct:"Joel Ramsey",ti:"VP Fleet",val:18000,stage:"lead",owner:"Casey Nolan",email:"joel@beacontrans.example",phone:"(555) 447-2093",note:"Inbound lead from trade show."},
-  {co:"Cross-Country Fuel",ct:"Tara Vale",ti:"Director",val:33000,stage:"prop",owner:"Jordan Lee",email:"tara@crosscountry.example",phone:"(555) 118-3376",note:"Proposal in review; strong fit."},
-  {co:"Granite Freight Co",ct:"Hana Ito",ti:"Fleet Manager",val:21000,stage:"qual",owner:"Sam Carter",email:"hana@granitefreight.example",phone:"(555) 771-6654",note:"Qualified; needs POS compatibility check."},
-  {co:"Blue Ridge Haulers",ct:"Gil Ortiz",ti:"Owner",val:15000,stage:"lead",owner:"Casey Nolan",email:"gil@blueridge.example",phone:"(555) 662-5530",note:"Early conversation; regional operator."},
-  {co:"Pioneer Trucking",ct:"Ruth Gaines",ti:"CFO",val:27000,stage:"prop",owner:"Taylor Brooks",email:"ruth@pioneertruck.example",phone:"(555) 340-9911",note:"Proposal sent; ROI model requested."},
-  {co:"Cascade Freight",ct:"Mara Quinn",ti:"Operations Lead",val:24000,stage:"qual",owner:"Morgan Diaz",email:"mara@cascadefreight.example",phone:"(555) 615-8842",note:"Qualified; pilot at two lanes proposed."},
-  {co:"Northgate Express",ct:"Joel Ramsey",ti:"VP",val:39000,stage:"neg",owner:"Alex Rivera",email:"jr@northgate.example",phone:"(555) 210-4471",note:"Negotiating multi-year term."},
-  {co:"Silverline Fleet",ct:"Owen Fields",ti:"Director",val:12000,stage:"lead",owner:"Casey Nolan",email:"owen@silverline.example",phone:"(555) 615-3390",note:"Lead qualification scheduled."}
+  {co:"Delgado Property Group",ct:"Maria Delgado",ti:"Facilities Director",val:48000,stage:"neg",owner:"Alex Rivera",email:"maria@delgadopg.example",phone:"(555) 240-1180",note:"Multi-site maintenance contract in final review."},
+  {co:"Foster Manufacturing",ct:"Dale Foster",ti:"Plant Manager",val:36000,stage:"prop",owner:"Jordan Lee",email:"dale@fostermfg.example",phone:"(555) 221-8876",note:"Proposal delivered; awaiting board approval."},
+  {co:"Pratt Logistics",ct:"Owen Pratt",ti:"Operations Lead",val:29000,stage:"qual",owner:"Sam Carter",email:"owen@prattlog.example",phone:"(555) 117-6650",note:"Qualified — 3 warehouses, HVAC + electrical."},
+  {co:"Vaughn Auto Group",ct:"Rick Vaughn",ti:"Owner",val:61000,stage:"won",owner:"Alex Rivera",email:"rick@vaughnauto.example",phone:"(555) 447-9910",note:"Closed won — onboarding scheduled."},
+  {co:"Brookside Apartments",ct:"Nina Brooks",ti:"Property Manager",val:42000,stage:"neg",owner:"Taylor Brooks",email:"nina@brookside.example",phone:"(555) 550-1123",note:"Negotiating annual service terms."},
+  {co:"Willis Church Campus",ct:"Hank Willis",ti:"Operations",val:55000,stage:"won",owner:"Morgan Diaz",email:"hank@williscampus.example",phone:"(555) 240-8817",note:"Closed won — recurring maintenance plan."},
+  {co:"Kim Medical Plaza",ct:"Grace Kim",ti:"Administrator",val:18000,stage:"lead",owner:"Casey Nolan",email:"grace@kimmedical.example",phone:"(555) 908-4471",note:"Inbound lead from referral."},
+  {co:"Salas Restaurant Group",ct:"Victor Salas",ti:"GM",val:33000,stage:"prop",owner:"Jordan Lee",email:"victor@salasrg.example",phone:"(555) 334-7789",note:"Proposal in review; refrigeration + HVAC."},
+  {co:"Cedar Ridge HOA",ct:"Angela Hunt",ti:"Board President",val:21000,stage:"qual",owner:"Sam Carter",email:"angela@cedarridge.example",phone:"(555) 903-2261",note:"Qualified; common-area maintenance."},
+  {co:"Moreno Fitness Studios",ct:"Ella Moreno",ti:"Owner",val:15000,stage:"lead",owner:"Casey Nolan",email:"ella@morenofit.example",phone:"(555) 771-2244",note:"Early conversation; 4 locations."},
+  {co:"Lopez Retail Centers",ct:"Sandra Lopez",ti:"Facilities",val:27000,stage:"prop",owner:"Taylor Brooks",email:"sandra@lopezretail.example",phone:"(555) 402-3318",note:"Proposal sent; ROI model requested."},
+  {co:"Summit Dental Offices",ct:"Priya Nair",ti:"Office Manager",val:24000,stage:"qual",owner:"Morgan Diaz",email:"priya@summitdental.example",phone:"(555) 662-3345",note:"Qualified; pilot at two offices proposed."},
+  {co:"Bledsoe Facilities",ct:"Tom Bledsoe",ti:"Director",val:39000,stage:"neg",owner:"Alex Rivera",email:"tom@bledsoefac.example",phone:"(555) 118-7742",note:"Negotiating multi-year term."},
+  {co:"Carver Custom Homes",ct:"Ben Carver",ti:"Owner",val:12000,stage:"lead",owner:"Casey Nolan",email:"ben@carverhomes.example",phone:"(555) 615-9902",note:"Lead qualification scheduled."}
 ];
 function stageMeta(id){return DEAL_STAGES.filter(function(s){return s[0]===id})[0]}
+
+var CLIENT_STATUS=[["new","New Lead"],["contacted","Contacted"],["quoted","Quoted"],["followup","Follow-up"],["won","Won"],["lost","Lost"]];
+function cstatusName(id){var m=CLIENT_STATUS.filter(function(s){return s[0]===id})[0];return m?m[1]:id}
+var CLIENTS=[
+  {id:"C-1001",name:"Maria Delgado",co:"Delgado Property Group",phone:"(555) 240-1180",owner:"Alex Rivera",val:8400,status:"quoted",nextDays:-2},
+  {id:"C-1002",name:"Tom Bledsoe",co:"Bledsoe Facilities",phone:"(555) 118-7742",owner:"Jordan Lee",val:15600,status:"followup",nextDays:0},
+  {id:"C-1003",name:"Angela Hunt",co:"Cedar Ridge HOA",phone:"(555) 903-2261",owner:"Sam Carter",val:6200,status:"contacted",nextDays:3},
+  {id:"C-1004",name:"Rick Vaughn",co:"Vaughn Auto Group",phone:"(555) 447-9910",owner:"Taylor Brooks",val:22800,status:"won",nextDays:30},
+  {id:"C-1005",name:"Priya Nair",co:"Summit Dental Offices",phone:"(555) 662-3345",owner:"Morgan Diaz",val:9700,status:"new",nextDays:1},
+  {id:"C-1006",name:"Dale Foster",co:"Foster Manufacturing",phone:"(555) 221-8876",owner:"Casey Nolan",val:31200,status:"quoted",nextDays:-5},
+  {id:"C-1007",name:"Nina Brooks",co:"Brookside Apartments",phone:"(555) 550-1123",owner:"Alex Rivera",val:18400,status:"followup",nextDays:2},
+  {id:"C-1008",name:"Victor Salas",co:"Salas Restaurant Group",phone:"(555) 334-7789",owner:"Jordan Lee",val:12600,status:"contacted",nextDays:6},
+  {id:"C-1009",name:"Grace Kim",co:"Kim Medical Plaza",phone:"(555) 908-4471",owner:"Sam Carter",val:14900,status:"new",nextDays:0},
+  {id:"C-1010",name:"Owen Pratt",co:"Pratt Logistics",phone:"(555) 117-6650",owner:"Taylor Brooks",val:27500,status:"quoted",nextDays:9},
+  {id:"C-1011",name:"Sandra Lopez",co:"Lopez Retail Centers",phone:"(555) 402-3318",owner:"Morgan Diaz",val:16800,status:"followup",nextDays:-1},
+  {id:"C-1012",name:"Ben Carver",co:"Carver Custom Homes",phone:"(555) 615-9902",owner:"Casey Nolan",val:8900,status:"lost",nextDays:99},
+  {id:"C-1013",name:"Ella Moreno",co:"Moreno Fitness Studios",phone:"(555) 771-2244",owner:"Alex Rivera",val:11300,status:"contacted",nextDays:4},
+  {id:"C-1014",name:"Hank Willis",co:"Willis Church Campus",phone:"(555) 240-8817",owner:"Jordan Lee",val:19700,status:"won",nextDays:14}
+];
+function clientById(id){return CLIENTS.filter(function(c){return c.id===id})[0]}
+
+var SMONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var SALES_LY=[188,196,205,212,203,219,228,235,241,236,247,258];
+var SALES_TY=[214,223,231,238,229,247,258,266,255,271,283,296];
+
 definePage('crm',
-  '<div class="page-head"><div><h1>CRM &amp; Deals</h1><p>Sales pipeline for payment-partner accounts — click a deal to open the account.</p></div><div class="tools"><button class="btn btn-sm" id="crmExport">'+ic('down')+'Export CSV</button><button class="btn btn-sm btn-pri">+ New Deal</button></div></div>'+
-  '<div class="kpi-row" id="crmKpis"></div>'+
-  '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Pipeline Value by Stage</h3><span class="hint">$ / mo potential</span></div><div class="chart-wrap sm"><canvas id="cCrm"></canvas></div></div>'+
-  '<div class="panel"><div class="panel-head"><h3>Deals by Owner</h3><span class="hint">count</span></div><div class="chart-wrap sm"><canvas id="cCrmOwner"></canvas></div></div></div>'+
-  '<div class="panel"><div class="panel-head"><h3>Deal Board</h3><span class="hint">drag-free demo · click a card</span></div><div class="board" id="crmBoard" style="grid-template-columns:repeat(5,1fr)"></div></div>',
+  '<div class="page-head"><div><h1>CRM &amp; Sales</h1><p>Sales analytics, pipeline, client follow-ups, and scheduled tasks.</p></div></div>'+
+  '<div class="subtabs" id="crmTabs">'+['Sales Analytics','Pipeline','Clients','Tasks'].map(function(t,i){return '<div class="subtab '+(i===0?'active':'')+'" data-t="'+t+'">'+t+'</div>'}).join('')+'</div>'+
+  '<div id="crmContent"></div>',
   function(){
-    var open=DEALS.filter(function(d){return d.stage!=='won'});
-    var pipeVal=open.reduce(function(a,d){return a+d.val},0);
-    var weighted=DEALS.reduce(function(a,d){return a+d.val*stageMeta(d.stage)[3]},0);
-    var won=DEALS.filter(function(d){return d.stage==='won'}).length;
-    $('#crmKpis').innerHTML=[kpi('','Open Deals',open.length,'in pipeline'),kpi('a','Pipeline Value',money(pipeVal)+'/mo',delta(6.2)+' vs last mo'),kpi('p','Weighted',money(Math.round(weighted))+'/mo','probability-adj'),kpi('g','Won (qtr)',won,'closed deals')].join('');
-    $('#crmBoard').innerHTML=DEAL_STAGES.map(function(s){var items=DEALS.filter(function(d){return d.stage===s[0]});
-      return '<div><div class="col-head"><span class="sw" style="background:'+s[2]+'"></span>'+s[1]+'<span class="cnt">'+items.length+'</span></div>'+items.map(function(d){
-        return '<div class="task" data-co="'+esc(d.co)+'"><div class="tt">'+esc(d.co)+'</div><div class="co">'+esc(d.ct)+' · '+esc(d.ti)+'</div><div class="meta"><span class="who"><span class="a">'+initials(d.owner)+'</span>'+d.owner.split(' ')[0]+'</span><span class="val">'+money(d.val)+'</span></div></div>';
-      }).join('')+'</div>';
-    }).join('');
-    $$('#crmBoard .task').forEach(function(el){el.onclick=function(){openDeal(el.dataset.co)}});
-    $('#crmExport').onclick=function(){exportCSV('northwind-deals.csv',['Company','Contact','Title','Value/mo','Stage','Owner'],DEALS.map(function(d){return [d.co,d.ct,d.ti,d.val,stageMeta(d.stage)[1],d.owner]}))};
-    var c=themeColors();
-    chart('cCrm',{type:'bar',data:{labels:DEAL_STAGES.map(function(s){return s[1]}),datasets:[{data:DEAL_STAGES.map(function(s){return DEALS.filter(function(d){return d.stage===s[0]}).reduce(function(a,d){return a+d.val},0)}),backgroundColor:DEAL_STAGES.map(function(s){return s[2]}),borderRadius:5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
-    var owners={};DEALS.forEach(function(d){owners[d.owner]=(owners[d.owner]||0)+1});
-    chart('cCrmOwner',{type:'bar',data:{labels:Object.keys(owners),datasets:[{data:Object.values(owners),backgroundColor:'#A78BFA',borderRadius:5}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+    $$('#crmTabs .subtab').forEach(function(tb){tb.onclick=function(){crmRender(tb.dataset.t)}});
+    crmRender(crmTab);
   });
+var crmTab='Sales Analytics';
+function crmRender(tab){
+  crmTab=tab; killCharts('cc_');
+  $$('#crmTabs .subtab').forEach(function(x){x.classList.toggle('active',x.dataset.t===tab)});
+  var c=$('#crmContent');
+  if(tab==='Sales Analytics')crmSales(c);
+  else if(tab==='Pipeline')crmPipeline(c);
+  else if(tab==='Clients')crmClients(c);
+  else crmTasks(c);
+}
+function crmSales(c){
+  var ty=SALES_TY,ly=SALES_LY,n=ty.length,i=n-1;
+  var mom=(ty[i]-ty[i-1])/ty[i-1]*100, yoy=(ty[i]-ly[i])/ly[i]*100;
+  var avg3=(ty[i]+ty[i-1]+ty[i-2])/3, ytd=ty.reduce(function(a,b){return a+b},0), avgMo=Math.round(ytd/n);
+  var gs=[];for(var m=n-3;m<n;m++)gs.push((ty[m]-ty[m-1])/ty[m-1]);
+  var avgg=gs.reduce(function(a,b){return a+b},0)/gs.length, forecast=Math.round(ty[i]*(1+avgg));
+  c.innerHTML=
+    '<div class="kpi-row">'+
+    kpi('','This Month · '+SMONTHS[i],'$'+ty[i]+'K',delta(+mom.toFixed(1))+' MoM')+
+    kpi('g','Year over Year',delta(+yoy.toFixed(1)),'$'+ly[i]+'K → $'+ty[i]+'K')+
+    kpi('p','Forecast · '+SMONTHS[(i+1)%12],'$'+forecast+'K',delta(+(avgg*100).toFixed(1))+' trend')+
+    kpi('a','3-Mo Average','$'+Math.round(avg3)+'K','trailing')+
+    kpi('o','Monthly Average','$'+avgMo+'K','this year')+
+    kpi('','YTD Sales','$'+ytd+'K','12 months')+
+    '</div>'+
+    '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Monthly Sales — This Year vs Last</h3><span class="hint">$K</span></div><div class="chart-wrap"><canvas id="cc_sales"></canvas></div></div>'+
+    '<div class="panel"><div class="panel-head"><h3>Year-over-Year Growth</h3><span class="hint">% by month</span></div><div class="chart-wrap"><canvas id="cc_yoy"></canvas></div></div></div>'+
+    '<div class="panel"><div class="panel-head"><h3>Sales Template</h3><span class="hint">monthly · MoM · YoY · vs average</span></div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Month</th><th>Sales ($K)</th><th>MoM</th><th>YoY</th><th>vs Avg</th></tr></thead><tbody>'+
+    ty.map(function(v,mi){var m2=mi>0?((v-ty[mi-1])/ty[mi-1]*100):null,y2=(v-ly[mi])/ly[mi]*100,va=(v-avgMo)/avgMo*100;
+      return '<tr'+(mi===i?' style="background:var(--surface-2)"':'')+'><td>'+SMONTHS[mi]+'</td><td class="num">$'+v+'K</td><td>'+(m2==null?'—':delta(+m2.toFixed(1)))+'</td><td>'+delta(+y2.toFixed(1))+'</td><td>'+delta(+va.toFixed(1))+'</td></tr>'}).join('')+
+    '<tr style="font-weight:700;border-top:2px solid var(--hair)"><td>Forecast · '+SMONTHS[(i+1)%12]+'</td><td class="num" style="color:var(--cyan)">$'+forecast+'K</td><td>'+delta(+(avgg*100).toFixed(1))+'</td><td>—</td><td>—</td></tr>'+
+    '<tr style="font-weight:700"><td>Average</td><td class="num">$'+avgMo+'K</td><td>—</td><td>—</td><td>—</td></tr>'+
+    '</tbody></table></div></div>';
+  chart('cc_sales',{type:'bar',data:{labels:SMONTHS,datasets:[{label:'This Year',data:ty,backgroundColor:'#00C8FF',borderRadius:4},{label:'Last Year',data:ly,backgroundColor:'#2C3444',borderRadius:4}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{size:11}}}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+  var yoyArr=ty.map(function(v,mi){return +((v-ly[mi])/ly[mi]*100).toFixed(1)});
+  chart('cc_yoy',{type:'line',data:{labels:SMONTHS,datasets:[{data:yoyArr,borderColor:'#00D68F',backgroundColor:'rgba(0,214,143,.12)',fill:true,tension:.35,pointRadius:2,borderWidth:2.5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+}
+function crmPipeline(c){
+  var open=DEALS.filter(function(d){return d.stage!=='won'}),pipeVal=open.reduce(function(a,d){return a+d.val},0);
+  var weighted=DEALS.reduce(function(a,d){return a+d.val*stageMeta(d.stage)[3]},0),won=DEALS.filter(function(d){return d.stage==='won'}).length;
+  c.innerHTML='<div class="kpi-row">'+kpi('','Open Deals',open.length,'in pipeline')+kpi('a','Pipeline Value',money(pipeVal)+'/mo',delta(6.2)+' vs last mo')+kpi('p','Weighted',money(Math.round(weighted))+'/mo','probability-adj')+kpi('g','Won (qtr)',won,'closed deals')+'</div>'+
+    '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Pipeline Value by Stage</h3><span class="hint">$ / mo</span></div><div class="chart-wrap sm"><canvas id="cc_deal"></canvas></div></div>'+
+    '<div class="panel"><div class="panel-head"><h3>Deals by Owner</h3><span class="hint">count</span></div><div class="chart-wrap sm"><canvas id="cc_owner"></canvas></div></div></div>'+
+    '<div class="panel"><div class="panel-head"><h3>Deal Board</h3><span class="hint">click a card</span></div><div class="board" id="crmBoard" style="grid-template-columns:repeat(5,1fr)"></div></div>';
+  $('#crmBoard').innerHTML=DEAL_STAGES.map(function(s){var items=DEALS.filter(function(d){return d.stage===s[0]});
+    return '<div><div class="col-head"><span class="sw" style="background:'+s[2]+'"></span>'+s[1]+'<span class="cnt">'+items.length+'</span></div>'+items.map(function(d){
+      return '<div class="task" data-co="'+esc(d.co)+'"><div class="tt">'+esc(d.co)+'</div><div class="co">'+esc(d.ct)+' · '+esc(d.ti)+'</div><div class="meta"><span class="who"><span class="a">'+initials(d.owner)+'</span>'+d.owner.split(' ')[0]+'</span><span class="val">'+money(d.val)+'</span></div></div>'}).join('')+'</div>'}).join('');
+  $$('#crmBoard .task').forEach(function(el){el.onclick=function(){openDeal(el.dataset.co)}});
+  chart('cc_deal',{type:'bar',data:{labels:DEAL_STAGES.map(function(s){return s[1]}),datasets:[{data:DEAL_STAGES.map(function(s){return DEALS.filter(function(d){return d.stage===s[0]}).reduce(function(a,d){return a+d.val},0)}),backgroundColor:DEAL_STAGES.map(function(s){return s[2]}),borderRadius:5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+  var owners={};DEALS.forEach(function(d){owners[d.owner]=(owners[d.owner]||0)+1});
+  chart('cc_owner',{type:'bar',data:{labels:Object.keys(owners),datasets:[{data:Object.values(owners),backgroundColor:'#A78BFA',borderRadius:5}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
+}
+function nextLabel(days){if(days>=90)return '<span class="pill paused">—</span>';if(days<0)return '<span class="pill risk">Overdue '+(-days)+'d</span>';if(days===0)return '<span class="pill prospect">Today</span>';if(days<=7)return '<span class="pill onboarding">in '+days+'d</span>';return '<span class="pill paused">in '+days+'d</span>'}
+var crmClientFilter='';
+function crmClients(c){
+  var active=CLIENTS.filter(function(x){return x.status!=='won'&&x.status!=='lost'});
+  c.innerHTML='<div class="kpi-row">'+
+    kpi('','Total Clients',CLIENTS.length,'in book')+
+    kpi('r','Overdue',CLIENTS.filter(function(x){return x.status!=='won'&&x.status!=='lost'&&x.nextDays<0}).length,'follow-ups')+
+    kpi('a','Due Today',CLIENTS.filter(function(x){return x.nextDays===0&&x.status!=='won'&&x.status!=='lost'}).length,'contacts')+
+    kpi('g','Won',CLIENTS.filter(function(x){return x.status==='won'}).length,'this quarter')+'</div>'+
+    '<div class="toolbar"><div class="search">'+ic('search')+'<input class="field" id="clSearch" placeholder="Search clients, companies, phone…"></div>'+
+    '<select class="field" id="clStatusFilter"><option value="">All statuses</option>'+CLIENT_STATUS.map(function(s){return '<option value="'+s[0]+'">'+s[1]+'</option>'}).join('')+'</select></div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Client</th><th>Phone</th><th>Owner</th><th>Value</th><th>Status</th><th>Next follow-up</th></tr></thead><tbody id="clBody"></tbody></table></div>';
+  var render=function(){
+    var q=($('#clSearch').value||'').toLowerCase();
+    var rows=CLIENTS.filter(function(x){var hay=(x.name+' '+x.co+' '+x.phone).toLowerCase();return (!q||hay.indexOf(q)>=0)&&(!crmClientFilter||x.status===crmClientFilter)});
+    $('#clBody').innerHTML=rows.map(function(x){
+      return '<tr class="clickable" data-id="'+x.id+'"><td><b>'+esc(x.name)+'</b><div class="co" style="font-size:11px;color:var(--faint)">'+esc(x.co)+'</div></td>'+
+        '<td class="mono"><a href="tel:'+x.phone.replace(/[^0-9]/g,'')+'" onclick="event.stopPropagation()">'+x.phone+'</a></td>'+
+        '<td style="color:var(--muted)">'+x.owner.split(" ")[0]+'</td><td class="num">'+money(x.val)+'</td>'+
+        '<td><select class="field cl-status" data-id="'+x.id+'" onclick="event.stopPropagation()" style="padding:5px 8px;font-size:12px">'+CLIENT_STATUS.map(function(s){return '<option value="'+s[0]+'"'+(s[0]===x.status?' selected':'')+'>'+s[1]+'</option>'}).join('')+'</select></td>'+
+        '<td>'+nextLabel(x.nextDays)+'</td></tr>'}).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">No matching clients.</td></tr>';
+    $$('#clBody tr[data-id]').forEach(function(tr){tr.onclick=function(){openClient(tr.dataset.id)}});
+    $$('#clBody .cl-status').forEach(function(sel){sel.onchange=function(){var cl=clientById(sel.dataset.id);cl.status=sel.value;toast(cl.name+' → '+cstatusName(sel.value),'ok');render()}});
+  };
+  $('#clSearch').oninput=render;$('#clStatusFilter').onchange=function(){crmClientFilter=this.value;render()};
+  render();
+}
+function openClient(id){
+  var x=clientById(id);if(!x)return;
+  var flow=['new','contacted','quoted','followup','won'];var atIdx=flow.indexOf(x.status==='lost'?'contacted':x.status);
+  openDrawer(dwHead('Client · '+cstatusName(x.status),x.name,esc(x.co))+
+    '<div class="dw-body">'+
+    '<div class="mini-kpis">'+miniKpi('Value',money(x.val))+miniKpi('Owner',x.owner.split(" ")[0])+miniKpi('Next',x.nextDays>=90?'—':x.nextDays<0?('Overdue '+(-x.nextDays)+'d'):x.nextDays===0?'Today':'in '+x.nextDays+'d')+'</div>'+
+    '<div class="sec-title">Contact</div><dl class="dl"><dt>Phone</dt><dd class="mono">'+x.phone+'</dd><dt>Company</dt><dd>'+esc(x.co)+'</dd><dt>Owner</dt><dd>'+x.owner+'</dd><dt>Status</dt><dd>'+cstatusName(x.status)+'</dd></dl>'+
+    '<div class="sec-title">Workflow</div>'+flow.map(function(st,si){var done=si<=atIdx&&x.status!=='lost';return '<div class="check"><span class="q">'+(done?'✓ ':'○ ')+cstatusName(st)+'</span><span class="pill '+(done?'done':'todo')+'">'+(done?'Done':'Open')+'</span></div>'}).join('')+
+    '<div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sm btn-pri" onclick="toast(\'Call logged (demo)\',\'ok\')">Log call</button><button class="btn btn-sm" onclick="toast(\'Follow-up scheduled (demo)\',\'ok\')">Schedule follow-up</button></div>'+
+    '</div>');
+}
+function crmTasks(c){
+  var buckets=[["over","Overdue","#FF4757",function(d){return d<0}],["today","Today","#FFC13D",function(d){return d===0}],["week","This Week","#00C8FF",function(d){return d>0&&d<=7}],["later","Scheduled","#8A97B0",function(d){return d>7&&d<90}]];
+  var pool=CLIENTS.filter(function(x){return x.status!=='won'&&x.status!=='lost'});
+  c.innerHTML='<div class="page-head" style="margin-bottom:14px"><div><h3 style="font-size:18px">Follow-up Tasks</h3><p style="color:var(--muted);font-size:12.5px">Auto-scheduled from client follow-up dates.</p></div><div class="tools"><button class="btn btn-sm btn-pri" id="autoSched">⚡ Auto-schedule follow-ups</button></div></div>'+
+    '<div class="board" id="taskBoard" style="grid-template-columns:repeat(4,1fr)"></div>';
+  var render=function(){
+    $('#taskBoard').innerHTML=buckets.map(function(b){var items=pool.filter(function(x){return b[3](x.nextDays)});
+      return '<div><div class="col-head"><span class="sw" style="background:'+b[2]+'"></span>'+b[1]+'<span class="cnt">'+items.length+'</span></div>'+items.map(function(x){
+        return '<div class="task" data-id="'+x.id+'"><div class="tt">Follow up · '+esc(x.name)+'</div><div class="co">'+esc(x.co)+' — '+cstatusName(x.status)+'</div><div class="meta"><span class="who"><span class="a">'+initials(x.owner)+'</span>'+x.owner.split(" ")[0]+'</span><span class="tag">'+(x.nextDays<0?(-x.nextDays)+'d late':x.nextDays===0?'today':'in '+x.nextDays+'d')+'</span></div></div>'}).join('')+'</div>'}).join('');
+    $$('#taskBoard .task').forEach(function(el){el.onclick=function(){openClient(el.dataset.id)}});
+  };
+  $('#autoSched').onclick=function(){var d=1;CLIENTS.forEach(function(x){if(x.status!=='won'&&x.status!=='lost'&&x.nextDays<=0){x.nextDays=d;d++}});render();toast('Auto-scheduled '+(d-1)+' overdue follow-ups','ok')};
+  render();
+}
 function openDeal(co){
   var d=DEALS.filter(function(x){return x.co===co})[0];if(!d)return;var sm=stageMeta(d.stage);
-  var timeline=['Intro call completed','Discovery — fleet size & volume','Proposal / ROI model sent','Pricing reviewed with ops','Follow-up scheduled'];
+  var timeline=['Intro call completed','Discovery — scope & sites','Proposal / ROI model sent','Pricing reviewed with ops','Follow-up scheduled'];
   var upto=Math.min(timeline.length,2+DEAL_STAGES.map(function(s){return s[0]}).indexOf(d.stage));
   openDrawer(dwHead('Account · '+sm[1],d.co,esc(d.ct)+' · '+esc(d.ti))+
     '<div class="dw-body">'+
