@@ -96,6 +96,20 @@
     desc.className = "card__desc";
     desc.textContent = p.description || "";
 
+    // "Read more" toggle — revealed after render only if the text is
+    // clamped. Stops the click from following the card's link.
+    const more = document.createElement("button");
+    more.type = "button";
+    more.className = "card__readmore";
+    more.textContent = "Read more";
+    more.hidden = true;
+    more.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const open = desc.classList.toggle("expanded");
+      more.textContent = open ? "Read less" : "Read more";
+    });
+
     const tags = document.createElement("div");
     tags.className = "card__tags";
     (p.tags || []).forEach((t) => {
@@ -112,6 +126,7 @@
     body.appendChild(topRow);
     body.appendChild(tagline);
     body.appendChild(desc);
+    body.appendChild(more);
     if ((p.tags || []).length) body.appendChild(tags);
     body.appendChild(cta);
 
@@ -170,6 +185,21 @@
     setCount(ordered);
     buildFilters(grid, ordered);
     ordered.forEach((p) => grid.appendChild(cardEl(p)));
+    revealClamps(grid);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { revealClamps(grid); });
+    }
+  }
+
+  // Show each card's "Read more" only where the 5-line clamp actually
+  // truncates the description.
+  function revealClamps(grid) {
+    grid.querySelectorAll(".card").forEach(function (card) {
+      const desc = card.querySelector(".card__desc");
+      const more = card.querySelector(".card__readmore");
+      if (!desc || !more || desc.classList.contains("expanded")) return;
+      more.hidden = desc.scrollHeight - desc.clientHeight <= 2;
+    });
   }
 
   async function loadProjects() {
@@ -188,6 +218,12 @@
 
     const yearEl = $("#year");
     if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+    let rt;
+    window.addEventListener("resize", function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { revealClamps(grid); }, 150);
+    });
 
     try {
       const projects = await loadProjects();
