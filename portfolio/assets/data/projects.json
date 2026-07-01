@@ -3,7 +3,7 @@
     "id": "systemsbyvega",
     "name": "Systems by Vega",
     "tagline": "Operations systems for small businesses",
-    "description": "Process, databases, and dashboards that get a business off spreadsheets. Includes a live, interactive demo console.",
+    "description": "Systems by Vega is a B2B operations studio that gets small businesses off spreadsheets and onto custom databases, dashboards, and clean process — built solo, end to end, with real tools instead of an enterprise price tag. The site pairs a storefront with a live, interactive operations console demo, hosted on GitHub Pages with a GitHub-token-based admin for managing the portfolio without touching code.",
     "url": "https://systemsbyvega.com",
     "thumb": "assets/img/systemsbyvega.jpg",
     "category": "Commercial",
