@@ -50,6 +50,15 @@
   .topcta{font-family:'Archivo';font-weight:700;font-size:13px;text-decoration:none;color:#fff;background:var(--ink);
     padding:9px 16px;border-radius:7px;transition:background .2s,transform .15s;white-space:nowrap}
   .topcta:hover{background:var(--amber-deep);transform:translateY(-1px)}
+  .topnav{display:flex;align-items:center;gap:4px}
+  .topnav a{font-family:'Archivo';font-weight:700;font-size:13px;text-decoration:none;color:var(--ink-soft);padding:8px 11px;border-radius:7px;transition:color .15s,background .15s;white-space:nowrap}
+  .topnav a:hover{color:var(--amber-deep);background:rgba(232,121,27,.08)}
+  @media(max-width:640px){
+    .topbar-in{flex-wrap:wrap;gap:10px}
+    .topright{gap:8px;flex-wrap:wrap}
+    .topnav{gap:2px}
+    .topnav a{padding:7px 9px;font-size:12.5px}
+  }
 
   /* ---------- hero ---------- */
   .hero{padding:70px 0 44px}
@@ -278,6 +287,11 @@
     <div class="brand"><span class="dot"></span> Jason Vega <small>· Systems &amp; Operations</small></div>
     <div class="topright">
       <span class="prepared" id="prepared" hidden></span>
+      <nav class="topnav">
+        <a href="/demo/">Live Demo</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/portfolio/">Portfolio</a>
+      </nav>
       <a href="#contact" class="topcta">Fix my chaos →</a>
     </div>
   </div>

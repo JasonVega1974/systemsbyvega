@@ -24,6 +24,16 @@
   .brand{display:flex;align-items:center;gap:11px;font-family:'Archivo';font-weight:800;font-size:20px;letter-spacing:-.01em}
   .brand .sq{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;place-items:center;color:#1a1206;font-size:16px;font-weight:900;font-family:'Archivo'}
   .head .tag{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-deep)}
+  .head .nav{display:flex;align-items:center;gap:4px}
+  .head .nav a{font-family:'Archivo';font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink-soft);padding:8px 12px;border-radius:7px;transition:color .15s,background .15s;white-space:nowrap}
+  .head .nav a:hover{color:var(--amber-deep);background:rgba(232,121,27,.08)}
+  .head .nav a.navcta{color:#1a1206;background:var(--amber);font-weight:700}
+  .head .nav a.navcta:hover{background:var(--amber-deep);color:#fff}
+  @media(max-width:640px){
+    .head{gap:12px}
+    .head .nav{gap:2px;flex-wrap:wrap}
+    .head .nav a{padding:7px 10px;font-size:12.5px}
+  }
 
   .lead{margin:24px 0 6px}
   .lead h1{font-family:'Archivo';font-weight:900;font-size:clamp(26px,4.5vw,38px);letter-spacing:-.025em;line-height:1.04}
@@ -91,7 +101,12 @@
 
   <div class="head">
     <div class="brand"><span class="sq">V</span> Systems by Vega</div>
-    <div class="tag">Packages &amp; Pricing</div>
+    <nav class="nav">
+      <a href="/demo/">Live Demo</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/portfolio/">Portfolio</a>
+      <a href="/#contact" class="navcta">Book a free walkthrough</a>
+    </nav>
   </div>
 
   <div class="lead">
