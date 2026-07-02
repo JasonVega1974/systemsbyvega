@@ -103,6 +103,11 @@
   .scard .n{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;color:var(--amber-deep);margin-bottom:14px}
   .scard h3{font-family:'Archivo';font-weight:700;font-size:18px;letter-spacing:-.01em;margin-bottom:8px}
   .scard p{font-size:14.5px;color:var(--ink-soft)}
+  .scard.feat{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber),0 14px 36px rgba(232,121,27,.12)}
+  .scard.feat .n{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .scard.feat .tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#1a1206;background:var(--con-amber);padding:2px 9px;border-radius:20px}
+  .scard .slink{display:inline-block;margin-top:12px;font-family:'Archivo';font-weight:700;font-size:13.5px;color:var(--amber-deep);text-decoration:none;border-bottom:2px solid transparent;transition:border-color .15s}
+  .scard .slink:hover{border-color:var(--amber)}
 
   /* how it works */
   .how{background:var(--con);color:var(--con-text)}
@@ -286,6 +291,7 @@
       <div class="scard"><div class="n">/ 04</div><h3>Websites &amp; web apps</h3><p>Fast, clean, custom-built sites and tools — not a bloated template. Made to do the one job your business needs done.</p></div>
       <div class="scard"><div class="n">/ 05</div><h3>SOPs &amp; documentation</h3><p>The processes and policies that live in someone's head, written down — so your business doesn't depend on any one person.</p></div>
       <div class="scard"><div class="n">/ 06</div><h3>Spreadsheet rescue</h3><p>Got a spreadsheet that's become a monster? I'll untangle it, fix it, or replace it with something that won't break when someone sneezes.</p></div>
+      <div class="scard feat"><div class="n"><span>/ 07</span><span class="tag">Featured</span></div><h3>Automated Business Reviews</h3><p>One-click, consultant-style reviews of your whole operation — your KPIs analyzed, wins highlighted, opportunities surfaced, and specific actions to improve each metric. The insight of a business consultant, generated from your live data on demand.</p><a href="showcase/" class="slink">See a live auto-generated business review →</a></div>
     </div>
   </div>
 </section>
@@ -446,6 +452,7 @@
         <div class="hero-cta">
           <a href="demo/" class="btn-pri">Open the live demo →</a>
         </div>
+        <p style="margin-top:16px"><a href="showcase/" class="slink">See a live auto-generated business review →</a></p>
       </div>
       <div class="demo-visual" aria-hidden="true">
         <div class="dv-top"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>ops / dispatch · live</span></div>
