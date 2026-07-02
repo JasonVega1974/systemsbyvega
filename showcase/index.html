@@ -342,6 +342,25 @@
   .rag{width:9px;height:9px;border-radius:50%;flex:none}.rag.g{background:var(--green)}.rag.a{background:var(--amber)}.rag.r{background:var(--red)}
   .scard2 .starg{font-size:11px;color:var(--faint)}
   .spark2{margin-top:8px}
+  /* customer portal */
+  .portal{max-width:780px;margin:0 auto}
+  .portal-hero{background:linear-gradient(135deg,color-mix(in srgb,var(--cyan) 14%,var(--surface)),var(--surface));border:1px solid var(--hair);border-radius:16px;padding:20px 22px;margin-bottom:16px}
+  .stepper{display:flex;margin:16px 0 4px}
+  .stepper .stp{flex:1;text-align:center;position:relative;font-size:10.5px;color:var(--muted);line-height:1.3}
+  .stepper .stp::before{content:"";position:absolute;top:12px;left:calc(-50% + 13px);width:calc(100% - 26px);height:2px;background:var(--surface-3)}
+  .stepper .stp:first-child::before{display:none}
+  .stepper .stp.done::before,.stepper .stp.now::before{background:var(--green)}
+  .stepper .dot{width:26px;height:26px;border-radius:50%;background:var(--surface-3);color:var(--faint);display:grid;place-items:center;margin:0 auto 6px;font-size:11px;font-weight:700;position:relative}
+  .stepper .stp.done .dot{background:var(--green);color:#04121f}
+  .stepper .stp.now .dot{background:var(--cyan);color:#04121f;box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 22%,transparent)}
+  .stepper .stp.done,.stepper .stp.now{color:var(--text)}
+  .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:6px}
+  .slot{padding:9px;border:1px solid var(--hair);border-radius:9px;text-align:center;cursor:pointer;font-size:12px;background:var(--surface-2);font-family:var(--mono)}
+  .slot:hover{border-color:var(--cyan)}
+  .slot.sel{background:color-mix(in srgb,var(--cyan) 16%,transparent);border-color:var(--cyan);color:var(--text)}
+  .qline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--hair);font-size:13.5px}
+  .portal label{display:block;font-size:12px;color:var(--muted);font-weight:600;margin:12px 0 5px}
+  .portal textarea,.portal select,.portal input{width:100%}
   .foot{margin-top:26px;padding:16px 18px;border:1px dashed var(--hair);border-radius:12px;color:var(--muted);font-size:12.5px;line-height:1.7}
   .foot b{color:var(--text)}.foot a{font-weight:600}
   @media(max-width:820px){:root{--sidebar:0px}.sidebar{display:none}main{margin-left:0;padding:16px}}
@@ -419,7 +438,8 @@ var ICONS={
   box:'<path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v9"/>',
   book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
   file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
-  mega:'<path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/>'
+  mega:'<path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/>',
+  home:'<path d="M3 10.5L12 3l9 7.5"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/>'
 };
 function ic(n){return '<svg viewBox="0 0 24 24">'+(ICONS[n]||'')+'</svg>'}
 
@@ -573,6 +593,7 @@ var NET_SAV=VENDORS.reduce(function(a,v){return a+v.sav},0);
    ============================================================ */
 var NAV=[
   ["OVERVIEW",[["dashboard","Dashboard","grid",""],["kpi","KPI Scorecard","gauge",""],["territory","Territory Map","map",""]]],
+  ["CUSTOMER-FACING",[["portal","Customer Portal","home",""]]],
   ["SALES & CRM",[["crm","CRM & Sales","users",""],["pipeline","Contract Onboarding","flow",""],["marketing","Marketing","mega",""]]],
   ["OPERATIONS",[["sites","Locations","db",""],["tasks","Implementation","check",""],["scheduling","Scheduling","clock",""],["visits","Job-Site Visits","clip",""],["calendar","Calendar","cal",""]]],
   ["WORKFORCE",[["team","Team & Productivity","award",""],["hr","HR & Admin","users",""]]],
@@ -1686,6 +1707,60 @@ definePage('documents',
 function addDoc(name,type,size){DOCS.unshift({name:name,type:type,size:size,by:'Jason V.',date:'Jul 01'});docRender();pushNotif('📄','File uploaded',name);toast('Uploaded '+name,'ok')}
 function docRender(){var q=docSearch.toLowerCase();var rows=DOCS.filter(function(d){return !q||d.name.toLowerCase().indexOf(q)>=0});
   $('#docList').innerHTML=rows.map(function(d){return '<div class="filerow"><span class="fileic">'+esc(d.type)+'</span><div style="flex:1"><div style="font-weight:600;font-size:13px">'+esc(d.name)+'</div><div style="font-size:11.5px;color:var(--faint)">'+d.size+' · '+d.by+' · '+d.date+'</div></div><button class="btn btn-sm" onclick="toast(\'Download started (demo)\',\'ok\')">Download</button></div>'}).join('')||'<div style="text-align:center;color:var(--muted);padding:18px">No files.</div>';
+}
+
+/* ============================================================
+   PAGE: CUSTOMER PORTAL (customer-facing view)
+   ============================================================ */
+var PSTAGES=["Requested","Scheduled","Tech en route","In progress","Complete"];
+var SERVICE_TYPES=["HVAC Repair — No cooling","Heating / Furnace","Plumbing","Electrical","Maintenance Tune-Up","New Installation","Emergency Service"];
+var SLOTS=["Thu Jul 3 · 8–10a","Thu Jul 3 · 1–3p","Fri Jul 4 · 10–12p","Fri Jul 4 · 3–5p","Sat Jul 5 · 8–10a","Mon Jul 7 · 10–12p","Mon Jul 7 · 1–3p","Tue Jul 8 · 3–5p"];
+var portalJob={id:"JOB-3312",service:"HVAC Repair — No cooling",stage:1,window:"Thu Jul 3 · 10:00–12:00",tech:"Marcus Bell",address:"1420 Cedar St"};
+var portalQuote={id:"Q-1188",title:"Compressor replacement + refrigerant",items:[["Compressor unit (parts)",680],["Refrigerant R-410A",210],["Labor (3.5 hrs)",385],["Diagnostic (waived)",0]],job:"JOB-3312",status:"pending"};
+var portalHistory=[["Furnace tune-up","Jan 14","$189"],["Water heater install","Nov 02","$1,240"],["Drain cleaning","Aug 22","$145"]];
+var portalSlot=null,portalReqType=null,portalReqDesc="";
+function pstepper(cur){return '<div class="stepper">'+PSTAGES.map(function(s,i){var cls=i<cur?'done':i===cur?'now':'';return '<div class="stp '+cls+'"><div class="dot">'+(i<cur?'✓':(i+1))+'</div>'+s+'</div>'}).join('')+'</div>'}
+definePage('portal',
+  '<div class="page-head"><div><h1>Customer Portal</h1><p>The customer-facing side — what your client\'s own customers use to request service, pick a window, track the job, and approve quotes.</p></div></div>'+
+  '<div class="portal" id="portalWrap"></div>',
+  function(){portalRender()});
+function portalRender(){
+  var w=$('#portalWrap');if(!w)return;
+  var qtotal=portalQuote.items.reduce(function(a,it){return a+it[1]},0);
+  var jobDone=portalJob.stage>=4;
+  w.innerHTML=
+    '<div class="portal-hero"><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--sky));display:grid;place-items:center;color:#04121f;font-weight:800">SN</div><div><div style="font-family:Barlow Condensed;font-weight:800;font-size:20px">Welcome back, Sarah</div><div style="font-size:12.5px;color:var(--muted)">Account #NW-88213 · '+esc(portalJob.address)+'</div></div><a class="btn btn-sm" style="margin-left:auto" href="#" onclick="return false">Sign out</a></div></div>'+
+    /* status */
+    '<div class="panel"><div class="panel-head"><h3>Your Service · '+esc(portalJob.id)+'</h3><span class="pill '+(jobDone?'done':'onboarding')+'">'+PSTAGES[portalJob.stage]+'</span></div>'+
+      '<div style="font-weight:600">'+esc(portalJob.service)+'</div><div style="font-size:12.5px;color:var(--muted);margin-top:2px">'+esc(portalJob.window)+' · Tech: '+esc(portalJob.tech)+'</div>'+
+      pstepper(portalJob.stage)+
+      (jobDone?'<div style="margin-top:12px;color:var(--green);font-weight:600">✓ Service complete — thanks for choosing Northwind!</div>':'<div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-sm btn-pri" id="pAdvance">Refresh status</button><button class="btn btn-sm" id="pReschedule">Reschedule</button></div>')+
+    '</div>'+
+    /* quote */
+    '<div class="panel"><div class="panel-head"><h3>Approve Your Quote · '+esc(portalQuote.id)+'</h3><span class="pill '+(portalQuote.status==='approved'?'done':portalQuote.status==='declined'?'risk':'prospect')+'">'+portalQuote.status+'</span></div>'+
+      '<div style="font-weight:600;margin-bottom:6px">'+esc(portalQuote.title)+'</div>'+
+      portalQuote.items.map(function(it){return '<div class="qline"><span>'+esc(it[0])+'</span><span class="mono">'+(it[1]?money(it[1]):'Waived')+'</span></div>'}).join('')+
+      '<div class="qline" style="font-weight:800;border-bottom:none"><span>Total</span><span class="mono" style="color:var(--green)">'+money(qtotal)+'</span></div>'+
+      (portalQuote.status==='pending'?'<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-sm btn-pri" id="qApprove">Approve quote</button><button class="btn btn-sm btn-danger" id="qDecline">Decline</button></div>':'<div style="margin-top:10px;color:var(--muted);font-size:12.5px">'+(portalQuote.status==='approved'?'Approved — we\'ll schedule the work and send a confirmation.':'Declined. Call us if you\'d like to revisit.')+'</div>')+
+    '</div>'+
+    /* request */
+    '<div class="panel"><div class="panel-head"><h3>Request Service</h3></div>'+
+      '<label>Service type</label><select class="field" id="reqType">'+SERVICE_TYPES.map(function(t){return '<option'+(t===portalReqType?' selected':'')+'>'+esc(t)+'</option>'}).join('')+'</select>'+
+      '<label>Describe the issue</label><textarea class="field" id="reqDesc" rows="2" placeholder="e.g. AC runs but blows warm air">'+esc(portalReqDesc)+'</textarea>'+
+      '<label>Pick a time window</label><div class="slots" id="slotGrid">'+SLOTS.map(function(s,i){return '<div class="slot'+(portalSlot===i?' sel':'')+'" data-i="'+i+'">'+s+'</div>'}).join('')+'</div>'+
+      '<button class="btn btn-pri" id="reqSubmit" style="margin-top:14px;width:100%;justify-content:center">Submit request</button>'+
+    '</div>'+
+    /* history */
+    '<div class="panel"><div class="panel-head"><h3>Service History</h3></div><div class="table-scroll"><table><thead><tr><th>Service</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody>'+
+      portalHistory.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+r[1]+'</td><td class="num">'+r[2]+'</td><td><span class="pill done">Complete</span></td></tr>'}).join('')+'</tbody></table></div></div>';
+  // wire
+  var adv=$('#pAdvance');if(adv)adv.onclick=function(){portalJob.stage=Math.min(4,portalJob.stage+1);pushNotif('📍','Job update',portalJob.id+' · '+PSTAGES[portalJob.stage]);toast('Status: '+PSTAGES[portalJob.stage],'ok');portalRender()};
+  var rs=$('#pReschedule');if(rs)rs.onclick=function(){toast('Reschedule link sent to your phone (demo)','ok')};
+  var qa=$('#qApprove');if(qa)qa.onclick=function(){portalQuote.status='approved';if(portalJob.id===portalQuote.job&&portalJob.stage<1)portalJob.stage=1;pushNotif('✅','Quote approved by customer','Sarah · '+portalQuote.id+' · '+money(qtotal));toast('Quote approved — thank you!','ok');portalRender()};
+  var qd=$('#qDecline');if(qd)qd.onclick=function(){portalQuote.status='declined';toast('Quote declined','ok');portalRender()};
+  $$('#slotGrid .slot').forEach(function(el){el.onclick=function(){portalSlot=+el.dataset.i;$$('#slotGrid .slot').forEach(function(x){x.classList.remove('sel')});el.classList.add('sel')}});
+  var rqt=$('#reqType');if(rqt)rqt.onchange=function(){portalReqType=this.value};var rqd=$('#reqDesc');if(rqd)rqd.oninput=function(){portalReqDesc=this.value};
+  var sub=$('#reqSubmit');if(sub)sub.onclick=function(){if(portalSlot==null){toast('Please pick a time window','err');return}var type=$('#reqType').value,desc=$('#reqDesc').value.trim(),win=SLOTS[portalSlot];portalJob={id:"JOB-3313",service:type+(desc?' — '+desc:''),stage:0,window:win,tech:"To be assigned",address:portalJob.address};portalSlot=null;portalReqType=null;portalReqDesc="";pushNotif('🛠️','New service request',type+' · '+win);toast('Request submitted — we will confirm shortly','ok');portalRender()};
 }
 
 /* ============================================================
