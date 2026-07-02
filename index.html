@@ -10,6 +10,28 @@
 <meta property="og:description" content="Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites for small business. See a live demo.">
 <meta property="og:url" content="https://systemsbyvega.com">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://systemsbyvega.com/portfolio/assets/img/systemsbyvega.jpg">
+<meta name="twitter:image" content="https://systemsbyvega.com/portfolio/assets/img/systemsbyvega.jpg">
+<link rel="canonical" href="https://systemsbyvega.com/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3922F'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial,sans-serif' font-size='36' font-weight='900' text-anchor='middle' fill='%231a1206'%3EV%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Systems by Vega",
+  "url": "https://systemsbyvega.com",
+  "description": "Custom databases, CRM, operations dashboards, automation, SOPs, scheduling, and websites for small businesses.",
+  "email": "info@kingdom-creatives.com",
+  "areaServed": "United States",
+  "founder": {
+    "@type": "Person",
+    "name": "Jason Vega",
+    "jobTitle": "Founder, Systems by Vega",
+    "url": "https://systemsbyvega.com/portfolio/"
+  },
+  "parentOrganization": { "@type": "Organization", "name": "Kingdom Creatives LLC" }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -164,6 +186,45 @@
     .svc{grid-template-columns:1fr 1fr}
   }
   @media(max-width:560px){.svc,.capgrid{grid-template-columns:1fr}.wrap,.hero-in,.nav-in{padding-left:22px;padding-right:22px}}
+  /* proof of work */
+  .proofgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+  .pcard{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--hair);border-radius:13px;overflow:hidden;box-shadow:var(--shadow);text-decoration:none;transition:transform .18s,box-shadow .18s}
+  .pcard:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(20,28,40,.13)}
+  .pcard .chrome{display:flex;align-items:center;gap:7px;padding:10px 14px;background:var(--con);border-bottom:1px solid var(--con-hair)}
+  .pcard .chrome .d{width:9px;height:9px;border-radius:50%;background:#39434F}
+  .pcard .chrome .d.g{background:var(--green)} .pcard .chrome .d.a{background:var(--con-amber)}
+  .pcard .chrome span{margin-left:auto;font-family:'IBM Plex Mono';font-size:10.5px;color:var(--con-muted)}
+  .pcard .shot{aspect-ratio:16/8;overflow:hidden;background:var(--con-2)}
+  .pcard .shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .35s ease}
+  .pcard:hover .shot img{transform:scale(1.03)}
+  .pcard .pbody{padding:18px 20px 20px}
+  .pcard h3{font-family:'Archivo';font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin-bottom:6px}
+  .pcard p{font-size:14px;color:var(--ink-soft)}
+  .pcard .plink{margin-top:12px;font-family:'Archivo';font-weight:700;font-size:13.5px;color:var(--amber-deep)}
+  .proof-more{margin-top:28px;text-align:center}
+  .proof-more a{font-family:'Archivo';font-weight:700;font-size:15px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--amber);padding-bottom:2px;transition:color .15s}
+  .proof-more a:hover{color:var(--amber-deep)}
+
+  /* builder */
+  .builder{background:var(--panel);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .builder .bgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;margin-top:26px;align-items:start}
+  .builder .bio p{font-size:16px;color:var(--ink-soft);margin-bottom:16px;max-width:60ch}
+  .builder .bio p b{color:var(--ink);font-weight:600}
+  .bcreds{display:flex;flex-direction:column;gap:13px}
+  .bcred{background:var(--paper);border:1px solid var(--hair);border-radius:11px;padding:17px 19px;display:flex;gap:14px;align-items:flex-start}
+  .bcred .bic{flex:none;width:36px;height:36px;border-radius:9px;background:var(--con);color:var(--con-amber);display:grid;place-items:center;font-family:'IBM Plex Mono';font-weight:600;font-size:13px}
+  .bcred b{display:block;font-family:'Archivo';font-weight:700;font-size:14.5px;color:var(--ink);margin-bottom:2px}
+  .bcred span{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+
+  /* next steps at contact */
+  .next{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:760px;margin:34px auto 0;text-align:left}
+  .nextc{background:var(--con-2);border:1px solid var(--con-hair);border-radius:11px;padding:18px}
+  .nextc .nn{font-family:'IBM Plex Mono';font-weight:600;font-size:11px;color:var(--con-amber);letter-spacing:.1em;text-transform:uppercase}
+  .nextc p{font-size:13.5px;color:#B7C0CC;margin-top:7px;max-width:none}
+  .final .email-line{margin-top:22px;font-family:'IBM Plex Mono';font-size:13.5px;color:var(--con-muted)}
+  .final .email-line a{color:var(--con-amber);text-decoration:none;border-bottom:1px solid rgba(243,146,47,.4)}
+
+  @media(max-width:900px){.proofgrid{grid-template-columns:1fr}.builder .bgrid{grid-template-columns:1fr;gap:26px}.next{grid-template-columns:1fr}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -173,8 +234,9 @@
   <div class="nav-in">
     <div class="logo"><span class="sq">V</span> Systems by Vega</div>
     <div class="nav-links">
-      <a href="https://systemsbyvega.com/showcase/" class="nav-tab">Sample Database</a>
-      <a href="/portfolio/" class="nav-tab">My Work</a>
+      <a href="#work" class="nav-tab">Shipped Work</a>
+      <a href="demo/" class="nav-tab">Live Demo</a>
+      <a href="portfolio/" class="nav-tab">Portfolio</a>
       <a href="#contact" class="cta">Book a free walkthrough</a>
     </div>
   </div>
@@ -319,6 +381,45 @@
   </div>
 </section>
 
+<!-- proof of work -->
+<section class="proof" id="work">
+  <div class="wrap reveal">
+    <div class="step">Proof, not promises</div>
+    <h2>Systems already running in the real world.</h2>
+    <p class="stxt">Every project below is live and in use today — built end to end by one person. Click any of them and poke around.</p>
+    <div class="proofgrid">
+      <a class="pcard" href="demo/">
+        <div class="chrome"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>ops command center · demo</span></div>
+        <div class="shot"><img src="portfolio/assets/img/showcase.jpg" alt="Operations Command Center — dashboards, sites database, territory heatmap" loading="lazy"></div>
+        <div class="pbody">
+          <h3>Operations Command Center</h3>
+          <p>The class of platform I run for a national truck-stop network — live dashboards, a searchable sites database, vendor ROI tracking, and a territory heatmap. Fully interactive demo with sample data.</p>
+          <div class="plink">Explore the demo →</div>
+        </div>
+      </a>
+      <a class="pcard" href="https://yourlifecc.com" target="_blank" rel="noopener">
+        <div class="chrome"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>yourlifecc.com · live</span></div>
+        <div class="shot"><img src="portfolio/assets/img/yourlifecc.jpg" alt="YourLife CC — installable family web app" loading="lazy"></div>
+        <div class="pbody">
+          <h3>YourLife CC</h3>
+          <p>A full consumer product: an installable family web app with accounts, payments, email, an admin dashboard, and a hardened security model — shipped and maintained solo on the same stack I'd use for your business.</p>
+          <div class="plink">Visit the live app →</div>
+        </div>
+      </a>
+      <a class="pcard" href="https://yourlifecc.com/return" target="_blank" rel="noopener">
+        <div class="chrome"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>inventory system · live</span></div>
+        <div class="shot"><img src="portfolio/assets/img/return.jpg" alt="The Return — QR-code tote inventory system" loading="lazy"></div>
+        <div class="pbody">
+          <h3>QR Inventory System</h3>
+          <p>Built for a 200-person retreat: volunteers scan any tote with a phone to see its supply list, reorder thresholds, and who has it. A real small-operation database, live in the field — not a slide deck.</p>
+          <div class="plink">See it live →</div>
+        </div>
+      </a>
+    </div>
+    <div class="proof-more"><a href="portfolio/">See all nine shipped projects →</a></div>
+  </div>
+</section>
+
 <!-- how it works -->
 <section class="how">
   <div class="wrap reveal">
@@ -359,21 +460,22 @@
   </div>
 </section>
 
-<!-- why me -->
-<section class="why">
+<!-- why me / the builder -->
+<section class="builder">
   <div class="wrap reveal">
-    <div class="grid">
-      <div>
-        <div class="step">Why work with me</div>
-        <h2>You talk to the person who actually builds it.</h2>
-        <p class="stxt">No account managers, no offshore handoff, no agency markup. When you hire me, you get me — someone who ships real production software and cares whether it actually works for you.</p>
+    <div class="step">Who's building it</div>
+    <h2>You talk to the person who actually builds it.</h2>
+    <div class="bgrid">
+      <div class="bio">
+        <p>I'm <b>Jason Vega</b>. By day I'm <b>Vice President of Digital Strategy &amp; Innovation at Roady's Truck Stops</b>, where I've led digital for a national truck-stop network since 2019 — building the databases, dashboards, CRM, and reporting that hundreds of independent locations run on.</p>
+        <p>Systems by Vega is that same work, pointed at small businesses. No account managers, no offshore handoff, no agency markup. When you hire me, you get me — the person who designs it, builds it, ships it, and answers the phone about it.</p>
+        <p><b>And I'll be straight with you:</b> if I can't help, I'll say so. If a spreadsheet is genuinely fine for your situation, I'll tell you that too.</p>
       </div>
-      <ul>
-        <li><span class="ck">✓</span><span><b>I build, full stop.</b> Real databases, real dashboards, real web apps — production systems, not slideware.</span></li>
-        <li><span class="ck">✓</span><span><b>Small-business native.</b> I build for shops without an IT department, at prices that make sense for one.</span></li>
-        <li><span class="ck">✓</span><span><b>Direct and honest.</b> If I can't help you, I'll say so. If a spreadsheet is fine, I'll tell you that too.</span></li>
-        <li><span class="ck">✓</span><span><b>Fast.</b> Most builds go from first call to live in weeks, not quarters.</span></li>
-      </ul>
+      <div class="bcreds">
+        <div class="bcred"><div class="bic">07y</div><div><b>Seven years running digital for a national network</b><span>Operations, data, and reporting for hundreds of locations — I know what breaks at scale and what small teams actually use.</span></div></div>
+        <div class="bcred"><div class="bic">x9</div><div><b>Nine projects shipped and live</b><span>Consumer apps, inventory systems, dashboards, artist sites — every one built end to end by one person, every one clickable above.</span></div></div>
+        <div class="bcred"><div class="bic">wks</div><div><b>Weeks, not quarters</b><span>Most builds go from first call to live in weeks. You see progress as it comes together — not a big reveal at the end.</span></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -400,9 +502,15 @@
     <h2>Tell me where it hurts. The walkthrough's free.</h2>
     <p>Whether it's spreadsheets and late nights, a process no one has written down, or a system you wish existed — send me a line about what's slowing you down. I'll tell you honestly whether I can help — no pitch, no pressure.</p>
     <div class="hero-cta">
-      <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20-%20free%20walkthrough" class="btn-pri">Book a free walkthrough</a>
+      <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20%E2%80%94%20free%20walkthrough&body=Hi%20Jason%2C%0A%0AHere%27s%20what%27s%20slowing%20us%20down%3A%20" class="btn-pri">Book a free walkthrough</a>
       <a href="demo/" class="btn-sec">See the live demo →</a>
     </div>
+    <div class="next">
+      <div class="nextc"><div class="nn">Step 1 · Today</div><p>Send a few lines about what's slowing you down. I reply within one business day — a real reply, not an autoresponder.</p></div>
+      <div class="nextc"><div class="nn">Step 2 · This week</div><p>A free 30-minute walkthrough call. You show me the pain; I tell you honestly whether I can fix it and roughly what it'd take.</p></div>
+      <div class="nextc"><div class="nn">Step 3 · In writing</div><p>You get a fixed price for a defined scope — one number, before anything starts. Take it or leave it, no pressure either way.</p></div>
+    </div>
+    <p class="email-line">Prefer plain email? <a href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
   </div>
 </section>
 
@@ -413,8 +521,8 @@
       Operations systems for small business · info@kingdom-creatives.com
     </div>
     <div>
-      A Kingdom Creatives company<br>
-      <a class="foot-link" href="/portfolio/">See all my work →</a>
+      A Kingdom Creatives LLC company · Nampa, Idaho<br>
+      <a class="foot-link" href="portfolio/">All nine shipped projects →</a>
     </div>
   </div>
 </footer>
