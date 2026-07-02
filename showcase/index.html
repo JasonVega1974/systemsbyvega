@@ -392,6 +392,35 @@
   .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--hair);font-size:13.5px;line-height:1.55}
   .action-item:last-child{border-bottom:none}
   .action-item .num{flex:none;width:26px;height:26px;border-radius:8px;background:var(--surface-3);color:var(--cyan);display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:800;font-size:15px}
+  /* group report */
+  .rpt-cover{border:1px solid var(--hair);border-radius:14px;padding:22px 24px;margin-bottom:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--cyan) 9%,var(--surface)),var(--bg-2))}
+  .rpt-cover .rk{font-family:var(--mono);font-size:10.5px;letter-spacing:1.6px;color:var(--cyan);text-transform:uppercase}
+  .rpt-cover h2{font-size:25px;margin:5px 0 1px;font-family:'Barlow Condensed';font-weight:800}
+  .rpt-cover .rsub{font-size:12.8px;color:var(--muted)}
+  .rkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0 12px;padding:15px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .rkpi .v{font-family:'Barlow Condensed';font-weight:800;font-size:27px;letter-spacing:.5px}
+  .rkpi .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+  .rmeta{font-family:var(--mono);font-size:10.7px;color:var(--faint);line-height:1.6}
+  .sec-label{font-family:'Barlow Condensed';font-weight:800;font-size:12.5px;letter-spacing:1.6px;color:var(--cyan);text-transform:uppercase;margin:24px 0 3px;padding-top:15px;border-top:1px solid var(--hair)}
+  .sec-h{font-size:18px;font-family:'Barlow Condensed';font-weight:700;margin-bottom:2px}
+  .sec-sub{font-size:12.3px;color:var(--muted);margin-bottom:12px;max-width:84ch;line-height:1.5}
+  .note{background:var(--surface-2);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 13px;font-size:11.7px;color:var(--muted);margin:10px 0;line-height:1.5}
+  .narr{font-size:13px;color:var(--text);line-height:1.62;margin:11px 0;max-width:86ch}.narr b{font-weight:700}
+  .share-row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:12px}
+  .share-row .nm{width:180px;flex:none;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .share-row .track{flex:1;height:15px;background:var(--surface-3);border-radius:5px;overflow:hidden;min-width:60px}
+  .share-row .track i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--sky))}
+  .share-row .val{width:120px;text-align:right;font-family:var(--mono);font-size:11.3px}
+  .winblock{padding:11px 0;border-bottom:1px solid var(--hair)}.winblock:last-child{border-bottom:none}
+  .winblock .wt{font-weight:700;font-size:13.5px;display:flex;align-items:flex-start;gap:8px}
+  .winblock .wt .mk{flex:none;width:19px;height:19px;border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:800;margin-top:1px}
+  .winblock .wt .mk.up{background:color-mix(in srgb,var(--green) 15%,transparent);color:var(--green)}
+  .winblock .wt .mk.dn{background:color-mix(in srgb,var(--red) 15%,transparent);color:var(--red)}
+  .winblock p{font-size:12.4px;color:var(--muted);margin-top:5px;line-height:1.55;padding-left:27px}
+  tr.tot td{font-weight:800;border-top:2px solid var(--hair);background:var(--surface-2)}
+  td.src{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .rpt-foot{margin-top:20px;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:center;border-top:1px solid var(--hair);padding-top:12px}
+  @media(max-width:640px){.rkpis{grid-template-columns:1fr 1fr}.share-row .nm{width:120px}.share-row .val{width:96px}}
   .foot{margin-top:26px;padding:16px 18px;border:1px dashed var(--hair);border-radius:12px;color:var(--muted);font-size:12.5px;line-height:1.7}
   .foot b{color:var(--text)}.foot a{font-weight:600}
   @media(max-width:820px){
@@ -1807,102 +1836,188 @@ function portalRender(){
 }
 
 /* ============================================================
-   PAGE: BUSINESS REVIEW (on-demand generated report)
+   PAGE: BUSINESS REVIEW (on-demand generated group report)
    ============================================================ */
 definePage('review',
-  '<div class="page-head"><div><h1>Business Review</h1><p>An on-demand, consultant-style review generated from the platform data.</p></div></div>'+
-  '<div class="panel br-cta" id="brStage"><div class="bi">📊</div><h3>Generate a Business Review</h3><p>Produce a comprehensive review — executive summary, trends, breakdowns, wins, risks, and recommended actions — synthesized from the current data. Runs entirely in your browser on fictional sample data.</p><button class="btn btn-pri" id="brGen">✨ Generate Business Review</button></div>'+
+  '<div class="page-head"><div><h1>Business Review</h1><p>An on-demand, consultant-style group performance report generated from the platform data.</p></div></div>'+
+  '<div class="panel br-cta" id="brStage"><div class="bi">📊</div><h3>Generate a Business Review</h3><p>Produce a full group performance report — executive summary, financial P&amp;L, month-over-month, by-location, supplier programs, per-job economics, and a wins / opportunities / recommended-actions analysis — synthesized from the current data. Runs entirely in your browser on fictional sample data.</p><button class="btn btn-pri" id="brGen">✨ Generate Business Review</button></div>'+
   '<div id="brReport"></div>',
-  function(){
-    var out=$('#brReport');
-    if(out&&out.children.length){brRender(out);}
-    else{var g=$('#brGen');if(g)g.onclick=brRun;}
-  });
+  function(){var out=$('#brReport');if(out&&out.children.length){brRender(out);}else{var g=$('#brGen');if(g)g.onclick=brRun;}});
 function brRun(){
   var stage=$('#brStage');if(stage)stage.style.display='none';
   killCharts('br_');
   var out=$('#brReport');if(!out)return;
   out.innerHTML='<div class="panel" style="text-align:center;padding:48px 20px"><span class="spin" style="width:22px;height:22px;border-width:3px"></span><div style="margin-top:12px;color:var(--muted);font-weight:600" id="brLoad">Analyzing your data…</div></div>';
-  var msgs=['Analyzing your data…','Crunching month-over-month trends…','Ranking locations and segments…','Surfacing wins and risks…','Drafting recommendations…'];
-  var mi=0;var tk=setInterval(function(){mi++;var el=$('#brLoad');if(el&&mi<msgs.length)el.textContent=msgs[mi]},320);
-  setTimeout(function(){clearInterval(tk);brRender(out)},1600);
+  var msgs=['Analyzing your data…','Building the executive summary…','Rolling up the financials…','Ranking locations and segments…','Auditing supplier programs…','Surfacing wins and risks…','Drafting recommendations…'];
+  var mi=0;var tk=setInterval(function(){mi++;var el=$('#brLoad');if(el&&mi<msgs.length)el.textContent=msgs[mi]},300);
+  setTimeout(function(){clearInterval(tk);brRender(out)},2000);
 }
+function pctf(x){return (x>=0?'+':'')+x.toFixed(1)+'%'}
 function brRender(out){
   var ty=SALES_TY,ly=SALES_LY,n=ty.length,i=n-1;
-  var mom=(ty[i]-ty[i-1])/ty[i-1]*100, yoy=(ty[i]-ly[i])/ly[i]*100;
+  var mom=(ty[i]-ty[i-1])/ty[i-1]*100;
   var ytd=ty.reduce(function(a,b){return a+b},0), ytdLy=ly.reduce(function(a,b){return a+b},0), ytdYoy=(ytd-ytdLy)/ytdLy*100;
-  var active=SITES.filter(function(s){return s.status==='Active'});
-  var byRev=SITES.filter(function(s){return s.rev>0}).slice().sort(function(a,b){return b.rev-a.rev});
-  var topLoc=byRev[0], bottomLoc=byRev[byRev.length-1];
-  var prospects=SITES.filter(function(s){return s.status==='Prospect'});
-  var vendSav=VENDORS.reduce(function(a,v){return a+v.sav},0), topVend=VENDORS.slice().sort(function(a,b){return b.sav-a.sav})[0];
+  var revDollars=ytd*1000;
+  var bestIdx=0;ty.forEach(function(v,k){if(v>ty[bestIdx])bestIdx=k});
+  // sites (reconciled to ytd)
+  var revSites=SITES.filter(function(s){return s.rev>0});
+  var totRev=revSites.reduce(function(a,s){return a+s.rev},0);
+  var siteYtd=function(s){return Math.round(s.rev/totRev*ytd)};
+  var byRev=revSites.slice().sort(function(a,b){return b.rev-a.rev});
+  var top3=byRev.slice(0,3), top3share=top3.reduce(function(a,s){return a+s.rev},0)/totRev*100;
+  var topLoc=byRev[0], secondLoc=byRev[1], bottomLoc=byRev[byRev.length-1];
+  var active=SITES.filter(function(s){return s.status==='Active'}), prospects=SITES.filter(function(s){return s.status==='Prospect'});
+  var states=Array.from(new Set(SITES.map(function(s){return s.state}))).sort();
+  // segments (reconciled)
+  var segSum={a:0,b:0,c:0,d:0};SITES.forEach(function(s){segSum.a+=s.fuelRev;segSum.b+=s.vendorRev;segSum.c+=s.rewardsRev;segSum.d+=s.insideRev});
+  var segTot=segSum.a+segSum.b+segSum.c+segSum.d;
+  var segD={a:Math.round(segSum.a/segTot*revDollars),b:Math.round(segSum.b/segTot*revDollars),c:Math.round(segSum.c/segTot*revDollars),d:Math.round(segSum.d/segTot*revDollars)};
+  var totRev$=segD.a+segD.b+segD.c+segD.d;
+  // suppliers YTD
+  var vend=VENDORS.map(function(v){return {name:v.name,cat:v.prog,reb:v.reb,spend:v.spend,sav:v.sav*6,sites:v.sites}}).sort(function(a,b){return b.sav-a.sav});
+  var totSav=vend.reduce(function(a,v){return a+v.sav},0), topVend=vend[0], savShare=topVend.sav/totSav*100;
+  // P&L
+  var exLabor=Math.round(revDollars*0.42), exMat=Math.round(revDollars*0.22), exOh=Math.round(revDollars*0.14), totExp=exLabor+exMat+exOh;
+  var netIncome=totRev$+totSav-totExp, netMargin=netIncome/totRev$*100;
+  // kpis / risks
   var kpiHit=KPIS.filter(kMeets), kpiMiss=KPIS.filter(function(x){return !kMeets(x)});
   var overdue=INVOICES.filter(function(x){return x.status==='overdue'}), overdueAmt=overdue.reduce(function(a,x){return a+x.amount},0);
   var openAR=INVOICES.filter(function(x){return x.status!=='paid'}).reduce(function(a,x){return a+x.amount},0);
   var atRisk=PIPELINE.filter(function(p){return p.risk});
   var topEmp=EMPLOYEES.slice().sort(function(a,b){return empScore(b)-empScore(a)})[0];
-  var seg={a:0,b:0,c:0,d:0};SITES.forEach(function(s){seg.a+=s.fuelRev;seg.b+=s.vendorRev;seg.c+=s.rewardsRev;seg.d+=s.insideRev});
-  // wins
-  var wins=[];
-  if(mom>0)wins.push('Revenue up '+mom.toFixed(1)+'% month-over-month — $'+ty[i]+'K in '+SMONTHS[i]+'.');
-  if(yoy>3)wins.push('Revenue up '+yoy.toFixed(1)+'% vs '+SMONTHS[i]+' last year.');
-  if(ytdYoy>0)wins.push('YTD revenue $'+ytd+'K, up '+ytdYoy.toFixed(1)+'% year-over-year.');
-  kpiHit.forEach(function(kk){if(kPct(kk)>=2)wins.push(kk.n+' at '+kFmt(kk.a,kk)+' — '+kPct(kk)+'% above target.')});
-  if(topLoc)wins.push(topLoc.name+' ('+topLoc.state+') leads the network at $'+topLoc.rev+'K/mo.');
-  wins.push('Suppliers delivering '+money(vendSav)+'/mo in savings, led by '+topVend.name+'.');
-  wins=wins.slice(0,6);
-  // opportunities
-  var opps=[];
-  if(mom<0)opps.push('Revenue down '+Math.abs(mom).toFixed(1)+'% month-over-month.');
-  kpiMiss.forEach(function(kk){opps.push(kk.n+' at '+kFmt(kk.a,kk)+' vs '+kFmt(kk.t,kk)+' target — '+Math.abs(kPct(kk))+'% off.')});
-  if(overdue.length)opps.push(money(overdueAmt)+' outstanding across '+overdue.length+' overdue invoices.');
-  atRisk.forEach(function(p){opps.push(p.name+' contract onboarding is at risk — stalled at "'+STAGES[Math.min(p.stage,6)]+'".')});
-  if(bottomLoc)opps.push(bottomLoc.name+' ('+bottomLoc.state+') is the lowest-revenue active location at $'+bottomLoc.rev+'K/mo.');
-  if(prospects.length)opps.push(prospects.length+' prospect location(s) stalled with no active service.');
-  opps=opps.slice(0,6);
-  // actions
-  var kpiAction={'First-Time Fix Rate':'add a pre-visit diagnostics checklist and pre-stage common parts on the trucks','Avg Response Time':'tighten dispatch routing and add an on-call slot during peak windows','Overdue Invoices':'move aged accounts to auto-reminders plus a weekly collections call','Callback Rate':'add a post-job QA sign-off to catch rework before the customer calls','Jobs Completed':'add an overflow contractor queue on high-demand days','Technician Utilization':'rebalance routes to cut windshield time between jobs','Customer Satisfaction':'follow up on every 3-star-or-below job within 24 hours','Employee Retention':'introduce stay interviews and a tenure bonus for senior techs','Monthly Revenue':'push the top three quotes to close and upsell maintenance plans','Avg Ticket':'bundle inspections and add-ons into every service call'};
-  var actions=[];
-  if(bottomLoc)actions.push('Revenue at '+bottomLoc.name+' ('+bottomLoc.state+') is the lowest in the network at $'+bottomLoc.rev+'K/mo — schedule a site review and reassign a lead technician to lift utilization.');
-  if(overdue.length)actions.push('Collect '+money(overdueAmt)+' in aged receivables — send reminders on the '+overdue.length+' overdue invoices and put the 60+ day account on a call list this week.');
-  if(atRisk.length)actions.push(atRisk[0].name+' onboarding is stalled at "'+STAGES[Math.min(atRisk[0].stage,6)]+'" — escalate to the account owner to close pricing and unblock go-live.');
+  // channel split (commercial / residential)
+  var comm=ty.map(function(v){return Math.round(v*0.66)}), resi=ty.map(function(v,k){return v-comm[k]});
+  var dateStr;try{dateStr=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}catch(e){dateStr='FY2026 YTD'}
   var worst=kpiMiss.slice().sort(function(a,b){return kPct(a)-kPct(b)})[0];
-  if(worst)actions.push(worst.n+' is '+Math.abs(kPct(worst))+'% off target ('+kFmt(worst.a,worst)+' vs '+kFmt(worst.t,worst)+') — '+(kpiAction[worst.n]||'assign an owner and a 30-day improvement plan')+'.');
-  if(prospects.length)actions.push(prospects.length+' prospect locations have no active service — assign a rep and set first-visit windows to convert them into recurring accounts.');
-  actions=actions.slice(0,5);
-  var head=[
+  var kpiAction={'First-Time Fix Rate':'a pre-visit diagnostics checklist and parts pre-staging','Avg Response Time':'tighter dispatch routing and a peak on-call slot','Overdue Invoices':'auto-reminders and a weekly collections call','Callback Rate':'a post-job QA sign-off to catch rework','Jobs Completed':'an overflow contractor queue on peak days','Technician Utilization':'route rebalancing to cut windshield time','Customer Satisfaction':'24-hour follow-up on every low-rated job','Employee Retention':'stay interviews and a senior-tech tenure bonus','Avg Ticket':'inspection + add-on bundling on every call'};
+
+  // WINS (title + detail)
+  var wins=[
+    {t:'Revenue up '+ytdYoy.toFixed(1)+'% year-over-year',d:'Monthly revenue climbed from $'+ty[0]+'K to $'+ty[i]+'K, with '+SMONTHS[bestIdx]+' the strongest month at $'+ty[bestIdx]+'K — momentum is broad-based, not a one-site spike.'},
+    {t:topLoc.name+' and '+secondLoc.name+' anchor the group',d:topLoc.name+' ('+topLoc.state+') and '+secondLoc.name+' ('+secondLoc.state+') together deliver '+((topLoc.rev+secondLoc.rev)/totRev*100).toFixed(1)+'% of group revenue and lead on job volume — the model to replicate at the smaller sites.'},
+    {t:'High-leverage supplier savings via '+topVend.name,d:topVend.name+' drives '+money(topVend.sav)+' of the group\'s '+money(totSav)+' in YTD supplier savings ('+savShare.toFixed(1)+'%) — a valuable, high-throughput relationship across '+topVend.sites+' sites.'},
+    {t:'Solid net margin',d:'The group nets '+money(netIncome)+' YTD on '+money(totRev$)+' of revenue ('+netMargin.toFixed(1)+'% net margin) after labor, materials, and overhead.'}
+  ];
+  kpiHit.filter(function(k){return kPct(k)>=2}).slice(0,2).forEach(function(k){wins.push({t:k.n+' beating target',d:k.n+' is running at '+kFmt(k.a,k)+' against a '+kFmt(k.t,k)+' goal — '+kPct(k)+'% above target.'})});
+  wins=wins.slice(0,5);
+  // OPPORTUNITIES
+  var opps=[];
+  opps.push({t:bottomLoc.name+' — lowest revenue in the group',d:bottomLoc.name+' ('+bottomLoc.state+') runs at $'+bottomLoc.rev+'K/mo ($'+siteYtd(bottomLoc)+'K YTD), the smallest active location. It sits below the group average and is the clearest single-site upside.'});
+  if(overdue.length)opps.push({t:money(overdueAmt)+' in overdue receivables',d:money(overdueAmt)+' is outstanding across '+overdue.length+' overdue invoices — collectible cash sitting past terms, ahead of the '+money(openAR)+' total open A/R.'});
+  if(atRisk.length)opps.push({t:atRisk[0].name+' onboarding at risk',d:atRisk[0].name+' is stalled at the "'+STAGES[Math.min(atRisk[0].stage,6)]+'" stage — new recurring revenue is blocked until pricing is closed.'});
+  kpiMiss.slice(0,2).forEach(function(k){opps.push({t:k.n+' below target',d:k.n+' is at '+kFmt(k.a,k)+' vs a '+kFmt(k.t,k)+' goal ('+Math.abs(kPct(k))+'% off) — a measurable gap with a clear operational fix.'})});
+  if(prospects.length)opps.push({t:prospects.length+' prospect location(s) stalled',d:prospects.length+' prospect location(s) carry no active service — unassigned pipeline that could convert into recurring accounts with an owner and a first visit.'});
+  opps=opps.slice(0,5);
+  // ACTIONS (action / target / lever)
+  var actions=[];
+  actions.push([ 'Run a site review and reassign a lead technician', bottomLoc.name+' ('+bottomLoc.state+')', 'Revenue lift']);
+  if(overdue.length)actions.push(['Collect '+money(overdueAmt)+' via reminders + a weekly call list', overdue.length+' overdue accounts', 'Cash / A\/R']);
+  if(atRisk.length)actions.push(['Escalate to the account owner to close pricing', atRisk[0].name, 'New recurring revenue']);
+  if(worst)actions.push(['Fix '+worst.n+' with '+(kpiAction[worst.n]||'a 30-day owner-led plan'), worst.n+' ('+Math.abs(kPct(worst))+'% off)', 'KPI recovery']);
+  if(prospects.length)actions.push(['Assign a rep and set first-visit windows', prospects.length+' prospect sites', 'Network growth']);
+  actions.push(['Replicate the flagship playbook (jobs + supplier depth)', 'All smaller sites', 'Volume + rebates']);
+  actions=actions.slice(0,6);
+
+  var kpi4=function(v,l){return '<div class="rkpi"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>'};
+  var head8=[
     kpi('','Revenue · '+SMONTHS[i],'$'+ty[i]+'K',delta(+mom.toFixed(1))+' MoM'),
     kpi('g','YTD Revenue','$'+ytd+'K',delta(+ytdYoy.toFixed(1))+' YoY'),
-    kpi('a','Active Locations',active.length,delta(7.7)+' this qtr'),
-    kpi('p','Supplier Savings',money(vendSav)+'/mo',delta(3.1)+' YTD'),
-    kpi('o','Open A/R',money(openAR),overdue.length+' overdue'),
-    kpi('r','KPIs Off Target',kpiMiss.length+' / '+KPIS.length,'need attention')
+    kpi('a','Active Locations',active.length,states.length+' states'),
+    kpi('p','Net Income (YTD)',money(netIncome),netMargin.toFixed(1)+'% margin'),
+    kpi('o','Supplier Savings',money(totSav),'YTD'),
+    kpi('r','Open A/R',money(openAR),overdue.length+' overdue'),
+    kpi('','KPIs On Target',kpiHit.length+' / '+KPIS.length,''),
+    kpi('a','Avg Revenue / Location','$'+Math.round(totRev/revSites.length)+'K/mo','')
   ].join('');
-  out.innerHTML=
-    '<div class="br-head"><div><div class="htitle">Business Review — Northwind Field Services</div><div class="hsub">Trailing 12 months · '+SMONTHS[i]+' close · auto-generated</div></div><span class="badge-demo">● fictional demo data</span><button class="btn btn-sm" id="brRegen">↻ Regenerate</button></div>'+
-    '<div class="sec-title">Executive summary</div><div class="kpi-row">'+head+'</div>'+
-    '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Revenue — MoM (this year vs last)</h3><span class="hint">$K</span></div><div class="chart-wrap"><canvas id="br_mom"></canvas></div></div>'+
+
+  var html=
+  // COVER
+  '<div class="rpt-cover"><div class="rk">Group Performance Report · FY2026 Year-to-Date (Jan–Jun)</div>'+
+    '<h2>Northwind Field Services</h2>'+
+    '<div class="rsub">'+revSites.length+'-location group analysis · Revenue, service segments &amp; supplier programs · Generated from the Northwind Ops Platform</div>'+
+    '<div class="rkpis">'+kpi4('$'+ytd+'K','YTD Revenue')+kpi4(pctf(ytdYoy),'Revenue YoY')+kpi4(money(netIncome),'Net Income YTD')+kpi4(money(totSav),'Supplier Savings')+'</div>'+
+    '<div class="rmeta">Group ID NW-100 · Region: '+states.join(' + ')+' · Generated '+dateStr+' · Source: Northwind Ops Platform · <span style="color:var(--amber)">Fictional demo data — illustrative</span> <button class="btn btn-sm" id="brRegen" style="float:right;margin-top:-4px">↻ Regenerate</button></div></div>'+
+  // EXEC SUMMARY
+  '<div class="sec-label">Executive Summary</div><div class="sec-h">The group at a glance</div>'+
+    '<div class="narr">Northwind Field Services operates <b>'+active.length+' active locations</b> across '+states.join(' and ')+'. Through the first half of FY2026 the group generated <b>$'+ytd+'K</b> in service revenue — up <b>'+ytdYoy.toFixed(1)+'% year-over-year</b> — with monthly revenue up '+mom.toFixed(1)+'% from '+SMONTHS[i-1]+' to '+SMONTHS[i]+'.</div>'+
+    '<div class="note">This review is generated on demand from the platform\'s operational data by a client-side insights engine. Every company, person, location, supplier, and figure is <b>fictional sample data</b> — no live financials, no external API calls, no keys in the page.</div>'+
+    '<div class="kpi-row">'+head8+'</div>'+
+    '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Revenue — month over month</h3><span class="hint">this year vs last · $K</span></div><div class="chart-wrap"><canvas id="br_mom"></canvas></div></div>'+
     '<div class="panel"><div class="panel-head"><h3>Cumulative YTD</h3><span class="hint">$K running</span></div><div class="chart-wrap"><canvas id="br_ytd"></canvas></div></div></div>'+
-    '<div class="sec-title">Breakdowns</div>'+
-    '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>Revenue by Location</h3><span class="hint">top 8 · $K/mo</span></div><div class="chart-wrap"><canvas id="br_loc"></canvas></div></div>'+
-    '<div class="panel"><div class="panel-head"><h3>Revenue Mix</h3><span class="hint">by segment</span></div><div class="chart-wrap"><canvas id="br_mix"></canvas></div></div></div>'+
-    '<div class="panel"><div class="panel-head"><h3>Top Performers</h3></div><div class="mini-kpis">'+
-      miniKpi('Top location',esc(topLoc.name))+miniKpi('Top supplier',esc(topVend.name))+miniKpi('Top technician',esc(topEmp.name))+miniKpi('Best month','$'+Math.max.apply(null,ty)+'K')+'</div>'+
-      '<div class="table-scroll" style="margin-top:6px"><table><thead><tr><th>Location</th><th>State</th><th>Manager</th><th>Rev/mo</th><th>Jobs/mo</th></tr></thead><tbody>'+
-      byRev.slice(0,5).map(function(s){return '<tr><td><b>'+esc(s.name)+'</b></td><td class="mono">'+s.state+'</td><td style="color:var(--muted)">'+esc(s.mgr)+'</td><td class="num">$'+s.rev+'K</td><td class="num">'+s.gal+'</td></tr>'}).join('')+'</tbody></table></div></div>'+
-    '<div class="sec-title">Insights</div>'+
-    '<div class="grid-2"><div class="panel"><div class="panel-head"><h3>✓ Wins</h3><span class="hint">auto-surfaced</span></div>'+wins.map(function(w){return '<div class="insight"><span class="mk up">▲</span><span>'+esc(w)+'</span></div>'}).join('')+'</div>'+
-    '<div class="panel"><div class="panel-head"><h3>⚠ Areas of Opportunity</h3><span class="hint">auto-surfaced</span></div>'+opps.map(function(o){return '<div class="insight"><span class="mk dn">▼</span><span>'+esc(o)+'</span></div>'}).join('')+'</div></div>'+
-    '<div class="panel"><div class="panel-head"><h3>Recommended Next Actions</h3><span class="hint">tied to the gaps above</span></div>'+actions.map(function(a,ai){return '<div class="action-item"><span class="num">'+(ai+1)+'</span><span>'+esc(a)+'</span></div>'}).join('')+'</div>'+
-    '<div class="foot" style="margin-top:18px">This review was generated on demand by client-side logic from the platform\'s fictional sample data — no external calls, no live financials. The same engine runs on your real numbers once connected.</div>';
+    '<div class="narr">Two flagship locations — <b>'+topLoc.name+'</b> ('+topLoc.state+') and <b>'+secondLoc.name+'</b> ('+secondLoc.state+') — drive '+((topLoc.rev+secondLoc.rev)/totRev*100).toFixed(1)+'% of group revenue and lead on job volume. The smaller sites are the group\'s growth runway.</div>'+
+  // FINANCIAL SUMMARY
+  '<div class="sec-label">Financial Summary</div><div class="sec-h">Net income — Revenues + Savings − Expenses (YTD)</div>'+
+    '<div class="sec-sub">Service revenue by segment, supplier savings, and operating expenses for the group, Jan–Jun 2026. Figures roll up from the platform\'s location and supplier data.</div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Line</th><th style="text-align:right">YTD</th><th>Source</th></tr></thead><tbody>'+
+      '<tr><td colspan="3" class="src" style="text-transform:uppercase;letter-spacing:.5px">Revenues</td></tr>'+
+      '<tr><td>Service calls</td><td class="num" style="text-align:right">'+money(segD.a)+'</td><td class="src">locations · segment split</td></tr>'+
+      '<tr><td>Installations</td><td class="num" style="text-align:right">'+money(segD.b)+'</td><td class="src">locations · segment split</td></tr>'+
+      '<tr><td>Maintenance plans</td><td class="num" style="text-align:right">'+money(segD.c)+'</td><td class="src">recurring contracts</td></tr>'+
+      '<tr><td>Parts &amp; materials</td><td class="num" style="text-align:right">'+money(segD.d)+'</td><td class="src">job line items</td></tr>'+
+      '<tr class="tot"><td>Total Revenues</td><td class="num" style="text-align:right">'+money(totRev$)+'</td><td></td></tr>'+
+      '<tr><td colspan="3" class="src" style="text-transform:uppercase;letter-spacing:.5px">Savings</td></tr>'+
+      '<tr><td>Supplier rebates &amp; contracted savings</td><td class="num" style="text-align:right">'+money(totSav)+'</td><td class="src">supplier programs</td></tr>'+
+      '<tr class="tot"><td>Total Savings</td><td class="num" style="text-align:right">'+money(totSav)+'</td><td></td></tr>'+
+      '<tr><td colspan="3" class="src" style="text-transform:uppercase;letter-spacing:.5px">Expenses</td></tr>'+
+      '<tr><td>Labor</td><td class="num" style="text-align:right">'+money(exLabor)+'</td><td class="src">~42% of revenue (est)</td></tr>'+
+      '<tr><td>Materials / COGS</td><td class="num" style="text-align:right">'+money(exMat)+'</td><td class="src">~22% of revenue (est)</td></tr>'+
+      '<tr><td>Overhead</td><td class="num" style="text-align:right">'+money(exOh)+'</td><td class="src">~14% of revenue (est)</td></tr>'+
+      '<tr class="tot"><td>Total Expenses</td><td class="num" style="text-align:right">'+money(totExp)+'</td><td></td></tr>'+
+      '<tr class="tot" style="color:var(--green)"><td>Net Income (YTD)</td><td class="num" style="text-align:right">'+money(netIncome)+'</td><td class="src" style="color:var(--faint)">'+netMargin.toFixed(1)+'% net margin</td></tr>'+
+    '</tbody></table></div>'+
+    '<div class="note">Provisional: expense ratios (labor 42% / materials 22% / overhead 14%) are illustrative estimates for the demo. Revenue and savings are computed from the platform\'s location and supplier data.</div>'+
+  // REVENUE MoM
+  '<div class="sec-label">Revenue — Month over Month</div><div class="sec-h">Group revenue by month, commercial vs residential</div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Month</th><th style="text-align:right">Commercial</th><th style="text-align:right">Residential</th><th style="text-align:right">Total</th><th style="text-align:right">MoM</th></tr></thead><tbody>'+
+      ty.map(function(v,k){var m2=k>0?((v-ty[k-1])/ty[k-1]*100):null;return '<tr><td>'+SMONTHS[k]+'</td><td class="num" style="text-align:right">$'+comm[k]+'K</td><td class="num" style="text-align:right">$'+resi[k]+'K</td><td class="num" style="text-align:right">$'+v+'K</td><td style="text-align:right">'+(m2==null?'—':delta(+m2.toFixed(1)))+'</td></tr>'}).join('')+
+      '<tr class="tot"><td>YTD Total</td><td class="num" style="text-align:right">$'+comm.reduce(function(a,b){return a+b},0)+'K</td><td class="num" style="text-align:right">$'+resi.reduce(function(a,b){return a+b},0)+'K</td><td class="num" style="text-align:right">$'+ytd+'K</td><td></td></tr>'+
+    '</tbody></table></div>'+
+    '<div class="grid-2" style="margin-top:14px"><div class="panel"><div class="panel-head"><h3>Revenue mix</h3><span class="hint">by service segment</span></div><div class="chart-wrap sm"><canvas id="br_mix"></canvas></div></div>'+
+    '<div class="panel"><div class="panel-head"><h3>Channel split</h3><span class="hint">commercial vs residential</span></div><div class="chart-wrap sm"><canvas id="br_ch"></canvas></div></div></div>'+
+  // BY LOCATION
+  '<div class="sec-label">Performance by Location</div><div class="sec-h">Per-location revenue — YTD</div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Location</th><th>State</th><th>Manager</th><th>Status</th><th style="text-align:right">Rev/mo</th><th style="text-align:right">YTD</th><th style="text-align:right">% of group</th></tr></thead><tbody>'+
+      byRev.map(function(s){return '<tr><td><b>'+esc(s.name)+'</b></td><td class="mono">'+s.state+'</td><td style="color:var(--muted)">'+esc(s.mgr)+'</td><td><span class="pill '+s.status.toLowerCase()+'">'+s.status+'</span></td><td class="num" style="text-align:right">$'+s.rev+'K</td><td class="num" style="text-align:right">$'+siteYtd(s)+'K</td><td class="num" style="text-align:right">'+(s.rev/totRev*100).toFixed(1)+'%</td></tr>'}).join('')+
+      '<tr class="tot"><td>Group</td><td></td><td></td><td></td><td class="num" style="text-align:right">$'+totRev+'K</td><td class="num" style="text-align:right">$'+ytd+'K</td><td class="num" style="text-align:right">100%</td></tr>'+
+    '</tbody></table></div>'+
+    '<div class="sec-sub" style="margin-top:14px">Revenue share by location — YTD</div>'+
+      byRev.map(function(s){var p=s.rev/totRev*100;return '<div class="share-row"><span class="nm">'+esc(s.name)+'</span><span class="track"><i style="width:'+p.toFixed(1)+'%"></i></span><span class="val">$'+siteYtd(s)+'K · '+p.toFixed(1)+'%</span></div>'}).join('')+
+    '<div class="narr">The top 3 locations account for <b>'+top3share.toFixed(1)+'%</b> of group revenue; the smaller sites are the concentration of upside — the same jobs-and-supplier-depth playbook that works at the flagships applies there with no new locations required.</div>'+
+  // SUPPLIER PROGRAMS
+  '<div class="sec-label">Supplier Programs</div><div class="sec-h">Programs, terms &amp; YTD savings</div>'+
+    '<div class="sec-sub">Every supplier program at the group with its rebate terms and estimated YTD savings. Savings = contracted rebate on category spend across enrolled sites.</div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Supplier</th><th>Category</th><th>Priority</th><th style="text-align:right">Rebate</th><th style="text-align:right">Spend/mo</th><th style="text-align:right">YTD Savings</th><th style="text-align:right">Sites</th></tr></thead><tbody>'+
+      vend.map(function(v){return '<tr><td><b>'+esc(v.name)+'</b></td><td>'+esc(v.cat)+'</td><td><span class="pill '+((v.reb>=8?'high':v.reb>=6?'med':'low'))+'">'+(v.reb>=8?'High':v.reb>=6?'Med':'Low')+'</span></td><td class="num" style="text-align:right">'+(v.reb?v.reb+'%':'—')+'</td><td class="num" style="text-align:right">'+(v.spend?money(v.spend):'—')+'</td><td class="num" style="text-align:right;color:var(--green)">'+money(v.sav)+'</td><td class="num" style="text-align:right">'+v.sites+'</td></tr>'}).join('')+
+      '<tr class="tot"><td>All suppliers</td><td></td><td></td><td></td><td></td><td class="num" style="text-align:right;color:var(--green)">'+money(totSav)+'</td><td></td></tr>'+
+    '</tbody></table></div>'+
+    '<div class="narr"><b>'+topVend.name+'</b> is the group\'s anchor program at '+savShare.toFixed(1)+'% of total supplier savings. Concentrating spend deepens rebate tiers, but the smaller programs are a ready cross-sell list for sites that carry only one or two — incremental rebate revenue with no new work.</div>'+
+  // PER-JOB ECONOMICS
+  '<div class="sec-label">Per-Job Economics</div><div class="sec-h">Unit economics &amp; cost stack</div>'+
+    '<div class="sec-sub">The cost basis behind each service call — labor, materials, and overhead per job — and the gross margin earned per job.</div>'+
+    '<div class="kpi-row">'+kpi('','Avg Ticket','$'+Math.round(totRev$/ (revSites.reduce(function(a,s){return a+s.gal},0)*6) ),'per job')+kpi('g','Gross Margin','38%','blended')+kpi('a','Jobs / mo',revSites.reduce(function(a,s){return a+s.gal},0),'group')+kpi('p','Margin / Job','$'+Math.round((totRev$/ (revSites.reduce(function(a,s){return a+s.gal},0)*6))*0.38),'contribution')+'</div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Location</th><th>State</th><th style="text-align:right">Jobs/mo</th><th style="text-align:right">Avg ticket</th><th style="text-align:right">Cost/job</th><th style="text-align:right">Margin/job</th></tr></thead><tbody>'+
+      byRev.slice(0,7).map(function(s){var tk=Math.round(s.rev*1000/Math.max(1,s.gal));var cost=Math.round(tk*0.62);return '<tr><td><b>'+esc(s.name)+'</b></td><td class="mono">'+s.state+'</td><td class="num" style="text-align:right">'+s.gal+'</td><td class="num" style="text-align:right">$'+tk+'</td><td class="num" style="text-align:right">$'+cost+'</td><td class="num" style="text-align:right;color:var(--green)">$'+(tk-cost)+'</td></tr>'}).join('')+
+    '</tbody></table></div>'+
+    '<div class="note">Cost stack is illustrative for the demo (labor 60% / materials 30% / overhead 10% of a 62% cost-of-service). In production these tie to actual timecards, parts, and overhead allocations.</div>'+
+  // BUSINESS ANALYSIS
+  '<div class="sec-label">Business Analysis</div><div class="sec-h">Wins</div>'+
+    wins.map(function(w){return '<div class="winblock"><div class="wt"><span class="mk up">▲</span>'+esc(w.t)+'</div><p>'+esc(w.d)+'</p></div>'}).join('')+
+  '<div class="sec-h" style="margin-top:22px">Areas of opportunity</div>'+
+    opps.map(function(o){return '<div class="winblock"><div class="wt"><span class="mk dn">▼</span>'+esc(o.t)+'</div><p>'+esc(o.d)+'</p></div>'}).join('')+
+  '<div class="sec-h" style="margin-top:22px">Recommended next actions</div>'+
+    '<div class="table-scroll"><table><thead><tr><th>Action</th><th>Target</th><th>Lever</th></tr></thead><tbody>'+
+      actions.map(function(a){return '<tr><td>'+esc(a[0])+'</td><td style="color:var(--muted)">'+esc(a[1])+'</td><td><span class="pill onboarding">'+esc(a[2])+'</span></td></tr>'}).join('')+
+    '</tbody></table></div>'+
+    '<div class="rpt-foot">Northwind Field Services · FY2026 YTD Group Report · generated on demand from fictional sample data · Systems by Vega demo</div>';
+
+  out.innerHTML=html;
   var rg=$('#brRegen');if(rg)rg.onclick=brRun;
   var c=themeColors();
   chart('br_mom',{type:'bar',data:{labels:SMONTHS,datasets:[{label:'This Year',data:ty,backgroundColor:'#00C8FF',borderRadius:4},{label:'Last Year',data:ly,backgroundColor:'#2C3444',borderRadius:4}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:11,font:{size:11}}}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
   var cum=[],run=0;ty.forEach(function(v){run+=v;cum.push(run)});
   chart('br_ytd',{type:'line',data:{labels:SMONTHS,datasets:[{data:cum,borderColor:'#00D68F',backgroundColor:'rgba(0,214,143,.12)',fill:true,tension:.35,pointRadius:0,borderWidth:2.5}]},options:{plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
-  var top8=byRev.slice(0,8);
-  chart('br_loc',{type:'bar',data:{labels:top8.map(function(s){return s.name.split(' ')[0]}),datasets:[{data:top8.map(function(s){return s.rev}),backgroundColor:'#00C8FF',borderRadius:4}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:ax(),y:ax()},maintainAspectRatio:false}});
-  chart('br_mix',{type:'doughnut',data:{labels:['Service Calls','Installations','Maintenance Plans','Parts & Materials'],datasets:[{data:[seg.a,seg.b,seg.c,seg.d],backgroundColor:['#00C8FF','#00D68F','#A78BFA','#FFC13D'],borderColor:c.ring,borderWidth:2}]},options:{cutout:'60%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:11}}}},maintainAspectRatio:false}});
+  chart('br_mix',{type:'doughnut',data:{labels:['Service Calls','Installations','Maintenance Plans','Parts & Materials'],datasets:[{data:[segD.a,segD.b,segD.c,segD.d],backgroundColor:['#00C8FF','#00D68F','#A78BFA','#FFC13D'],borderColor:c.ring,borderWidth:2}]},options:{cutout:'60%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:11}}}},maintainAspectRatio:false}});
+  chart('br_ch',{type:'bar',data:{labels:SMONTHS,datasets:[{label:'Commercial',data:comm,backgroundColor:'#00C8FF',borderRadius:3},{label:'Residential',data:resi,backgroundColor:'#A78BFA',borderRadius:3}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10.5}}}},scales:{x:Object.assign({stacked:true},ax()),y:Object.assign({stacked:true},ax())},maintainAspectRatio:false}});
 }
 
 /* ============================================================
