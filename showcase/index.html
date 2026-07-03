@@ -375,6 +375,23 @@
   .intro-bar a:hover{text-decoration:underline}
   .intro-bar .ix{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:0 2px;line-height:1}
   .intro-bar .ix:hover{color:var(--text)}
+
+  /* sidebar module search */
+  .nav-search{position:relative;margin:2px 2px 14px}
+  .nav-search svg{position:absolute;left:10px;top:9px;width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+  .nav-search input{width:100%;background:var(--surface-2);border:1px solid var(--hair);border-radius:9px;color:var(--text);font:inherit;font-size:12.5px;padding:8px 10px 8px 31px}
+  .nav-search input::placeholder{color:var(--faint)}
+  .nav-search input:focus{outline:none;border-color:var(--cyan)}
+
+  /* guided tour */
+  .tourbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:55;display:none;align-items:center;gap:14px;background:var(--bg-2);border:1px solid var(--hair-2);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);width:min(580px,94vw)}
+  .tourbar.on{display:flex}
+  .tourbar .tinfo{flex:1;min-width:0}
+  .tourbar .tstep{font-family:var(--mono);font-size:10px;color:var(--cyan);letter-spacing:.8px;text-transform:uppercase}
+  .tourbar .tt{font-weight:700;font-size:14px;margin-top:1px}
+  .tourbar .td{font-size:12px;color:var(--muted);margin-top:1px;line-height:1.45}
+  .tourbar .tbtns{display:flex;gap:7px;flex:none;align-items:center}
+  @media(max-width:560px){.tourbar{flex-wrap:wrap}.tourbar .tbtns{margin-left:auto}}
   /* business review */
   .br-cta{text-align:center;padding:46px 20px}
   .br-cta .bi{font-size:34px;margin-bottom:10px}
@@ -443,6 +460,7 @@
   <div class="top-right">
     <div class="period">Period <select id="periodSel"><option>Last 12 months</option><option>Year to date</option><option>This quarter</option></select></div>
     <button class="icon-btn bell" id="bellBtn" title="Notifications"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="nbadge" id="nbadge"></span></button>
+    <button class="icon-btn" id="tourBtn" title="Guided tour">▶</button>
     <button class="icon-btn" id="themeBtn" title="Toggle theme"></button>
     <a class="back-link home-link" href="https://systemsbyvega.com">← Systems by Vega</a><a class="back-link home-link" href="https://systemsbyvega.com/pricing/">Pricing</a>
     <div class="user"><span class="avatar">JV</span><span>Jason V.</span></div>
@@ -452,12 +470,13 @@
 <nav class="sidebar" id="nav"></nav>
 <div id="navScrim"></div>
 
-<main id="main"><div class="intro-bar" id="introBar"><span>👋 <b>Interactive demo.</b> This is the kind of operations platform Systems by Vega builds for field-service businesses — browse the modules to explore it. <b>All data is fictional sample data.</b></span><a href="https://systemsbyvega.com/pricing/">See pricing →</a><a href="https://systemsbyvega.com">Back to site →</a><button class="ix" id="introX" aria-label="Dismiss">✕</button></div></main>
+<main id="main"><div class="intro-bar" id="introBar"><span>👋 <b>Interactive demo.</b> This is the kind of operations platform Systems by Vega builds for field-service businesses — 24 modules, all clickable. <b>All data is fictional sample data.</b></span><a href="#" id="tourStart">▶ Take the 60-second tour</a><a href="https://systemsbyvega.com/pricing/">See pricing →</a><a href="https://systemsbyvega.com">Back to site →</a><button class="ix" id="introX" aria-label="Dismiss">✕</button></div></main>
 
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer" aria-hidden="true"></aside>
 <div class="modal-bg" id="modalBg"></div>
 <div class="ndrop" id="ndrop"></div>
+<div class="tourbar" id="tourbar"></div>
 <div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
@@ -665,20 +684,73 @@ var NET_SAV=VENDORS.reduce(function(a,v){return a+v.sav},0);
    ============================================================ */
 var NAV=[
   ["OVERVIEW",[["dashboard","Dashboard","grid",""],["kpi","KPI Scorecard","gauge",""],["review","Business Review","report",""],["territory","Territory Map","map",""]]],
-  ["CUSTOMER-FACING",[["portal","Customer Portal","home",""]]],
   ["SALES & CRM",[["crm","CRM & Sales","users",""],["pipeline","Contract Onboarding","flow",""],["marketing","Marketing","mega",""]]],
   ["OPERATIONS",[["sites","Locations","db",""],["tasks","Implementation","check",""],["scheduling","Scheduling","clock",""],["visits","Job-Site Visits","clip",""],["calendar","Calendar","cal",""]]],
-  ["WORKFORCE",[["team","Team & Productivity","award",""],["hr","HR & Admin","users",""]]],
   ["FINANCE",[["finance","Invoicing & Accounting","dollar",""],["vendors","Supplier ROI","tag",""],["calc","Job Margin Calc","calc",""]]],
+  ["WORKFORCE",[["team","Team & Productivity","award",""],["hr","HR & Admin","users",""]]],
   ["INVENTORY & DOCS",[["inventory","Inventory","box",""],["policies","Policies & SOPs","book",""],["documents","Documents","file",""],["training","Training Academy","cap",""]]],
-  ["INSIGHTS",[["process","Process Flow","route",""]]],
-  ["DEVELOPER",[["devtools","Developer Tools","code",""]]]
+  ["CUSTOMER-FACING",[["portal","Customer Portal","home",""]]],
+  ["UNDER THE HOOD",[["process","Process Flow","route",""],["devtools","Developer Tools","code",""]]]
 ];
-$('#nav').innerHTML=NAV.map(function(g){
+var MODULE_COUNT=NAV.reduce(function(a,g){return a+g[1].length},0);
+$('#nav').innerHTML='<div class="nav-search">'+ic('search')+'<input id="navFilter" type="text" placeholder="Find a module… ( / )" aria-label="Find a module"></div>'+NAV.map(function(g){
   return '<div class="nav-group"><h5>'+g[0]+'</h5>'+g[1].map(function(it){
     return '<div class="nav-item" data-page="'+it[0]+'">'+ic(it[2])+'<span>'+it[1]+'</span>'+(it[3]?'<span class="badge">'+it[3]+'</span>':'')+'</div>';
   }).join('')+'</div>';
 }).join('')+'<div class="nav-foot"><a href="https://systemsbyvega.com">← Systems by Vega</a><a href="https://systemsbyvega.com/pricing/">Packages &amp; pricing</a></div>';
+
+/* ---- module quick-search ---- */
+var navFilter=$('#navFilter');
+navFilter.placeholder='Find a module ('+MODULE_COUNT+')… /';
+function navFirstVisible(){return $$('.nav-item').filter(function(n){return n.style.display!=='none'})[0]}
+navFilter.addEventListener('input',function(){
+  var q=navFilter.value.trim().toLowerCase();
+  $$('.nav-item').forEach(function(n){n.style.display=(!q||n.textContent.toLowerCase().indexOf(q)>-1)?'':'none'});
+  $$('.nav-group').forEach(function(g){var any=$$('.nav-item',g).some(function(n){return n.style.display!=='none'});g.style.display=any?'':'none'});
+});
+navFilter.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){var first=navFirstVisible();if(first){go(first.dataset.page);history.replaceState(null,'','#'+first.dataset.page);navFilter.value='';navFilter.dispatchEvent(new Event('input'));navFilter.blur();if(window.__closeMenu)window.__closeMenu();}}
+  else if(e.key==='Escape'){navFilter.value='';navFilter.dispatchEvent(new Event('input'));navFilter.blur()}
+});
+document.addEventListener('keydown',function(e){
+  var tag=(document.activeElement&&document.activeElement.tagName)||'';
+  if(/INPUT|TEXTAREA|SELECT/.test(tag))return;
+  if(e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k')){
+    e.preventDefault();
+    if(window.innerWidth<=820){var sb=$('#nav');sb.classList.add('open');var sc=$('#navScrim');if(sc)sc.classList.add('open')}
+    navFilter.focus();
+  }
+});
+
+/* ---- guided tour ---- */
+var TOUR=[
+  ['dashboard','Dashboard','Network health at a glance — KPIs, revenue trend, and live alerts. Everything on this page is clickable.'],
+  ['review','Business Review','The flagship: hit “Generate Business Review” and a full consultant-style report is built from the live data in one click.'],
+  ['kpi','KPI Scorecard','Targets vs actuals across the whole business — green means on or above goal.'],
+  ['crm','CRM & Sales','Sales analytics, a deal pipeline, client follow-ups, and an auto-scheduler for tasks.'],
+  ['sites','Locations','A searchable, sortable database — click any row to open the full location record.'],
+  ['territory','Territory Map','Service activity by state — click an active state to drill into its locations.'],
+  ['finance','Invoicing & Accounting','Invoices, receivables, and the P&L — the money side, wired to the same data.'],
+  ['portal','Customer Portal','The customer-facing side: request service, pick a window, track the job, approve quotes.']
+];
+var tourIx=-1;
+function tourShow(){
+  var tb=$('#tourbar');
+  if(tourIx<0||tourIx>=TOUR.length){tb.classList.remove('on');tourIx=-1;return}
+  var t=TOUR[tourIx];
+  go(t[0]);history.replaceState(null,'','#'+t[0]);if(window.__closeMenu)window.__closeMenu();
+  tb.innerHTML='<div class="tinfo"><div class="tstep">Tour · '+(tourIx+1)+' of '+TOUR.length+'</div><div class="tt">'+t[1]+'</div><div class="td">'+t[2]+'</div></div>'+
+    '<div class="tbtns">'+(tourIx>0?'<button class="btn btn-sm" id="tourPrev">←</button>':'')+
+    '<button class="btn btn-sm btn-pri" id="tourNext">'+(tourIx===TOUR.length-1?'Finish ✓':'Next →')+'</button>'+
+    '<button class="btn btn-sm" id="tourEnd" title="End tour">✕</button></div>';
+  tb.classList.add('on');
+  var p=$('#tourPrev');if(p)p.onclick=function(){tourIx--;tourShow()};
+  $('#tourNext').onclick=function(){tourIx++;tourShow();if(tourIx===-1)toast('That’s the tour — keep exploring, everything is clickable.','ok')};
+  $('#tourEnd').onclick=function(){tourIx=TOUR.length;tourShow()};
+}
+function startTour(){tourIx=0;tourShow()}
+var tourStart=$('#tourStart');if(tourStart)tourStart.onclick=function(e){e.preventDefault();startTour()};
+var tourBtn=$('#tourBtn');if(tourBtn)tourBtn.onclick=startTour;
 
 var PAGES={};
 function definePage(id,html,onShow){PAGES[id]={html:html,onShow:onShow}}

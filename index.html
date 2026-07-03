@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Systems by Vega — Custom software &amp; operations systems for small business</title>
-<meta name="description" content="Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites — the full operations toolkit small businesses can't justify a whole IT team for. One person, modern tools, no enterprise price tag.">
+<meta name="description" content="Get your hours back and stop revenue leaks. Databases, CRM, dashboards, automation, SOPs, scheduling, and websites for small business — one person, modern tools, no enterprise price tag. Try the interactive 24-module showcase.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Systems by Vega — custom software &amp; operations systems">
-<meta property="og:description" content="Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites for small business. See a live demo.">
+<meta property="og:description" content="Get your hours back and stop revenue leaks. Databases, CRM, dashboards, automation, and websites for small business. Try the interactive 24-module showcase.">
 <meta property="og:url" content="https://systemsbyvega.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://systemsbyvega.com/portfolio/assets/img/systemsbyvega.jpg">
@@ -181,6 +181,21 @@
   footer a.foot-link{color:#fff;text-decoration:none;border-bottom:1px solid var(--con-hair);transition:color .15s ease,border-color .15s ease}
   footer a.foot-link:hover{color:var(--amber);border-color:var(--amber)}
 
+  /* outcomes */
+  .ggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+  .gcard{background:var(--panel);border:1px solid var(--hair);border-top:3px solid var(--green);border-radius:13px;padding:24px;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
+  .gcard:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(20,28,40,.1)}
+  .gcard .gk{display:block;font-family:'IBM Plex Mono';font-weight:600;font-size:12px;color:var(--green);margin-bottom:10px}
+  .gcard .gt{font-family:'Archivo';font-weight:800;font-size:18px;letter-spacing:-.01em;margin-bottom:8px}
+  .gcard p{font-size:14px;color:var(--ink-soft)}
+  @media(max-width:980px){.ggrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.ggrid{grid-template-columns:1fr}}
+
+  /* showcase module chips */
+  .mod-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .mod-chips span{font-family:'IBM Plex Mono';font-size:11px;color:#C2CAD6;border:1px solid #39434F;padding:4px 10px;border-radius:20px;white-space:nowrap}
+  .mod-chips span.more{color:var(--con-amber);border-color:rgba(243,146,47,.5)}
+
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
 
@@ -240,6 +255,7 @@
     <div class="logo"><span class="sq">V</span> Systems by Vega</div>
     <div class="nav-links">
       <a href="/demo/" class="nav-tab">Live Demo</a>
+      <a href="/showcase/" class="nav-tab">Showcase</a>
       <a href="/pricing/" class="nav-tab">Pricing</a>
       <a href="/portfolio/" class="nav-tab">Portfolio</a>
       <a href="#contact" class="cta">Book a free walkthrough</a>
@@ -251,10 +267,10 @@
   <div class="hero-in">
     <div class="eyebrow">Software · systems · operations for small business</div>
     <h1>The systems your business runs on — <span class="hl">designed, built, and shipped.</span></h1>
-    <p>Databases, CRM, dashboards, analytics, automation, SOPs, scheduling, and websites — the whole back office, built to fit how you actually work. Whether it's eleven spreadsheets held together by one person or a process that only lives in someone's head, I turn it into a real system. One person, modern tools, no enterprise price tag.</p>
+    <p>Eleven spreadsheets, invoices that slip through the cracks, reports rebuilt by hand every week — I make those problems go away. Databases, CRM, dashboards, automation, scheduling, and websites, built to fit how you actually work, so the busywork runs itself and you get your hours back. One person, modern tools, no enterprise price tag.</p>
     <div class="hero-cta">
       <a href="#contact" class="btn-pri">Book a free walkthrough</a>
-      <a href="demo/" class="btn-sec">See a live demo →</a>
+      <a href="showcase/" class="btn-sec">Try the interactive showcase →</a>
     </div>
     <div class="hero-meta">
       <div><b>Built solo</b>Direct line to the person building it</div>
@@ -278,6 +294,21 @@
   </div>
 </section>
 
+<!-- outcomes -->
+<section class="gains">
+  <div class="wrap reveal">
+    <div class="step">What you get back</div>
+    <h2>The point isn't software. It's the week you get back.</h2>
+    <p class="stxt">Every build is aimed at outcomes you can feel within the first month — time back, money that stops leaking, and a calmer operation.</p>
+    <div class="ggrid">
+      <div class="gcard"><span class="gk">/ time</span><div class="gt">Hours back, every week</div><p>Data gets entered once and the reports build themselves. The after-hours retyping session disappears from your calendar.</p></div>
+      <div class="gcard"><span class="gk">/ money</span><div class="gt">The leaks stop</div><p>Every job invoiced, every quote followed up, every double-booking caught. The revenue that used to slip through the cracks stays yours.</p></div>
+      <div class="gcard"><span class="gk">/ clarity</span><div class="gt">Answers in seconds</div><p>"How are we doing this month?" becomes a glance at a live dashboard — not an afternoon of digging through files.</p></div>
+      <div class="gcard"><span class="gk">/ peace of mind</span><div class="gt">It runs without you hovering</div><p>The process lives in a system anyone can use — not in one person's head. People take vacations; your operation keeps moving.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- services -->
 <section class="why2">
   <div class="wrap reveal">
@@ -291,7 +322,7 @@
       <div class="scard"><div class="n">/ 04</div><h3>Websites &amp; web apps</h3><p>Fast, clean, custom-built sites and tools — not a bloated template. Made to do the one job your business needs done.</p></div>
       <div class="scard"><div class="n">/ 05</div><h3>SOPs &amp; documentation</h3><p>The processes and policies that live in someone's head, written down — so your business doesn't depend on any one person.</p></div>
       <div class="scard"><div class="n">/ 06</div><h3>Spreadsheet rescue</h3><p>Got a spreadsheet that's become a monster? I'll untangle it, fix it, or replace it with something that won't break when someone sneezes.</p></div>
-      <div class="scard feat"><div class="n"><span>/ 07</span><span class="tag">Featured</span></div><h3>Automated Business Reviews</h3><p>One-click, consultant-style reviews of your whole operation — your KPIs analyzed, wins highlighted, opportunities surfaced, and specific actions to improve each metric. The insight of a business consultant, generated from your live data on demand.</p><a href="showcase/" class="slink">See a live auto-generated business review →</a></div>
+      <div class="scard feat"><div class="n"><span>/ 07</span><span class="tag">Featured</span></div><h3>Automated Business Reviews</h3><p>One-click, consultant-style reviews of your whole operation — your KPIs analyzed, wins highlighted, opportunities surfaced, and specific actions to improve each metric. The insight of a business consultant, generated from your live data on demand.</p><a href="showcase/#review" class="slink">See a live auto-generated business review →</a></div>
     </div>
   </div>
 </section>
@@ -394,13 +425,13 @@
     <h2>Systems already running in the real world.</h2>
     <p class="stxt">Every project below is live and in use today — built end to end by one person. Click any of them and poke around.</p>
     <div class="proofgrid">
-      <a class="pcard" href="demo/">
-        <div class="chrome"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>ops command center · demo</span></div>
+      <a class="pcard" href="showcase/">
+        <div class="chrome"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>ops command center · interactive</span></div>
         <div class="shot"><img src="portfolio/assets/img/showcase.jpg" alt="Operations Command Center — dashboards, sites database, territory heatmap" loading="lazy"></div>
         <div class="pbody">
           <h3>Operations Command Center</h3>
-          <p>The class of platform I run for a national truck-stop network — live dashboards, a searchable sites database, vendor ROI tracking, and a territory heatmap. Fully interactive demo with sample data.</p>
-          <div class="plink">Explore the demo →</div>
+          <p>The class of platform I run for a national truck-stop network — live dashboards, a searchable sites database, supplier ROI tracking, a territory heatmap, and one-click business reviews. 24 fully interactive modules with sample data.</p>
+          <div class="plink">Open the showcase →</div>
         </div>
       </a>
       <a class="pcard" href="https://yourlifecc.com" target="_blank" rel="noopener">
@@ -447,12 +478,12 @@
     <div class="demo-in">
       <div class="demo-txt">
         <div class="step">See it in action</div>
-        <h2>Click through a working system.</h2>
-        <p class="stxt">Instead of describing it, I'll show you. This is a live, interactive operations console — the kind of thing I'd build for your business. Tab through it, search it, watch the numbers move.</p>
+        <h2>Don't take my word for it — click around the real thing.</h2>
+        <p class="stxt">The Showcase is a full, working operations platform with 24 live modules — dashboards, CRM, invoicing, scheduling, HR, inventory, a territory map, and a one-click automated business review. Fictional data, real software. If you can use a website, you can run it.</p>
         <div class="hero-cta">
-          <a href="demo/" class="btn-pri">Open the live demo →</a>
+          <a href="showcase/" class="btn-pri">Open the interactive showcase →</a>
         </div>
-        <p style="margin-top:16px"><a href="showcase/" class="slink">See a live auto-generated business review →</a></p>
+        <p style="margin-top:16px"><a href="demo/" class="slink">Prefer the backstory? Read the before-and-after case study →</a></p>
       </div>
       <div class="demo-visual" aria-hidden="true">
         <div class="dv-top"><span class="d g"></span><span class="d a"></span><span class="d"></span><span>ops / dispatch · live</span></div>
@@ -462,6 +493,7 @@
           <div class="dv-kpi"><div class="l">Response</div><div class="v">42m</div></div>
         </div>
         <div class="dv-bars"><i style="height:46%"></i><i style="height:38%"></i><i style="height:62%"></i><i style="height:54%"></i><i style="height:71%"></i><i style="height:64%"></i><i style="height:84%"></i><i style="height:96%"></i></div>
+        <div class="mod-chips"><span>Dashboard</span><span>CRM &amp; Sales</span><span>Invoicing</span><span>Territory Map</span><span>HR</span><span class="more">✨ Business Review</span><span class="more">+ 18 more modules</span></div>
       </div>
     </div>
   </div>
@@ -510,7 +542,7 @@
     <p>Whether it's spreadsheets and late nights, a process no one has written down, or a system you wish existed — send me a line about what's slowing you down. I'll tell you honestly whether I can help — no pitch, no pressure.</p>
     <div class="hero-cta">
       <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20%E2%80%94%20free%20walkthrough&body=Hi%20Jason%2C%0A%0AHere%27s%20what%27s%20slowing%20us%20down%3A%20" class="btn-pri">Book a free walkthrough</a>
-      <a href="demo/" class="btn-sec">See the live demo →</a>
+      <a href="showcase/" class="btn-sec">Explore the showcase →</a>
     </div>
     <p class="email-line" style="margin-top:14px"><a href="/pricing/">See packages &amp; pricing →</a></p>
     <div class="next">
