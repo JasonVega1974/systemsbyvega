@@ -142,5 +142,21 @@
     ],
     "status": "Demo",
     "featured": true
+  },
+  {
+    "id": "primebincleaning",
+    "name": "Prime Bin Cleaning",
+    "tagline": "Residential bin power-washing service",
+    "description": "Prime Bin Cleaning is the web presence and booking front for a teen-owned residential garbage-bin cleaning service in Idaho's Treasure Valley — power-washing, sanitizing, and deodorizing bins curbside. The single-page site handles the full pitch (pricing, process, before/after results) and a text-to-book flow, deployed as a lean static site under the Kingdom Creatives umbrella.",
+    "url": "https://primebincleaning.com",
+    "thumb": "assets/img/primebincleaning.jpg",
+    "category": "Local Service",
+    "tags": [
+      "Web",
+      "Local business",
+      "Booking"
+    ],
+    "status": "Live",
+    "featured": false
   }
 ]
