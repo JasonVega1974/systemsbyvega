@@ -250,6 +250,22 @@
 
   @media(max-width:900px){.proofgrid{grid-template-columns:1fr}.builder .bgrid{grid-template-columns:1fr;gap:26px}.next{grid-template-columns:1fr}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+  /* contact form */
+  .contact-form{max-width:540px;margin:34px auto 0;background:var(--panel);border:1px solid var(--hair);border-radius:13px;padding:28px;box-shadow:var(--shadow);text-align:left;color:var(--ink)}
+  .cf-row{margin-bottom:16px}
+  .cf-row:last-of-type{margin-bottom:0}
+  .cf-row label{display:block;font-family:'IBM Plex Mono';font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--con-amber);margin-bottom:7px}
+  .cf-row input,.cf-row textarea{display:block;width:100%;font-family:'Archivo';font-size:15px;font-weight:500;background:transparent;border:1px solid var(--hair);border-radius:7px;padding:11px 14px;color:inherit}
+  .cf-row input::placeholder,.cf-row textarea::placeholder{color:var(--ink-soft);opacity:.65}
+  .cf-row input:focus,.cf-row textarea:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
+  .cf-row textarea{resize:vertical;line-height:1.5;font-family:'Archivo'}
+  .cf-submit{display:block;width:100%;margin-top:6px;border:none;cursor:pointer;font:inherit}
+  .cf-submit:disabled{opacity:.6;cursor:default}
+  .cf-status{margin-top:12px;font-size:13.5px;color:var(--ink-soft)}
+  .cf-status.err{color:#C0392B;font-weight:600}
+  .cf-success{display:none;max-width:540px;margin:34px auto 0;background:var(--panel);border:1px solid var(--hair);border-radius:13px;padding:28px;box-shadow:var(--shadow);font-family:'Archivo';font-weight:700;font-size:17px;color:var(--ink);text-align:center}
+  @media(min-width:640px){.cf-submit{display:inline-flex;align-items:center;width:auto;padding-left:28px;padding-right:28px}}
 </style>
 </head>
 <body>
@@ -548,17 +564,39 @@
     <div class="step">Let's talk</div>
     <h2>Tell me where it hurts. The walkthrough's free.</h2>
     <p>Whether it's spreadsheets and late nights, a process no one has written down, or a system you wish existed — send me a line about what's slowing you down. I'll tell you honestly whether I can help — no pitch, no pressure.</p>
-    <div class="hero-cta">
-      <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20%E2%80%94%20free%20walkthrough&body=Hi%20Jason%2C%0A%0AHere%27s%20what%27s%20slowing%20us%20down%3A%20" class="btn-pri">Hire me</a>
+    <div class="hero-cta" style="justify-content:center">
       <a href="showcase/" class="btn-sec">Explore the showcase →</a>
     </div>
+    <form class="contact-form" id="contactForm">
+      <input type="hidden" name="access_key" value="4d5cdfe7-f9bc-45dd-ac8e-d5e266810da3">
+      <input type="hidden" name="subject" value="Systems by Vega — new inquiry">
+      <input type="hidden" name="from_name" value="Systems by Vega site">
+      <div class="cf-row">
+        <label for="cfName">Name</label>
+        <input type="text" id="cfName" name="name" required>
+      </div>
+      <div class="cf-row">
+        <label for="cfEmail">Email</label>
+        <input type="email" id="cfEmail" name="email" required>
+      </div>
+      <div class="cf-row">
+        <label for="cfPhone">Phone</label>
+        <input type="tel" id="cfPhone" name="phone" placeholder="optional — I'll text you back faster">
+      </div>
+      <div class="cf-row">
+        <label for="cfMessage">What's slowing you down?</label>
+        <textarea id="cfMessage" name="message" rows="4" required placeholder="Tell me what's broken, backed up, or eating your time."></textarea>
+      </div>
+      <button type="submit" class="btn-pri cf-submit">Send it →</button>
+      <p class="cf-status" id="cfStatus"></p>
+    </form>
+    <div class="cf-success" id="cfSuccess">Got it — I'll be in touch within one business day.</div>
     <p class="email-line" style="margin-top:14px"><a href="/pricing/">See packages &amp; pricing →</a></p>
     <div class="next">
       <div class="nextc"><div class="nn">Step 1 · Today</div><p>Send a few lines about what's slowing you down. I reply within one business day — a real reply, not an autoresponder.</p></div>
       <div class="nextc"><div class="nn">Step 2 · This week</div><p>A free 30-minute walkthrough call. You show me the pain; I tell you honestly whether I can fix it and roughly what it'd take.</p></div>
       <div class="nextc"><div class="nn">Step 3 · In writing</div><p>You get a fixed price for a defined scope — one number, before anything starts. Take it or leave it, no pressure either way.</p></div>
     </div>
-    <p class="email-line">Prefer plain email? <a href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
   </div>
 </section>
 
@@ -587,6 +625,39 @@
   // reveal on scroll
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // contact form (Web3Forms)
+  (function(){
+    const form=document.getElementById('contactForm');
+    if(!form)return;
+    const status=document.getElementById('cfStatus');
+    const success=document.getElementById('cfSuccess');
+    const btn=form.querySelector('.cf-submit');
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      status.textContent='';
+      status.classList.remove('err');
+      btn.disabled=true;
+      btn.textContent='Sending…';
+      fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(Object.fromEntries(new FormData(form)))
+      }).then(r=>r.json()).then(function(data){
+        if(data.success){
+          form.style.display='none';
+          success.style.display='block';
+        }else{
+          throw new Error(data.message||'error');
+        }
+      }).catch(function(){
+        status.textContent='Something went wrong — email me directly at info@kingdom-creatives.com';
+        status.classList.add('err');
+        btn.disabled=false;
+        btn.textContent='Send it →';
+      });
+    });
+  })();
 </script>
 </body>
 </html>
