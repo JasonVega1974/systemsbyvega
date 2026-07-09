@@ -252,20 +252,21 @@
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 
   /* contact form */
-  .contact-form{max-width:540px;margin:34px auto 0;background:var(--panel);border:1px solid var(--hair);border-radius:13px;padding:28px;box-shadow:var(--shadow);text-align:left;color:var(--ink)}
-  .cf-row{margin-bottom:16px}
+  .contact-form{max-width:560px;margin:36px auto 0;background:linear-gradient(165deg,var(--con-2),var(--con));border:1px solid var(--con-hair);border-top:3px solid var(--con-amber);border-radius:16px;padding:34px 32px;box-shadow:0 24px 60px rgba(0,0,0,.4);text-align:left}
+  .cf-row{margin-bottom:19px}
   .cf-row:last-of-type{margin-bottom:0}
-  .cf-row label{display:block;font-family:'IBM Plex Mono';font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--con-amber);margin-bottom:7px}
-  .cf-row input,.cf-row textarea{display:block;width:100%;font-family:'Archivo';font-size:15px;font-weight:500;background:transparent;border:1px solid var(--hair);border-radius:7px;padding:11px 14px;color:inherit}
-  .cf-row input::placeholder,.cf-row textarea::placeholder{color:var(--ink-soft);opacity:.65}
-  .cf-row input:focus,.cf-row textarea:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
-  .cf-row textarea{resize:vertical;line-height:1.5;font-family:'Archivo'}
-  .cf-submit{display:block;width:100%;margin-top:6px;border:none;cursor:pointer;font:inherit}
+  .cf-row label{display:block;font-family:'IBM Plex Mono';font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--con-amber);margin-bottom:8px}
+  .cf-row input,.cf-row textarea{display:block;width:100%;font-family:'Archivo';font-size:15px;font-weight:500;background:rgba(255,255,255,.045);border:1px solid var(--con-hair);border-radius:8px;padding:12px 14px;color:var(--con-text)}
+  .cf-row input::placeholder,.cf-row textarea::placeholder{color:var(--con-muted);opacity:1}
+  .cf-row input:focus,.cf-row textarea:focus{outline:none;border-color:var(--con-amber);background:rgba(243,146,47,.07);box-shadow:0 0 0 3px rgba(243,146,47,.16)}
+  .cf-row textarea{resize:vertical;line-height:1.55;font-family:'Archivo'}
+  .cf-submit{display:block;width:100%;margin-top:8px;border:none;cursor:pointer;font:inherit}
   .cf-submit:disabled{opacity:.6;cursor:default}
-  .cf-status{margin-top:12px;font-size:13.5px;color:var(--ink-soft)}
-  .cf-status.err{color:#C0392B;font-weight:600}
-  .cf-success{display:none;max-width:540px;margin:34px auto 0;background:var(--panel);border:1px solid var(--hair);border-radius:13px;padding:28px;box-shadow:var(--shadow);font-family:'Archivo';font-weight:700;font-size:17px;color:var(--ink);text-align:center}
-  @media(min-width:640px){.cf-submit{display:inline-flex;align-items:center;width:auto;padding-left:28px;padding-right:28px}}
+  .cf-status{margin-top:14px;font-size:13.5px;color:var(--con-muted)}
+  .cf-status.err{color:#FF8A75;font-weight:600}
+  .cf-success{display:none;max-width:560px;margin:36px auto 0;background:linear-gradient(165deg,var(--con-2),var(--con));border:1px solid var(--con-hair);border-top:3px solid var(--green);border-radius:16px;padding:38px 32px;box-shadow:0 24px 60px rgba(0,0,0,.4);font-family:'Archivo';font-weight:700;font-size:17.5px;color:#fff;text-align:center}
+  .cf-success .cf-check{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(31,157,99,.16);color:var(--green);margin-right:9px;vertical-align:middle;font-weight:800;font-size:15px}
+  @media(min-width:640px){.cf-submit{display:inline-flex;align-items:center;width:auto;padding-left:30px;padding-right:30px}}
 </style>
 </head>
 <body>
@@ -590,7 +591,7 @@
       <button type="submit" class="btn-pri cf-submit">Send it →</button>
       <p class="cf-status" id="cfStatus"></p>
     </form>
-    <div class="cf-success" id="cfSuccess">Got it — I'll be in touch within one business day.</div>
+    <div class="cf-success" id="cfSuccess"><span class="cf-check">&#10003;</span>Got it — I'll be in touch within one business day.</div>
     <p class="email-line" style="margin-top:14px"><a href="/pricing/">See packages &amp; pricing →</a></p>
     <div class="next">
       <div class="nextc"><div class="nn">Step 1 · Today</div><p>Send a few lines about what's slowing you down. I reply within one business day — a real reply, not an autoresponder.</p></div>
