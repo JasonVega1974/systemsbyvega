@@ -450,12 +450,47 @@
     .topbar .period,.topbar .user,.topbar .home-link,.brand-txt{display:none}
     #pg-calendar .cal-grid{min-width:480px}#pg-calendar .panel{overflow-x:auto}
   }
+
+  /* module gallery */
+  .gallery-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+  .gallery-head{max-width:760px;margin-bottom:26px}
+  .gallery-head h1{font-size:clamp(24px,3.4vw,34px);margin-bottom:10px}
+  .gallery-head p{color:var(--muted);font-size:14px;max-width:64ch}
+  .mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:1100px){.mod-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.mod-grid{grid-template-columns:1fr}}
+  .mod-card{background:var(--surface);border:1px solid var(--hair);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:10px}
+  .mod-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:var(--shadow)}
+  .mod-card .mc-ic{width:38px;height:38px;border-radius:10px;background:var(--surface-3);display:grid;place-items:center;color:var(--cyan)}
+  .mod-card .mc-ic svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .mod-card h3{font-size:18px}
+  .mod-card p{font-size:13px;color:var(--muted);flex:1;line-height:1.5}
+  .mod-card .mc-open{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--cyan)}
+  .mod-card.hero{grid-column:1/-1;background:linear-gradient(135deg,color-mix(in srgb,var(--cyan) 10%,var(--surface)),var(--surface));border-color:color-mix(in srgb,var(--cyan) 35%,var(--hair))}
+  .mod-card.hero .mc-ic{background:linear-gradient(135deg,var(--cyan),var(--green));color:#04121f}
+  .mod-card.hero h3{font-size:21px}
+
+  /* view modes: gallery (landing) / focus (single module) / app (full sidebar) */
+  .focus-bar{display:none;align-items:center;gap:14px;margin-bottom:18px}
+  .focus-bar .fb-back{display:inline-flex;align-items:center;gap:7px;font-family:'Barlow Condensed';font-weight:700;font-size:13.5px;color:var(--text);background:var(--surface-2);border:1px solid var(--hair);border-radius:9px;padding:8px 13px;cursor:pointer}
+  .focus-bar .fb-back:hover{border-color:var(--cyan)}
+  .focus-bar .fb-title{font-family:var(--mono);font-size:12px;color:var(--faint)}
+  body[data-view="focus"] .focus-bar{display:flex}
+  body[data-view="gallery"] #introBar{display:none}
+  .sidebar{display:none}
+  main{margin-left:0}
+  .menu-btn{display:none}
+  body[data-view="app"] .sidebar{display:block}
+  body[data-view="app"] .menu-btn{display:none}
+  @media(max-width:820px){body[data-view="app"] .menu-btn{display:grid}}
+  @media(min-width:821px){body[data-view="app"] main{margin-left:var(--sidebar)}}
+  .brand{cursor:pointer}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button><div class="brand"><span class="mark">NW</span><div class="brand-txt">Northwind Field Services<small>A SYSTEMS BY VEGA DEMO</small></div></div>
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button><div class="brand" id="brandHome" role="button" tabindex="0" title="Back to module gallery"><span class="mark">NW</span><div class="brand-txt">Northwind Field Services<small>A SYSTEMS BY VEGA DEMO</small></div></div>
   <span class="demo-pill">● DEMO · fictional data</span>
   <div class="top-right">
     <div class="period">Period <select id="periodSel"><option>Last 12 months</option><option>Year to date</option><option>This quarter</option></select></div>
@@ -470,7 +505,7 @@
 <nav class="sidebar" id="nav"></nav>
 <div id="navScrim"></div>
 
-<main id="main"><div class="intro-bar" id="introBar"><span>👋 <b>Interactive demo.</b> This is the kind of operations platform Systems by Vega builds for field-service businesses — 24 modules, all clickable. <b>All data is fictional sample data.</b></span><a href="#" id="tourStart">▶ Take the 60-second tour</a><a href="https://systemsbyvega.com/pricing/">See pricing →</a><a href="https://systemsbyvega.com">Back to site →</a><button class="ix" id="introX" aria-label="Dismiss">✕</button></div></main>
+<main id="main"><div class="focus-bar" id="focusBar"><button class="fb-back" id="focusBackBtn">← All modules</button><span class="fb-title" id="focusBarTitle"></span></div><div class="intro-bar" id="introBar"><span>👋 <b>Interactive demo.</b> This is the kind of operations platform Systems by Vega builds for field-service businesses — 24 modules, all clickable. <b>All data is fictional sample data.</b></span><a href="#" id="tourStart">▶ Take the 60-second tour</a><a href="https://systemsbyvega.com/pricing/">See pricing →</a><a href="https://systemsbyvega.com">Back to site →</a><button class="ix" id="introX" aria-label="Dismiss">✕</button></div></main>
 
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer" aria-hidden="true"></aside>
@@ -693,11 +728,12 @@ var NAV=[
   ["UNDER THE HOOD",[["process","Process Flow","route",""],["devtools","Developer Tools","code",""]]]
 ];
 var MODULE_COUNT=NAV.reduce(function(a,g){return a+g[1].length},0);
+var NAV_LABELS={};NAV.forEach(function(g){g[1].forEach(function(it){NAV_LABELS[it[0]]=it[1]})});
 $('#nav').innerHTML='<div class="nav-search">'+ic('search')+'<input id="navFilter" type="text" placeholder="Find a module… ( / )" aria-label="Find a module"></div>'+NAV.map(function(g){
   return '<div class="nav-group"><h5>'+g[0]+'</h5>'+g[1].map(function(it){
     return '<div class="nav-item" data-page="'+it[0]+'">'+ic(it[2])+'<span>'+it[1]+'</span>'+(it[3]?'<span class="badge">'+it[3]+'</span>':'')+'</div>';
   }).join('')+'</div>';
-}).join('')+'<div class="nav-foot"><a href="https://systemsbyvega.com">← Systems by Vega</a><a href="https://systemsbyvega.com/pricing/">Packages &amp; pricing</a></div>';
+}).join('')+'<div class="nav-foot"><a href="#" id="navGalleryLink">← Module gallery</a><a href="https://systemsbyvega.com">← Systems by Vega</a><a href="https://systemsbyvega.com/pricing/">Packages &amp; pricing</a></div>';
 
 /* ---- module quick-search ---- */
 var navFilter=$('#navFilter');
@@ -748,13 +784,15 @@ function tourShow(){
   $('#tourNext').onclick=function(){tourIx++;tourShow();if(tourIx===-1)toast('That’s the tour — keep exploring, everything is clickable.','ok')};
   $('#tourEnd').onclick=function(){tourIx=TOUR.length;tourShow()};
 }
-function startTour(){tourIx=0;tourShow()}
+function startTour(){setBodyView('app');tourIx=0;tourShow()}
 var tourStart=$('#tourStart');if(tourStart)tourStart.onclick=function(e){e.preventDefault();startTour()};
 var tourBtn=$('#tourBtn');if(tourBtn)tourBtn.onclick=startTour;
 
 var PAGES={};
 function definePage(id,html,onShow){PAGES[id]={html:html,onShow:onShow}}
 var rendered={};
+var viewMode='gallery';
+function setBodyView(m){viewMode=m;document.body.setAttribute('data-view',m)}
 function go(page){
   if(!PAGES[page])page='dashboard';
   $$('.nav-item').forEach(function(n){n.classList.toggle('active',n.dataset.page===page)});
@@ -762,10 +800,14 @@ function go(page){
   if(!rendered[page]){main.insertAdjacentHTML('beforeend','<section class="page" id="pg-'+page+'">'+PAGES[page].html+'</section>');rendered[page]=true;}
   $$('.page').forEach(function(p){p.classList.toggle('active',p.id==='pg-'+page)});
   if(PAGES[page].onShow)PAGES[page].onShow();
+  if(viewMode==='focus'){var ft=$('#focusBarTitle');if(ft)ft.textContent=NAV_LABELS[page]||''}
   window.scrollTo({top:0});
 }
+function openGallery(){setBodyView('gallery');go('gallery');history.replaceState(null,'',location.pathname+location.search);if(window.__closeMenu)window.__closeMenu()}
+function openModule(id,tab){if(!PAGES[id])return;if(id==='crm'&&tab)crmTab=tab;setBodyView('focus');go(id);history.replaceState(null,'','#'+id)}
+function openIntegrated(startId){setBodyView('app');go(startId||'dashboard');history.replaceState(null,'','#all')}
 document.addEventListener('click',function(e){
-  var nav=e.target.closest('.nav-item[data-page]'); if(nav){go(nav.dataset.page);history.replaceState(null,'','#'+nav.dataset.page);if(window.__closeMenu)window.__closeMenu();return;}
+  var nav=e.target.closest('.nav-item[data-page]'); if(nav){setBodyView('app');go(nav.dataset.page);history.replaceState(null,'','#'+nav.dataset.page);if(window.__closeMenu)window.__closeMenu();return;}
 });
 
 /* ============================================================
@@ -2093,6 +2135,39 @@ function brRender(out){
 }
 
 /* ============================================================
+   PAGE: GALLERY (module landing)
+   ============================================================ */
+var GALLERY_CARDS=[
+  {id:'dashboard',icon:'grid',title:'Dashboard',desc:'Network health at a glance — live KPIs, revenue trend, and priority alerts.'},
+  {id:'crm',tab:'Sales Analytics',icon:'gauge',title:'Sales Forecast',desc:'Monthly sales vs. last year, with a rolling forecast built from recent trend.'},
+  {id:'crm',tab:'Clients',icon:'users',title:'CRM',desc:'Contacts, deal value, and follow-up status for every active relationship.'},
+  {id:'pipeline',icon:'flow',title:'Pipeline',desc:'Every new contract tracked from signed agreement to launch, stage by stage.'},
+  {id:'calendar',icon:'cal',title:'Schedule / Calendar',desc:'Site visits, launches, and deadlines on a full monthly calendar.'},
+  {id:'tasks',icon:'check',title:'Task Board',desc:'A kanban board tracking onboarding work — To Do, In Progress, Review, Done.'},
+  {id:'sites',icon:'db',title:'Database',desc:'A searchable, sortable directory of every location, with a full drill-down record.'},
+  {id:'territory',icon:'map',title:'Territory Map',desc:'Service activity by state, with drill-down into each state’s locations.'},
+  {id:'calc',icon:'calc',title:'ROI Calculator',desc:'Model a pricing scenario and see the projected monthly and annual margin impact.'}
+];
+function galleryCardHTML(c){
+  return '<div class="mod-card" data-id="'+c.id+'"'+(c.tab?' data-tab="'+esc(c.tab)+'"':'')+'>'+
+    '<div class="mc-ic">'+ic(c.icon)+'</div><h3>'+esc(c.title)+'</h3><p>'+c.desc+'</p><div class="mc-open">Open demo →</div></div>';
+}
+definePage('gallery',
+  '<div class="gallery-head"><div class="gallery-eyebrow">Interactive showcase</div><h1>Pick a module, or see them work together.</h1><p>Every module below runs on fictional sample data and is fully interactive — open one to try it, or open the whole platform as a client would use it.</p></div>'+
+  '<div class="mod-grid" id="galleryGrid">'+
+    '<div class="mod-card hero" data-hero="1"><div class="mc-ic">'+ic('zap')+'</div><h3>The whole system, together</h3><p>All '+MODULE_COUNT+' modules, wired into one platform with the full navigation — exactly how a client uses it day to day.</p><div class="mc-open">Open the full platform →</div></div>'+
+    GALLERY_CARDS.map(galleryCardHTML).join('')+
+  '</div>',
+  function(){
+    $$('#galleryGrid .mod-card').forEach(function(card){
+      card.onclick=function(){
+        if(card.dataset.hero)openIntegrated();else openModule(card.dataset.id,card.dataset.tab);
+      };
+    });
+  }
+);
+
+/* ============================================================
    BOOT
    ============================================================ */
 (function(){
@@ -2104,8 +2179,14 @@ function brRender(out){
   if(scrim)scrim.onclick=window.__closeMenu;
   var ix=$('#introX');if(ix)ix.onclick=function(){var b=$('#introBar');if(b)b.remove();try{localStorage.setItem('nw_intro','1')}catch(e){}};
   try{if(localStorage.getItem('nw_intro')){var ib=$('#introBar');if(ib)ib.remove()}}catch(e){}
+  var fb=$('#focusBackBtn');if(fb)fb.onclick=function(){openGallery()};
+  var bh=$('#brandHome');if(bh){bh.onclick=function(){openGallery()};bh.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openGallery()}}}
+  var ng=$('#navGalleryLink');if(ng)ng.onclick=function(e){e.preventDefault();openGallery();if(window.__closeMenu)window.__closeMenu()};
   var start=(location.hash||'').replace('#','');
-  go(PAGES[start]?start:'dashboard');
+  if(!start)openGallery();
+  else if(start==='all')openIntegrated('dashboard');
+  else if(start!=='gallery'&&PAGES[start])openModule(start);
+  else openGallery();
 })();
 </script>
 </body>

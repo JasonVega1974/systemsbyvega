@@ -79,9 +79,13 @@
   .btn-pri:hover{background:#fff;transform:translateY(-2px)}
   .btn-sec{font-family:'Archivo';font-weight:700;font-size:15.5px;text-decoration:none;color:#fff;border:1px solid #39434F;padding:15px 28px;border-radius:9px;transition:.18s}
   .btn-sec:hover{border-color:var(--con-amber);color:var(--con-amber)}
-  .hero-meta{display:flex;flex-wrap:wrap;gap:26px;margin-top:46px;padding-top:26px;border-top:1px solid #283040}
-  .hero-meta div{font-size:13.5px;color:var(--con-muted)}
-  .hero-meta b{display:block;font-family:'Archivo';font-weight:700;color:#fff;font-size:14.5px;margin-bottom:2px}
+  .hero-chips{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:38px}
+  .hchip{background:rgba(255,255,255,.04);border:1px solid #283040;border-radius:10px;padding:13px 12px}
+  .hchip b{display:block;font-family:'Archivo';font-weight:700;font-size:13.5px;color:#fff;letter-spacing:-.01em}
+  .hchip span{display:block;font-family:'IBM Plex Mono';font-size:11px;color:var(--con-muted);margin-top:5px;line-height:1.4}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;margin-top:28px;padding:10px 18px;border-radius:30px;background:rgba(243,146,47,.08);border:1px solid rgba(243,146,47,.35);font-family:'IBM Plex Mono';font-size:12px;color:var(--con-amber);letter-spacing:.02em}
+  @media(max-width:900px){.hero-chips{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:560px){.hero-chips{grid-template-columns:repeat(2,1fr)}.hero-badge{font-size:11px;padding:9px 14px;text-align:center}}
 
   section{padding:64px 0}
   .step{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber-deep)}
@@ -258,7 +262,7 @@
       <a href="/showcase/" class="nav-tab">Showcase</a>
       <a href="/pricing/" class="nav-tab">Pricing</a>
       <a href="/portfolio/" class="nav-tab">Portfolio</a>
-      <a href="#contact" class="cta">Book a free walkthrough</a>
+      <a href="#contact" class="cta">Hire me</a>
     </div>
   </div>
 </nav>
@@ -266,17 +270,21 @@
 <header class="hero">
   <div class="hero-in">
     <div class="eyebrow">Software · systems · operations for small business</div>
-    <h1>The systems your business runs on — <span class="hl">designed, built, and shipped.</span></h1>
-    <p>Eleven spreadsheets, invoices that slip through the cracks, reports rebuilt by hand every week — I make those problems go away. Databases, CRM, dashboards, automation, scheduling, and websites, built to fit how you actually work, so the busywork runs itself and you get your hours back. One person, modern tools, no enterprise price tag.</p>
+    <h1>The systems <span class="hl">your business runs on.</span></h1>
+    <p>Databases, CRM, dashboards, and automation that get you off spreadsheets. Built solo, priced like it.</p>
+    <div class="hero-chips">
+      <div class="hchip"><b>Websites</b><span>Fast sites that actually convert</span></div>
+      <div class="hchip"><b>Databases</b><span>One source of truth</span></div>
+      <div class="hchip"><b>CRM</b><span>Leads and follow-ups tracked</span></div>
+      <div class="hchip"><b>Dashboards</b><span>Live numbers, zero spreadsheets</span></div>
+      <div class="hchip"><b>Automation</b><span>Busywork that runs itself</span></div>
+      <div class="hchip"><b>Scheduling</b><span>Bookings and crews organized</span></div>
+    </div>
     <div class="hero-cta">
-      <a href="#contact" class="btn-pri">Book a free walkthrough</a>
-      <a href="showcase/" class="btn-sec">Try the interactive showcase →</a>
+      <a href="#contact" class="btn-pri">Hire me</a>
+      <a href="portfolio/" class="btn-sec">See the work →</a>
     </div>
-    <div class="hero-meta">
-      <div><b>Built solo</b>Direct line to the person building it</div>
-      <div><b>Fixed scope</b>No retainers, no surprise invoices</div>
-      <div><b>You own it</b>It's yours when it's done</div>
-    </div>
+    <div class="hero-badge">1 builder · 9 shipped projects · No enterprise price tag</div>
   </div>
 </header>
 
@@ -453,7 +461,7 @@
         </div>
       </a>
     </div>
-    <div class="proof-more"><a href="portfolio/">See all ten shipped projects →</a></div>
+    <div class="proof-more"><a href="portfolio/">See the work →</a></div>
   </div>
 </section>
 
@@ -541,7 +549,7 @@
     <h2>Tell me where it hurts. The walkthrough's free.</h2>
     <p>Whether it's spreadsheets and late nights, a process no one has written down, or a system you wish existed — send me a line about what's slowing you down. I'll tell you honestly whether I can help — no pitch, no pressure.</p>
     <div class="hero-cta">
-      <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20%E2%80%94%20free%20walkthrough&body=Hi%20Jason%2C%0A%0AHere%27s%20what%27s%20slowing%20us%20down%3A%20" class="btn-pri">Book a free walkthrough</a>
+      <a href="mailto:info@kingdom-creatives.com?subject=Systems%20by%20Vega%20%E2%80%94%20free%20walkthrough&body=Hi%20Jason%2C%0A%0AHere%27s%20what%27s%20slowing%20us%20down%3A%20" class="btn-pri">Hire me</a>
       <a href="showcase/" class="btn-sec">Explore the showcase →</a>
     </div>
     <p class="email-line" style="margin-top:14px"><a href="/pricing/">See packages &amp; pricing →</a></p>
@@ -562,7 +570,7 @@
     </div>
     <div>
       A Kingdom Creatives LLC company · Nampa, Idaho<br>
-      <a class="foot-link" href="/pricing/">Pricing</a> · <a class="foot-link" href="portfolio/">All ten shipped projects →</a>
+      <a class="foot-link" href="/pricing/">Pricing</a> · <a class="foot-link" href="portfolio/">See the work →</a>
     </div>
   </div>
 </footer>
