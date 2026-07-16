@@ -1,0 +1,189 @@
+{
+  "brand": {
+    "name": "Larkspur & Ledge Landscape Co.",
+    "tagline": "Every season, handled right.",
+    "phone": "(208) 555-0134",
+    "email": "hello@larkspurledge.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Meridian, ID"
+  },
+  "seasons": [
+    {
+      "id": "spring",
+      "label": "Spring",
+      "startMonth": 3,
+      "monthRange": "March – May",
+      "photo": "",
+      "blurb": "Everything wakes up at once — beds, weeds and grass all in the same week. We knock out the reset before it gets away from you.",
+      "services": [
+        {
+          "name": "Spring Cleanup",
+          "price": 189,
+          "unit": "one-time",
+          "desc": "Bed edging, debris haul-away, first mow of the year and a fertilizer kickoff."
+        },
+        {
+          "name": "Mulch Refresh",
+          "price": 249,
+          "unit": "from",
+          "desc": "Fresh mulch delivered and spread in every bed — dyed or natural, your call."
+        },
+        {
+          "name": "Irrigation Startup",
+          "price": 95,
+          "unit": "one-time",
+          "desc": "System flush, zone-by-zone check, and head adjustments before the heat hits."
+        }
+      ]
+    },
+    {
+      "id": "summer",
+      "label": "Summer",
+      "startMonth": 6,
+      "monthRange": "June – August",
+      "photo": "",
+      "blurb": "Grass grows fast, weeds grow faster. This is the season where a missed week actually shows.",
+      "services": [
+        {
+          "name": "Bed Weeding & Edging Refresh",
+          "price": 129,
+          "unit": "one-time",
+          "desc": "A deep pass through every bed — pulled weeds, crisp edges, hauled away."
+        },
+        {
+          "name": "Shrub & Hedge Shaping",
+          "price": 149,
+          "unit": "one-time",
+          "desc": "Hand-shaped or sheared to the look you want, clippings bagged and gone."
+        },
+        {
+          "name": "Weed & Pest Spot Treatment",
+          "price": 79,
+          "unit": "one-time",
+          "desc": "Targeted treatment for the patches store-bought spray never fixes."
+        }
+      ]
+    },
+    {
+      "id": "fall",
+      "label": "Fall",
+      "startMonth": 9,
+      "monthRange": "September – November",
+      "photo": "",
+      "blurb": "Leaves don't stop until the trees are bare. We keep the yard from disappearing under them.",
+      "services": [
+        {
+          "name": "Fall Cleanup & Leaf Haul-Away",
+          "price": 199,
+          "unit": "one-time",
+          "desc": "Every leaf, every bed, hauled off-site — not blown into your neighbor's yard."
+        },
+        {
+          "name": "Core Aeration & Overseed",
+          "price": 175,
+          "unit": "one-time",
+          "desc": "Opens up compacted soil and gets new grass established before the ground freezes."
+        },
+        {
+          "name": "Irrigation Winterization",
+          "price": 85,
+          "unit": "one-time",
+          "desc": "Full system blowout so a hard freeze doesn't split a line you can't see."
+        }
+      ]
+    },
+    {
+      "id": "winter",
+      "label": "Winter",
+      "startMonth": 12,
+      "monthRange": "December – February",
+      "photo": "",
+      "blurb": "Idaho winters don't care about your morning meeting. We do the driveway before you wake up.",
+      "services": [
+        {
+          "name": "Snow Removal",
+          "price": 65,
+          "unit": "per push",
+          "desc": "Driveway and walkways cleared before your first alarm, every storm."
+        },
+        {
+          "name": "Dormant Pruning",
+          "price": 139,
+          "unit": "one-time",
+          "desc": "The one time of year trees and shrubs can be cut hard without stressing them."
+        },
+        {
+          "name": "Bed & Gutter Winter Clear-Out",
+          "price": 119,
+          "unit": "one-time",
+          "desc": "Debris out of beds and gutters before ice turns it into a dam."
+        }
+      ]
+    }
+  ],
+  "plans": [
+    {
+      "tier": "Basic Mow & Edge",
+      "price": 120,
+      "per": "mo",
+      "freq": "Weekly, April – October",
+      "best": false,
+      "features": [
+        "Weekly mow, edge & blow",
+        "Clippings cleared off walks & drives",
+        "Text alert before every visit",
+        "Skip weeks for vacation, no penalty"
+      ]
+    },
+    {
+      "tier": "Full Yard Care",
+      "price": 210,
+      "per": "mo",
+      "freq": "Weekly, April – October",
+      "best": true,
+      "features": [
+        "Everything in Basic Mow & Edge",
+        "Monthly bed weeding",
+        "Quarterly shrub trim",
+        "Spring & fall fertilization included",
+        "Priority scheduling"
+      ]
+    },
+    {
+      "tier": "Estate Grounds",
+      "price": 385,
+      "per": "mo",
+      "freq": "Twice-weekly in peak season",
+      "best": false,
+      "features": [
+        "Everything in Full Yard Care",
+        "Twice-weekly mow, June – August",
+        "Irrigation system checks",
+        "Seasonal color rotation",
+        "Dedicated crew lead"
+      ]
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Meridian",
+      "Boise",
+      "Eagle",
+      "Star",
+      "Kuna",
+      "Middleton"
+    ]
+  },
+  "owner": {
+    "name": "Mara Quist",
+    "bio": "Mara Quist grew up two blocks from a nursery and spent every summer of high school working the register, then the greenhouses, then the crews. Ten seasons later she's running her own — Larkspur & Ledge started as one truck and a trailer, and it still runs on the same rule: show up when you say you will, and leave the yard looking better than the photo you were quoted from. She's still out on jobs most weeks, not just behind a desk.",
+    "photo": ""
+  },
+  "misc": {
+    "plansNote": "Corner lot, acreage, or something in between? Text us your square footage and we'll quote it exact.",
+    "scopeNote": "None of that is off the table — just outside our flat-rate plans. Text us a photo and we'll quote it separately."
+  },
+  "social": []
+}

@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Black Anvil Fabrication — Custom Welding &amp; Fab | Caldwell, ID</title>
+<meta name="description" content="Black Anvil Fabrication builds custom gates, railings, trailers, firepits and CNC plasma signs — and repairs what the big shops won't touch. One certified welder, mobile rig, fixed quotes in writing. Caldwell, Idaho. Call or text (208) 555-0119." />
+<meta name="theme-color" content="#14181d" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<!-- SWAP: canonical + og:url — set to the real domain when deployed -->
+<link rel="canonical" href="https://blackanvilfab.example.com" />
+<meta property="og:url" content="https://blackanvilfab.example.com" />
+<meta property="og:title" content="Black Anvil Fabrication — Drawn in Chalk. Built in Steel." />
+<meta property="og:description" content="Custom gates, trailers, farm repair, firepits &amp; plasma signs. One welder, no middleman. Caldwell, ID — call or text (208) 555-0119." />
+<!-- SWAP: og:image — add a real 1200x630 share image at assets/og.jpg -->
+<meta property="og:image" content="https://blackanvilfab.example.com/assets/og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Favicon: anvil mark on molten orange -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FF6B1A'/%3E%3Cpath fill='%2314181d' d='M11 19h36c-.8 6.4-6.4 9.8-13.5 10.8V36h6v6h4.5v7H20v-7h4.5v-6h6v-6.1C21 29 13.4 25.6 11 19z'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Local business structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Black Anvil Fabrication",
+  "description": "One-man welding and custom fabrication shop. Custom gates and railings, trailer builds and repair, structural and farm repair, custom furniture and firepits, mobile welding, and CNC plasma-cut signs.",
+  "telephone": "+12085550119",
+  "email": "blackanvil@example.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Caldwell", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Caldwell, Nampa & the Treasure Valley, Idaho",
+  "knowsAbout": ["Welding", "Custom metal fabrication", "TIG welding", "MIG welding", "CNC plasma cutting", "Trailer repair"],
+  "founder": { "@type": "Person", "name": "Cole Braddock", "jobTitle": "Owner & Welder" },
+  "slogan": "Drawn in chalk. Built in steel."
+}
+</script>
+
+<style>
+/* =========================================================
+   BLACK ANVIL FABRICATION — tokens
+   Gunmetal / forge theme: cold dark steel base, molten-orange
+   primary with a deep forge variant, spark yellow used sparingly.
+   ========================================================= */
+:root{
+  --coal:#0c0f12;
+  --gun:#14181d;
+  --gun-2:#1a2027;
+  --steel:#222a33;
+  --white:#EDF1F5;
+  --muted:#96A3B1;
+  --melt:#FF6B1A;      /* molten orange — primary */
+  --forge:#C2470A;     /* deep forge variant — gradient ends */
+  --spark:#FFC53D;     /* spark yellow — sparingly */
+  --line:rgba(150,172,194,.14);
+  --card:rgba(24,30,37,.78);
+  --card-brd:rgba(150,172,194,.16);
+  --glow:rgba(255,107,26,.45);
+  --shadow:0 28px 60px -24px rgba(0,0,0,.8);
+  --maxw:1160px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--gun);
+  color:var(--white);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* fixed backdrop: brushed-metal diagonals + ember radials */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(900px 520px at 85% 108%, rgba(255,107,26,.14), transparent 62%),
+    radial-gradient(700px 460px at 6% 96%, rgba(194,71,10,.12), transparent 60%),
+    radial-gradient(1000px 560px at 70% -12%, rgba(38,50,62,.5), transparent 65%),
+    linear-gradient(180deg,#11151a 0%, #14181d 46%, #0e1216 100%);
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background:
+    repeating-linear-gradient(115deg, transparent 0 90px, rgba(180,200,220,.022) 90px 92px, transparent 92px 210px),
+    repeating-linear-gradient(115deg, transparent 0 34px, rgba(255,255,255,.012) 34px 35px);
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.26em;
+  font-size:.74rem;color:var(--melt);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--melt),transparent);
+}
+.section-title{
+  font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.0;letter-spacing:.015em;
+  background:linear-gradient(180deg,#ffffff 0%,#dfe7ee 55%,#9fb0c0 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.06rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  font-size:1.12rem;padding:1rem 1.8rem;border-radius:12px;border:0;cursor:pointer;
+  color:#160b04;background:linear-gradient(135deg,var(--melt),var(--forge));
+  box-shadow:0 14px 32px -12px var(--glow), inset 0 1px 0 rgba(255,255,255,.35);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 44px -12px rgba(255,107,26,.6), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:active{transform:translateY(0)}
+/* heat shimmer sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,220,150,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(255,107,26,.07);color:var(--white);
+  border:1px solid rgba(255,140,70,.4);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(255,107,26,.14);box-shadow:0 10px 26px -14px var(--glow)}
+.btn--lg{font-size:1.26rem;padding:1.15rem 2.3rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--spark);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(12,15,18,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--line), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--melt),var(--forge));
+  box-shadow:0 10px 24px -10px var(--glow), inset 0 1px 0 rgba(255,255,255,.35)}
+.brand__mark svg{width:28px;height:28px}
+.brand__name{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.11em;
+  text-transform:uppercase;font-size:1.08rem;line-height:1;color:var(--white)}
+.brand__name span{display:block;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.3em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;font-size:.98rem;color:var(--white);opacity:.8;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--spark)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Saira Condensed',sans-serif;
+  font-weight:800;letter-spacing:.07em;text-transform:uppercase;font-size:1rem;
+  padding:.6rem 1.1rem;border-radius:10px;color:#160b04;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--melt),var(--forge));
+  box-shadow:0 10px 24px -12px var(--glow), inset 0 1px 0 rgba(255,255,255,.35)}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:820px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.82rem;padding:.5rem .85rem;gap:.35rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(80px,10vh,110px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+@media(max-height:760px){.hero{align-items:flex-start}}
+
+.hero__tag{margin-bottom:22px}
+.hero h1{
+  font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(3.2rem,9.6vw,6.9rem);line-height:.95;letter-spacing:.012em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  display:block;
+  background:linear-gradient(180deg,#ffffff 0%,#e3eaf1 45%,#94a6b8 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 22px rgba(160,190,220,.12));
+}
+.hero h1 .l2{
+  display:block;color:var(--melt);
+  text-shadow:0 6px 34px rgba(255,107,26,.4);
+}
+.hero__sub{font-size:1.16rem;color:#C6D0DA;max-width:52ch;margin:20px 0 32px}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero__proof{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap}
+.proofstat{display:flex;flex-direction:column;line-height:1.1}
+.proofstat b{font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:2rem;color:#fff;letter-spacing:.03em}
+.proofstat b em{font-style:normal;color:var(--spark)}
+.proofstat span{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.proofstat + .proofstat{padding-left:26px;border-left:1px solid var(--line)}
+@media(max-width:560px){.hero__proof{gap:18px}.proofstat + .proofstat{padding-left:18px}}
+
+/* rising spark particles */
+.sparks{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sparkp{position:absolute;bottom:-2%;width:3px;height:3px;border-radius:50%;
+  background:radial-gradient(circle,#ffd9a0 0%,var(--melt) 60%,transparent 100%);
+  box-shadow:0 0 8px 1px rgba(255,150,60,.7);
+  opacity:0;animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translate(0,0) scale(1);opacity:0}
+  8%{opacity:.95}
+  70%{opacity:.6}
+  100%{transform:translate(var(--dx,24px),-108vh) scale(.4);opacity:0}
+}
+
+/* angled steel divider under hero */
+.slash{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--coal);z-index:1;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--coal),rgba(12,15,18,.55));border-block:1px solid var(--line)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 36px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'Saira Condensed',sans-serif;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.98rem;color:#D6DEE6}
+.trust__item svg{width:20px;height:20px;color:var(--melt);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:96px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — THE BUILD BOARD (job-ticket portfolio)
+   ========================================================= */
+.board__filters{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px}
+.pill{
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.78rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);cursor:pointer;
+  padding:.6rem 1.15rem;border-radius:999px;border:1px solid var(--card-brd);
+  background:rgba(20,26,32,.6);transition:color .2s,border-color .2s,background .2s,box-shadow .2s;
+}
+.pill:hover{color:var(--white);border-color:rgba(255,140,70,.45)}
+.pill.on{
+  color:#160b04;border-color:transparent;
+  background:linear-gradient(135deg,var(--melt),var(--forge));
+  box-shadow:0 10px 24px -12px var(--glow);
+}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1020px){.board{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){.board{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.board{grid-template-columns:1fr;max-width:400px;margin:0 auto}}
+
+/* job ticket card */
+.ticket{
+  position:relative;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--card);border:1px solid var(--card-brd);border-radius:14px;
+  backdrop-filter:blur(8px);
+  transition:opacity .28s ease, transform .28s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.ticket:hover{border-color:rgba(255,140,70,.45);box-shadow:0 18px 44px -20px rgba(0,0,0,.7);transform:translateY(-4px)}
+.ticket.is-out{opacity:0;transform:scale(.94)}
+.ticket.is-hidden{display:none}
+.ticket__head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px dashed rgba(150,172,194,.25)}
+.ticket__no{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.76rem;letter-spacing:.14em;color:var(--spark)}
+.ticket__cat{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--card-brd);border-radius:6px;padding:.18rem .5rem;white-space:nowrap}
+
+/* placeholder image area — each tone class fakes a different shot
+   until real photos land in assets/work/. Keep aspect ratio 4/3. */
+.ticket__img{position:relative;aspect-ratio:4/3;overflow:hidden;background-color:#171d24}
+.ticket__img::after{ /* subtle vignette so stamps read on any tone */
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 8%, transparent 55%, rgba(8,10,13,.55) 100%);
+}
+.ticket__img img{width:100%;height:100%;object-fit:cover}
+/* steel / spark / rust tone variations */
+.tone-a{background:
+  radial-gradient(70% 90% at 78% 88%, rgba(255,107,26,.4), transparent 60%),
+  repeating-linear-gradient(112deg, #1c242d 0 26px, #212a34 26px 27px, #1c242d 27px 58px),
+  linear-gradient(160deg,#232d38,#141a20)}
+.tone-b{background:
+  radial-gradient(60% 70% at 22% 20%, rgba(255,197,61,.22), transparent 60%),
+  repeating-linear-gradient(58deg, #202832 0 20px, #1a2129 20px 21px, #202832 21px 46px),
+  linear-gradient(200deg,#28313c,#12171d)}
+.tone-c{background:
+  radial-gradient(80% 80% at 70% 30%, rgba(166,74,26,.38), transparent 62%),
+  repeating-linear-gradient(140deg, #241f1a 0 30px, #2b241d 30px 31px, #241f1a 31px 64px),
+  linear-gradient(180deg,#2b241e,#15120e)}
+.tone-d{background:
+  radial-gradient(75% 85% at 50% 100%, rgba(255,107,26,.32), transparent 58%),
+  repeating-linear-gradient(96deg, #1b222b 0 16px, #222b35 16px 17px, #1b222b 17px 40px),
+  linear-gradient(150deg,#1f2731,#10151b)}
+.tone-e{background:
+  radial-gradient(65% 75% at 85% 15%, rgba(194,71,10,.42), transparent 60%),
+  repeating-linear-gradient(120deg, #262019 0 24px, #2e271f 24px 25px, #262019 25px 52px),
+  linear-gradient(170deg,#2a2620,#14110d)}
+.tone-f{background:
+  radial-gradient(70% 80% at 15% 85%, rgba(255,170,80,.26), transparent 58%),
+  repeating-linear-gradient(66deg, #1e2630 0 34px, #171d24 34px 35px, #1e2630 35px 72px),
+  linear-gradient(190deg,#25303b,#11161c)}
+.tone-g{background:
+  radial-gradient(85% 70% at 55% 0%, rgba(255,197,61,.16), transparent 55%),
+  radial-gradient(60% 70% at 80% 100%, rgba(255,107,26,.36), transparent 60%),
+  repeating-linear-gradient(104deg, #1a2027 0 22px, #202830 22px 23px, #1a2027 23px 50px)}
+.tone-h{background:
+  radial-gradient(70% 80% at 30% 95%, rgba(166,84,30,.4), transparent 62%),
+  repeating-linear-gradient(128deg, #221d17 0 28px, #292219 28px 29px, #221d17 29px 60px),
+  linear-gradient(185deg,#29231c,#120f0b)}
+
+/* status stamp */
+.ticket__stamp{
+  position:absolute;top:14px;right:-8px;z-index:2;transform:rotate(8deg);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.68rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--spark);
+  border:2px solid rgba(255,197,61,.75);border-radius:6px;padding:.3rem .7rem .3rem .85rem;
+  background:rgba(12,15,18,.55);text-shadow:0 0 12px rgba(255,197,61,.4);
+}
+.ticket__body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:6px}
+.ticket__body h3{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+  letter-spacing:.04em;font-size:1.32rem;line-height:1.08;color:#fff}
+.ticket__spec{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.05em;color:var(--muted)}
+.board__note{text-align:center;color:var(--muted);font-size:.95rem;margin-top:30px}
+.board__note b{color:#D6DEE6}
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+.services{background:linear-gradient(180deg,rgba(12,15,18,.5),transparent)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:940px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.svc-grid{grid-template-columns:1fr}}
+.svc{
+  background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:28px 24px;
+  backdrop-filter:blur(8px);transition:transform .22s ease, border-color .22s ease;
+}
+.svc:hover{transform:translateY(-6px);border-color:rgba(255,140,70,.4)}
+.svc__ic{width:54px;height:54px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(255,107,26,.2),rgba(194,71,10,.16));
+  border:1px solid rgba(255,140,70,.32);color:var(--melt)}
+.svc__ic svg{width:28px;height:28px}
+.svc h3{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+  letter-spacing:.05em;font-size:1.38rem;margin-bottom:8px;color:#fff}
+.svc p{color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   PROCESS
+   ========================================================= */
+.process{background:linear-gradient(180deg,transparent,rgba(12,15,18,.55))}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:16px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:3rem;line-height:1;
+  color:transparent;-webkit-text-stroke:2px rgba(255,140,70,.75);display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  font-size:1.35rem;margin-bottom:8px;color:#fff}
+.step p{color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   SPEC / CAPABILITY STRIP
+   ========================================================= */
+.specs{background:var(--coal);border-block:1px solid var(--line)}
+.specs__in{padding:44px 22px 50px}
+.specs__groups{display:flex;flex-wrap:wrap;gap:26px 46px;justify-content:center;margin-top:26px}
+.specgroup{display:flex;flex-direction:column;gap:12px;align-items:center}
+.specgroup__label{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.chip{
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.8rem;letter-spacing:.06em;
+  color:#D6DEE6;padding:.5rem 1rem;border-radius:9px;
+  border:1px solid var(--card-brd);background:rgba(26,32,39,.7);white-space:nowrap;
+}
+.chip b{color:var(--spark);font-weight:700}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.meet__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.meet__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.meet__photo{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+  background:linear-gradient(165deg,rgba(38,48,60,.6),rgba(18,23,29,.7));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.meet__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.meet__photo:not(:has(img))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,107,26,.14), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(150,172,194,.05) 14px 15px);
+}
+.meet__photo:not(:has(img))::after{
+  content:"Add Cole's photo here — assets/cole.jpg";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;
+  color:var(--muted);opacity:.7;padding:20px;text-align:center;pointer-events:none}
+.meet__body .section-title{margin:14px 0 22px}
+.meet__desc{color:#C6D0DA;font-size:1.04rem;line-height:1.75;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.meet__desc:empty::before{
+  content:"Cole's bio goes here — where he learned to weld, how long he's been running a bead, why he went out on his own. Two or three honest sentences beat a page of fluff. Replace this placeholder when it's written.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+.meet__sign{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted)}
+.meet__sign b{color:var(--spark)}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.04em;font-size:1.26rem;color:#EAF0F6}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,140,70,.4);color:var(--melt);transition:transform .25s ease;font-family:'Inter'}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem;max-width:66ch}
+
+/* =========================================================
+   QUOTE FORM
+   ========================================================= */
+.quote{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 15% 0%, rgba(255,107,26,.2), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(194,71,10,.24), transparent 60%),
+    linear-gradient(160deg,#161c23,#0d1116);
+  border-block:1px solid var(--line)}
+.quote__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.quote__phone a{color:var(--melt);font-weight:600}
+.qform{max-width:760px;margin:0 auto;background:rgba(14,18,23,.72);
+  border:1px solid var(--card-brd);border-radius:20px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.qform__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.qform__grid + .qform__grid,.qform__grid + .field,.field + .qform__grid{margin-top:16px}
+@media(max-width:640px){.qform__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#C6D0DA;margin-bottom:7px}
+.field em{color:var(--melt);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(9,12,15,.75);border:1px solid var(--card-brd);color:#fff;font-family:'Inter';font-size:1rem}
+.field textarea{resize:vertical;min-height:120px;line-height:1.6}
+.field input::placeholder,.field textarea::placeholder{color:#5f6f80}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--melt);background:rgba(9,12,15,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B1A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+.qform__photos{display:flex;gap:.7rem;align-items:flex-start;margin-top:18px;padding:14px 16px;border-radius:12px;
+  background:rgba(255,197,61,.06);border:1px dashed rgba(255,197,61,.35);color:#D6DEE6;font-size:.92rem;line-height:1.55}
+.qform__photos svg{width:20px;height:20px;flex:none;color:var(--spark);margin-top:2px}
+.qform__photos b{color:var(--spark)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.qform__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.qform__actions .btn[disabled]{opacity:.7;cursor:progress}
+.qform__alt{font-family:'Saira Condensed',sans-serif;font-weight:700;letter-spacing:.08em;color:#D6DEE6;opacity:.85;
+  text-transform:uppercase;font-size:.95rem;text-decoration:underline;text-underline-offset:4px}
+.qform__alt:hover{opacity:1;color:var(--spark)}
+.qform__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.qform__msg.err{color:#ff9aa2}
+.qform__msg.ok{color:var(--spark)}
+
+.qdone{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(40,30,20,.55),rgba(18,14,10,.6));
+  border:1px solid rgba(255,140,70,.4);border-radius:20px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,107,26,.2),var(--shadow);backdrop-filter:blur(10px)}
+.qdone__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#160b04;background:linear-gradient(135deg,var(--melt),var(--forge));
+  box-shadow:0 12px 30px -10px rgba(255,107,26,.8)}
+.qdone__ic svg{width:34px;height:34px}
+.qdone h3{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:clamp(1.9rem,4vw,2.7rem);
+  line-height:1;margin-bottom:12px;
+  background:linear-gradient(180deg,#fff,#e8caa8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.qdone p{color:#C6D0DA;font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 120px;border-top:1px solid var(--line)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;font-size:1.05rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.88rem;text-align:right;line-height:1.9}
+.footer__meta a{color:var(--melt)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+.footer__credit{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.8rem;line-height:1.8}
+.footer__credit p{max-width:72ch;margin:0 auto}
+.footer__credit b{color:#D6DEE6;font-weight:600}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(10,13,16,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;text-transform:uppercase;font-size:1.12rem;
+  padding:.9rem;border-radius:12px}
+.mobile-cta .call{color:#160b04;background:linear-gradient(135deg,var(--melt),var(--forge));
+  box-shadow:0 8px 20px -8px var(--glow)}
+.mobile-cta .text{color:var(--white);background:rgba(255,107,26,.1);border:1px solid rgba(255,140,70,.4)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:110px}}
+@media(min-width:821px){.footer{padding-bottom:52px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .ticket{transition:none}
+  .btn::after{display:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Black Anvil Fabrication home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img" aria-label="Anvil mark"><path fill="#14181d" d="M11 19h36c-.8 6.4-6.4 9.8-13.5 10.8V36h6v6h4.5v7H20v-7h4.5v-6h6v-6.1C21 29 13.4 25.6 11 19z"/></svg>
+      </span>
+      <span class="brand__name">Black Anvil Fabrication<span>Weld · Fab · Repair — <span data-city>Caldwell, ID</span></span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#work">Work</a>
+      <a class="link" href="#services">Services</a>
+      <a class="link" href="#why">Why</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#quote">Quote</a>
+      <!-- Phone/email/city render from content.json (editable in /admin/); (208) 555-0119 is the demo fallback -->
+      <a class="nav__call" href="tel:+12085550119"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg><span data-phone>(208) 555-0119</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="sparks" id="sparks" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__tag"><span class="eyebrow">Custom welding &amp; fabrication · <span data-city>Caldwell, ID</span></span></div>
+    <h1><span class="l1">Drawn in chalk.</span><span class="l2">Built in steel.</span></h1>
+    <p class="hero__sub">Gates, trailers, farm repairs, firepits — anything worth making out of metal, made right the first time. One certified welder, no salesman, no middleman. You describe it, I build it, you own it for decades.</p>
+    <div class="hero__cta">
+      <a class="btn btn--lg" href="#quote">Get a quote</a>
+      <a class="btn btn--ghost btn--lg" href="#work">See the work</a>
+    </div>
+    <div class="hero__proof" id="proofStats">
+      <!-- Rendered from CONTENT.stats (edit in /admin/ → Hero stats); markup below is the no-JS fallback -->
+      <div class="proofstat"><b>14<em>+</em></b><span>Years behind the hood</span></div>
+      <div class="proofstat"><b>300<em>+</em></b><span>Builds delivered</span></div>
+      <div class="proofstat"><b>AWS</b><span>Certified welder</span></div>
+    </div>
+  </div>
+  <svg class="slash" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,64 L0,44 L980,10 L1440,30 L1440,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Certified welds</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>Mobile rig — I come to you</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>You talk to the welder</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7-9 9H5v-7z"/><path d="M13 8l3 3"/></svg>Built to spec, in writing</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: THE BUILD BOARD ============ -->
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">The Build Board</span>
+      <h2 class="section-title">Every job gets a ticket</h2>
+      <p class="lead" style="margin:0 auto">In the shop, every build hangs on the board as a job ticket — number, spec, status. Here's a pull from the board. Filter it by what you need done.</p>
+    </div>
+
+    <div class="board__filters reveal" role="group" aria-label="Filter projects by category">
+      <button class="pill on" data-filter="all" aria-pressed="true">All</button>
+      <button class="pill" data-filter="gates" aria-pressed="false">Gates &amp; Railings</button>
+      <button class="pill" data-filter="trailers" aria-pressed="false">Trailers</button>
+      <button class="pill" data-filter="repair" aria-pressed="false">Repair</button>
+      <button class="pill" data-filter="custom" aria-pressed="false">Custom</button>
+    </div>
+
+    <div class="board reveal" id="board">
+      <!-- The Build Board renders from CONTENT.projects (edit in /admin/ → Build Board, photo upload included).
+           The tickets below are the no-JS fallback and mirror DEFAULT_CONTENT. -->
+      <article class="ticket" data-cat="gates">
+        <div class="ticket__head"><span class="ticket__no">JOB-0417</span><span class="ticket__cat">Gates &amp; Railings</span></div>
+        <div class="ticket__img tone-a"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Ridgeline Driveway Gate</h3>
+          <p class="ticket__spec">2in sq tube · 11ga panel · MIG · 16ft dual swing</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="trailers">
+        <div class="ticket__head"><span class="ticket__no">JOB-0389</span><span class="ticket__cat">Trailers</span></div>
+        <!-- SWAP: assets/work/utility-trailer.jpg -->
+        <div class="ticket__img tone-b"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>14ft Utility Trailer Build</h3>
+          <p class="ticket__spec">3in channel frame · 7k axles · treated deck</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="repair">
+        <div class="ticket__head"><span class="ticket__no">JOB-0426</span><span class="ticket__cat">Repair</span></div>
+        <!-- SWAP: assets/work/baler-arm.jpg -->
+        <div class="ticket__img tone-c"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Baler Arm Rebuild</h3>
+          <p class="ticket__spec">AR400 wear plate · gouge, prep &amp; stick weld</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="custom">
+        <div class="ticket__head"><span class="ticket__no">JOB-0402</span><span class="ticket__cat">Custom</span></div>
+        <!-- SWAP: assets/work/ember-ring-firepit.jpg -->
+        <div class="ticket__img tone-d"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Ember Ring Firepit</h3>
+          <p class="ticket__spec">1/4in A36 plate · CNC plasma cut · 40in bowl</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="gates">
+        <div class="ticket__head"><span class="ticket__no">JOB-0432</span><span class="ticket__cat">Gates &amp; Railings</span></div>
+        <!-- SWAP: assets/work/stair-railing.jpg -->
+        <div class="ticket__img tone-f"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Craftsman Stair Railing</h3>
+          <p class="ticket__spec">1in solid bar · TIG · powder-coat satin black</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="trailers">
+        <div class="ticket__head"><span class="ticket__no">JOB-0441</span><span class="ticket__cat">Trailers</span></div>
+        <!-- SWAP: assets/work/deckover-repair.jpg -->
+        <div class="ticket__img tone-e"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Deckover Frame Repair</h3>
+          <p class="ticket__spec">1/4in A36 plate · fishplate &amp; box · stick</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="repair">
+        <div class="ticket__head"><span class="ticket__no">JOB-0435</span><span class="ticket__cat">Repair</span></div>
+        <!-- SWAP: assets/work/corral-chute.jpg -->
+        <div class="ticket__img tone-h"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Corral Panel &amp; Chute Repair</h3>
+          <p class="ticket__spec">Sched 40 pipe · on-site · mobile rig, same week</p>
+        </div>
+      </article>
+
+      <article class="ticket" data-cat="custom">
+        <div class="ticket__head"><span class="ticket__no">JOB-0419</span><span class="ticket__cat">Custom</span></div>
+        <!-- SWAP: assets/work/console-table.jpg -->
+        <div class="ticket__img tone-g"><span class="ticket__stamp">Delivered</span></div>
+        <div class="ticket__body">
+          <h3>Steel-Top Console Table</h3>
+          <p class="ticket__spec">Blackened steel · TIG · white oak shelf</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="board__note reveal">Every ticket above left the shop with a <b>welded-on job tag</b> and a customer who'd call again. Yours is next on the board.</p>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section services" id="services">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">What I build &amp; fix</span>
+      <h2 class="section-title">If it's steel, it's in scope</h2>
+      <p class="lead">Six things I do all day, every day. If your project doesn't fit a box below, describe it anyway — "something else" is half my board.</p>
+    </div>
+    <!-- Services render from CONTENT.services (edit in /admin/ → Services); markup below is the no-JS fallback -->
+    <div class="svc-grid reveal" id="svcGrid">
+      <div class="svc">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l4-3v17"/><path d="M17 21V4l4 3v14"/><path d="M7 9h10M7 14h10M7 19h10"/></svg></div>
+        <h3>Custom Gates &amp; Railings</h3>
+        <p>Driveway gates, stair and deck railings, fence panels. Measured on site, built square, hung so they swing true for twenty years.</p>
+      </div>
+      <div class="svc">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
+        <h3>Trailers — Build &amp; Repair</h3>
+        <p>New utility and flatbed builds to your spec, plus frame repair, deck swaps, ramps, and axle work on whatever you're towing now.</p>
+      </div>
+      <div class="svc">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3z"/></svg></div>
+        <h3>Structural &amp; Farm Repair</h3>
+        <p>Cracked loader arms, bent implements, broken corral panels, sagging carports. If it broke in the field, I've probably fixed one like it.</p>
+      </div>
+      <div class="svc">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12s-3 2.5-3 5a3 3 0 0 0 6 0"/><path d="M12 3s5 4.5 5 9a5 5 0 0 1-10 0c0-2 1-4 2.5-5.5"/></svg></div>
+        <h3>Furniture &amp; Firepits</h3>
+        <p>Tables, benches, shelving frames, and plasma-cut firepits that turn a back patio into the place everyone ends up standing around.</p>
+      </div>
+      <div class="svc">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M4.9 19.1l2.2-2.2M16.9 7.1l2.2-2.2"/></svg></div>
+        <h3>Mobile Welding</h3>
+        <p>The rig comes to you — field, jobsite, or driveway. Same certified welds without hauling a broken machine across the county.</p>
+      </div>
+      <div class="svc">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L20 4"/><path d="M4 4l4 4M16 16l4 4"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+        <h3>CNC Plasma Signs</h3>
+        <p>Ranch signs, address plaques, business logos cut clean from plate on the 4x8 plasma table. Send a sketch — I'll make it steel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="section process" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How a build works</span>
+      <h2 class="section-title">No surprises. Just steel.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Walk-through &amp; sketch</h3>
+        <p>Call, text, or send the form. We talk through what you need — on site if it helps — and I sketch it up with real dimensions and material.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>Fixed quote, in writing</h3>
+        <p>You get one number for the whole job before any steel gets cut. No hourly creep, no "well, it ran long." The quote is the price.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Build, photos, delivery</h3>
+        <p>I build it and text you photos as it comes together. Then it's delivered, installed if needed, and inspected with you standing there.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPEC / CAPABILITY STRIP ============ -->
+<section class="specs" aria-label="Shop capabilities">
+  <div class="wrap specs__in">
+    <div class="section__head center reveal" style="margin-bottom:0">
+      <span class="eyebrow">Shop spec sheet</span>
+      <h2 class="section-title" style="font-size:clamp(1.7rem,4vw,2.5rem)">Process · Material · Machine</h2>
+    </div>
+    <!-- Spec chips render from CONTENT.specs (edit in /admin/ → Spec sheet); markup below is the no-JS fallback -->
+    <div class="specs__groups reveal" id="specGroups">
+      <div class="specgroup">
+        <span class="specgroup__label">Process</span>
+        <div class="chips">
+          <span class="chip"><b>TIG</b></span>
+          <span class="chip"><b>MIG</b></span>
+          <span class="chip"><b>Stick</b></span>
+          <span class="chip">Oxy / plasma cutting</span>
+        </div>
+      </div>
+      <div class="specgroup">
+        <span class="specgroup__label">Material</span>
+        <div class="chips">
+          <span class="chip"><b>Steel</b> · mild &amp; A36</span>
+          <span class="chip"><b>Aluminum</b></span>
+          <span class="chip"><b>Stainless</b></span>
+        </div>
+      </div>
+      <div class="specgroup">
+        <span class="specgroup__label">Machine</span>
+        <div class="chips">
+          <span class="chip">CNC plasma table · <b>4x8</b></span>
+          <span class="chip">Mobile rig · <b>on-site</b></span>
+          <span class="chip">Powder coat · <b>partnered</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="meet__grid">
+      <!-- SWAP: replace the empty div's content with Cole's real photo:
+           <img src="assets/cole.jpg" alt="Cole Braddock, owner of Black Anvil Fabrication" /> -->
+      <div class="meet__photo reveal" id="meetPhoto" role="img" aria-label="Photo of Cole Braddock — coming soon"></div>
+
+      <div class="meet__body reveal" data-delay="1">
+        <span class="eyebrow">Why one guy beats a big shop</span>
+        <!-- Owner name + bio render from CONTENT.about (edit in /admin/ → About) -->
+        <h2 class="section-title" id="meetTitle">Meet Cole Braddock</h2>
+        <div class="meet__desc" id="meetDesc"></div>
+        <p class="meet__sign">The hands on your project are <b>the ones you shook</b>. Quote, build, weld, deliver — one person, one standard, one phone number.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Straight answers</span>
+      <h2 class="section-title">Asked at every job site</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Do you take small repair jobs?<span class="plus">+</span></summary><div class="faq__body">Yes. A cracked hitch or a broken gate hinge is a real job to me, not a nuisance. Small repairs usually slot in between bigger builds within a few days — text a photo and I'll tell you what it'll run.</div></details>
+      <details class="faq reveal"><summary>How far will the mobile rig travel?<span class="plus">+</span></summary><div class="faq__body">Anywhere in the Treasure Valley — Caldwell, Nampa, Middleton, Star, Boise and the farm ground between. Farther out is usually fine too with a small trip charge; text your location and I'll confirm before you commit to anything.</div></details>
+      <details class="faq reveal"><summary>How do quotes work?<span class="plus">+</span></summary><div class="faq__body">Simple: we talk through the job, I put one fixed number in writing, and that number is what you pay. Material price swings are my problem to manage, not a surprise on your invoice. Quotes are free.</div></details>
+      <details class="faq reveal"><summary>Can I get it powder coated?<span class="plus">+</span></summary><div class="faq__body">Yes. I prep and partner with a local powder coater for a factory-grade finish in any standard color — tougher and cleaner than rattle-can paint. It's quoted as a line item so you can take it or leave it.</div></details>
+      <details class="faq reveal"><summary>What are lead times like?<span class="plus">+</span></summary><div class="faq__body">Repairs: usually inside a week. Custom builds: typically two to four weeks depending on the board. I'll give you a real date with the quote — and if the board shifts, you hear it from me before it becomes your problem.</div></details>
+      <details class="faq reveal"><summary>I have an idea but no design. Can you help?<span class="plus">+</span></summary><div class="faq__body">Absolutely — that's most projects. Bring a photo from the internet, a napkin sketch, or just a rough idea, and I'll turn it into a dimensioned drawing you approve before anything gets cut.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE FORM ============ -->
+<section class="section quote" id="quote">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Get your number</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Tell me what you're building</h2>
+      <p class="lead" style="margin:0 auto">A few lines is plenty. I'll get back to you within one business day with questions or a number — whichever comes first.</p>
+      <p class="quote__phone">Rather talk it through? Call or text <a href="tel:+12085550119" data-phone>(208) 555-0119</a></p>
+    </div>
+
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <div class="qform__grid">
+        <div class="field">
+          <label for="q-name">Name <em>*</em></label>
+          <input id="q-name" name="name" type="text" autocomplete="name" placeholder="Sam Carter" required />
+        </div>
+        <div class="field">
+          <label for="q-phone">Phone <em>*</em></label>
+          <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0134" required />
+        </div>
+        <div class="field">
+          <label for="q-email">Email</label>
+          <input id="q-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="q-type">Project type <em>*</em></label>
+          <select id="q-type" name="project_type" required>
+            <option value="" selected disabled>Pick the closest fit…</option>
+            <option value="Gate or railing">Gate or railing</option>
+            <option value="Trailer — new build">Trailer — new build</option>
+            <option value="Trailer or equipment repair">Trailer or equipment repair</option>
+            <option value="Structural or farm repair">Structural or farm repair</option>
+            <option value="Furniture or firepit">Furniture or firepit</option>
+            <option value="CNC plasma sign">CNC plasma sign</option>
+            <option value="Something else">Something else</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="q-desc">Tell me what you're building <em>*</em></label>
+          <textarea id="q-desc" name="description" rows="5" placeholder="Rough size, what it's for, where it goes. Example: 12ft driveway gate, single swing, opener-ready, matching the fence in the photo I'll text over." required></textarea>
+        </div>
+        <div class="field">
+          <label for="q-when">Timeline</label>
+          <select id="q-when" name="timeline">
+            <option value="ASAP — it's broken" selected>ASAP — it's broken</option>
+            <option value="In the next 2–4 weeks">In the next 2–4 weeks</option>
+            <option value="1–2 months out">1–2 months out</option>
+            <option value="Just pricing it out">Just pricing it out</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="q-city">City / location</label>
+          <input id="q-city" name="city" type="text" autocomplete="address-level2" placeholder="Caldwell" />
+        </div>
+      </div>
+
+      <div class="qform__photos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5-4 4-2-2-5 5"/></svg>
+        <span>Got photos or a sketch? <b>Text them to <span data-phone>(208) 555-0119</span></b> after you hit send — a picture of the broken part or the space it lives in makes your quote faster and more accurate.</span>
+      </div>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="qform__actions">
+        <button class="btn btn--lg" type="submit" id="quoteSubmit">Send it to the shop</button>
+        <a class="qform__alt" href="sms:+12085550119?body=Hi%20Black%20Anvil%20—%20I'd%20like%20a%20quote%20on%20a%20project.">or text me instead</a>
+      </div>
+      <p class="qform__msg" id="quoteMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="qdone" id="quoteDone" hidden>
+      <div class="qdone__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>It's on the board</h3>
+      <p id="doneMsg">Got it — I'll call or text you within one business day to talk through the build.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><path fill="#14181d" d="M11 19h36c-.8 6.4-6.4 9.8-13.5 10.8V36h6v6h4.5v7H20v-7h4.5v-6h6v-6.1C21 29 13.4 25.6 11 19z"/></svg>
+      </span>
+      <div><b>Black Anvil Fabrication</b><span>Drawn in chalk · Built in steel</span></div>
+    </div>
+    <div class="footer__meta">
+      <!-- Phone + email render from content.json (editable in /admin/) -->
+      Call or text <a href="tel:+12085550119" data-phone>(208) 555-0119</a> · <a href="mailto:blackanvil@example.com" data-email>blackanvil@example.com</a><br />
+      Serving <span data-area>Caldwell, Nampa &amp; the Treasure Valley, Idaho</span><br />
+      <span style="opacity:.6">© <span id="yr"></span> Black Anvil Fabrication · Licensed &amp; insured</span>
+    </div>
+  </div>
+  <div class="wrap footer__credit">
+    <!-- SWAP:DISCLOSURE -->
+    <p>“Black Anvil Fabrication” is a fictional business created to demonstrate this website design. The phone number, email, and jobs shown are placeholders — no real services are offered.</p>
+    <!-- /SWAP:DISCLOSURE -->
+    <p>Concept build by <b>Systems by Vega</b></p>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550119"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550119?body=Hi%20Black%20Anvil%20—%20I'd%20like%20a%20quote%20on%20a%20project."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // nav solidify
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // reveal on scroll
+  var revs = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    revs.forEach(function(r){ io.observe(r); });
+  } else { revs.forEach(function(r){ r.classList.add('in'); }); }
+
+  // rising sparks in the hero
+  var sparks = document.getElementById('sparks');
+  if(sparks && !reduce){
+    var n = window.innerWidth < 700 ? 9 : 16;
+    for(var i=0;i<n;i++){
+      var s = document.createElement('span');
+      s.className = 'sparkp';
+      s.style.left = (2 + Math.random()*96) + '%';
+      var dur = 4 + Math.random()*5;
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = (-Math.random()*dur) + 's';
+      s.style.setProperty('--dx', (Math.random()*90 - 45) + 'px');
+      var sz = 2 + Math.random()*2.5;
+      s.style.width = sz + 'px';
+      s.style.height = sz + 'px';
+      s.style.opacity = 0.35 + Math.random()*0.5;
+      sparks.appendChild(s);
+    }
+  }
+
+  // =====================================================================
+  // CONTENT — owner-editable data.
+  // DEFAULT_CONTENT ships with the page and renders instantly. content.json
+  // (repo root, written by /admin/) is fetched at runtime and merged over it.
+  // Keep the key shape in sync with admin/index.html (SECTIONS + SEED).
+  // =====================================================================
+  var esc = function(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telDigits = function(p){ var d=String(p||'').replace(/\D/g,''); if(d.length===10) d='1'+d; return '+'+d; };
+  var chipHtml = function(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>'); };
+
+  var DEFAULT_CONTENT = {
+    brand: {
+      phone: "(208) 555-0119",
+      email: "blackanvil@example.com",
+      leadEmail: "info@kingdom-creatives.com",
+      city: "Caldwell, ID",
+      area: "Caldwell, Nampa & the Treasure Valley, Idaho"
+    },
+    stats: [
+      { num: "14+",  label: "Years behind the hood" },
+      { num: "300+", label: "Builds delivered" },
+      { num: "AWS",  label: "Certified welder" }
+    ],
+    projects: [
+      { no:"JOB-0417", cat:"gates",    title:"Ridgeline Driveway Gate",     spec:"2in sq tube · 11ga panel · MIG · 16ft dual swing",   status:"Delivered", image:"", tone:"a" },
+      { no:"JOB-0389", cat:"trailers", title:"14ft Utility Trailer Build",  spec:"3in channel frame · 7k axles · treated deck",        status:"Delivered", image:"", tone:"b" },
+      { no:"JOB-0426", cat:"repair",   title:"Baler Arm Rebuild",           spec:"AR400 wear plate · gouge, prep & stick weld",        status:"Delivered", image:"", tone:"c" },
+      { no:"JOB-0402", cat:"custom",   title:"Ember Ring Firepit",          spec:"1/4in A36 plate · CNC plasma cut · 40in bowl",       status:"Delivered", image:"", tone:"d" },
+      { no:"JOB-0432", cat:"gates",    title:"Craftsman Stair Railing",     spec:"1in solid bar · TIG · powder-coat satin black",      status:"Delivered", image:"", tone:"f" },
+      { no:"JOB-0441", cat:"trailers", title:"Deckover Frame Repair",       spec:"1/4in A36 plate · fishplate & box · stick",          status:"Delivered", image:"", tone:"e" },
+      { no:"JOB-0435", cat:"repair",   title:"Corral Panel & Chute Repair", spec:"Sched 40 pipe · on-site · mobile rig, same week",    status:"Delivered", image:"", tone:"h" },
+      { no:"JOB-0419", cat:"custom",   title:"Steel-Top Console Table",     spec:"Blackened steel · TIG · white oak shelf",            status:"Delivered", image:"", tone:"g" }
+    ],
+    services: [
+      { icon:"gate",    title:"Custom Gates & Railings",  desc:"Driveway gates, stair and deck railings, fence panels. Measured on site, built square, hung so they swing true for twenty years." },
+      { icon:"trailer", title:"Trailers — Build & Repair", desc:"New utility and flatbed builds to your spec, plus frame repair, deck swaps, ramps, and axle work on whatever you're towing now." },
+      { icon:"repair",  title:"Structural & Farm Repair", desc:"Cracked loader arms, bent implements, broken corral panels, sagging carports. If it broke in the field, I've probably fixed one like it." },
+      { icon:"fire",    title:"Furniture & Firepits",     desc:"Tables, benches, shelving frames, and plasma-cut firepits that turn a back patio into the place everyone ends up standing around." },
+      { icon:"mobile",  title:"Mobile Welding",           desc:"The rig comes to you — field, jobsite, or driveway. Same certified welds without hauling a broken machine across the county." },
+      { icon:"plasma",  title:"CNC Plasma Signs",         desc:"Ranch signs, address plaques, business logos cut clean from plate on the 4x8 plasma table. Send a sketch — I'll make it steel." }
+    ],
+    specs: [
+      { label:"Process",  chips:["**TIG**","**MIG**","**Stick**","Oxy / plasma cutting"] },
+      { label:"Material", chips:["**Steel** · mild & A36","**Aluminum**","**Stainless**"] },
+      { label:"Machine",  chips:["CNC plasma table · **4x8**","Mobile rig · **on-site**","Powder coat · **partnered**"] }
+    ],
+    about: { name:"Cole Braddock", bio:"" }
+  };
+
+  var CAT_LABELS = { gates:"Gates & Railings", trailers:"Trailers", repair:"Repair", custom:"Custom" };
+  var TONES = ["a","b","c","d","e","f","g","h"];
+  var SVC_ICONS = {
+    gate:'<path d="M3 21V7l4-3v17"/><path d="M17 21V4l4 3v14"/><path d="M7 9h10M7 14h10M7 19h10"/>',
+    trailer:'<path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+    repair:'<path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3z"/>',
+    fire:'<path d="M8 12s-3 2.5-3 5a3 3 0 0 0 6 0"/><path d="M12 3s5 4.5 5 9a5 5 0 0 1-10 0c0-2 1-4 2.5-5.5"/>',
+    mobile:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M4.9 19.1l2.2-2.2M16.9 7.1l2.2-2.2"/>',
+    plasma:'<path d="M4 20L20 4"/><path d="M4 4l4 4M16 16l4 4"/><circle cx="12" cy="12" r="2.5"/>'
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  // ===== THE BUILD BOARD — rendered from CONTENT, pill filters with animated in/out =====
+  var pills = document.querySelectorAll('.pill');
+  var tickets = document.querySelectorAll('#board .ticket');
+  var currentCat = 'all';
+
+  var applyFilter = function(cat){
+    currentCat = cat;
+    tickets.forEach(function(t){
+      var match = (cat === 'all') || (t.dataset.cat === cat);
+      if(t._hideTimer){ clearTimeout(t._hideTimer); t._hideTimer = null; }
+
+      if(reduce){
+        // no animation — instant toggle
+        t.classList.toggle('is-hidden', !match);
+        t.classList.remove('is-out');
+        return;
+      }
+      if(match){
+        t.classList.remove('is-hidden');
+        // let display:block land, then fade in on the next frames
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){ t.classList.remove('is-out'); });
+        });
+      } else {
+        t.classList.add('is-out');
+        t._hideTimer = setTimeout(function(){
+          // only hide if this card still shouldn't show for the ACTIVE filter
+          var stillOut = (currentCat !== 'all') && (t.dataset.cat !== currentCat);
+          if(stillOut) t.classList.add('is-hidden');
+        }, 290);
+      }
+    });
+  };
+
+  pills.forEach(function(p){
+    p.addEventListener('click', function(){
+      pills.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
+      p.classList.add('on');
+      p.setAttribute('aria-pressed','true');
+      applyFilter(p.dataset.filter);
+    });
+  });
+
+  var renderBoard = function(list){
+    var board = document.getElementById('board');
+    if(!board) return;
+    board.innerHTML = list.map(function(p,i){
+      var tone = TONES.indexOf(p.tone) > -1 ? p.tone : TONES[i % TONES.length];
+      var img = p.image ? '<img src="'+esc(p.image)+'" alt="'+esc(p.title||'')+'" loading="lazy" />' : '';
+      return '<article class="ticket" data-cat="'+esc(p.cat||'custom')+'">'
+        + '<div class="ticket__head"><span class="ticket__no">'+esc(p.no||'')+'</span><span class="ticket__cat">'+esc(CAT_LABELS[p.cat]||p.cat||'')+'</span></div>'
+        + '<div class="ticket__img tone-'+tone+'">'+img+'<span class="ticket__stamp">'+esc(p.status||'Delivered')+'</span></div>'
+        + '<div class="ticket__body"><h3>'+esc(p.title||'')+'</h3><p class="ticket__spec">'+esc(p.spec||'')+'</p></div>'
+        + '</article>';
+    }).join('');
+    tickets = board.querySelectorAll('.ticket');
+    applyFilter(currentCat);
+  };
+
+  // ===== render every owner-editable region from CONTENT =====
+  var renderContent = function(c){
+    var b = c.brand || {};
+    var tel = telDigits(b.phone);
+
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){ a.setAttribute('href','tel:'+tel); });
+    document.querySelectorAll('a[href^="sms:"]').forEach(function(a){
+      a.setAttribute('href', a.getAttribute('href').replace(/^sms:[^?]*/, 'sms:'+tel));
+    });
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.textContent = b.phone || ''; });
+    document.querySelectorAll('[data-email]').forEach(function(el){
+      el.textContent = b.email || '';
+      if(el.tagName === 'A') el.setAttribute('href','mailto:'+(b.email||''));
+    });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = b.city || ''; });
+    document.querySelectorAll('[data-area]').forEach(function(el){ el.textContent = b.area || b.city || ''; });
+
+    // hero proof stats — a trailing +/%/x on the number renders in spark yellow
+    var proof = document.getElementById('proofStats');
+    if(proof && Array.isArray(c.stats)){
+      proof.innerHTML = c.stats.map(function(s){
+        var m = /^(.*?)([+%×x]+)$/.exec(s.num||'');
+        var big = m ? esc(m[1])+'<em>'+esc(m[2])+'</em>' : esc(s.num);
+        return '<div class="proofstat"><b>'+big+'</b><span>'+esc(s.label)+'</span></div>';
+      }).join('');
+    }
+
+    if(Array.isArray(c.projects)) renderBoard(c.projects);
+
+    var grid = document.getElementById('svcGrid');
+    if(grid && Array.isArray(c.services)){
+      grid.innerHTML = c.services.map(function(s){
+        return '<div class="svc"><div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+          + (SVC_ICONS[s.icon]||SVC_ICONS.repair) + '</svg></div><h3>'+esc(s.title)+'</h3><p>'+esc(s.desc)+'</p></div>';
+      }).join('');
+    }
+
+    var sg = document.getElementById('specGroups');
+    if(sg && Array.isArray(c.specs)){
+      sg.innerHTML = c.specs.map(function(g){
+        return '<div class="specgroup"><span class="specgroup__label">'+esc(g.label)+'</span><div class="chips">'
+          + (g.chips||[]).map(function(ch){ return '<span class="chip">'+chipHtml(ch)+'</span>'; }).join('') + '</div></div>';
+      }).join('');
+    }
+
+    var a = c.about || {};
+    var mt = document.getElementById('meetTitle');
+    if(mt) mt.textContent = 'Meet ' + (a.name || 'the owner');
+    var md = document.getElementById('meetDesc');
+    if(md) md.innerHTML = a.bio ? esc(a.bio).replace(/\n/g,'<br />') : '';
+    var mp = document.getElementById('meetPhoto');
+    if(mp && !mp.querySelector('img')) mp.setAttribute('aria-label', 'Photo of ' + (a.name||'the owner') + ' — coming soon');
+  };
+
+  // render defaults immediately (no flash), then merge the live override.
+  // 404 / offline / bad JSON: the defaults stand — never hard-fail the page.
+  renderContent(CONTENT);
+  fetch('content.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(CONTENT); } })
+    .catch(function(){});
+
+  // ===== quote form (no backend) =====
+  // Leads are delivered via FormSubmit — zero-signup. The FIRST real submission
+  // emails an activation link to CONTENT.brand.email; click it once and every
+  // quote request after that lands in that inbox. The destination email and the
+  // text-fallback number both come from CONTENT.brand (edit in /admin/).
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  // Desktop guard: never let sms:/tel: links trigger the OS "Pick an app"
+  // dialog. Intercept and show a toast with the number instead. Mobile untouched.
+  if(!isMobile){
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+      if(!a) return;
+      e.preventDefault();
+      var t = document.getElementById('smsToast');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'smsToast';
+        t.setAttribute('role','status');
+        t.style.cssText = 'position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:9999;'
+          + 'background:#10151b;color:#fff;padding:14px 22px;border-radius:12px;'
+          + 'box-shadow:0 12px 40px rgba(0,0,0,.6);border:1px solid rgba(255,140,70,.4);'
+          + 'font-family:Inter,system-ui,sans-serif;font-size:15px;max-width:88vw;text-align:center;'
+          + 'opacity:0;transition:opacity .25s ease;';
+        document.body.appendChild(t);
+      }
+      t.innerHTML = 'Call or text the shop at <strong style="color:#FFC53D;letter-spacing:.02em">' + esc(CONTENT.brand.phone) + '</strong> from your phone.';
+      requestAnimationFrame(function(){ t.style.opacity = '1'; });
+      clearTimeout(window.__smsToastTimer);
+      window.__smsToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 4500);
+    });
+  }
+
+  var form = document.getElementById('quoteForm');
+  if(form){
+    var msgEl = document.getElementById('quoteMsg');
+    var submitBtn = document.getElementById('quoteSubmit');
+    var fieldOf = function(id){ var el = document.getElementById(id); return el ? el.closest('.field') : null; };
+    var val = function(id){ var el = document.getElementById(id); return el ? (el.value||'').trim() : ''; };
+
+    var buildSms = function(d){
+      var body = "Hi Black Anvil! Quote request."
+        + " Name: " + d.name + "."
+        + " Phone: " + d.phone + "."
+        + " Project: " + d.project_type + "."
+        + " Details: " + d.description + "."
+        + " Timeline: " + d.timeline + "."
+        + (d.city ? " Location: " + d.city + "." : "");
+      return "sms:" + telDigits(CONTENT.brand.phone) + "?body=" + encodeURIComponent(body);
+    };
+
+    var showDone = function(phone, smsUrl){
+      form.hidden = true;
+      var done = document.getElementById('quoteDone');
+      var dm = document.getElementById('doneMsg');
+      if(dm){
+        if(isMobile && smsUrl){
+          dm.textContent = "Got it — I'll call or text you at " + phone + " within one business day. Opening a text so you can fire over photos too — just hit send.";
+        } else {
+          dm.textContent = "Got it — I'll call or text you at " + phone + " within one business day. Photos of the project or the broken part? Text them to " + CONTENT.brand.phone + ".";
+        }
+      }
+      if(done){ done.hidden = false; done.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}); }
+      // Belt-and-suspenders: on mobile, also open a pre-filled SMS.
+      if(smsUrl && isMobile){ setTimeout(function(){ window.location.href = smsUrl; }, 900); }
+    };
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      msgEl.textContent = ''; msgEl.className = 'qform__msg';
+
+      // honeypot — silently succeed for bots
+      if(form.querySelector('input[name="_honey"]').value){ showDone('', ''); return; }
+
+      var d = {
+        name: val('q-name'),
+        phone: val('q-phone'),
+        email: val('q-email'),
+        project_type: val('q-type'),
+        description: val('q-desc'),
+        timeline: val('q-when'),
+        city: val('q-city')
+      };
+
+      // validate
+      var ok = true;
+      [['q-name', d.name], ['q-phone', d.phone], ['q-type', d.project_type], ['q-desc', d.description]].forEach(function(pair){
+        var f = fieldOf(pair[0]);
+        var bad = !pair[1];
+        if(f) f.classList.toggle('invalid', bad);
+        if(bad) ok = false;
+      });
+      if(!ok){
+        msgEl.textContent = 'A couple required fields are missing — name, phone, project type, and a description.';
+        msgEl.classList.add('err');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      var smsUrl = buildSms(d);
+      var payload = {
+        name: d.name, phone: d.phone, email: d.email || '(none given)',
+        project_type: d.project_type, description: d.description,
+        timeline: d.timeline, city: d.city || '(not given)',
+        _subject: 'Black Anvil — quote request: ' + d.project_type,
+        _template: 'table', _captcha: 'false'
+      };
+
+      fetch('https://formsubmit.co/ajax/' + encodeURIComponent(CONTENT.brand.leadEmail || CONTENT.brand.email), {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(payload)
+      }).then(function(r){ return r.json(); }).then(function(res){
+        if(res && (res.success === 'true' || res.success === true)){
+          showDone(d.phone, smsUrl);
+        } else { throw new Error('formsubmit rejected'); }
+      }).catch(function(){
+        // graceful degrade: point at text/call so the lead is never lost
+        msgEl.innerHTML = 'Hmm — that didn\'t go through. Text your project straight to <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+        msgEl.classList.add('err');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send it to the shop';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

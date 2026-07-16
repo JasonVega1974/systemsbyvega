@@ -1,0 +1,301 @@
+{
+  "brand": {
+    "phone": "(208) 555-0172",
+    "email": "hello@coravalefitness.com",
+    "city": "Eagle, Idaho",
+    "leadEmail": "info@kingdom-creatives.com"
+  },
+  "stats": [
+    {
+      "num": "10 yrs",
+      "label": "Coaching lifters & runners"
+    },
+    {
+      "num": "1:1 & online",
+      "label": "Formats available"
+    },
+    {
+      "num": "Eagle, ID",
+      "label": "Home base"
+    }
+  ],
+  "goals": [
+    {
+      "id": "strength",
+      "label": "Strength",
+      "tagline": "Get stronger, on purpose",
+      "blurb": "A progressive plan built around the barbell lifts — squat, hinge, press, pull — loaded at a pace your joints and your schedule can actually handle.",
+      "programs": [
+        {
+          "title": "Foundations Block",
+          "desc": "Bar-only technique work until the big lifts are safe to load — bracing, bar path and depth before weight goes on."
+        },
+        {
+          "title": "Strength Cycle",
+          "desc": "A progressive cycle built around your current numbers, adjusted session to session based on how the bar actually moved."
+        },
+        {
+          "title": "Accessory Work",
+          "desc": "Targeted assistance work for whatever's holding your lifts back — a weak lockout, a shaky brace, a stuck plateau."
+        }
+      ],
+      "proof": [
+        {
+          "num": "12 wks",
+          "label": "Typical cycle length"
+        },
+        {
+          "num": "3–4x",
+          "label": "Sessions per week"
+        },
+        {
+          "num": "Barbell",
+          "label": "Primary tool"
+        }
+      ]
+    },
+    {
+      "id": "first5k",
+      "label": "First 5K",
+      "tagline": "From zero to the start line",
+      "blurb": "A run/walk progression that meets you at your current mileage — even if that's zero — and builds toward a 5K without wrecking your knees along the way.",
+      "programs": [
+        {
+          "title": "Run/Walk Start",
+          "desc": "Interval-based sessions that build time on your feet before they build pace — the base everything else stacks on."
+        },
+        {
+          "title": "Base Mileage",
+          "desc": "A gradual increase in weekly distance, timed to stay ahead of soreness instead of chasing it."
+        },
+        {
+          "title": "Race-Week Taper",
+          "desc": "A short taper block so you show up to race day rested, not depleted from a last-minute push."
+        }
+      ],
+      "proof": [
+        {
+          "num": "8–10 wks",
+          "label": "Typical build"
+        },
+        {
+          "num": "3x",
+          "label": "Runs per week"
+        },
+        {
+          "num": "Run/walk",
+          "label": "Starting point"
+        }
+      ]
+    },
+    {
+      "id": "postpartum",
+      "label": "Postpartum",
+      "tagline": "Back to training, in the right order",
+      "blurb": "A return-to-training plan that starts after your provider's clearance and rebuilds from the inside out — breath and core first, load second.",
+      "programs": [
+        {
+          "title": "Cleared-to-Train Basics",
+          "desc": "Breath, core and pelvic floor work first — the foundation everything after this is built on."
+        },
+        {
+          "title": "Rebuild Phase",
+          "desc": "Gradual reintroduction of loaded movement, paced against how your body is actually responding, not a calendar."
+        },
+        {
+          "title": "Full Return",
+          "desc": "A path back to the training you did before — or a new normal, if that's what you'd rather build toward."
+        }
+      ],
+      "proof": [
+        {
+          "num": "Cleared first",
+          "label": "Always required before we start"
+        },
+        {
+          "num": "Slow ramp",
+          "label": "Load progression"
+        },
+        {
+          "num": "Core + floor",
+          "label": "Where every plan begins"
+        }
+      ]
+    },
+    {
+      "id": "over50",
+      "label": "Over 50",
+      "tagline": "Train for the next 30 years",
+      "blurb": "Joint-friendly strength and balance work chosen for how you'll move through your week, not just what shows up on a barbell.",
+      "programs": [
+        {
+          "title": "Joint-Friendly Strength",
+          "desc": "Loaded movement patterns selected for your actual joint ranges — strength without the ache the next day."
+        },
+        {
+          "title": "Balance & Mobility",
+          "desc": "Work aimed at fall-proofing and everyday function — stairs, floors, carrying groceries without a second thought."
+        },
+        {
+          "title": "Longevity Cycle",
+          "desc": "A long-view training plan built to keep working for you a decade out, not just for the next few months."
+        }
+      ],
+      "proof": [
+        {
+          "num": "Joint-first",
+          "label": "Movement selection"
+        },
+        {
+          "num": "2–3x",
+          "label": "Sessions per week"
+        },
+        {
+          "num": "Function",
+          "label": "What we train for"
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "name": "Small Group",
+      "price": "$65",
+      "period": "/session",
+      "features": "4–6 person class cap\nProgrammed by Cora, not a template\nText-based coaching between sessions",
+      "best": false,
+      "note": ""
+    },
+    {
+      "name": "1:1 Coaching",
+      "price": "$95",
+      "period": "/session",
+      "features": "Fully individualized programming\nForm checked every rep, every session\nDirect text line to Cora",
+      "best": true,
+      "note": "Most popular"
+    },
+    {
+      "name": "Online Programming",
+      "price": "$149",
+      "period": "/month",
+      "features": "Custom plan in your lifting app\nWeekly check-in & adjustments\nForm-check video review",
+      "best": false,
+      "note": ""
+    }
+  ],
+  "pricingNote": "Billed session-to-session or month-to-month — no long-term contract required.",
+  "bio": "Cora spent the first half of her training life chasing her own PRs and the second half getting other people to theirs. A decade under the bar, coaching everyone from first-time squatters to lifelong runners chasing a comeback 5K. Every program is written by hand — no templates, no guesswork, no generic plan with your name pasted on top.",
+  "chips": [
+    {
+      "t": "Programs written by hand, not templated"
+    },
+    {
+      "t": "Texts back the same day"
+    },
+    {
+      "t": "Beginners welcome — no experience required"
+    },
+    {
+      "t": "In-person in Eagle or online anywhere"
+    }
+  ],
+  "gallery": [
+    {
+      "title": "1:1 session",
+      "tag": "Strength",
+      "image": ""
+    },
+    {
+      "title": "Small group class",
+      "tag": "Small Group",
+      "image": ""
+    },
+    {
+      "title": "Outdoor run coaching",
+      "tag": "First 5K",
+      "image": ""
+    },
+    {
+      "title": "Form check",
+      "tag": "Coaching",
+      "image": ""
+    },
+    {
+      "title": "Postpartum session",
+      "tag": "Postpartum",
+      "image": ""
+    },
+    {
+      "title": "Client training day",
+      "tag": "Over 50",
+      "image": ""
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do I need experience to start?",
+      "a": "No. Most people who start with Cora have never done a structured program before. Sessions begin with an assessment of what you can already do, and the plan is built from there — not from a template.",
+      "tags": "all"
+    },
+    {
+      "q": "I've never touched a barbell — is strength training realistic for me?",
+      "a": "Yes. The first block is entirely about technique: how to brace, how to move the bar, how to fail a rep safely. Loading comes after the pattern is solid, not before.",
+      "tags": "strength"
+    },
+    {
+      "q": "I've never run more than a mile. Is a 5K actually realistic?",
+      "a": "For almost everyone, yes — on a run/walk progression that adds distance gradually. The plan is built around your current mileage, not a generic couch-to-5K calendar.",
+      "tags": "first5k"
+    },
+    {
+      "q": "When can I start training after having a baby?",
+      "a": "Whenever your provider clears you for exercise — that clearance always comes first, no exceptions. After that, the plan starts with the basics: breath, core, and pelvic floor, before any loaded movement returns.",
+      "tags": "postpartum"
+    },
+    {
+      "q": "Is it too late to start strength training in my 50s or 60s?",
+      "a": "No — it's one of the highest-value times to start. Exercises are chosen for joint-friendly ranges of motion first, and progress is measured in how you move through your week, not just numbers on a bar.",
+      "tags": "over50"
+    },
+    {
+      "q": "How much does coaching cost?",
+      "a": "See the Packages section above — pricing is flat and posted, no quote required. Sessions are billed as you go; there's no long-term contract.",
+      "tags": "all"
+    },
+    {
+      "q": "Do you train in person or online?",
+      "a": "Both. In-person sessions are based in Eagle, Idaho; online programming works from anywhere with a phone and a lifting app.",
+      "tags": "all"
+    },
+    {
+      "q": "What's your cancellation policy?",
+      "a": "24 hours' notice to reschedule a session at no charge. Life happens — a late cancel isn't the end of the world, but the slot can't always be backfilled on short notice.",
+      "tags": "all"
+    }
+  ],
+  "social": [
+    {
+      "platform": "Instagram",
+      "label": "@coravalefitness",
+      "url": "https://systemsbyvega.com"
+    }
+  ],
+  "settings": {
+    "acceptingClients": true,
+    "closedNote": "Cora's client list is full right now. Join the waitlist below and you'll hear first when a spot opens."
+  }
+}

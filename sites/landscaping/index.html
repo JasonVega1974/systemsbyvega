@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Larkspur &amp; Ledge Landscape Co. — Year-Round Lawn &amp; Yard Care | Meridian, ID</title>
+<meta name="description" content="Flat-rate maintenance plans and seasonal yard services — spring cleanups, summer mowing, fall leaf haul-away and winter snow removal. Serving the Treasure Valley. Pick your season, see what's next, and get a real price. Call or text (208) 555-0134." />
+<meta name="theme-color" content="#0E1712" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/larkspur-ledge-landscape-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/larkspur-ledge-landscape-demo/" />
+<meta property="og:title" content="Larkspur &amp; Ledge Landscape Co. — Every Season, Handled Right." />
+<meta property="og:description" content="Flat-rate maintenance plans and seasonal yard services for the Treasure Valley. See exactly what your yard needs this season and get a real price in seconds." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: a larkspur sprig rising from a stone ledge -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238177F2'/%3E%3Cpath d='M6 44 L58 44 L52 55 L12 55 Z' fill='%2318261B'/%3E%3Cpath d='M32 44 C30 32 34 24 30 12' stroke='%2318261B' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='12' r='4.2' fill='%23F2F0E6'/%3E%3Ccircle cx='24.5' cy='20' r='3.4' fill='%23F2F0E6'/%3E%3Ccircle cx='36' cy='22' r='3.1' fill='%23F2F0E6'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Local business structured data (helps Google show you).
+     Keep phone/plans in sync with the visible copy and CONTENT.plans in the script. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Larkspur & Ledge Landscape Co.",
+  "url": "https://jasonvega1974.github.io/larkspur-ledge-landscape-demo/",
+  "description": "Year-round lawn and yard care — flat-rate maintenance plans plus seasonal services (spring cleanups, summer mowing, fall leaf haul-away, winter snow removal).",
+  "telephone": "+12085550134",
+  "email": "hello@larkspurledge.com",
+  "areaServed": "Treasure Valley, Idaho — Meridian, Boise, Eagle, Star, Kuna, Middleton",
+  "priceRange": "$65-$385",
+  "slogan": "Every season, handled right.",
+  "makesOffer": [
+    { "@type": "Offer", "name": "Basic Mow & Edge (monthly plan)", "price": "120", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Full Yard Care (monthly plan)", "price": "210", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Estate Grounds (monthly plan)", "price": "385", "priceCurrency": "USD" }
+  ]
+}
+</script>
+
+<style>
+/* =========================================================
+   LARKSPUR & LEDGE LANDSCAPE CO. — tokens
+   Trade identity: deep loam/soil base, larkspur violet-blue
+   primary (the flower the name borrows), warm clay secondary
+   (the "Ledge" — stone, sparingly), sage-cream type.
+   ========================================================= */
+:root{
+  --loam-deep:#0A100B;
+  --loam:#101A13;
+  --loam-2:#17251C;
+  --moss:#213424;
+  --larkspur:#8177F2;
+  --larkspur-bright:#9C93FF;
+  --larkspur-deep:#4B3FA8;
+  --clay:#D98A52;
+  --cream:#F2F0E6;
+  --cream-soft:#FAF9F2;
+  --stone:#B9C2B4;
+  --muted:#8B948A;
+  --line:rgba(129,119,242,.16);
+  --hair:rgba(242,240,230,.12);
+  --card:rgba(23,37,28,.55);
+  --card-brd:rgba(242,240,230,.13);
+  --shadow:0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:1140px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Work Sans',system-ui,sans-serif;
+  background:var(--loam);
+  color:var(--cream);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* atmospheric backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 84% -8%, rgba(129,119,242,.18), transparent 60%),
+    radial-gradient(900px 700px at 4% 12%, rgba(33,52,36,.6), transparent 62%),
+    radial-gradient(760px 520px at 50% 110%, rgba(217,138,82,.06), transparent 60%),
+    linear-gradient(180deg,#0C1710 0%, #101A13 45%, #0A100B 100%);
+}
+/* faint garden-bed dot texture */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 20% 20%, transparent 0 52px, rgba(242,240,230,.035) 52px 53px),
+    repeating-radial-gradient(circle at 82% 66%, transparent 0 68px, rgba(129,119,242,.035) 68px 69px),
+    repeating-radial-gradient(circle at 55% -8%, transparent 0 84px, rgba(242,240,230,.02) 84px 85px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'Space Mono',monospace;font-weight:700;
+  text-transform:uppercase;letter-spacing:.2em;
+  font-size:.74rem;color:var(--larkspur-bright);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--larkspur-bright),transparent);
+}
+.section-title{
+  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.03;letter-spacing:.01em;
+  background:linear-gradient(180deg,#fffdf9 0%,var(--cream) 55%,#cfc9b4 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--stone);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  box-shadow:0 12px 30px -10px rgba(129,119,242,.55), inset 0 1px 0 rgba(255,255,255,.35);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(129,119,242,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:active{transform:translateY(0)}
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(129,119,242,.08);color:var(--cream-soft);
+  border:1px solid rgba(129,119,242,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(129,119,242,.16);box-shadow:0 10px 26px -14px rgba(129,119,242,.5)}
+.btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--larkspur-bright);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(10,16,11,.88);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  box-shadow:0 8px 20px -8px rgba(129,119,242,.6)}
+.brand__mark svg{width:28px;height:28px}
+.brand__name{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--cream-soft)}
+.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.2em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.76rem;color:var(--cream);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--larkspur-bright)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Oswald',sans-serif;
+  font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:#12101F;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  box-shadow:0 10px 24px -12px rgba(129,119,242,.7), inset 0 1px 0 rgba(255,255,255,.35);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.02em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{
+  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.96;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,#fffdf9 0%,var(--cream) 50%,#cfc9b4 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(242,240,230,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--larkspur-bright);display:block;
+  text-shadow:0 4px 30px rgba(129,119,242,.4);
+}
+.hero__sub{font-size:1.16rem;color:var(--stone);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.6rem;color:#fff;letter-spacing:.02em}
+.proof span{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* hero art: a terraced stone ledge with larkspur in bloom, drawn inline */
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(129,119,242,.22), rgba(129,119,242,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+.hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting garden pollen */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.mote{position:absolute;bottom:-4%;width:4px;height:4px;border-radius:50%;
+  background:radial-gradient(circle,rgba(156,147,255,.9),rgba(156,147,255,0) 70%);
+  opacity:0;animation:mote linear infinite}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* hedge-line divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--loam-2);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--loam-2),rgba(23,37,28,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;
+  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--cream)}
+.trust__item svg{width:20px;height:20px;color:var(--larkspur-bright);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — SEASON WHEEL
+   ========================================================= */
+.wheel{
+  max-width:1060px;margin:0 auto;border-radius:20px;overflow:hidden;
+  background:rgba(12,20,14,.72);border:1px solid var(--card-brd);
+  box-shadow:var(--shadow);backdrop-filter:blur(10px);
+}
+.wheel::before{
+  content:"";display:block;height:6px;
+  background:linear-gradient(90deg,var(--larkspur),var(--clay));
+}
+.wheel__in{padding:clamp(20px,3.2vw,32px)}
+
+.wheel__tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:26px}
+@media(max-width:640px){.wheel__tabs{grid-template-columns:repeat(2,1fr)}}
+.tab{
+  display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
+  border:1px solid var(--card-brd);border-radius:14px;padding:14px 10px;background:rgba(19,30,21,.45);
+  font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+  font-size:.92rem;color:var(--stone);transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
+}
+.tab svg{width:26px;height:26px;color:var(--muted);transition:color .18s ease}
+.tab span{font-family:'Space Mono',monospace;font-weight:400;font-size:.66rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.tab:hover{border-color:rgba(129,119,242,.4);transform:translateY(-2px)}
+.tab[aria-selected="true"]{
+  border-color:var(--larkspur);background:rgba(129,119,242,.1);color:var(--cream-soft);
+  box-shadow:0 0 0 1px var(--larkspur), 0 18px 40px -22px rgba(129,119,242,.45);
+}
+.tab[aria-selected="true"] svg{color:var(--larkspur-bright)}
+.tab[aria-selected="true"] span{color:var(--larkspur-bright)}
+
+.wheel__body{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(22px,3vw,38px);align-items:start}
+@media(max-width:820px){.wheel__body{grid-template-columns:1fr}}
+
+.wheel__art{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(33,52,36,.55),rgba(12,20,14,.6));
+  border:1px solid var(--card-brd);box-shadow:0 18px 40px -24px rgba(0,0,0,.6)}
+.wheel__art img{width:100%;height:100%;object-fit:cover;display:block}
+.wheel__art > svg{width:100%;height:100%;display:block}
+.wheel__caption{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;
+  font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--stone);background:linear-gradient(0deg,rgba(8,13,9,.75),transparent)}
+
+.wheel__range{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--clay);margin-bottom:8px;display:block}
+.wheel__blurb{color:var(--stone);font-size:1rem;margin-bottom:22px}
+
+.svc-list{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.svc{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+  border:1px solid var(--card-brd);border-radius:14px;padding:14px 16px;background:rgba(19,30,21,.4)}
+.svc__body{min-width:0}
+.svc__name{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.02rem;color:var(--cream-soft);letter-spacing:.01em}
+.svc__desc{color:var(--muted);font-size:.88rem;margin-top:4px}
+.svc__price{flex:none;text-align:right;font-family:'Oswald',sans-serif;font-weight:700;font-size:1.15rem;color:var(--larkspur-bright)}
+.svc__price small{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+.wheel__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.wheel__alt{font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--stone);text-decoration:underline;text-underline-offset:3px}
+.wheel__alt:hover{color:var(--larkspur-bright)}
+
+/* season-scene illustration groups (recolored/toggled by JS per season) */
+.yard-scene .yard-tree{fill:var(--foliage,#3c5c3f);transition:fill .5s ease}
+.yard-scene .yard-ground{fill:var(--ground,#233826);transition:fill .5s ease}
+.yard-scene .yard-blossom{opacity:0;transition:opacity .5s ease}
+.yard-scene .yard-leaffall{opacity:0;transition:opacity .5s ease}
+.yard-scene .yard-snow{opacity:0;transition:opacity .5s ease}
+.yard-scene[data-season="spring"] .yard-blossom{opacity:1}
+.yard-scene[data-season="fall"] .yard-leaffall{opacity:1}
+.yard-scene[data-season="winter"] .yard-snow{opacity:1}
+
+/* =========================================================
+   GOOD TO KNOW / OUT OF SCOPE
+   ========================================================= */
+.scope{background:linear-gradient(180deg,rgba(23,37,28,.35),transparent)}
+.scope .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;
+  font-size:.8rem;letter-spacing:.03em;color:var(--cream);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(12,20,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--larkspur-bright);flex:none}
+.scope__alt{text-align:center;color:var(--muted);font-size:.95rem;max-width:60ch;margin:26px auto 0}
+.scope__alt b{color:var(--cream)}
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:820px){.benefits-grid{grid-template-columns:1fr}}
+.benefit{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:28px 26px;
+  backdrop-filter:blur(8px);transition:transform .22s ease,border-color .22s ease}
+.benefit:hover{transform:translateY(-6px);border-color:rgba(129,119,242,.4)}
+.benefit__ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(129,119,242,.22),rgba(75,63,168,.14));color:var(--larkspur-bright)}
+.benefit__ic svg{width:24px;height:24px}
+.benefit h3{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.02em;
+  font-size:1.1rem;margin-bottom:8px;color:#fff}
+.benefit p{color:var(--muted);font-size:.96rem}
+
+/* =========================================================
+   PLANS (pricing)
+   ========================================================= */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+@media(max-width:900px){.plans-grid{grid-template-columns:1fr;max-width:480px}}
+.plan-card{position:relative;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+  padding:30px 26px;backdrop-filter:blur(8px);display:flex;flex-direction:column;transition:transform .22s ease,border-color .22s ease}
+.plan-card:hover{transform:translateY(-6px)}
+.plan-card--best{border-color:var(--larkspur);box-shadow:0 0 0 1px var(--larkspur),0 24px 60px -30px rgba(129,119,242,.5)}
+.plan-card__pill{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  font-family:'Space Mono',monospace;font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  padding:.4rem .9rem;border-radius:999px;box-shadow:0 8px 20px -10px rgba(129,119,242,.7)}
+.plan-card__tier{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.02em;
+  font-size:1.3rem;color:var(--cream-soft)}
+.plan-card__freq{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin:6px 0 18px}
+.plan-card__price{font-family:'Oswald',sans-serif;font-weight:700;font-size:2.6rem;line-height:1;
+  color:var(--larkspur-bright);margin-bottom:4px}
+.plan-card__price small{font-family:'Space Mono',monospace;font-weight:400;font-size:.8rem;color:var(--muted);letter-spacing:.04em}
+.plan-card__features{list-style:none;margin:18px 0 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.plan-card__features li{display:flex;align-items:flex-start;gap:.6rem;color:var(--stone);font-size:.92rem}
+.plan-card__features svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--larkspur-bright)}
+.plans-note{text-align:center;color:var(--muted);font-size:.94rem;max-width:60ch;margin:26px auto 0}
+.plans-note b{color:var(--cream)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(129,119,242,.6);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;
+  letter-spacing:.02em;font-size:1.15rem;margin-bottom:8px;color:#fff}
+.step p{color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(33,52,36,.6),rgba(12,20,14,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(129,119,242,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,240,230,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:.74rem;
+  color:var(--stone);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--cream);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Larkspur & Ledge, how long they've been in the dirt, and why the plans are flat-rate instead of a guessing game. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Oswald',sans-serif;font-weight:600;font-size:1.04rem;color:var(--cream-soft)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(129,119,242,.4);color:var(--larkspur-bright);transition:transform .25s ease;font-family:'Work Sans',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--cream)}
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:820px){.reviews-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.review{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;backdrop-filter:blur(8px)}
+.review__stars{color:var(--clay);font-size:.9rem;letter-spacing:.15em;margin-bottom:12px}
+.review__quote{color:var(--cream);font-size:.98rem;line-height:1.6;min-height:70px}
+.review__quote:empty::before{content:"Real review coming soon.";color:var(--muted);opacity:.7;font-style:italic}
+.review__who{margin-top:16px;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, rgba(129,119,242,.14), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(33,52,36,.7), transparent 60%),
+    linear-gradient(160deg,#17251C,#0C1710);
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--larkspur-bright);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(12,20,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--clay);margin-bottom:6px}
+.field em{color:var(--larkspur-bright);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(6,10,7,.7);border:1px solid var(--card-brd);color:var(--cream-soft);
+  font-family:'Work Sans',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:#5c6459}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--larkspur);background:rgba(6,10,7,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239C93FF' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(129,119,242,.06);border-style:dashed;color:var(--cream);
+  font-family:'Space Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--larkspur);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'Space Mono',monospace;letter-spacing:.06em;color:var(--cream);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--larkspur-bright)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:#ff9aa2}
+.book__msg.ok{color:var(--larkspur-bright)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(33,52,36,.55),rgba(12,20,14,.6));
+  border:1px solid rgba(129,119,242,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(129,119,242,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  box-shadow:0 12px 30px -10px rgba(129,119,242,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,#fffdf9,var(--cream));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--stone);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--larkspur-bright)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--stone);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--larkspur-bright)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(10,16,11,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  box-shadow:0 8px 20px -8px rgba(129,119,242,.7)}
+.mobile-cta .text{color:var(--cream-soft);background:rgba(129,119,242,.1);border:1px solid rgba(129,119,242,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Larkspur & Ledge Landscape Co. home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="#12101F"/>
+          <path d="M32 44 C30 32 34 24 30 12" stroke="#12101F" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="4.2" fill="#12101F"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Larkspur &amp; Ledge Landscape Co.<span>Treasure Valley landscaping</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#season">Seasons</a>
+      <a class="link" href="#plans">Plans</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#book">Book</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550134">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0134</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Lawn &amp; yard care · Treasure Valley, Idaho</span></div>
+        <h1><span class="l1">Your Yard,</span><span class="l2">Every Season.</span></h1>
+        <p class="hero__sub">Spring cleanup isn't a fall cleanup, and a July mow isn't a January snow push. We plan around what your yard actually needs this month — pick your season below and see exactly what's next, with a real price attached.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#season">See this season</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550134">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Year-Round</b><span>Every season covered</span></div>
+          <div class="proof"><b>500+</b><span>Yards kept sharp</span></div>
+          <div class="proof"><b>Local</b><span>Owned &amp; operated</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <!-- terraced stone ledge with larkspur in bloom -->
+        <svg viewBox="0 0 520 380" fill="none" role="img" aria-label="Illustration: larkspur flowers growing from a terraced stone ledge">
+          <!-- sun / glow -->
+          <circle cx="418" cy="66" r="20" fill="#9C93FF" fill-opacity=".7"/>
+          <circle cx="418" cy="66" r="32" stroke="#9C93FF" stroke-opacity=".22" stroke-width="2"/>
+          <!-- terraces (stone ledges), back to front -->
+          <path d="M40 150 H480 L462 202 H58 Z" fill="#3A4A3C" fill-opacity=".5"/>
+          <path d="M64 202 H456 L436 258 H84 Z" fill="#465A48" fill-opacity=".6"/>
+          <path d="M92 258 H428 L406 320 H114 Z" fill="#55694F" fill-opacity=".72"/>
+          <!-- ledge cap lines -->
+          <rect x="40" y="146" width="440" height="8" rx="3" fill="#26332B"/>
+          <rect x="64" y="198" width="392" height="8" rx="3" fill="#26332B"/>
+          <rect x="92" y="254" width="336" height="8" rx="3" fill="#26332B"/>
+          <!-- larkspur stalks on the top tier -->
+          <path d="M140 146 C 136 116 146 96 140 66" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="140" cy="66" r="5.5" fill="#F2F0E6"/><circle cx="132" cy="78" r="4.4" fill="#F2F0E6"/><circle cx="148" cy="82" r="4.2" fill="#F2F0E6"/><circle cx="136" cy="94" r="4" fill="#F2F0E6"/>
+          <path d="M200 146 C 196 122 204 104 198 78" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="198" cy="78" r="5" fill="#F2F0E6"/><circle cx="190" cy="90" r="4" fill="#F2F0E6"/><circle cx="206" cy="94" r="3.8" fill="#F2F0E6"/>
+          <path d="M356 146 C 352 118 360 100 354 70" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="354" cy="70" r="5.5" fill="#F2F0E6"/><circle cx="346" cy="82" r="4.4" fill="#F2F0E6"/><circle cx="362" cy="86" r="4.2" fill="#F2F0E6"/>
+          <!-- shrub on the middle tier -->
+          <circle cx="270" cy="196" r="26" fill="#4C6350"/><circle cx="248" cy="202" r="18" fill="#4C6350"/><circle cx="294" cy="202" r="18" fill="#4C6350"/>
+          <!-- ground -->
+          <path d="M20 358 H500" stroke="#F2F0E6" stroke-opacity=".2" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,46 C120,20 240,20 360,42 C480,58 600,58 720,34 C840,14 960,14 1080,36 C1200,54 1320,54 1440,30 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Same crew, every visit</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text before we show up</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/><path d="M3 21h18"/></svg>Locally owned &amp; operated</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.2-9.5-9.3C.8 8.4 2.2 4.8 5.8 4.1c2-.4 3.9.6 4.9 2.2 1-1.6 2.9-2.6 4.9-2.2 3.6.7 5 4.3 3.3 7.6C19 15.8 12 21 12 21z" opacity="0"/><path d="M4 20 L4 12 M4 12 L14 6 M4 12 L20 12" stroke-opacity="0"/><circle cx="12" cy="9" r="3"/><path d="M12 12v9"/></svg>Serving the Treasure Valley</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: SEASON WHEEL ============ -->
+<section class="section" id="season">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Pick your season</span>
+      <h2 class="section-title" id="seasonTitle">One yard. Four very different jobs.</h2>
+      <p class="lead" style="margin:0 auto" id="seasonLead">Tap a season to see what it actually takes to keep a Treasure Valley yard looking right — and what each job costs.</p>
+    </div>
+
+    <div class="wheel reveal" id="wheel">
+      <div class="wheel__in">
+        <div class="wheel__tabs" id="wheelTabs" role="tablist" aria-label="Choose a season"></div>
+        <div class="wheel__body" id="wheelBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOOD TO KNOW / OUT OF SCOPE ============ -->
+<section class="section scope" id="scope">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">What's outside a standard visit</h2>
+      <p class="lead" style="margin:0 auto">Our flat-rate plans and seasonal jobs cover the vast majority of yards. Here's the short list of things that need their own quote.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Tree removal &amp; stump grinding</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Irrigation repair</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Sod installation</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Hardscape &amp; pavers</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Fence repair</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Large excavation</span>
+    </div>
+    <p class="scope__alt reveal" id="scopeNote">None of that is off the table — just outside our flat-rate plans. <b>Text us a photo and we'll quote it separately.</b></p>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="section" id="benefits">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Why Larkspur &amp; Ledge</span>
+      <h2 class="section-title">Built around your yard's calendar</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit reveal" data-delay="1">
+        <div class="benefit__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></div>
+        <h3>Built around your season</h3>
+        <p>We don't run one static service list all year. What we do in March isn't what we do in November — the site changes with the season, and so does your yard.</p>
+      </div>
+      <div class="benefit reveal" data-delay="2">
+        <div class="benefit__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>No surprise invoices</h3>
+        <p>Plans are flat monthly pricing. One-time jobs are quoted up front — before we touch a shovel, not after.</p>
+      </div>
+      <div class="benefit reveal" data-delay="3">
+        <div class="benefit__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></div>
+        <h3>Same crew, every time</h3>
+        <p>You get to know the people mowing your lawn — not a rotating cast of subcontractors you've never met.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANS (pricing) ============ -->
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Maintenance plans</span>
+      <h2 class="section-title">Pick a plan. It's flat, every month.</h2>
+      <p class="lead" style="margin:0 auto">Ongoing care, not a one-off job. Every plan includes text alerts before each visit and a photo update after anything bigger than a mow.</p>
+    </div>
+    <div class="plans-grid" id="plansGrid"></div>
+    <p class="plans-note reveal" id="plansNote">Corner lot, acreage, or something in between? <b>Text us your square footage and we'll quote it exact.</b></p>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. Zero guesswork.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Tell us about your yard</h3>
+        <p>A season, a plan, or a one-time job — pick above or just send us a few lines. Two minutes, no site visit required to get a starting number.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We quote it before we touch anything</h3>
+        <p>Flat price, confirmed before the crew shows up. No "we'll see once we get there" invoices.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>You get a text, then a photo</h3>
+        <p>A heads-up before every visit, and a photo update after anything bigger than a routine mow — so you know it's done without walking outside.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner kneeling beside a garden bed at a stone ledge">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <circle cx="316" cy="108" r="58" stroke="#F2F0E6" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="316" cy="108" r="84" stroke="#F2F0E6" stroke-opacity=".06" stroke-width="1.5"/>
+          <circle cx="316" cy="108" r="110" stroke="#F2F0E6" stroke-opacity=".045" stroke-width="1.5"/>
+          <circle cx="300" cy="76" r="16" fill="#9C93FF" fill-opacity=".8"/>
+          <circle cx="300" cy="76" r="27" stroke="#9C93FF" stroke-opacity=".22" stroke-width="2"/>
+          <!-- terraced ledge -->
+          <path d="M40 300 H360 L346 344 H54 Z" fill="#3A4A3C" fill-opacity=".6"/>
+          <rect x="40" y="296" width="320" height="10" rx="3" fill="#26332B"/>
+          <!-- larkspur stalks -->
+          <path d="M110 300 C 106 274 114 258 108 236" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="108" cy="236" r="4.6" fill="#F2F0E6"/><circle cx="100" cy="248" r="3.8" fill="#F2F0E6"/><circle cx="116" cy="252" r="3.6" fill="#F2F0E6"/>
+          <path d="M296 300 C 292 270 300 252 294 226" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="294" cy="226" r="5" fill="#F2F0E6"/><circle cx="286" cy="238" r="4" fill="#F2F0E6"/><circle cx="302" cy="242" r="3.8" fill="#F2F0E6"/>
+          <!-- kneeling figure, simple line art -->
+          <circle cx="196" cy="252" r="18" fill="#26332B"/>
+          <path d="M178 270 C 168 286 168 306 176 330 L 224 330 C 232 306 232 286 214 270 Z" fill="#26332B"/>
+          <path d="M176 330 L168 352 M224 330 L236 350" stroke="#26332B" stroke-width="10" stroke-linecap="round"/>
+          <path d="M182 296 L156 314" stroke="#26332B" stroke-width="9" stroke-linecap="round"/>
+          <!-- ground -->
+          <path d="M16 372 H384" stroke="#F2F0E6" stroke-opacity=".2" stroke-width="2"/>
+          <!-- caption -->
+          <text x="200" y="418" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" letter-spacing="4" fill="#B9C2B4" opacity=".85">TRUSTED GROUNDS CREW</text>
+          <text id="ownerCaption" x="200" y="440" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#8B948A" opacity=".7">ON SITE MOST WEEKS</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The person who quotes the job</h2>
+        <div class="owner__desc" id="ownerDesc">Mara Quist grew up two blocks from a nursery and spent every summer of high school working the register, then the greenhouses, then the crews. Ten seasons later she's running her own — Larkspur &amp; Ledge started as one truck and a trailer, and it still runs on the same rule: show up when you say you will, and leave the yard looking better than the photo you were quoted from. She's still out on jobs most weeks, not just behind a desk.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Do I need to be home for a visit?<span class="plus">+</span></summary><div class="faq__body">No. Gate code or a note on where things are is all we need — most of our regulars never see us show up. We text before and after, so you always know it's done.</div></details>
+      <details class="faq reveal"><summary>What happens if it rains — or snows — on my scheduled day?<span class="plus">+</span></summary><div class="faq__body">We reschedule to the next clear day, usually within 24-48 hours, and text you the new time. No visit gets skipped without a replacement — you're never charged for one we didn't do.</div></details>
+      <details class="faq reveal"><summary>Do you bring your own equipment?<span class="plus">+</span></summary><div class="faq__body">Yes — mowers, edgers, blowers, aerators, the works. You never need to own or store anything for us to do the job.</div></details>
+      <details class="faq reveal"><summary>Can I switch plans, or skip a visit?<span class="plus">+</span></summary><div class="faq__body">Anytime. Text us before your next scheduled visit and we'll adjust the plan or push the date — no cancellation fee, no long-term contract holding you in.</div></details>
+      <details class="faq reveal"><summary>What's <em>not</em> included in a plan?<span class="plus">+</span></summary><div class="faq__body">Bigger jobs like irrigation repair, tree removal, sod or hardscape work aren't part of a standard plan — see the "What's outside a standard visit" list above. Text us a photo and we'll quote those separately.</div></details>
+      <details class="faq reveal"><summary id="faqDeliverQ">Where do you service?<span class="plus">+</span></summary><div class="faq__body" id="faqDeliver">Meridian, Boise, Eagle, Star, Kuna, Middleton and everything in between — the whole Treasure Valley. Outside that ring? Text us your address anyway; if a route works we'll make it work.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">From the yard</span>
+      <h2 class="section-title">What the neighbors say</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review reveal" data-delay="1">
+        <div class="review__stars" aria-hidden="true">★★★★★</div>
+        <div class="review__quote"></div>
+        <div class="review__who">— Add a real review here</div>
+      </div>
+      <div class="review reveal" data-delay="2">
+        <div class="review__stars" aria-hidden="true">★★★★★</div>
+        <div class="review__quote"></div>
+        <div class="review__who">— Add a real review here</div>
+      </div>
+      <div class="review reveal" data-delay="3">
+        <div class="review__stars" aria-hidden="true">★★★★★</div>
+        <div class="review__quote"></div>
+        <div class="review__who">— Add a real review here</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Get a quote</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Get your quote in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Tell us about your yard and we'll text you back within the hour (during business hours) with a real price — not a callback promise.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550134" data-phone>(208) 555-0134</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Property address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Larkspur Ln" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Meridian" required />
+        </div>
+        <div class="field">
+          <label for="b-service">What do you need? <em>*</em></label>
+          <select id="b-service" name="service" required></select>
+        </div>
+        <div class="field">
+          <label for="b-date">Preferred start date <em>*</em></label>
+          <input id="b-date" name="start_date" type="date" required />
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Gate code, dog in the yard, that one stubborn corner, whatever's useful…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your selection (auto-filled from the season wheel or a plan above)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Use a season or plan above, or leave blank and we'll confirm by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Get my quote</button>
+        <a class="book__alt" href="sms:+12085550134?body=Hi%20Larkspur%20%26%20Ledge!%20I'd%20like%20a%20quote.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>You're on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your quote.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="#12101F"/>
+          <path d="M32 44 C30 32 34 24 30 12" stroke="#12101F" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="4.2" fill="#12101F"/>
+        </svg>
+      </span>
+      <div><b data-brand>Larkspur &amp; Ledge Landscape Co.</b><span data-tagline>Every season, handled right.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550134" data-phone>(208) 555-0134</a> · <a href="mailto:hello@larkspurledge.com" id="footEmail">hello@larkspurledge.com</a><br />
+      <span id="footServe">Serving Meridian · Boise · Eagle · Star · Kuna · Middleton</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Larkspur &amp; Ledge Landscape Co.</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550134"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550134?body=Hi%20Larkspur%20%26%20Ledge!%20I'd%20like%20a%20quote."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it —
+     the season wheel, plans grid, booking form, footer,
+     FAQ and owner section all re-render from the merged
+     object. Keep content.json's shape in sync with this
+     const. (Static copy the admin does NOT touch: the
+     JSON-LD offers/priceRange in <head> and the meta
+     description.)
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    brand: {
+      name: "Larkspur & Ledge Landscape Co.",
+      tagline: "Every season, handled right.",
+      phone: "(208) 555-0134",
+      email: "hello@larkspurledge.com",
+      leadEmail: "info@kingdom-creatives.com",
+      city: "Meridian, ID"
+    },
+    seasons: [
+      { id: "spring", label: "Spring", startMonth: 3, monthRange: "March – May", photo: "",
+        blurb: "Everything wakes up at once — beds, weeds and grass all in the same week. We knock out the reset before it gets away from you.",
+        services: [
+          { name: "Spring Cleanup", price: 189, unit: "one-time", desc: "Bed edging, debris haul-away, first mow of the year and a fertilizer kickoff." },
+          { name: "Mulch Refresh", price: 249, unit: "from", desc: "Fresh mulch delivered and spread in every bed — dyed or natural, your call." },
+          { name: "Irrigation Startup", price: 95, unit: "one-time", desc: "System flush, zone-by-zone check, and head adjustments before the heat hits." }
+        ] },
+      { id: "summer", label: "Summer", startMonth: 6, monthRange: "June – August", photo: "",
+        blurb: "Grass grows fast, weeds grow faster. This is the season where a missed week actually shows.",
+        services: [
+          { name: "Bed Weeding & Edging Refresh", price: 129, unit: "one-time", desc: "A deep pass through every bed — pulled weeds, crisp edges, hauled away." },
+          { name: "Shrub & Hedge Shaping", price: 149, unit: "one-time", desc: "Hand-shaped or sheared to the look you want, clippings bagged and gone." },
+          { name: "Weed & Pest Spot Treatment", price: 79, unit: "one-time", desc: "Targeted treatment for the patches store-bought spray never fixes." }
+        ] },
+      { id: "fall", label: "Fall", startMonth: 9, monthRange: "September – November", photo: "",
+        blurb: "Leaves don't stop until the trees are bare. We keep the yard from disappearing under them.",
+        services: [
+          { name: "Fall Cleanup & Leaf Haul-Away", price: 199, unit: "one-time", desc: "Every leaf, every bed, hauled off-site — not blown into your neighbor's yard." },
+          { name: "Core Aeration & Overseed", price: 175, unit: "one-time", desc: "Opens up compacted soil and gets new grass established before the ground freezes." },
+          { name: "Irrigation Winterization", price: 85, unit: "one-time", desc: "Full system blowout so a hard freeze doesn't split a line you can't see." }
+        ] },
+      { id: "winter", label: "Winter", startMonth: 12, monthRange: "December – February", photo: "",
+        blurb: "Idaho winters don't care about your morning meeting. We do the driveway before you wake up.",
+        services: [
+          { name: "Snow Removal", price: 65, unit: "per push", desc: "Driveway and walkways cleared before your first alarm, every storm." },
+          { name: "Dormant Pruning", price: 139, unit: "one-time", desc: "The one time of year trees and shrubs can be cut hard without stressing them." },
+          { name: "Bed & Gutter Winter Clear-Out", price: 119, unit: "one-time", desc: "Debris out of beds and gutters before ice turns it into a dam." }
+        ] }
+    ],
+    plans: [
+      { tier: "Basic Mow & Edge", price: 120, per: "mo", freq: "Weekly, April – October", best: false,
+        features: ["Weekly mow, edge & blow", "Clippings cleared off walks & drives", "Text alert before every visit", "Skip weeks for vacation, no penalty"] },
+      { tier: "Full Yard Care", price: 210, per: "mo", freq: "Weekly, April – October", best: true,
+        features: ["Everything in Basic Mow & Edge", "Monthly bed weeding", "Quarterly shrub trim", "Spring & fall fertilization included", "Priority scheduling"] },
+      { tier: "Estate Grounds", price: 385, per: "mo", freq: "Twice-weekly in peak season", best: false,
+        features: ["Everything in Full Yard Care", "Twice-weekly mow, June – August", "Irrigation system checks", "Seasonal color rotation", "Dedicated crew lead"] }
+    ],
+    serviceArea: {
+      region: "Treasure Valley, Idaho",
+      short: "Treasure Valley",
+      cities: ["Meridian", "Boise", "Eagle", "Star", "Kuna", "Middleton"]
+    },
+    owner: {
+      name: "Mara Quist",
+      bio: "Mara Quist grew up two blocks from a nursery and spent every summer of high school working the register, then the greenhouses, then the crews. Ten seasons later she's running her own — Larkspur & Ledge started as one truck and a trailer, and it still runs on the same rule: show up when you say you will, and leave the yard looking better than the photo you were quoted from. She's still out on jobs most weeks, not just behind a desk.",
+      photo: ""
+    },
+    misc: {
+      plansNote: "Corner lot, acreage, or something in between? Text us your square footage and we'll quote it exact.",
+      scopeNote: "None of that is off the table — just outside our flat-rate plans. Text us a photo and we'll quote it separately."
+    },
+    social: []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+     submission emails a one-time activation link to LEAD.email; click it once and
+     every booking after that lands in that inbox, formatted as a table. */
+  var LEAD = { provider: 'formsubmit', email: '', sms: '' };
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function num(v){ var n = Number(v); return isFinite(n) ? n : 0; }
+  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
+  function slugify(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+  function applyRuntime(c){
+    LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
+    LEAD.sms = telHref((c.brand||{}).phone);
+  }
+  applyRuntime(CONTENT);
+
+  // ---------- year ----------
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---------- nav solidify ----------
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ---------- reveal on scroll (re-armable for JS-injected nodes) ----------
+  var io = null;
+  if('IntersectionObserver' in window && !reduce){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  }
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(io){ nodes.forEach(function(n){ io.observe(n); }); }
+    else { nodes.forEach(function(n){ n.classList.add('in'); }); }
+  }
+  revealScan(document);
+
+  // ---------- drifting pollen motes in hero ----------
+  var motes = document.getElementById('motes');
+  if(motes && !reduce){
+    var n = window.innerWidth < 700 ? 8 : 16;
+    for(var i=0;i<n;i++){
+      var m = document.createElement('span');
+      m.className = 'mote';
+      m.style.left = Math.random()*100 + '%';
+      var dur = 9 + Math.random()*10;
+      m.style.animationDuration = dur + 's';
+      m.style.animationDelay = (-Math.random()*dur) + 's';
+      m.style.opacity = 0.25 + Math.random()*0.5;
+      var s = 2.5 + Math.random()*3;
+      m.style.width = s + 'px'; m.style.height = s + 'px';
+      motes.appendChild(m);
+    }
+  }
+
+  /* =====================================================
+     SIGNATURE — SEASON WHEEL
+     ===================================================== */
+  var TAB_ICONS = {
+    spring: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11Z"/><path d="M12 11v6"/></svg>',
+    summer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>',
+    fall: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 3 3 6 1 8 2 0 4 1 5 3-3 1-6 0-7-2 0 3-1 6-3 8-1-3-1-6 1-8-2 0-4-1-5-3 3-1 6 0 7 2 0-3 1-6 1-8Z"/></svg>',
+    winter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 7l16 10M20 7L4 17"/></svg>'
+  };
+  var SEASON_COLORS = {
+    spring: { foliage: '#5f7a52', ground: '#3a4f36', sky: '#9c93ff' },
+    summer: { foliage: '#3d6b3f', ground: '#2a4a2c', sky: '#f2c94c' },
+    fall:   { foliage: '#9a6a3a', ground: '#5a3f26', sky: '#d98a52' },
+    winter: { foliage: '#5b6a63', ground: '#c9d2cd', sky: '#c7d6ff' }
+  };
+
+  var wheelTabs = document.getElementById('wheelTabs');
+  var wheelBody = document.getElementById('wheelBody');
+  var activeSeason = null;
+
+  function seasonForMonth(seasons, month){
+    for(var i=0;i<seasons.length;i++){
+      var s = seasons[i], start = num(s.startMonth) || 1;
+      for(var k=0;k<3;k++){
+        var mm = ((start - 1 + k) % 12) + 1;
+        if(mm === month) return s.id;
+      }
+    }
+    return seasons.length ? seasons[0].id : null;
+  }
+
+  function priceLabel(svc){
+    var p = '$' + num(svc.price);
+    if(svc.unit === 'from') return 'from ' + p;
+    if(svc.unit === 'per push') return p;
+    return p;
+  }
+  function unitLabel(svc){
+    if(svc.unit === 'per push') return 'per push';
+    if(svc.unit === 'from') return 'starting price';
+    return 'one-time';
+  }
+
+  function yardSceneSvg(){
+    return '<svg class="yard-scene" viewBox="0 0 400 500" fill="none" role="img" aria-label="Illustration of the yard through the seasons">' +
+      '<circle cx="300" cy="90" r="30" fill="var(--sky,#9c93ff)" fill-opacity=".55"/>' +
+      '<path class="yard-ground" d="M20 340 H380 L360 420 H40 Z"/>' +
+      '<circle class="yard-tree" cx="160" cy="270" r="70"/>' +
+      '<circle class="yard-tree" cx="230" cy="250" r="52"/>' +
+      '<rect x="185" y="300" width="16" height="70" fill="#4a3a2c"/>' +
+      '<g class="yard-blossom">' +
+        '<circle cx="120" cy="240" r="5" fill="#F2D9E8"/><circle cx="150" cy="212" r="4.5" fill="#F2D9E8"/>' +
+        '<circle cx="188" cy="230" r="5.2" fill="#F2D9E8"/><circle cx="210" cy="200" r="4.2" fill="#F2D9E8"/>' +
+        '<circle cx="238" cy="222" r="4.8" fill="#F2D9E8"/>' +
+      '</g>' +
+      '<g class="yard-leaffall">' +
+        '<circle cx="110" cy="330" r="5" fill="#D98A52"/><circle cx="260" cy="350" r="4.4" fill="#C4622E"/>' +
+        '<circle cx="200" cy="370" r="4.8" fill="#E0A25E"/><circle cx="150" cy="360" r="4" fill="#C4622E"/>' +
+        '<circle cx="300" cy="330" r="4.2" fill="#D98A52"/>' +
+      '</g>' +
+      '<g class="yard-snow">' +
+        '<ellipse cx="160" cy="330" rx="66" ry="14" fill="#F2F0E6" fill-opacity=".85"/>' +
+        '<ellipse cx="230" cy="316" rx="48" ry="11" fill="#F2F0E6" fill-opacity=".85"/>' +
+        '<rect x="16" y="410" width="368" height="14" rx="4" fill="#F2F0E6" fill-opacity=".7"/>' +
+      '</g>' +
+      '<rect x="16" y="416" width="368" height="8" rx="3" fill="#26332B"/>' +
+      '</svg>';
+  }
+
+  function wheelRender(){
+    var seasons = CONTENT.seasons || [];
+    if(!seasons.length){ wheelTabs.innerHTML = ''; wheelBody.innerHTML = ''; return; }
+    if(!seasons.some(function(s){ return s.id === activeSeason; })){
+      activeSeason = seasonForMonth(seasons, new Date().getMonth() + 1);
+    }
+    var season = seasons.filter(function(s){ return s.id === activeSeason; })[0] || seasons[0];
+
+    wheelTabs.innerHTML = seasons.map(function(s){
+      var sel = s.id === season.id;
+      return '<button type="button" class="tab" data-season-tab="' + esc(s.id) + '" role="tab" aria-selected="' + (sel ? 'true' : 'false') + '">' +
+        (TAB_ICONS[s.id] || TAB_ICONS.spring) + esc(s.label) + '<span>' + esc(s.monthRange || '') + '</span></button>';
+    }).join('');
+
+    var artHtml;
+    if(season.photo){
+      artHtml = '<div class="wheel__art"><img src="' + esc(season.photo) + '" alt="' + esc(season.label) + ' at Larkspur & Ledge" loading="lazy" />' +
+        '<span class="wheel__caption">' + esc(season.label) + ' · ' + esc(season.monthRange || '') + '</span></div>';
+    } else {
+      artHtml = '<div class="wheel__art">' + yardSceneSvg() +
+        '<span class="wheel__caption">' + esc(season.label) + ' · ' + esc(season.monthRange || '') + '</span></div>';
+    }
+
+    var svcHtml = (season.services || []).map(function(svc){
+      return '<div class="svc"><div class="svc__body"><div class="svc__name">' + esc(svc.name) + '</div>' +
+        '<div class="svc__desc">' + esc(svc.desc || '') + '</div></div>' +
+        '<div class="svc__price">' + priceLabel(svc) + '<small>' + esc(unitLabel(svc)) + '</small></div></div>';
+    }).join('');
+
+    wheelBody.innerHTML = artHtml +
+      '<div class="wheel__info">' +
+        '<span class="wheel__range">' + esc(season.monthRange || '') + '</span>' +
+        '<p class="wheel__blurb">' + esc(season.blurb || '') + '</p>' +
+        '<div class="svc-list">' + svcHtml + '</div>' +
+        '<div class="wheel__actions">' +
+          '<button class="btn" type="button" id="wheelBook">Request ' + esc(season.label) + ' services</button>' +
+          '<a class="wheel__alt" id="wheelSms" href="#">or text us this list</a>' +
+        '</div>' +
+      '</div>';
+
+    var scene = wheelBody.querySelector('.yard-scene');
+    if(scene){
+      scene.setAttribute('data-season', season.id);
+      var colors = SEASON_COLORS[season.id] || SEASON_COLORS.spring;
+      scene.style.setProperty('--foliage', colors.foliage);
+      scene.style.setProperty('--ground', colors.ground);
+      scene.style.setProperty('--sky', colors.sky);
+    }
+
+    var bookBtn = document.getElementById('wheelBook');
+    var smsAlt = document.getElementById('wheelSms');
+    var summaryLine = (season.services || []).map(function(s){ return s.name + ' (' + priceLabel(s) + ')'; }).join(', ');
+    if(smsAlt){
+      smsAlt.href = 'sms:' + LEAD.sms + '?body=' + encodeURIComponent(
+        "Hi " + CONTENT.brand.name + "! I'd like " + season.label + " services: " + summaryLine);
+    }
+    if(bookBtn){
+      bookBtn.addEventListener('click', function(){
+        var svc = document.getElementById('b-service');
+        var notes = document.getElementById('b-notes');
+        var summary = document.getElementById('b-summary');
+        if(svc) svc.value = 'seasonal';
+        if(notes) notes.value = "Interested in " + season.label + " services: " + summaryLine + ".";
+        if(summary) summary.value = season.label + ' seasonal services — ' + summaryLine;
+        document.getElementById('book').scrollIntoView(reduce ? {} : {behavior:'smooth'});
+        setTimeout(function(){ document.getElementById('b-name').focus({preventScroll:true}); }, reduce ? 0 : 650);
+      });
+    }
+
+    revealScan(wheelBody);
+  }
+
+  wheelTabs.addEventListener('click', function(e){
+    var b = e.target.closest('[data-season-tab]');
+    if(!b) return;
+    activeSeason = b.getAttribute('data-season-tab');
+    wheelRender();
+  });
+
+  /* =====================================================
+     PLANS (pricing) grid
+     ===================================================== */
+  var plansGrid = document.getElementById('plansGrid');
+  var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  function plansRender(){
+    var plans = CONTENT.plans || [];
+    plansGrid.innerHTML = plans.map(function(p, i){
+      var feats = (p.features || []).map(function(f){ return '<li>' + checkSvg + '<span>' + esc(f) + '</span></li>'; }).join('');
+      return '<div class="plan-card reveal' + (p.best ? ' plan-card--best' : '') + '" data-delay="' + ((i % 3) + 1) + '" data-plan="' + esc(slugify(p.tier)) + '">' +
+        (p.best ? '<span class="plan-card__pill">Most popular</span>' : '') +
+        '<div class="plan-card__tier">' + esc(p.tier) + '</div>' +
+        '<div class="plan-card__freq">' + esc(p.freq || '') + '</div>' +
+        '<div class="plan-card__price">$' + num(p.price) + '<small>/' + esc(p.per || 'mo') + '</small></div>' +
+        '<ul class="plan-card__features">' + feats + '</ul>' +
+        '<button class="btn' + (p.best ? '' : ' btn--ghost') + '" type="button" data-choose-plan="' + esc(slugify(p.tier)) + '">Choose this plan</button>' +
+      '</div>';
+    }).join('');
+    revealScan(plansGrid);
+  }
+
+  plansGrid.addEventListener('click', function(e){
+    var b = e.target.closest('[data-choose-plan]');
+    if(!b) return;
+    var slug = b.getAttribute('data-choose-plan');
+    var plan = (CONTENT.plans || []).filter(function(p){ return slugify(p.tier) === slug; })[0];
+    var svc = document.getElementById('b-service');
+    var summary = document.getElementById('b-summary');
+    if(svc && plan) svc.value = slug;
+    if(summary && plan) summary.value = plan.tier + ' — $' + num(plan.price) + '/' + (plan.per || 'mo') + ' · ' + (plan.freq || '');
+    document.getElementById('book').scrollIntoView(reduce ? {} : {behavior:'smooth'});
+    setTimeout(function(){ document.getElementById('b-name').focus({preventScroll:true}); }, reduce ? 0 : 650);
+  });
+
+  /* =====================================================
+     BOOKING FORM — FormSubmit fetch + sms fallback
+     ===================================================== */
+  var form = document.getElementById('bookForm');
+  var msgEl = document.getElementById('bookMsg');
+  var submitBtn = document.getElementById('bookSubmit');
+  var bService = document.getElementById('b-service');
+  var bSummary = document.getElementById('b-summary');
+
+  function serviceOptionsHtml(){
+    var opts = (CONTENT.plans || []).map(function(p){
+      return '<option value="' + esc(slugify(p.tier)) + '">' + esc(p.tier) + ' — $' + num(p.price) + '/' + esc(p.per || 'mo') + '</option>';
+    }).join('');
+    opts += '<option value="seasonal">One-time seasonal service (see above)</option>';
+    opts += '<option value="unsure">Not sure — help me pick</option>';
+    return opts;
+  }
+
+  // no past start dates
+  var bDate = document.getElementById('b-date');
+  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  bDate.min = today.toISOString().slice(0,10);
+
+  var val = function(id){ var el = document.getElementById(id); return el ? (el.value||'').trim() : ''; };
+  var setErr = function(id, on){
+    var el = document.getElementById(id);
+    var f = el && el.closest('.field');
+    if(f) f.classList.toggle('invalid', !!on);
+  };
+
+  var buildSms = function(d){
+    var body = "Hi " + CONTENT.brand.name + "! I'd like a quote."
+      + " Name: " + d.name + "."
+      + " Phone: " + d.phone + "."
+      + " Address: " + d.address + (d.city ? ", " + d.city : "") + "."
+      + " Interested in: " + d.serviceLabel + "."
+      + " Start date: " + d.start_date + "."
+      + (d.config_summary ? " Selection: " + d.config_summary + "." : "")
+      + (d.notes ? " Notes: " + d.notes + "." : "");
+    return "sms:" + LEAD.sms + "?body=" + encodeURIComponent(body);
+  };
+
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  /* Global guard: on desktop, never let sms:/tel: links trigger the OS
+     "Pick an app" dialog. Show a friendly toast instead. Mobile untouched. */
+  if(!isMobile){
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+      if(!a) return;
+      e.preventDefault();
+      var t = document.getElementById('smsToast');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'smsToast';
+        t.setAttribute('role','status');
+        t.style.cssText = 'position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:9999;'
+          + 'background:#0A100B;color:#F2F0E6;padding:14px 22px;border-radius:12px;'
+          + 'box-shadow:0 12px 40px rgba(0,0,0,.55);border:1px solid rgba(129,119,242,.35);'
+          + 'font-family:Work Sans,system-ui,sans-serif;font-size:15px;max-width:88vw;text-align:center;'
+          + 'opacity:0;transition:opacity .25s ease;';
+        document.body.appendChild(t);
+      }
+      t.innerHTML = 'Call or text us at <strong style="color:#9C93FF;letter-spacing:.02em">' + esc(CONTENT.brand.phone) + '</strong> from your phone.';
+      requestAnimationFrame(function(){ t.style.opacity = '1'; });
+      clearTimeout(window.__smsToastTimer);
+      window.__smsToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 4500);
+    });
+  }
+
+  var showDone = function(phone, smsUrl){
+    form.hidden = true;
+    var done = document.getElementById('bookDone');
+    var dm = document.getElementById('doneMsg');
+    if(dm){
+      if(isMobile && smsUrl){
+        dm.textContent = "We got it! We'll text you at " + phone + " to confirm your quote. Opening a text so you can send us a copy too — just hit send.";
+      } else {
+        dm.textContent = "We got it! We'll text you at " + phone + " from " + CONTENT.brand.phone + " to confirm your quote. Keep an eye on your messages.";
+      }
+    }
+    if(done){ done.hidden = false; done.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}); }
+    if(smsUrl && isMobile){ setTimeout(function(){ window.location.href = smsUrl; }, 900); }
+  };
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    msgEl.textContent = ''; msgEl.className = 'book__msg';
+
+    // honeypot: silently succeed for bots
+    if(form.querySelector('input[name="_honey"]').value){ showDone('your number', ''); return; }
+
+    var svcVal = val('b-service');
+    var svcLabel = (function(){
+      if(svcVal === 'seasonal') return 'One-time seasonal service';
+      if(svcVal === 'unsure') return 'Not sure — help them pick';
+      var plan = (CONTENT.plans || []).filter(function(p){ return slugify(p.tier) === svcVal; })[0];
+      return plan ? plan.tier : svcVal;
+    })();
+
+    var d = {
+      name: val('b-name'),
+      phone: val('b-phone'),
+      address: val('b-addr'),
+      city: val('b-city'),
+      service: svcVal,
+      serviceLabel: svcLabel,
+      start_date: val('b-date'),
+      notes: val('b-notes'),
+      config_summary: val('b-summary')
+    };
+
+    var bad = false;
+    setErr('b-name', !d.name); bad = bad || !d.name;
+    var digits = d.phone.replace(/\D/g,'');
+    setErr('b-phone', digits.length < 7); bad = bad || digits.length < 7;
+    setErr('b-addr', !d.address); bad = bad || !d.address;
+    setErr('b-city', !d.city); bad = bad || !d.city;
+    setErr('b-date', !d.start_date); bad = bad || !d.start_date;
+    var consent = document.getElementById('b-consent').checked;
+
+    if(bad){ msgEl.textContent = 'Please fill in the highlighted fields.'; msgEl.classList.add('err'); return; }
+    if(!consent){ msgEl.textContent = 'Please check the consent box so we can text you a confirmation.'; msgEl.classList.add('err'); return; }
+
+    var smsUrl = buildSms(d);
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      _subject: 'New yard care request — ' + d.name + ' (' + d.serviceLabel + ')',
+      _template: 'table',
+      _captcha: 'false',
+      name: d.name, phone: d.phone,
+      address: d.address, city: d.city,
+      service: d.serviceLabel,
+      start_date: d.start_date,
+      notes: d.notes || '—',
+      config_summary: d.config_summary || '— (no season/plan picker used)'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + LEAD.email, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('bad status');
+      return r.json();
+    }).then(function(){
+      showDone(d.phone, smsUrl);
+    }).catch(function(){
+      // network or provider hiccup — fall back to SMS so the lead isn't lost
+      submitBtn.disabled = false; submitBtn.textContent = 'Get my quote';
+      msgEl.classList.add('err');
+      if(isMobile){
+        msgEl.textContent = "Hmm, that didn't send. Opening a text instead — your info is pre-filled, just hit send.";
+        setTimeout(function(){ window.location.href = smsUrl; }, 700);
+      } else {
+        msgEl.textContent = "Hmm, that didn't send. Call or text us at " + CONTENT.brand.phone + " and we'll get you booked the old-fashioned way.";
+      }
+    });
+  });
+
+  /* =====================================================
+     CONTENT RENDER — re-paints every owner-editable region
+     from the merged CONTENT object. Runs once with the
+     inline defaults (no flash) and again if content.json
+     loads. Never hard-fails the page.
+     ===================================================== */
+  var ownerPhotoBox = document.getElementById('ownerPhoto');
+  var ownerPhotoDefault = ownerPhotoBox.innerHTML;
+  var ownerPhotoAria = ownerPhotoBox.getAttribute('aria-label');
+
+  function renderContent(c){
+    applyRuntime(c);
+    var brand = c.brand || {}, area = c.serviceArea || {}, owner = c.owner || {}, misc = c.misc || {};
+    var social = c.social || [];
+    var e164 = telHref(brand.phone);
+    var smsBody = encodeURIComponent("Hi " + brand.name + "! I'd like a quote.");
+
+    // ----- brand & contact -----
+    document.getElementById('brandName').innerHTML = esc(brand.name) + '<span>' + esc((area.short || '') + ' landscaping') + '</span>';
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){ a.href = 'tel:' + e164; });
+    document.querySelectorAll('a[href^="sms:"]').forEach(function(a){ a.href = 'sms:' + e164 + '?body=' + smsBody; });
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.textContent = brand.phone; });
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = brand.name; });
+    document.querySelectorAll('[data-tagline]').forEach(function(el){ el.textContent = brand.tagline; });
+    var fe = document.getElementById('footEmail');
+    fe.href = 'mailto:' + brand.email; fe.textContent = brand.email;
+
+    // ----- service area -----
+    document.getElementById('heroEyebrow').textContent = 'Lawn & yard care · ' + area.region;
+    var cities = (area.cities || []).filter(Boolean);
+    document.getElementById('footServe').innerHTML = 'Serving ' + cities.map(esc).join(' · ');
+    document.getElementById('faqDeliver').innerHTML = cities.map(esc).join(', ')
+      + ' and everything in between — <b>the whole ' + esc(area.short) + '.</b>'
+      + " Outside that ring? Text us your address anyway; if a route works we'll make it work.";
+
+    // ----- social links (footer; hidden when empty) -----
+    document.getElementById('footSocial').innerHTML = social.length
+      ? social.map(function(s){
+          return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer" style="color:var(--larkspur-bright)">' + esc(s.n) + '</a>';
+        }).join(' · ') + '<br />'
+      : '';
+
+    // ----- misc notes -----
+    document.getElementById('plansNote').innerHTML = esc(misc.plansNote || '');
+    document.getElementById('scopeNote').innerHTML = esc(misc.scopeNote || '');
+
+    // ----- season wheel + plans + booking selects -----
+    wheelRender();
+    plansRender();
+    var prevSel = bService.value;
+    bService.innerHTML = serviceOptionsHtml();
+    var slugs = (c.plans || []).map(function(p){ return slugify(p.tier); }).concat(['seasonal','unsure']);
+    bService.value = slugs.indexOf(prevSel) > -1 ? prevSel : (slugs[0] || '');
+    if(bSummary.value) { /* leave any in-progress summary alone */ }
+
+    // ----- owner -----
+    document.getElementById('ownerDesc').textContent = owner.bio || '';
+    if(owner.photo){
+      ownerPhotoBox.innerHTML = '<img src="' + esc(owner.photo) + '" alt="' + esc(owner.name || 'The owner') + '" loading="lazy" />';
+      ownerPhotoBox.setAttribute('aria-label', owner.name || 'The owner');
+    } else {
+      if(ownerPhotoBox.innerHTML !== ownerPhotoDefault){
+        ownerPhotoBox.innerHTML = ownerPhotoDefault;
+        ownerPhotoBox.setAttribute('aria-label', ownerPhotoAria);
+      }
+      var cap = document.getElementById('ownerCaption');
+      if(cap){
+        var first = String(owner.name || '').trim().split(/\s+/)[0];
+        cap.textContent = first ? 'ON SITE MOST WEEKS' : '';
+      }
+    }
+
+    revealScan(document);
+  }
+
+  // paint from the inline defaults immediately, then merge the live override
+  renderContent(CONTENT);
+  fetch('content.json', {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(CONTENT); } })
+    .catch(function(){}); // 404 / offline: the defaults stand
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+{
+  "brand": {
+    "name": "Sawtooth Dumpster Co.",
+    "tagline": "The price is the price.",
+    "phone": "(208) 555-0188",
+    "email": "hello@sawtoothdumpster.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Treasure Valley, ID"
+  },
+  "sizes": [
+    {
+      "yd": "10",
+      "price": 299,
+      "dims": "12'L × 8'W × 3.5'H",
+      "lengthFt": 12,
+      "heightFt": 3.5,
+      "loads": "Fits ≈ 4 pickup loads",
+      "best": "Best for bathroom remodels, garage cleanouts and small demo jobs.",
+      "meters": "Bathroom remodel | 80\nOne-car garage cleanout | 70\nSmall deck tear-out | 55",
+      "note": "Low 3.5' walls — easy to load by hand over the side, and it fits where a car parks."
+    },
+    {
+      "yd": "15",
+      "price": 349,
+      "dims": "16'L × 8'W × 4.5'H",
+      "lengthFt": 16,
+      "heightFt": 4.5,
+      "loads": "Fits ≈ 6 pickup loads",
+      "best": "Best for roof tear-offs, kitchen remodels and whole-floor flooring.",
+      "meters": "Roof tear-off (20 sq) | 85\nKitchen remodel | 70\nWhole-house flooring | 60",
+      "note": "The Goldilocks box — our most-rented size, and the one we suggest when you're on the fence."
+    },
+    {
+      "yd": "20",
+      "price": 399,
+      "dims": "22'L × 8'W × 4.5'H",
+      "lengthFt": 22,
+      "heightFt": 4.5,
+      "loads": "Fits ≈ 8 pickup loads",
+      "best": "Best for whole-house cleanouts, big remodels and new construction.",
+      "meters": "Whole-house cleanout | 85\nMajor remodel debris | 75\nEstate / hoard cleanup | 65",
+      "note": "22 feet long — measure your driveway first, or we'll happily eyeball it on a video call."
+    }
+  ],
+  "durations": [
+    {
+      "days": "3",
+      "addon": 0
+    },
+    {
+      "days": "7",
+      "addon": 50
+    },
+    {
+      "days": "14",
+      "addon": 110
+    }
+  ],
+  "terms": {
+    "rushFee": 45,
+    "includedTons": 2,
+    "overagePerTon": 65,
+    "extraDayFee": 10
+  },
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Boise",
+      "Meridian",
+      "Nampa",
+      "Eagle",
+      "Caldwell",
+      "Star",
+      "Kuna"
+    ]
+  },
+  "owner": {
+    "name": "Rusty Calder",
+    "bio": "Rusty Calder spent twelve years driving roll-offs for one of the big national haulers — long enough to see exactly how the quote games get played. In 2021 he bought his own hook-lift truck, painted the boxes safety yellow, and started Sawtooth Dumpster Co. with one rule: the price on the site is the price on the card. He still drives most routes himself, and yes — the number on this page rings in the truck.",
+    "photo": ""
+  },
+  "social": []
+}

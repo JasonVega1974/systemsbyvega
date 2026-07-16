@@ -1,0 +1,112 @@
+{
+  "brand": {
+    "phone": "(208) 555-0142",
+    "email": "summitstone@example.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Nampa",
+    "serviceArea": "Nampa & the Treasure Valley",
+    "license": "ID RCE-000000"
+  },
+  "owner": {
+    "heading": "The guy who answers the phone",
+    "bio": "",
+    "photo": ""
+  },
+  "projects": [
+    {
+      "title": "Driveway replacement",
+      "location": "Nampa",
+      "beforeTag": "Cracked & stained",
+      "afterTag": "New stamped concrete",
+      "beforeImg": "",
+      "afterImg": "",
+      "note": "Tear-out to broom-finish in under a week on most driveways — old slab hauled off, new one cured, edges backfilled."
+    }
+  ],
+  "services": [
+    {
+      "icon": "concrete",
+      "title": "Concrete & Driveways",
+      "desc": "Tear-outs, new pours, stamped patios, walkways and garage slabs. Proper base prep and control joints — so it doesn't crack like the last one did."
+    },
+    {
+      "icon": "landscape",
+      "title": "Landscaping & Hardscape",
+      "desc": "Paver patios, retaining walls, planting beds, sod and gravel work. Yards that look intentional — and drain the right direction."
+    },
+    {
+      "icon": "remodel",
+      "title": "Kitchen & Bath Remodels",
+      "desc": "Cabinets, counters, tile, fixtures and flooring — from a weekend refresh to a studs-out rebuild. One crew, one schedule, no mystery subs."
+    },
+    {
+      "icon": "deck",
+      "title": "Decks & Fences",
+      "desc": "Cedar, vinyl and composite. New builds, tear-out replacements and post repairs — set in concrete, square to the property line, built to shrug off Idaho winters."
+    },
+    {
+      "icon": "wash",
+      "title": "Pressure Washing & Exterior Cleaning",
+      "desc": "Driveways, siding, fences, patios and gutters. The fastest, cheapest way to make a house look five years newer before you spend a dime on anything else."
+    },
+    {
+      "icon": "punchlist",
+      "title": "Handyman Punch-List",
+      "desc": "That list on your fridge: sticking doors, drywall patches, leaning gates, caulk lines gone black. Send us the whole thing — we knock it out in one visit."
+    }
+  ],
+  "pricing": [
+    {
+      "label": "Refresh",
+      "price": "$500–$2.5K",
+      "per": "Days, not weeks",
+      "featured": false,
+      "cta": "Start a refresh",
+      "features": [
+        "Pressure washing packages",
+        "Fence & gate repairs",
+        "Full handyman punch-lists",
+        "Concrete patch & seal work"
+      ]
+    },
+    {
+      "label": "Rebuild",
+      "price": "$2.5K–$15K",
+      "per": "One to three weeks",
+      "featured": true,
+      "cta": "Plan a rebuild",
+      "features": [
+        "New driveways & stamped patios",
+        "Decks & full fence runs",
+        "Paver hardscape & retaining walls",
+        "Bath refreshes & tile work"
+      ]
+    },
+    {
+      "label": "Remodel",
+      "price": "$15K+",
+      "per": "Scoped & scheduled up front",
+      "featured": false,
+      "cta": "Talk remodel",
+      "features": [
+        "Full kitchen remodels",
+        "Studs-out bathroom rebuilds",
+        "Whole-exterior overhauls",
+        "Milestone schedule in writing"
+      ]
+    }
+  ],
+  "gallery": [
+    { "title": "Stamped concrete patio", "meta": "Nampa · Rebuild", "image": "", "style": "patio" },
+    { "title": "Cedar privacy fence, 180 ft", "meta": "Caldwell · Rebuild", "image": "", "style": "fence" },
+    { "title": "Paver walkway & planting beds", "meta": "Meridian · Rebuild", "image": "", "style": "pavers" },
+    { "title": "Kitchen remodel, cabinets & tile", "meta": "Nampa · Remodel", "image": "", "style": "kitchen" },
+    { "title": "Composite deck & rail", "meta": "Kuna · Rebuild", "image": "", "style": "deck" },
+    { "title": "Full driveway replacement", "meta": "Middleton · Rebuild", "image": "", "style": "driveway" }
+  ],
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ]
+}

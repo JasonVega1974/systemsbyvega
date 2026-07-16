@@ -1,0 +1,38 @@
+{
+  "brand": {
+    "phone": "(208) 555-0119",
+    "email": "blackanvil@example.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Caldwell, ID",
+    "area": "Caldwell, Nampa & the Treasure Valley, Idaho"
+  },
+  "stats": [
+    { "num": "14+", "label": "Years behind the hood" },
+    { "num": "300+", "label": "Builds delivered" },
+    { "num": "AWS", "label": "Certified welder" }
+  ],
+  "projects": [
+    { "no": "JOB-0417", "cat": "gates", "title": "Ridgeline Driveway Gate", "spec": "2in sq tube · 11ga panel · MIG · 16ft dual swing", "status": "Delivered", "image": "", "tone": "a" },
+    { "no": "JOB-0389", "cat": "trailers", "title": "14ft Utility Trailer Build", "spec": "3in channel frame · 7k axles · treated deck", "status": "Delivered", "image": "", "tone": "b" },
+    { "no": "JOB-0426", "cat": "repair", "title": "Baler Arm Rebuild", "spec": "AR400 wear plate · gouge, prep & stick weld", "status": "Delivered", "image": "", "tone": "c" },
+    { "no": "JOB-0402", "cat": "custom", "title": "Ember Ring Firepit", "spec": "1/4in A36 plate · CNC plasma cut · 40in bowl", "status": "Delivered", "image": "", "tone": "d" },
+    { "no": "JOB-0432", "cat": "gates", "title": "Craftsman Stair Railing", "spec": "1in solid bar · TIG · powder-coat satin black", "status": "Delivered", "image": "", "tone": "f" },
+    { "no": "JOB-0441", "cat": "trailers", "title": "Deckover Frame Repair", "spec": "1/4in A36 plate · fishplate & box · stick", "status": "Delivered", "image": "", "tone": "e" },
+    { "no": "JOB-0435", "cat": "repair", "title": "Corral Panel & Chute Repair", "spec": "Sched 40 pipe · on-site · mobile rig, same week", "status": "Delivered", "image": "", "tone": "h" },
+    { "no": "JOB-0419", "cat": "custom", "title": "Steel-Top Console Table", "spec": "Blackened steel · TIG · white oak shelf", "status": "Delivered", "image": "", "tone": "g" }
+  ],
+  "services": [
+    { "icon": "gate", "title": "Custom Gates & Railings", "desc": "Driveway gates, stair and deck railings, fence panels. Measured on site, built square, hung so they swing true for twenty years." },
+    { "icon": "trailer", "title": "Trailers — Build & Repair", "desc": "New utility and flatbed builds to your spec, plus frame repair, deck swaps, ramps, and axle work on whatever you're towing now." },
+    { "icon": "repair", "title": "Structural & Farm Repair", "desc": "Cracked loader arms, bent implements, broken corral panels, sagging carports. If it broke in the field, I've probably fixed one like it." },
+    { "icon": "fire", "title": "Furniture & Firepits", "desc": "Tables, benches, shelving frames, and plasma-cut firepits that turn a back patio into the place everyone ends up standing around." },
+    { "icon": "mobile", "title": "Mobile Welding", "desc": "The rig comes to you — field, jobsite, or driveway. Same certified welds without hauling a broken machine across the county." },
+    { "icon": "plasma", "title": "CNC Plasma Signs", "desc": "Ranch signs, address plaques, business logos cut clean from plate on the 4x8 plasma table. Send a sketch — I'll make it steel." }
+  ],
+  "specs": [
+    { "label": "Process", "chips": ["**TIG**", "**MIG**", "**Stick**", "Oxy / plasma cutting"] },
+    { "label": "Material", "chips": ["**Steel** · mild & A36", "**Aluminum**", "**Stainless**"] },
+    { "label": "Machine", "chips": ["CNC plasma table · **4x8**", "Mobile rig · **on-site**", "Powder coat · **partnered**"] }
+  ],
+  "about": { "name": "Cole Braddock", "bio": "" }
+}

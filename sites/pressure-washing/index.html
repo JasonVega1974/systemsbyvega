@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grit &amp; Gleam Powerwashing — Flat-Rate Pressure Washing | Nampa, ID</title>
+<meta name="description" content="Flat-rate pressure washing for driveways, siding, decks and roofs across the Treasure Valley, Idaho. Soft-wash safe on paint &amp; shingles, same-week booking, before/after photos texted. Call or text (208) 555-0151." />
+<meta name="theme-color" content="#071e29" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/grit-gleam-powerwash-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/grit-gleam-powerwash-demo/" />
+<meta property="og:title" content="Grit &amp; Gleam Powerwashing — Grime Today. Gleam Tonight." />
+<meta property="og:description" content="Flat-rate pressure washing for driveways, siding, decks and roofs across the Treasure Valley. Drag the wand on the homepage and watch the grime disappear." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: spray-wand nozzle throwing droplets, on deep-aqua -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230C7A93'/%3E%3Cpath d='M14 44 L34 24' stroke='%23EAF7FB' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='30' y='16' width='14' height='10' rx='2' transform='rotate(45 30 16)' fill='%23EAF7FB'/%3E%3Ccircle cx='46' cy='14' r='2.6' fill='%2322D3EE'/%3E%3Ccircle cx='52' cy='22' r='2' fill='%2222D3EE'/%3E%3Ccircle cx='41' cy='9' r='1.8' fill='%2222D3EE'/%3E%3Cpath d='M10 48 L18 48' stroke='%23EAF7FB' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<!-- Local business structured data (helps Google show you).
+     Keep phone/email/prices in sync with the visible copy and the PRICING content below. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Grit & Gleam Powerwashing",
+  "url": "https://jasonvega1974.github.io/grit-gleam-powerwash-demo/",
+  "description": "Flat-rate pressure washing for driveways, siding, roofs and decks across the Treasure Valley, Idaho. Soft-wash safe technique, same-week booking, before/after photos texted.",
+  "telephone": "+12085550151",
+  "email": "hello@gritgleampowerwash.com",
+  "areaServed": "Treasure Valley, Idaho — Nampa, Caldwell, Meridian, Boise, Star, Middleton",
+  "priceRange": "$149-$329",
+  "slogan": "Grime today. Gleam by tonight.",
+  "makesOffer": [
+    { "@type": "Offer", "name": "Driveway Refresh", "price": "149", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Full Exterior Wash", "price": "329", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Deck & Fence Restore", "price": "219", "priceCurrency": "USD" }
+  ]
+}
+</script>
+
+<style>
+/* =========================================================
+   GRIT & GLEAM POWERWASHING — tokens
+   Water-clean identity: near-black navy depths, bright aqua
+   spray as the primary accent, a muted grime-brown used only
+   as a sparing "before" cue (icons/badges, never body text).
+   ========================================================= */
+:root{
+  --deep:#03111a;
+  --navy:#071e29;
+  --navy-2:#0c2c3a;
+  --teal:#123a46;
+  --aqua:#22D3EE;
+  --aqua-bright:#7FF0FF;
+  --aqua-deep:#0C7A93;
+  --grime:#9C7A45;
+  --ink:#EAF7FB;
+  --ink-soft:#CFE7EE;
+  --muted:#8FB4C2;
+  --line:rgba(34,211,238,.15);
+  --hair:rgba(234,247,251,.12);
+  --card:rgba(12,44,58,.55);
+  --card-brd:rgba(234,247,251,.13);
+  --shadow:0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:1140px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Manrope',system-ui,sans-serif;
+  background:var(--navy);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* deep-water backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 84% -8%, rgba(34,211,238,.14), transparent 60%),
+    radial-gradient(900px 700px at 4% 12%, rgba(18,58,70,.6), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(34,211,238,.06), transparent 60%),
+    linear-gradient(180deg,#051620 0%, #071e29 45%, #03111a 100%);
+}
+/* faint rippling-water lines */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 20% 20%, transparent 0 58px, rgba(234,247,251,.03) 58px 59px),
+    repeating-radial-gradient(circle at 82% 66%, transparent 0 70px, rgba(34,211,238,.028) 70px 71px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'Space Mono',monospace;font-weight:700;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--aqua);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--aqua),transparent);
+}
+.section-title{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.2rem);line-height:1.03;letter-spacing:.005em;
+  background:linear-gradient(180deg,#fff 0%,var(--ink) 55%,#bfe4ee 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  font-size:.98rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:#04222b;background:linear-gradient(135deg,var(--aqua-bright),var(--aqua-deep));
+  box-shadow:0 12px 30px -10px rgba(34,211,238,.5), inset 0 1px 0 rgba(255,255,255,.5);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(34,211,238,.65), inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:active{transform:translateY(0)}
+/* wave shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(34,211,238,.07);color:var(--ink-soft);
+  border:1px solid rgba(34,211,238,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(34,211,238,.14);box-shadow:0 10px 26px -14px rgba(34,211,238,.5)}
+.btn--sm{font-size:.82rem;padding:.65rem 1.1rem}
+.btn--lg{font-size:1.1rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--aqua-bright);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(3,17,26,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--aqua-bright),var(--aqua-deep));
+  box-shadow:0 8px 20px -8px rgba(34,211,238,.6)}
+.brand__mark svg{width:26px;height:26px}
+.brand__name{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-soft)}
+.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.2em;margin-top:4px;color:var(--muted);text-transform:uppercase}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--aqua-bright)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Grotesk',sans-serif;
+  font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:#04222b;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--aqua-bright),var(--aqua-deep));
+  box-shadow:0 10px 24px -12px rgba(34,211,238,.7), inset 0 1px 0 rgba(255,255,255,.45);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.02em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:34px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.6vw,4.5rem);line-height:.96;letter-spacing:0;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,#fff 0%,var(--ink) 50%,#bfe4ee 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(234,247,251,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--aqua);display:block;
+  text-shadow:0 4px 30px rgba(34,211,238,.4);
+}
+.hero__sub{font-size:1.14rem;color:var(--muted);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.6rem;color:#fff;letter-spacing:.01em}
+.proof span{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* drifting droplets in the hero backdrop */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.mote{position:absolute;top:-4%;width:4px;height:6px;border-radius:50% 50% 50% 0;transform:rotate(45deg);
+  background:radial-gradient(circle,rgba(127,240,255,.9),rgba(127,240,255,0) 70%);
+  opacity:0;animation:mote linear infinite}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0) rotate(45deg);opacity:0}
+  12%{opacity:.7}
+  55%{transform:translate3d(-18px,55vh,0) rotate(45deg)}
+  88%{opacity:.35}
+  100%{transform:translate3d(10px,108vh,0) rotate(45deg);opacity:0}
+}
+
+/* ridge divider under hero */
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--navy-2);z-index:0;pointer-events:none}
+
+/* =========================================================
+   SIGNATURE — WAND-REVEAL HERO PANEL
+   ========================================================= */
+.wandwrap{position:relative}
+.wandhero{
+  position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1/1;max-height:520px;
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);background:var(--navy-2);
+  touch-action:none;cursor:crosshair;
+}
+@media(max-width:900px){.wandhero{aspect-ratio:4/3;max-height:420px;margin-inline:auto;max-width:520px}}
+.wandhero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.wandhero__hint{
+  position:absolute;left:50%;top:16px;transform:translateX(-50%);z-index:4;
+  font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--deep);background:rgba(234,247,251,.92);padding:.55rem 1rem;border-radius:999px;
+  display:flex;align-items:center;gap:.5rem;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(0,0,0,.4);
+  transition:opacity .3s ease, transform .3s ease;pointer-events:none;
+}
+.wandhero__hint.hidden{opacity:0;transform:translateX(-50%) translateY(-8px)}
+.wandhero__brush{
+  position:absolute;width:0;height:0;border-radius:50%;pointer-events:none;z-index:5;opacity:0;
+  transform:translate(-50%,-50%);box-shadow:0 0 0 2px rgba(255,255,255,.75), 0 0 26px 4px rgba(127,240,255,.55);
+  transition:opacity .15s ease;
+}
+.wandhero__auto{
+  position:absolute;right:12px;bottom:12px;z-index:4;
+}
+.wandhero__cap{margin-top:14px;text-align:center;color:var(--muted);font-size:.85rem}
+.wandhero__cap b{color:var(--ink-soft)}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--navy-2),rgba(12,44,58,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;
+  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--aqua);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SURFACES WE CLEAN
+   ========================================================= */
+.surf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:960px){.surf-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.surf-grid{grid-template-columns:1fr;max-width:460px;margin-inline:auto}}
+.surf-card{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px 24px;
+  backdrop-filter:blur(8px);transition:transform .22s ease,border-color .22s ease}
+.surf-card:hover{transform:translateY(-6px);border-color:rgba(34,211,238,.4)}
+.surf-card__ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px;
+  background:rgba(34,211,238,.1);color:var(--aqua)}
+.surf-card__ic svg{width:24px;height:24px}
+.surf-card h3{font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.02em;font-size:1.08rem;margin-bottom:8px;color:#fff}
+.surf-card p{color:var(--muted);font-size:.94rem}
+
+/* =========================================================
+   PRICING
+   ========================================================= */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+@media(max-width:960px){.price-grid{grid-template-columns:1fr;max-width:460px}}
+.price-card{position:relative;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+  padding:30px 26px;backdrop-filter:blur(8px);display:flex;flex-direction:column}
+.price-card--best{border-color:rgba(34,211,238,.55);box-shadow:0 0 0 1px rgba(34,211,238,.35),var(--shadow)}
+.price-card__pill{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  font-family:'Space Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#04222b;background:linear-gradient(135deg,var(--aqua-bright),var(--aqua-deep));
+  padding:.4rem .9rem;border-radius:999px;white-space:nowrap;box-shadow:0 8px 18px -8px rgba(34,211,238,.6)}
+.price-card__name{font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.01em;font-size:1.2rem;color:var(--ink-soft);margin-bottom:6px}
+.price-card__amt{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;
+  color:#fff;display:flex;align-items:baseline;gap:.35rem}
+.price-card__amt small{font-family:'Space Mono',monospace;font-weight:400;font-size:.62rem;letter-spacing:.06em;
+  color:var(--muted);text-transform:none}
+.price-card__unit{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--muted);
+  margin:6px 0 18px}
+.price-card__feats{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:18px;flex:1}
+.price-card__feats li{display:flex;align-items:flex-start;gap:.6rem;font-size:.92rem;color:var(--ink)}
+.price-card__feats svg{width:16px;height:16px;color:var(--aqua);flex:none;margin-top:.2rem}
+.price-card__note{color:var(--muted);font-size:.82rem;border-top:1px dashed var(--hair);padding-top:14px;margin-bottom:16px}
+.price-card .btn{width:100%}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Space Grotesk',sans-serif;font-weight:800;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(34,211,238,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.02em;font-size:1.15rem;margin-bottom:8px;color:#fff}
+.step p{color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   HONEST LIMITS
+   ========================================================= */
+.limits{background:linear-gradient(180deg,transparent,rgba(12,44,58,.4));border-block:1px solid var(--hair)}
+.limits .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:860px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;
+  font-size:.8rem;letter-spacing:.02em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(5,15,22,.5)}
+.chip svg{width:14px;height:14px;color:var(--aqua);flex:none}
+.limits__alt{text-align:center;color:var(--muted);font-size:.95rem;max-width:60ch;margin:26px auto 0}
+.limits__alt b{color:var(--ink)}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(18,58,70,.6),rgba(5,15,22,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(34,211,238,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(234,247,251,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:.74rem;
+  color:var(--muted);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Grit & Gleam Powerwashing, how long they've been at it, and why they started. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.02rem;color:var(--ink-soft)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(34,211,238,.4);color:var(--aqua);transition:transform .25s ease;font-family:'Manrope',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.testi-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+.testi-card{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px 24px;backdrop-filter:blur(8px)}
+.testi__quote{color:var(--ink);font-size:1rem;line-height:1.65;min-height:4.4em}
+.testi__quote:empty::before{content:"Real review coming soon.";color:var(--muted);opacity:.7;font-style:italic}
+.testi__quote::before{content:"“"}
+.testi__quote:not(:empty)::after{content:"”"}
+.testi__meta{margin-top:14px;font-family:'Space Mono',monospace;font-size:.76rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted)}
+.testi__meta b{color:var(--aqua-bright)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, rgba(34,211,238,.14), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(18,58,70,.7), transparent 60%),
+    linear-gradient(160deg,#123a46,#051620);
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--aqua-bright);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(5,15,22,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field em{color:var(--aqua-bright);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(3,10,15,.7);border:1px solid var(--card-brd);color:var(--ink-soft);
+  font-family:'Manrope',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:#5c7480}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--aqua);background:rgba(3,10,15,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237FF0FF' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(34,211,238,.06);border-style:dashed;color:var(--ink);
+  font-family:'Space Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--aqua);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'Space Mono',monospace;letter-spacing:.05em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--aqua-bright)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:#ff9aa2}
+.book__msg.ok{color:var(--aqua-bright)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(18,58,70,.55),rgba(5,15,22,.6));
+  border:1px solid rgba(34,211,238,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(34,211,238,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#04222b;background:linear-gradient(135deg,var(--aqua-bright),var(--aqua-deep));
+  box-shadow:0 12px 30px -10px rgba(34,211,238,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,#fff,var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-soft);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;
+  text-transform:uppercase;color:#fff;font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--aqua-bright)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--aqua-bright)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(3,17,26,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.03em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:#04222b;background:linear-gradient(135deg,var(--aqua-bright),var(--aqua-deep));
+  box-shadow:0 8px 20px -8px rgba(34,211,238,.7)}
+.mobile-cta .text{color:var(--ink-soft);background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Grit &amp; Gleam Powerwashing home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M14 44 L34 24" stroke="#04222b" stroke-width="5" stroke-linecap="round"/>
+          <rect x="30" y="16" width="14" height="10" rx="2" transform="rotate(45 30 16)" fill="#04222b"/>
+          <circle cx="46" cy="14" r="2.6" fill="#04222b"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Grit &amp; Gleam Powerwashing<span>Nampa &amp; the Treasure Valley</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#surfaces">Surfaces</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#book">Book</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550151">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0151</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Pressure washing · Nampa &amp; the Treasure Valley</span></div>
+        <h1><span class="l1">Grime Off.</span><span class="l2">Gleam On.</span></h1>
+        <p class="hero__sub">Driveways, siding, decks and roofs — washed by a two-person Nampa crew that shows up when we say we will. Drag your finger or mouse across the panel to see what's hiding under the dirt.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#pricing">See my price</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550151">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b id="statFrom">From $149</b><span>Flat-rate pricing</span></div>
+          <div class="proof"><b>Same-week</b><span>Booking windows</span></div>
+          <div class="proof"><b>Nampa</b><span>Locally owned &amp; run</span></div>
+        </div>
+      </div>
+
+      <div class="wandwrap">
+        <div class="wandhero reveal" id="wandPanel" role="img" aria-label="Interactive demo: drag or tap to power-wash a grimy patio clean, revealing bright concrete underneath">
+          <canvas id="wandClean" aria-hidden="true"></canvas>
+          <canvas id="wandDirty" aria-hidden="true"></canvas>
+          <div class="wandhero__brush" id="wandBrush" aria-hidden="true"></div>
+          <span class="wandhero__hint" id="wandHint" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5l7 7-7 7M20 12H4"/></svg>
+            Drag to power wash
+          </span>
+          <button class="btn btn--ghost btn--sm wandhero__auto" id="wandAuto" type="button">Tap to auto-clean</button>
+        </div>
+        <p class="wandhero__cap">This is what <b>Grit &amp; Gleam</b> does to your driveway — minus the finger.</p>
+      </div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,34 C240,64 360,4 600,30 C840,56 960,8 1200,32 C1320,44 1380,40 1440,30 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>Eco-conscious detergents</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l4 4L20 4"/><path d="M4 18l4 4"/><path d="M12 18l4 4 6-8" opacity=".55"/></svg>Soft-wash safe on paint &amp; shingles</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>Same-week booking windows</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Nampa-based, not a franchise</div>
+  </div>
+</section>
+
+<main id="main">
+
+<!-- ============ SURFACES WE CLEAN ============ -->
+<section class="section" id="surfaces">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What we clean</span>
+      <h2 class="section-title">Point us at the grime</h2>
+      <p class="lead" style="margin:0 auto">Different surfaces need different pressure, chemistry and technique. Here's what we're set up to handle.</p>
+    </div>
+    <div class="surf-grid" id="surfacesGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing" style="background:linear-gradient(180deg,rgba(18,58,70,.3),transparent)">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Flat-rate pricing</span>
+      <h2 class="section-title">Pick a package. See the price.</h2>
+      <p class="lead" style="margin:0 auto" id="pricingLead">No walkthrough required for these three. Bigger or unusual job? Text a photo and we'll quote it in minutes.</p>
+    </div>
+    <div class="price-grid" id="pricingGrid"></div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Book it. We wash it. You inspect it.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Get your flat price</h3>
+        <p>Pick a package above or text a photo of the job. No in-person walkthrough needed for most driveways, decks and single-story homes.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We show up &amp; wash</h3>
+        <p>Soft-wash technique on anything painted, full pressure on concrete and pavers, eco-conscious detergent either way.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>You inspect before we leave</h3>
+        <p>We walk the job with you and fix anything on the spot — before the hose gets coiled up, not after a callback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HONEST LIMITS ============ -->
+<section class="section limits" id="limits">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">A few honest limits</span>
+      <h2 class="section-title">What we won't sugar-coat</h2>
+      <p class="lead" style="margin:0 auto">We'd rather tell you this up front than surprise you on the invoice.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Loose or crumbling mortar gets flagged, not blasted</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Very worn paint may look patchy after — repainting may follow</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>We reschedule around freezing overnight temps</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Roofs are soft-wash only — no pressure ever touches shingles</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Exteriors only — no interior work</span>
+    </div>
+    <p class="limits__alt reveal">Something borderline? <b>Text us a photo before we quote</b> — five minutes now saves a surprise later.</p>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner's pressure-washing rig beside a driveway, half clean and half dirty">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <circle cx="330" cy="112" r="58" stroke="#EAF7FB" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="330" cy="112" r="84" stroke="#EAF7FB" stroke-opacity=".06" stroke-width="1.5"/>
+          <circle cx="330" cy="112" r="110" stroke="#EAF7FB" stroke-opacity=".045" stroke-width="1.5"/>
+          <rect x="20" y="260" width="360" height="140" fill="#0c2c3a"/>
+          <rect x="20" y="260" width="180" height="140" fill="#1c4552"/>
+          <rect x="20" y="260" width="180" height="140" fill="url(#grime)"/>
+          <defs>
+            <linearGradient id="grime" x1="20" y1="260" x2="200" y2="400" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#9C7A45" stop-opacity=".55"/><stop offset="1" stop-color="#5c4826" stop-opacity=".35"/>
+            </linearGradient>
+          </defs>
+          <path d="M20 260 H380 M20 400 H380" stroke="#EAF7FB" stroke-opacity=".18" stroke-width="2"/>
+          <!-- wand + hose -->
+          <path d="M256 250 L226 210" stroke="#EAF7FB" stroke-opacity=".7" stroke-width="6" stroke-linecap="round"/>
+          <rect x="214" y="192" width="26" height="16" rx="3" transform="rotate(45 214 192)" fill="#7FF0FF" fill-opacity=".85"/>
+          <circle cx="204" cy="176" r="3" fill="#7FF0FF"/><circle cx="196" cy="188" r="2.4" fill="#7FF0FF"/><circle cx="210" cy="166" r="2" fill="#7FF0FF"/>
+          <path d="M256 250 C300 240 320 300 360 296" stroke="#EAF7FB" stroke-opacity=".35" stroke-width="5" fill="none"/>
+          <path d="M16 420 H384" stroke="#EAF7FB" stroke-opacity=".22" stroke-width="2"/>
+          <text x="200" y="450" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" letter-spacing="4" fill="#8FB4C2" opacity=".85">RIG 01 · EST. 2022</text>
+          <text id="ownerCaption" x="200" y="472" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#8FB4C2" opacity=".7">DEV DRIVES EVERY JOB</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The one who shows up</h2>
+        <div class="owner__desc" id="ownerDesc">Dev Okafor spent six years running exterior maintenance crews for property management companies across the Treasure Valley — swapping air filters, patching drywall, and scrubbing enough grimy siding to last two lifetimes. In 2022, Dev bought a second pressure washer, printed some door hangers, and started knocking on doors personally. Grit &amp; Gleam is still a two-person outfit: Dev drives most jobs, texts you back personally, and walks every finished job with you before packing up the hose.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Will this damage my paint or siding?<span class="plus">+</span></summary><div class="faq__body">Not with our technique. Anything painted, stuccoed or vinyl-sided gets <b>soft-washed</b> — low pressure, a cleaner with real dwell time, and a gentle rinse. Full pressure is reserved for concrete, pavers and brick, which can take it.</div></details>
+      <details class="faq reveal"><summary>How long does a driveway take?<span class="plus">+</span></summary><div class="faq__body">Most single driveways run <b>45–90 minutes</b> start to finish, depending on how bad the staining is. Full exterior washes are usually a half-day.</div></details>
+      <details class="faq reveal"><summary>Do I need to be home?<span class="plus">+</span></summary><div class="faq__body">Nope. Point us to an outside hose bib (and an outlet if the job needs one) and we'll text you before/after photos when it's done.</div></details>
+      <details class="faq reveal"><summary>What if it's raining or about to freeze?<span class="plus">+</span></summary><div class="faq__body">We reschedule at no cost — pressure washing in a hard freeze just refreezes the water on the surface, which helps nobody. We'll text you a new time as soon as the forecast clears.</div></details>
+      <details class="faq reveal"><summary id="faqDeliverQ">Where do you clean?<span class="plus">+</span></summary><div class="faq__body" id="faqDeliver"></div></details>
+      <details class="faq reveal"><summary>Pressure washing vs. soft washing — what's the difference?<span class="plus">+</span></summary><div class="faq__body">Pressure washing uses mechanical force (water pressure) to blast dirt off hard, tough surfaces like concrete. Soft washing uses lower pressure plus a cleaning solution with dwell time to lift algae, mildew and grime off surfaces that pressure alone would damage — paint, stucco, shingles. Most jobs use both, matched to the surface.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="testimonials" style="background:linear-gradient(180deg,rgba(18,58,70,.25),transparent)">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">From the neighborhood</span>
+      <h2 class="section-title">What the driveway thinks</h2>
+    </div>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Book your wash</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Book it in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Pick a package and a day that works. We'll text you within the hour (during business hours) to confirm the window — that's the only "call" this whole process involves.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550151" data-phone>(208) 555-0151</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Service address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Sundown Ave" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Nampa" required />
+        </div>
+        <div class="field">
+          <label for="b-service">Package <em>*</em></label>
+          <select id="b-service" name="service" required>
+            <option value="unsure">Not sure — help me pick</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-date">Preferred date <em>*</em></label>
+          <input id="b-date" name="preferred_date" type="date" required />
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Anything we should know? (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Two-story with a lot of algae on the north side, gate code #2411…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your selection (auto-filled from the package you pick)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Pick a package above, or leave blank and we'll confirm pricing by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my appointment window and price. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Book my wash</button>
+        <a class="book__alt" id="bookSms" href="sms:+12085550151?body=Hi%20Grit%20%26%20Gleam!%20I'd%20like%20to%20book%20a%20powerwash.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>You're on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your appointment window.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M14 44 L34 24" stroke="#04222b" stroke-width="5" stroke-linecap="round"/>
+          <rect x="30" y="16" width="14" height="10" rx="2" transform="rotate(45 30 16)" fill="#04222b"/>
+          <circle cx="46" cy="14" r="2.6" fill="#04222b"/>
+        </svg>
+      </span>
+      <div><b data-brand>Grit &amp; Gleam Powerwashing</b><span data-tagline>Grime today. Gleam by tonight.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550151" data-phone>(208) 555-0151</a> · <a href="mailto:hello@gritgleampowerwash.com" id="footEmail">hello@gritgleampowerwash.com</a><br />
+      <span id="footServe">Serving Nampa · Caldwell · Meridian · Boise · Star · Middleton</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Grit &amp; Gleam Powerwashing</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550151"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550151?body=Hi%20Grit%20%26%20Gleam!%20I'd%20like%20to%20book%20a%20powerwash."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it —
+     the surfaces grid, pricing cards, booking form, footer,
+     FAQ and owner section all re-render from the merged
+     object. Keep content.json's shape in sync with this
+     const. (Static copy the admin does NOT touch: the
+     JSON-LD offers/priceRange in <head> and the meta
+     description.)
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    brand: {
+      name: "Grit & Gleam Powerwashing",
+      tagline: "Grime today. Gleam by tonight.",
+      phone: "(208) 555-0151",
+      email: "hello@gritgleampowerwash.com",
+      leadEmail: "info@kingdom-creatives.com",
+      city: "Nampa, ID"
+    },
+    surfaces: [
+      { name: "Driveways & Walkways", blurb: "Hot-water blast lifts oil stains, tire marks and years of ground-in grime that concrete cleaners can't touch." },
+      { name: "House Siding", blurb: "Low-pressure soft-wash on vinyl, stucco and painted surfaces — strong enough for algae and pollen, gentle enough not to strip a finish." },
+      { name: "Roof Soft-Washing", blurb: "Kills the black streaks (that's algae, not dirt) without a single pound of pressure ever touching a shingle." },
+      { name: "Decks & Fences", blurb: "Wood brightening pulls out gray weathering and mildew, leaving bare wood ready for stain or sealant." },
+      { name: "Commercial & HOA", blurb: "Sidewalks, dumpster pads, storefronts and shared amenities — scheduled on a route so nothing gets forgotten." }
+    ],
+    pricing: [
+      { name: "Driveway Refresh", price: 149, unit: "flat, up to 600 sq ft", best: false,
+        features: "Driveway + walkway\nOil & tire-stain pretreat\nEco-conscious detergent\nBefore/after photos texted",
+        note: "Extra square footage past 600 ft² is billed at $0.18/ft² — quoted before we start, never after." },
+      { name: "Full Exterior Wash", price: 329, unit: "flat, most single-story homes", best: true,
+        features: "Siding, soffits & fascia\nGutter exteriors brushed\nWindows rinsed (exterior)\nDriveway approach included",
+        note: "Two-story homes or heavy staining get a confirmed adjusted price before booking — never a surprise on the invoice." },
+      { name: "Deck & Fence Restore", price: 219, unit: "flat, up to 400 sq ft of deck", best: false,
+        features: "Wood brightening treatment\nMildew & algae treatment\nSealant-ready rinse\nRailings & stairs included",
+        note: "Bigger deck or a full privacy fence? Text a photo and we'll quote the real number in minutes." }
+    ],
+    serviceArea: {
+      region: "Treasure Valley, Idaho",
+      short: "Treasure Valley",
+      cities: ["Nampa", "Caldwell", "Meridian", "Boise", "Star", "Middleton"]
+    },
+    owner: {
+      name: "Dev Okafor",
+      bio: "Dev Okafor spent six years running exterior maintenance crews for property management companies across the Treasure Valley — swapping air filters, patching drywall, and scrubbing enough grimy siding to last two lifetimes. In 2022, Dev bought a second pressure washer, printed some door hangers, and started knocking on doors personally. Grit & Gleam is still a two-person outfit: Dev drives most jobs, texts you back personally, and walks every finished job with you before packing up the hose.",
+      photo: ""
+    },
+    testimonials: [
+      { quote: "", author: "", location: "" },
+      { quote: "", author: "", location: "" },
+      { quote: "", author: "", location: "" }
+    ],
+    social: []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+     submission emails a one-time activation link to LEAD.email; click it once and
+     every booking after that lands in that inbox, formatted as a table. */
+  var LEAD = { provider: 'formsubmit', email: '', sms: '' };
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function num(v){ var n = Number(v); return isFinite(n) ? n : 0; }
+  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
+
+  function applyRuntime(c){
+    LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
+    LEAD.sms = telHref((c.brand||{}).phone);
+  }
+  applyRuntime(CONTENT);
+
+  // ---------- year ----------
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---------- nav solidify ----------
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ---------- reveal on scroll (re-armed for JS-rendered nodes, see revealScan) ----------
+  var io = null;
+  if('IntersectionObserver' in window && !reduce){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  }
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not([data-rv])');
+    nodes.forEach(function(r){
+      r.setAttribute('data-rv', '1');
+      if(io) io.observe(r); else r.classList.add('in');
+    });
+  }
+  revealScan(document);
+
+  // ---------- drifting droplets in hero backdrop ----------
+  var motes = document.getElementById('motes');
+  if(motes && !reduce){
+    var n = window.innerWidth < 700 ? 8 : 16;
+    for(var i=0;i<n;i++){
+      var m = document.createElement('span');
+      m.className = 'mote';
+      m.style.left = Math.random()*100 + '%';
+      var dur = 9 + Math.random()*10;
+      m.style.animationDuration = dur + 's';
+      m.style.animationDelay = (-Math.random()*dur) + 's';
+      m.style.opacity = 0.25 + Math.random()*0.5;
+      var s = 3 + Math.random()*3;
+      m.style.width = s + 'px'; m.style.height = (s*1.4) + 'px';
+      motes.appendChild(m);
+    }
+  }
+
+  /* =====================================================
+     SIGNATURE — WAND-REVEAL HERO
+     Two stacked canvases: a bright "clean" layer underneath,
+     a grimy layer on top. Pointer/touch acts as the wash
+     wand: destination-out compositing erases the dirty
+     layer along the drag path, revealing the clean layer
+     beneath. Fully mandatory fallbacks:
+       - prefers-reduced-motion: skip the ambient auto-demo
+         sweep (no looping animation); reveal a representative
+         patch instantly instead, with no animation.
+       - touch: Pointer Events unify mouse/touch/pen on all
+         evergreen browsers; where PointerEvent is unavailable
+         we bind explicit touchstart/touchmove/touchend AND
+         mousedown/mousemove/mouseup listeners as a fallback.
+       - universal "Tap to auto-clean" button: works for touch,
+         reduced-motion, keyboard/switch users, or anyone who
+         just doesn't want to drag.
+     ===================================================== */
+  (function(){
+    var panel = document.getElementById('wandPanel');
+    var cleanCv = document.getElementById('wandClean');
+    var dirtyCv = document.getElementById('wandDirty');
+    var brush = document.getElementById('wandBrush');
+    var hint = document.getElementById('wandHint');
+    var autoBtn = document.getElementById('wandAuto');
+    if(!panel || !cleanCv || !dirtyCv || !cleanCv.getContext) return;
+
+    var cctx = cleanCv.getContext('2d');
+    var dctx = dirtyCv.getContext('2d');
+    var W = 0, H = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
+    var touched = false, cleaned = false, autoRAF = null, demoRAF = null;
+
+    function sizeCanvas(cv, ctx){
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawClean(){
+      cctx.clearRect(0,0,W,H);
+      var g = cctx.createLinearGradient(0,0,W,H);
+      g.addColorStop(0, '#eef7fa');
+      g.addColorStop(.55, '#d7ecf1');
+      g.addColorStop(1, '#c3dee5');
+      cctx.fillStyle = g;
+      cctx.fillRect(0,0,W,H);
+      // faint concrete joint lines
+      cctx.strokeStyle = 'rgba(12,44,58,.14)';
+      cctx.lineWidth = Math.max(1, W*.004);
+      var cols = 4, rows = 4;
+      for(var i=1;i<cols;i++){ cctx.beginPath(); cctx.moveTo(W*i/cols,0); cctx.lineTo(W*i/cols,H); cctx.stroke(); }
+      for(var j=1;j<rows;j++){ cctx.beginPath(); cctx.moveTo(0,H*j/rows); cctx.lineTo(W,H*j/rows); cctx.stroke(); }
+      // a soft highlight sheen to sell "clean & wet"
+      var sheen = cctx.createRadialGradient(W*.3,H*.25,0,W*.3,H*.25,W*.6);
+      sheen.addColorStop(0,'rgba(255,255,255,.5)');
+      sheen.addColorStop(1,'rgba(255,255,255,0)');
+      cctx.fillStyle = sheen;
+      cctx.fillRect(0,0,W,H);
+    }
+
+    function seeded(seedInit){
+      var s = seedInit;
+      return function(){ s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    }
+
+    function drawDirty(){
+      dctx.clearRect(0,0,W,H);
+      var g = dctx.createLinearGradient(0,0,W,H);
+      g.addColorStop(0, '#5c4a2e');
+      g.addColorStop(.5, '#4a3d26');
+      g.addColorStop(1, '#332a1a');
+      dctx.fillStyle = g;
+      dctx.fillRect(0,0,W,H);
+      var rnd = seeded(42);
+      // grime blotches
+      for(var i=0;i<26;i++){
+        var x = rnd()*W, y = rnd()*H, r = 14 + rnd()*46;
+        var rg = dctx.createRadialGradient(x,y,0,x,y,r);
+        rg.addColorStop(0, 'rgba(30,24,14,'+(0.35+rnd()*0.3)+')');
+        rg.addColorStop(1, 'rgba(30,24,14,0)');
+        dctx.fillStyle = rg;
+        dctx.beginPath(); dctx.arc(x,y,r,0,Math.PI*2); dctx.fill();
+      }
+      // streaks
+      dctx.strokeStyle = 'rgba(20,16,9,.28)';
+      for(var k=0;k<10;k++){
+        var sx = rnd()*W, sy = 0;
+        dctx.lineWidth = 2 + rnd()*5;
+        dctx.beginPath(); dctx.moveTo(sx,sy);
+        dctx.lineTo(sx + (rnd()-0.5)*W*.25, H);
+        dctx.stroke();
+      }
+      // moss-ish patches near edges
+      for(var m=0;m<8;m++){
+        var mx = rnd()*W, my = H*(0.6+rnd()*0.4), mr = 10+rnd()*22;
+        var mg = dctx.createRadialGradient(mx,my,0,mx,my,mr);
+        mg.addColorStop(0,'rgba(70,90,40,.4)');
+        mg.addColorStop(1,'rgba(70,90,40,0)');
+        dctx.fillStyle = mg;
+        dctx.beginPath(); dctx.arc(mx,my,mr,0,Math.PI*2); dctx.fill();
+      }
+    }
+
+    function resize(){
+      var r = panel.getBoundingClientRect();
+      W = Math.max(1, Math.round(r.width));
+      H = Math.max(1, Math.round(r.height));
+      sizeCanvas(cleanCv, cctx);
+      sizeCanvas(dirtyCv, dctx);
+      drawClean();
+      if(!cleaned) drawDirty();
+    }
+
+    var BRUSH_R = 42;
+    var lastX = null, lastY = null;
+
+    function erasePoint(x, y){
+      dctx.save();
+      dctx.globalCompositeOperation = 'destination-out';
+      var rg = dctx.createRadialGradient(x,y,0,x,y,BRUSH_R);
+      rg.addColorStop(0, 'rgba(0,0,0,1)');
+      rg.addColorStop(.7, 'rgba(0,0,0,.9)');
+      rg.addColorStop(1, 'rgba(0,0,0,0)');
+      dctx.fillStyle = rg;
+      dctx.beginPath(); dctx.arc(x,y,BRUSH_R,0,Math.PI*2); dctx.fill();
+      dctx.restore();
+    }
+    function eraseSegment(x1,y1,x2,y2){
+      var dist = Math.hypot(x2-x1, y2-y1);
+      var steps = Math.max(1, Math.ceil(dist / (BRUSH_R*.35)));
+      for(var i=0;i<=steps;i++){
+        var t = i/steps;
+        erasePoint(x1 + (x2-x1)*t, y1 + (y2-y1)*t);
+      }
+    }
+
+    function onTouchedFirst(){
+      if(touched) return;
+      touched = true;
+      if(hint) hint.classList.add('hidden');
+      if(demoRAF){ cancelAnimationFrame(demoRAF); demoRAF = null; }
+    }
+
+    function localXY(clientX, clientY){
+      var r = panel.getBoundingClientRect();
+      return { x: clientX - r.left, y: clientY - r.top };
+    }
+
+    function moveBrush(x, y, show){
+      if(!brush) return;
+      brush.style.left = x + 'px';
+      brush.style.top = y + 'px';
+      brush.style.width = (BRUSH_R*2) + 'px';
+      brush.style.height = (BRUSH_R*2) + 'px';
+      brush.style.opacity = show ? '1' : '0';
+    }
+
+    function handleStart(cx, cy){
+      onTouchedFirst();
+      var p = localXY(cx, cy);
+      lastX = p.x; lastY = p.y;
+      erasePoint(p.x, p.y);
+      moveBrush(p.x, p.y, true);
+    }
+    function handleMove(cx, cy, active){
+      var p = localXY(cx, cy);
+      moveBrush(p.x, p.y, true);
+      if(active){
+        if(lastX == null){ lastX = p.x; lastY = p.y; }
+        eraseSegment(lastX, lastY, p.x, p.y);
+        lastX = p.x; lastY = p.y;
+      }
+    }
+    function handleEnd(){
+      lastX = null; lastY = null;
+      moveBrush(0,0,false);
+    }
+
+    /* Input binding: Pointer Events unify mouse + touch + pen on every evergreen
+       browser (this alone gives correct touch support). Where PointerEvent is
+       unavailable we fall back to explicit touch + mouse listeners so dragging
+       still works with real touch-event handling, not just mouse events. */
+    if(window.PointerEvent){
+      panel.addEventListener('pointerdown', function(e){
+        try{ panel.setPointerCapture(e.pointerId); }catch(err){}
+        handleStart(e.clientX, e.clientY);
+      });
+      panel.addEventListener('pointermove', function(e){ handleMove(e.clientX, e.clientY, e.buttons > 0); });
+      panel.addEventListener('pointerup', handleEnd);
+      panel.addEventListener('pointercancel', handleEnd);
+      panel.addEventListener('pointerleave', function(){ moveBrush(0,0,false); });
+    } else {
+      // explicit touch fallback
+      panel.addEventListener('touchstart', function(e){
+        var t = e.touches[0]; if(t) handleStart(t.clientX, t.clientY);
+      }, {passive:true});
+      panel.addEventListener('touchmove', function(e){
+        var t = e.touches[0]; if(t){ handleMove(t.clientX, t.clientY, true); e.preventDefault(); }
+      }, {passive:false});
+      panel.addEventListener('touchend', handleEnd, {passive:true});
+      panel.addEventListener('touchcancel', handleEnd, {passive:true});
+      // explicit mouse fallback
+      var mdown = false;
+      panel.addEventListener('mousedown', function(e){ mdown = true; handleStart(e.clientX, e.clientY); });
+      panel.addEventListener('mousemove', function(e){ handleMove(e.clientX, e.clientY, mdown); });
+      window.addEventListener('mouseup', function(){ mdown = false; handleEnd(); });
+      panel.addEventListener('mouseleave', function(){ moveBrush(0,0,false); });
+    }
+
+    // "Tap to auto-clean" — universal fallback (touch / reduced-motion / anyone else)
+    function autoClean(){
+      onTouchedFirst();
+      if(autoRAF){ cancelAnimationFrame(autoRAF); autoRAF = null; }
+      if(cleaned){
+        // reset: redraw the grime so the demo can be shown again
+        drawDirty();
+        cleaned = false;
+        autoBtn.textContent = 'Tap to auto-clean';
+        return;
+      }
+      if(reduce){
+        // no animation under reduced motion — instant full reveal
+        dctx.clearRect(0,0,W,H);
+        cleaned = true;
+        autoBtn.textContent = 'Reset the grime';
+        return;
+      }
+      var start = null, duration = 900;
+      function step(ts){
+        if(start == null) start = ts;
+        var t = Math.min(1, (ts - start) / duration);
+        dctx.clearRect(0,0,W,H);
+        // progressively reveal left-to-right with a soft wipe edge
+        var edge = W * t;
+        drawDirty();
+        dctx.save();
+        dctx.globalCompositeOperation = 'destination-out';
+        var wg = dctx.createLinearGradient(0,0,edge+60,0);
+        wg.addColorStop(0, 'rgba(0,0,0,1)');
+        wg.addColorStop(1, 'rgba(0,0,0,0)');
+        dctx.fillStyle = wg;
+        dctx.fillRect(0,0,edge+60,H);
+        dctx.restore();
+        if(t < 1){ autoRAF = requestAnimationFrame(step); }
+        else { dctx.clearRect(0,0,W,H); cleaned = true; autoRAF = null; autoBtn.textContent = 'Reset the grime'; }
+      }
+      autoRAF = requestAnimationFrame(step);
+    }
+    if(autoBtn) autoBtn.addEventListener('click', autoClean);
+
+    // ambient "demo sweep" hint — plays once before the visitor interacts, never
+    // loops, and never runs at all under reduced motion (a static instant reveal
+    // is drawn instead so the effect is still visible without any animation).
+    function runDemoSweep(){
+      if(reduce || touched) return;
+      var start = null, duration = 1500;
+      function step(ts){
+        if(touched){ demoRAF = null; drawDirty(); return; }
+        if(start == null) start = ts;
+        var t = Math.min(1, (ts - start) / duration);
+        var cx = W * (0.28 + 0.30 * Math.sin(t * Math.PI));
+        var cy = H * (0.42 + 0.12 * Math.cos(t * Math.PI * 1.4));
+        erasePoint(cx, cy);
+        if(t < 1) demoRAF = requestAnimationFrame(step);
+        else {
+          demoRAF = null;
+          // let the hint linger a moment, then quietly restore the grime so the
+          // visitor's own drag starts from a fully dirty panel
+          setTimeout(function(){ if(!touched) drawDirty(); }, 1100);
+        }
+      }
+      demoRAF = requestAnimationFrame(step);
+    }
+
+    var seen = false;
+    function onVisible(){
+      if(seen) return; seen = true;
+      resize();
+      if(reduce){
+        // static instant partial reveal — no animation, still shows the effect
+        erasePoint(W*0.32, H*0.46);
+      } else {
+        runDemoSweep();
+      }
+    }
+    if('IntersectionObserver' in window){
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting) onVisible(); });
+      }, {threshold:.3});
+      vio.observe(panel);
+    } else { onVisible(); }
+
+    window.addEventListener('resize', function(){
+      var wasCleaned = cleaned;
+      resize();
+      if(wasCleaned) dctx.clearRect(0,0,W,H);
+    }, {passive:true});
+  })();
+
+  /* =====================================================
+     BOOKING FORM — FormSubmit fetch + sms fallback
+     ===================================================== */
+  var form = document.getElementById('bookForm');
+  var msgEl = document.getElementById('bookMsg');
+  var submitBtn = document.getElementById('bookSubmit');
+  var bService = document.getElementById('b-service');
+  var bSummary = document.getElementById('b-summary');
+
+  // no past service dates
+  var bDate = document.getElementById('b-date');
+  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  bDate.min = today.toISOString().slice(0,10);
+
+  var val = function(id){ var el = document.getElementById(id); return el ? (el.value||'').trim() : ''; };
+  var setErr = function(id, on){
+    var el = document.getElementById(id);
+    var f = el && el.closest('.field');
+    if(f) f.classList.toggle('invalid', !!on);
+  };
+
+  function pickPackage(name, price){
+    bService.value = name;
+    bSummary.value = name + ' — $' + num(price) + ' flat';
+    document.getElementById('book').scrollIntoView(reduce ? {} : {behavior:'smooth'});
+    setTimeout(function(){ document.getElementById('b-name').focus({preventScroll:true}); }, reduce ? 0 : 650);
+  }
+  window.__ggpPickPackage = pickPackage; // wired to each pricing card's button in renderContent
+
+  var buildSms = function(d){
+    var body = "Hi " + CONTENT.brand.name + "! I'd like to book a powerwash."
+      + " Name: " + d.name + "."
+      + " Phone: " + d.phone + "."
+      + " Address: " + d.address + (d.city ? ", " + d.city : "") + "."
+      + " Package: " + (d.service === 'unsure' ? 'not sure yet' : d.service) + "."
+      + " Preferred date: " + d.preferred_date + "."
+      + (d.config_summary ? " Selection: " + d.config_summary + "." : "")
+      + (d.notes ? " Notes: " + d.notes + "." : "");
+    return "sms:" + LEAD.sms + "?body=" + encodeURIComponent(body);
+  };
+
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  /* Global guard: on desktop, never let sms:/tel: links trigger the OS
+     "Pick an app" dialog. Show a friendly toast instead. Mobile untouched. */
+  if(!isMobile){
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+      if(!a) return;
+      e.preventDefault();
+      var t = document.getElementById('smsToast');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'smsToast';
+        t.setAttribute('role','status');
+        t.style.cssText = 'position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:9999;'
+          + 'background:#03111a;color:#EAF7FB;padding:14px 22px;border-radius:12px;'
+          + 'box-shadow:0 12px 40px rgba(0,0,0,.55);border:1px solid rgba(34,211,238,.35);'
+          + 'font-family:Manrope,system-ui,sans-serif;font-size:15px;max-width:88vw;text-align:center;'
+          + 'opacity:0;transition:opacity .25s ease;';
+        document.body.appendChild(t);
+      }
+      t.innerHTML = 'Call or text us at <strong style="color:#7FF0FF;letter-spacing:.02em">' + esc(CONTENT.brand.phone) + '</strong> from your phone.';
+      requestAnimationFrame(function(){ t.style.opacity = '1'; });
+      clearTimeout(window.__smsToastTimer);
+      window.__smsToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 4500);
+    });
+  }
+
+  var showDone = function(phone, smsUrl){
+    form.hidden = true;
+    var done = document.getElementById('bookDone');
+    var dm = document.getElementById('doneMsg');
+    if(dm){
+      if(isMobile && smsUrl){
+        dm.textContent = "We got it! We'll text you at " + phone + " to confirm your appointment window. Opening a text so you can send us a copy too — just hit send.";
+      } else {
+        dm.textContent = "We got it! We'll text you at " + phone + " from " + CONTENT.brand.phone + " to confirm your appointment window. Keep an eye on your messages.";
+      }
+    }
+    if(done){ done.hidden = false; done.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}); }
+    if(smsUrl && isMobile){ setTimeout(function(){ window.location.href = smsUrl; }, 900); }
+  };
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    msgEl.textContent = ''; msgEl.className = 'book__msg';
+
+    if(form.querySelector('input[name="_honey"]').value){ showDone('your number', ''); return; }
+
+    var d = {
+      name: val('b-name'),
+      phone: val('b-phone'),
+      address: val('b-addr'),
+      city: val('b-city'),
+      service: val('b-service'),
+      preferred_date: val('b-date'),
+      notes: val('b-notes'),
+      config_summary: val('b-summary')
+    };
+
+    var bad = false;
+    setErr('b-name', !d.name); bad = bad || !d.name;
+    var digits = d.phone.replace(/\D/g,'');
+    setErr('b-phone', digits.length < 7); bad = bad || digits.length < 7;
+    setErr('b-addr', !d.address); bad = bad || !d.address;
+    setErr('b-city', !d.city); bad = bad || !d.city;
+    setErr('b-date', !d.preferred_date); bad = bad || !d.preferred_date;
+    var consent = document.getElementById('b-consent').checked;
+
+    if(bad){ msgEl.textContent = 'Please fill in the highlighted fields.'; msgEl.classList.add('err'); return; }
+    if(!consent){ msgEl.textContent = 'Please check the consent box so we can text you a confirmation.'; msgEl.classList.add('err'); return; }
+
+    var smsUrl = buildSms(d);
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      _subject: 'New powerwash booking — ' + d.name + ' (' + (d.service === 'unsure' ? 'package TBD' : d.service) + ')',
+      _template: 'table',
+      _captcha: 'false',
+      name: d.name, phone: d.phone,
+      address: d.address, city: d.city,
+      service: d.service === 'unsure' ? 'Not sure — help them pick' : d.service,
+      preferred_date: d.preferred_date,
+      notes: d.notes || '—',
+      config_summary: d.config_summary || '— (no package picked yet)'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + LEAD.email, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('bad status');
+      return r.json();
+    }).then(function(){
+      showDone(d.phone, smsUrl);
+    }).catch(function(){
+      submitBtn.disabled = false; submitBtn.textContent = 'Book my wash';
+      msgEl.classList.add('err');
+      if(isMobile){
+        msgEl.textContent = "Hmm, that didn't send. Opening a text instead — your info is pre-filled, just hit send.";
+        setTimeout(function(){ window.location.href = smsUrl; }, 700);
+      } else {
+        msgEl.textContent = "Hmm, that didn't send. Call or text us at " + CONTENT.brand.phone + " and we'll book you the old-fashioned way.";
+      }
+    });
+  });
+
+  /* =====================================================
+     CONTENT RENDER — re-paints every owner-editable region
+     from the merged CONTENT object. Runs once with the
+     inline defaults (no flash) and again if content.json
+     loads. Never hard-fails the page.
+     ===================================================== */
+  var ownerPhotoBox = document.getElementById('ownerPhoto');
+  var ownerPhotoDefault = ownerPhotoBox.innerHTML;
+  var ownerPhotoAria = ownerPhotoBox.getAttribute('aria-label');
+
+  var SURF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>';
+  var CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  function parseFeatures(str){
+    return String(str || '').split(/\n+/).map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+
+  function renderContent(c){
+    applyRuntime(c);
+    var brand = c.brand || {}, area = c.serviceArea || {}, owner = c.owner || {};
+    var surfaces = c.surfaces || [], pricing = c.pricing || [], testimonials = c.testimonials || [], social = c.social || [];
+    var e164 = telHref(brand.phone);
+    var smsBody = encodeURIComponent("Hi " + brand.name + "! I'd like to book a powerwash.");
+
+    // ----- brand & contact -----
+    document.getElementById('brandName').innerHTML = esc(brand.name) + '<span>' + esc((brand.city || area.short || '')) + '</span>';
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){ a.href = 'tel:' + e164; });
+    document.querySelectorAll('a[href^="sms:"]').forEach(function(a){ a.href = 'sms:' + e164 + '?body=' + smsBody; });
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.textContent = brand.phone; });
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = brand.name; });
+    document.querySelectorAll('[data-tagline]').forEach(function(el){ el.textContent = brand.tagline; });
+    var fe = document.getElementById('footEmail');
+    fe.href = 'mailto:' + brand.email; fe.textContent = brand.email;
+
+    // ----- service area -----
+    document.getElementById('heroEyebrow').textContent = 'Pressure washing · ' + area.region;
+    var cities = (area.cities || []).filter(Boolean);
+    document.getElementById('footServe').textContent = 'Serving ' + cities.join(' · ');
+    document.getElementById('faqDeliver').innerHTML = cities.map(esc).join(', ')
+      + ' and everything in between — <b>the whole ' + esc(area.short) + '.</b>'
+      + " Outside that ring? Text us your address anyway; if a route works we'll make it work.";
+
+    // ----- social links (footer; hidden when empty) -----
+    document.getElementById('footSocial').innerHTML = social.length
+      ? social.map(function(s){
+          return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer" style="color:var(--aqua-bright)">' + esc(s.n) + '</a>';
+        }).join(' · ') + '<br />'
+      : '';
+
+    // ----- surfaces we clean -----
+    document.getElementById('surfacesGrid').innerHTML = surfaces.map(function(s, i){
+      return '<div class="surf-card reveal in" data-delay="' + ((i % 3) + 1) + '">'
+        + '<div class="surf-card__ic">' + SURF_ICON + '</div>'
+        + '<h3>' + esc(s.name) + '</h3>'
+        + '<p>' + esc(s.blurb) + '</p>'
+        + '</div>';
+    }).join('');
+
+    // ----- pricing tiers -----
+    var minPrice = pricing.length ? Math.min.apply(null, pricing.map(function(p){ return num(p.price); })) : null;
+    if(minPrice != null) document.getElementById('statFrom').textContent = 'From $' + minPrice;
+
+    document.getElementById('pricingGrid').innerHTML = pricing.map(function(p, i){
+      var feats = parseFeatures(p.features).map(function(f){
+        return '<li>' + CHECK_ICON + '<span>' + esc(f) + '</span></li>';
+      }).join('');
+      return '<div class="price-card reveal in' + (p.best ? ' price-card--best' : '') + '" data-delay="' + ((i % 3) + 1) + '">'
+        + (p.best ? '<span class="price-card__pill">Most requested</span>' : '')
+        + '<div class="price-card__name">' + esc(p.name) + '</div>'
+        + '<div class="price-card__amt">$' + num(p.price) + '<small>flat</small></div>'
+        + '<div class="price-card__unit">' + esc(p.unit) + '</div>'
+        + '<ul class="price-card__feats">' + feats + '</ul>'
+        + (p.note ? '<p class="price-card__note">' + esc(p.note) + '</p>' : '')
+        + '<button type="button" class="btn' + (p.best ? '' : ' btn--ghost') + '" data-pkg="' + i + '">Book this package</button>'
+        + '</div>';
+    }).join('');
+
+    // wire "Book this package" buttons (re-bound each render, since innerHTML was replaced)
+    document.querySelectorAll('#pricingGrid [data-pkg]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var p = pricing[Number(btn.getAttribute('data-pkg'))];
+        if(p) pickPackage(p.name, p.price);
+      });
+    });
+
+    // keep the booking select's options in sync with the live tiers
+    var prevSel = bService.value;
+    bService.innerHTML = pricing.map(function(p){
+      return '<option value="' + esc(p.name) + '">' + esc(p.name) + ' — $' + num(p.price) + '</option>';
+    }).join('') + '<option value="unsure">Not sure — help me pick</option>';
+    bService.value = (prevSel === 'unsure' || pricing.some(function(p){ return p.name === prevSel; })) ? prevSel : 'unsure';
+
+    // ----- owner -----
+    document.getElementById('ownerDesc').textContent = owner.bio || '';
+    if(owner.photo){
+      ownerPhotoBox.innerHTML = '<img src="' + esc(owner.photo) + '" alt="' + esc(owner.name || 'The owner') + '" loading="lazy" />';
+      ownerPhotoBox.setAttribute('aria-label', owner.name || 'The owner');
+    } else {
+      if(ownerPhotoBox.innerHTML !== ownerPhotoDefault){
+        ownerPhotoBox.innerHTML = ownerPhotoDefault;
+        ownerPhotoBox.setAttribute('aria-label', ownerPhotoAria);
+      }
+      var cap = document.getElementById('ownerCaption');
+      if(cap){
+        var first = String(owner.name || '').trim().split(/\s+/)[0];
+        cap.textContent = first ? first.toUpperCase() + ' DRIVES EVERY JOB' : '';
+      }
+    }
+
+    // ----- testimonials (empty-state via CSS :empty) -----
+    document.getElementById('testiGrid').innerHTML = testimonials.length
+      ? testimonials.map(function(t, i){
+          return '<div class="testi-card reveal in" data-delay="' + ((i % 3) + 1) + '">'
+            + '<p class="testi__quote">' + esc(t.quote) + '</p>'
+            + '<p class="testi__meta">' + (t.author ? '<b>' + esc(t.author) + '</b>' + (t.location ? ' · ' + esc(t.location) : '') : 'Awaiting first review') + '</p>'
+            + '</div>';
+        }).join('')
+      : '';
+
+    // re-arm the reveal observer for anything just injected via innerHTML
+    revealScan(document.getElementById('surfacesGrid'));
+    revealScan(document.getElementById('pricingGrid'));
+    revealScan(document.getElementById('testiGrid'));
+  }
+
+  // paint from the inline defaults immediately, then merge the live override
+  renderContent(CONTENT);
+  fetch('content.json', {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(CONTENT); } })
+    .catch(function(){}); // 404 / offline: the defaults stand
+})();
+</script>
+</body>
+</html>

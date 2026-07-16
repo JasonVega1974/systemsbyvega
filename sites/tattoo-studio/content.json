@@ -1,0 +1,164 @@
+{
+  "brand": {
+    "phone": "(208) 555-0177",
+    "email": "books@staticrosetattoo.com",
+    "city": "Boise, Idaho",
+    "leadEmail": "info@kingdom-creatives.com"
+  },
+  "stats": [
+    {
+      "num": "9 yrs",
+      "label": "Tattooing"
+    },
+    {
+      "num": "1,200+",
+      "label": "Pieces healed"
+    },
+    {
+      "num": "Private",
+      "label": "One-chair studio"
+    }
+  ],
+  "gallery": [
+    {
+      "title": "Serpent & Dagger",
+      "tag": "Blackwork",
+      "cat": "blackwork",
+      "art": "a-serpent",
+      "image": ""
+    },
+    {
+      "title": "Death Moth",
+      "tag": "Blackwork",
+      "cat": "blackwork",
+      "art": "a-moth",
+      "image": ""
+    },
+    {
+      "title": "Wolf Skull",
+      "tag": "Blackwork",
+      "cat": "blackwork",
+      "art": "a-wolf",
+      "image": ""
+    },
+    {
+      "title": "Single-Needle Rose",
+      "tag": "Fine Line",
+      "cat": "fineline",
+      "art": "a-rose",
+      "image": ""
+    },
+    {
+      "title": "Sage Stem",
+      "tag": "Fine Line",
+      "cat": "fineline",
+      "art": "a-botanical",
+      "image": ""
+    },
+    {
+      "title": "Mother's Script",
+      "tag": "Fine Line",
+      "cat": "fineline",
+      "art": "a-script",
+      "image": ""
+    },
+    {
+      "title": "Koi in Bloom",
+      "tag": "Color",
+      "cat": "color",
+      "art": "a-koi",
+      "image": ""
+    },
+    {
+      "title": "Gilded Swallow",
+      "tag": "Color",
+      "cat": "color",
+      "art": "a-swallow",
+      "image": ""
+    },
+    {
+      "title": "Poppy Field",
+      "tag": "Color",
+      "cat": "color",
+      "art": "a-poppy",
+      "image": ""
+    },
+    {
+      "title": "Thorned Heart",
+      "tag": "Flash",
+      "cat": "flash",
+      "art": "a-heart",
+      "image": ""
+    },
+    {
+      "title": "Coiled Snake",
+      "tag": "Flash",
+      "cat": "flash",
+      "art": "a-snake",
+      "image": ""
+    },
+    {
+      "title": "Dagger & Rose",
+      "tag": "Flash",
+      "cat": "flash",
+      "art": "a-dagger",
+      "image": ""
+    }
+  ],
+  "flash": [
+    {
+      "title": "Thorned Heart",
+      "price": "$180",
+      "desc": "Palm-sized sacred heart wrapped in thorns. Solid black with dotwork shading. Inner arm or calf.",
+      "art": "a-heart",
+      "image": ""
+    },
+    {
+      "title": "Coiled Snake",
+      "price": "$220",
+      "desc": "Whip-shaded serpent coiled around a crescent. Reads beautifully on the forearm or above the knee.",
+      "art": "a-snake",
+      "image": ""
+    },
+    {
+      "title": "Dagger & Rose",
+      "price": "$200",
+      "desc": "Classic pairing, drawn thin. A single-needle rose split by a stiletto dagger. Vertical placements only.",
+      "art": "a-dagger",
+      "image": ""
+    },
+    {
+      "title": "Moth No. 3",
+      "price": "$160",
+      "desc": "Small symmetrical moth from the spring sheet. Two hours in the chair, heals crisp. Sternum or nape.",
+      "art": "a-moth",
+      "image": ""
+    }
+  ],
+  "bio": "Rae started tattooing in 2017 the way most stubborn people do — hand-poking her own ankle in a college apartment, then apprenticing for two years under a traditional shop in Garden City until the machine felt like a pencil. She went private in 2021: no walk-ins, no five chairs buzzing at once, just one client and one drawing at a time. Blackwork and single-needle fine line are home base; she takes color projects when the idea genuinely needs it. If your concept isn't a fit, she'll say so and point you to someone in the valley who's better for it.",
+  "chips": [
+    {
+      "t": "Licensed · Idaho"
+    },
+    {
+      "t": "Bloodborne pathogen certified"
+    },
+    {
+      "t": "Single-use needles, always"
+    },
+    {
+      "t": "LGBTQ+ welcoming"
+    }
+  ],
+  "social": [
+    {
+      "platform": "Instagram",
+      "label": "@staticrosetattoo",
+      "url": "https://systemsbyvega.com"
+    }
+  ],
+  "settings": {
+    "booksOpen": true,
+    "closedNote": "Books are closed while Rae works through the current list. The next opening is announced on Instagram first — follow along there, or check back soon."
+  }
+}

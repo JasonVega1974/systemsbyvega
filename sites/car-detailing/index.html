@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kestrel Detail Co. — Mobile Car Detailing That Comes to You | Boise, ID</title>
+<meta name="description" content="Mobile car detailing in Boise & the Treasure Valley — we bring the water, power and polish to your driveway. Flat pricing from $89, most cars done in a couple of hours. Book in 60 seconds. Call or text (208) 555-0166." />
+<meta name="theme-color" content="#0E131A" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/kestrel-detail-co-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/kestrel-detail-co-demo/" />
+<meta property="og:title" content="Kestrel Detail Co. — Showroom Shine, Curbside." />
+<meta property="og:description" content="Mobile car detailing that comes to your driveway across Boise & the Treasure Valley. Flat pricing from $89. Book your detail in 60 seconds." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: a car profile with a shine spark, on gloss cyan -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232DD4CE'/%3E%3Cpath d='M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z' fill='%230E131A'/%3E%3Ccircle cx='26' cy='45' r='4' fill='%230E131A'/%3E%3Ccircle cx='47' cy='45' r='4' fill='%230E131A'/%3E%3Cpath d='M46 15 l2 5 5 2 -5 2 -2 5 -2-5 -5-2 5-2 z' fill='%230E131A'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<!-- Local business structured data (helps Google show you).
+     Keep phone/email/prices in sync with the visible copy and the packages in the script. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoDetailing",
+  "name": "Kestrel Detail Co.",
+  "url": "https://jasonvega1974.github.io/kestrel-detail-co-demo/",
+  "description": "Mobile car detailing that comes to your driveway. Full interior and exterior detailing with flat, up-front pricing across Boise and the Treasure Valley.",
+  "telephone": "+12085550166",
+  "email": "hello@kestreldetail.com",
+  "areaServed": "Boise, Idaho — Boise, Meridian, Eagle, Nampa, Kuna, Star, Garden City",
+  "priceRange": "$89-$329",
+  "slogan": "Showroom shine, curbside.",
+  "makesOffer": [
+    { "@type": "Offer", "name": "Express Refresh", "price": "89", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Full Detail", "price": "189", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Showroom Detail", "price": "329", "priceCurrency": "USD" }
+  ]
+}
+</script>
+
+<style>
+/* =========================================================
+   KESTREL DETAIL CO. — tokens
+   Identity: midnight-garage graphite base, gloss-cyan
+   "wax shine" primary, cool chrome/ice type. Reads clean,
+   detailed and reflective — nothing like a dumpster yard.
+   ========================================================= */
+:root{
+  --graphite-deep:#070A0E;
+  --graphite:#0E131A;
+  --graphite-2:#161E28;
+  --steel:#1E2A38;
+  --gloss:#2DD4CE;
+  --gloss-bright:#5CE8E2;
+  --gloss-deep:#12A39C;
+  --chrome:#D9E6EF;
+  --ice:#EDF3F7;
+  --ice-soft:#F7FBFD;
+  --steel-txt:#9DB1C0;
+  --muted:#748799;
+  --line:rgba(45,212,206,.14);
+  --hair:rgba(217,230,239,.12);
+  --card:rgba(22,30,40,.55);
+  --card-brd:rgba(217,230,239,.13);
+  --shadow:0 24px 60px -20px rgba(0,0,0,.75);
+  --maxw:1140px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Manrope',system-ui,sans-serif;
+  background:var(--graphite);
+  color:var(--ice);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* cool reflective backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 82% -10%, rgba(45,212,206,.15), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(30,42,56,.6), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(92,232,226,.06), transparent 60%),
+    linear-gradient(180deg,#0b1017 0%, #0E131A 45%, #070A0E 100%);
+}
+/* faint reflected-light streaks (a garage floor sheen) */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(115deg, transparent 0 78px, rgba(217,230,239,.02) 78px 79px),
+    repeating-linear-gradient(65deg, transparent 0 120px, rgba(45,212,206,.022) 120px 121px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'Space Mono',monospace;font-weight:700;
+  text-transform:uppercase;letter-spacing:.2em;
+  font-size:.74rem;color:var(--gloss);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--gloss),transparent);
+}
+.section-title{
+  font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.0;letter-spacing:.01em;
+  background:linear-gradient(180deg,#ffffff 0%,var(--ice) 55%,#b9ccd9 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--steel-txt);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1.05rem;padding:.95rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  box-shadow:0 12px 30px -10px rgba(45,212,206,.6), inset 0 1px 0 rgba(255,255,255,.45);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(45,212,206,.8), inset 0 1px 0 rgba(255,255,255,.5)}
+.btn:active{transform:translateY(0)}
+/* wax-shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(45,212,206,.07);color:var(--ice-soft);
+  border:1px solid rgba(45,212,206,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(45,212,206,.14);box-shadow:0 10px 26px -14px rgba(45,212,206,.5)}
+.btn--lg{font-size:1.15rem;padding:1.1rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--gloss-bright);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;padding:16px 0}
+.nav.solid{background:rgba(7,10,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;padding:10px 0}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  box-shadow:0 8px 20px -8px rgba(45,212,206,.6)}
+.brand__mark svg{width:30px;height:30px}
+.brand__name{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;font-size:1rem;line-height:1;color:var(--ice-soft)}
+.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.2em;margin-top:5px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.74rem;color:var(--ice);opacity:.8;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--gloss-bright)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Saira Condensed',sans-serif;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.92rem;
+  padding:.55rem 1.05rem;border-radius:10px;color:#062522;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  box-shadow:0 10px 24px -12px rgba(45,212,206,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.82rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.76rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.6rem,7vw,4.9rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px}
+.hero h1 .l1{background:linear-gradient(180deg,#ffffff 0%,var(--ice) 50%,#b9ccd9 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(217,230,239,.14));display:block}
+.hero h1 .l2{color:var(--gloss);display:block;text-shadow:0 4px 30px rgba(45,212,206,.4)}
+.hero__sub{font-size:1.16rem;color:var(--steel-txt);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:1.6rem;color:#fff;letter-spacing:.02em}
+.proof span{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* hero art: a car under a wax-shine sweep, drawn inline */
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{position:absolute;inset:2% -8% 8%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(45,212,206,.22), rgba(45,212,206,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0}
+.hero__art svg{position:relative;z-index:1;width:min(540px,96%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting shine sparkles */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.mote{position:absolute;bottom:-4%;width:4px;height:4px;border-radius:50%;
+  background:radial-gradient(circle,rgba(92,232,226,.95),rgba(92,232,226,0) 70%);
+  opacity:0;animation:mote linear infinite}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.8}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* wave divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--graphite-2);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--graphite-2),rgba(22,30,40,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;
+  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--ice)}
+.trust__item svg{width:20px;height:20px;color:var(--gloss);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — CAR HOTSPOT DIAGRAM
+   ========================================================= */
+.detail{background:linear-gradient(180deg,rgba(22,30,40,.35),transparent)}
+.diagram{max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;
+  gap:clamp(20px,3vw,40px);align-items:center;
+  background:rgba(11,16,23,.7);border:1px solid var(--card-brd);border-radius:20px;
+  box-shadow:var(--shadow);backdrop-filter:blur(10px);overflow:hidden}
+/* gloss stripe across the top — the "wax line" touch */
+.diagram::before{content:"";display:block;grid-column:1/-1;height:8px;
+  background:repeating-linear-gradient(-45deg,var(--gloss) 0 14px,#0a2b29 14px 28px);opacity:.85}
+@media(max-width:820px){.diagram{grid-template-columns:1fr}}
+
+.diagram__stage{position:relative;padding:clamp(18px,3vw,30px)}
+.diagram__stage svg.car{width:100%;height:auto;display:block}
+/* per-zone shine highlight on the car, revealed when its zone is active */
+.car .hl{opacity:0;transition:opacity .3s ease}
+.diagram[data-active="wheels"]  .hl-wheels,
+.diagram[data-active="paint"]   .hl-paint,
+.diagram[data-active="glass"]   .hl-glass,
+.diagram[data-active="interior"] .hl-interior,
+.diagram[data-active="trim"]    .hl-trim{opacity:1}
+
+/* hotspot markers overlaid on the car */
+.hot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;
+  border:2px solid var(--gloss);background:rgba(11,16,23,.65);color:var(--gloss-bright);
+  cursor:pointer;display:grid;place-items:center;padding:0;transition:transform .18s ease, background .18s ease;
+  box-shadow:0 0 0 6px rgba(45,212,206,.12)}
+.hot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gloss-bright);
+  box-shadow:0 0 10px var(--gloss-bright)}
+.hot::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--gloss);
+  opacity:.7;animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(1.9);opacity:0}}
+.hot:hover{transform:translate(-50%,-50%) scale(1.12);background:rgba(45,212,206,.2)}
+.hot[aria-pressed="true"]{background:var(--gloss);box-shadow:0 0 0 8px rgba(45,212,206,.22)}
+.hot[aria-pressed="true"]::before{background:#062522;box-shadow:none}
+.hot[aria-pressed="true"]::after{animation:none;opacity:0}
+
+.diagram__panel{padding:clamp(18px,3vw,30px) clamp(20px,3vw,34px) clamp(24px,4vw,38px)}
+.diagram__eyebrow{font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.diagram__zone{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.8rem,4vw,2.6rem);line-height:1;margin:6px 0 12px;
+  background:linear-gradient(180deg,#fff,var(--gloss-bright));-webkit-background-clip:text;background-clip:text;color:transparent}
+.diagram__blurb{color:var(--steel-txt);font-size:1.02rem;min-height:5.5em}
+.diagram__hint{margin-top:16px;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted)}
+.zone-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.zone-chips button{font-family:'Space Mono',monospace;font-weight:400;font-size:.74rem;letter-spacing:.04em;
+  color:var(--ice);padding:.45rem .85rem;border-radius:9px;cursor:pointer;
+  border:1px solid var(--card-brd);background:rgba(7,10,14,.5);transition:.15s}
+.zone-chips button:hover{border-color:rgba(45,212,206,.5)}
+.zone-chips button[aria-pressed="true"]{color:#062522;border-color:transparent;
+  background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep))}
+
+/* =========================================================
+   PACKAGES (pricing)
+   ========================================================= */
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+@media(max-width:900px){.pkg-grid{grid-template-columns:1fr;max-width:460px;margin-inline:auto}}
+.pkg{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;padding:26px 24px;backdrop-filter:blur(8px);transition:transform .22s ease,border-color .22s ease}
+.pkg:hover{transform:translateY(-6px);border-color:rgba(45,212,206,.4)}
+.pkg--best{border-color:var(--gloss);box-shadow:0 0 0 1px var(--gloss),0 26px 60px -30px rgba(45,212,206,.5)}
+.pkg__flag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:'Space Mono',monospace;font-weight:700;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  padding:.35rem .8rem;border-radius:20px;box-shadow:0 8px 20px -8px rgba(45,212,206,.7)}
+.pkg__name{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:1.6rem;line-height:1;color:var(--ice-soft)}
+.pkg__dur{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gloss);margin-top:8px}
+.pkg__price{font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:2.9rem;line-height:1;margin:14px 0 4px;
+  background:linear-gradient(180deg,#fff 0%,var(--gloss-bright) 55%,var(--gloss) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.pkg__price small{font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.14em;color:var(--muted);
+  -webkit-text-fill-color:var(--muted);text-transform:uppercase;margin-left:6px}
+.pkg__best{color:var(--steel-txt);font-size:.92rem;margin:2px 0 16px}
+.pkg__list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:22px}
+.pkg__list li{display:flex;gap:.6rem;font-size:.94rem;color:var(--ice)}
+.pkg__list svg{width:17px;height:17px;color:var(--gloss);flex:none;margin-top:.28rem}
+.pkg .btn{width:100%;margin-top:auto}
+.pkg__note{text-align:center;color:var(--muted);font-size:.95rem;max-width:60ch;margin:26px auto 0}
+.pkg__note b{color:var(--ice)}
+
+/* =========================================================
+   ADD-ONS
+   ========================================================= */
+.addons{background:linear-gradient(180deg,transparent,rgba(22,30,40,.4));border-block:1px solid var(--hair)}
+.addon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;max-width:900px;margin:0 auto}
+.addon{background:rgba(7,10,14,.5);border:1px solid var(--card-brd);border-radius:14px;padding:18px 18px 16px}
+.addon__top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.addon__name{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:1.15rem;color:var(--ice-soft);letter-spacing:.02em}
+.addon__price{font-family:'Space Mono',monospace;font-weight:700;font-size:.9rem;color:var(--gloss-bright);flex:none}
+.addon__desc{color:var(--muted);font-size:.86rem;margin-top:6px}
+.addon__foot{text-align:center;color:var(--muted);font-size:.92rem;margin-top:24px}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Saira Condensed',sans-serif;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(45,212,206,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.2rem;margin-bottom:8px;color:#fff}
+.step p{color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   RESULTS GALLERY
+   ========================================================= */
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.results-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.results-grid{grid-template-columns:1fr}}
+.result{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(30,42,56,.6),rgba(11,16,23,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow)}
+.result img{width:100%;height:100%;object-fit:cover;display:block}
+.result__cap{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;
+  font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.03em;color:var(--ice);
+  background:linear-gradient(180deg,transparent,rgba(7,10,14,.85))}
+.results-empty{border:1px dashed var(--card-brd);border-radius:16px;padding:44px 24px;text-align:center;
+  background:repeating-linear-gradient(45deg,transparent 0 14px,rgba(217,230,239,.03) 14px 15px)}
+.results-empty svg{width:34px;height:34px;color:var(--gloss);opacity:.7;margin:0 auto 12px}
+.results-empty p{color:var(--muted);font-family:'Space Mono',monospace;font-size:.8rem;
+  letter-spacing:.06em;text-transform:uppercase}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(30,42,56,.6),rgba(11,16,23,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ice);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px}
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.quotes{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+.quote{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px 22px;
+  backdrop-filter:blur(8px);display:flex;flex-direction:column;gap:14px}
+.quote__stars{display:flex;gap:3px;color:var(--gloss)}
+.quote__stars svg{width:16px;height:16px}
+.quote__body{color:var(--ice);font-size:1rem;line-height:1.6}
+.quote__body:empty::before{content:"Real review coming soon — the space is ready for it.";color:var(--muted);font-style:italic}
+.quote__who{font-family:'Space Mono',monospace;font-size:.76rem;letter-spacing:.04em;color:var(--gloss-bright);margin-top:auto}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.14rem;color:var(--ice-soft)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(45,212,206,.4);color:var(--gloss);transition:transform .25s ease;font-family:'Manrope',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ice)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, rgba(45,212,206,.14), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(30,42,56,.7), transparent 60%),
+    linear-gradient(160deg,#161E28,#0b1017);
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--gloss-bright);font-weight:600}
+.book{max-width:760px;margin:0 auto;background:rgba(7,10,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field em{color:var(--gloss-bright);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,8,11,.7);border:1px solid var(--card-brd);color:var(--ice-soft);
+  font-family:'Manrope',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:#5f6b78}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gloss);background:rgba(5,8,11,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235CE8E2' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+.field input[type="date"]{color-scheme:dark}
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--gloss);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'Space Mono',monospace;letter-spacing:.06em;color:var(--ice);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--gloss-bright)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:#ff9aa2}
+.book__msg.ok{color:var(--gloss-bright)}
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(30,42,56,.55),rgba(11,16,23,.6));
+  border:1px solid rgba(45,212,206,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(45,212,206,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  box-shadow:0 12px 30px -10px rgba(45,212,206,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,#fff,var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--steel-txt);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:#fff;font-size:1.05rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--gloss-bright)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--steel-txt);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--gloss-bright)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(7,10,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:1.02rem;padding:.9rem;border-radius:12px}
+.mobile-cta .call{color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  box-shadow:0 8px 20px -8px rgba(45,212,206,.7)}
+.mobile-cta .text{color:var(--ice-soft);background:rgba(45,212,206,.1);border:1px solid rgba(45,212,206,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+  .hot::after{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Kestrel Detail Co. home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z" fill="#0E131A"/>
+          <circle cx="26" cy="45" r="4" fill="#0E131A"/><circle cx="47" cy="45" r="4" fill="#0E131A"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Kestrel Detail Co.<span>Mobile detailing · Boise</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#detail">What we detail</a>
+      <a class="link" href="#packages">Packages</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#results">Results</a>
+      <a class="link" href="#book">Book</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550166">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0166</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Mobile car detailing · Boise &amp; the Treasure Valley</span></div>
+        <h1><span class="l1">Showroom Shine.</span><span class="l2">Curbside.</span></h1>
+        <p class="hero__sub">We bring the water, the power and the polish straight to your driveway. Pick a package, see a flat price, and get back into a car that looks like the day you drove it home — usually in a couple of hours, without leaving home.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#packages">See packages &amp; prices</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550166">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Mobile</b><span>We come to you</span></div>
+          <div class="proof"><b>Flat</b><span>Pricing, no games</span></div>
+          <div class="proof"><b>Local</b><span>Owned &amp; operated</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <!-- a car catching a wax-shine sweep -->
+        <svg viewBox="0 0 560 320" fill="none" role="img" aria-label="Illustration: a freshly detailed car catching the light">
+          <ellipse cx="280" cy="270" rx="222" ry="20" fill="#000" opacity=".38"/>
+          <!-- body -->
+          <path d="M64 214 Q64 176 116 170 L196 118 Q216 104 252 104 L372 104 Q414 106 438 134 L498 172 Q532 178 532 212 L532 216 Q532 230 518 230 L78 230 Q64 230 64 214 Z"
+                fill="url(#body)" stroke="#2DD4CE" stroke-width="2.4"/>
+          <defs>
+            <linearGradient id="body" x1="0" y1="104" x2="0" y2="230" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#243444"/><stop offset="1" stop-color="#0e151d"/>
+            </linearGradient>
+            <linearGradient id="glass" x1="0" y1="112" x2="0" y2="168" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5CE8E2" stop-opacity=".5"/><stop offset="1" stop-color="#2DD4CE" stop-opacity=".14"/>
+            </linearGradient>
+          </defs>
+          <!-- greenhouse / windows -->
+          <path d="M206 126 Q220 114 250 114 L300 114 L300 166 L196 166 Q196 150 206 126 Z" fill="url(#glass)"/>
+          <path d="M316 114 L366 114 Q398 116 414 138 L426 166 L316 166 Z" fill="url(#glass)"/>
+          <rect x="303" y="114" width="10" height="52" rx="2" fill="#0e151d"/>
+          <!-- wax-shine streak across the hood -->
+          <path d="M300 138 L470 150" stroke="#EDF3F7" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+          <path d="M120 196 L250 196" stroke="#5CE8E2" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>
+          <!-- door line + handles -->
+          <path d="M250 176 L250 224 M330 176 L330 224" stroke="#0a1016" stroke-width="3" stroke-opacity=".6"/>
+          <rect x="262" y="182" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <rect x="342" y="182" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <!-- wheels -->
+          <circle cx="170" cy="230" r="42" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="170" cy="230" r="20" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+          <circle cx="410" cy="230" r="42" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="410" cy="230" r="20" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+          <!-- sparkle -->
+          <path d="M486 96 l3 8 8 3 -8 3 -3 8 -3-8 -8-3 8-3 z" fill="#5CE8E2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,32 C240,64 480,64 720,40 C960,16 1200,16 1440,40 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h13v5H3z"/><path d="M16 8h3l2 3v4h-5z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>We come to you</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>We bring water &amp; power</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.3a2.6 2.6 0 0 0-2.5-1.3c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.7.8 2.7 2.1-1.2 2-2.7 2a2.8 2.8 0 0 1-2.7-1.4"/><path d="M12 6.5v11"/></svg>Flat, up-front pricing</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l4 4L20 4"/></svg>We don't leave 'til it's right</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: CAR HOTSPOT DIAGRAM ============ -->
+<section class="section detail" id="detail">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What we detail</span>
+      <h2 class="section-title">Every inch, handled</h2>
+      <p class="lead" style="margin:0 auto">Tap a part of the car to see exactly what we do to it. The whole thing gets this treatment — not just the parts you see from the driver's seat.</p>
+    </div>
+
+    <div class="diagram reveal" id="detailDiagram" data-active="paint">
+      <div class="diagram__stage">
+        <!-- car (decorative); the hotspot buttons below carry the interaction -->
+        <svg class="car" viewBox="0 0 560 300" fill="none" aria-hidden="true">
+          <ellipse cx="280" cy="256" rx="214" ry="18" fill="#000" opacity=".35"/>
+          <!-- highlights (revealed per active zone) -->
+          <ellipse class="hl hl-paint"    cx="300" cy="150" rx="150" ry="46" fill="#5CE8E2" fill-opacity=".16"/>
+          <ellipse class="hl hl-glass"    cx="292" cy="128" rx="120" ry="30" fill="#5CE8E2" fill-opacity=".22"/>
+          <circle  class="hl hl-wheels"   cx="164" cy="222" r="52" fill="#5CE8E2" fill-opacity=".18"/>
+          <ellipse class="hl hl-interior" cx="300" cy="146" rx="86"  ry="30" fill="#5CE8E2" fill-opacity=".2"/>
+          <rect    class="hl hl-trim"     x="96" y="196" width="368" height="26" rx="10" fill="#5CE8E2" fill-opacity=".2"/>
+          <!-- body -->
+          <path d="M60 206 Q60 170 110 164 L190 114 Q210 100 246 100 L366 100 Q408 102 432 130 L490 166 Q524 172 524 204 L524 208 Q524 222 510 222 L74 222 Q60 222 60 206 Z"
+                fill="url(#body2)" stroke="#2DD4CE" stroke-width="2.4"/>
+          <defs>
+            <linearGradient id="body2" x1="0" y1="100" x2="0" y2="222" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#243444"/><stop offset="1" stop-color="#0e151d"/>
+            </linearGradient>
+            <linearGradient id="glass2" x1="0" y1="108" x2="0" y2="160" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5CE8E2" stop-opacity=".45"/><stop offset="1" stop-color="#2DD4CE" stop-opacity=".12"/>
+            </linearGradient>
+          </defs>
+          <path d="M200 122 Q214 110 244 110 L294 110 L294 160 L190 160 Q190 144 200 122 Z" fill="url(#glass2)"/>
+          <path d="M310 110 L360 110 Q392 112 408 134 L420 160 L310 160 Z" fill="url(#glass2)"/>
+          <rect x="297" y="110" width="10" height="50" rx="2" fill="#0e151d"/>
+          <path d="M244 170 L244 216 M324 170 L324 216" stroke="#0a1016" stroke-width="3" stroke-opacity=".6"/>
+          <rect x="256" y="176" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <rect x="336" y="176" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <circle cx="164" cy="222" r="40" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="164" cy="222" r="19" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+          <circle cx="404" cy="222" r="40" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="404" cy="222" r="19" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+        </svg>
+
+        <!-- hotspot markers (percentages sit over the car above) -->
+        <button class="hot" type="button" data-zone="glass"    aria-pressed="false" style="left:44%;top:41%" title="Glass &amp; mirrors"><span class="hp">Glass &amp; mirrors</span></button>
+        <button class="hot" type="button" data-zone="interior" aria-pressed="false" style="left:55%;top:47%" title="Interior &amp; seats"><span class="hp">Interior &amp; seats</span></button>
+        <button class="hot" type="button" data-zone="paint"    aria-pressed="true"  style="left:70%;top:53%" title="Paint &amp; body"><span class="hp">Paint &amp; body</span></button>
+        <button class="hot" type="button" data-zone="wheels"   aria-pressed="false" style="left:29%;top:74%" title="Wheels &amp; tires"><span class="hp">Wheels &amp; tires</span></button>
+        <button class="hot" type="button" data-zone="trim"     aria-pressed="false" style="left:47%;top:72%" title="Trim &amp; details"><span class="hp">Trim &amp; details</span></button>
+      </div>
+
+      <div class="diagram__panel" aria-live="polite">
+        <span class="diagram__eyebrow">Zone</span>
+        <div class="diagram__zone" id="zoneLabel">Paint &amp; body</div>
+        <p class="diagram__blurb" id="zoneBlurb">Loading…</p>
+        <div class="zone-chips" id="zoneChips" role="group" aria-label="Choose a part of the car"></div>
+        <p class="diagram__hint">Tap the glowing dots on the car</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PACKAGES ============ -->
+<section class="section" id="packages">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Packages &amp; pricing</span>
+      <h2 class="section-title">One flat price. No quote games.</h2>
+      <p class="lead" style="margin:0 auto" id="packagesLead">Three levels, from a quick reset to a full showroom detail. Every price is the price you pay — mobile service to your driveway is included, not an upsell.</p>
+    </div>
+    <div class="pkg-grid" id="packageGrid"><!-- rendered from CONTENT.packages --></div>
+    <p class="pkg__note reveal" id="pkgNote"><!-- rendered from CONTENT.notes.pkgAddon --></p>
+  </div>
+</section>
+
+<!-- ============ ADD-ONS ============ -->
+<section class="section addons" id="addons">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Add-ons</span>
+      <h2 class="section-title">Bolt on the extras</h2>
+      <p class="lead" style="margin:0 auto">Stack any of these onto a package. Tell us when you book, or just point at it in the driveway.</p>
+    </div>
+    <div class="addon-grid" id="addonGrid"><!-- rendered from CONTENT.addons --></div>
+    <p class="addon__foot reveal" id="addonFoot"><!-- rendered from CONTENT.notes.addonFoot --></p>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. Zero phone tag.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Book online</h3>
+        <p>Pick a package, grab a day, tell us where the car lives. Two minutes, no "someone will call you back," no mystery quote.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We pull up &amp; plug in</h3>
+        <p>We arrive with our own water and power and set up right at your driveway or lot. You don't have to lift a finger — or even be home.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Drive off gleaming</h3>
+        <p>A couple of hours later the keys are back in your hand and the car looks the way it did on the lot. That's the whole job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="section" id="results">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Results</span>
+      <h2 class="section-title">Fresh out of the driveway</h2>
+      <p class="lead" style="margin:0 auto">Real cars, real turnarounds. Photos land here as jobs roll in.</p>
+    </div>
+    <div class="results-grid reveal" id="resultsGrid"><!-- rendered from CONTENT.results --></div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the detailing van and gear that come to your driveway">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <rect width="400" height="500" fill="none"/>
+          <!-- reflected-light streaks -->
+          <path d="M-20 120 L420 40" stroke="#D9E6EF" stroke-opacity=".06" stroke-width="30"/>
+          <path d="M-20 220 L420 150" stroke="#2DD4CE" stroke-opacity=".05" stroke-width="22"/>
+          <!-- van body -->
+          <path d="M60 300 L60 210 Q60 196 76 196 L250 196 L300 240 L340 240 Q356 240 356 258 L356 300 Z" fill="#1E2A38" stroke="#2DD4CE" stroke-width="2.5"/>
+          <rect x="80" y="212" width="150" height="48" rx="6" fill="#0E131A"/>
+          <path d="M250 210 L292 240 L250 240 Z" fill="#0E131A"/>
+          <!-- shine sweep on the panel -->
+          <path d="M96 300 L230 300" stroke="#5CE8E2" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/>
+          <!-- wheels -->
+          <circle cx="120" cy="312" r="26" fill="#070A0E" stroke="#1E2A38" stroke-width="5"/>
+          <circle cx="120" cy="312" r="11" fill="#0E131A" stroke="#2DD4CE" stroke-width="2.5"/>
+          <circle cx="300" cy="312" r="26" fill="#070A0E" stroke="#1E2A38" stroke-width="5"/>
+          <circle cx="300" cy="312" r="11" fill="#0E131A" stroke="#2DD4CE" stroke-width="2.5"/>
+          <!-- bucket + wand -->
+          <path d="M150 388 L162 440 L206 440 L218 388 Z" fill="#0E131A" stroke="#2DD4CE" stroke-width="2"/>
+          <ellipse cx="184" cy="388" rx="34" ry="8" fill="#12A39C" fill-opacity=".5"/>
+          <path d="M252 448 L252 392 Q252 384 260 384 L286 384" stroke="#2DD4CE" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <!-- captions -->
+          <text x="200" y="474" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" letter-spacing="4" fill="#9DB1C0" opacity=".85">VAN 01 · EST. 2019</text>
+          <text id="ownerCaption" x="200" y="494" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#748799" opacity=".75">THEO RUNS EVERY JOB HIMSELF</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The guy in your driveway</h2>
+        <div class="owner__desc" id="ownerDesc">Loading…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">In their words</span>
+      <h2 class="section-title">What drivers say</h2>
+    </div>
+    <div class="quotes reveal" id="testimonialGrid"><!-- rendered from CONTENT.testimonials --></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Do I need to be home?<span class="plus">+</span></summary><div class="faq__body">Nope. As long as we can reach the car and you've left it unlocked (or dropped a key), you can be at work the whole time. We'll text you before and after. Most folks come out to a finished car.</div></details>
+      <details class="faq reveal"><summary>Do you bring your own water and power?<span class="plus">+</span></summary><div class="faq__body"><b>Yes — we're fully self-contained.</b> Our own water tank and power come with the van, so we can detail in a driveway, a parking lot, or a job site. If a spigot or outlet is handy we'll happily use it, but we never count on it.</div></details>
+      <details class="faq reveal"><summary>How long does it take?<span class="plus">+</span></summary><div class="faq__body" id="faqTime">Depends on the package and how the car's been living. An Express Refresh is about an hour; a Full Detail runs a few; a Showroom Detail is a half-day. We'll give you a real window when you book — not a vague "sometime today."</div></details>
+      <details class="faq reveal"><summary>What if the car's really rough?<span class="plus">+</span></summary><div class="faq__body">Send a couple of photos when you book — pet hair, spilled latte, constructions-site dust, we've seen it. If it needs an add-on or a bump to the next package, we'll tell you the number up front. <b>No surprise line items when we're done.</b></div></details>
+      <details class="faq reveal"><summary>How do I pay?<span class="plus">+</span></summary><div class="faq__body">Card, tap, or the usual apps — whatever's easy, paid when the work's done and you've looked the car over. The price you booked is the price you pay, plus any add-ons you okayed.</div></details>
+      <details class="faq reveal"><summary>Where do you go?<span class="plus">+</span></summary><div class="faq__body" id="faqDeliver">Boise, Meridian, Eagle, Nampa, Kuna, Star, Garden City and everything in between — <b>the whole Treasure Valley.</b> Just outside the ring? Text us your address; if the route works we'll make it work.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Book your detail</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Book it in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Pick a package and a day. We'll text you within the hour (during business hours) to lock in your window — that's the only "call" this whole thing takes.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550166" data-phone>(208) 555-0166</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Where's the car? (address) <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Ridgeline Rd" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Meridian" required />
+        </div>
+        <div class="field">
+          <label for="b-vehicle">Vehicle type <em>*</em></label>
+          <select id="b-vehicle" name="vehicle" required>
+            <option value="Car / sedan" selected>Car / sedan</option>
+            <option value="SUV / crossover">SUV / crossover</option>
+            <option value="Truck">Truck</option>
+            <option value="Minivan / van">Minivan / van</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-package">Package <em>*</em></label>
+          <select id="b-package" name="package" required><!-- options from CONTENT.packages --></select>
+        </div>
+        <div class="field">
+          <label for="b-date">Preferred date <em>*</em></label>
+          <input id="b-date" name="preferred_date" type="date" required />
+        </div>
+        <div class="field">
+          <label for="b-time">Time of day</label>
+          <select id="b-time" name="time_window">
+            <option value="Morning" selected>Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Either">Either works</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Anything we should know? (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Lots of dog hair, coffee spill on the passenger seat, gate code #2411…"></textarea>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my window and price. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Book my detail</button>
+        <a class="book__alt" href="sms:+12085550166?body=Hi%20Kestrel%20Detail!%20I'd%20like%20to%20book%20a%20detail.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>You're on the schedule!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your window.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z" fill="#0E131A"/>
+          <circle cx="26" cy="45" r="4" fill="#0E131A"/><circle cx="47" cy="45" r="4" fill="#0E131A"/>
+        </svg>
+      </span>
+      <div><b data-brand>Kestrel Detail Co.</b><span data-tagline>Showroom shine, curbside.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550166" data-phone>(208) 555-0166</a> · <a href="mailto:hello@kestreldetail.com" id="footEmail">hello@kestreldetail.com</a><br />
+      <span id="footServe">Serving Boise · Meridian · Eagle · Nampa · Kuna · Star · Garden City</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Kestrel Detail Co.</span> · Mobile detailing, locally owned</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550166"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550166?body=Hi%20Kestrel%20Detail!%20I'd%20like%20to%20book%20a%20detail."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it —
+     packages, add-ons, the hotspot zones, results,
+     testimonials, service area, owner and footer all
+     re-render from the merged object.
+     Keep content.json's shape in sync with this const.
+     (Static copy the admin does NOT touch: the JSON-LD
+     offers/priceRange in <head> and the meta description.)
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    brand: {
+      name: "Kestrel Detail Co.",
+      tagline: "Showroom shine, curbside.",
+      phone: "(208) 555-0166",
+      email: "hello@kestreldetail.com",
+      leadEmail: "info@kingdom-creatives.com",
+      city: "Boise, ID"
+    },
+    packages: [
+      { name: "Express Refresh", price: 89, duration: "~1 hour", popular: false,
+        best: "A fast reset between details — dust, crumbs and a clean exterior.",
+        includes: "Hand wash & dry\nWheels & tires cleaned\nInterior vacuum\nWindows in & out\nDash & console wiped down" },
+      { name: "Full Detail", price: 189, duration: "~3 hours", popular: true,
+        best: "Our most-booked service — inside and out, top to bottom.",
+        includes: "Everything in Express Refresh\nInterior deep-clean & shampoo\nLeather cleaned & conditioned\nClay bar & spray sealant\nDoor jambs & trim dressed\nStreak-free glass treatment" },
+      { name: "Showroom Detail", price: 329, duration: "~5 hours", popular: false,
+        best: "The full reset — for sale-ready cars or once-a-year deep love.",
+        includes: "Everything in Full Detail\nMachine paint decon & polish\nHand-applied paint sealant\nCarpet & upholstery extraction\nHeadliner & vents detailed\nEngine bay cleaned & dressed" }
+    ],
+    addons: [
+      { name: "Pet hair removal", price: 35, desc: "Embedded fur pulled from seats and carpets." },
+      { name: "Headlight restore", price: 45, desc: "Cut the haze, bring back clear lenses (pair)." },
+      { name: "Engine bay clean", price: 40, desc: "Degreased, rinsed and dressed to shine." },
+      { name: "Odor treatment", price: 30, desc: "Neutralize smoke, pets and gym-bag funk." },
+      { name: "Shampoo & extract", price: 55, desc: "Deep hot-water extraction on carpets and cloth seats." }
+    ],
+    notes: {
+      pkgAddon: "Bigger rig — truck, van, or a third-row SUV packed with life? Add $20–$40 depending on size. Not sure which package? Book \"help me pick\" and we'll sort it when we see the car.",
+      addonFoot: "Something not on the list? Text us a photo and we'll tell you straight whether it's worth doing."
+    },
+    zones: [
+      { id: "paint",    label: "Paint & body",
+        blurb: "A foam pre-soak lifts grit before a gentle two-bucket hand wash, then bug and tar spots come off by hand. Clay and a spray sealant leave the finish slick and beading — not just clean, protected." },
+      { id: "glass",    label: "Glass & mirrors",
+        blurb: "Inside and out, edge to edge, including the streaks everyone misses at the top of the windshield and the smudges on the mirrors. Ask for a rain-repellent treatment and we'll add it." },
+      { id: "interior", label: "Interior & seats",
+        blurb: "Vacuumed down to the seat tracks, mats shampooed, leather cleaned and conditioned, plastics wiped down. Steam where it needs it — and no greasy shine left behind on the dash." },
+      { id: "wheels",   label: "Wheels & tires",
+        blurb: "Barrels, faces and lug nuts scrubbed, brake dust and iron fallout dissolved, then a satin dressing on the tires. It's the first thing people notice and the first thing most washes skip." },
+      { id: "trim",     label: "Trim & details",
+        blurb: "Faded black trim brought back, door jambs wiped, vents and cupholders dug out, badges detailed. The small stuff that makes a whole car read as cared-for." }
+    ],
+    results: [],
+    testimonials: [],
+    serviceArea: {
+      region: "Boise & the Treasure Valley",
+      short: "Treasure Valley",
+      cities: ["Boise", "Meridian", "Eagle", "Nampa", "Kuna", "Star", "Garden City"]
+    },
+    owner: {
+      name: "Theo Marsh",
+      bio: "Theo Marsh has been detailing cars around Boise since he was cleaning up trade-ins for a used lot at nineteen. Kestrel Detail Co. is the one-van operation he always wanted to run: he shows up to your driveway with water, power and everything else, does the work himself, and doesn't leave until the car looks like the day you fell for it. No lot to drop off at, no shuttle to catch, no upsell games — just an honest detail and a number you agreed to before he started.",
+      photo: ""
+    },
+    social: []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+     submission emails a one-time activation link to LEAD.email; click it once and
+     every booking after that lands in that inbox, formatted as a table. */
+  var LEAD = { provider: 'formsubmit', email: '', sms: '' };
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function num(v){ var n = Number(v); return isFinite(n) ? n : 0; }
+  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
+
+  function applyRuntime(c){
+    LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
+    LEAD.sms = telHref((c.brand||{}).phone);
+  }
+  applyRuntime(CONTENT);
+
+  // ---------- year ----------
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---------- nav solidify ----------
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ---------- reveal on scroll ----------
+  function revealScan(root){
+    var revs = (root || document).querySelectorAll('.reveal:not(.in)');
+    if('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+      revs.forEach(function(r){ io.observe(r); });
+    } else { revs.forEach(function(r){ r.classList.add('in'); }); }
+  }
+  revealScan(document);
+
+  // ---------- drifting shine sparkles in hero ----------
+  var motes = document.getElementById('motes');
+  if(motes && !reduce){
+    var n = window.innerWidth < 700 ? 8 : 16;
+    for(var i=0;i<n;i++){
+      var m = document.createElement('span');
+      m.className = 'mote';
+      m.style.left = Math.random()*100 + '%';
+      var dur = 9 + Math.random()*10;
+      m.style.animationDuration = dur + 's';
+      m.style.animationDelay = (-Math.random()*dur) + 's';
+      m.style.opacity = 0.25 + Math.random()*0.5;
+      var s = 2.5 + Math.random()*3;
+      m.style.width = s + 'px'; m.style.height = s + 'px';
+      motes.appendChild(m);
+    }
+  }
+
+  /* =====================================================
+     SIGNATURE — CAR HOTSPOT DIAGRAM
+     ===================================================== */
+  var diagram   = document.getElementById('detailDiagram');
+  var zoneLabel = document.getElementById('zoneLabel');
+  var zoneBlurb = document.getElementById('zoneBlurb');
+  var zoneChips = document.getElementById('zoneChips');
+  var zoneMap   = {};   // id -> {label, blurb}
+  var zoneOrder = [];   // ids present, in content order
+
+  function setZone(id){
+    if(!zoneMap[id]) return;
+    diagram.setAttribute('data-active', id);
+    zoneLabel.innerHTML = esc(zoneMap[id].label);
+    zoneBlurb.textContent = zoneMap[id].blurb;
+    // sync pressed state on hotspots + chips
+    diagram.querySelectorAll('.hot').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-zone') === id)); });
+    if(zoneChips){ zoneChips.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-zone') === id)); }); }
+  }
+
+  // hotspot markers (static in markup) — one delegated handler
+  diagram.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-zone]');
+    if(b) setZone(b.getAttribute('data-zone'));
+  });
+
+  /* =====================================================
+     BOOKING FORM — refs + FormSubmit fetch + sms fallback
+     ===================================================== */
+  var bPackage  = document.getElementById('b-package');
+  var form      = document.getElementById('bookForm');
+  var msgEl     = document.getElementById('bookMsg');
+  var submitBtn = document.getElementById('bookSubmit');
+
+  // "Book this package" buttons carry the choice into the form (delegated)
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-book-package]');
+    if(!b) return;
+    var wanted = b.getAttribute('data-book-package');
+    if(bPackage){
+      var found = Array.prototype.some.call(bPackage.options, function(o){ return o.value === wanted; });
+      bPackage.value = found ? wanted : bPackage.value;
+    }
+    document.getElementById('book').scrollIntoView(reduce ? {} : {behavior:'smooth'});
+    setTimeout(function(){ document.getElementById('b-name').focus({preventScroll:true}); }, reduce ? 0 : 650);
+  });
+
+  // no past dates
+  var bDate = document.getElementById('b-date');
+  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  bDate.min = today.toISOString().slice(0,10);
+
+  var val = function(id){ var el = document.getElementById(id); return el ? (el.value||'').trim() : ''; };
+  var setErr = function(id, on){
+    var el = document.getElementById(id);
+    var f = el && el.closest('.field');
+    if(f) f.classList.toggle('invalid', !!on);
+  };
+
+  var buildSms = function(d){
+    var body = "Hi " + CONTENT.brand.name + "! I'd like to book a detail."
+      + " Name: " + d.name + "."
+      + " Phone: " + d.phone + "."
+      + " Where: " + d.address + (d.city ? ", " + d.city : "") + "."
+      + " Vehicle: " + d.vehicle + "."
+      + " Package: " + d.package + "."
+      + " Date: " + d.preferred_date + " (" + d.time_window + ")."
+      + (d.notes ? " Notes: " + d.notes + "." : "");
+    return "sms:" + LEAD.sms + "?body=" + encodeURIComponent(body);
+  };
+
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  /* Global guard: on desktop, never let sms:/tel: links trigger the OS
+     "Pick an app" dialog. Show a friendly toast instead. Mobile untouched. */
+  if(!isMobile){
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+      if(!a) return;
+      e.preventDefault();
+      var t = document.getElementById('smsToast');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'smsToast';
+        t.setAttribute('role','status');
+        t.style.cssText = 'position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:9999;'
+          + 'background:#0b1017;color:#EDF3F7;padding:14px 22px;border-radius:12px;'
+          + 'box-shadow:0 12px 40px rgba(0,0,0,.55);border:1px solid rgba(45,212,206,.35);'
+          + 'font-family:Manrope,system-ui,sans-serif;font-size:15px;max-width:88vw;text-align:center;'
+          + 'opacity:0;transition:opacity .25s ease;';
+        document.body.appendChild(t);
+      }
+      t.innerHTML = 'Call or text us at <strong style="color:#5CE8E2;letter-spacing:.02em">' + esc(CONTENT.brand.phone) + '</strong> from your phone.';
+      requestAnimationFrame(function(){ t.style.opacity = '1'; });
+      clearTimeout(window.__smsToastTimer);
+      window.__smsToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 4500);
+    });
+  }
+
+  var showDone = function(phone, smsUrl){
+    form.hidden = true;
+    var done = document.getElementById('bookDone');
+    var dm = document.getElementById('doneMsg');
+    if(dm){
+      if(isMobile && smsUrl){
+        dm.textContent = "We got it! We'll text you at " + phone + " to confirm your window. Opening a text so you can send us a copy too — just hit send.";
+      } else {
+        dm.textContent = "We got it! We'll text you at " + phone + " from " + CONTENT.brand.phone + " to confirm your window. Keep an eye on your messages.";
+      }
+    }
+    if(done){ done.hidden = false; done.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}); }
+    if(smsUrl && isMobile){ setTimeout(function(){ window.location.href = smsUrl; }, 900); }
+  };
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    msgEl.textContent = ''; msgEl.className = 'book__msg';
+
+    // honeypot: silently succeed for bots
+    if(form.querySelector('input[name="_honey"]').value){ showDone('your number', ''); return; }
+
+    var d = {
+      name: val('b-name'),
+      phone: val('b-phone'),
+      address: val('b-addr'),
+      city: val('b-city'),
+      vehicle: val('b-vehicle'),
+      package: val('b-package'),
+      preferred_date: val('b-date'),
+      time_window: val('b-time'),
+      notes: val('b-notes')
+    };
+
+    var bad = false;
+    setErr('b-name', !d.name); bad = bad || !d.name;
+    var digits = d.phone.replace(/\D/g,'');
+    setErr('b-phone', digits.length < 7); bad = bad || digits.length < 7;
+    setErr('b-addr', !d.address); bad = bad || !d.address;
+    setErr('b-city', !d.city); bad = bad || !d.city;
+    setErr('b-date', !d.preferred_date); bad = bad || !d.preferred_date;
+    var consent = document.getElementById('b-consent').checked;
+
+    if(bad){ msgEl.textContent = 'Please fill in the highlighted fields.'; msgEl.classList.add('err'); return; }
+    if(!consent){ msgEl.textContent = 'Please check the consent box so we can text you a confirmation.'; msgEl.classList.add('err'); return; }
+
+    var smsUrl = buildSms(d);
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      _subject: 'New detail booking — ' + d.name + ' (' + d.package + ')',
+      _template: 'table',
+      _captcha: 'false',
+      name: d.name, phone: d.phone,
+      address: d.address, city: d.city,
+      vehicle: d.vehicle, package: d.package,
+      preferred_date: d.preferred_date,
+      time_window: d.time_window,
+      notes: d.notes || '—'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + LEAD.email, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('bad status');
+      return r.json();
+    }).then(function(){
+      showDone(d.phone, smsUrl);
+    }).catch(function(){
+      submitBtn.disabled = false; submitBtn.textContent = 'Book my detail';
+      msgEl.classList.add('err');
+      if(isMobile){
+        msgEl.textContent = "Hmm, that didn't send. Opening a text instead — your info is pre-filled, just hit send.";
+        setTimeout(function(){ window.location.href = smsUrl; }, 700);
+      } else {
+        msgEl.textContent = "Hmm, that didn't send. Call or text us at " + CONTENT.brand.phone + " and we'll book you the old-fashioned way.";
+      }
+    });
+  });
+
+  /* =====================================================
+     CONTENT RENDER — re-paints every owner-editable region
+     from the merged CONTENT object. Runs once with the
+     inline defaults (no flash) and again if content.json
+     loads. Never hard-fails the page.
+     ===================================================== */
+  var ownerPhotoBox = document.getElementById('ownerPhoto');
+  var ownerPhotoDefault = ownerPhotoBox.innerHTML;
+  var ownerPhotoAria = ownerPhotoBox.getAttribute('aria-label');
+
+  var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+  var starIcon  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 6.9 7.5.6-5.7 5 1.7 7.4L12 24l-6.5-.1 1.7-7.4L1.5 9.5 9 8.9z"/></svg>';
+
+  function renderContent(c){
+    applyRuntime(c);
+    var brand = c.brand || {}, area = c.serviceArea || {}, owner = c.owner || {};
+    var packages = c.packages || [], addons = c.addons || [], zones = c.zones || [];
+    var results = c.results || [], testimonials = c.testimonials || [], social = c.social || [];
+    var notes = c.notes || {};
+    var e164 = telHref(brand.phone);
+    var smsBody = encodeURIComponent("Hi " + brand.name + "! I'd like to book a detail.");
+
+    // ----- brand & contact -----
+    document.getElementById('brandName').innerHTML = esc(brand.name) + '<span>Mobile detailing · ' + esc((area.short || '').replace(/^the\s+/i,'')) + '</span>';
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){ a.href = 'tel:' + e164; });
+    document.querySelectorAll('a[href^="sms:"]').forEach(function(a){ a.href = 'sms:' + e164 + '?body=' + smsBody; });
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.textContent = brand.phone; });
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = brand.name; });
+    document.querySelectorAll('[data-tagline]').forEach(function(el){ el.textContent = brand.tagline; });
+    var fe = document.getElementById('footEmail');
+    fe.href = 'mailto:' + brand.email; fe.textContent = brand.email;
+
+    // ----- service area -----
+    document.getElementById('heroEyebrow').textContent = 'Mobile car detailing · ' + area.region;
+    var cities = (area.cities || []).filter(Boolean);
+    document.getElementById('footServe').textContent = 'Serving ' + cities.join(' · ');
+    document.getElementById('faqDeliver').innerHTML = cities.map(esc).join(', ')
+      + ' and everything in between — <b>the whole ' + esc(String(area.short || '').replace(/^the\s+/i,'')) + '.</b>'
+      + " Just outside the ring? Text us your address; if the route works we'll make it work.";
+
+    // ----- social links (footer; hidden when empty) -----
+    document.getElementById('footSocial').innerHTML = social.length
+      ? social.map(function(s){
+          return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer" style="color:var(--gloss-bright)">' + esc(s.n) + '</a>';
+        }).join(' · ') + '<br />'
+      : '';
+
+    // ----- packages: cards + booking select -----
+    document.getElementById('packageGrid').innerHTML = packages.map(function(p, i){
+      var items = String(p.includes || '').split(/\n+/).map(function(x){ return x.trim(); }).filter(Boolean);
+      return '<div class="pkg' + (p.popular ? ' pkg--best' : '') + ' reveal" data-delay="' + ((i % 3) + 1) + '">'
+        + (p.popular ? '<span class="pkg__flag">Most booked</span>' : '')
+        + '<div class="pkg__name">' + esc(p.name) + '</div>'
+        + (p.duration ? '<div class="pkg__dur">' + esc(p.duration) + '</div>' : '')
+        + '<div class="pkg__price">$' + num(p.price) + '<small>flat</small></div>'
+        + (p.best ? '<p class="pkg__best">' + esc(p.best) + '</p>' : '')
+        + '<ul class="pkg__list">' + items.map(function(it){ return '<li>' + checkIcon + '<span>' + esc(it) + '</span></li>'; }).join('') + '</ul>'
+        + '<button class="btn' + (p.popular ? '' : ' btn--ghost') + '" type="button" data-book-package="' + esc(p.name) + '">Book ' + esc(p.name) + '</button>'
+        + '</div>';
+    }).join('');
+
+    if(bPackage){
+      var prevPkg = bPackage.value;
+      bPackage.innerHTML = packages.map(function(p){
+        return '<option value="' + esc(p.name) + '">' + esc(p.name) + ' — $' + num(p.price) + '</option>';
+      }).join('') + '<option value="Not sure — help me pick">Not sure — help me pick</option>';
+      var names = packages.map(function(p){ return p.name; });
+      bPackage.value = (prevPkg && (names.indexOf(prevPkg) >= 0 || prevPkg === 'Not sure — help me pick'))
+        ? prevPkg : (packages[0] ? packages[0].name : '');
+    }
+    document.getElementById('pkgNote').textContent = notes.pkgAddon || '';
+
+    // ----- add-ons -----
+    document.getElementById('addonGrid').innerHTML = addons.map(function(a){
+      return '<div class="addon">'
+        + '<div class="addon__top"><span class="addon__name">' + esc(a.name) + '</span>'
+        + '<span class="addon__price">+$' + num(a.price) + '</span></div>'
+        + (a.desc ? '<p class="addon__desc">' + esc(a.desc) + '</p>' : '')
+        + '</div>';
+    }).join('');
+    document.getElementById('addonFoot').textContent = notes.addonFoot || '';
+
+    // ----- hotspot zones -----
+    zoneMap = {}; zoneOrder = [];
+    zones.forEach(function(z){ if(z && z.id){ zoneMap[z.id] = { label: z.label || z.id, blurb: z.blurb || '' }; zoneOrder.push(z.id); } });
+    // hide hotspots whose zone was removed; label the rest
+    diagram.querySelectorAll('.hot').forEach(function(b){
+      var id = b.getAttribute('data-zone');
+      if(zoneMap[id]){ b.style.display = ''; b.title = zoneMap[id].label; b.querySelector('.hp').textContent = zoneMap[id].label; }
+      else { b.style.display = 'none'; }
+    });
+    // chips (a11y + a fallback way to browse the zones)
+    if(zoneChips){
+      zoneChips.innerHTML = zoneOrder.map(function(id){
+        return '<button type="button" data-zone="' + esc(id) + '" aria-pressed="false">' + esc(zoneMap[id].label) + '</button>';
+      }).join('');
+    }
+    var active = diagram.getAttribute('data-active');
+    setZone(zoneMap[active] ? active : (zoneOrder[0] || 'paint'));
+
+    // ----- results gallery (empty-state when no photos) -----
+    var rg = document.getElementById('resultsGrid');
+    if(results.length){
+      rg.classList.remove('results-empty-wrap');
+      rg.innerHTML = results.map(function(r){
+        return '<figure class="result">'
+          + (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(r.caption || 'Detailed car') + '" loading="lazy" />' : '')
+          + (r.caption ? '<figcaption class="result__cap">' + esc(r.caption) + '</figcaption>' : '')
+          + '</figure>';
+      }).join('');
+    } else {
+      rg.innerHTML = '<div class="results-empty" style="grid-column:1/-1">'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg>'
+        + '<p>Before-and-after shots land here soon</p></div>';
+    }
+
+    // ----- testimonials (empty-state when none) -----
+    var tg = document.getElementById('testimonialGrid');
+    if(testimonials.length){
+      tg.innerHTML = testimonials.map(function(t){
+        return '<figure class="quote">'
+          + '<div class="quote__stars" aria-hidden="true">' + starIcon + starIcon + starIcon + starIcon + starIcon + '</div>'
+          + '<blockquote class="quote__body">' + esc(t.quote || '') + '</blockquote>'
+          + '<figcaption class="quote__who">' + esc(t.name || '') + '</figcaption>'
+          + '</figure>';
+      }).join('');
+    } else {
+      tg.innerHTML = [1,2,3].map(function(){
+        return '<figure class="quote">'
+          + '<div class="quote__stars" aria-hidden="true">' + starIcon + starIcon + starIcon + starIcon + starIcon + '</div>'
+          + '<blockquote class="quote__body"></blockquote>'
+          + '<figcaption class="quote__who">A happy driver</figcaption>'
+          + '</figure>';
+      }).join('');
+    }
+
+    // ----- owner -----
+    document.getElementById('ownerDesc').textContent = owner.bio || '';
+    if(owner.photo){
+      ownerPhotoBox.innerHTML = '<img src="' + esc(owner.photo) + '" alt="' + esc(owner.name || 'The owner') + '" loading="lazy" />';
+      ownerPhotoBox.setAttribute('aria-label', owner.name || 'The owner');
+    } else {
+      if(ownerPhotoBox.innerHTML !== ownerPhotoDefault){
+        ownerPhotoBox.innerHTML = ownerPhotoDefault;
+        ownerPhotoBox.setAttribute('aria-label', ownerPhotoAria);
+      }
+      var cap = document.getElementById('ownerCaption');
+      if(cap){
+        var first = String(owner.name || '').trim().split(/\s+/)[0];
+        cap.textContent = first ? first.toUpperCase() + ' RUNS EVERY JOB HIMSELF' : '';
+      }
+    }
+
+    // re-arm reveal for any freshly injected nodes
+    revealScan(document);
+  }
+
+  // paint from the inline defaults immediately, then merge the live override
+  renderContent(CONTENT);
+  fetch('content.json', {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(CONTENT); } })
+    .catch(function(){}); // 404 / offline: the defaults stand
+})();
+</script>
+</body>
+</html>

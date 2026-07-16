@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cinder Hog BBQ — Smoked All Night. Parked Near You. | Nampa & Boise, ID</title>
+<meta name="description" content="Cinder Hog BBQ is a wood-fired barbecue food truck roaming Nampa & Boise, Idaho. Brisket, pulled pork and ribs smoked 14 hours over real oak — till we sell out. Find the truck this week or book catering. (208) 555-0163." />
+<meta name="theme-color" content="#0C0A08" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/cinder-hog-bbq-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/cinder-hog-bbq-demo/" />
+<meta property="og:title" content="Cinder Hog BBQ — Smoked All Night. Parked Near You." />
+<meta property="og:description" content="Wood-fired BBQ truck roaming Nampa & Boise. Oak-smoked brisket, pork & ribs till we sell out. Find the truck this week or book catering — (208) 555-0163." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: hog snout ringed in flame on charred black (inline SVG, no file needed) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%230C0A08'/%3E%3Cpath d='M32 6c3 7-6 9-4 16 1 4 5 5 5 5s-1-6 4-8c-1 6 7 8 7 15 0 8-5 13-12 13s-12-5-12-13c0-6 4-9 5-14 3 3 3 6 3 6s5-5 4-20z' fill='%23E8590C'/%3E%3Cellipse cx='32' cy='40' rx='9' ry='7' fill='%23F6EBD9'/%3E%3Cellipse cx='28.5' cy='40' rx='1.7' ry='2.6' fill='%230C0A08'/%3E%3Cellipse cx='35.5' cy='40' rx='1.7' ry='2.6' fill='%230C0A08'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+<!-- Structured data: helps Google show the truck for "bbq near me" searches -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FoodEstablishment",
+  "name": "Cinder Hog BBQ",
+  "url": "https://jasonvega1974.github.io/cinder-hog-bbq-demo/",
+  "description": "Wood-fired barbecue food truck. Brisket, pulled pork and ribs smoked 14 hours over real oak. Roaming Nampa & Boise, Idaho — daily till sold out.",
+  "servesCuisine": "Barbecue",
+  "telephone": "+12085550163",
+  "email": "eat@cinderhogbbq.com",
+  "areaServed": "Nampa & Boise, Idaho",
+  "priceRange": "$$",
+  "slogan": "Smoked All Night. Parked Near You.",
+  "acceptsReservations": "False",
+  "paymentAccepted": "Cash, Credit Card"
+}
+</script>
+
+<style>
+/* =========================================================
+   CINDER HOG BBQ — design tokens
+   Charred black + drifting smoke, ember-orange fire,
+   butcher-paper cream type, a hit of mustard for badges.
+   ========================================================= */
+:root{
+  --char:#0C0A08;          /* page base — charred black */
+  --coal:#171310;          /* raised surface */
+  --coal-2:#1F1913;        /* warmer panel */
+  --ember:#E8590C;         /* primary — ember orange */
+  --ember-hot:#FF7A2F;     /* bright end of the fire gradient */
+  --ember-deep:#9C3D06;    /* deep coal end of the fire gradient */
+  --mustard:#E3B341;       /* secondary accent — badges, success, sparingly */
+  --paper:#F6EBD9;         /* butcher-paper cream — main text */
+  --paper-dim:#E4D4BC;     /* softer cream */
+  --muted:#B09A7E;         /* muted smoke-tan */
+  --line:rgba(232,89,12,.16);
+  --hair:rgba(246,235,217,.10);
+  --card:rgba(31,25,19,.66);
+  --card-brd:rgba(232,89,12,.20);
+  --glow:rgba(232,89,12,.5);
+  --shadow:0 26px 60px -22px rgba(0,0,0,.8);
+  --maxw:1140px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito Sans',system-ui,sans-serif;
+  background:var(--char);
+  color:var(--paper);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* fixed charred backdrop: firebox glow low, night above */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(1000px 520px at 50% 108%, rgba(232,89,12,.20), transparent 62%),
+    radial-gradient(760px 480px at 12% -6%, rgba(60,40,24,.5), transparent 60%),
+    radial-gradient(820px 520px at 88% 4%, rgba(43,30,20,.55), transparent 62%),
+    linear-gradient(180deg,#12100D 0%, #0C0A08 55%, #0A0806 100%);
+}
+/* drifting smoke: two huge soft plumes sliding on their own clocks */
+.smokebg{position:fixed;inset:-20%;z-index:-2;pointer-events:none;overflow:hidden}
+.smokebg::before,.smokebg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(560px 380px at 24% 66%, rgba(246,235,217,.045), transparent 70%),
+    radial-gradient(680px 420px at 74% 34%, rgba(246,235,217,.035), transparent 70%);
+  animation:smokedrift 46s ease-in-out infinite alternate;
+}
+.smokebg::after{
+  background:
+    radial-gradient(480px 320px at 62% 78%, rgba(232,89,12,.05), transparent 70%),
+    radial-gradient(620px 400px at 30% 20%, rgba(246,235,217,.03), transparent 70%);
+  animation-duration:61s;animation-direction:alternate-reverse;
+}
+@keyframes smokedrift{
+  0%{transform:translate3d(-3%,2%,0) scale(1)}
+  100%{transform:translate3d(4%,-3%,0) scale(1.12)}
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.26em;
+  font-size:.74rem;color:var(--ember-hot);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--ember),transparent);
+}
+.section-title{
+  font-family:'Alfa Slab One',serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.9rem,4.8vw,3.1rem);line-height:1.04;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--paper) 0%, var(--paper-dim) 55%, #D89A5E 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.06rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Nunito Sans',sans-serif;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  font-size:.95rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:#180B04;background:linear-gradient(135deg,var(--ember-hot),var(--ember-deep));
+  box-shadow:0 14px 32px -12px rgba(232,89,12,.75), inset 0 1px 0 rgba(255,214,138,.4);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 44px -12px rgba(232,89,12,.9), inset 0 1px 0 rgba(255,214,138,.5)}
+.btn:active{transform:translateY(0)}
+/* heat-shimmer sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,230,180,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(232,89,12,.08);color:var(--paper);
+  border:1px solid rgba(232,89,12,.4);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(232,89,12,.16);box-shadow:0 10px 26px -14px rgba(232,89,12,.6)}
+.btn--lg{font-size:1.08rem;padding:1.15rem 2.2rem}
+.btn--sm{font-size:.78rem;padding:.6rem 1rem;border-radius:9px}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--mustard);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(12,10,8,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand__mark{width:42px;height:42px;flex:none;filter:drop-shadow(0 4px 12px rgba(232,89,12,.45))}
+.brand__name{font-family:'Alfa Slab One',serif;font-weight:400;letter-spacing:.05em;
+  text-transform:uppercase;font-size:1.02rem;line-height:1;color:var(--paper)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;
+  font-size:.56rem;letter-spacing:.3em;margin-top:4px;color:var(--ember-hot)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'Nunito Sans',sans-serif;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.8rem;color:var(--paper-dim);opacity:.85;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:#fff}
+.nav__call{display:inline-flex;align-items:center;gap:.45rem;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.8rem;padding:.6rem 1.05rem;border-radius:10px;
+  color:#180B04;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--ember-hot),var(--ember-deep));
+  box-shadow:0 10px 24px -12px rgba(232,89,12,.85), inset 0 1px 0 rgba(255,214,138,.35);}
+.nav__call svg{width:15px;height:15px}
+@media(max-width:860px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.72rem;padding:.5rem .8rem}.brand__name{font-size:.9rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(80px,10vh,110px);overflow:hidden;text-align:center}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+@media(max-height:760px){.hero{align-items:flex-start}}
+
+.hero__tag{margin-bottom:22px}
+.hero h1{
+  font-family:'Alfa Slab One',serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(2.5rem,7.6vw,5.1rem);line-height:1.02;letter-spacing:.005em;margin-bottom:6px;
+}
+.hero h1 .l1{
+  display:block;
+  background:linear-gradient(180deg,#FFFDF7 0%, var(--paper) 50%, #E2C79B 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 24px rgba(232,89,12,.18));
+}
+.hero h1 .l2{
+  display:block;color:var(--ember-hot);
+  text-shadow:0 6px 30px rgba(232,89,12,.5);
+}
+.hero__sub{font-size:1.16rem;color:var(--paper-dim);max-width:52ch;margin:20px auto 32px}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.hero__proof{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap;justify-content:center}
+.proof{display:flex;flex-direction:column;line-height:1.1;text-align:center}
+.proof b{font-family:'Alfa Slab One',serif;font-weight:400;font-size:1.7rem;color:#fff;letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.66rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin-top:6px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+
+/* announcement pill — admin-editable, hidden when there's no announcement */
+.hero__announce{display:inline-flex;align-items:center;gap:.55rem;margin:0 auto 22px;max-width:64ch;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.78rem;letter-spacing:.08em;
+  color:var(--mustard);background:rgba(227,179,65,.1);border:1px solid rgba(227,179,65,.4);
+  border-radius:12px;padding:.6rem 1.1rem;text-align:left;line-height:1.5}
+.hero__announce[hidden]{display:none}
+.hero__announce a{color:var(--mustard);text-decoration:underline;text-underline-offset:3px;font-weight:700}
+
+/* rising smoke + embers in hero */
+.smokes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.puff{position:absolute;bottom:-12%;border-radius:50%;
+  background:radial-gradient(circle, rgba(246,235,217,.10), rgba(246,235,217,0) 66%);
+  filter:blur(6px);opacity:0;animation:rise linear infinite}
+.emberbit{position:absolute;bottom:-4%;width:4px;height:4px;border-radius:50%;
+  background:radial-gradient(circle, #FFD68A, var(--ember) 60%, transparent);
+  box-shadow:0 0 8px 2px rgba(232,89,12,.55);
+  opacity:0;animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translate3d(0,0,0) scale(.7);opacity:0}
+  12%{opacity:1}
+  80%{opacity:.5}
+  100%{transform:translate3d(var(--drift,30px),-112vh,0) scale(1.25);opacity:0}
+}
+
+/* charred rim divider under hero */
+.charline{position:absolute;left:0;right:0;bottom:-1px;height:64px;line-height:0;color:var(--coal);z-index:0;pointer-events:none;width:100%}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--coal),rgba(23,19,16,.35));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.78rem;color:var(--paper-dim)}
+.trust__item svg{width:20px;height:20px;color:var(--ember-hot);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — FIND THE TRUCK weekly schedule
+   ========================================================= */
+.find{position:relative}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+@media(max-width:1060px){.week{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:820px){.week{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.week{grid-template-columns:1fr}}
+.daycard{
+  position:relative;display:flex;flex-direction:column;gap:6px;
+  background:var(--card);border:1px solid var(--card-brd);border-radius:16px;
+  padding:20px 16px 16px;backdrop-filter:blur(8px);min-height:196px;
+  transition:transform .2s ease, border-color .2s ease;
+}
+.daycard:hover{transform:translateY(-4px);border-color:rgba(232,89,12,.45)}
+.daycard__day{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.68rem;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.daycard__spot{font-family:'Alfa Slab One',serif;font-weight:400;font-size:1.02rem;line-height:1.2;
+  color:var(--paper);text-transform:uppercase;letter-spacing:.01em}
+.daycard__addr{font-size:.84rem;color:var(--muted);line-height:1.45;flex:1}
+.daycard__hours{display:inline-flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;font-size:.72rem;letter-spacing:.06em;color:var(--paper-dim)}
+.daycard__hours svg{width:13px;height:13px;color:var(--ember-hot);flex:none}
+.daycard .btn--sm{margin-top:10px}
+.daycard .btn--sm svg{width:14px;height:14px}
+
+/* TODAY — the ember-ringed card with a pulsing badge */
+.daycard--today{
+  border-color:rgba(255,122,47,.7);
+  background:linear-gradient(180deg,rgba(64,32,12,.72),rgba(31,20,12,.75));
+  box-shadow:0 0 0 1px rgba(255,122,47,.4), 0 26px 55px -22px rgba(232,89,12,.55);
+}
+.daycard--today .daycard__day{color:var(--ember-hot)}
+.today-badge{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase;color:#180B04;padding:.32rem .7rem;border-radius:20px;
+  background:linear-gradient(135deg,#FFD68A,var(--mustard));
+  box-shadow:0 8px 20px -6px rgba(227,179,65,.7);
+  animation:heretoday 1.8s ease-in-out infinite;
+}
+.today-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ember);
+  box-shadow:0 0 0 0 rgba(232,89,12,.6);animation:beacon 1.8s ease-out infinite}
+@keyframes heretoday{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06)}}
+@keyframes beacon{0%{box-shadow:0 0 0 0 rgba(232,89,12,.6)}100%{box-shadow:0 0 0 9px rgba(232,89,12,0)}}
+
+/* past days — been & gone */
+.daycard--past{opacity:.42;filter:saturate(.55)}
+.daycard--past:hover{transform:none}
+.daycard__gone{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* off days — smoker's resting */
+.daycard--off{border-style:dashed;border-color:var(--hair);background:rgba(23,19,16,.4);justify-content:center;text-align:center;align-items:center}
+.daycard--off .daycard__day{color:var(--muted)}
+.daycard__off-pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-weight:600;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--hair);border-radius:20px;padding:.35rem .8rem;margin:6px 0}
+.daycard--off .daycard__addr{flex:0}
+
+.find__note{text-align:center;color:var(--muted);font-size:.95rem;margin-top:28px}
+.find__note b{color:var(--paper-dim)}
+.find__note a{color:var(--ember-hot);font-weight:700}
+
+/* =========================================================
+   MENU — tab pills + item list
+   ========================================================= */
+.menu{background:linear-gradient(180deg,rgba(23,19,16,.4),transparent)}
+.menu__tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:36px}
+.tab{
+  font-family:'Nunito Sans',sans-serif;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  font-size:.82rem;color:var(--paper-dim);padding:.66rem 1.4rem;border-radius:24px;cursor:pointer;
+  background:rgba(23,19,16,.6);border:1px solid var(--hair);transition:.18s;
+}
+.tab:hover{border-color:rgba(232,89,12,.5);color:#fff}
+.tab.on{
+  color:#180B04;border-color:transparent;
+  background:linear-gradient(135deg,var(--ember-hot),var(--ember-deep));
+  box-shadow:0 10px 24px -10px rgba(232,89,12,.8);
+}
+.menu__list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.mi{
+  display:flex;flex-direction:column;gap:2px;padding:16px 20px;border-radius:14px;
+  background:var(--card);border:1px solid var(--hair);backdrop-filter:blur(6px);
+  animation:mi-in .35s ease both;
+}
+.mi:nth-child(2){animation-delay:.04s}.mi:nth-child(3){animation-delay:.08s}
+.mi:nth-child(4){animation-delay:.12s}.mi:nth-child(5){animation-delay:.16s}
+.mi:nth-child(6){animation-delay:.2s}
+@keyframes mi-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mi__row{display:flex;align-items:baseline;gap:12px}
+.mi__name{font-family:'Alfa Slab One',serif;font-weight:400;font-size:1rem;letter-spacing:.02em;
+  text-transform:uppercase;color:var(--paper)}
+.mi__dots{flex:1;border-bottom:2px dotted rgba(176,154,126,.4);transform:translateY(-4px)}
+.mi__price{font-family:'Alfa Slab One',serif;font-weight:400;font-size:1.05rem;color:var(--ember-hot)}
+.mi__desc{color:var(--muted);font-size:.92rem;line-height:1.5}
+/* optional item photo (uploaded via the admin panel) */
+.mi__flex{display:flex;gap:14px;align-items:center}
+.mi__thumb{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;border:1px solid var(--hair)}
+.mi__inner{flex:1;min-width:0}
+.menu__note{text-align:center;margin-top:30px;color:var(--muted);font-size:.95rem}
+.menu__note b{color:var(--mustard)}
+
+/* =========================================================
+   CATERING — packages + lead form
+   ========================================================= */
+.catering{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, rgba(232,89,12,.2), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(156,61,6,.28), transparent 60%),
+    linear-gradient(160deg,#221710,#140E09);
+  border-block:1px solid var(--line)}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:0 auto 56px;align-items:stretch}
+@media(max-width:820px){.pkg-grid{grid-template-columns:1fr;max-width:440px;gap:24px}}
+.pkg{
+  position:relative;background:var(--card);border:1px solid var(--card-brd);border-radius:18px;
+  padding:28px 22px 24px;text-align:center;backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;transition:transform .2s ease,border-color .2s ease;
+}
+.pkg:hover{transform:translateY(-6px)}
+.pkg__label{font-family:'IBM Plex Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  font-size:.72rem;color:var(--paper-dim);display:inline-block;padding:.42rem 1rem;border-radius:10px;
+  background:rgba(232,89,12,.14);border:1px solid rgba(232,89,12,.3);margin:0 auto 16px}
+.pkg__price{font-family:'Alfa Slab One',serif;font-weight:400;font-size:clamp(2.4rem,6vw,3.4rem);line-height:1;
+  background:linear-gradient(180deg,#fff,var(--paper-dim));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pkg__price sup{font-size:1.3rem;vertical-align:top;top:.5em;position:relative;-webkit-text-fill-color:var(--ember-hot)}
+.pkg__per{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.pkg__features{list-style:none;padding:0;margin:18px 0 20px;display:flex;flex-direction:column;gap:9px;text-align:left}
+.pkg__features li{font-weight:600;color:var(--paper-dim);font-size:.86rem;line-height:1.4;display:flex;gap:9px;align-items:flex-start}
+.pkg__features li svg{width:13px;height:13px;flex-shrink:0;color:var(--ember-hot);margin-top:4px;stroke-width:2.8}
+.pkg .btn{width:100%;margin-top:auto}
+.pkg--best{border-color:rgba(227,179,65,.55);
+  box-shadow:0 0 0 1px rgba(227,179,65,.3), 0 30px 60px -24px rgba(232,89,12,.5);
+  background:linear-gradient(180deg,rgba(54,36,18,.72),rgba(28,19,12,.72))}
+.pkg--best::before{content:"★ Most Booked";position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.64rem;
+  color:#180B04;background:linear-gradient(135deg,#FFD68A,var(--mustard));padding:.35rem .9rem;border-radius:20px;
+  box-shadow:0 8px 20px -8px rgba(227,179,65,.8);white-space:nowrap}
+
+/* lead form */
+.leadwrap{max-width:760px;margin:0 auto;background:rgba(15,11,8,.68);
+  border:1px solid rgba(232,89,12,.28);border-radius:22px;padding:clamp(22px,3.4vw,36px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.leadwrap h3{font-family:'Alfa Slab One',serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;
+  font-size:1.3rem;margin-bottom:6px;color:#fff}
+.leadwrap > p{color:var(--muted);font-size:.94rem;margin-bottom:22px}
+.lead__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.lead__grid{grid-template-columns:1fr}}
+.lead__grid + .lead__grid{margin-top:16px}
+.field{min-width:0}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:7px}
+.field em{color:var(--ember-hot);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{
+  width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(8,6,4,.75);border:1px solid rgba(232,89,12,.24);color:#fff;
+  font-family:'Nunito Sans',sans-serif;font-size:1rem}
+.field textarea{min-height:96px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:#7d6a55}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ember);background:rgba(8,6,4,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF7A2F' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:#E0616B;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+.field--wide{grid-column:1 / -1}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.lead__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px}
+.lead__actions .btn[disabled]{opacity:.7;cursor:progress}
+.lead__alt{font-weight:700;letter-spacing:.05em;color:var(--paper-dim);opacity:.85;
+  text-transform:uppercase;font-size:.8rem;text-decoration:underline;text-underline-offset:3px}
+.lead__alt:hover{opacity:1;color:#fff}
+.lead__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.lead__msg.err{color:#FF9AA2}
+.lead__msg.ok{color:var(--mustard)}
+
+/* success card */
+.lead-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(54,36,18,.6),rgba(24,16,10,.65));
+  border:1px solid rgba(227,179,65,.45);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(227,179,65,.2),var(--shadow);backdrop-filter:blur(10px)}
+.lead-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#180B04;background:linear-gradient(135deg,#FFD68A,var(--mustard));
+  box-shadow:0 12px 30px -10px rgba(227,179,65,.9)}
+.lead-done__ic svg{width:34px;height:34px}
+.lead-done h3{font-family:'Alfa Slab One',serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.05;margin-bottom:12px;
+  background:linear-gradient(180deg,#fff,var(--paper-dim));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead-done p{color:var(--paper-dim);font-size:1.02rem;margin-bottom:22px}
+.lead__phone{color:var(--muted);font-size:.95rem;margin-top:16px;text-align:center}
+.lead__phone a{color:var(--ember-hot);font-weight:800}
+
+/* =========================================================
+   PITMASTER
+   ========================================================= */
+.meet{background:linear-gradient(180deg,rgba(23,19,16,.4),transparent)}
+.meet__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.meet__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.meet__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(54,36,18,.55),rgba(20,14,9,.6));
+  border:1px solid rgba(232,89,12,.26);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.meet__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.meet__photo:not(:has(img))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(232,89,12,.16), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(232,89,12,.05) 14px 15px);
+}
+.meet__photo:not(:has(img))::after{
+  content:"Pitmaster photo coming soon";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;
+  color:var(--paper-dim);opacity:.55;padding:20px;text-align:center;pointer-events:none}
+.meet__body .section-title{margin:14px 0 22px}
+.meet__desc{color:var(--paper-dim);font-size:1.04rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--hair);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.meet__desc:empty::before{
+  content:"Short bio goes here — who runs the smoker, where the recipes came from, why one truck and real wood beats a restaurant. Replace this placeholder with the real story when it's ready.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--hair);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-weight:800;font-size:1.02rem;color:var(--paper)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(232,89,12,.4);color:var(--ember-hot);transition:transform .25s ease;font-family:'Nunito Sans'}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 120px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand svg{width:52px;height:52px}
+.footer__brand b{font-family:'Alfa Slab One',serif;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:#fff;font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.78rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.88rem;text-align:right;line-height:1.9}
+.footer__meta a{color:var(--ember-hot);font-weight:700}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(12,10,8,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.92rem;
+  padding:.95rem;border-radius:12px}
+.mobile-cta .find-btn{color:#180B04;background:linear-gradient(135deg,var(--ember-hot),var(--ember-deep));
+  box-shadow:0 8px 20px -8px rgba(232,89,12,.8)}
+.mobile-cta .call-btn{color:var(--paper);background:rgba(232,89,12,.12);border:1px solid rgba(232,89,12,.38)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:110px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+  .mi{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<div class="smokebg" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Cinder Hog BBQ home">
+      <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="13" fill="#171310"/>
+        <path d="M32 6c3 7-6 9-4 16 1 4 5 5 5 5s-1-6 4-8c-1 6 7 8 7 15 0 8-5 13-12 13s-12-5-12-13c0-6 4-9 5-14 3 3 3 6 3 6s5-5 4-20z" fill="#E8590C"/>
+        <ellipse cx="32" cy="40" rx="9" ry="7" fill="#F6EBD9"/>
+        <ellipse cx="28.5" cy="40" rx="1.7" ry="2.6" fill="#0C0A08"/>
+        <ellipse cx="35.5" cy="40" rx="1.7" ry="2.6" fill="#0C0A08"/>
+      </svg>
+      <span class="brand__name"><span data-edit="brand-name">Cinder Hog BBQ</span><span>Wood-fired · <span data-edit="city">Nampa &amp; Boise</span></span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#find">Find us</a>
+      <a class="link" href="#menu">Menu</a>
+      <a class="link" href="#catering">Catering</a>
+      <a class="link" href="#about">About</a>
+      <a class="nav__call" href="tel:+12085550163" data-tel>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-edit="phone">(208) 555-0163</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="smokes" id="smokes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__tag reveal in"><span class="eyebrow">Wood-fired BBQ truck · <span data-edit="city">Nampa &amp; Boise, Idaho</span></span></div>
+    <p class="hero__announce" id="announceBar" hidden></p>
+    <h1><span class="l1">Smoked All Night.</span><span class="l2">Parked Near You.</span></h1>
+    <p class="hero__sub">Whole briskets and pork shoulders hit the oak at midnight. By eleven the window's open — and when the pans run dry, that's it till tomorrow. Catch us while there's still some left.</p>
+    <div class="hero__cta">
+      <a class="btn btn--lg" href="#find">Find the truck</a>
+      <a class="btn btn--ghost btn--lg" href="#catering">Book catering</a>
+    </div>
+    <div class="hero__proof">
+      <div class="proof"><b>14 hrs</b><span>Every brisket smoked</span></div>
+      <div class="proof"><b>2019</b><span>Hauling smoke since</span></div>
+      <div class="proof"><b>1 truck</b><span>Real wood, no shortcuts</span></div>
+    </div>
+  </div>
+  <svg class="charline" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,30 C180,58 360,58 540,40 C760,18 980,20 1160,36 C1280,46 1380,44 1440,36 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 5 6 11a6 6 0 0 1-12 0c0-3 1.5-5.5 3-7 0 2 1 3.5 1 3.5S11 6 12 2z"/></svg>Smoked daily over Idaho oak</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Sold out means sold out</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Cash &amp; card, no minimum</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Family recipes, three generations</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: FIND THE TRUCK ============ -->
+<section class="section find" id="find">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">This week</span>
+      <h2 class="section-title">Find the truck</h2>
+      <p class="lead" style="margin:0 auto">One truck, seven days, a different corner of the Treasure Valley most of them. Today's stop is lit up below — tap Directions and come hungry.</p>
+    </div>
+
+    <!-- Cards are rendered by JS from CONTENT.schedule (defaults inline, live copy
+         in content.json). Owners edit it at /admin/ — one tab, once a week. -->
+    <div class="week" id="week" aria-live="polite"></div>
+
+    <p class="find__note reveal"><b>Schedule updates Sunday night.</b> Big line? We post sell-outs on Instagram at <b data-edit="instagram">@cinderhogbbq</b> — check before you drive.</p>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="section menu" id="menu">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Off the smoker</span>
+      <h2 class="section-title">The menu</h2>
+      <p class="lead" style="margin:0 auto">Everything below comes off one offset smoker and real oak splits. No warming trays, no freezer, no menu longer than the truck.</p>
+    </div>
+
+    <div class="menu__tabs reveal" role="tablist" aria-label="Menu categories">
+      <button class="tab on" role="tab" aria-selected="true" aria-controls="menuList" data-cat="plates" id="tab-plates">Plates</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="menuList" data-cat="sandwiches" id="tab-sandwiches">Sandwiches</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="menuList" data-cat="sides" id="tab-sides">Sides</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="menuList" data-cat="drinks" id="tab-drinks">Drinks</button>
+    </div>
+
+    <!-- Items are rendered by JS from the MENU object in the script below. -->
+    <div class="menu__list reveal" id="menuList" role="tabpanel" aria-labelledby="tab-plates"></div>
+
+    <p class="menu__note reveal">Serving from open <b>till we sell out</b> — most days that's mid-afternoon. Brisket goes first. You've been warned.</p>
+  </div>
+</section>
+
+<!-- ============ CATERING ============ -->
+<section class="section catering" id="catering">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Bring the smoke to you</span>
+      <h2 class="section-title">Catering, done low &amp; slow</h2>
+      <p class="lead" style="margin:0 auto">Backyard birthday or a 200-seat wedding — we pull the truck up, serve off the smoker, and haul the mess away. Starting prices per person below; every event gets a real quote within a day.</p>
+    </div>
+
+    <!-- Packages are rendered by JS from CONTENT.catering.packages (admin-editable). -->
+    <div class="pkg-grid" id="pkgGrid"></div>
+
+    <!-- lead form -->
+    <form class="leadwrap reveal" id="leadForm" novalidate aria-label="Catering quote request">
+      <span id="lead" style="position:relative;top:-90px" aria-hidden="true"></span>
+      <h3>Get your catering quote</h3>
+      <p>Takes a minute. We'll call or email you back within one business day with a real number — no spam, no newsletter, just brisket.</p>
+
+      <div class="lead__grid">
+        <div class="field">
+          <label for="c-name">Your name <em>*</em></label>
+          <input id="c-name" name="name" type="text" autocomplete="name" placeholder="Sam Rivera" required />
+        </div>
+        <div class="field">
+          <label for="c-phone">Phone <em>*</em></label>
+          <input id="c-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0134" required />
+        </div>
+        <div class="field">
+          <label for="c-email">Email <em>*</em></label>
+          <input id="c-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="c-date">Event date <em>*</em></label>
+          <input id="c-date" name="event_date" type="date" required />
+        </div>
+        <div class="field">
+          <label for="c-count">Headcount <em>*</em></label>
+          <select id="c-count" name="headcount" required>
+            <option value="">Choose one…</option>
+            <option value="10–25 people">10–25 people</option>
+            <option value="25–75 people">25–75 people</option>
+            <option value="75–150 people">75–150 people</option>
+            <option value="150+ people">150+ people</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-type">Event type <em>*</em></label>
+          <select id="c-type" name="event_type" required>
+            <option value="">Choose one…</option>
+            <option value="Backyard / birthday">Backyard / birthday</option>
+            <option value="Company / corporate">Company / corporate</option>
+            <option value="Wedding / rehearsal">Wedding / rehearsal</option>
+            <option value="Fundraiser / community">Fundraiser / community</option>
+            <option value="Something else">Something else</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="c-msg">Anything else? (optional)</label>
+          <textarea id="c-msg" name="message" placeholder="Venue, dietary needs, must-have meats, budget ballpark…"></textarea>
+        </div>
+      </div>
+
+      <!-- spam honeypot: real people never see or fill this -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="lead__actions">
+        <button class="btn btn--lg" type="submit" id="leadSubmit">Send my quote request</button>
+        <a class="lead__alt" href="sms:+12085550163?body=Hi%20Cinder%20Hog%20BBQ!%20I'd%20like%20a%20catering%20quote." data-sms>or text us instead</a>
+      </div>
+      <p class="lead__msg" id="leadMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="lead-done" id="leadDone" hidden>
+      <div class="lead-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>The smoke is headed your way</h3>
+      <p id="doneMsg">We got your request — expect a call or email within one business day.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+
+    <p class="lead__phone">Rather talk it through? Call or text <a href="tel:+12085550163" data-tel data-edit="phone">(208) 555-0163</a>
+      or email <a href="mailto:eat@cinderhogbbq.com" data-edit="email">eat@cinderhogbbq.com</a></p>
+  </div>
+</section>
+
+<!-- ============ MEET THE PITMASTER ============ -->
+<section class="section meet" id="about">
+  <div class="wrap">
+    <div class="meet__grid">
+      <!-- Photo slot: drop an <img> inside this div and the placeholder styling disappears.
+           Example: <img src="assets/pitmaster.jpg" alt="Ray, pitmaster of Cinder Hog BBQ, at the smoker" /> -->
+      <div class="meet__photo reveal" role="img" aria-label="Photo of the pitmaster — coming soon"></div>
+
+      <div class="meet__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the pitmaster</span>
+        <h2 class="section-title">One smoker. One stubborn family.</h2>
+        <!-- Bio text is owner-editable — it renders from CONTENT.about.bio (see the admin panel). -->
+        <div class="meet__desc" data-edit="bio"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Before you ask</span>
+      <h2 class="section-title">Straight answers</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Where do you post the weekly schedule?<span class="plus">+</span></summary><div class="faq__body">Right here — the "Find the truck" section above updates every Sunday night with the week's stops. We mirror it on Instagram, but this page is the source of truth.</div></details>
+      <details class="faq reveal"><summary>Can I order ahead?<span class="plus">+</span></summary><div class="faq__body">Not yet. It's one truck and one window, and pre-orders would eat the line alive. Show up early — the schedule tells you exactly where we'll be.</div></details>
+      <details class="faq reveal"><summary>Do you really sell out?<span class="plus">+</span></summary><div class="faq__body">Yes, most days. Brisket goes on the smoker 14 hours before service, so what's on the truck is all there is. When a meat 86's, we post it on Instagram within minutes.</div></details>
+      <details class="faq reveal"><summary>Anything gluten-free or lighter?<span class="plus">+</span></summary><div class="faq__body">Yes. Every smoked meat and most sides are naturally gluten-free — skip the bun and the cornbread. Rubs are salt, pepper and spices; no flour, no fillers. Ask at the window and we'll walk you through it.</div></details>
+      <details class="faq reveal"><summary>Can you park at my private event?<span class="plus">+</span></summary><div class="faq__body">That's our favorite gig. The truck needs a flat spot about the size of two parking spaces and nothing else — we bring our own power and water. Use the catering form above and mention it's truck-on-site.</div></details>
+      <details class="faq reveal"><summary>What happens when the weather turns?<span class="plus">+</span></summary><div class="faq__body">The smoker doesn't care about rain, and neither do we — we serve unless it's genuinely unsafe. If a stop ever cancels, this page and Instagram update by 9 AM that morning.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="13" fill="#171310"/>
+        <path d="M32 6c3 7-6 9-4 16 1 4 5 5 5 5s-1-6 4-8c-1 6 7 8 7 15 0 8-5 13-12 13s-12-5-12-13c0-6 4-9 5-14 3 3 3 6 3 6s5-5 4-20z" fill="#E8590C"/>
+        <ellipse cx="32" cy="40" rx="9" ry="7" fill="#F6EBD9"/>
+        <ellipse cx="28.5" cy="40" rx="1.7" ry="2.6" fill="#0C0A08"/>
+        <ellipse cx="35.5" cy="40" rx="1.7" ry="2.6" fill="#0C0A08"/>
+      </svg>
+      <div><b data-edit="brand-name">Cinder Hog BBQ</b><span>Smoked all night · Parked near you</span></div>
+    </div>
+    <div class="footer__meta">
+      <span id="footSocial"></span>
+      Call or text <a href="tel:+12085550163" data-tel data-edit="phone">(208) 555-0163</a><br />
+      Catering: <a href="mailto:eat@cinderhogbbq.com" data-edit="email">eat@cinderhogbbq.com</a><br />
+      Roaming <span data-edit="city">Nampa &amp; Boise, Idaho</span> · Wood-fired since 2019<br />
+      <span style="opacity:.6">© <span id="yr"></span> <span data-edit="brand-name">Cinder Hog BBQ</span></span><br />
+      <!-- SWAP:DISCLOSURE -->
+      <span style="opacity:.6">Demonstration website for a fictional food truck.</span><br />
+      <!-- /SWAP:DISCLOSURE -->
+      <span style="opacity:.6">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="find-btn" href="#find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Find us</a>
+  <a class="call-btn" href="tel:+12085550163" data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =========================================================
+     OWNER-EDITABLE CONTENT
+     =========================================================
+     DEFAULT_CONTENT is the built-in fallback — the page renders
+     from it instantly, then fetches content.json (the live copy
+     the /admin/ panel edits) and re-renders with that.
+     Owners: don't edit this file — use /admin/ instead.
+
+     schedule — the Find-the-truck week. One entry per day:
+       day     — full day name, exactly: "Monday" … "Sunday"
+       spot    — where the truck parks (short, punchy name)
+       address — street address or cross-streets shown on the card
+       hours   — serving window as plain text, e.g. "11 AM – 2 PM"
+       mapUrl  — a Google Maps link for the Directions button
+                 (open Google Maps, find the spot, hit Share → Copy link)
+
+     Day off? Use:  { day:"Monday", off:true, note:"why (optional)" }
+     The site figures out which card is TODAY automatically —
+     no dates to type, just day names. Keep all 7 days listed,
+     Monday through Sunday, in order.
+
+     menu — four fixed categories; items have name/desc/price and
+     an optional image (uploaded via the admin panel).
+
+     catering.packages — the three starting-price cards above the
+     lead form. Each: label (tier + headcount), price ("$21" — the
+     currency symbol renders as the small superscript), per (the
+     small line under the price), best (true puts the "Most Booked"
+     ribbon on it — use it on one card, or none), features (a list
+     of ticked lines). Prices here are STARTING prices; every event
+     still gets a real quote. Editable from /admin/ → Catering.
+
+     brand.formEmail — where FormSubmit delivers catering leads.
+     FormSubmit emails a ONE-TIME activation link to that address
+     on the first real submission; click it once and every lead
+     after that lands in that inbox.
+     ========================================================= */
+  var DEFAULT_CONTENT = {
+    brand: {
+      name: "Cinder Hog BBQ",
+      phone: "(208) 555-0163",
+      email: "eat@cinderhogbbq.com",
+      formEmail: "info@kingdom-creatives.com",
+      city: "Nampa & Boise, Idaho",
+      instagram: "@cinderhogbbq"
+    },
+
+    announcement: { text: "", link: "" },
+
+    about: {
+      bio: "Ray Calder spent twenty summers tending his grandfather's cinder-block pit outside Amarillo before hauling the family rub book north to the Treasure Valley. He welded the offset smoker himself, splits his own oak, and still refuses to bolt on a gas assist. One truck, one fire, one rule: if it wouldn't pass at the family table, it doesn't go out the window."
+    },
+
+    social: [],
+
+    schedule: [
+    { day: "Monday",
+      off: true,
+      note: "Smoker's resting. Prepping meat for the week." },
+
+    { day: "Tuesday",
+      spot: "Canal Street Commons",
+      address: "Canal St & 12th Ave S, Nampa",
+      hours: "11 AM – 2 PM",
+      mapUrl: "https://maps.google.com/?q=Canal+St+and+12th+Ave+S,+Nampa,+ID" },
+
+    { day: "Wednesday",
+      spot: "Sawtooth Alley Brewing",
+      address: "Pine Ave & E 2nd St, Meridian",
+      hours: "4 PM – 8 PM",
+      mapUrl: "https://maps.google.com/?q=Pine+Ave+and+E+2nd+St,+Meridian,+ID" },
+
+    { day: "Thursday",
+      spot: "Ninth & Grove Lunch Pod",
+      address: "9th St & Grove St, Boise",
+      hours: "11 AM – 2 PM",
+      mapUrl: "https://maps.google.com/?q=9th+St+and+Grove+St,+Boise,+ID" },
+
+    { day: "Friday",
+      spot: "Bench Line Taproom",
+      address: "Vista Ave & Targee St, Boise",
+      hours: "11 AM – 7 PM",
+      mapUrl: "https://maps.google.com/?q=Vista+Ave+and+Targee+St,+Boise,+ID" },
+
+    { day: "Saturday",
+      spot: "Canyon Bend Growers Market",
+      address: "Front St & 13th Ave S, Nampa",
+      hours: "9 AM – 1 PM",
+      mapUrl: "https://maps.google.com/?q=Front+St+and+13th+Ave+S,+Nampa,+ID" },
+
+    { day: "Sunday",
+      off: true,
+      note: "Church, family, football. See you Tuesday." }
+    ],
+
+    menu: {
+    plates: [
+      { name: "Brisket Plate", desc: "Half pound of 14-hour oak-smoked brisket, sliced to order. Two sides, Texas toast.", price: "$18" },
+      { name: "Pulled Pork Plate", desc: "Hand-pulled shoulder with a vinegar kiss. Two sides, Texas toast.", price: "$15" },
+      { name: "St. Louis Ribs — Half Rack", desc: "Dry-rubbed, smoked till they tug clean off the bone. Two sides.", price: "$17" },
+      { name: "Smoked Turkey Plate", desc: "Brined breast, smoked gentle, sliced thick. Two sides, Texas toast.", price: "$16" },
+      { name: "The Cinder Hog Sampler", desc: "Brisket, pulled pork and two ribs on one tray. For the undecided.", price: "$24" },
+      { name: "Burnt Ends (when we have 'em)", desc: "Double-smoked brisket point cubes, glazed. First to sell out, every time.", price: "$19" }
+    ],
+    sandwiches: [
+      { name: "The Cinder Hog", desc: "Pulled pork piled on a brioche bun with mustard slaw and house pickles.", price: "$12" },
+      { name: "Brisket Sandwich", desc: "Sliced or chopped, your call. Pickles, onion, sauce on the side.", price: "$14" },
+      { name: "Hot Link Sandwich", desc: "House-smoked spicy link, split and seared, mustard and pickled jalapeño.", price: "$11" },
+      { name: "Smoked Turkey Stack", desc: "Smoked turkey, bacon, mustard slaw and mayo on toasted sourdough.", price: "$12" },
+      { name: "The Squealer", desc: "Pulled pork AND hot link on one bun. Bring napkins. Bring a friend.", price: "$14" }
+    ],
+    sides: [
+      { name: "Smoked Mac & Cheese", desc: "Three cheeses, finished in the smoker under a crust of crumbs.", price: "$5" },
+      { name: "Cowboy Beans", desc: "Slow beans loaded with chopped brisket ends. Practically a meal.", price: "$4" },
+      { name: "Mustard Slaw", desc: "Sharp, crunchy, zero mayo. Cuts the richness just right.", price: "$4" },
+      { name: "Skillet Cornbread", desc: "Cast-iron baked, served warm with honey butter.", price: "$3" },
+      { name: "Loaded Potato Salad", desc: "Red potatoes, bacon, scallion — the picnic classic done right.", price: "$5" }
+    ],
+    drinks: [
+      { name: "Sweet Tea", desc: "Brewed strong every morning. The only correct pairing.", price: "$3" },
+      { name: "Fresh-Squeezed Lemonade", desc: "Squeezed at the truck. Ask for it half-and-half with tea.", price: "$3" },
+      { name: "Mexican Coke", desc: "Glass bottle, real sugar.", price: "$3" },
+      { name: "Root Beer", desc: "Bottled, ice-cold, made for ribs.", price: "$3" },
+      { name: "Bottled Water", desc: "Cold and free with any kids' plate.", price: "$1" }
+    ]
+    },
+
+    catering: {
+    packages: [
+      { label: "Backyard · up to ~25",
+        price: "$21",
+        per: "per person · starting",
+        best: false,
+        features: [
+          "Two smoked meats + two sides",
+          "Buns, pickles, sauces & plates",
+          "Drop-off or truck-on-site"
+        ] },
+
+      { label: "Company · up to ~75",
+        price: "$18",
+        per: "per person · starting",
+        best: true,
+        features: [
+          "Three meats + three sides",
+          "Staffed serving line, 90 minutes",
+          "Sweet tea & lemonade included"
+        ] },
+
+      { label: "Wedding · 150+",
+        price: "$16",
+        per: "per person · starting",
+        best: false,
+        features: [
+          "Full spread, carved on site",
+          "Tastings for the two of you first",
+          "We handle setup & cleanup"
+        ] }
+    ]
+    }
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  /* tel: href from the display phone — digits only, +1 for 10-digit US numbers */
+  function telHref(p){
+    var d = String(p || '').replace(/\D/g, '');
+    if(d.length === 10) d = '1' + d;
+    return '+' + d;
+  }
+
+  /* ---------- year stamp ---------- */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ---------- reveal on scroll ---------- */
+  var revs = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    revs.forEach(function(r){ io.observe(r); });
+  } else { revs.forEach(function(r){ r.classList.add('in'); }); }
+
+  /* JS-rendered blocks miss the scan above (it runs once, at boot),
+     so re-arm any .reveal nodes a render just created. */
+  function revealScan(root){
+    if(!root) return;
+    var els = root.querySelectorAll('.reveal');
+    Array.prototype.forEach.call(els, function(r){
+      if(io && !r.classList.contains('in')) io.observe(r);
+      else r.classList.add('in');
+    });
+  }
+
+  /* ---------- hero smoke + embers ---------- */
+  var smokes = document.getElementById('smokes');
+  if(smokes && !reduce){
+    var small = window.innerWidth < 700;
+    var puffN = small ? 5 : 9, emberN = small ? 6 : 12, i, el, dur;
+    for(i=0;i<puffN;i++){
+      el = document.createElement('span');
+      el.className = 'puff';
+      var size = 60 + Math.random()*120;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.left = Math.random()*100 + '%';
+      dur = 16 + Math.random()*14;
+      el.style.animationDuration = dur + 's';
+      el.style.animationDelay = (-Math.random()*dur) + 's';
+      el.style.setProperty('--drift', (Math.random()*160 - 60) + 'px');
+      smokes.appendChild(el);
+    }
+    for(i=0;i<emberN;i++){
+      el = document.createElement('span');
+      el.className = 'emberbit';
+      el.style.left = Math.random()*100 + '%';
+      dur = 7 + Math.random()*8;
+      el.style.animationDuration = dur + 's';
+      el.style.animationDelay = (-Math.random()*dur) + 's';
+      el.style.setProperty('--drift', (Math.random()*120 - 40) + 'px');
+      var s = 2 + Math.random()*3;
+      el.style.width = s + 'px';
+      el.style.height = s + 'px';
+      smokes.appendChild(el);
+    }
+  }
+
+  /* =========================================================
+     FIND THE TRUCK — render the week
+     Day matching is by DAY NAME (Mon–Sun), never by typed
+     dates, so the owner can't break the "today" highlight.
+     ========================================================= */
+  var WEEK = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  var JS_DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderWeek(){
+    var wrap = document.getElementById('week');
+    if(!wrap) return;
+    var todayName = JS_DAYS[new Date().getDay()];       // e.g. "Thursday"
+    var todayIdx = WEEK.indexOf(todayName);             // 0 (Mon) … 6 (Sun)
+    var html = '';
+
+    (CONTENT.schedule || []).forEach(function(entry){
+      var idx = WEEK.indexOf(entry.day);                // -1 if day is mistyped
+      var isToday = idx === todayIdx;
+      var isPast = idx > -1 && idx < todayIdx;
+      var cls = 'daycard';
+      if(entry.off) cls += ' daycard--off';
+      if(isToday) cls += ' daycard--today';
+      else if(isPast) cls += ' daycard--past';
+
+      html += '<article class="' + cls + '">';
+      if(isToday && !entry.off){
+        html += '<span class="today-badge">We’re here today</span>';
+      }
+      html += '<span class="daycard__day">' + esc(entry.day) + (isToday ? ' • today' : '') + '</span>';
+
+      if(entry.off){
+        html += '<span class="daycard__off-pill">' + (isToday ? 'Truck off today' : 'No service') + '</span>';
+        html += '<p class="daycard__addr">' + esc(entry.note || 'Back on the road soon.') + '</p>';
+      } else {
+        html += '<h3 class="daycard__spot">' + esc(entry.spot) + '</h3>';
+        html += '<p class="daycard__addr">' + esc(entry.address) + '</p>';
+        html += '<span class="daycard__hours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>' + esc(entry.hours) + '</span>';
+        if(isPast){
+          html += '<span class="daycard__gone">Been &amp; gone</span>';
+        } else {
+          html += '<a class="btn btn--ghost btn--sm" href="' + esc(entry.mapUrl) + '" target="_blank" rel="noopener noreferrer">'
+               + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-6-3V4l6 3 6-3 6 3v13l-6-3-6 3z"/><path d="M9 7v13M15 4v13"/></svg>'
+               + 'Directions</a>';
+        }
+      }
+      html += '</article>';
+    });
+
+    wrap.innerHTML = html;
+  }
+
+  /* =========================================================
+     MENU — tab pills swap the list
+     ========================================================= */
+  var menuList = document.getElementById('menuList');
+  var tabs = document.querySelectorAll('.menu__tabs .tab');
+  var currentCat = 'plates';
+
+  function renderMenu(cat){
+    currentCat = cat;
+    var items = (CONTENT.menu || {})[cat] || [];
+    var html = '';
+    items.forEach(function(it){
+      var inner = '<div class="mi__row"><span class="mi__name">' + esc(it.name) + '</span>'
+        + '<span class="mi__dots" aria-hidden="true"></span>'
+        + '<span class="mi__price">' + esc(it.price) + '</span></div>'
+        + '<p class="mi__desc">' + esc(it.desc) + '</p>';
+      html += '<div class="mi">'
+        + (it.image
+            ? '<div class="mi__flex"><img class="mi__thumb" src="' + esc(it.image) + '" alt="' + esc(it.name) + '" loading="lazy"><div class="mi__inner">' + inner + '</div></div>'
+            : inner)
+        + '</div>';
+    });
+    menuList.innerHTML = html;
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){
+        t.classList.toggle('on', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
+      menuList.setAttribute('aria-labelledby', tab.id);
+      renderMenu(tab.getAttribute('data-cat'));
+    });
+  });
+
+  /* =========================================================
+     CATERING PACKAGES — starting-price cards, from CONTENT
+     so the owner can change a price from /admin/ without a
+     developer. Same markup the cards always had.
+     ========================================================= */
+  var TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
+
+  /* "$21" -> ['$','21'] so the symbol can render as the small superscript.
+     A price with no leading symbol ("Ask us") just renders as-is. */
+  function splitPrice(p){
+    var m = String(p == null ? '' : p).trim().match(/^([^0-9]*)([\s\S]*)$/);
+    return m ? [m[1], m[2]] : ['', ''];
+  }
+
+  function renderPackages(){
+    var grid = document.getElementById('pkgGrid');
+    if(!grid) return;
+    var pkgs = (CONTENT.catering && CONTENT.catering.packages) || [];
+    var html = '';
+
+    pkgs.forEach(function(p, i){
+      var pr = splitPrice(p.price);
+      html += '<div class="pkg' + (p.best ? ' pkg--best' : '') + ' reveal" data-delay="' + (i + 1) + '">';
+      if(p.label) html += '<span class="pkg__label">' + esc(p.label) + '</span>';
+      html += '<div class="pkg__price">' + (pr[0] ? '<sup>' + esc(pr[0]) + '</sup>' : '') + esc(pr[1]) + '</div>';
+      if(p.per) html += '<div class="pkg__per">' + esc(p.per) + '</div>';
+      var feats = p.features || [];
+      if(feats.length){
+        html += '<ul class="pkg__features">';
+        feats.forEach(function(f){ html += '<li>' + TICK + esc(f) + '</li>'; });
+        html += '</ul>';
+      }
+      html += '<a class="btn" href="#lead">Get a quote</a>';
+      html += '</div>';
+    });
+
+    grid.innerHTML = html;
+    /* No packages = no empty grid (and no dangling 56px gap); the lead form
+       still carries the quote. Inline display beats .pkg-grid's display:grid,
+       which [hidden] would not. */
+    grid.style.display = pkgs.length ? '' : 'none';
+    revealScan(grid);
+  }
+
+  /* =========================================================
+     CATERING LEAD FORM — FormSubmit, no backend
+     ========================================================= */
+  var form = document.getElementById('leadForm');
+  if(form){
+    var msgEl = document.getElementById('leadMsg');
+    var submitBtn = document.getElementById('leadSubmit');
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    var val = function(id){ var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; };
+    var mark = function(id, bad){
+      var el = document.getElementById(id);
+      if(el && el.closest('.field')) el.closest('.field').classList.toggle('invalid', !!bad);
+    };
+
+    /* Desktop guard: never let sms:/tel: links trigger Windows'
+       "Pick an app" dialog — show a toast with the number instead.
+       Mobile is untouched; phones handle these links natively. */
+    if(!isMobile){
+      document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+        if(!a) return;
+        e.preventDefault();
+        var t = document.getElementById('smsToast');
+        if(!t){
+          t = document.createElement('div');
+          t.id = 'smsToast';
+          t.setAttribute('role','status');
+          t.style.cssText = 'position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:9999;'
+            + 'background:#1F1913;color:#F6EBD9;padding:14px 22px;border-radius:12px;'
+            + 'box-shadow:0 12px 40px rgba(0,0,0,.6);border:1px solid rgba(232,89,12,.4);'
+            + 'font-family:\'Nunito Sans\',system-ui,sans-serif;font-size:15px;max-width:88vw;text-align:center;'
+            + 'opacity:0;transition:opacity .25s ease;';
+          document.body.appendChild(t);
+        }
+        t.innerHTML = 'Call or text us at <strong style="color:#E3B341;letter-spacing:.02em">' + esc(CONTENT.brand.phone) + '</strong> from your phone.';
+        requestAnimationFrame(function(){ t.style.opacity = '1'; });
+        clearTimeout(window.__smsToastTimer);
+        window.__smsToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 4500);
+      });
+    }
+
+    var buildSms = function(d){
+      var body = "Hi " + CONTENT.brand.name + "! Catering quote please."
+        + " Name: " + d.name + "."
+        + " Phone: " + d.phone + "."
+        + " Date: " + d.event_date + "."
+        + " Headcount: " + d.headcount + "."
+        + " Type: " + d.event_type + "."
+        + (d.message ? " Notes: " + d.message : "");
+      return "sms:" + telHref(CONTENT.brand.phone) + "?body=" + encodeURIComponent(body);
+    };
+
+    var showDone = function(d){
+      form.hidden = true;
+      var done = document.getElementById('leadDone');
+      var dm = document.getElementById('doneMsg');
+      var smsUrl = buildSms(d);
+      if(dm){
+        if(isMobile){
+          dm.textContent = "Got it, " + d.name.split(' ')[0] + "! We'll reach you at " + d.phone
+            + " within one business day. Opening a text so you can send us a copy too — just hit send.";
+        } else {
+          dm.textContent = "Got it, " + d.name.split(' ')[0] + "! We'll call or email you within one business day to talk headcount, meats and a real number.";
+        }
+      }
+      if(done){ done.hidden = false; done.scrollIntoView({behavior:'smooth', block:'center'}); }
+      /* Belt-and-suspenders: on mobile only, also open a pre-filled text. */
+      if(isMobile){ setTimeout(function(){ window.location.href = smsUrl; }, 900); }
+    };
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      /* honeypot: bots fill it, humans can't see it */
+      if(form.querySelector('input[name="_honey"]').value){ return; }
+
+      var d = {
+        name: val('c-name'),
+        phone: val('c-phone'),
+        email: val('c-email'),
+        event_date: val('c-date'),
+        headcount: val('c-count'),
+        event_type: val('c-type'),
+        message: val('c-msg')
+      };
+
+      var bad = false;
+      mark('c-name', !d.name); bad = bad || !d.name;
+      mark('c-phone', !/[\d]{7,}/.test(d.phone.replace(/\D/g,''))); bad = bad || !/[\d]{7,}/.test(d.phone.replace(/\D/g,''));
+      mark('c-email', !/^\S+@\S+\.\S+$/.test(d.email)); bad = bad || !/^\S+@\S+\.\S+$/.test(d.email);
+      mark('c-date', !d.event_date); bad = bad || !d.event_date;
+      mark('c-count', !d.headcount); bad = bad || !d.headcount;
+      mark('c-type', !d.event_type); bad = bad || !d.event_type;
+
+      if(bad){
+        msgEl.textContent = 'Almost there — fill in the highlighted fields.';
+        msgEl.className = 'lead__msg err';
+        return;
+      }
+
+      msgEl.textContent = 'Sending…';
+      msgEl.className = 'lead__msg';
+      submitBtn.disabled = true;
+
+      fetch('https://formsubmit.co/ajax/' + CONTENT.brand.formEmail, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Catering lead — ' + d.name + ' (' + d.headcount + ', ' + d.event_date + ')',
+          _template: 'table',
+          name: d.name,
+          phone: d.phone,
+          email: d.email,
+          event_date: d.event_date,
+          headcount: d.headcount,
+          event_type: d.event_type,
+          message: d.message || '(none)'
+        })
+      }).then(function(res){
+        if(!res.ok) throw new Error('bad status');
+        return res.json();
+      }).then(function(){
+        showDone(d);
+      }).catch(function(){
+        submitBtn.disabled = false;
+        msgEl.innerHTML = 'Hmm, that didn’t go through. Call or text us at <b>' + esc(CONTENT.brand.phone) + '</b> — or '
+          + '<a href="' + buildSms(d).replace(/"/g,'&quot;') + '" style="color:#FF7A2F;font-weight:800">tap here to send it as a text</a>.';
+        msgEl.className = 'lead__msg err';
+      });
+    });
+  }
+
+  /* =========================================================
+     CONTENT RENDERING — defaults first (no flash), then merge
+     content.json (edited by /admin/) over the top. Never
+     hard-fails: 404/offline just means the defaults stand.
+     ========================================================= */
+  function applyEdits(){
+    var b = CONTENT.brand || {};
+    var tel = telHref(b.phone);
+    var map = {
+      'brand-name': b.name,
+      'phone': b.phone,
+      'email': b.email,
+      'city': b.city,
+      'instagram': b.instagram,
+      'bio': (CONTENT.about && CONTENT.about.bio) || ''
+    };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-edit]'), function(el){
+      var k = el.getAttribute('data-edit');
+      var v = map[k];
+      if(v == null) return;
+      el.textContent = v;
+      if(el.tagName === 'A' && k === 'email') el.setAttribute('href', 'mailto:' + v);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('a[data-tel]'), function(a){
+      a.setAttribute('href', 'tel:' + tel);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('a[data-sms]'), function(a){
+      a.setAttribute('href', 'sms:' + tel + '?body=' + encodeURIComponent("Hi " + (b.name || '') + "! I'd like a catering quote."));
+    });
+
+    /* announcement pill in the hero — hidden when there's no text */
+    var bar = document.getElementById('announceBar');
+    if(bar){
+      var an = CONTENT.announcement || {};
+      if(an.text){
+        bar.hidden = false;
+        bar.innerHTML = an.link
+          ? '<a href="' + esc(an.link) + '" target="_blank" rel="noopener noreferrer">' + esc(an.text) + '</a>'
+          : esc(an.text);
+      } else {
+        bar.hidden = true;
+        bar.innerHTML = '';
+      }
+    }
+
+    /* footer social links — only when the owner adds some */
+    var fsoc = document.getElementById('footSocial');
+    if(fsoc){
+      var soc = CONTENT.social || [];
+      fsoc.innerHTML = soc.length
+        ? soc.map(function(s){
+            return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.n) + '</a>';
+          }).join(' · ') + '<br />'
+        : '';
+    }
+  }
+
+  function renderContent(){
+    applyEdits();
+    renderWeek();
+    renderMenu(currentCat);
+    renderPackages();
+  }
+
+  renderContent();
+  fetch('content.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(); }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

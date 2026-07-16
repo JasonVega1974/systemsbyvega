@@ -1,0 +1,81 @@
+{
+  "brand": {
+    "name": "Grit & Gleam Powerwashing",
+    "tagline": "Grime today. Gleam by tonight.",
+    "phone": "(208) 555-0151",
+    "email": "hello@gritgleampowerwash.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Nampa, ID"
+  },
+  "surfaces": [
+    {
+      "name": "Driveways & Walkways",
+      "blurb": "Hot-water blast lifts oil stains, tire marks and years of ground-in grime that concrete cleaners can't touch."
+    },
+    {
+      "name": "House Siding",
+      "blurb": "Low-pressure soft-wash on vinyl, stucco and painted surfaces — strong enough for algae and pollen, gentle enough not to strip a finish."
+    },
+    {
+      "name": "Roof Soft-Washing",
+      "blurb": "Kills the black streaks (that's algae, not dirt) without a single pound of pressure ever touching a shingle."
+    },
+    {
+      "name": "Decks & Fences",
+      "blurb": "Wood brightening pulls out gray weathering and mildew, leaving bare wood ready for stain or sealant."
+    },
+    {
+      "name": "Commercial & HOA",
+      "blurb": "Sidewalks, dumpster pads, storefronts and shared amenities — scheduled on a route so nothing gets forgotten."
+    }
+  ],
+  "pricing": [
+    {
+      "name": "Driveway Refresh",
+      "price": 149,
+      "unit": "flat, up to 600 sq ft",
+      "best": false,
+      "features": "Driveway + walkway\nOil & tire-stain pretreat\nEco-conscious detergent\nBefore/after photos texted",
+      "note": "Extra square footage past 600 ft² is billed at $0.18/ft² — quoted before we start, never after."
+    },
+    {
+      "name": "Full Exterior Wash",
+      "price": 329,
+      "unit": "flat, most single-story homes",
+      "best": true,
+      "features": "Siding, soffits & fascia\nGutter exteriors brushed\nWindows rinsed (exterior)\nDriveway approach included",
+      "note": "Two-story homes or heavy staining get a confirmed adjusted price before booking — never a surprise on the invoice."
+    },
+    {
+      "name": "Deck & Fence Restore",
+      "price": 219,
+      "unit": "flat, up to 400 sq ft of deck",
+      "best": false,
+      "features": "Wood brightening treatment\nMildew & algae treatment\nSealant-ready rinse\nRailings & stairs included",
+      "note": "Bigger deck or a full privacy fence? Text a photo and we'll quote the real number in minutes."
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Nampa",
+      "Caldwell",
+      "Meridian",
+      "Boise",
+      "Star",
+      "Middleton"
+    ]
+  },
+  "owner": {
+    "name": "Dev Okafor",
+    "bio": "Dev Okafor spent six years running exterior maintenance crews for property management companies across the Treasure Valley — swapping air filters, patching drywall, and scrubbing enough grimy siding to last two lifetimes. In 2022, Dev bought a second pressure washer, printed some door hangers, and started knocking on doors personally. Grit & Gleam is still a two-person outfit: Dev drives most jobs, texts you back personally, and walks every finished job with you before packing up the hose.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "author": "", "location": "" },
+    { "quote": "", "author": "", "location": "" },
+    { "quote": "", "author": "", "location": "" }
+  ],
+  "social": []
+}

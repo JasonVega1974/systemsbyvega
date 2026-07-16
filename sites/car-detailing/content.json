@@ -1,0 +1,87 @@
+{
+  "brand": {
+    "name": "Kestrel Detail Co.",
+    "tagline": "Showroom shine, curbside.",
+    "phone": "(208) 555-0166",
+    "email": "hello@kestreldetail.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Boise, ID"
+  },
+  "packages": [
+    {
+      "name": "Express Refresh",
+      "price": 89,
+      "duration": "~1 hour",
+      "popular": false,
+      "best": "A fast reset between details — dust, crumbs and a clean exterior.",
+      "includes": "Hand wash & dry\nWheels & tires cleaned\nInterior vacuum\nWindows in & out\nDash & console wiped down"
+    },
+    {
+      "name": "Full Detail",
+      "price": 189,
+      "duration": "~3 hours",
+      "popular": true,
+      "best": "Our most-booked service — inside and out, top to bottom.",
+      "includes": "Everything in Express Refresh\nInterior deep-clean & shampoo\nLeather cleaned & conditioned\nClay bar & spray sealant\nDoor jambs & trim dressed\nStreak-free glass treatment"
+    },
+    {
+      "name": "Showroom Detail",
+      "price": 329,
+      "duration": "~5 hours",
+      "popular": false,
+      "best": "The full reset — for sale-ready cars or once-a-year deep love.",
+      "includes": "Everything in Full Detail\nMachine paint decon & polish\nHand-applied paint sealant\nCarpet & upholstery extraction\nHeadliner & vents detailed\nEngine bay cleaned & dressed"
+    }
+  ],
+  "addons": [
+    { "name": "Pet hair removal", "price": 35, "desc": "Embedded fur pulled from seats and carpets." },
+    { "name": "Headlight restore", "price": 45, "desc": "Cut the haze, bring back clear lenses (pair)." },
+    { "name": "Engine bay clean", "price": 40, "desc": "Degreased, rinsed and dressed to shine." },
+    { "name": "Odor treatment", "price": 30, "desc": "Neutralize smoke, pets and gym-bag funk." },
+    { "name": "Shampoo & extract", "price": 55, "desc": "Deep hot-water extraction on carpets and cloth seats." }
+  ],
+  "notes": {
+    "pkgAddon": "Bigger rig — truck, van, or a third-row SUV packed with life? Add $20–$40 depending on size. Not sure which package? Book \"help me pick\" and we'll sort it when we see the car.",
+    "addonFoot": "Something not on the list? Text us a photo and we'll tell you straight whether it's worth doing."
+  },
+  "zones": [
+    {
+      "id": "paint",
+      "label": "Paint & body",
+      "blurb": "A foam pre-soak lifts grit before a gentle two-bucket hand wash, then bug and tar spots come off by hand. Clay and a spray sealant leave the finish slick and beading — not just clean, protected."
+    },
+    {
+      "id": "glass",
+      "label": "Glass & mirrors",
+      "blurb": "Inside and out, edge to edge, including the streaks everyone misses at the top of the windshield and the smudges on the mirrors. Ask for a rain-repellent treatment and we'll add it."
+    },
+    {
+      "id": "interior",
+      "label": "Interior & seats",
+      "blurb": "Vacuumed down to the seat tracks, mats shampooed, leather cleaned and conditioned, plastics wiped down. Steam where it needs it — and no greasy shine left behind on the dash."
+    },
+    {
+      "id": "wheels",
+      "label": "Wheels & tires",
+      "blurb": "Barrels, faces and lug nuts scrubbed, brake dust and iron fallout dissolved, then a satin dressing on the tires. It's the first thing people notice and the first thing most washes skip."
+    },
+    {
+      "id": "trim",
+      "label": "Trim & details",
+      "blurb": "Faded black trim brought back, door jambs wiped, vents and cupholders dug out, badges detailed. The small stuff that makes a whole car read as cared-for."
+    }
+  ],
+  "results": [],
+  "testimonials": [],
+  "serviceArea": {
+    "region": "Boise & the Treasure Valley",
+    "short": "Treasure Valley",
+    "cities": ["Boise", "Meridian", "Eagle", "Nampa", "Kuna", "Star", "Garden City"]
+  },
+  "owner": {
+    "name": "Theo Marsh",
+    "bio": "Theo Marsh has been detailing cars around Boise since he was cleaning up trade-ins for a used lot at nineteen. Kestrel Detail Co. is the one-van operation he always wanted to run: he shows up to your driveway with water, power and everything else, does the work himself, and doesn't leave until the car looks like the day you fell for it. No lot to drop off at, no shuttle to catch, no upsell games — just an honest detail and a number you agreed to before he started.",
+    "photo": ""
+  },
+  "social": []
+}

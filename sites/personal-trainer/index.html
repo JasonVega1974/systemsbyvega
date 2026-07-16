@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cora Vale Fitness — Personal Training in Eagle, Idaho</title>
+<meta name="description" content="Cora Vale Fitness — 1:1 and small-group personal training in Eagle, Idaho, in-person or online. Strength, first-5K, postpartum and over-50 coaching, built around your goal." />
+<meta name="theme-color" content="#14181c" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/cora-vale-fitness-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/cora-vale-fitness-demo/" />
+<meta property="og:title" content="Cora Vale Fitness — Personal Training in Eagle, Idaho" />
+<meta property="og:description" content="1:1 and small-group personal training, in-person or online. Pick your goal — strength, first 5K, postpartum or over 50 — and the plan is built around it." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: dumbbell mark, ember on charcoal (inline SVG, no file needed) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314181c'/%3E%3Crect x='8' y='24' width='9' height='16' rx='2.5' fill='%23FF5A2E'/%3E%3Crect x='47' y='24' width='9' height='16' rx='2.5' fill='%23FF5A2E'/%3E%3Crect x='16' y='29' width='32' height='6' rx='2' fill='%23FF5A2E'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+<!-- Structured data: the studio + the trainer -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ExerciseGym",
+      "@id": "https://jasonvega1974.github.io/cora-vale-fitness-demo/#studio",
+      "name": "Cora Vale Fitness",
+      "description": "Personal training studio in Eagle, Idaho. 1:1 and small-group strength coaching, first-5K run coaching, postpartum return-to-training and over-50 programming, in-person or online.",
+      "email": "hello@coravalefitness.com",
+      "telephone": "+12085550172",
+      "url": "https://jasonvega1974.github.io/cora-vale-fitness-demo/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Eagle",
+        "addressRegion": "ID",
+        "addressCountry": "US"
+      },
+      "founder": { "@id": "https://jasonvega1974.github.io/cora-vale-fitness-demo/#cora" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://jasonvega1974.github.io/cora-vale-fitness-demo/#cora",
+      "name": "Cora Vale",
+      "jobTitle": "Personal Trainer",
+      "worksFor": { "@id": "https://jasonvega1974.github.io/cora-vale-fitness-demo/#studio" },
+      "knowsAbout": ["Strength training", "First 5K run coaching", "Postpartum fitness", "Fitness training for adults over 50"]
+    }
+  ]
+}
+</script>
+
+<style>
+/* =========================================================
+   CORA VALE FITNESS — tokens
+   Warm graphite base, molten-ember accent, chalk-teal secondary.
+   Condensed athletic display + clean workhorse body.
+   ========================================================= */
+:root{
+  --char:#14181c;
+  --char-2:#1a1f24;
+  --char-3:#20262c;
+  --ember:#FF5A2E;
+  --ember-bright:#FF7A47;
+  --ember-deep:#8A2A10;
+  --chalk:#4FD8C4;
+  --bone:#EDEDE6;
+  --muted:#9B9B92;
+  --hair:rgba(237,237,230,.12);
+  --card:rgba(32,38,44,.55);
+  --card-brd:rgba(237,237,230,.13);
+  --shadow:0 30px 70px -30px rgba(0,0,0,.85);
+  --maxw:1120px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--char);
+  color:var(--bone);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+
+/* fixed atmospheric backdrop */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(900px 620px at 85% -8%, rgba(255,90,46,.16), transparent 62%),
+    radial-gradient(760px 560px at -10% 30%, rgba(79,216,196,.06), transparent 60%),
+    radial-gradient(1000px 700px at 55% 115%, rgba(32,38,44,.6), transparent 65%),
+    linear-gradient(180deg,#16191d 0%, #14181c 50%, #101316 100%);
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    radial-gradient(rgba(237,237,230,.045) 1px, transparent 1.4px),
+    radial-gradient(rgba(237,237,230,.03) 1px, transparent 1.3px);
+  background-size:26px 26px, 17px 17px;
+  background-position:0 0, 9px 13px;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:600;text-transform:uppercase;letter-spacing:.22em;
+  font-size:.72rem;color:var(--ember-bright);
+  display:inline-flex;align-items:center;gap:.65rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;
+  background:linear-gradient(90deg,var(--ember),transparent);
+}
+.display{
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  line-height:.92;letter-spacing:.01em;
+}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(2.4rem,5.6vw,3.8rem);line-height:.98;letter-spacing:.01em;
+  background:linear-gradient(180deg,#fbf9f4 0%, var(--bone) 55%, #c9b9a6 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.05rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-weight:700;letter-spacing:.06em;
+  font-size:.92rem;padding:1.02rem 1.9rem;border-radius:4px;border:0;cursor:pointer;
+  color:#fff8f2;background:linear-gradient(150deg,var(--ember-bright),var(--ember-deep));
+  box-shadow:0 14px 34px -14px rgba(255,90,46,.6), inset 0 1px 0 rgba(255,255,255,.18);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 42px -14px rgba(255,90,46,.75), inset 0 1px 0 rgba(255,255,255,.22)}
+.btn:active{transform:translateY(0)}
+.btn::after{
+  content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,240,220,.32),transparent);
+  transform:skewX(-16deg);transition:left .6s ease;
+}
+.btn:hover::after{left:140%}
+.btn--ghost{
+  background:transparent;color:var(--bone);
+  border:1px solid var(--hair);box-shadow:none;
+}
+.btn--ghost:hover{border-color:rgba(237,237,230,.35);background:rgba(237,237,230,.05);box-shadow:none}
+.btn--lg{font-size:1rem;padding:1.15rem 2.3rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--ember-bright);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;padding:18px 0;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+}
+.nav.solid{
+  background:rgba(20,24,28,.88);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair);padding:11px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:38px;height:38px;flex:none;filter:drop-shadow(0 3px 12px rgba(255,90,46,.4))}
+.brand__name{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.3rem;line-height:1;letter-spacing:.03em}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;
+  color:var(--bone);opacity:.72;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:#fff}
+.nav__book{display:inline-flex;align-items:center;font-weight:700;letter-spacing:.06em;
+  font-size:.78rem;padding:.62rem 1.15rem;border-radius:4px;color:#fff8f2;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(150deg,var(--ember-bright),var(--ember-deep));
+  box-shadow:0 10px 26px -12px rgba(255,90,46,.7)}
+@media(max-width:860px){.nav__links a.link{display:none}}
+@media(max-width:400px){.brand__name{font-size:1.1rem}}
+
+/* =========================================================
+   HERO — identity first
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(64px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,64px);align-items:center}
+@media(max-height:760px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:34px}}
+
+.hero__tag{margin-bottom:22px}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(3.4rem,10vw,6.6rem);line-height:.9;letter-spacing:.01em;margin-bottom:8px}
+.hero h1 .l1{display:block;
+  background:linear-gradient(180deg,#fffaf5 0%, var(--bone) 55%, #cbb89a 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 26px rgba(0,0,0,.55))}
+.hero h1 .l2{display:block;color:var(--ember);font-size:.42em;font-family:'Inter',sans-serif;font-weight:800;letter-spacing:.02em;
+  text-shadow:0 4px 30px rgba(255,90,46,.3);margin-top:10px}
+.hero__sub{font-size:1.12rem;color:var(--muted);max-width:46ch;margin:20px 0 32px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.9rem;color:#fbf9f4;letter-spacing:.02em}
+.proof span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.proof + .proof{padding-left:28px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* portrait frame — CSS-only placeholder until a real photo exists */
+.hero__portrait{position:relative;display:flex;justify-content:center}
+.portrait{position:relative;width:min(380px,86%);aspect-ratio:4/5;background:linear-gradient(165deg,#1c2127,#101316 70%);
+  border:1px solid var(--card-brd);box-shadow:var(--shadow)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.portrait::before{content:"";position:absolute;inset:12px;border:1px solid rgba(255,90,46,.35);pointer-events:none;z-index:2}
+.portrait__corner{position:absolute;width:22px;height:22px;border:0 solid var(--ember);z-index:3;pointer-events:none}
+.portrait__corner--tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px}
+.portrait__corner--br{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px}
+/* no-photo state: deliberate composition with the dumbbell mark.
+   For a real rebrand, drop <img src="assets/portrait.jpg"> inside
+   .portrait and this whole treatment disappears automatically. */
+.portrait:not(:has(img))::after{
+  content:"Cora Vale · Eagle, Idaho";
+  position:absolute;inset:0;display:grid;place-items:end center;text-align:center;
+  padding:0 20px 24px;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--bone);opacity:.75;z-index:1}
+.portrait:not(:has(img)) .portrait__wash{
+  position:absolute;inset:0;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg opacity='.22'%3E%3Crect x='8' y='24' width='9' height='16' rx='2.5' fill='%23EDEDE6'/%3E%3Crect x='47' y='24' width='9' height='16' rx='2.5' fill='%23EDEDE6'/%3E%3Crect x='16' y='29' width='32' height='6' rx='2' fill='%23FF5A2E'/%3E%3C/g%3E%3C/svg%3E") center 38% / 140px auto no-repeat,
+    radial-gradient(70% 55% at 50% 38%, rgba(255,90,46,.14), transparent 70%),
+    radial-gradient(50% 40% at 50% 82%, rgba(237,237,230,.05), transparent 70%),
+    repeating-linear-gradient(135deg, transparent 0 16px, rgba(237,237,230,.03) 16px 17px)}
+
+/* floating chalk-dust motes in the hero */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.mote{position:absolute;bottom:-4%;border-radius:50%;opacity:0;filter:blur(1px);
+  animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translateY(0) translateX(0) scale(.7);opacity:0}
+  12%{opacity:var(--o,.5)}
+  85%{opacity:var(--o,.5)}
+  100%{transform:translateY(-108vh) translateX(var(--sway,20px)) scale(1);opacity:0}
+}
+
+.hero__rule{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(720px,84%);height:1px;
+  background:linear-gradient(90deg,transparent,var(--hair) 20%,rgba(255,90,46,.5) 50%,var(--hair) 80%,transparent)}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:96px 0}
+.section__head{max-width:640px;margin-bottom:46px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — goal-path picker
+   ========================================================= */
+.goals{background:linear-gradient(180deg,rgba(32,38,44,.5),transparent);border-block:1px solid var(--hair)}
+.goal-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px}
+.goal-pill{cursor:pointer;background:transparent;border:1px solid var(--hair);border-radius:999px;
+  padding:.62rem 1.35rem;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);transition:color .2s,border-color .2s,background .2s}
+.goal-pill:hover{color:var(--bone);border-color:rgba(237,237,230,.32)}
+.goal-pill[aria-pressed="true"]{color:#fff8f2;border-color:transparent;
+  background:linear-gradient(150deg,var(--ember-bright),var(--ember-deep));
+  box-shadow:0 10px 26px -14px rgba(255,90,46,.8)}
+
+.goal-panel{max-width:920px;margin:0 auto}
+.goal-tagline{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:.01em;
+  text-align:center;color:#fbf9f4;margin-bottom:10px}
+.goal-blurb{text-align:center;color:var(--muted);max-width:64ch;margin:0 auto 40px}
+
+.program-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:prog;margin-bottom:36px}
+@media(max-width:820px){.program-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.program-card{position:relative;padding:28px 24px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:6px;backdrop-filter:blur(8px)}
+.program-card__n{counter-increment:prog;font-family:'Bebas Neue',sans-serif;font-size:2.4rem;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(255,122,71,.75);display:block;margin-bottom:12px}
+.program-card__n::before{content:"0" counter(prog)}
+.program-card h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.4rem;margin-bottom:8px;color:#f6f2e9;letter-spacing:.01em}
+.program-card p{color:var(--muted);font-size:.95rem}
+
+.goal-proof{display:flex;gap:0;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
+.goal-proof .proof{padding:0 26px}
+.goal-proof .proof + .proof{border-left:1px solid var(--hair)}
+@media(max-width:640px){.goal-proof .proof + .proof{border-left:0}}
+
+.goal-cta{display:flex;justify-content:center}
+
+/* =========================================================
+   PRICING
+   ========================================================= */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+@media(max-width:900px){.pricing-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.price-card{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:6px;backdrop-filter:blur(8px);display:flex;flex-direction:column}
+.price-card--best{border-color:rgba(255,90,46,.5);box-shadow:0 0 0 1px rgba(255,90,46,.25), var(--shadow)}
+.price-card__badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(150deg,var(--ember-bright),var(--ember-deep));color:#fff8f2;
+  font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:.32rem .9rem;border-radius:999px;white-space:nowrap}
+.price-card__name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.01em;color:#f6f2e9;margin-bottom:6px}
+.price-card__price{display:flex;align-items:baseline;gap:.35rem;margin-bottom:16px}
+.price-card__price b{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--ember-bright)}
+.price-card__price span{color:var(--muted);font-size:.85rem}
+.price-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:8px;flex:1}
+.price-card li{display:flex;gap:.6rem;align-items:flex-start;color:var(--muted);font-size:.92rem}
+.price-card li svg{flex:none;width:16px;height:16px;margin-top:3px;color:var(--chalk)}
+.price-card__note{font-size:.78rem;color:var(--ember-bright);font-weight:600;margin-top:10px}
+.pricing-note{text-align:center;color:var(--muted);font-size:.9rem;margin-top:28px}
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+.about__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(30px,5vw,60px);align-items:center;max-width:980px;margin:0 auto}
+@media(max-width:820px){.about__grid{grid-template-columns:1fr;max-width:520px}}
+.about__photo{position:relative;aspect-ratio:4/5;border:1px solid var(--card-brd);box-shadow:var(--shadow);
+  background:linear-gradient(165deg,#1c2127,#101316 70%)}
+.about__photo img{width:100%;height:100%;object-fit:cover}
+/* no-photo state: moody rack-and-chalk composition. For a real rebrand,
+   drop <img src="assets/studio.jpg"> inside and it disappears. */
+.about__photo:not(:has(img))::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(42% 30% at 62% 26%, rgba(79,216,196,.16), transparent 72%),
+    radial-gradient(closest-side at 50% 52%, rgba(255,90,46,.13), transparent 72%),
+    linear-gradient(180deg, transparent 68%, rgba(237,237,230,.05) 68.4%, transparent 69%),
+    repeating-linear-gradient(45deg, transparent 0 15px, rgba(237,237,230,.03) 15px 16px)}
+.about__photo:not(:has(img))::after{content:"The studio · Eagle, Idaho";
+  position:absolute;inset:0;display:grid;place-items:end center;text-align:center;
+  padding:0 20px 22px;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--bone);opacity:.7}
+.about__body .section-title{margin:14px 0 20px}
+.bio{color:var(--bone);font-size:1.02rem;line-height:1.75;padding:26px;border:1px solid var(--card-brd);
+  background:var(--card);backdrop-filter:blur(8px);min-height:150px}
+.bio:empty::before{
+  content:"Cora's bio goes here — how she started coaching, what she looks for in a client, why the plans are written by hand. Two or three honest sentences beat a paragraph of hype. Replace this placeholder when it's written.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+.about__chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--hair);padding:.42rem .85rem;border-radius:999px}
+
+/* =========================================================
+   GALLERY (supporting — not the signature; simple grid, no filter/lightbox)
+   ========================================================= */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.gallery-grid{grid-template-columns:1fr}}
+.gtile{position:relative;aspect-ratio:4/5;border:1px solid var(--card-brd);border-radius:4px;overflow:hidden;background:var(--char-3)}
+.gtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gtile__cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px;
+  background:linear-gradient(180deg,transparent,rgba(10,12,14,.86));
+  font-size:.66rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bone)}
+.gtile:not(:has(img))::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side at 50% 42%, rgba(255,90,46,.14), transparent 72%),
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(237,237,230,.03) 14px 15px)}
+.gtile:not(:has(img))::after{content:"Photo coming soon";position:absolute;inset:0;display:grid;place-items:center;
+  text-align:center;padding:0 16px;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+/* =========================================================
+   PROCESS
+   ========================================================= */
+.process{background:linear-gradient(180deg,transparent,rgba(32,38,44,.4))}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.steps{grid-template-columns:1fr;max-width:480px}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:6px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Bebas Neue',sans-serif;font-size:2.6rem;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(255,122,71,.75);display:block;margin-bottom:14px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.4rem;margin-bottom:8px;color:#f6f2e9}
+.step p{color:var(--muted);font-size:.95rem}
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.test-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.test-card{padding:28px 24px;background:var(--card);border:1px solid var(--card-brd);border-radius:6px;backdrop-filter:blur(8px)}
+.test-card blockquote{color:var(--bone);font-size:.98rem;line-height:1.6;min-height:70px;margin-bottom:14px}
+.test-card blockquote:empty::before{content:"Real review coming soon.";color:var(--muted);font-style:italic}
+.test-card cite{font-style:normal;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ember-bright)}
+.test-card cite:empty::before{content:"—";color:var(--muted)}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:740px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:6px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:19px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-weight:500;font-size:1rem;color:#f3ede1}
+.faq summary::-webkit-details-marker{display:none}
+.faq__badge{flex:none;font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ember-bright);border:1px solid rgba(255,90,46,.45);padding:.22rem .55rem;border-radius:999px;margin-right:10px}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,90,46,.5);color:var(--ember-bright);transition:transform .25s ease;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:.97rem}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.book-sec{position:relative;overflow:hidden;border-block:1px solid var(--hair);
+  background:
+    radial-gradient(640px 340px at 14% 0%, rgba(255,90,46,.22), transparent 62%),
+    radial-gradient(560px 320px at 92% 100%, rgba(79,216,196,.1), transparent 60%),
+    linear-gradient(165deg,#181c21,#101316)}
+.book{max-width:760px;margin:0 auto;background:rgba(16,19,22,.65);
+  border:1px solid var(--card-brd);border-radius:6px;padding:clamp(24px,3.4vw,36px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bone);margin-bottom:7px}
+.field label em{color:var(--ember-bright);font-style:normal}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:4px;
+  background:rgba(10,12,14,.7);border:1px solid var(--hair);color:#fbf9f4;
+  font-family:'Inter',sans-serif;font-size:.98rem}
+.field textarea{resize:vertical;min-height:110px}
+.field input::placeholder,.field textarea::placeholder{color:#6b6a63}
+.field select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF7A47' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:16px;padding-right:2.6rem}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(255,90,46,.6);background:rgba(10,12,14,.9)}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:#ff8a6b;box-shadow:0 0 0 2px rgba(255,138,107,.2)}
+.field--wide{grid-column:1 / -1}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.9rem;line-height:1.55;cursor:pointer}
+.consent input{margin-top:.2rem;width:17px;height:17px;flex:none;accent-color:var(--ember);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px}
+.book__actions .btn[disabled]{opacity:.65;cursor:progress}
+.book__alt{letter-spacing:.02em;color:var(--bone);opacity:.8;font-size:.82rem;
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,90,46,.5)}
+.book__alt:hover{opacity:1}
+.book__msg{margin-top:14px;font-size:.92rem;min-height:1.2em}
+.book__msg.err{color:#ffab8f}
+.book__msg.ok{color:var(--ember-bright)}
+
+.book-done{max-width:560px;margin:0 auto;text-align:center;
+  background:rgba(16,19,22,.75);border:1px solid rgba(255,90,46,.45);border-radius:6px;
+  padding:clamp(34px,5vw,54px) 32px;box-shadow:0 0 0 1px rgba(255,90,46,.15),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:62px;height:62px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#fff8f2;background:linear-gradient(150deg,var(--ember-bright),var(--ember-deep));
+  box-shadow:0 14px 34px -12px rgba(255,90,46,.85)}
+.book-done__ic svg{width:30px;height:30px}
+.book-done h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(1.9rem,4vw,2.6rem);
+  line-height:1.05;margin-bottom:12px;color:#f8f4ea}
+.book-done p{color:var(--muted);font-size:1rem;margin-bottom:22px}
+
+/* =========================================================
+   SOCIALS + FOOTER
+   ========================================================= */
+.socials{padding:64px 0;text-align:center}
+.socials__row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+.social{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.35rem;border:1px solid var(--hair);
+  border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);
+  transition:border-color .2s, color .2s, transform .2s}
+.social:hover{border-color:rgba(255,90,46,.6);color:#fff;transform:translateY(-2px)}
+.social svg{width:17px;height:17px;color:var(--ember-bright)}
+
+.footer{padding:46px 0 120px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:13px}
+.footer__brand svg{width:42px;height:42px}
+.footer__brand b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.2rem;color:#f6f2e9;display:block;line-height:1.1;letter-spacing:.01em}
+.footer__brand span{color:var(--muted);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right;line-height:1.9}
+.footer__meta a{color:var(--ember-bright)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE BAR
+   ========================================================= */
+.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(20,24,28,.95);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-weight:700;letter-spacing:.06em;font-size:.84rem;
+  padding:.95rem;border-radius:4px}
+.mobile-bar .book-cta{color:#fff8f2;background:linear-gradient(150deg,var(--ember-bright),var(--ember-deep));
+  box-shadow:0 8px 20px -8px rgba(255,90,46,.8)}
+.mobile-bar .text-cta{color:var(--bone);background:rgba(237,237,230,.06);border:1px solid var(--hair)}
+.mobile-bar svg{width:18px;height:18px}
+@media(max-width:820px){.mobile-bar{display:flex}.footer{padding-bottom:118px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .btn::after{display:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Cora Vale Fitness — home">
+      <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="8" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="47" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="16" y="29" width="32" height="6" rx="2" fill="#FF5A2E"/>
+      </svg>
+      <span class="brand__name">Cora Vale<span>Personal Training · Eagle, ID</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#goals">Goal Path</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="nav__book" href="#book">Book a consult</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow">Personal training · <span data-edit="city">Eagle, Idaho</span></span></div>
+        <h1 class="display"><span class="l1">Cora Vale</span><span class="l2">Training built around your goal, not a template.</span></h1>
+        <p class="hero__sub">1:1 and small-group personal training, in-person or online. Pick your goal below — strength, your first 5K, postpartum return, or training after 50 — and the plan changes to fit it.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#goals">Find your goal path</a>
+          <a class="btn btn--ghost btn--lg" href="#book">Book a consult</a>
+        </div>
+        <!-- rendered from CONTENT.stats -->
+        <div class="hero__proof" id="proofRow"></div>
+      </div>
+      <div class="hero__portrait">
+        <!-- Rebrand note: drop <img src="assets/portrait.jpg" alt="…" /> inside .portrait
+             (before the corner spans) and the dumbbell-mark treatment disappears automatically -->
+        <div class="portrait" role="img" aria-label="Cora Vale Fitness mark — dumbbell on graphite">
+          <span class="portrait__wash" aria-hidden="true"></span>
+          <span class="portrait__corner portrait__corner--tl" aria-hidden="true"></span>
+          <span class="portrait__corner portrait__corner--br" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__rule" aria-hidden="true"></div>
+</header>
+
+<!-- ============ SIGNATURE: GOAL-PATH PICKER ============ -->
+<section class="section goals" id="goals">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Pick your goal</span>
+      <h2 class="section-title">Find Your Path</h2>
+      <p class="lead" style="margin:0 auto">Every client starts somewhere different. Choose the goal closest to yours and the program, the numbers below it, and the FAQ all change to match.</p>
+    </div>
+
+    <div class="goal-pills reveal" id="goalPills" role="group" aria-label="Choose your training goal"></div>
+
+    <div class="goal-panel">
+      <p class="goal-tagline" id="goalTagline"></p>
+      <p class="goal-blurb" id="goalBlurb"></p>
+      <!-- rendered from the selected item in CONTENT.goals -->
+      <div class="program-grid" id="programGrid"></div>
+      <div class="goal-proof" id="goalProof"></div>
+      <div class="goal-cta">
+        <a class="btn" href="#book" id="goalBookCta">Book training for this goal</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Packages</span>
+      <h2 class="section-title">Flat, Posted Pricing</h2>
+      <p class="lead" style="margin:0 auto">No quote required. Pick a format below — the price is the price.</p>
+    </div>
+    <!-- Rendered from CONTENT.packages (edit at /admin/) -->
+    <div class="pricing-grid" id="pricingGrid"></div>
+    <p class="pricing-note reveal" id="pricingNote"></p>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="about__grid">
+      <!-- Rebrand note: drop <img src="assets/studio.jpg" alt="…" /> inside
+           .about__photo and the rack-and-chalk composition disappears automatically -->
+      <div class="about__photo reveal" role="img" aria-label="The Cora Vale Fitness studio — rack and chalk, graphite on ember"></div>
+      <div class="about__body reveal" data-delay="1">
+        <span class="eyebrow">Meet your coach</span>
+        <h2 class="section-title">Cora Vale</h2>
+        <!-- Rendered from CONTENT.bio / CONTENT.chips (edit at /admin/). If the
+             bio is left empty, a placeholder prompt renders instead. -->
+        <div class="bio" id="bioText"></div>
+        <div class="about__chips" id="chipRow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY (supporting — empty-state until real photos exist) ============ -->
+<section class="section" id="gallery">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">In the gym</span>
+      <h2 class="section-title">Sessions in Progress</h2>
+      <p class="lead" style="margin:0 auto">Real sessions, real sets — added as they happen.</p>
+    </div>
+    <!-- Rendered from CONTENT.gallery (edit at /admin/); each tile shows an
+         uploaded photo or a "Photo coming soon" placeholder. -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section process" id="process">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three Steps to Start</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Book a consult</h3>
+        <p>A short call or in-person meeting to talk through your goal, your schedule, and anything that's held you back before.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>Get your plan</h3>
+        <p>Cora writes your program by hand, built around your goal path, your equipment, and how many days a week actually work for you.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Train &amp; adjust</h3>
+        <p>Sessions in person or online, with the plan adjusted as you go — nothing stays generic past week one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Client notes</span>
+      <h2 class="section-title">In Their Words</h2>
+    </div>
+    <!-- Rendered from CONTENT.testimonials (edit at /admin/). Empty quotes
+         render "Real review coming soon." — never fabricated. -->
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Before you book</span>
+      <h2 class="section-title">Questions, Answered</h2>
+      <p class="lead" style="margin:0 auto">Answers tagged for your selected goal move to the top.</p>
+    </div>
+    <!-- Rendered from CONTENT.faq; re-sorts when the goal path changes. -->
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section book-sec" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:640px;margin:0 auto 34px">
+      <span class="eyebrow">Book with Cora</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Book a Consult</h2>
+      <p class="lead" style="margin:0 auto">Tell me about your goal and your schedule. I reply to everything within one business day.</p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required />
+        </div>
+        <div class="field">
+          <label for="b-email">Email <em>*</em></label>
+          <input id="b-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone <span style="color:var(--muted);text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" />
+        </div>
+        <div class="field">
+          <label for="b-goal">Goal</label>
+          <select id="b-goal" name="goal"></select>
+        </div>
+        <div class="field field--wide">
+          <label for="b-format">Format</label>
+          <select id="b-format" name="format">
+            <option value="In-person — Eagle, ID" selected>In-person — Eagle, ID</option>
+            <option value="Online coaching">Online coaching</option>
+            <option value="Either works">Either works</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="b-msg">Anything else?</label>
+          <textarea id="b-msg" name="message" placeholder="Schedule, injuries or limitations, what's held you back before — whatever's useful."></textarea>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>I'm okay being contacted by phone, text or email about scheduling a consult.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Send it</button>
+        <a class="book__alt" id="bookAlt" href="sms:+12085550172">or text Cora instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- waitlist card: shown instead of the form when settings.acceptingClients is off -->
+    <div class="book-done" id="bookClosed" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Client list is full.</h3>
+      <p id="closedMsg"></p>
+      <a class="btn btn--ghost" href="#goals">See the goal paths</a>
+    </div>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>Got it.</h3>
+      <p id="doneMsg">Cora reads every request personally — expect a reply within one business day.</p>
+      <a class="btn btn--ghost" href="#goals">Back to goal paths</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIALS ============ -->
+<section class="socials" aria-label="Social links">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="justify-content:center">Elsewhere</span>
+    <!-- Rendered from CONTENT.social + CONTENT.brand.email (edit at /admin/).
+         Demo note: @coravalefitness is fictional; its link routes behind this
+         concept build so it never 404s. -->
+    <div class="socials__row" id="socialRow"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#14181c"/>
+        <rect x="8" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="47" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="16" y="29" width="32" height="6" rx="2" fill="#FF5A2E"/>
+      </svg>
+      <div><b>Cora Vale Fitness</b><span>Cora Vale · Eagle, ID</span></div>
+    </div>
+    <div class="footer__meta">
+      Text <a id="footPhone" href="tel:+12085550172">(208) 555-0172</a> · <a id="footEmail" href="mailto:hello@coravalefitness.com">hello@coravalefitness.com</a><br />
+      In-person in <span data-edit="city-short">Eagle</span>, or online anywhere<br />
+      <span style="opacity:.6">© <span id="yr"></span> Cora Vale Fitness</span><br />
+      <!-- SWAP:DISCLOSURE --><span style="opacity:.55;font-size:.78rem">Demonstration website for a fictional trainer · </span><!-- /SWAP:DISCLOSURE --><span style="opacity:.55;font-size:.78rem">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE BAR ============ -->
+<div class="mobile-bar">
+  <a class="book-cta" href="#book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Book</a>
+  <!-- Demo note: prefilled sms body names the trainer — clone.mjs rewrites it -->
+  <a class="text-cta" id="textLink" href="sms:+12085550172?&body=Hi%20Cora%2C%20I%27d%20like%20to%20book%20a%20consult."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // nav solidify
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // reveal on scroll
+  var revs = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    revs.forEach(function(r){ io.observe(r); });
+  } else { revs.forEach(function(r){ r.classList.add('in'); }); }
+
+  // floating chalk-dust motes in the hero
+  var motes = document.getElementById('motes');
+  if(motes && !reduce){
+    var n = window.innerWidth < 700 ? 8 : 16;
+    for(var i=0;i<n;i++){
+      var m = document.createElement('span');
+      m.className = 'mote';
+      var size = 2 + Math.random()*4;
+      m.style.width = size + 'px';
+      m.style.height = size + 'px';
+      m.style.left = Math.random()*100 + '%';
+      m.style.background = Math.random() < .6
+        ? 'rgba(255,90,46,' + (0.25 + Math.random()*0.3) + ')'
+        : 'rgba(237,237,230,' + (0.12 + Math.random()*0.18) + ')';
+      var dur = 11 + Math.random()*14;
+      m.style.animationDuration = dur + 's';
+      m.style.animationDelay = (-Math.random()*dur) + 's';
+      m.style.setProperty('--o', (0.25 + Math.random()*0.4).toFixed(2));
+      m.style.setProperty('--sway', ((Math.random()*90) - 45).toFixed(0) + 'px');
+      motes.appendChild(m);
+    }
+  }
+
+  /* =====================================================
+     CONTENT — everything the owner edits in one object.
+     DEFAULT_CONTENT ships inline (renders immediately);
+     content.json at the repo root — written by /admin/ —
+     overrides it at runtime. Keep both shapes in sync.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    brand: {
+      phone: "(208) 555-0172",
+      email: "hello@coravalefitness.com",
+      city: "Eagle, Idaho",
+      leadEmail: "info@kingdom-creatives.com"
+    },
+    stats: [
+      { num: "10 yrs", label: "Coaching lifters & runners" },
+      { num: "1:1 & online", label: "Formats available" },
+      { num: "Eagle, ID", label: "Home base" }
+    ],
+    goals: [
+      {
+        id: "strength", label: "Strength", tagline: "Get stronger, on purpose",
+        blurb: "A progressive plan built around the barbell lifts — squat, hinge, press, pull — loaded at a pace your joints and your schedule can actually handle.",
+        programs: [
+          { title: "Foundations Block", desc: "Bar-only technique work until the big lifts are safe to load — bracing, bar path and depth before weight goes on." },
+          { title: "Strength Cycle", desc: "A progressive cycle built around your current numbers, adjusted session to session based on how the bar actually moved." },
+          { title: "Accessory Work", desc: "Targeted assistance work for whatever's holding your lifts back — a weak lockout, a shaky brace, a stuck plateau." }
+        ],
+        proof: [
+          { num: "12 wks", label: "Typical cycle length" },
+          { num: "3–4x", label: "Sessions per week" },
+          { num: "Barbell", label: "Primary tool" }
+        ]
+      },
+      {
+        id: "first5k", label: "First 5K", tagline: "From zero to the start line",
+        blurb: "A run/walk progression that meets you at your current mileage — even if that's zero — and builds toward a 5K without wrecking your knees along the way.",
+        programs: [
+          { title: "Run/Walk Start", desc: "Interval-based sessions that build time on your feet before they build pace — the base everything else stacks on." },
+          { title: "Base Mileage", desc: "A gradual increase in weekly distance, timed to stay ahead of soreness instead of chasing it." },
+          { title: "Race-Week Taper", desc: "A short taper block so you show up to race day rested, not depleted from a last-minute push." }
+        ],
+        proof: [
+          { num: "8–10 wks", label: "Typical build" },
+          { num: "3x", label: "Runs per week" },
+          { num: "Run/walk", label: "Starting point" }
+        ]
+      },
+      {
+        id: "postpartum", label: "Postpartum", tagline: "Back to training, in the right order",
+        blurb: "A return-to-training plan that starts after your provider's clearance and rebuilds from the inside out — breath and core first, load second.",
+        programs: [
+          { title: "Cleared-to-Train Basics", desc: "Breath, core and pelvic floor work first — the foundation everything after this is built on." },
+          { title: "Rebuild Phase", desc: "Gradual reintroduction of loaded movement, paced against how your body is actually responding, not a calendar." },
+          { title: "Full Return", desc: "A path back to the training you did before — or a new normal, if that's what you'd rather build toward." }
+        ],
+        proof: [
+          { num: "Cleared first", label: "Always required before we start" },
+          { num: "Slow ramp", label: "Load progression" },
+          { num: "Core + floor", label: "Where every plan begins" }
+        ]
+      },
+      {
+        id: "over50", label: "Over 50", tagline: "Train for the next 30 years",
+        blurb: "Joint-friendly strength and balance work chosen for how you'll move through your week, not just what shows up on a barbell.",
+        programs: [
+          { title: "Joint-Friendly Strength", desc: "Loaded movement patterns selected for your actual joint ranges — strength without the ache the next day." },
+          { title: "Balance & Mobility", desc: "Work aimed at fall-proofing and everyday function — stairs, floors, carrying groceries without a second thought." },
+          { title: "Longevity Cycle", desc: "A long-view training plan built to keep working for you a decade out, not just for the next few months." }
+        ],
+        proof: [
+          { num: "Joint-first", label: "Movement selection" },
+          { num: "2–3x", label: "Sessions per week" },
+          { num: "Function", label: "What we train for" }
+        ]
+      }
+    ],
+    packages: [
+      { name: "Small Group", price: "$65", period: "/session", features: "4–6 person class cap\nProgrammed by Cora, not a template\nText-based coaching between sessions", best: false, note: "" },
+      { name: "1:1 Coaching", price: "$95", period: "/session", features: "Fully individualized programming\nForm checked every rep, every session\nDirect text line to Cora", best: true, note: "Most popular" },
+      { name: "Online Programming", price: "$149", period: "/month", features: "Custom plan in your lifting app\nWeekly check-in & adjustments\nForm-check video review", best: false, note: "" }
+    ],
+    pricingNote: "Billed session-to-session or month-to-month — no long-term contract required.",
+    bio: "Cora spent the first half of her training life chasing her own PRs and the second half getting other people to theirs. A decade under the bar, coaching everyone from first-time squatters to lifelong runners chasing a comeback 5K. Every program is written by hand — no templates, no guesswork, no generic plan with your name pasted on top.",
+    chips: [
+      { t: "Programs written by hand, not templated" },
+      { t: "Texts back the same day" },
+      { t: "Beginners welcome — no experience required" },
+      { t: "In-person in Eagle or online anywhere" }
+    ],
+    gallery: [
+      { title: "1:1 session", tag: "Strength", image: "" },
+      { title: "Small group class", tag: "Small Group", image: "" },
+      { title: "Outdoor run coaching", tag: "First 5K", image: "" },
+      { title: "Form check", tag: "Coaching", image: "" },
+      { title: "Postpartum session", tag: "Postpartum", image: "" },
+      { title: "Client training day", tag: "Over 50", image: "" }
+    ],
+    testimonials: [
+      { quote: "", name: "" },
+      { quote: "", name: "" },
+      { quote: "", name: "" }
+    ],
+    faq: [
+      { q: "Do I need experience to start?", a: "No. Most people who start with Cora have never done a structured program before. Sessions begin with an assessment of what you can already do, and the plan is built from there — not from a template.", tags: "all" },
+      { q: "I've never touched a barbell — is strength training realistic for me?", a: "Yes. The first block is entirely about technique: how to brace, how to move the bar, how to fail a rep safely. Loading comes after the pattern is solid, not before.", tags: "strength" },
+      { q: "I've never run more than a mile. Is a 5K actually realistic?", a: "For almost everyone, yes — on a run/walk progression that adds distance gradually. The plan is built around your current mileage, not a generic couch-to-5K calendar.", tags: "first5k" },
+      { q: "When can I start training after having a baby?", a: "Whenever your provider clears you for exercise — that clearance always comes first, no exceptions. After that, the plan starts with the basics: breath, core, and pelvic floor, before any loaded movement returns.", tags: "postpartum" },
+      { q: "Is it too late to start strength training in my 50s or 60s?", a: "No — it's one of the highest-value times to start. Exercises are chosen for joint-friendly ranges of motion first, and progress is measured in how you move through your week, not just numbers on a bar.", tags: "over50" },
+      { q: "How much does coaching cost?", a: "See the Packages section above — pricing is flat and posted, no quote required. Sessions are billed as you go; there's no long-term contract.", tags: "all" },
+      { q: "Do you train in person or online?", a: "Both. In-person sessions are based in Eagle, Idaho; online programming works from anywhere with a phone and a lifting app.", tags: "all" },
+      { q: "What's your cancellation policy?", a: "24 hours' notice to reschedule a session at no charge. Life happens — a late cancel isn't the end of the world, but the slot can't always be backfilled on short notice.", tags: "all" }
+    ],
+    social: [
+      { platform: "Instagram", label: "@coravalefitness", url: "https://systemsbyvega.com" }
+    ],
+    settings: {
+      acceptingClients: true,
+      closedNote: "Cora's client list is full right now. Join the waitlist below and you'll hear first when a spot opens."
+    }
+  };
+  var CONTENT = DEFAULT_CONTENT;
+  var currentGoal = 'strength';
+
+  var esc = function(s){
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  };
+  var telHref = function(p){
+    var d = String(p || '').replace(/\D/g, '');
+    if(d.length === 10) d = '1' + d;
+    return 'tel:+' + d;
+  };
+  var goalById = function(id){
+    var list = (CONTENT.goals || []);
+    for(var i=0;i<list.length;i++){ if(list[i].id === id) return list[i]; }
+    return list[0];
+  };
+
+  /* =====================================================
+     SIGNATURE: goal-path picker
+     Clicking a pill re-renders the program grid, the proof
+     stats and re-sorts the FAQ to emphasize that goal.
+     ===================================================== */
+  var renderGoalPills = function(list){
+    document.getElementById('goalPills').innerHTML = (list || []).map(function(g){
+      return '<button class="goal-pill" data-goal="' + esc(g.id) + '" aria-pressed="' + (g.id === currentGoal ? 'true' : 'false') + '">' + esc(g.label) + '</button>';
+    }).join('');
+  };
+
+  var renderGoalPanel = function(){
+    var g = goalById(currentGoal);
+    if(!g) return;
+    document.getElementById('goalTagline').textContent = g.tagline || '';
+    document.getElementById('goalBlurb').textContent = g.blurb || '';
+    // Injected cards intentionally skip the .reveal class: the goal-panel
+    // wrapper above already faded in once via IntersectionObserver, so a
+    // pill click just swaps content in place rather than re-animating it.
+    document.getElementById('programGrid').innerHTML = (g.programs || []).map(function(p){
+      return '<div class="program-card"><span class="program-card__n"></span><h3>' + esc(p.title) + '</h3><p>' + esc(p.desc) + '</p></div>';
+    }).join('');
+    document.getElementById('goalProof').innerHTML = (g.proof || []).map(function(s){
+      return '<div class="proof"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+    var cta = document.getElementById('goalBookCta');
+    cta.textContent = 'Book training for ' + (g.label || 'this goal');
+  };
+
+  var renderFaq = function(list){
+    var goal = currentGoal;
+    var scored = (list || []).map(function(f, i){
+      var tags = String(f.tags || 'all').split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+      var score = tags.indexOf(goal) > -1 ? 0 : (tags.indexOf('all') > -1 ? 1 : 2);
+      return { f: f, i: i, score: score };
+    });
+    scored.sort(function(a, b){ return a.score - b.score || a.i - b.i; });
+    var goalLabel = (goalById(goal) || {}).label || '';
+    document.getElementById('faqList').innerHTML = scored.map(function(s){
+      var badge = s.score === 0 ? '<span class="faq__badge">For ' + esc(goalLabel) + '</span>' : '';
+      return '<details class="faq"><summary>' + badge + '<span>' + esc(s.f.q) + '</span><span class="plus">+</span></summary><div class="faq__body">' + esc(s.f.a) + '</div></details>';
+    }).join('');
+  };
+
+  var setGoal = function(id, opts){
+    opts = opts || {};
+    if(!goalById(id)) return;
+    currentGoal = id;
+    renderGoalPills(CONTENT.goals);
+    renderGoalPanel();
+    renderFaq(CONTENT.faq);
+    var goalSel = document.getElementById('b-goal');
+    if(goalSel) goalSel.value = id;
+    if(!opts.silent){
+      try{ history.replaceState(null, '', '?goal=' + encodeURIComponent(id) + '#goals'); }catch(err){}
+    }
+  };
+
+  document.getElementById('goalPills').addEventListener('click', function(e){
+    var b = e.target.closest('[data-goal]');
+    if(!b) return;
+    setGoal(b.getAttribute('data-goal'));
+  });
+  document.getElementById('goalBookCta').addEventListener('click', function(){
+    var goalSel = document.getElementById('b-goal');
+    if(goalSel) goalSel.value = currentGoal;
+  });
+
+  /* =====================================================
+     RENDER — paints every owner-editable region from the
+     merged CONTENT object. Runs once with the defaults,
+     again if content.json loads. Never hard-fails the page.
+     ===================================================== */
+  var SOCIAL_ICONS = {
+    'Instagram': '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".8" fill="currentColor" stroke="none"/>',
+    'TikTok': '<path d="M9 12a4 4 0 1 0 4 4V4c.4 2.5 2.1 4.1 4.6 4.4"/>',
+    'Facebook': '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+    'YouTube': '<rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5l5 2.5-5 2.5z"/>',
+    'Website': '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>'
+  };
+  var socSvg = function(platform){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+      + (SOCIAL_ICONS[platform] || SOCIAL_ICONS.Website) + '</svg>';
+  };
+  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  var renderStats = function(list){
+    document.getElementById('proofRow').innerHTML = (list || []).map(function(s){
+      return '<div class="proof"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+  };
+
+  var renderPricing = function(list, note){
+    document.getElementById('pricingGrid').innerHTML = (list || []).map(function(p){
+      var feats = String(p.features || '').split('\n').map(function(x){ return x.trim(); }).filter(Boolean);
+      return '<div class="price-card' + (p.best ? ' price-card--best' : '') + '">'
+        + (p.best ? '<span class="price-card__badge">' + esc(p.note || 'Most popular') + '</span>' : '')
+        + '<div class="price-card__name">' + esc(p.name) + '</div>'
+        + '<div class="price-card__price"><b>' + esc(p.price) + '</b><span>' + esc(p.period || '') + '</span></div>'
+        + '<ul>' + feats.map(function(f){ return '<li>' + CHECK_SVG + '<span>' + esc(f) + '</span></li>'; }).join('') + '</ul>'
+        + (!p.best && p.note ? '<div class="price-card__note">' + esc(p.note) + '</div>' : '')
+        + '</div>';
+    }).join('');
+    document.getElementById('pricingNote').textContent = note || '';
+  };
+
+  var renderAbout = function(c){
+    document.getElementById('bioText').textContent = c.bio || '';
+    document.getElementById('chipRow').innerHTML = (c.chips || []).map(function(ch){
+      return '<span class="chip">' + esc(ch.t) + '</span>';
+    }).join('');
+  };
+
+  var renderGallery = function(list){
+    document.getElementById('galleryGrid').innerHTML = (list || []).map(function(g){
+      var art = g.image
+        ? '<img src="' + esc(g.image) + '" alt="' + esc(g.title) + '" loading="lazy">'
+        : '';
+      return '<div class="gtile">' + art + '<span class="gtile__cap">' + esc(g.title) + (g.tag ? ' · ' + esc(g.tag) : '') + '</span></div>';
+    }).join('');
+  };
+
+  var renderTestimonials = function(list){
+    document.getElementById('testGrid').innerHTML = (list || []).map(function(t){
+      return '<div class="test-card"><blockquote>' + esc(t.quote || '') + '</blockquote><cite>' + esc(t.name || '') + '</cite></div>';
+    }).join('');
+  };
+
+  var renderSocial = function(list, brand){
+    var pillsHtml = (list || []).map(function(s){
+      return '<a class="social" href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">'
+        + socSvg(s.platform) + esc(s.label || s.platform) + '</a>';
+    });
+    pillsHtml.push('<a class="social" href="mailto:' + esc(brand.email) + '">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>'
+      + esc(brand.email) + '</a>');
+    document.getElementById('socialRow').innerHTML = pillsHtml.join('');
+  };
+
+  var renderBrand = function(b){
+    var short = String(b.city || '').split(',')[0].trim();
+    document.querySelectorAll('[data-edit="city"]').forEach(function(el){ el.textContent = b.city; });
+    document.querySelectorAll('[data-edit="city-short"]').forEach(function(el){ el.textContent = short; });
+    var fp = document.getElementById('footPhone');
+    fp.href = telHref(b.phone); fp.textContent = b.phone;
+    var fe = document.getElementById('footEmail');
+    fe.href = 'mailto:' + b.email; fe.textContent = b.email;
+    var alt = document.getElementById('bookAlt');
+    alt.href = 'sms:+' + String(b.phone || '').replace(/\D/g, '').replace(/^1?/, '1');
+    var text = document.getElementById('textLink');
+    if(text) text.href = 'sms:' + telHref(b.phone).replace('tel:', '');
+  };
+
+  var renderGoalSelect = function(list){
+    var sel = document.getElementById('b-goal');
+    sel.innerHTML = (list || []).map(function(g){
+      return '<option value="' + esc(g.id) + '">' + esc(g.label) + '</option>';
+    }).join('') + '<option value="not-sure">Not sure yet</option>';
+    sel.value = currentGoal;
+  };
+
+  var renderBooking = function(s){
+    var open = !s || s.acceptingClients !== false;
+    var formEl = document.getElementById('bookForm');
+    var closed = document.getElementById('bookClosed');
+    var done = document.getElementById('bookDone');
+    if(open){
+      closed.hidden = true;
+      if(done.hidden) formEl.hidden = false;
+    } else {
+      formEl.hidden = true;
+      done.hidden = true;
+      document.getElementById('closedMsg').textContent = (s && s.closedNote) || 'The client list is full right now — check back soon.';
+      closed.hidden = false;
+    }
+  };
+
+  var renderContent = function(c){
+    renderBrand(c.brand || {});
+    renderStats(c.stats);
+    renderGoalSelect(c.goals);
+    renderGoalPills(c.goals);
+    renderGoalPanel();
+    renderPricing(c.packages, c.pricingNote);
+    renderAbout(c);
+    renderGallery(c.gallery);
+    renderTestimonials(c.testimonials);
+    renderFaq(c.faq);
+    renderSocial(c.social, c.brand || {});
+    renderBooking(c.settings);
+  };
+  renderContent(CONTENT);
+
+  // deep-link support: ?goal=strength preselects the goal path on load
+  try{
+    var param = new URLSearchParams(window.location.search).get('goal');
+    if(param && goalById(param)) setGoal(param, {silent:true});
+  }catch(err){}
+
+  // live override: content.json is what /admin/ edits. 404/offline = defaults stand.
+  fetch('content.json', {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        if(!goalById(currentGoal)) currentGoal = (CONTENT.goals && CONTENT.goals[0] && CONTENT.goals[0].id) || 'strength';
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+
+  /* =====================================================
+     BOOKING FORM — no backend
+     Default: FormSubmit (zero signup). The FIRST real submission emails an
+     activation link to LEAD.email; click it once and every request after
+     that lands in the inbox. Swap the email below for the real one.
+     ===================================================== */
+  // Delivery inbox = CONTENT.brand.leadEmail (editable at /admin/ → Contact).
+  var LEAD = {
+    provider: 'formsubmit',
+    get email(){ return (CONTENT.brand && CONTENT.brand.leadEmail) || DEFAULT_CONTENT.brand.leadEmail; }
+  };
+
+  var form = document.getElementById('bookForm');
+  var msgEl = document.getElementById('bookMsg');
+  var submitBtn = document.getElementById('bookSubmit');
+
+  var setErr = function(input, on){
+    var f = input.closest('.field');
+    if(f) f.classList.toggle('invalid', !!on);
+  };
+  var say = function(text, cls){
+    msgEl.textContent = text;
+    msgEl.className = 'book__msg' + (cls ? ' ' + cls : '');
+  };
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // honeypot — bots fill it, humans can't see it
+    if(form.querySelector('input[name="_honey"]').value){ return; }
+
+    var name    = document.getElementById('b-name');
+    var email   = document.getElementById('b-email');
+    var phone   = document.getElementById('b-phone');
+    var consent = document.getElementById('b-consent');
+
+    var bad = false;
+    [name, email].forEach(function(el){
+      var empty = !(el.value || '').trim();
+      setErr(el, empty);
+      if(empty) bad = true;
+    });
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value||'').trim());
+    if(!emailOk){ setErr(email, true); bad = true; }
+    if(!consent.checked){
+      say('Please confirm the contact permission checkbox first.', 'err');
+      return;
+    }
+    if(bad){
+      say('A couple of required fields are missing — they’re marked in red.', 'err');
+      return;
+    }
+
+    var goalSel = document.getElementById('b-goal');
+    var goalLabel = goalSel.options[goalSel.selectedIndex] ? goalSel.options[goalSel.selectedIndex].text : goalSel.value;
+
+    var payload = {
+      _subject: 'Consult request — Cora Vale Fitness',
+      name: name.value.trim(),
+      email: email.value.trim(),
+      phone: (phone.value||'').trim() || '(not given)',
+      goal: goalLabel,
+      format: document.getElementById('b-format').value,
+      message: (document.getElementById('b-msg').value || '').trim() || '(none)'
+    };
+
+    submitBtn.disabled = true;
+    say('Sending…');
+
+    fetch('https://formsubmit.co/ajax/' + LEAD.email, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if(!res.ok) throw new Error('bad status');
+      return res.json();
+    }).then(function(){
+      form.hidden = true;
+      var done = document.getElementById('bookDone');
+      var dm = document.getElementById('doneMsg');
+      dm.textContent = 'Got it, ' + payload.name.split(' ')[0] + '. Cora reads every request personally — expect a reply at ' + payload.email + ' within one business day.';
+      done.hidden = false;
+      done.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'});
+    }).catch(function(){
+      submitBtn.disabled = false;
+      say('That didn’t go through. Email ' + ((CONTENT.brand && CONTENT.brand.email) || 'the studio') + ' instead.', 'err');
+    });
+  });
+
+  /* Desktop tel: guard — stops Windows' "Pick an app" dialog; shows a toast
+     with the number instead. Phones are untouched. */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(!isMobile){
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="sms:"]');
+      if(!a) return;
+      e.preventDefault();
+      var t = document.getElementById('telToast');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'telToast';
+        t.setAttribute('role','status');
+        t.style.cssText = 'position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:9999;'
+          + 'background:#1a1f24;color:#ededE6;padding:14px 22px;border-radius:4px;'
+          + 'box-shadow:0 12px 40px rgba(0,0,0,.6);border:1px solid rgba(255,90,46,.4);'
+          + 'font-family:\'Inter\',system-ui,sans-serif;font-size:15px;max-width:88vw;text-align:center;'
+          + 'opacity:0;transition:opacity .25s ease;';
+        document.body.appendChild(t);
+      }
+      t.innerHTML = 'Text Cora at <strong style="color:#FF7A47;letter-spacing:.02em">' + esc((CONTENT.brand && CONTENT.brand.phone) || '') + '</strong> from your phone.';
+      requestAnimationFrame(function(){ t.style.opacity = '1'; });
+      clearTimeout(window.__telToastTimer);
+      window.__telToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 4500);
+    });
+  }
+})();
+</script>
+</body>
+</html>
