@@ -1,0 +1,50 @@
+{
+  "brand": {
+    "name": "Voltridge Electric",
+    "tagline": "Wired right, the first time.",
+    "phone": "(208) 555-0195",
+    "email": "hello@voltridgeelectric.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Kuna, ID"
+  },
+  "services": [
+    { "id": "panel", "label": "Panel Upgrades", "desc": "Old fuse box or a panel maxed out on double-taps and no room left? We swap it for a modern panel sized for how much power your house actually uses now." },
+    { "id": "ev", "label": "EV Charger Install", "desc": "A dedicated circuit and a Level 2 charger, wired so your car charges overnight without tripping anything else in the house." },
+    { "id": "lighting", "label": "Lighting & Fixtures", "desc": "Recessed lighting, ceiling fans, outdoor security lights, dimmer upgrades — wired clean, no exposed junction boxes left behind." },
+    { "id": "repairs", "label": "Troubleshooting & Repairs", "desc": "Flickering lights, dead outlets, breakers that trip for no reason — we find the actual cause, not just the symptom." },
+    { "id": "generator", "label": "Generator Hookups", "desc": "A transfer switch and generator hookup so a storm outage doesn't mean sitting in the dark." },
+    { "id": "smart", "label": "Smart Home Wiring", "desc": "Smart switches, smart panels, EV-ready circuits — wired for what your house does now and what it does in five years." }
+  ],
+  "pricing": {
+    "serviceCall": { "price": 95, "note": "First-hour diagnostic — applied toward the repair if you move forward that day." },
+    "ranges": [
+      { "label": "Troubleshooting & Repairs", "range": "$150 – $450" },
+      { "label": "EV Charger Install", "range": "$650 – $1,400" },
+      { "label": "Generator Hookup", "range": "$900 – $1,800" },
+      { "label": "Panel Upgrade", "range": "$1,800 – $3,200" }
+    ]
+  },
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Kuna", "Nampa", "Meridian", "Boise", "Star"]
+  },
+  "owner": {
+    "name": "Nate Cordero",
+    "bio": "Nate Cordero started running wire as an apprentice on new-construction crews around the Treasure Valley, then spent a decade doing service work — the calls where something's already broken and somebody's waiting on you to fix it. Voltridge Electric is the one-van operation he always wanted: he answers his own phone, quotes the job before he starts, and doesn't leave a panel looking like a spider built it.",
+    "photo": ""
+  },
+  "faq": [
+    { "q": "Do you pull permits?", "a": "Yes — any job that requires one gets a permit pulled and inspected. It's part of doing it right, not an upsell." },
+    { "q": "How do I know if my panel needs an upgrade?", "a": "Breakers that trip for no clear reason, warm or discolored outlets, flickering lights when something big kicks on, or a fuse box instead of breakers — any of those is worth a look." },
+    { "q": "How long does an EV charger install take?", "a": "Most installs are same-day — usually two to four hours once we're on site, depending on how far the panel is from where the charger goes." },
+    { "q": "Do you offer emergency service?", "a": "For active hazards — sparking, burning smell, a dead panel — yes, call and we'll work you in. Routine issues get scheduled at the next normal slot." },
+    { "q": "Is the service call fee separate from the repair cost?", "a": "The service call covers the first hour of diagnostic time. If you move forward with the repair that day, it's applied toward the total — you're not paying twice." }
+  ],
+  "testimonials": [
+    { "quote": "", "author": "" },
+    { "quote": "", "author": "" },
+    { "quote": "", "author": "" }
+  ],
+  "social": []
+}

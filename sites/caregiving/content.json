@@ -1,0 +1,54 @@
+{
+  "brand": {
+    "name": "Hearth & Home Companion Care",
+    "tagline": "Companionship and support, right at home.",
+    "phone": "(208) 555-0198",
+    "email": "hello@hearthhomecare.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Middleton, ID"
+  },
+  "stats": [
+    { "num": "8 yrs", "label": "Supporting Treasure Valley families" },
+    { "num": "12", "label": "Caregivers on our team" },
+    { "num": "100%", "label": "Background-checked, every hire" }
+  ],
+  "careNeeds": [
+    { "id": "companionship", "label": "Companionship Visits", "desc": "Conversation, a shared activity, someone present so a day doesn't pass alone.", "days": ["Mon", "Wed", "Fri"], "time": "Afternoon" },
+    { "id": "mealprep", "label": "Meal Prep", "desc": "Grocery lists, simple cooking, and cleanup — meals made the way they like them.", "days": ["Mon", "Tue", "Wed", "Thu", "Fri"], "time": "Morning" },
+    { "id": "housekeeping", "label": "Light Housekeeping", "desc": "Tidying, laundry, dishes — the everyday upkeep that gets harder to keep up with alone.", "days": ["Tue", "Thu"], "time": "Midday" },
+    { "id": "medreminders", "label": "Medication Reminders", "desc": "A gentle reminder when it's time — never administered or managed, just remembered.", "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "time": "Morning & evening" },
+    { "id": "transportation", "label": "Transportation to Appointments", "desc": "Doctor visits, errands, the hair salon — door to door, and someone to wait with them.", "days": [], "time": "Scheduled as needed" },
+    { "id": "overnight", "label": "Overnight Stays", "desc": "A caregiver in the home overnight, for families who want that extra peace of mind.", "days": ["Fri", "Sat"], "time": "Overnight" }
+  ],
+  "pricing": [
+    { "name": "A Few Hours a Week", "price": "$32", "per": "/hour", "features": "2-hour visit minimum\nFlexible day-to-day scheduling\nSame caregiver when possible", "best": false, "note": "" },
+    { "name": "Daily Support", "price": "$30", "per": "/hour", "features": "Discounted rate for daily visits\nTypically 3-6 hours a day\nOne consistent care plan", "best": true, "note": "Most common" },
+    { "name": "Overnight & 24-Hour Care", "price": "$220", "per": "/night", "features": "A caregiver in the home overnight\n24-hour care available for short stretches\nSeamless handoff with daytime care", "best": false, "note": "" }
+  ],
+  "pricingNote": "Every plan starts with a free in-home consultation — no cost, no obligation, no surprise minimums.",
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Middleton", "Caldwell", "Nampa", "Star", "Meridian", "Eagle"]
+  },
+  "owner": {
+    "name": "Nora Bishop",
+    "heading": "Why we started Hearth & Home",
+    "bio": "Nora Bishop spent three years driving forty minutes each way to check on her grandmother after a fall made living alone harder than anyone wanted to admit. She found the daily visits, the meals, the company — the small things that add up to someone being okay — impossible to coordinate around a full-time job and a family of her own. Hearth & Home is the service she wishes had existed then: a small, steady team families can actually rely on, not a call center or a rotating cast of strangers.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "Is this medical care?", "a": "No. Hearth & Home provides non-medical companion care — help around the house, company, transportation, and support with daily routines. If your family needs skilled nursing or medical care, we're glad to help point you toward a home-health agency that can." },
+    { "q": "How are your caregivers vetted?", "a": "Every caregiver on our team passes a background check and an in-person interview before their first visit, and we check in with families regularly to make sure the match is working." },
+    { "q": "Can the care plan change over time?", "a": "Yes — most families start with one or two visits a week and adjust as needs change. Nothing here is a long-term contract you're locked into." },
+    { "q": "What if we just need companionship, nothing else?", "a": "That's plenty. Companionship-only visits are one of our most requested plans — someone to talk to, play cards with, or just be in the house." },
+    { "q": "How quickly can we get started?", "a": "A free in-home consultation is usually within a few days, and most families have a caregiver matched and a first visit scheduled within a week after that." },
+    { "q": "Do you manage medications?", "a": "We provide medication reminders — a gentle nudge at the right time — but we don't administer medication or manage prescriptions. That's the role of a home-health or nursing service, and we're happy to help you find one if that's what's needed." }
+  ],
+  "social": []
+}

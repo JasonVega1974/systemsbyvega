@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Voltridge Electric — Residential &amp; Light-Commercial Electrician | Kuna, ID</title>
+<meta name="description" content="Panel upgrades, EV charger installs, lighting, troubleshooting, generator hookups and smart-home wiring. Flip the switchboard to see what we do, then get a real estimate. Serving the Treasure Valley. Call or text (208) 555-0195." />
+<meta name="theme-color" content="#05060F" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/voltridge-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/voltridge-demo/" />
+<meta property="og:title" content="Voltridge Electric — Wired Right, The First Time." />
+<meta property="og:description" content="Panel upgrades, EV charger installs, lighting, troubleshooting, generators and smart-home wiring for the Treasure Valley. Flip the switchboard to see what we do." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: a breaker switch on a navy panel -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0D1C'/%3E%3Crect x='22' y='14' width='20' height='36' rx='6' fill='%23171D38' stroke='%236C63FF' stroke-width='2'/%3E%3Crect x='26' y='18' width='12' height='14' rx='3' fill='%237DF9FF'/%3E%3Cpath d='M32 34 L26 44 L31 44 L30 50 L38 40 L33 40 Z' fill='%236C63FF'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Local business structured data. Keep phone/services in sync with the visible copy and CONTENT.services in the script. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Electrician",
+  "name": "Voltridge Electric",
+  "url": "https://jasonvega1974.github.io/voltridge-demo/",
+  "description": "Residential and light-commercial electrical work — panel upgrades, EV charger installs, lighting, troubleshooting, generator hookups and smart-home wiring.",
+  "telephone": "+12085550195",
+  "email": "hello@voltridgeelectric.com",
+  "areaServed": "Treasure Valley, Idaho — Kuna, Nampa, Meridian, Boise, Star",
+  "priceRange": "$95-$3200",
+  "slogan": "Wired right, the first time.",
+  "address": { "@type": "PostalAddress", "addressLocality": "Kuna", "addressRegion": "ID", "addressCountry": "US" }
+}
+</script>
+
+<style>
+/* =========================================================
+   VOLTRIDGE ELECTRIC — tokens
+   Trade identity: deep indigo-navy base (a breaker panel at
+   night), a two-tone "electric arc" primary — violet-blue
+   racing to a white-hot cyan spark — used as one continuous
+   gradient rather than two competing accents. Mono type doubles
+   as panel labeling for the signature switchboard.
+   ========================================================= */
+:root{
+  --navy-deep:#05060F;
+  --navy:#0A0D1C;
+  --navy-2:#11162B;
+  --panel-2:#171D38;
+  --violet:#6C63FF;
+  --violet-bright:#8B7FFF;
+  --violet-deep:#3C34A8;
+  --spark:#7DF9FF;
+  --spark-deep:#3FD0DB;
+  --ink:#EAF0FF;
+  --ink-soft:#C7D0EC;
+  --muted:#8590B8;
+  --line:rgba(108,99,255,.18);
+  --hair:rgba(234,240,255,.12);
+  --card:rgba(23,29,56,.58);
+  --card-brd:rgba(234,240,255,.13);
+  --shadow:0 24px 60px -20px rgba(0,0,0,.75);
+  --maxw:1140px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--navy);
+  color:var(--ink);
+  line-height:1.66;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1000px 620px at 86% -6%, rgba(108,99,255,.20), transparent 60%),
+    radial-gradient(760px 520px at 6% 18%, rgba(125,249,255,.09), transparent 58%),
+    linear-gradient(180deg,#070915 0%, #0A0D1C 46%, #05060F 100%);
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 63px, rgba(234,240,255,.025) 63px 64px),
+    repeating-linear-gradient(0deg, transparent 0 63px, rgba(234,240,255,.02) 63px 64px);
+  opacity:.7;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.2em;
+  font-size:.74rem;color:var(--spark);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--spark),transparent);
+}
+.section-title{
+  font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.005em;
+  background:linear-gradient(180deg,#ffffff 0%,var(--ink) 55%,#c3caea 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--ink-soft);font-size:1.06rem;max-width:58ch}
+
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  font-size:1.02rem;padding:1rem 1.7rem;border-radius:11px;border:0;cursor:pointer;
+  color:#050414;background:linear-gradient(120deg,var(--violet-bright),var(--spark));
+  box-shadow:0 12px 30px -10px rgba(108,99,255,.55), inset 0 1px 0 rgba(255,255,255,.35);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(108,99,255,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:active{transform:translateY(0)}
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(108,99,255,.08);color:var(--ink);
+  border:1px solid rgba(108,99,255,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(108,99,255,.16);box-shadow:0 10px 26px -14px rgba(108,99,255,.5)}
+.btn--lg{font-size:1.14rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--spark);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .3s ease, box-shadow .3s ease, padding .3s ease;padding:16px 0}
+.nav.solid{background:rgba(5,6,15,.9);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;padding:10px 0}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--violet-bright),var(--violet-deep));
+  box-shadow:0 8px 20px -8px rgba(108,99,255,.6)}
+.brand__mark svg{width:26px;height:26px}
+.brand__name{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;font-size:.94rem;line-height:1;color:var(--ink)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.2em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:26px}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.75rem;color:var(--ink-soft);opacity:.85;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--spark)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Rajdhani',sans-serif;
+  font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:.85rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:#050414;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(120deg,var(--violet-bright),var(--spark));
+  box-shadow:0 10px 24px -12px rgba(108,99,255,.7), inset 0 1px 0 rgba(255,255,255,.35);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.76rem;padding:.5rem .8rem;gap:.35rem}}
+@media(max-width:380px){.nav__call{font-size:.7rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.6vw,4.6rem);line-height:.98;letter-spacing:.005em;margin-bottom:8px}
+.hero h1 .l1{background:linear-gradient(180deg,#ffffff 0%,var(--ink) 50%,#c3caea 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(234,240,255,.14));display:block}
+.hero h1 .l2{display:block;background:linear-gradient(100deg,var(--violet-bright),var(--spark));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 4px 30px rgba(108,99,255,.35)}
+.hero__sub{font-size:1.14rem;color:var(--ink-soft);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.6rem;color:#fff;letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(108,99,255,.24), rgba(125,249,255,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 5.5s ease-in-out infinite;z-index:0}
+.hero__art svg{position:relative;z-index:1;width:min(440px,90%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.65));animation:float 6.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+.sparks{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.spark-mote{position:absolute;bottom:-4%;width:3px;height:3px;border-radius:50%;
+  background:radial-gradient(circle,rgba(125,249,255,.95),rgba(125,249,255,0) 70%);
+  opacity:0;animation:mote linear infinite}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.85}
+  55%{transform:translate3d(20px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-10px,-108vh,0);opacity:0}
+}
+
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--navy-2);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--navy-2),rgba(23,29,56,.35));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--spark);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — BREAKER PANEL SWITCHBOARD
+   Doubles as the Services section: flipping a breaker reveals
+   that service's detail card below. Multiple breakers can be on
+   at once, like a real panel.
+   ========================================================= */
+.board{max-width:1080px;margin:0 auto;border-radius:20px;overflow:hidden;
+  background:rgba(10,13,28,.75);border:1px solid var(--card-brd);
+  box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.board::before{content:"";display:block;height:6px;background:linear-gradient(90deg,var(--violet),var(--spark))}
+.board__in{padding:clamp(20px,3.2vw,32px)}
+.board__hint{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-align:center;margin-bottom:20px}
+
+.breakers{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:26px}
+@media(max-width:900px){.breakers{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.breakers{grid-template-columns:repeat(2,1fr)}}
+
+.breaker{
+  display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;
+  border:1px solid var(--card-brd);border-radius:14px;padding:16px 8px 14px;
+  background:rgba(17,22,43,.6);font:inherit;color:var(--ink-soft);
+  transition:border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.breaker:hover{transform:translateY(-2px);border-color:rgba(108,99,255,.4)}
+.breaker__switch{
+  width:30px;height:52px;border-radius:7px;background:#050414;
+  border:1px solid rgba(234,240,255,.18);position:relative;flex:none;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.5);
+}
+.breaker__switch::after{
+  content:"";position:absolute;left:3px;right:3px;top:3px;height:22px;border-radius:5px;
+  background:linear-gradient(180deg,#3a4266,#232a48);
+  transition:transform .22s cubic-bezier(.3,1.4,.5,1), background .22s ease;
+}
+.breaker[aria-pressed="true"] .breaker__switch::after{
+  transform:translateY(24px);
+  background:linear-gradient(180deg,var(--spark),var(--spark-deep));
+  box-shadow:0 0 14px rgba(125,249,255,.7);
+}
+.breaker__label{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.68rem;
+  letter-spacing:.06em;text-transform:uppercase;text-align:center;line-height:1.35;color:var(--muted)}
+.breaker[aria-pressed="true"]{border-color:var(--violet);background:rgba(108,99,255,.1);
+  box-shadow:0 0 0 1px var(--violet), 0 18px 40px -22px rgba(108,99,255,.45)}
+.breaker[aria-pressed="true"] .breaker__label{color:var(--spark)}
+
+.board__readout{border-top:1px dashed var(--card-brd);padding-top:22px}
+.readout-empty{text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;
+  font-size:.82rem;letter-spacing:.04em;padding:18px 0}
+.readout-list{display:flex;flex-direction:column;gap:12px}
+.readout-card{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border:1px solid var(--card-brd);border-radius:14px;padding:16px 18px;background:rgba(17,22,43,.5);
+  animation:cardIn .3s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.readout-card__body{min-width:0}
+.readout-card__name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.08rem;
+  text-transform:uppercase;letter-spacing:.02em;color:#fff}
+.readout-card__desc{color:var(--ink-soft);font-size:.92rem;margin-top:5px}
+.readout-card__tag{flex:none;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--spark);border:1px solid rgba(125,249,255,.35);
+  padding:.35rem .6rem;border-radius:20px}
+
+@media(prefers-reduced-motion:reduce){
+  .breaker__switch::after{transition:none}
+  .readout-card{animation:none}
+}
+
+/* =========================================================
+   PRICING
+   ========================================================= */
+.pricing-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(22px,3vw,40px);max-width:1000px;margin:0 auto}
+@media(max-width:820px){.pricing-wrap{grid-template-columns:1fr}}
+.call-card{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:30px 26px;
+  backdrop-filter:blur(8px);text-align:center}
+.call-card__label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--spark)}
+.call-card__price{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:3.4rem;line-height:1;
+  color:#fff;margin:10px 0 6px}
+.call-card__price small{font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.9rem;color:var(--muted)}
+.call-card__note{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
+.ranges{display:flex;flex-direction:column;gap:12px}
+.range-row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  border:1px solid var(--card-brd);border-radius:14px;padding:16px 18px;background:rgba(17,22,43,.42)}
+.range-row__label{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:1.02rem;color:var(--ink)}
+.range-row__val{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.96rem;color:var(--spark);white-space:nowrap}
+.pricing-note{text-align:center;color:var(--muted);font-size:.94rem;max-width:60ch;margin:26px auto 0}
+.pricing-note b{color:var(--ink)}
+
+/* =========================================================
+   SERVICE AREA
+   ========================================================= */
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.03em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(17,22,43,.5)}
+.chip svg{width:14px;height:14px;color:var(--spark);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(23,29,56,.6),rgba(10,13,28,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(closest-side, rgba(108,99,255,.12), transparent 70%)}
+.owner__photo:not(:has(img,svg))::after{content:"Add the owner's photo here";position:absolute;inset:0;
+  display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;
+  letter-spacing:.14em;font-size:.74rem;color:var(--ink-soft);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{content:"Short bio goes here — who runs Voltridge Electric, how long they've been running wire, and why the estimates are given before the work starts. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.08rem;color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(108,99,255,.4);color:var(--spark);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:820px){.reviews-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.review{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;backdrop-filter:blur(8px)}
+.review__stars{color:var(--spark);font-size:.9rem;letter-spacing:.15em;margin-bottom:12px}
+.review__quote{color:var(--ink);font-size:.98rem;line-height:1.6;min-height:70px}
+.review__quote:empty::before{content:"Real review coming soon.";color:var(--muted);opacity:.7;font-style:italic}
+.review__who{margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* =========================================================
+   QUOTE FORM
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, rgba(108,99,255,.16), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(125,249,255,.08), transparent 60%),
+    linear-gradient(160deg,#11162B,#070915);
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--spark);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(10,13,28,.65);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--spark);margin-bottom:6px}
+.field em{color:var(--violet-bright);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,6,15,.7);border:1px solid var(--card-brd);color:var(--ink);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:#5b6690}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--violet);background:rgba(5,6,15,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B7FFF' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+
+/* urgency toggle */
+.urgency{display:flex;gap:10px;margin-bottom:18px}
+.urgency button{flex:1;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.78rem;letter-spacing:.05em;
+  text-transform:uppercase;padding:.8rem;border-radius:10px;border:1px solid var(--card-brd);
+  background:rgba(17,22,43,.5);color:var(--ink-soft);cursor:pointer;transition:.15s}
+.urgency button[aria-pressed="true"]{border-color:var(--violet);background:rgba(108,99,255,.14);color:#fff}
+.urgency-note{font-size:.86rem;color:var(--muted);margin:-6px 0 18px}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--violet);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--spark)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:#ff9aa2}
+.book__msg.ok{color:var(--spark)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(23,29,56,.6),rgba(10,13,28,.65));
+  border:1px solid rgba(108,99,255,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(108,99,255,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#050414;background:linear-gradient(120deg,var(--violet-bright),var(--spark));
+  box-shadow:0 12px 30px -10px rgba(108,99,255,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,#ffffff,var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-soft);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:#fff;font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--spark)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--spark)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(5,6,15,.95);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.03em;
+  text-transform:uppercase;font-size:.98rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:#050414;background:linear-gradient(120deg,var(--violet-bright),var(--spark));
+  box-shadow:0 8px 20px -8px rgba(108,99,255,.7)}
+.mobile-cta .text{color:var(--ink);background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Voltridge Electric home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M34 10 L20 36 L30 36 L26 54 L46 26 L34 26 Z" fill="#050414"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Voltridge Electric<span>Treasure Valley electrician</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#switchboard">Services</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#quote">Get a quote</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550195">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0195</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="sparks" id="sparks" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Electrician · Treasure Valley, Idaho</span></div>
+        <h1><span class="l1">Wired Right,</span><span class="l2">The First Time.</span></h1>
+        <p class="hero__sub">Panel upgrades, EV chargers, lighting, troubleshooting, generators, smart-home wiring — flip a breaker below to see exactly what we do and what it runs, before you ever pick up the phone.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#switchboard">See the switchboard</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550195">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>16+ yrs</b><span>Running wire in the Valley</span></div>
+          <div class="proof"><b>4,000+</b><span>Service calls answered</span></div>
+          <div class="proof"><b>Kuna, ID</b><span>Home base</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <svg viewBox="0 0 420 420" fill="none" role="img" aria-label="Illustration: an open breaker panel with one switch lit">
+          <rect x="90" y="40" width="240" height="340" rx="22" fill="#11162B" stroke="#2A335C" stroke-width="2"/>
+          <rect x="90" y="40" width="240" height="46" rx="22" fill="#171D38"/>
+          <circle cx="210" cy="63" r="5" fill="#3C34A8"/>
+          <g>
+            <rect x="118" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="122" y="118" width="34" height="24" rx="6" fill="#3a4266"/>
+            <rect x="168" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="172" y="118" width="34" height="24" rx="6" fill="#3a4266"/>
+            <rect x="218" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#7DF9FF" stroke-width="2"/>
+            <rect x="222" y="118" width="34" height="24" rx="6" fill="#7DF9FF">
+              <animate attributeName="opacity" values="1;.55;1" dur="2.2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="268" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="272" y="118" width="34" height="24" rx="6" fill="#3a4266"/>
+          </g>
+          <g>
+            <rect x="118" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="122" y="206" width="34" height="24" rx="6" fill="#3a4266"/>
+            <rect x="168" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="172" y="206" width="34" height="24" rx="6" fill="#3a4266"/>
+            <rect x="218" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="222" y="206" width="34" height="24" rx="6" fill="#3a4266"/>
+            <rect x="268" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="272" y="206" width="34" height="24" rx="6" fill="#3a4266"/>
+          </g>
+          <path d="M236 292 L214 330 L226 330 L208 366 L252 322 L232 322 Z" fill="#6C63FF" opacity=".9"/>
+          <path d="M50 380 H370" stroke="#EAF0FF" stroke-opacity=".18" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,46 C120,20 240,20 360,42 C480,58 600,58 720,34 C840,14 960,14 1080,36 C1200,54 1320,54 1440,30 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Estimate before we start</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text before we show up</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/><path d="M3 21h18"/></svg>Locally owned &amp; operated</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M1 12h4M19 12h4M4.2 19.8l2.8-2.8M17 7l2.8-2.8"/></svg>Permits pulled when required</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: BREAKER SWITCHBOARD (doubles as Services) ============ -->
+<section class="section" id="switchboard">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Services</span>
+      <h2 class="section-title">Flip a breaker. See what it powers.</h2>
+      <p class="lead" style="margin:0 auto">Six things we do all day, every day. Flip as many as apply — the panel below fills in with exactly what each one covers.</p>
+    </div>
+
+    <div class="board reveal" id="board">
+      <div class="board__in">
+        <div class="board__hint">Panel status: <span id="onCount">0</span> of 6 circuits active</div>
+        <div class="breakers" id="breakers" role="group" aria-label="Service switchboard"></div>
+        <div class="board__readout" id="readout"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What it runs</span>
+      <h2 class="section-title">One service call. Real ranges up front.</h2>
+      <p class="lead" style="margin:0 auto">Every job gets a firm number before we start. These are the ranges most jobs land in — your actual quote depends on what we find.</p>
+    </div>
+    <div class="pricing-wrap">
+      <div class="call-card reveal">
+        <div class="call-card__label">Service call</div>
+        <div class="call-card__price" id="callPrice">$95</div>
+        <div class="call-card__note" id="callNote">First-hour diagnostic — applied toward the repair if you move forward that day.</div>
+      </div>
+      <div class="ranges reveal" data-delay="1" id="rangesList"></div>
+    </div>
+    <p class="pricing-note reveal" id="pricingNote">Bigger project, or not sure which box it falls in? <b>Text us a few details and we'll give you a real number.</b></p>
+  </div>
+</section>
+
+<!-- ============ SERVICE AREA ============ -->
+<section class="section" id="area">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Where we work</span>
+      <h2 class="section-title">The Treasure Valley, door to door</h2>
+    </div>
+    <div class="chips reveal" id="areaChips"></div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner beside an open panel with a multimeter">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <circle cx="300" cy="108" r="58" stroke="#EAF0FF" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="300" cy="108" r="84" stroke="#EAF0FF" stroke-opacity=".06" stroke-width="1.5"/>
+          <rect x="60" y="260" width="280" height="90" rx="14" fill="#171D38" stroke="#2A335C" stroke-width="1.5"/>
+          <rect x="86" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="126" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="166" y="280" width="30" height="50" rx="7" fill="#7DF9FF" opacity=".85"/>
+          <rect x="206" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="246" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="286" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <circle cx="196" cy="210" r="18" fill="#26332B" opacity=".001"/>
+          <circle cx="196" cy="208" r="18" fill="#232a48"/>
+          <path d="M178 226 C 168 242 168 262 176 286 L 224 286 C 232 262 232 242 214 226 Z" fill="#232a48"/>
+          <path d="M176 286 L168 308 M224 286 L236 306" stroke="#232a48" stroke-width="10" stroke-linecap="round"/>
+          <path d="M16 380 H384" stroke="#EAF0FF" stroke-opacity=".18" stroke-width="2"/>
+          <text x="200" y="418" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="4" fill="#8590B8" opacity=".85">ONE VAN. ONE CREW.</text>
+          <text id="ownerCaption" x="200" y="440" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="2.5" fill="#8590B8" opacity=".7">ANSWERS HIS OWN PHONE</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The person who quotes the job</h2>
+        <div class="owner__desc" id="ownerDesc">Nate Cordero started running wire as an apprentice on new-construction crews around the Treasure Valley, then spent a decade doing service work — the calls where something's already broken and somebody's waiting on you to fix it. Voltridge Electric is the one-van operation he always wanted: he answers his own phone, quotes the job before he starts, and doesn't leave a panel looking like a spider built it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">From the panel</span>
+      <h2 class="section-title">What the neighbors say</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review reveal" data-delay="1"><div class="review__stars" aria-hidden="true">★★★★★</div><div class="review__quote"></div><div class="review__who">— Add a real review here</div></div>
+      <div class="review reveal" data-delay="2"><div class="review__stars" aria-hidden="true">★★★★★</div><div class="review__quote"></div><div class="review__who">— Add a real review here</div></div>
+      <div class="review reveal" data-delay="3"><div class="review__stars" aria-hidden="true">★★★★★</div><div class="review__quote"></div><div class="review__who">— Add a real review here</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE FORM ============ -->
+<section class="section cta" id="quote">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Get a quote</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Tell us what's going on</h2>
+      <p class="lead" style="margin:0 auto">A few lines is plenty. We'll text you back within the hour (during business hours) with a real number or a next step — not a callback promise.</p>
+      <p class="cta__phone">Active hazard — sparking, burning smell, dead panel? Call or text <a href="tel:+12085550195" data-phone>(208) 555-0195</a> now.</p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="urgency" role="group" aria-label="How urgent is this">
+        <button type="button" data-val="scheduled" aria-pressed="true">Scheduled visit</button>
+        <button type="button" data-val="emergency" aria-pressed="false">Active hazard</button>
+      </div>
+      <p class="urgency-note" id="urgencyNote">Routine work — we'll confirm a time that works for you.</p>
+
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Property address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Ridge Ave" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Kuna" required />
+        </div>
+        <div class="field">
+          <label for="b-service">What do you need? <em>*</em></label>
+          <select id="b-service" name="service" required></select>
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="What's happening, when it started, whatever's useful…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your selection (auto-filled from the switchboard above)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Flip a breaker above, or leave blank and we'll confirm by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm the quote and schedule. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Get my quote</button>
+        <a class="book__alt" href="sms:+12085550195?body=Hi%20Voltridge%20Electric!%20I'd%20like%20a%20quote.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h3>You're on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M34 10 L20 36 L30 36 L26 54 L46 26 L34 26 Z" fill="#050414"/></svg>
+      </span>
+      <div><b data-brand>Voltridge Electric</b><span data-tagline>Wired right, the first time.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550195" data-phone>(208) 555-0195</a> · <a href="mailto:hello@voltridgeelectric.com" id="footEmail">hello@voltridgeelectric.com</a><br />
+      <span id="footServe">Serving Kuna · Nampa · Meridian · Boise · Star</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Voltridge Electric</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550195"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550195?body=Hi%20Voltridge%20Electric!%20I'd%20like%20a%20quote."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it —
+     the switchboard, pricing, service area, FAQ, footer and
+     owner section all re-render from the merged object.
+     Keep content.json's shape in sync with this const.
+     (Static copy the admin does NOT touch: the JSON-LD in
+     <head> and the meta description.)
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    brand: {
+      name: "Voltridge Electric",
+      tagline: "Wired right, the first time.",
+      phone: "(208) 555-0195",
+      email: "hello@voltridgeelectric.com",
+      leadEmail: "info@kingdom-creatives.com",
+      city: "Kuna, ID"
+    },
+    services: [
+      { id: "panel", label: "Panel Upgrades", desc: "Old fuse box or a panel maxed out on double-taps and no room left? We swap it for a modern panel sized for how much power your house actually uses now." },
+      { id: "ev", label: "EV Charger Install", desc: "A dedicated circuit and a Level 2 charger, wired so your car charges overnight without tripping anything else in the house." },
+      { id: "lighting", label: "Lighting & Fixtures", desc: "Recessed lighting, ceiling fans, outdoor security lights, dimmer upgrades — wired clean, no exposed junction boxes left behind." },
+      { id: "repairs", label: "Troubleshooting & Repairs", desc: "Flickering lights, dead outlets, breakers that trip for no reason — we find the actual cause, not just the symptom." },
+      { id: "generator", label: "Generator Hookups", desc: "A transfer switch and generator hookup so a storm outage doesn't mean sitting in the dark." },
+      { id: "smart", label: "Smart Home Wiring", desc: "Smart switches, smart panels, EV-ready circuits — wired for what your house does now and what it does in five years." }
+    ],
+    pricing: {
+      serviceCall: { price: 95, note: "First-hour diagnostic — applied toward the repair if you move forward that day." },
+      ranges: [
+        { label: "Troubleshooting & Repairs", range: "$150 – $450" },
+        { label: "EV Charger Install", range: "$650 – $1,400" },
+        { label: "Generator Hookup", range: "$900 – $1,800" },
+        { label: "Panel Upgrade", range: "$1,800 – $3,200" }
+      ]
+    },
+    serviceArea: {
+      region: "Treasure Valley, Idaho",
+      short: "Treasure Valley",
+      cities: ["Kuna", "Nampa", "Meridian", "Boise", "Star"]
+    },
+    owner: {
+      name: "Nate Cordero",
+      bio: "Nate Cordero started running wire as an apprentice on new-construction crews around the Treasure Valley, then spent a decade doing service work — the calls where something's already broken and somebody's waiting on you to fix it. Voltridge Electric is the one-van operation he always wanted: he answers his own phone, quotes the job before he starts, and doesn't leave a panel looking like a spider built it.",
+      photo: ""
+    },
+    faq: [
+      { q: "Do you pull permits?", a: "Yes — any job that requires one gets a permit pulled and inspected. It's part of doing it right, not an upsell." },
+      { q: "How do I know if my panel needs an upgrade?", a: "Breakers that trip for no clear reason, warm or discolored outlets, flickering lights when something big kicks on, or a fuse box instead of breakers — any of those is worth a look." },
+      { q: "How long does an EV charger install take?", a: "Most installs are same-day — usually two to four hours once we're on site, depending on how far the panel is from where the charger goes." },
+      { q: "Do you offer emergency service?", a: "For active hazards — sparking, burning smell, a dead panel — yes, call and we'll work you in. Routine issues get scheduled at the next normal slot." },
+      { q: "Is the service call fee separate from the repair cost?", a: "The service call covers the first hour of diagnostic time. If you move forward with the repair that day, it's applied toward the total — you're not paying twice." }
+    ],
+    testimonials: [
+      { quote: "", author: "" },
+      { quote: "", author: "" },
+      { quote: "", author: "" }
+    ],
+    social: []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+     submission emails a one-time activation link to LEAD.email; click it once and
+     every quote request after that lands in that inbox, formatted as a table. */
+  var LEAD = { provider: 'formsubmit', email: '', sms: '' };
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
+
+  function applyRuntime(c){
+    LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
+    LEAD.sms = telHref((c.brand||{}).phone);
+  }
+  applyRuntime(CONTENT);
+
+  // ---------- year ----------
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---------- nav solidify ----------
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ---------- reveal on scroll (re-armable for JS-injected nodes) ----------
+  var io = null;
+  if('IntersectionObserver' in window && !reduce){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  }
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(io){ nodes.forEach(function(n){ io.observe(n); }); }
+    else { nodes.forEach(function(n){ n.classList.add('in'); }); }
+  }
+
+  // ---------- drifting spark motes in hero ----------
+  var sparksEl = document.getElementById('sparks');
+  if(sparksEl && !reduce){
+    var n = window.innerWidth < 700 ? 8 : 16;
+    for(var i=0;i<n;i++){
+      var m = document.createElement('span');
+      m.className = 'spark-mote';
+      m.style.left = Math.random()*100 + '%';
+      var dur = 8 + Math.random()*9;
+      m.style.animationDuration = dur + 's';
+      m.style.animationDelay = (-Math.random()*dur) + 's';
+      m.style.opacity = 0.3 + Math.random()*0.5;
+      sparksEl.appendChild(m);
+    }
+  }
+
+  // ---------- BREAKER SWITCHBOARD ----------
+  var onIds = {};
+  function renderBreakers(){
+    var wrap = document.getElementById('breakers');
+    wrap.innerHTML = (CONTENT.services||[]).map(function(s){
+      return '<button type="button" class="breaker" data-id="'+esc(s.id)+'" aria-pressed="'+(onIds[s.id]?'true':'false')+'">'+
+        '<span class="breaker__switch" aria-hidden="true"></span>'+
+        '<span class="breaker__label">'+esc(s.label)+'</span>'+
+      '</button>';
+    }).join('');
+    renderReadout();
+  }
+  function renderReadout(){
+    var readout = document.getElementById('readout');
+    var active = (CONTENT.services||[]).filter(function(s){ return onIds[s.id]; });
+    document.getElementById('onCount').textContent = active.length;
+    if(!active.length){
+      readout.innerHTML = '<div class="readout-empty">Flip a breaker above to see what it powers.</div>';
+      return;
+    }
+    readout.innerHTML = '<div class="readout-list">' + active.map(function(s){
+      return '<div class="readout-card"><div class="readout-card__body"><div class="readout-card__name">'+esc(s.label)+'</div>'+
+        '<div class="readout-card__desc">'+esc(s.desc)+'</div></div><span class="readout-card__tag">On</span></div>';
+    }).join('') + '</div>';
+    revealScan(readout);
+  }
+  document.getElementById('breakers').addEventListener('click', function(e){
+    var btn = e.target.closest('.breaker'); if(!btn) return;
+    var id = btn.getAttribute('data-id');
+    onIds[id] = !onIds[id];
+    btn.setAttribute('aria-pressed', onIds[id] ? 'true' : 'false');
+    renderReadout();
+    var opt = document.querySelector('#b-service option[value="'+id+'"]');
+    if(opt){
+      var summary = document.getElementById('b-summary');
+      var chosen = (CONTENT.services||[]).filter(function(s){ return onIds[s.id]; }).map(function(s){ return s.label; });
+      summary.value = chosen.join(', ');
+      if(chosen.length === 1){ document.getElementById('b-service').value = id; }
+    }
+  });
+
+  // ---------- pricing ----------
+  function renderPricing(){
+    var p = CONTENT.pricing || {};
+    var sc = p.serviceCall || {};
+    document.getElementById('callPrice').textContent = '$' + (sc.price != null ? sc.price : 95);
+    document.getElementById('callNote').textContent = sc.note || '';
+    document.getElementById('rangesList').innerHTML = (p.ranges||[]).map(function(r){
+      return '<div class="range-row"><span class="range-row__label">'+esc(r.label)+'</span><span class="range-row__val">'+esc(r.range)+'</span></div>';
+    }).join('');
+  }
+
+  // ---------- service area ----------
+  function renderArea(){
+    var area = CONTENT.serviceArea || {};
+    var cities = (area.cities || []).filter(Boolean);
+    document.getElementById('areaChips').innerHTML = cities.map(function(c){
+      return '<span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21s-6-5.7-6-10a6 6 0 0 1 12 0c0 4.3-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>'+esc(c)+'</span>';
+    }).join('');
+    document.getElementById('footServe').textContent = 'Serving ' + cities.join(' · ');
+  }
+
+  // ---------- FAQ ----------
+  function renderFaq(){
+    document.getElementById('faqList').innerHTML = (CONTENT.faq||[]).map(function(f){
+      return '<details class="faq"><summary>'+esc(f.q)+'<span class="plus">+</span></summary><div class="faq__body">'+esc(f.a)+'</div></details>';
+    }).join('');
+  }
+
+  // ---------- service select options ----------
+  function renderServiceOptions(){
+    var sel = document.getElementById('b-service');
+    sel.innerHTML = '<option value="" disabled selected>Choose one…</option>' +
+      (CONTENT.services||[]).map(function(s){ return '<option value="'+esc(s.id)+'">'+esc(s.label)+'</option>'; }).join('') +
+      '<option value="other">Something else</option>';
+  }
+
+  // ---------- brand / footer ----------
+  function renderBrand(){
+    var b = CONTENT.brand || {};
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = b.name || ''; });
+    document.querySelectorAll('[data-tagline]').forEach(function(el){ el.textContent = b.tagline || ''; });
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.textContent = b.phone || ''; });
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){ a.href = 'tel:' + telHref(b.phone); });
+    var fe = document.getElementById('footEmail');
+    if(fe){ fe.href = 'mailto:' + b.email; fe.textContent = b.email; }
+    document.getElementById('heroEyebrow').textContent = 'Electrician · ' + (b.city || '').replace(/, ID$/, ', Idaho');
+  }
+
+  // ---------- owner ----------
+  function renderOwner(){
+    var o = CONTENT.owner || {};
+    var desc = document.getElementById('ownerDesc');
+    desc.textContent = o.bio || '';
+  }
+
+  // ---------- testimonials ----------
+  function renderTestimonials(){
+    var t = CONTENT.testimonials || [];
+    document.querySelectorAll('.review').forEach(function(card, i){
+      var q = card.querySelector('.review__quote'), who = card.querySelector('.review__who');
+      var item = t[i] || {};
+      q.textContent = item.quote || '';
+      who.textContent = item.author ? ('— ' + item.author) : '— Add a real review here';
+    });
+  }
+
+  function renderContent(c){
+    CONTENT = c;
+    applyRuntime(CONTENT);
+    renderBrand();
+    renderBreakers();
+    renderPricing();
+    renderArea();
+    renderFaq();
+    renderServiceOptions();
+    renderOwner();
+    renderTestimonials();
+    revealScan(document);
+  }
+
+  renderContent(CONTENT);
+  revealScan(document);
+
+  fetch('content.json', {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d){ renderContent(Object.assign({}, DEFAULT_CONTENT, d)); } })
+    .catch(function(){});
+
+  // ---------- urgency toggle ----------
+  var urgency = 'scheduled';
+  var urgencyNotes = {
+    scheduled: "Routine work — we'll confirm a time that works for you.",
+    emergency: "Active hazard — we'll call to confirm the fastest slot we can get to you."
+  };
+  document.querySelectorAll('.urgency button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.urgency button').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+      btn.setAttribute('aria-pressed','true');
+      urgency = btn.getAttribute('data-val');
+      document.getElementById('urgencyNote').textContent = urgencyNotes[urgency] || '';
+    });
+  });
+
+  // ---------- quote form ----------
+  var form = document.getElementById('bookForm');
+  if(form){
+    var msgEl = document.getElementById('bookMsg');
+    var submitBtn = document.getElementById('bookSubmit');
+    var doneCard = document.getElementById('bookDone');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(form.querySelector('.hp').value){ return; } // honeypot tripped, silently drop
+      var name = document.getElementById('b-name').value.trim();
+      var phone = document.getElementById('b-phone').value.trim();
+      var addr = document.getElementById('b-addr').value.trim();
+      var city = document.getElementById('b-city').value.trim();
+      var service = document.getElementById('b-service').value;
+      var consent = document.getElementById('b-consent').checked;
+
+      var invalid = false;
+      [['b-name',name],['b-phone',phone],['b-addr',addr],['b-city',city],['b-service',service]].forEach(function(pair){
+        var el = document.getElementById(pair[0]);
+        var field = el.closest('.field');
+        var bad = !pair[1];
+        field.classList.toggle('invalid', bad);
+        if(bad) invalid = true;
+      });
+      if(!consent) invalid = true;
+      if(invalid){ msgEl.textContent = 'Please fill in the required fields.'; msgEl.className = 'book__msg err'; return; }
+
+      submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+      var payload = {
+        name: name, phone: phone, address: addr, city: city,
+        service: service, urgency: urgency,
+        notes: document.getElementById('b-notes').value.trim(),
+        selection: document.getElementById('b-summary').value,
+        _subject: 'Voltridge Electric — ' + (urgency === 'emergency' ? 'URGENT ' : '') + 'quote request',
+        _template: 'table', _captcha: 'false'
+      };
+
+      fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(payload)
+      }).then(function(r){ return r.json(); }).then(function(res){
+        if(res && (res.success === 'true' || res.success === true)){
+          form.hidden = true;
+          doneCard.hidden = false;
+          document.getElementById('doneMsg').textContent = "We'll text " + name.split(' ')[0] + ' shortly to confirm.';
+          doneCard.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'center'});
+        } else { throw new Error('formsubmit rejected'); }
+      }).catch(function(){
+        msgEl.innerHTML = 'Hmm — that didn\'t go through. Text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+        msgEl.className = 'book__msg err';
+        submitBtn.disabled = false; submitBtn.textContent = 'Get my quote';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

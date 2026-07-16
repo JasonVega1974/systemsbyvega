@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bristlecone Paint Co. — Residential Painting | Star, ID</title>
+<meta name="description" content="Interior, exterior, cabinet refinishing and deck staining for the Treasure Valley. Tap a swatch and see the color on the wall before we ever open a can. Call or text (208) 555-0145." />
+<meta name="theme-color" content="#131110" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://jasonvega1974.github.io/bristlecone-paint-demo/" />
+<meta property="og:url" content="https://jasonvega1974.github.io/bristlecone-paint-demo/" />
+<meta property="og:title" content="Bristlecone Paint Co. — Every Wall, Exactly Right." />
+<meta property="og:description" content="Interior, exterior, cabinet and deck painting for the Treasure Valley. Tap a swatch and see the color on the wall before we open a can." />
+<meta name="twitter:card" content="summary" />
+
+<!-- Favicon: a paint roller leaving a terracotta stroke -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23C97B63'/%3E%3Crect x='16' y='14' width='9' height='20' rx='2' fill='%23221E1A'/%3E%3Crect x='13' y='32' width='15' height='7' rx='2' fill='%23221E1A'/%3E%3Cpath d='M20 39 L20 52' stroke='%23221E1A' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M34 50 C 40 44 46 46 50 40' stroke='%23F4EDE3' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Local business structured data. Keep phone/pricing in sync with visible copy and CONTENT.pricing in the script. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Bristlecone Paint Co.",
+  "url": "https://jasonvega1974.github.io/bristlecone-paint-demo/",
+  "description": "Residential interior and exterior painting, cabinet refinishing and deck/fence staining, serving the Treasure Valley.",
+  "telephone": "+12085550145",
+  "email": "hello@bristleconepaint.com",
+  "areaServed": "Treasure Valley, Idaho — Star, Eagle, Meridian, Boise, Nampa, Middleton",
+  "priceRange": "$450-$9800",
+  "slogan": "Every wall, exactly right.",
+  "makesOffer": [
+    { "@type": "Offer", "name": "Room Refresh", "priceRange": "$450-$900", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Full Repaint", "priceRange": "$2800-$6500", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Whole Exterior", "priceRange": "$4200-$9800", "priceCurrency": "USD" }
+  ]
+}
+</script>
+
+<style>
+/* =========================================================
+   BRISTLECONE PAINT CO. — tokens
+   Trade identity: warm neutral graphite base (a primed wall,
+   not a fire), dusty terracotta primary (the paint-chip color
+   the visualizer is built around), sage secondary (a second
+   swatch family, used sparingly), warm cream type.
+   ========================================================= */
+:root{
+  --char-deep:#0B0A09;
+  --char:#131110;
+  --char-2:#1B1815;
+  --panel:#221E1A;
+  --terracotta:#C97B63;
+  --terracotta-bright:#DE9880;
+  --terracotta-deep:#8F4E3B;
+  --sage:#9CAF88;
+  --cream:#F4EDE3;
+  --cream-soft:#FBF7F0;
+  --stone:#C4B8AA;
+  --muted:#8F8377;
+  --line:rgba(201,123,99,.16);
+  --hair:rgba(244,237,227,.12);
+  --card:rgba(34,30,26,.6);
+  --card-brd:rgba(244,237,227,.13);
+  --shadow:0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:1140px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Karla',system-ui,sans-serif;
+  background:var(--char);
+  color:var(--cream);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 84% -8%, rgba(201,123,99,.16), transparent 60%),
+    radial-gradient(900px 700px at 4% 12%, rgba(156,175,136,.08), transparent 62%),
+    linear-gradient(180deg,#0F0D0C 0%, #131110 45%, #0B0A09 100%);
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 20% 20%, transparent 0 52px, rgba(244,237,227,.03) 52px 53px),
+    repeating-radial-gradient(circle at 82% 66%, transparent 0 68px, rgba(201,123,99,.03) 68px 69px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.2em;
+  font-size:.74rem;color:var(--terracotta-bright);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--terracotta-bright),transparent);
+}
+.section-title{
+  font-family:'Fraunces',serif;font-weight:700;font-optical-sizing:auto;
+  font-size:clamp(1.9rem,5vw,3.2rem);line-height:1.06;letter-spacing:-.01em;
+  background:linear-gradient(180deg,#fffdf9 0%,var(--cream) 55%,#d8cbb8 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--stone);font-size:1.08rem;max-width:58ch}
+
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Fraunces',serif;font-weight:600;letter-spacing:.01em;
+  font-size:1.02rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:#221208;background:linear-gradient(135deg,var(--terracotta-bright),var(--terracotta-deep));
+  box-shadow:0 12px 30px -10px rgba(201,123,99,.55), inset 0 1px 0 rgba(255,255,255,.35);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(201,123,99,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:active{transform:translateY(0)}
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(201,123,99,.08);color:var(--cream-soft);
+  border:1px solid rgba(201,123,99,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(201,123,99,.16);box-shadow:0 10px 26px -14px rgba(201,123,99,.5)}
+.btn--lg{font-size:1.1rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--terracotta-bright);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .3s ease, box-shadow .3s ease, padding .3s ease;padding:16px 0}
+.nav.solid{background:rgba(11,10,9,.9);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;padding:10px 0}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--terracotta-bright),var(--terracotta-deep));
+  box-shadow:0 8px 20px -8px rgba(201,123,99,.6)}
+.brand__mark svg{width:26px;height:26px}
+.brand__name{font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem;line-height:1;color:var(--cream-soft)}
+.brand__name .brand__sub{display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.16em;text-transform:uppercase;margin-top:5px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.06em;
+  text-transform:uppercase;font-size:.76rem;color:var(--cream);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--terracotta-bright)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Fraunces',serif;
+  font-weight:600;font-size:.86rem;padding:.6rem 1.05rem;border-radius:10px;color:#221208;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--terracotta-bright),var(--terracotta-deep));
+  box-shadow:0 10px 24px -12px rgba(201,123,99,.7), inset 0 1px 0 rgba(255,255,255,.35)}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.76rem;padding:.5rem .8rem;gap:.35rem}}
+@media(max-width:380px){.nav__call{font-size:.7rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(2.4rem,6.4vw,4.4rem);line-height:1.02;letter-spacing:-.01em;margin-bottom:8px}
+.hero h1 .l1{background:linear-gradient(180deg,#fffdf9 0%,var(--cream) 50%,#d8cbb8 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(244,237,227,.12));display:block}
+.hero h1 .l2{color:var(--terracotta-bright);display:block;text-shadow:0 4px 30px rgba(201,123,99,.4)}
+.hero__sub{font-size:1.14rem;color:var(--stone);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Fraunces',serif;font-weight:700;font-size:1.55rem;color:#fff}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(201,123,99,.22), rgba(201,123,99,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0}
+.hero__art svg{position:relative;z-index:1;width:min(500px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.mote{position:absolute;bottom:-4%;width:5px;height:5px;border-radius:1px;
+  background:radial-gradient(circle,rgba(222,152,128,.9),rgba(222,152,128,0) 70%);
+  opacity:0;animation:mote linear infinite}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0}
+  12%{opacity:.7}
+  55%{transform:translate3d(20px,-55vh,0) rotate(60deg)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-12px,-108vh,0) rotate(120deg);opacity:0}
+}
+
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--char-2);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--char-2),rgba(34,30,26,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:400;letter-spacing:.06em;text-transform:uppercase;font-size:.74rem;color:var(--cream)}
+.trust__item svg{width:20px;height:20px;color:var(--terracotta-bright);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+/* =========================================================
+   SIGNATURE — ROOM RE-PAINT VISUALIZER
+   ========================================================= */
+.viz{max-width:1060px;margin:0 auto;border-radius:20px;overflow:hidden;
+  background:rgba(20,17,14,.72);border:1px solid var(--card-brd);
+  box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.viz::before{content:"";display:block;height:6px;background:linear-gradient(90deg,var(--terracotta),var(--sage))}
+.viz__in{padding:clamp(20px,3.2vw,32px)}
+.viz__body{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(22px,3vw,38px);align-items:start}
+@media(max-width:820px){.viz__body{grid-template-columns:1fr}}
+
+.viz__room{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(34,30,26,.7),rgba(11,10,9,.6));
+  border:1px solid var(--card-brd);box-shadow:0 18px 40px -24px rgba(0,0,0,.6)}
+.viz__room svg{width:100%;height:100%;display:block}
+.room-wall{transition:fill .45s ease}
+.viz__caption{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;
+  font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cream-soft);background:linear-gradient(0deg,rgba(8,7,6,.8),transparent)}
+.viz__caption b{color:var(--terracotta-bright);font-weight:600}
+
+.viz__panel{display:flex;flex-direction:column;gap:18px}
+.viz__intro{color:var(--stone);font-size:.98rem}
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:520px){.swatches{grid-template-columns:repeat(4,1fr)}}
+.swatch{
+  display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
+  border:2px solid var(--card-brd);border-radius:14px;padding:10px 6px;background:rgba(27,24,21,.5);
+  font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.03em;color:var(--stone);
+  transition:border-color .18s ease, transform .18s ease;text-align:center;
+}
+.swatch__chip{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
+.swatch:hover{transform:translateY(-2px);border-color:rgba(201,123,99,.4)}
+.swatch[aria-pressed="true"]{border-color:var(--terracotta);background:rgba(201,123,99,.1);color:var(--cream-soft);
+  box-shadow:0 0 0 1px var(--terracotta), 0 14px 30px -20px rgba(201,123,99,.5)}
+.viz__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:4px}
+.viz__alt{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--stone);text-decoration:underline;text-underline-offset:3px}
+.viz__alt:hover{color:var(--terracotta-bright)}
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:980px){.services-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.services-grid{grid-template-columns:1fr}}
+.svc-card{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px 24px;
+  backdrop-filter:blur(8px);transition:transform .22s ease,border-color .22s ease}
+.svc-card:hover{transform:translateY(-6px);border-color:rgba(201,123,99,.4)}
+.svc-card__ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(201,123,99,.22),rgba(143,78,59,.14));color:var(--terracotta-bright)}
+.svc-card__ic svg{width:23px;height:23px}
+.svc-card h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;margin-bottom:8px;color:#fff}
+.svc-card p{color:var(--muted);font-size:.92rem}
+
+/* =========================================================
+   PRICING
+   ========================================================= */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+@media(max-width:900px){.plans-grid{grid-template-columns:1fr;max-width:480px}}
+.plan-card{position:relative;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+  padding:30px 26px;backdrop-filter:blur(8px);display:flex;flex-direction:column;transition:transform .22s ease,border-color .22s ease}
+.plan-card:hover{transform:translateY(-6px)}
+.plan-card--best{border-color:var(--terracotta);box-shadow:0 0 0 1px var(--terracotta),0 24px 60px -30px rgba(201,123,99,.5)}
+.plan-card__pill{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#221208;background:linear-gradient(135deg,var(--terracotta-bright),var(--terracotta-deep));
+  padding:.4rem .9rem;border-radius:999px;box-shadow:0 8px 20px -10px rgba(201,123,99,.7)}
+.plan-card__tier{font-family:'Fraunces',serif;font-weight:700;font-size:1.28rem;color:var(--cream-soft)}
+.plan-card__freq{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin:6px 0 18px}
+.plan-card__price{font-family:'Fraunces',serif;font-weight:700;font-size:2.05rem;line-height:1.1;
+  color:var(--terracotta-bright);margin-bottom:4px}
+.plan-card__price small{font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.72rem;color:var(--muted);letter-spacing:.02em;display:block;margin-top:4px}
+.plan-card__features{list-style:none;margin:18px 0 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.plan-card__features li{display:flex;align-items:flex-start;gap:.6rem;color:var(--stone);font-size:.9rem}
+.plan-card__features svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--terracotta-bright)}
+.plans-note{text-align:center;color:var(--muted);font-size:.94rem;max-width:60ch;margin:26px auto 0}
+.plans-note b{color:var(--cream)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Fraunces',serif;font-weight:700;
+  font-size:2.5rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(201,123,99,.55);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.12rem;margin-bottom:8px;color:#fff}
+.step p{color:var(--muted);font-size:.98rem}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(34,30,26,.7),rgba(11,10,9,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(closest-side, rgba(201,123,99,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(244,237,227,.04) 14px 15px)}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;
+  color:var(--stone);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--cream);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs the crew, how long they've been painting, and what real prep work means to them. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem;color:var(--cream-soft)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(201,123,99,.4);color:var(--terracotta-bright);transition:transform .25s ease;font-family:'Karla',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:.98rem}
+.faq__body b{color:var(--cream)}
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:820px){.reviews-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.review{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;backdrop-filter:blur(8px)}
+.review__stars{color:var(--terracotta-bright);font-size:.9rem;letter-spacing:.15em;margin-bottom:12px}
+.review__quote{color:var(--cream);font-size:.96rem;line-height:1.6;min-height:70px}
+.review__quote:empty::before{content:"Real review coming soon.";color:var(--muted);opacity:.7;font-style:italic}
+.review__who{margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:radial-gradient(700px 340px at 18% 0%, rgba(201,123,99,.14), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(156,175,136,.1), transparent 60%),
+    linear-gradient(160deg,#1B1815,#0F0D0C);
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--terracotta-bright);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(16,14,12,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--sage);margin-bottom:6px}
+.field em{color:var(--terracotta-bright);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(6,5,4,.7);border:1px solid var(--card-brd);color:var(--cream-soft);
+  font-family:'Karla',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:#6b6157}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--terracotta);background:rgba(6,5,4,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DE9880' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(201,123,99,.06);border-style:dashed;color:var(--cream);
+  font-family:'IBM Plex Mono',monospace;font-size:.84rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.9rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--terracotta);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;color:var(--cream);opacity:.85;
+  text-transform:uppercase;font-size:.74rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--terracotta-bright)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:#ff9aa2}
+.book__msg.ok{color:var(--terracotta-bright)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(34,30,26,.7),rgba(11,10,9,.6));
+  border:1px solid rgba(201,123,99,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(201,123,99,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:#221208;background:linear-gradient(135deg,var(--terracotta-bright),var(--terracotta-deep));
+  box-shadow:0 12px 30px -10px rgba(201,123,99,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.05;margin-bottom:12px;
+  background:linear-gradient(180deg,#fffdf9,var(--cream));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--stone);font-size:1.02rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--terracotta-bright)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--stone);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--terracotta-bright)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(11,10,9,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Fraunces',serif;font-weight:600;font-size:.94rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:#221208;background:linear-gradient(135deg,var(--terracotta-bright),var(--terracotta-deep));
+  box-shadow:0 8px 20px -8px rgba(201,123,99,.7)}
+.mobile-cta .text{color:var(--cream-soft);background:rgba(201,123,99,.1);border:1px solid rgba(201,123,99,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+  .room-wall{transition:none}
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Bristlecone Paint Co. home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#221208" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="6" height="9" rx="1"/><rect x="5.5" y="11" width="9" height="4" rx="1"/><path d="M10 15v6"/><path d="M15 20c2-2 4-2 6-5"/></svg>
+      </span>
+      <span class="brand__name" id="brandName"><span data-brand>Bristlecone Paint Co.</span><span class="brand__sub">Treasure Valley painting</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#visualizer">Visualizer</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#book">Quote</a>
+      <a class="nav__call" href="tel:+12085550145">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0145</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Residential painting · Treasure Valley, Idaho</span></div>
+        <h1><span class="l1">Pick The Color.</span><span class="l2">See It On The Wall.</span></h1>
+        <p class="hero__sub">Paint chips lie under fluorescent store lighting. Tap a swatch below and watch the color land on an actual wall first — then we show up with real prep work under every coat.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#visualizer">Try the visualizer</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550145">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>9+ Years</b><span>Painting the valley</span></div>
+          <div class="proof"><b>400+</b><span>Rooms brought to life</span></div>
+          <div class="proof"><b>Local</b><span>Owned &amp; operated</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <svg viewBox="0 0 520 380" fill="none" role="img" aria-label="Illustration: a paint roller and tray beside a wall mid-repaint">
+          <circle cx="418" cy="66" r="20" fill="#DE9880" fill-opacity=".7"/>
+          <circle cx="418" cy="66" r="32" stroke="#DE9880" stroke-opacity=".22" stroke-width="2"/>
+          <rect x="40" y="60" width="440" height="260" rx="10" fill="#332C25" fill-opacity=".55"/>
+          <rect x="40" y="60" width="220" height="260" rx="10" fill="#4A3F35" fill-opacity=".7"/>
+          <rect x="252" y="60" width="20" height="260" fill="#C97B63" fill-opacity=".9"/>
+          <rect x="90" y="120" width="120" height="150" rx="6" fill="#221E1A" fill-opacity=".4"/>
+          <rect x="300" y="150" width="140" height="24" rx="4" fill="#8F4E3B" fill-opacity=".6"/>
+          <rect x="300" y="184" width="100" height="24" rx="4" fill="#DE9880" fill-opacity=".55"/>
+          <rect x="120" y="300" width="60" height="20" rx="4" fill="#221E1A"/>
+          <path d="M150 300 L150 340" stroke="#221E1A" stroke-width="6" stroke-linecap="round"/>
+          <path d="M150 340 C 200 322 250 330 290 300" stroke="#F4EDE3" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <rect x="20 " y="358" width="480" height="2" fill="#F4EDE3" fill-opacity=".18"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,46 C120,20 240,20 360,42 C480,58 600,58 720,34 C840,14 960,14 1080,36 C1200,54 1320,54 1440,30 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Two coats, minimum</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text before we show up</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/><path d="M3 21h18"/></svg>Locally owned &amp; operated</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="3"/><path d="M12 12v9"/></svg>Serving the Treasure Valley</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: ROOM VISUALIZER ============ -->
+<section class="section" id="visualizer">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Try it yourself</span>
+      <h2 class="section-title">Tap a swatch. Watch the wall change.</h2>
+      <p class="lead" style="margin:0 auto">Eight real colors from our current book. No guessing from a 2-inch chip — see the whole wall before you commit to a can.</p>
+    </div>
+
+    <div class="viz reveal" id="viz">
+      <div class="viz__in">
+        <div class="viz__body">
+          <div class="viz__room" id="vizRoom" role="img" aria-label="Room illustration with a wall that recolors to match the selected swatch"></div>
+          <div class="viz__panel">
+            <p class="viz__intro" id="vizIntro">Pick a color below — the accent wall updates instantly.</p>
+            <div class="swatches" id="swatches" role="group" aria-label="Paint swatches"></div>
+            <div class="viz__actions">
+              <a class="viz__alt" href="#book">Get this color quoted →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What we do</span>
+      <h2 class="section-title">Four ways we touch your house</h2>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What it costs</span>
+      <h2 class="section-title">Real ranges, not a mystery quote</h2>
+      <p class="lead" style="margin:0 auto">Every job gets a firm number before we start — these ranges tell you what to expect walking in.</p>
+    </div>
+    <div class="plans-grid" id="plansGrid"></div>
+    <p class="plans-note reveal" id="plansNote">Bigger than a single room, smaller than the whole house? <b>Text us the square footage and we'll quote it exact.</b></p>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. Zero guesswork.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Pick your colors</h3>
+        <p>Use the visualizer above, or send us a photo of your space and a Pinterest board — we'll narrow it down together.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We quote it before we open a can</h3>
+        <p>A real walkthrough (in person or by video), a firm number, confirmed before any paint gets bought.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>You walk the job with us</h3>
+        <p>We don't call it done until you've walked every room with us and signed off — not after we've already packed the truck.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner holding a paint roller beside a ladder">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <circle cx="316" cy="108" r="58" stroke="#F4EDE3" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="316" cy="108" r="84" stroke="#F4EDE3" stroke-opacity=".06" stroke-width="1.5"/>
+          <circle cx="300" cy="76" r="16" fill="#DE9880" fill-opacity=".8"/>
+          <circle cx="300" cy="76" r="27" stroke="#DE9880" stroke-opacity=".22" stroke-width="2"/>
+          <rect x="40" y="60" width="320" height="260" rx="10" fill="#332C25" fill-opacity=".5"/>
+          <rect x="40" y="60" width="150" height="260" rx="10" fill="#8F4E3B" fill-opacity=".5"/>
+          <circle cx="196" cy="252" r="18" fill="#26221D"/>
+          <path d="M178 270 C 168 286 168 306 176 330 L 224 330 C 232 306 232 286 214 270 Z" fill="#26221D"/>
+          <path d="M176 330 L168 352 M224 330 L236 350" stroke="#26221D" stroke-width="10" stroke-linecap="round"/>
+          <path d="M182 296 L150 280" stroke="#26221D" stroke-width="9" stroke-linecap="round"/>
+          <rect x="140" y="272" width="16" height="10" rx="2" fill="#26221D"/>
+          <path d="M16 372 H384" stroke="#F4EDE3" stroke-opacity=".18" stroke-width="2"/>
+          <text x="200" y="418" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="4" fill="#C4B8AA" opacity=".8">TRUSTED PAINT CREW</text>
+          <text id="ownerCaption" x="200" y="438" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.5" fill="#8F8377" opacity=".7">ON A JOB MOST WEEKS</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The person who quotes the job</h2>
+        <div class="owner__desc" id="ownerDesc">Wren Callahan started painting apartment turnovers on weekends during college and never really stopped. Nine years and a few hundred houses later, Bristlecone Paint Co. is a small, steady crew instead of a one-truck operation — but the rule from year one hasn't changed: real prep under every coat, or it doesn't go on the wall. Wren still walks every finished job with the homeowner before calling it done.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">From the neighborhood</span>
+      <h2 class="section-title">What homeowners say</h2>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Get a quote</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Get your quote in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Tell us about the job and we'll text you back within the hour (during business hours) with a real number — not a callback promise.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550145" data-phone>(208) 555-0145</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Property address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Main St" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Star" required />
+        </div>
+        <div class="field">
+          <label for="b-service">What do you need? <em>*</em></label>
+          <select id="b-service" name="service" required></select>
+        </div>
+        <div class="field">
+          <label for="b-date">Preferred start date <em>*</em></label>
+          <input id="b-date" name="start_date" type="date" required />
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Rooms involved, colors you're considering, anything useful…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your selection (auto-filled from the visualizer)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Pick a swatch above, or leave blank and we'll confirm by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Get my quote</button>
+        <a class="book__alt" href="sms:+12085550145?body=Hi%20Bristlecone%20Paint%20Co.!%20I'd%20like%20a%20quote.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>You're on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your quote.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#221208" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="6" height="9" rx="1"/><rect x="5.5" y="11" width="9" height="4" rx="1"/><path d="M10 15v6"/><path d="M15 20c2-2 4-2 6-5"/></svg>
+      </span>
+      <div><b data-brand>Bristlecone Paint Co.</b><span data-tagline>Every wall, exactly right.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550145" data-phone>(208) 555-0145</a> · <a href="mailto:hello@bristleconepaint.com" id="footEmail">hello@bristleconepaint.com</a><br />
+      <span id="footServe">Serving Star · Eagle · Meridian · Boise · Nampa · Middleton</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Bristlecone Paint Co.</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550145"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550145?body=Hi%20Bristlecone%20Paint%20Co.!%20I'd%20like%20a%20quote."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it —
+     the visualizer swatches, services, pricing, booking
+     form, footer, FAQ and owner section all re-render from
+     the merged object. Keep content.json's shape in sync
+     with this const. (Static copy the admin does NOT touch:
+     the JSON-LD offers/priceRange in <head> and the meta
+     description.)
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    brand: {
+      name: "Bristlecone Paint Co.",
+      tagline: "Every wall, exactly right.",
+      phone: "(208) 555-0145",
+      email: "hello@bristleconepaint.com",
+      leadEmail: "info@kingdom-creatives.com",
+      city: "Star, ID"
+    },
+    swatches: [
+      { id: "sage-whisper", name: "Sage Whisper", hex: "#9CAF88" },
+      { id: "weathered-clay", name: "Weathered Clay", hex: "#C97B63" },
+      { id: "harbor-fog", name: "Harbor Fog", hex: "#7C93A3" },
+      { id: "warm-linen", name: "Warm Linen", hex: "#E8DCC8" },
+      { id: "dusk-plum", name: "Dusk Plum", hex: "#8B6F7E" },
+      { id: "alpine-slate", name: "Alpine Slate", hex: "#4A5A63" },
+      { id: "golden-wheat", name: "Golden Wheat", hex: "#D4A857" },
+      { id: "fresh-basil", name: "Fresh Basil", hex: "#6B8E5A" }
+    ],
+    services: [
+      { icon: "interior", title: "Interior Painting", desc: "Walls, ceilings and trim — one room or the whole house, with real prep work under every coat." },
+      { icon: "exterior", title: "Exterior Painting", desc: "Siding, trim and fascia, prepped and coated to actually hold up through an Idaho winter." },
+      { icon: "cabinet", title: "Cabinet Refinishing", desc: "Spray-finished kitchen and bath cabinets that look replaced, at a fraction of replacement cost." },
+      { icon: "deck", title: "Deck & Fence Staining", desc: "Cleaned, sanded and stained to protect the wood — not just to make it look good for a season." }
+    ],
+    pricing: [
+      { tier: "Room Refresh", priceLow: 450, priceHigh: 900, unit: "one-time", best: false,
+        features: ["One or two rooms", "Walls only, trim on request", "Two coats, color-matched", "Furniture moved & covered"] },
+      { tier: "Full Repaint", priceLow: 2800, priceHigh: 6500, unit: "one-time", best: true,
+        features: ["Whole interior — walls, trim, ceilings", "Full prep: patch, sand, caulk", "Two coats minimum, low-odor option", "Walkthrough before we call it done"] },
+      { tier: "Whole Exterior", priceLow: 4200, priceHigh: 9800, unit: "one-time", best: false,
+        features: ["Siding, trim & fascia", "Pressure wash & scrape included", "Weather-rated exterior coating", "Multi-day crew, not a solo job"] }
+    ],
+    serviceArea: {
+      region: "Treasure Valley, Idaho",
+      short: "Treasure Valley",
+      cities: ["Star", "Eagle", "Meridian", "Boise", "Nampa", "Middleton"]
+    },
+    owner: {
+      name: "Wren Callahan",
+      bio: "Wren Callahan started painting apartment turnovers on weekends during college and never really stopped. Nine years and a few hundred houses later, Bristlecone Paint Co. is a small, steady crew instead of a one-truck operation — but the rule from year one hasn't changed: real prep under every coat, or it doesn't go on the wall. Wren still walks every finished job with the homeowner before calling it done.",
+      photo: ""
+    },
+    testimonials: [
+      { quote: "", name: "" },
+      { quote: "", name: "" },
+      { quote: "", name: "" }
+    ],
+    faq: [
+      { q: "How many coats are included?", a: "Two coats, minimum, on every job — three if the color shift needs it (deep reds and dark colors over white often do). That's built into the price, not an upcharge." },
+      { q: "Is prep work actually included?", a: "Yes. Patching nail holes, sanding rough spots, caulking gaps and taping edges happens before any paint opens. A repaint is only as good as what's underneath it." },
+      { q: "Do you offer low-odor or low-VOC paint?", a: "Yes — it's available at no extra charge on interior jobs. Ask for it if anyone in the house is sensitive to fumes or you just don't want to air the place out for two days." },
+      { q: "How long does a typical interior repaint take?", a: "A single room is usually a one-day job. A full-interior repaint runs two to four days depending on square footage and how much trim work is involved." },
+      { q: "Do I need to move my own furniture?", a: "No. We move what we can move safely and cover the rest — you don't need to empty a room before we show up." },
+      { q: "What if I don't love the color once it's on the wall?", a: "Bring a sample home and live with it for a day before we start — natural light changes everything. Once we've started a full room, a color change becomes a new job, so the visualizer and a sample chip up front save everyone a repaint." }
+    ],
+    social: []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+
+  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+     submission emails a one-time activation link to LEAD.email; click it once and
+     every booking after that lands in that inbox, formatted as a table. */
+  var LEAD = { provider: 'formsubmit', email: '', sms: '' };
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function num(v){ var n = Number(v); return isFinite(n) ? n : 0; }
+  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
+  function money(n){ return '$' + num(n).toLocaleString('en-US'); }
+
+  function applyRuntime(c){
+    LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
+    LEAD.sms = telHref((c.brand||{}).phone);
+  }
+  applyRuntime(CONTENT);
+
+  // ---------- year ----------
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---------- nav solidify ----------
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 30); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ---------- reveal on scroll (re-armable for JS-injected nodes) ----------
+  var io = null;
+  if('IntersectionObserver' in window && !reduce){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  }
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(io){ nodes.forEach(function(n){ io.observe(n); }); }
+    else { nodes.forEach(function(n){ n.classList.add('in'); }); }
+  }
+  revealScan(document);
+
+  // ---------- drifting paint-fleck motes in hero ----------
+  var motes = document.getElementById('motes');
+  if(motes && !reduce){
+    var n = window.innerWidth < 700 ? 8 : 16;
+    for(var i=0;i<n;i++){
+      var m = document.createElement('span');
+      m.className = 'mote';
+      m.style.left = Math.random()*100 + '%';
+      var dur = 9 + Math.random()*10;
+      m.style.animationDuration = dur + 's';
+      m.style.animationDelay = (-Math.random()*dur) + 's';
+      m.style.opacity = 0.25 + Math.random()*0.5;
+      var s = 3 + Math.random()*3;
+      m.style.width = s + 'px'; m.style.height = s + 'px';
+      motes.appendChild(m);
+    }
+  }
+
+  /* =====================================================
+     SIGNATURE — ROOM RE-PAINT VISUALIZER
+     Tap-driven, not drag-driven: every swatch is a real
+     <button> with a click handler, so mouse, touch and
+     keyboard (Enter/Space, native button behavior) all work
+     identically with zero extra fallback code. The wall's
+     fill color transitions via CSS (killed under
+     prefers-reduced-motion by the global rule above).
+     ===================================================== */
+  var vizRoom = document.getElementById('vizRoom');
+  var swatchesEl = document.getElementById('swatches');
+  var vizIntro = document.getElementById('vizIntro');
+  var activeSwatch = null;
+
+  function roomSvg(){
+    return '<svg viewBox="0 0 400 300" fill="none" role="img" aria-label="Illustration of a room with one accent wall">' +
+      '<rect x="0" y="0" width="400" height="240" fill="#2A241E"/>' +
+      '<rect class="room-wall" id="roomWall" x="0" y="0" width="400" height="240" fill="#4A3F35"/>' +
+      '<rect x="0" y="240" width="400" height="60" fill="#1B1815"/>' +
+      '<rect x="0" y="234" width="400" height="8" fill="#F4EDE3" fill-opacity=".85"/>' +
+      '<rect x="40" y="60" width="90" height="130" rx="4" fill="#1B1815" fill-opacity=".55" stroke="#F4EDE3" stroke-opacity=".2" stroke-width="3"/>' +
+      '<circle cx="118" cy="128" r="4" fill="#F4EDE3" fill-opacity=".5"/>' +
+      '<rect x="200" y="40" width="120" height="90" rx="4" fill="#8FA8C4" fill-opacity=".35" stroke="#F4EDE3" stroke-opacity=".2" stroke-width="3"/>' +
+      '<rect x="200" y="40" width="60" height="90" fill="#F4EDE3" fill-opacity=".08"/>' +
+      '<path d="M290 300 L290 200 C 290 176 306 176 306 200 L306 300" fill="#26221D"/>' +
+      '<rect x="270" y="292" width="56" height="8" rx="2" fill="#26221D"/>' +
+      '</svg>';
+  }
+  vizRoom.innerHTML = roomSvg();
+  var roomWall = document.getElementById('roomWall');
+
+  function applySwatch(sw){
+    if(!sw) return;
+    activeSwatch = sw.id;
+    if(roomWall){ roomWall.setAttribute('fill', sw.hex); }
+    vizIntro.textContent = 'Wall shown in ' + sw.name + '. Like it? Get it quoted below.';
+    var summary = document.getElementById('b-summary');
+    if(summary){ summary.value = 'Room Refresh in ' + sw.name; }
+    Array.prototype.forEach.call(swatchesEl.children, function(btn){
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-id') === sw.id ? 'true' : 'false');
+    });
+  }
+
+  function renderSwatches(){
+    var list = CONTENT.swatches || [];
+    swatchesEl.innerHTML = list.map(function(sw){
+      return '<button type="button" class="swatch" data-id="' + esc(sw.id) + '" aria-pressed="false">' +
+        '<span class="swatch__chip" style="background:' + esc(sw.hex) + '" aria-hidden="true"></span>' +
+        esc(sw.name) + '</button>';
+    }).join('');
+    Array.prototype.forEach.call(swatchesEl.children, function(btn){
+      btn.addEventListener('click', function(){
+        var sw = list.filter(function(s){ return s.id === btn.getAttribute('data-id'); })[0];
+        applySwatch(sw);
+      });
+    });
+    if(list.length){ applySwatch(list[0]); }
+  }
+
+  /* =====================================================
+     SERVICES
+     ===================================================== */
+  var SVC_ICONS = {
+    interior: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+    exterior: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>',
+    cabinet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18"/><circle cx="9" cy="12" r=".6" fill="currentColor"/><circle cx="15" cy="12" r=".6" fill="currentColor"/></svg>',
+    deck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18M3 14h18M3 19h18"/><path d="M6 4v18M18 4v18"/></svg>'
+  };
+  function renderServices(){
+    var grid = document.getElementById('servicesGrid');
+    grid.innerHTML = (CONTENT.services || []).map(function(s, i){
+      return '<div class="svc-card reveal" data-delay="' + ((i % 3) + 1) + '">' +
+        '<div class="svc-card__ic" aria-hidden="true">' + (SVC_ICONS[s.icon] || SVC_ICONS.interior) + '</div>' +
+        '<h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
+    }).join('');
+    revealScan(grid);
+  }
+
+  /* =====================================================
+     PRICING
+     ===================================================== */
+  var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  function renderPricing(){
+    var grid = document.getElementById('plansGrid');
+    grid.innerHTML = (CONTENT.pricing || []).map(function(p){
+      var pill = p.best ? '<span class="plan-card__pill">Most booked</span>' : '';
+      var feats = (p.features || []).map(function(f){ return '<li>' + CHECK + '<span>' + esc(f) + '</span></li>'; }).join('');
+      return '<div class="plan-card' + (p.best ? ' plan-card--best' : '') + '">' + pill +
+        '<div class="plan-card__tier">' + esc(p.tier) + '</div>' +
+        '<div class="plan-card__freq">' + esc(p.unit || '') + '</div>' +
+        '<div class="plan-card__price">' + money(p.priceLow) + '&ndash;' + money(p.priceHigh) + '<small>typical range, confirmed before we start</small></div>' +
+        '<ul class="plan-card__features">' + feats + '</ul>' +
+        '<a class="btn" href="#book">Get quoted</a></div>';
+    }).join('');
+  }
+
+  /* =====================================================
+     SERVICE + BOOKING SELECT OPTIONS
+     ===================================================== */
+  function renderBookingSelect(){
+    var sel = document.getElementById('b-service');
+    var opts = (CONTENT.pricing || []).map(function(p){ return p.tier; })
+      .concat((CONTENT.services || []).map(function(s){ return s.title; }));
+    sel.innerHTML = '<option value="" disabled selected>Choose one…</option>' +
+      opts.map(function(o){ return '<option value="' + esc(o) + '">' + esc(o) + '</option>'; }).join('');
+  }
+
+  /* =====================================================
+     OWNER + FAQ + TESTIMONIALS + FOOTER
+     ===================================================== */
+  function renderOwner(){
+    var o = CONTENT.owner || {};
+    var descEl = document.getElementById('ownerDesc');
+    if(descEl) descEl.textContent = o.bio || '';
+    var cap = document.getElementById('ownerCaption');
+    if(cap) cap.textContent = 'ON A JOB MOST WEEKS';
+    var photoEl = document.getElementById('ownerPhoto');
+    if(photoEl && o.photo){
+      var existing = photoEl.querySelector('img');
+      if(!existing){
+        var img = document.createElement('img');
+        img.alt = (o.name || 'Owner') + ' portrait';
+        img.loading = 'lazy';
+        photoEl.querySelector('svg').replaceWith(img);
+      }
+      photoEl.querySelector('img').src = o.photo;
+    }
+  }
+
+  function renderFaq(){
+    var list = document.getElementById('faqList');
+    list.innerHTML = (CONTENT.faq || []).map(function(f){
+      return '<details class="faq reveal"><summary>' + esc(f.q) + '<span class="plus">+</span></summary>' +
+        '<div class="faq__body">' + esc(f.a) + '</div></details>';
+    }).join('');
+    revealScan(list);
+  }
+
+  function renderTestimonials(){
+    var grid = document.getElementById('reviewsGrid');
+    grid.innerHTML = (CONTENT.testimonials || []).map(function(t, i){
+      return '<div class="review reveal" data-delay="' + ((i % 3) + 1) + '">' +
+        '<div class="review__stars" aria-hidden="true">★★★★★</div>' +
+        '<div class="review__quote">' + esc(t.quote || '') + '</div>' +
+        '<div class="review__who">— ' + esc(t.name || 'Add a real review here') + '</div></div>';
+    }).join('');
+    revealScan(grid);
+  }
+
+  function renderFooter(){
+    var b = CONTENT.brand || {};
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = b.name || ''; });
+    document.querySelectorAll('[data-tagline]').forEach(function(el){ el.textContent = b.tagline || ''; });
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.textContent = b.phone || ''; });
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(el){ el.href = 'tel:' + telHref(b.phone); });
+    var fe = document.getElementById('footEmail');
+    if(fe){ fe.href = 'mailto:' + (b.email || ''); fe.textContent = b.email || ''; }
+    var area = CONTENT.serviceArea || {};
+    var cities = (area.cities || []).filter(Boolean);
+    var fs = document.getElementById('footServe');
+    if(fs){ fs.textContent = 'Serving ' + cities.join(' · '); }
+    var faqDeliver = document.getElementById('faqDeliver');
+    if(faqDeliver){ faqDeliver.textContent = cities.join(', ') + ' and everything in between — the whole ' + (area.short || '') + '.'; }
+    var eyebrow = document.getElementById('heroEyebrow');
+    if(eyebrow){ eyebrow.textContent = 'Residential painting · ' + (b.city || ''); }
+  }
+
+  function renderAll(){
+    renderSwatches();
+    renderServices();
+    renderPricing();
+    renderBookingSelect();
+    renderOwner();
+    renderFaq();
+    renderTestimonials();
+    renderFooter();
+  }
+  renderAll();
+
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); applyRuntime(CONTENT); renderAll(); } })
+    .catch(function(){ /* offline/404: defaults stand */ });
+
+  /* =====================================================
+     BOOKING FORM — FormSubmit fetch + sms fallback
+     ===================================================== */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  var form = document.getElementById('bookForm');
+  var msgEl = document.getElementById('bookMsg');
+  var submitBtn = document.getElementById('bookSubmit');
+  var doneEl = document.getElementById('bookDone');
+  var doneMsgEl = document.getElementById('doneMsg');
+
+  function val(id){ var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; }
+  function setErr(fieldEl, on){ if(fieldEl) fieldEl.classList.toggle('invalid', !!on); }
+
+  function buildSms(d){
+    var body = "Hi Bristlecone Paint Co.! I'd like a quote."
+      + " Name: " + d.name + "."
+      + " Phone: " + d.phone + "."
+      + " Address: " + d.address + (d.city ? ", " + d.city : "") + "."
+      + " Job: " + d.service + "."
+      + (d.notes ? " Notes: " + d.notes + "." : "")
+      + (d.summary ? " Selection: " + d.summary + "." : "");
+    return 'sms:' + LEAD.sms + '?body=' + encodeURIComponent(body);
+  }
+
+  function showDone(phone){
+    form.hidden = true;
+    doneEl.hidden = false;
+    doneMsgEl.textContent = "We'll text " + (phone || 'you') + " shortly to confirm your quote.";
+    doneEl.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  }
+
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(val('_honey') || (document.querySelector('.hp') && document.querySelector('.hp').value)){ return; }
+
+      var d = {
+        name: val('b-name'), phone: val('b-phone'), address: val('b-addr'), city: val('b-city'),
+        service: val('b-service'), notes: val('b-notes'), summary: val('b-summary'),
+        consent: document.getElementById('b-consent').checked
+      };
+
+      var invalid = false;
+      [['b-name', d.name], ['b-phone', d.phone], ['b-addr', d.address], ['b-city', d.city], ['b-service', d.service]].forEach(function(pair){
+        var el = document.getElementById(pair[0]);
+        var bad = !pair[1];
+        setErr(el ? el.closest('.field') : null, bad);
+        if(bad) invalid = true;
+      });
+      if(!d.consent){ invalid = true; }
+      if(invalid){ msgEl.textContent = 'Please fill in the required fields and check the consent box.'; msgEl.classList.add('err'); return; }
+
+      msgEl.textContent = ''; msgEl.classList.remove('err');
+      submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+      var smsUrl = buildSms(d);
+
+      fetch('https://formsubmit.co/ajax/' + LEAD.email, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: d.name, phone: d.phone, address: d.address, city: d.city,
+          service: d.service, notes: d.notes, selection: d.summary,
+          _subject: 'Bristlecone Paint Co. — new quote request', _template: 'table', _captcha: 'false'
+        })
+      }).then(function(r){ return r.json(); }).then(function(res){
+        if(res && (res.success === 'true' || res.success === true)){
+          showDone(d.phone);
+          if(isMobile){ setTimeout(function(){ window.location.href = smsUrl; }, 900); }
+        } else { throw new Error('formsubmit rejected'); }
+      }).catch(function(){
+        msgEl.innerHTML = "Hmm — that didn't go through. Text your job straight to <strong>" + esc(document.querySelector('[data-phone]').textContent) + "</strong> instead.";
+        msgEl.classList.add('err');
+        submitBtn.disabled = false; submitBtn.textContent = 'Get my quote';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

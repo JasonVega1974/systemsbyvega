@@ -1,0 +1,58 @@
+{
+  "brand": {
+    "name": "Bristlecone Paint Co.",
+    "tagline": "Every wall, exactly right.",
+    "phone": "(208) 555-0145",
+    "email": "hello@bristleconepaint.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Star, ID"
+  },
+  "swatches": [
+    { "id": "sage-whisper", "name": "Sage Whisper", "hex": "#9CAF88" },
+    { "id": "weathered-clay", "name": "Weathered Clay", "hex": "#C97B63" },
+    { "id": "harbor-fog", "name": "Harbor Fog", "hex": "#7C93A3" },
+    { "id": "warm-linen", "name": "Warm Linen", "hex": "#E8DCC8" },
+    { "id": "dusk-plum", "name": "Dusk Plum", "hex": "#8B6F7E" },
+    { "id": "alpine-slate", "name": "Alpine Slate", "hex": "#4A5A63" },
+    { "id": "golden-wheat", "name": "Golden Wheat", "hex": "#D4A857" },
+    { "id": "fresh-basil", "name": "Fresh Basil", "hex": "#6B8E5A" }
+  ],
+  "services": [
+    { "icon": "interior", "title": "Interior Painting", "desc": "Walls, ceilings and trim — one room or the whole house, with real prep work under every coat." },
+    { "icon": "exterior", "title": "Exterior Painting", "desc": "Siding, trim and fascia, prepped and coated to actually hold up through an Idaho winter." },
+    { "icon": "cabinet", "title": "Cabinet Refinishing", "desc": "Spray-finished kitchen and bath cabinets that look replaced, at a fraction of replacement cost." },
+    { "icon": "deck", "title": "Deck & Fence Staining", "desc": "Cleaned, sanded and stained to protect the wood — not just to make it look good for a season." }
+  ],
+  "pricing": [
+    { "tier": "Room Refresh", "priceLow": 450, "priceHigh": 900, "unit": "one-time", "best": false,
+      "features": ["One or two rooms", "Walls only, trim on request", "Two coats, color-matched", "Furniture moved & covered"] },
+    { "tier": "Full Repaint", "priceLow": 2800, "priceHigh": 6500, "unit": "one-time", "best": true,
+      "features": ["Whole interior — walls, trim, ceilings", "Full prep: patch, sand, caulk", "Two coats minimum, low-odor option", "Walkthrough before we call it done"] },
+    { "tier": "Whole Exterior", "priceLow": 4200, "priceHigh": 9800, "unit": "one-time", "best": false,
+      "features": ["Siding, trim & fascia", "Pressure wash & scrape included", "Weather-rated exterior coating", "Multi-day crew, not a solo job"] }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Star", "Eagle", "Meridian", "Boise", "Nampa", "Middleton"]
+  },
+  "owner": {
+    "name": "Wren Callahan",
+    "bio": "Wren Callahan started painting apartment turnovers on weekends during college and never really stopped. Nine years and a few hundred houses later, Bristlecone Paint Co. is a small, steady crew instead of a one-truck operation — but the rule from year one hasn't changed: real prep under every coat, or it doesn't go on the wall. Wren still walks every finished job with the homeowner before calling it done.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "How many coats are included?", "a": "Two coats, minimum, on every job — three if the color shift needs it (deep reds and dark colors over white often do). That's built into the price, not an upcharge." },
+    { "q": "Is prep work actually included?", "a": "Yes. Patching nail holes, sanding rough spots, caulking gaps and taping edges happens before any paint opens. A repaint is only as good as what's underneath it." },
+    { "q": "Do you offer low-odor or low-VOC paint?", "a": "Yes — it's available at no extra charge on interior jobs. Ask for it if anyone in the house is sensitive to fumes or you just don't want to air the place out for two days." },
+    { "q": "How long does a typical interior repaint take?", "a": "A single room is usually a one-day job. A full-interior repaint runs two to four days depending on square footage and how much trim work is involved." },
+    { "q": "Do I need to move my own furniture?", "a": "No. We move what we can move safely and cover the rest — you don't need to empty a room before we show up." },
+    { "q": "What if I don't love the color once it's on the wall?", "a": "Bring a sample home and live with it for a day before we start — natural light changes everything. Once we've started a full room, a color change becomes a new job, so the visualizer and a sample chip up front save everyone a repaint." }
+  ],
+  "social": []
+}

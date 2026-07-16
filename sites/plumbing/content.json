@@ -1,0 +1,60 @@
+{
+  "brand": {
+    "name": "Cascade & Copper Plumbing",
+    "tagline": "Fast, honest plumbing — Kuna to Boise.",
+    "phone": "(208) 555-0195",
+    "email": "hello@cascadecopperplumbing.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Kuna, ID"
+  },
+  "stats": [
+    { "num": "15 yrs", "label": "Fixing Treasure Valley pipes" },
+    { "num": "24/7", "label": "Emergency line" },
+    { "num": "$89", "label": "Service call, waived on repair" }
+  ],
+  "dripCalc": {
+    "mlPerDrop": 0.25,
+    "costPerGallon": 0.009,
+    "minRate": 10,
+    "maxRate": 120,
+    "defaultRate": 40,
+    "note": "Estimate only, based on average U.S. residential water and sewer rates combined. Your actual cost depends on your utility's pricing."
+  },
+  "services": [
+    { "icon": "leak", "title": "Leak Repair & Drip Fixes", "desc": "Dripping faucets, running toilets, and the leaks you can hear but can't find. Diagnosed and fixed in one visit, most of the time." },
+    { "icon": "heater", "title": "Water Heater Install & Repair", "desc": "Tank and tankless, gas and electric. Same-day install on most stock units when yours finally gives out." },
+    { "icon": "repipe", "title": "Repiping", "desc": "Old galvanized or failing polybutylene swapped for copper or PEX, room by room or whole-house." },
+    { "icon": "drain", "title": "Drain & Sewer Cleaning", "desc": "Camera inspection before we quote anything — so you know what's actually down there before we touch it." },
+    { "icon": "fixture", "title": "Fixture Installs", "desc": "Faucets, toilets, garbage disposals, tub and shower valves. Bring your own fixture or we'll spec one." },
+    { "icon": "emergency", "title": "Emergency Calls", "desc": "Burst pipe at 2am doesn't wait for business hours. Neither do we — see the emergency line below." }
+  ],
+  "pricing": [
+    { "label": "Service Call", "price": "$89", "per": "trip fee — waived if you book the repair", "featured": false,
+      "features": "Diagnosis & written quote\nSame-day scheduling, most weeks\nNo obligation to book" },
+    { "label": "Standard Repair", "price": "$150–$450", "per": "most single-fixture repairs", "featured": true,
+      "features": "Leak fixes, fixture swaps, drain clears\nParts + labor, quoted before we start\n90-day workmanship warranty" },
+    { "label": "Major Project", "price": "$800+", "per": "repiping, water heaters, sewer lines", "featured": false,
+      "features": "Full written scope before work begins\nPermit handling where required\nMilestone updates, no surprise invoices" }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Kuna", "Boise", "Meridian", "Nampa", "Eagle", "Star"]
+  },
+  "owner": {
+    "name": "Nate Colby",
+    "bio": "Nate Colby apprenticed under a Boise plumbing outfit for six years before going out on his own in 2013 with a van and a pager. Cascade & Copper is still small on purpose — Nate runs most calls himself, quotes the job before touching a wrench, and answers the emergency line personally more nights than not. No dispatch fee games, no upsell script, just the actual fix and the actual price."
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "How fast can you get here for an emergency?", "a": "Most Treasure Valley addresses inside an hour, day or night. Call the emergency line directly — it rings to a phone, not a call center." },
+    { "q": "Do you charge extra for after-hours calls?", "a": "A modest after-hours trip fee applies outside 7am–7pm, quoted before you commit. No mystery surcharge on the invoice." },
+    { "q": "Are repairs warrantied?", "a": "Yes — 90 days on workmanship for standard repairs, longer on major installs. Parts carry the manufacturer's own warranty." },
+    { "q": "Do you offer free estimates?", "a": "The service call fee ($89) covers diagnosis and a written quote, and it's waived entirely if you book the repair on the spot." }
+  ],
+  "social": []
+}

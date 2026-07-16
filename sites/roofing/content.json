@@ -1,0 +1,67 @@
+{
+  "brand": {
+    "name": "Storm Ridge Roofing",
+    "tagline": "Built for the next storm.",
+    "phone": "(208) 555-0209",
+    "email": "hello@stormridgeroofing.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Middleton, ID"
+  },
+  "stats": [
+    { "num": "18+ yrs", "label": "Roofing the Treasure Valley" },
+    { "num": "1,200+", "label": "Roofs repaired or replaced" },
+    { "num": "Free", "label": "Storm damage inspections" }
+  ],
+  "selfCheck": {
+    "intro": "Four quick questions. Answer honestly — there's no wrong answer, just a clearer picture of where your roof actually stands.",
+    "questions": [
+      { "id": "shingles", "q": "Missing, cracked, or curling shingles anywhere on the roof?" },
+      { "id": "granules", "q": "Granules piling up in the gutters or at the downspouts?" },
+      { "id": "daylight", "q": "Any daylight, water stains, or soft spots in the attic?" },
+      { "id": "storm", "q": "Hail, high wind, or a falling branch in the last year or two?" }
+    ]
+  },
+  "services": [
+    { "icon": "repair", "title": "Roof Repair", "desc": "Missing shingles, active leaks, flashing failures — patched fast, matched close, done right the first time." },
+    { "icon": "replace", "title": "Full Roof Replacement", "desc": "Tear-off to final nail in a day or two for most homes. Every layer inspected before the new one goes down." },
+    { "icon": "claim", "title": "Storm Damage & Insurance Claims", "desc": "We walk the roof with you, document what the storm did, and meet your adjuster on-site if it helps." },
+    { "icon": "gutter", "title": "Gutter Repair & Replacement", "desc": "Gutters and downspouts that actually move water away from your foundation instead of into it." }
+  ],
+  "pricing": [
+    {
+      "label": "Repair", "price": "$350–$1,200", "per": "most single-issue repairs", "featured": false,
+      "features": ["Leak diagnosis & patch", "Flashing & vent boot repair", "Storm-damage spot repair"]
+    },
+    {
+      "label": "Full Replacement", "price": "$8,500–$16,000", "per": "typical single-family roof", "featured": true,
+      "features": ["Complete tear-off & haul-away", "Underlayment & ice/water shield", "Manufacturer-matched shingles", "Written scope before work starts"]
+    },
+    {
+      "label": "Storm & Insurance Claim", "price": "Scoped after inspection", "per": "", "featured": false,
+      "features": ["Free storm damage inspection", "Photo documentation for your adjuster", "We meet the adjuster on-site if needed", "No cost unless work is approved"]
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Middleton", "Caldwell", "Nampa", "Star", "Eagle", "Meridian"]
+  },
+  "owner": {
+    "name": "Marcus Teague",
+    "bio": "Marcus Teague spent eleven years on repair crews before he ever pulled a permit of his own — flashing failures at 2am, storm damage nobody wanted to climb up and look at, the jobs other crews put off. In 2019 he started the company with one truck and a rule: walk every roof in person before quoting it, and never sell a replacement a repair could fix. He still climbs most roofs himself.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "How does the insurance claim process work?", "a": "We do a free inspection first and tell you honestly whether the damage looks claim-worthy. If it does, we document everything with photos and can meet your adjuster on-site to walk the roof together — the estimate itself is between you and your insurer, we just make sure nothing gets missed." },
+    { "q": "How long does a full replacement take?", "a": "Most single-family roofs are a one- to two-day tear-off and reroof, weather permitting. We'll give you a real date range before work starts, not just “a few days.”" },
+    { "q": "What roofing materials do you install?", "a": "Architectural asphalt shingles cover most of what we do, with metal and synthetic options available for specific jobs — we'll talk through what fits your roof and budget during the inspection." },
+    { "q": "Do you offer emergency repairs?", "a": "For active leaks, yes — call and we'll get a tarp or temporary patch on same-day where possible, then schedule the real repair." },
+    { "q": "How much does a repair cost?", "a": "See the Pricing section above for typical ranges — every roof is different, so the exact number comes after a free inspection, not a guess over the phone." }
+  ],
+  "social": []
+}
