@@ -144,6 +144,18 @@
     "featured": true
   },
   {
+    "id": "sitelab",
+    "name": "Site Shop",
+    "tagline": "White-labeled small-business site templates, ready to launch",
+    "description": "Nine ready-to-sell small-business websites — landscaping, pressure washing, detailing, personal training, BBQ, dumpster rental, tattoo, fabrication, and contracting — each with a signature interactive feature and an owner-editable live CMS. Browse the full gallery and click into any live demo.",
+    "url": "https://systemsbyvega.com/sites/",
+    "thumb": "assets/img/sitelab.jpg",
+    "category": "Commercial",
+    "tags": ["Templates", "Web", "Local business"],
+    "status": "Live",
+    "featured": true
+  },
+  {
     "id": "primebincleaning",
     "name": "Prime Bin Cleaning",
     "tagline": "Residential bin power-washing service",
