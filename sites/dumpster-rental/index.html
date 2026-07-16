@@ -1112,7 +1112,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     </div>
     <div class="footer__meta">
       Call or text <a href="tel:+12085550188" data-phone>(208) 555-0188</a> · <a href="mailto:hello@sawtoothdumpster.com" id="footEmail">hello@sawtoothdumpster.com</a><br />
-      <span id="footServe">Serving Boise · Meridian · Nampa · Eagle · Caldwell · Star · Kuna · Licensed &amp; insured</span><br />
+      <span id="footServe">Serving Boise · Meridian · Nampa · Eagle · Caldwell · Star · Kuna</span><br />
       <span id="footSocial"></span>
       <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Sawtooth Dumpster Co.</span> · Locally owned &amp; operated</span>
       <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
@@ -1531,7 +1531,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     // ----- service area -----
     document.getElementById('heroEyebrow').textContent = 'Roll-off dumpster rental · ' + area.region;
     var cities = (area.cities || []).filter(Boolean);
-    document.getElementById('footServe').innerHTML = 'Serving ' + cities.map(esc).join(' · ') + ' · Licensed &amp; insured';
+    document.getElementById('footServe').innerHTML = 'Serving ' + cities.map(esc).join(' · ');
     document.getElementById('faqDeliver').innerHTML = cities.map(esc).join(', ')
       + ' and everything in between — <b>the whole ' + esc(area.short) + '.</b>'
       + " Outside that ring? Text us your address anyway; if a route works we'll make it work.";
