@@ -87,6 +87,21 @@
   .sc-body p{font-size:14px;color:var(--ink-soft);line-height:1.55}
   .sc-chips{display:flex;flex-wrap:wrap;gap:6px}
   .sc-chip{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--hair);padding:4px 9px;border-radius:20px}
+  .sc-pkg{border-top:1px solid var(--hair);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+  .sc-price{font-family:'IBM Plex Mono';font-size:12px;color:var(--ink-soft);letter-spacing:.01em}
+  .sc-price strong{font-family:'Archivo';font-weight:800;font-size:15px;color:var(--ink);letter-spacing:-.01em}
+  .sc-price-sep{opacity:.45;padding:0 2px}
+  .sc-incl summary{font-family:'IBM Plex Mono';font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--amber-deep);cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;padding:2px 0}
+  .sc-incl summary::-webkit-details-marker{display:none}
+  .sc-incl summary:hover{color:var(--ink)}
+  .sc-incl-arrow{transition:transform .15s}
+  .sc-incl[open] .sc-incl-arrow{transform:rotate(180deg)}
+  .sc-incl-body{padding:10px 0 2px;display:flex;flex-direction:column;gap:6px}
+  .sc-tier{font-family:'Archivo';font-weight:800;font-size:13px;color:var(--ink)}
+  .sc-incl-body ul{margin:0 0 4px;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+  .sc-incl-body li{font-size:12.5px;color:var(--ink-soft);line-height:1.45}
+  .sc-care{font-size:12px;color:var(--ink-soft);font-style:italic}
+  .sc-care em{font-style:italic;opacity:.8}
   .sc-actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;padding-top:6px}
   .sc-btn{font-family:'Archivo';font-weight:700;font-size:13px;text-decoration:none;padding:10px 15px;border-radius:8px;transition:.15s;flex:1;text-align:center;white-space:nowrap;border:none;cursor:pointer;font:inherit}
   .sc-btn.pri{color:#fff;background:var(--ink)}
@@ -199,6 +214,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Season wheel</span><span class="sc-chip">Booking form</span><span class="sc-chip">Tiered pricing</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/landscaping/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Landscaping" data-slug="landscaping">Want this site?</button>
@@ -213,6 +253,31 @@
           <p>A wand-reveal hero lets visitors wipe grime off the header art with a pointer or finger — then flat-rate pricing cards and a surface-by-surface service breakdown close the sale.</p>
           <div class="sc-chips">
             <span class="sc-chip">Wand-reveal hero</span><span class="sc-chip">Flat-rate pricing</span><span class="sc-chip">Service area list</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
           </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/pressure-washing/" target="_blank" rel="noopener">View Full Site →</a>
@@ -229,6 +294,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Car hotspot diagram</span><span class="sc-chip">Package tiers</span><span class="sc-chip">Add-on menu</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/car-detailing/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Car detailing" data-slug="car-detailing">Want this site?</button>
@@ -243,6 +333,31 @@
           <p>A goal-path picker — Strength, First 5K, Postpartum, Over 50 — re-renders the program section, proof points, and FAQ around whichever goal a visitor picks. A personal-brand layout built around the coach.</p>
           <div class="sc-chips">
             <span class="sc-chip">Goal-path picker</span><span class="sc-chip">Personal brand</span><span class="sc-chip">Package pricing</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
           </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/personal-trainer/" target="_blank" rel="noopener">View Full Site →</a>
@@ -259,6 +374,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Weekly schedule</span><span class="sc-chip">Menu + pricing</span><span class="sc-chip">Catering packages</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/bbq-food-truck/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="BBQ food truck" data-slug="bbq-food-truck">Want this site?</button>
@@ -273,6 +413,31 @@
           <p>A live price picker walks visitors through size, rental length, and add-ons with the total updating in real time — "the price is the price" built right into the interaction, not just the copy.</p>
           <div class="sc-chips">
             <span class="sc-chip">Live price picker</span><span class="sc-chip">Transparent pricing</span><span class="sc-chip">Service area list</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
           </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/dumpster-rental/" target="_blank" rel="noopener">View Full Site →</a>
@@ -289,6 +454,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Gallery + lightbox</span><span class="sc-chip">Flash pricing</span><span class="sc-chip">Books-open toggle</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/tattoo-studio/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Tattoo studio" data-slug="tattoo-studio">Want this site?</button>
@@ -303,6 +493,31 @@
           <p>A job-ticket-style build board shows real project specs — tube size, process, finish — the way they'd actually hang on a shop wall. Service breakdown, process/material chips, and a mobile welding callout.</p>
           <div class="sc-chips">
             <span class="sc-chip">Build board</span><span class="sc-chip">Service specs</span><span class="sc-chip">Mobile welding</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
           </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/metal-fabrication/" target="_blank" rel="noopener">View Full Site →</a>
@@ -319,6 +534,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Before/after slider</span><span class="sc-chip">Tiered pricing</span><span class="sc-chip">Project gallery</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/contracting/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Contracting" data-slug="contracting">Want this site?</button>
@@ -333,6 +573,31 @@
           <p>A room re-paint visualizer lets visitors tap a paint chip and watch a room illustration recolor live — the single best way to sell a color choice before a brush ever touches a wall. Interior, exterior, and cabinet refinishing packages.</p>
           <div class="sc-chips">
             <span class="sc-chip">Room color visualizer</span><span class="sc-chip">Interior + exterior</span><span class="sc-chip">Free estimates</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
           </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/painting/" target="_blank" rel="noopener">View Full Site →</a>
@@ -349,6 +614,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Drip cost calculator</span><span class="sc-chip">24/7 emergency line</span><span class="sc-chip">Starting-at pricing</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/plumbing/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Plumbing" data-slug="plumbing">Want this site?</button>
@@ -363,6 +653,31 @@
           <p>A breaker panel switchboard doubles as the services menu — flip a breaker to reveal panel upgrades, EV charger installs, lighting, and more. Built for a trade where clarity and trust close the job.</p>
           <div class="sc-chips">
             <span class="sc-chip">Breaker panel switchboard</span><span class="sc-chip">EV charger installs</span><span class="sc-chip">Service-call pricing</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
           </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/electrician/" target="_blank" rel="noopener">View Full Site →</a>
@@ -379,6 +694,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Weekly care-plan builder</span><span class="sc-chip">Non-medical companion care</span><span class="sc-chip">Free care consultation</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/caregiving/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Companion care" data-slug="caregiving">Want this site?</button>
@@ -394,6 +734,31 @@
           <div class="sc-chips">
             <span class="sc-chip">Storm-damage self-check</span><span class="sc-chip">Insurance claim support</span><span class="sc-chip">Free inspection</span><span class="sc-chip">Owner admin panel (live CMS)</span>
           </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
           <div class="sc-actions">
             <a class="sc-btn pri" href="/sites/roofing/" target="_blank" rel="noopener">View Full Site →</a>
             <button type="button" class="sc-btn sec want-btn" data-site="Roofing" data-slug="roofing">Want this site?</button>
@@ -401,6 +766,358 @@
         </div>
       </div>
 
+          <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Bin Cleaning</span><iframe src="/sites/bin-cleaning/" loading="lazy" tabindex="-1" aria-hidden="true" title="Sage &amp; Suds Bin Co. preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Sage &amp; Suds Bin Co.</h3>
+          <p>A bin-cleaning site built around a route-day finder — tap your zone on a stylized valley map and it shows your service day, what to expect, and the right plan. Per-bin pricing across monthly, quarterly and one-time visits, with a three-step signup flow.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Route-day finder map</span><span class="sc-chip">Per-bin plan pricing</span><span class="sc-chip">Signup form</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/bin-cleaning/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Bin Cleaning" data-slug="bin-cleaning">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">HVAC</span><iframe src="/sites/hvac/" loading="lazy" tabindex="-1" aria-hidden="true" title="Whitecloud Heating &amp; Air preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Whitecloud Heating &amp; Air</h3>
+          <p>An HVAC site with a tap-the-house system map — furnace, ducts, filter, thermostat and more, each revealing symptoms, what a visit covers, and a typical price range. Tune-up plan tiers and seasonal readiness guides carry the heating/cooling split through the whole design.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Home system map</span><span class="sc-chip">Tune-up plan tiers</span><span class="sc-chip">Seasonal prep guides</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/hvac/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="HVAC" data-slug="hvac">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Auto Repair</span><iframe src="/sites/auto-repair/" loading="lazy" tabindex="-1" aria-hidden="true" title="Rimrock Garage preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Rimrock Garage</h3>
+          <p>A small-town garage site with a &quot;What’s that sound?&quot; diagnoser — pick the noise and when it happens, get the likely culprits, what the diagnostic visit covers, and an honest price range. Straight-talk pricing table and a diagnose-approve-fix process section.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Sound diagnoser</span><span class="sc-chip">Straight-talk price ranges</span><span class="sc-chip">Booking form</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/auto-repair/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Auto Repair" data-slug="auto-repair">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Auto Body</span><iframe src="/sites/auto-body/" loading="lazy" tabindex="-1" aria-hidden="true" title="Ironwood Collision Co. preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Ironwood Collision Co.</h3>
+          <p>A collision-repair site whose Repair Reveal slider wipes SVG-drawn damage away as stage captions track estimate → teardown → paint match → refinish → cure. Includes a plain-English insurance-claim walkthrough written for the customer, plus an estimate form.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Repair reveal slider</span><span class="sc-chip">Claim process explainer</span><span class="sc-chip">Estimate form</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/auto-body/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Auto Body" data-slug="auto-body">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Dog Walking</span><iframe src="/sites/dog-walking/" loading="lazy" tabindex="-1" aria-hidden="true" title="Bluebird &amp; Biscuit Pet Care preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Bluebird &amp; Biscuit Pet Care</h3>
+          <p>A dog-walking and pet-sitting site with a walk-week builder — toggle days, walk length and service type and watch the weekly grid fill while a monthly price computes live. Meet-and-greet-first booking flow with solo, pack and drop-in tiers.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Walk week builder</span><span class="sc-chip">Live monthly pricing</span><span class="sc-chip">Meet &amp; greet flow</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/dog-walking/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Dog Walking" data-slug="dog-walking">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Child Care</span><iframe src="/sites/child-care/" loading="lazy" tabindex="-1" aria-hidden="true" title="Huckleberry Sitters preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Huckleberry Sitters</h3>
+          <p>A babysitting site with a sitter match planner — pick ages, times and needs and it assembles a sample evening rundown with a live hourly estimate. Positioned squarely as in-home date-night and after-school sitting, with the rates table driven by the same data as the planner.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Sitter match planner</span><span class="sc-chip">Sample evening rundown</span><span class="sc-chip">Hourly rate estimate</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/child-care/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Child Care" data-slug="child-care">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Delivery</span><iframe src="/sites/delivery/" loading="lazy" tabindex="-1" aria-hidden="true" title="Swiftwater Courier Co. preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Swiftwater Courier Co.</h3>
+          <p>A courier site with a zone-to-zone quoter that shows its math — pickup, dropoff, parcel size and speed produce a line-by-line quote with a minimum-charge floor. Dispatch walkthrough and a recurring-accounts section aimed at business clients.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Zone-to-zone quoter</span><span class="sc-chip">Line-by-line quote math</span><span class="sc-chip">Business accounts</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/delivery/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Delivery" data-slug="delivery">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">Moving</span><iframe src="/sites/moving/" loading="lazy" tabindex="-1" aria-hidden="true" title="Osprey Moving Co. preview"></iframe></div>
+        <div class="sc-body">
+          <h3>Osprey Moving Co.</h3>
+          <p>A moving-company site with a load builder — tap rooms and bulky items and a truck-fill gauge recommends the truck size, crew and hours with a live ballpark. Crew-hour pricing table and a no-surprises billable-time explainer share one source of truth with the builder.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">Load builder</span><span class="sc-chip">Truck-fill gauge</span><span class="sc-chip">Crew-hour pricing</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/moving/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Moving" data-slug="moving">Want this site?</button>
+          </div>
+        </div>
+      </div>
+      <div class="sitecard">
+        <div class="sc-preview"><span class="sc-tag">DJ / Performer</span><iframe src="/sites/dj/pink/" loading="lazy" tabindex="-1" aria-hidden="true" title="DJ Nova · Pulse · Bloom — 3-Theme Kit preview"></iframe></div>
+        <div class="sc-body">
+          <h3>DJ Nova · Pulse · Bloom — 3-Theme Kit</h3>
+          <p>One DJ site in three complete color themes — Nova (azure), Pulse (neon green) and Bloom (hot pink) — with a chooser page to compare them live. Shows, releases, video and merch sections over a canvas-animated stage backdrop, plus a booking request form.</p>
+          <div class="sc-chips">
+            <span class="sc-chip">3 color themes</span><span class="sc-chip">Shows &amp; releases</span><span class="sc-chip">Booking request form</span><span class="sc-chip">Owner admin panel (live CMS)</span>
+          </div>
+          <div class="sc-pkg">
+            <div class="sc-price"><strong>$299</strong> launch-ready <span class="sc-price-sep">·</span> <strong>$499</strong> custom launch</div>
+            <details class="sc-incl">
+              <summary>What's included <span class="sc-incl-arrow" aria-hidden="true">▾</span></summary>
+              <div class="sc-incl-body">
+                <p class="sc-tier">$299 — Launch-Ready</p>
+                <ul>
+                  <li>All 3 color themes included (Nova · Pulse · Bloom) — pick one at setup</li>
+                  <li>This exact site, white-labeled: your business name, colors &amp; contact</li>
+                  <li>Domain connected</li>
+                  <li>Lead form straight to your inbox</li>
+                  <li>Owner admin panel (live CMS)</li>
+                  <li>Setup guide</li>
+                </ul>
+                <p class="sc-tier">$499 — Custom Launch</p>
+                <ul>
+                  <li>Everything in Launch-Ready</li>
+                  <li>Content &amp; section edits</li>
+                  <li>Social media ad graphics</li>
+                  <li>Email/flyer graphics</li>
+                  <li>30 days of support</li>
+                </ul>
+                <p class="sc-care">+ $25/mo Care Plan — ongoing edits &amp; priority support <em>(optional, cancel anytime)</em></p>
+              </div>
+            </details>
+          </div>
+          <div class="sc-actions">
+            <a class="sc-btn pri" href="/sites/dj/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="DJ Site Kit" data-slug="dj">Want this site?</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
