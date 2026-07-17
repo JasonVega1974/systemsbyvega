@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Whitecloud Heating &amp; Air — HVAC Service | Caldwell, ID</title>
+<meta name="description" content="Furnace and AC repair, tune-ups and installs in Caldwell and the Treasure Valley. Flat tune-up pricing, honest diagnostics, both seasons handled by one crew. Tap the house diagram to see what's acting up." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Whitecloud Heating &amp; Air — Warm in January. Cool in July." />
+<meta property="og:description" content="Honest heating &amp; cooling for the Treasure Valley — flat tune-up pricing and a diagram that helps you point at the problem." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700;800&family=Albert+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231E6FB0'/%3E%3Cpath d='M24 44c-5-3-7-9-4-14 2-4 2-7 1-10 5 2 8 5 9 9 1-2 1-4 .5-6 4 3 6 8 4 13-1.6 4-6 8-10.5 8z' fill='%23E4572E'/%3E%3Cpath d='M44 20v24M36 26l16 12M52 26L36 38' stroke='%23F2F7FB' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  "name": "Whitecloud Heating & Air",
+  "description": "Furnace and air-conditioning repair, tune-ups and installs for Caldwell and the Treasure Valley.",
+  "telephone": "+12085550263",
+  "email": "hello@whitecloudair.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Caldwell", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --ice:#F2F7FB; --ice-soft:#FBFDFE; --panel:rgba(255,255,255,.86);
+    --steel:#1E6FB0; --steel-bright:#2E86D1; --steel-deep:#175A91;
+    --coral:#E4572E; --coral-deep:#B84523; --coral-soft:rgba(228,87,46,.12);
+    --steel-soft:rgba(30,111,176,.11);
+    --ink:#152435; --muted:#4E6072; --hair:rgba(21,36,53,.13);
+    --card:rgba(255,255,255,.9); --card-brd:rgba(21,36,53,.10);
+    --shadow:0 22px 52px -24px rgba(23,90,145,.22);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ice);color:var(--ink);font-family:'Albert Sans',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--steel-deep);outline-offset:3px;border-radius:4px}
+  section{padding:76px 0}
+  h1,h2,h3{font-family:'Kanit',sans-serif;font-weight:700;letter-spacing:-.01em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:62ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel-deep);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--coral),var(--steel))}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(242,247,251,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(21,36,53,.04)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Kanit';font-weight:800;font-size:17px;color:var(--ink)}
+  .logo .mark{width:31px;height:31px;border-radius:9px;background:linear-gradient(135deg,var(--coral) 0%,var(--coral) 46%,var(--steel) 54%,var(--steel-deep) 100%);display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark svg{width:16px;height:16px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:var(--steel-soft);color:var(--steel-deep)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#fff;background:var(--steel-deep);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--steel);transform:translateY(-1px)}
+  @media(max-width:760px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:80px 0 88px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(720px 340px at 4% -8%,rgba(228,87,46,.09),transparent 66%),
+      radial-gradient(640px 340px at 98% 6%,rgba(30,111,176,.12),transparent 66%),
+      radial-gradient(8px 8px at 14% 76%,rgba(228,87,46,.16) 98%,transparent),
+      radial-gradient(11px 11px at 88% 62%,rgba(30,111,176,.16) 98%,transparent),
+      radial-gradient(6px 6px at 70% 14%,rgba(30,111,176,.2) 98%,transparent)}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.05;letter-spacing:-.015em;max-width:15ch;margin-top:20px}
+  .hero h1 .warm{color:var(--coral)}
+  .hero h1 .cool{color:var(--steel-deep)}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:52ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Albert Sans';font-weight:800;font-size:15px;text-decoration:none;color:#fff;background:var(--steel-deep);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--steel);transform:translateY(-2px)}
+  .btn-sec{font-family:'Albert Sans';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--ice-soft);padding:15px 26px;border-radius:12px;transition:.18s}
+  .btn-sec:hover{border-color:var(--coral);color:var(--coral-deep)}
+  .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--steel-soft);border:1px solid rgba(30,111,176,.35);border-radius:20px;padding:4px 11px;margin-bottom:16px}
+  .hero-card .hc-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px dashed var(--hair)}
+  .hero-card .hc-row:last-of-type{border-bottom:none}
+  .hero-card .hc-season{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .hero-card .hc-row.warm .hc-season{color:var(--coral-deep)}
+  .hero-card .hc-row.cool .hc-season{color:var(--steel-deep)}
+  .hero-card .hc-out{font-size:13px;color:var(--muted)}
+  .hero-card .hc-in{font-family:'Kanit';font-weight:800;font-size:22px}
+  .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--ice-soft)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Kanit';font-weight:800;font-size:27px;color:var(--steel-deep)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+  .svc{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;border-top:3px solid var(--hair)}
+  .svc.heat{border-top-color:var(--coral)}
+  .svc.cool{border-top-color:var(--steel)}
+  .svc.air{border-top-color:var(--steel-bright)}
+  .svc.plan{border-top-color:var(--coral-deep)}
+  .svc .s-ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px}
+  .svc.heat .s-ico{background:var(--coral-soft);color:var(--coral-deep)}
+  .svc.cool .s-ico,.svc.air .s-ico{background:var(--steel-soft);color:var(--steel-deep)}
+  .svc.plan .s-ico{background:var(--coral-soft);color:var(--coral-deep)}
+  .svc .s-ico svg{width:21px;height:21px}
+  .svc h3{font-size:16.5px}
+  .svc p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:980px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
+
+  /* ---------- plans ---------- */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .pcard{background:var(--card);border:1.5px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .pcard.best{border-color:var(--steel-deep);box-shadow:0 0 0 1px var(--steel-deep),var(--shadow)}
+  .pcard .pnote{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--coral);padding:4px 11px;border-radius:20px;margin-bottom:10px}
+  .pcard h3{font-size:18px}
+  .pcard .pnum{font-family:'Kanit';font-weight:800;font-size:36px;margin-top:8px}
+  .pcard .pnum span{font-family:'Albert Sans';font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}
+  .pcard ul{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:9px}
+  .pcard li{font-size:13.5px;color:var(--muted);padding-left:20px;position:relative}
+  .pcard li::before{content:"✓";position:absolute;left:0;color:var(--steel-deep);font-weight:800}
+  .pricing-note{margin-top:20px;font-size:13.5px;color:var(--muted);text-align:center}
+  @media(max-width:900px){.price-grid{grid-template-columns:1fr}}
+
+  /* ---------- system map ---------- */
+  .sys-wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;margin-top:32px;align-items:start}
+  .sys-map{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+  .sys-map svg{width:100%;height:auto;display:block}
+  .hs-g{cursor:pointer}
+  .hs-dot{fill:var(--steel-deep);transition:fill .15s}
+  .hs-g:hover .hs-dot{fill:var(--coral)}
+  .hs-g.on .hs-dot{fill:var(--coral)}
+  .hs-g.on .hs-ring{stroke:var(--coral);stroke-width:2.5;opacity:1}
+  .hs-ring{fill:none;stroke:var(--steel-deep);stroke-width:1.5;opacity:0;transition:opacity .15s}
+  .hs-g:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
+  .hs-num{fill:#fff;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;pointer-events:none}
+  .hs-halo{fill:var(--steel-deep);opacity:.18;transform-box:fill-box;transform-origin:center;animation:hsPulse 2.6s ease-out infinite}
+  @keyframes hsPulse{0%{opacity:.22;transform:scale(1)}70%{opacity:0;transform:scale(1.9)}100%{opacity:0;transform:scale(1.9)}}
+  @media(prefers-reduced-motion:reduce){.hs-halo{animation:none;opacity:0}}
+  .house-line{stroke:var(--ink);stroke-opacity:.5;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .house-fill{fill:rgba(30,111,176,.05)}
+  .house-soft{stroke:var(--ink);stroke-opacity:.28;fill:none;stroke-width:1.5;stroke-linecap:round}
+  .house-duct{stroke:var(--steel);stroke-opacity:.55;fill:rgba(30,111,176,.07);stroke-width:1.5;stroke-dasharray:5 4}
+  .house-warm{stroke:var(--coral);stroke-opacity:.6;fill:rgba(228,87,46,.08);stroke-width:1.5}
+  .house-cool{stroke:var(--steel);stroke-opacity:.6;fill:rgba(30,111,176,.08);stroke-width:1.5}
+  .sys-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .schip{font-family:'IBM Plex Mono';font-size:12px;font-weight:600;color:var(--ink);background:var(--ice-soft);border:1px solid var(--hair);border-radius:20px;padding:7px 13px;cursor:pointer;transition:.15s}
+  .schip:hover{border-color:var(--coral);color:var(--coral-deep)}
+  .schip.on{background:var(--steel-deep);border-color:var(--steel-deep);color:#fff}
+  .sys-detail{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
+  .sys-detail .sd-empty{color:var(--muted);font-size:15px}
+  .sys-detail .sd-label{font-family:'Kanit';font-weight:800;font-size:26px;line-height:1.1}
+  .sys-detail .sd-h{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel-deep);margin-top:18px}
+  .sys-detail .sd-h.warm{color:var(--coral-deep)}
+  .sys-detail p.sd-t{font-size:14.5px;color:var(--muted);margin-top:6px;line-height:1.6}
+  .sys-detail .sd-range{font-family:'Kanit';font-weight:700;font-size:17px;margin-top:6px;color:var(--ink)}
+  .sys-detail .sd-cta{margin-top:20px}
+  .sys-note{margin-top:16px;font-size:13.5px;color:var(--muted);background:var(--steel-soft);border:1px solid rgba(30,111,176,.3);border-radius:10px;padding:11px 14px}
+  @media(max-width:900px){.sys-wrap{grid-template-columns:1fr}.sys-detail{position:static}}
+
+  /* ---------- seasonal ---------- */
+  .season-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+  .scard{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;border-top:4px solid var(--steel)}
+  .scard.warm{border-top-color:var(--coral)}
+  .scard .sc-tag{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-deep);background:var(--steel-soft);border-radius:20px;padding:4px 11px;margin-bottom:12px}
+  .scard.warm .sc-tag{color:var(--coral-deep);background:var(--coral-soft)}
+  .scard h3{font-size:18px}
+  .scard p{font-size:14.5px;color:var(--muted);margin-top:8px}
+  .scard ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .scard li{font-size:13.5px;color:var(--muted);padding-left:20px;position:relative}
+  .scard li::before{content:"✓";position:absolute;left:0;font-weight:800;color:var(--steel-deep)}
+  .scard.warm li::before{color:var(--coral-deep)}
+  @media(max-width:820px){.season-grid{grid-template-columns:1fr}}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--steel-deep);background:var(--steel-soft);border:1px solid rgba(30,111,176,.28);padding:7px 13px;border-radius:20px}
+
+  /* ---------- owner ---------- */
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:20px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--steel-deep);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6;font-weight:500}
+  .tcard p:empty::before{content:"A word from a neighbor whose house we fixed is coming soon.";color:var(--muted);font-style:italic;font-weight:400}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a Whitecloud customer"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Kanit';font-weight:700;font-size:16px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--steel-deep);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- booking form ---------- */
+  .book{background:var(--steel-deep);color:#fff;text-align:center}
+  .book .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
+  .book .eyebrow::before{background:linear-gradient(90deg,var(--coral),#fff)}
+  .book h2{color:#fff;max-width:26ch;margin:12px auto 14px}
+  .book > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row select option{color:var(--ink)}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.16)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:var(--coral);color:#fff;font-family:'Albert Sans';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{filter:brightness(1.08)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
+  .qf-status.err{color:#FFD9C6;font-weight:700}
+  .qf-success{display:none;max-width:560px;margin:34px auto 0;background:#fff;color:var(--ink);border-radius:18px;padding:32px;font-family:'Kanit';font-weight:700;font-size:17px;text-align:center}
+  .qf-success[data-show]{display:block}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
+  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ice-soft);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Kanit';color:var(--ink)}
+  .footer__credit{opacity:.75}
+  .footer__credit a{color:var(--steel-deep);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--ice-soft);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(21,36,53,.1)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Albert Sans';font-weight:800;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#fff;background:var(--steel-deep)}
+  .mobile-cta .text{color:var(--steel-deep);background:var(--steel-soft);border:1px solid rgba(30,111,176,.3)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M6 7l6 4 6-4"/><path d="M6 17l6-4 6 4"/></svg></span><span>Whitecloud</span><small>Heating &amp; Air</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#plans" class="tab">Tune-Up Plans</a>
+      <a href="#sysmap" class="tab">System Map</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a Visit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Heating &amp; cooling · Treasure Valley</div>
+      <h1 class="reveal"><span class="warm">Warm in January.</span> <span class="cool">Cool in July.</span></h1>
+      <p class="reveal">One crew for both seasons. Whitecloud keeps Treasure Valley homes comfortable year-round — honest diagnostics, flat tune-up pricing, and a straight answer before anyone touches a wrench.</p>
+      <div class="hero-cta reveal">
+        <a href="#book" class="btn-pri">Book a visit</a>
+        <a href="#sysmap" class="btn-sec">What's acting up? ↓</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">The goal, all year</span>
+      <div class="hc-row warm">
+        <span class="hc-season">January</span>
+        <span class="hc-out">14° outside</span>
+        <span class="hc-in">70° inside</span>
+      </div>
+      <div class="hc-row cool">
+        <span class="hc-season">July</span>
+        <span class="hc-out">104° outside</span>
+        <span class="hc-in">70° inside</span>
+      </div>
+      <p class="hc-by">Tune-ups · repairs · installs · both seasons, one number</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we do</div>
+      <h2>Everything between the thermostat and the weather.</h2>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="plans" style="background:var(--ice-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Tune-up plans</div>
+      <h2>Flat prices. Zero upsell script.</h2>
+      <p class="stxt">A tune-up is maintenance, not a sales visit. Pick the rhythm that fits your house — repairs are always quoted flat and approved by you first.</p>
+    </div>
+    <div class="price-grid reveal" id="priceGrid"></div>
+    <p class="pricing-note" id="pricingNote"></p>
+  </div>
+</section>
+
+<section id="sysmap">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The system map</div>
+      <h2>Point at the problem.</h2>
+      <p class="stxt">Tap a numbered spot on the house — see the symptoms it causes, what a visit covers, and the ballpark before we ever ring your doorbell.</p>
+    </div>
+    <div class="sys-wrap reveal">
+      <div>
+        <div class="sys-map" id="sysMapBox"></div>
+        <div class="sys-chips" id="sysChips" role="group" aria-label="System components"></div>
+        <p class="sys-note" id="sysNote"></p>
+      </div>
+      <div class="sys-detail" id="sysDetail" aria-live="polite">
+        <p class="sd-empty">Tap a spot on the house to see symptoms, what we check, and the ballpark.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="seasonal" style="background:var(--ice-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Timing matters</div>
+      <h2>Beat the rush. Book the shoulder season.</h2>
+      <p class="stxt">The worst time to find a problem is the first 100° week — or the first hard freeze. A shoulder-season tune-up finds it while it's still cheap and the schedule is still open.</p>
+    </div>
+    <div class="season-grid reveal" id="seasonGrid"></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Rolling out of Caldwell, across the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--ice-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Whitecloud Heating &amp; Air</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">Word of mouth</div>
+    <h2>What the neighbors say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--ice-soft);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Book a visit</div>
+    <h2>Tell us what the house is doing.</h2>
+    <p>We'll call you back to confirm a time — usually the same day. No dispatch fee surprises; you'll know the number before we start.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qAddress">Street address &amp; city</label>
+        <input type="text" id="qAddress" name="address" placeholder="123 Elm St, Caldwell" />
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qNeed">What do you need?</label>
+          <select id="qNeed" name="need">
+            <option>Repair — no heat</option>
+            <option>Repair — no cool / weak cooling</option>
+            <option selected>Tune-up or plan</option>
+            <option>New system quote</option>
+            <option>Air quality / ducts / filters</option>
+            <option>Not sure — something's off</option>
+          </select>
+        </div>
+        <div class="qf-row">
+          <label for="qWhen">How soon?</label>
+          <select id="qWhen" name="timing">
+            <option>This week</option>
+            <option selected>Next couple of weeks</option>
+            <option>Planning ahead</option>
+          </select>
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Noises, smells, which rooms, how old the system is — anything helps…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request a visit</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550263" data-phone-link>Call or text (208) 555-0263</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Got it — we'll call to confirm a time, usually the same day.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Whitecloud Heating &amp; Air</b><br />
+      Heating &amp; cooling · <span data-city>Caldwell, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550263" data-phone>(208) 555-0263</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550263"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550263?body=Hi%20Whitecloud%2C%20my%20house%20needs%20a%20look."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Whitecloud Heating & Air",
+      "tagline": "Warm in January. Cool in July.",
+      "phone": "(208) 555-0263",
+      "email": "hello@whitecloudair.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Caldwell, ID"
+    },
+    "stats": [
+      { "num": "2x", "label": "A year your system should get looked at — spring and fall. We do both." },
+      { "num": "21-pt", "label": "Inspection on every tune-up, heating or cooling" },
+      { "num": "$0", "label": "Surprise charges — you approve the number before we start" }
+    ],
+    "services": [
+      { "pole": "heat", "title": "Heating", "desc": "Furnace repair, replacement and fall tune-ups. If it rattles, short-cycles or just won't keep up, we find out why before we talk money." },
+      { "pole": "cool", "title": "Cooling", "desc": "AC repair, new installs and spring readiness. We size a replacement to your actual house — not to the biggest unit on the truck." },
+      { "pole": "air", "title": "Air quality", "desc": "Filters, duct sealing and humidity balance — the stuff you feel every day and see on the dust rag." },
+      { "pole": "plan", "title": "Maintenance plans", "desc": "Twice-a-year tune-ups on a schedule you never think about, with priority scheduling when the weather turns mean." }
+    ],
+    "plans": [
+      { "name": "One-Time Tune-Up", "price": "$89", "per": "/visit", "features": "Heating or cooling — pick the season\n21-point inspection and cleaning\nFilter swap included (have your size handy)\nStraight answers, no sales pitch", "best": false, "note": "" },
+      { "name": "Season Pass", "price": "$159", "per": "/year", "features": "Two visits — spring cooling, fall heating\nPriority scheduling in heat waves and cold snaps\nFilter swap at every visit\n10% off any repair, any time", "best": true, "note": "Most popular" },
+      { "name": "Whole-Home Plan", "price": "$249", "per": "/year", "features": "Everything in Season Pass\nCovers two systems, or homes over 3,000 sq ft\nWater heater check-in at every visit\nFirst in line when the schedule fills up", "best": false, "note": "" }
+    ],
+    "pricingNote": "Repairs are always quoted flat and approved by you before work starts — a plan is never required to get service.",
+    "systemMap": [
+      { "id": "furnace", "label": "Furnace", "symptoms": "Short-cycling, rattling, weak heat, a burner that won't stay lit.", "covers": "Burner cleaning, blower and ignition test, heat-exchanger look, carbon-monoxide reading.", "range": "$89 tune-up · repairs quoted flat first" },
+      { "id": "filter", "label": "Return filter", "symptoms": "Dust on every shelf, indoor allergies, airflow that feels lazy.", "covers": "Filter swap, return-plenum check, and a size recommendation you can buy anywhere.", "range": "Included with every visit" },
+      { "id": "waterheater", "label": "Water heater", "symptoms": "Lukewarm showers, popping sounds from the tank, rusty tint in hot water.", "covers": "Flush, element and valve test, temperature check and an honest age assessment.", "range": "$79 check + flush" },
+      { "id": "ducts", "label": "Ductwork", "symptoms": "One room always hot, one always cold, whistling behind the walls.", "covers": "Leak check, a sealing quote if it needs one, and balancing between rooms.", "range": "Free look during any visit" },
+      { "id": "thermostat", "label": "Thermostat", "symptoms": "Readings that don't match the room, schedules that won't stick, short-cycling.", "covers": "Calibration, wiring check, smart-thermostat setup and a five-minute lesson.", "range": "$49 with any visit" },
+      { "id": "attic", "label": "Attic insulation", "symptoms": "Upstairs bakes in July, heating bills creep up every January.", "covers": "Depth check, air-gap inspection, and a plain-numbers estimate if it's thin.", "range": "Free with any tune-up" },
+      { "id": "condenser", "label": "AC condenser", "symptoms": "Warm air from the vents, ice on the lines, a unit that hums but won't spin.", "covers": "Coil cleaning, pressure check, capacitor and fan test, refrigerant-line inspection.", "range": "$89 tune-up · repairs quoted flat first" }
+    ],
+    "sysNote": "Not sure where the noise is coming from? Tap the closest thing — or just call and describe it. Guessing is our job, not yours.",
+    "seasonal": [
+      { "kind": "cool", "title": "Spring — cooling prep", "desc": "Book in April or May, before the first 95° week fills every schedule in the valley.", "items": "Condenser coil wash\nPressure and capacitor test\nAirflow and filter check\nCondensate drain clear" },
+      { "kind": "warm", "title": "Fall — heating prep", "desc": "Book in September or October, before the first hard freeze finds the weak spot for you.", "items": "Burner and ignition cleaning\nHeat-exchanger inspection\nCarbon-monoxide reading\nFilter swap and thermostat check" }
+    ],
+    "serviceArea": {
+      "region": "Treasure Valley, Idaho",
+      "short": "Treasure Valley",
+      "cities": ["Caldwell", "Nampa", "Middleton", "Greenleaf", "Notus", "Wilder"]
+    },
+    "owner": {
+      "name": "Doyle Pruett",
+      "heading": "Why Whitecloud exists",
+      "bio": "Doyle Pruett spent a decade running no-heat calls for a big outfit and grew to hate the commission sheet more than the cold crawl spaces. The person diagnosing your furnace shouldn't be paid extra to declare it dead. So he started Whitecloud: one crew, both seasons, and the price on paper before the panel comes off. Winter or summer doesn't matter to the mountains — it shouldn't matter to your living room either.",
+      "photo": ""
+    },
+    "testimonials": [
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" }
+    ],
+    "faq": [
+      { "q": "Do you take emergency calls?", "a": "Yes. No-heat and no-cool calls jump the line, plan members first. Call rather than use the form if the house is uncomfortable right now — the form is for scheduling, the phone is for today." },
+      { "q": "How often does a system really need a tune-up?", "a": "Twice a year — cooling in spring, heating in fall. Skipping years doesn't break anything immediately; it just means the first 100° week or the first freeze gets to pick when you find the problem." },
+      { "q": "Repair or replace — how do you decide?", "a": "Simple math, done in front of you: if a repair costs more than half of what a new system would, and the unit is past its expected years, we'll say replace. If a $220 part buys you three more winters, we'll say repair. You decide either way." },
+      { "q": "Which brands do you work on?", "a": "All of them. Furnaces and ACs are more alike than the badges suggest. If a part is genuinely unavailable for an old unit, we'll tell you before anything is taken apart." },
+      { "q": "How long does a new install take?", "a": "Most straight swaps are one day — comfortable morning to late afternoon. Add ductwork changes and it can stretch to two. You'll get the timeline with the quote, in writing." },
+      { "q": "Do plans renew automatically?", "a": "Only if you ask for that. The default is a reminder text when your year is up — renew with a yes, or just let it lapse. No gotchas." }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+
+  /* Fixed hotspot geometry for up to 7 spots (index-matched to systemMap).
+     Extra spots beyond 7 still appear as chips below the diagram. */
+  var SPOT_GEO = [
+    { x: 150, y: 345 },   /* furnace (utility room)   */
+    { x: 208, y: 300 },   /* return filter (plenum)   */
+    { x: 96,  y: 352 },   /* water heater             */
+    { x: 222, y: 216 },   /* duct chase, mid-wall     */
+    { x: 342, y: 318 },   /* thermostat, living room  */
+    { x: 262, y: 104 },   /* attic insulation         */
+    { x: 560, y: 356 }    /* AC condenser, outside    */
+  ];
+
+  /* Static cutaway-house drawing. Hotspots are appended per systemMap data. */
+  function houseSvgBase(){
+    return [
+      /* ground */
+      '<line class="house-line" x1="14" y1="400" x2="626" y2="400"/>',
+      /* house shell */
+      '<rect class="house-fill" x="62" y="150" width="396" height="250"/>',
+      '<path class="house-line" d="M62,400 V150 M458,400 V150"/>',
+      /* roof + attic */
+      '<path class="house-line" d="M44,152 L260,58 L476,152"/>',
+      '<path class="house-soft" d="M78,145 L260,66 L442,145"/>',
+      /* attic insulation batts */
+      '<path class="house-warm" d="M104,150 h44 v-12 h-44 z M162,150 h44 v-12 h-44 z M220,150 h44 v-12 h-44 z M278,150 h44 v-12 h-44 z M336,150 h44 v-12 h-44 z M394,150 h22 v-12 h-22 z"/>',
+      /* floor split */
+      '<line class="house-line" x1="62" y1="272" x2="458" y2="272"/>',
+      /* utility room wall */
+      '<line class="house-soft" x1="248" y1="272" x2="248" y2="400"/>',
+      /* duct chase: vertical + branches */
+      '<rect class="house-duct" x="210" y="150" width="26" height="150"/>',
+      '<path class="house-duct" d="M236,196 h120 M236,240 h80"/>',
+      /* supply registers */
+      '<rect class="house-soft" x="352" y="192" width="26" height="8"/>',
+      '<rect class="house-soft" x="312" y="236" width="26" height="8"/>',
+      /* furnace box */
+      '<rect class="house-warm" x="130" y="316" width="44" height="70"/>',
+      '<path class="house-soft" d="M138,330 h28 M138,342 h28"/>',
+      /* return plenum + filter slot */
+      '<rect class="house-duct" x="186" y="286" width="42" height="26"/>',
+      /* water heater cylinder */
+      '<rect class="house-soft" x="82" y="326" width="30" height="62" rx="13"/>',
+      /* thermostat on wall */
+      '<rect class="house-cool" x="330" y="306" width="22" height="14" rx="3"/>',
+      /* windows for flavor */
+      '<rect class="house-soft" x="300" y="170" width="34" height="26" rx="3"/>',
+      '<rect class="house-soft" x="110" y="188" width="34" height="26" rx="3"/>',
+      '<rect class="house-soft" x="386" y="300" width="34" height="30" rx="3"/>',
+      /* door */
+      '<path class="house-soft" d="M282,400 v-52 a8,8 0 0 1 8,-8 h14 a8,8 0 0 1 8,8 v52"/>',
+      /* condenser pad + unit */
+      '<line class="house-soft" x1="512" y1="400" x2="612" y2="400"/>',
+      '<rect class="house-cool" x="524" y="330" width="72" height="66" rx="6"/>',
+      '<circle class="house-soft" cx="560" cy="358" r="18"/>',
+      '<path class="house-soft" d="M560,344 v28 M546,358 h28"/>',
+      /* refrigerant lineset to house */
+      '<path class="house-duct" d="M524,368 H470 a10,10 0 0 1 -10,-10 v-32"/>'
+    ].join('');
+  }
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', my house needs a look.'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // services
+    var svcIcos = {
+      heat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 4 5.5 6.4 5.5 9.5a5.5 5.5 0 0 1-11 0C6.5 9.4 8.5 7 12 3z"/><path d="M12 12c1.4 1.6 2.2 2.7 2.2 4a2.2 2.2 0 0 1-4.4 0c0-1.3.8-2.4 2.2-4z"/></svg>',
+      cool: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 6l16 12M20 6L4 18"/></svg>',
+      air: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7a2.5 2.5 0 1 1-2.5 2.5"/></svg>',
+      plan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>'
+    };
+    document.getElementById('svcGrid').innerHTML = c.services.map(function(s){
+      var pole = svcIcos[s.pole] ? s.pole : 'plan';
+      return '<div class="svc ' + pole + '"><span class="s-ico">' + svcIcos[pole] + '</span><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
+    }).join('');
+
+    // plans
+    document.getElementById('priceGrid').innerHTML = c.plans.map(function(p){
+      var feats = (p.features || '').split('\n').filter(Boolean).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');
+      return '<div class="pcard' + (p.best ? ' best' : '') + '">' +
+        (p.best ? '<span class="pnote">' + esc(p.note || 'Most popular') + '</span>' : '') +
+        '<h3>' + esc(p.name) + '</h3>' +
+        '<div class="pnum">' + esc(p.price) + '<span> ' + esc(p.per) + '</span></div>' +
+        '<ul>' + feats + '</ul></div>';
+    }).join('');
+    document.getElementById('pricingNote').textContent = c.pricingNote || '';
+
+    // system map
+    renderSystemMap(c);
+    document.getElementById('sysNote').textContent = c.sysNote || '';
+
+    // seasonal
+    document.getElementById('seasonGrid').innerHTML = c.seasonal.map(function(s){
+      var items = (s.items || '').split('\n').filter(Boolean).map(function(it){ return '<li>' + esc(it) + '</li>'; }).join('');
+      return '<div class="scard' + (s.kind === 'warm' ? ' warm' : '') + '">' +
+        '<span class="sc-tag">' + (s.kind === 'warm' ? 'Heating' : 'Cooling') + '</span>' +
+        '<h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p><ul>' + items + '</ul></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    revealScan(document.body);
+  }
+
+  /* ---------- system map: house diagram + chips + detail panel ---------- */
+  var activeSpot = -1;
+  function renderSystemMap(c){
+    var spots = c.systemMap || [];
+    var svg = '<svg viewBox="0 0 640 420" role="img" aria-label="Cutaway house diagram with tappable heating and cooling components">';
+    svg += houseSvgBase();
+    spots.slice(0, SPOT_GEO.length).forEach(function(s, i){
+      var g = SPOT_GEO[i];
+      svg += '<g class="hs-g" tabindex="0" role="button" aria-pressed="false" data-spot="' + i + '" aria-label="' + esc(s.label) + ' — symptoms and pricing">' +
+        '<circle class="hs-halo" cx="' + g.x + '" cy="' + g.y + '" r="14"/>' +
+        '<circle class="hs-ring" cx="' + g.x + '" cy="' + g.y + '" r="18"/>' +
+        '<circle class="hs-dot" cx="' + g.x + '" cy="' + g.y + '" r="13"/>' +
+        '<text class="hs-num" x="' + g.x + '" y="' + (g.y + 4.5) + '" text-anchor="middle">' + (i + 1) + '</text></g>';
+    });
+    svg += '</svg>';
+    document.getElementById('sysMapBox').innerHTML = svg;
+
+    document.getElementById('sysChips').innerHTML = spots.map(function(s, i){
+      return '<button type="button" class="schip" data-spot="' + i + '" aria-pressed="false">' + (i < SPOT_GEO.length ? (i + 1) + ' · ' : '') + esc(s.label) + '</button>';
+    }).join('');
+
+    var wrap = document.getElementById('sysmap');
+    if(!wrap._wired){
+      wrap._wired = true;
+      wrap.addEventListener('click', function(e){
+        var el = e.target.closest('[data-spot]');
+        if(el) activateSpot(+el.getAttribute('data-spot'));
+      });
+      wrap.addEventListener('keydown', function(e){
+        var el = e.target.closest('g[data-spot]');
+        if(el && (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar')){
+          e.preventDefault();
+          activateSpot(+el.getAttribute('data-spot'));
+        }
+      });
+    }
+    if(activeSpot >= 0 && activeSpot < spots.length) activateSpot(activeSpot);
+  }
+
+  function activateSpot(i){
+    var spots = CONTENT.systemMap || [];
+    var s = spots[i];
+    if(!s) return;
+    activeSpot = i;
+    document.querySelectorAll('#sysmap [data-spot]').forEach(function(el){
+      var on = +el.getAttribute('data-spot') === i;
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.getElementById('sysDetail').innerHTML =
+      '<p class="sd-label">' + esc(s.label) + '</p>' +
+      '<p class="sd-h warm">Sounds like</p><p class="sd-t">' + esc(s.symptoms) + '</p>' +
+      '<p class="sd-h">What a visit covers</p><p class="sd-t">' + esc(s.covers) + '</p>' +
+      '<p class="sd-h">Ballpark</p><p class="sd-range">' + esc(s.range) + '</p>' +
+      '<p class="sd-cta"><a class="btn-pri" href="#book">Book this visit</a></p>';
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      address: document.getElementById('qAddress').value.trim() || '(not given)',
+      need: document.getElementById('qNeed').value,
+      timing: document.getElementById('qWhen').value,
+      notes: document.getElementById('qNotes').value.trim(),
+      _subject: CONTENT.brand.name + ' — new request from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.setAttribute('data-show','1');
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request a visit';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

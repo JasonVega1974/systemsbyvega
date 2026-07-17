@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ironwood Collision Co. — Auto Body & Collision Repair | Emmett, ID</title>
+<meta name="description" content="Collision repair, dent and panel work, and factory paint matching in Emmett, Idaho — serving the whole Treasure Valley. Blueprinted repairs, plain-language estimates, insurance claims without the fog. Call or text (208) 555-0291." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ironwood Collision Co. — Like it never happened." />
+<meta property="og:description" content="Auto body repair in Emmett, ID. Every repair blueprinted, every step approved by you, paint matched until the fix is invisible." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2316121A'/%3E%3Cpath d='M12 38q2-9 9-10l6-1q5-6 13-6h6q7 1 10 7l2 4q2 1 2 4v4q0 3-3 3h-2a6 6 0 0 0-12 0H26a6 6 0 0 0-12 0h-1q-2 0-1-5z' fill='%23C9D1D9'/%3E%3Ccircle cx='20' cy='47' r='4' fill='%23B02E58'/%3E%3Ccircle cx='44' cy='47' r='4' fill='%23B02E58'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoBodyShop",
+  "name": "Ironwood Collision Co.",
+  "description": "Collision repair, dent and panel work, and factory paint matching in Emmett, Idaho — serving the Treasure Valley.",
+  "telephone": "+12085550291",
+  "email": "hello@ironwoodcollision.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Emmett", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Gem County and the Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --coal:#16121A; --coal-2:#1C1622; --panel:rgba(255,255,255,.045);
+    --wine:#B02E58; --wine-bright:#D14975; --wine-deep:#8A2344;
+    --silver:#C9D1D9; --pearl:#EDE6F2;
+    --ink:#F2EDF6; --muted:#A79FB0; --hair:rgba(237,230,242,.13);
+    --card:rgba(255,255,255,.05); --card-brd:rgba(237,230,242,.11);
+    --shadow:0 26px 60px -28px rgba(0,0,0,.7);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--coal);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(760px 420px at 12% -6%,rgba(176,46,88,.16),transparent 66%),
+      radial-gradient(640px 380px at 96% 12%,rgba(201,209,217,.07),transparent 62%),
+      radial-gradient(900px 520px at 50% 110%,rgba(138,35,68,.10),transparent 70%),
+      linear-gradient(180deg,#171219 0%,#16121A 55%,#141018 100%)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--wine-bright);outline-offset:3px;border-radius:4px}
+  section{padding:78px 0}
+  h1,h2,h3{font-family:'Sora',sans-serif;font-weight:700;letter-spacing:-.015em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--wine-bright);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--silver)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(22,18,26,.88);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Sora';font-weight:800;font-size:17px;color:var(--ink)}
+  .logo .mark{width:31px;height:31px;border-radius:10px;background:linear-gradient(150deg,var(--wine-bright),var(--wine-deep));display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark svg{width:17px;height:17px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:600;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:rgba(209,73,117,.12);color:var(--wine-bright)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#fff;background:var(--wine);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--wine-bright);transform:translateY(-1px)}
+  @media(max-width:760px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 90px;position:relative;overflow:hidden}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.05;letter-spacing:-.02em;max-width:15ch;margin-top:20px;
+    background:linear-gradient(180deg,#fff 0%,var(--pearl) 70%,var(--silver) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero h1 .hl{background:linear-gradient(180deg,var(--wine-bright),var(--wine));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:52ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:#fff;background:var(--wine);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--wine-bright);transform:translateY(-2px)}
+  .btn-sec{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--panel);padding:15px 26px;border-radius:12px;transition:.18s}
+  .btn-sec:hover{border-color:var(--wine-bright);color:var(--wine-bright)}
+  .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+  .hero-card .hc-line{font-family:'Sora';font-weight:700;font-size:19px;line-height:1.45;color:var(--ink)}
+  .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pearl);background:rgba(176,46,88,.18);border:1px solid rgba(209,73,117,.4);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--coal-2)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Sora';font-weight:800;font-size:27px;color:var(--wine-bright)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* =========================================================
+     SIGNATURE — Repair Reveal slider + stage strip
+     Damaged SVG panel scene drags into the finished repair.
+     ========================================================= */
+  .ba-labels{display:flex;justify-content:space-between;align-items:center;max-width:860px;margin:30px auto 14px;padding:0 4px;gap:16px}
+  .ba-label{font-family:'IBM Plex Mono';font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:11px;padding:.42rem .9rem;border-radius:20px;display:inline-flex;align-items:center;gap:.5rem}
+  .ba-label::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.75}
+  .ba-label--b{background:rgba(0,0,0,.4);color:var(--silver);border:1px solid rgba(201,209,217,.35)}
+  .ba-label--a{background:rgba(176,46,88,.16);color:var(--wine-bright);border:1px solid rgba(209,73,117,.5)}
+  @media(max-width:520px){.ba-label{font-size:9.5px;letter-spacing:.09em;padding:.34rem .6rem}}
+  .ba{position:relative;max-width:860px;margin:0 auto;aspect-ratio:16/9;border-radius:20px;overflow:hidden;user-select:none;touch-action:pan-y;
+    border:1px solid rgba(209,73,117,.28);box-shadow:var(--shadow);background:#211A29;cursor:ew-resize}
+  .ba__panel{position:absolute;inset:0}
+  .ba__panel svg{width:100%;height:100%;display:block}
+  .ba__before{z-index:2;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+  .ba__handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;
+    background:linear-gradient(180deg,transparent,var(--silver),var(--wine-bright),var(--silver),transparent);
+    transform:translateX(-1px);z-index:5;box-shadow:0 0 18px rgba(209,73,117,.8)}
+  .ba__grip{position:absolute;top:50%;left:var(--pos,50%);transform:translate(-50%,-50%);z-index:6;
+    width:50px;height:50px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 35% 30%,var(--wine-bright),var(--wine) 60%,var(--wine-deep));
+    border:2px solid rgba(255,255,255,.85);
+    box-shadow:0 8px 24px -6px rgba(0,0,0,.8),0 0 22px rgba(176,46,88,.7);
+    display:grid;place-items:center;color:#fff}
+  .ba__grip svg{width:22px;height:22px}
+  .ba__hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;
+    font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--pearl);background:rgba(22,18,26,.7);padding:.34rem .75rem;border-radius:20px;
+    border:1px solid var(--hair);transition:opacity .4s;pointer-events:none}
+  .ba.touched .ba__hint{opacity:0}
+  /* stage strip under the slider */
+  .stages{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:860px;margin:22px auto 0}
+  .stage{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.05em;color:var(--muted);
+    background:var(--panel);border:1px solid var(--hair);border-radius:20px;padding:8px 14px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:7px}
+  .stage .n{font-size:10px;opacity:.7}
+  .stage:hover{border-color:var(--wine-bright);color:var(--wine-bright)}
+  .stage.on{background:var(--wine);border-color:var(--wine);color:#fff}
+  .stage.done{color:var(--pearl);border-color:rgba(209,73,117,.4)}
+  .stage-blurb{max-width:66ch;margin:18px auto 0;text-align:center;font-size:15px;color:var(--muted);line-height:1.65;min-height:3.3em}
+  .reveal-note{max-width:860px;margin:18px auto 0;font-size:13.5px;color:var(--muted);background:rgba(176,46,88,.10);border:1px solid rgba(209,73,117,.3);border-radius:10px;padding:11px 14px;text-align:center}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .svc{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;transition:transform .2s,border-color .2s;backdrop-filter:blur(6px)}
+  .svc:hover{transform:translateY(-4px);border-color:rgba(209,73,117,.45)}
+  .svc .s-ico{width:44px;height:44px;border-radius:12px;background:rgba(176,46,88,.16);border:1px solid rgba(209,73,117,.3);display:grid;place-items:center;margin-bottom:14px;color:var(--wine-bright)}
+  .svc .s-ico svg{width:22px;height:22px}
+  .svc h3{font-size:16.5px}
+  .svc p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:900px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.svc-grid{grid-template-columns:1fr}}
+
+  /* ---------- claims ---------- */
+  .claims{background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .claims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;counter-reset:cstep}
+  .ccard{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:22px;counter-increment:cstep;position:relative}
+  .ccard::before{content:counter(cstep,decimal-leading-zero);font-family:'Sora';font-weight:800;font-size:32px;color:transparent;-webkit-text-stroke:1.5px var(--wine-bright);display:block;margin-bottom:10px;opacity:.9}
+  .ccard h3{font-size:15.5px}
+  .ccard p{font-size:13.5px;color:var(--muted);margin-top:8px}
+  .claims-note{margin-top:20px;font-size:13.5px;color:var(--muted);text-align:center;background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:11px 14px;max-width:760px;margin-left:auto;margin-right:auto}
+  @media(max-width:900px){.claims-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.claims-grid{grid-template-columns:1fr}}
+
+  /* ---------- process ---------- */
+  .proc-list{margin-top:32px;display:flex;flex-direction:column;gap:0;max-width:760px}
+  .pstep{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair);position:relative}
+  .pstep:last-child{border-bottom:none}
+  .pstep .pn{width:44px;height:44px;border-radius:50%;background:rgba(176,46,88,.14);border:1.5px solid rgba(209,73,117,.4);display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:16px;color:var(--wine-bright)}
+  .pstep h3{font-size:17px}
+  .pstep p{font-size:14.5px;color:var(--muted);margin-top:6px;max-width:58ch}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--pearl);background:rgba(201,209,217,.08);border:1px solid rgba(201,209,217,.22);padding:7px 13px;border-radius:20px}
+
+  /* ---------- owner ---------- */
+  .owner-sec{background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:20px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--wine-bright);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6;font-weight:500}
+  .tcard p:empty::before{content:"A word from a customer whose bad day we erased — coming soon.";color:var(--muted);font-style:italic;font-weight:400}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a customer"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Sora';font-weight:700;font-size:16px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--wine-bright);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- estimate form ---------- */
+  .estimate{background:linear-gradient(160deg,var(--wine-deep),#4A1226 60%,#2A0C17);color:#fff;text-align:center;border-top:1px solid var(--hair)}
+  .estimate .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
+  .estimate .eyebrow::before{background:var(--silver)}
+  .estimate h2{color:#fff;max-width:26ch;margin:12px auto 14px}
+  .estimate > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row select option{color:var(--coal)}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.15)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:#fff;color:var(--wine-deep);font-family:'Inter Tight';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{filter:brightness(.94)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
+  .qf-status.err{color:#FFD3C2;font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--coal);border-radius:18px;padding:32px;font-family:'Sora';font-weight:700;font-size:17px;text-align:center}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
+  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--coal-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Sora';color:var(--ink)}
+  .footer__credit{opacity:.75}
+  .footer__credit a{color:var(--wine-bright);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--coal-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Inter Tight';font-weight:800;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#fff;background:var(--wine)}
+  .mobile-cta .text{color:var(--wine-bright);background:rgba(176,46,88,.14);border:1px solid rgba(209,73,117,.4)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--pearl);color:var(--coal);padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15q1-4 4-4.5l2.5-.5q2-2.5 5-2.5h2q2.5.5 3.5 3l.5 1.5q1.5.5 1.5 2v1.5q0 1.5-1.5 1.5"/><circle cx="8" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M10 17h5"/></svg></span><span>Ironwood</span><small>Collision Co.</small></div>
+    <div class="nav-links">
+      <a href="#reveal" class="tab">The Repair</a>
+      <a href="#services" class="tab">Services</a>
+      <a href="#claims" class="tab">Insurance</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#estimate" class="cta">Get an Estimate</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Auto body &amp; collision repair · <span data-city-inline>Emmett, ID</span></div>
+      <h1 class="reveal">Your car, back to <span class="hl">before.</span></h1>
+      <p class="reveal">Fender benders, parking-lot mysteries, hail Sundays. Ironwood Collision Co. blueprints every repair, matches your exact factory color, and hands back a car you can't tell was ever hit. That's the whole standard.</p>
+      <div class="hero-cta reveal">
+        <a href="#estimate" class="btn-pri">Get my estimate</a>
+        <a href="#reveal" class="btn-sec">See the repair ↓</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">Every repair, blueprinted</span>
+      <p class="hc-line">Estimate → teardown → paint match → refinish → cure. You approve each gate before we pass it.</p>
+      <p class="hc-by">No surprises on the invoice · ever</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="reveal">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The Repair Reveal</div>
+      <h2>Drag the line. Watch the bad day disappear.</h2>
+      <p class="stxt">Left of the line is how cars arrive. Right of the line is how they leave. The five gates under the slider are the trip in between — tap one to jump to it.</p>
+    </div>
+    <div class="ba-labels reveal">
+      <span class="ba-label ba-label--b">The bad day</span>
+      <span class="ba-label ba-label--a">Out the door</span>
+    </div>
+    <div class="ba reveal" id="ba" role="slider" tabindex="0"
+         aria-label="Repair reveal slider — drag right to show the damage, left to show the finished repair"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <div class="ba__panel ba__after" aria-hidden="true">
+        <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="bodyClean" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#DDE3E9"/><stop offset=".55" stop-color="#B9C2CB"/><stop offset="1" stop-color="#98A2AD"/>
+            </linearGradient>
+            <linearGradient id="glassClean" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3A3147"/><stop offset="1" stop-color="#241D2E"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="460" fill="#211A29"/>
+          <rect y="392" width="800" height="68" fill="#191322"/>
+          <ellipse cx="400" cy="400" rx="330" ry="18" fill="rgba(0,0,0,.45)"/>
+          <path d="M62,332 Q62,300 78,284 Q100,262 150,252 L240,240 Q310,178 395,174 L470,174 Q555,178 612,240 L695,252 Q732,260 740,290 L744,330 Q744,352 720,352 L683,352 A68,68 0 0 0 547,352 L273,352 A68,68 0 0 0 137,352 L86,352 Q62,352 62,332 Z" fill="url(#bodyClean)"/>
+          <path d="M262,238 Q318,188 396,184 L466,184 Q542,188 596,236 L560,242 L296,242 Z" fill="url(#glassClean)"/>
+          <rect x="424" y="184" width="10" height="58" rx="3" fill="url(#bodyClean)"/>
+          <path d="M270,244 L560,244" stroke="rgba(60,52,72,.4)" stroke-width="2"/>
+          <path d="M430,246 L430,348" stroke="rgba(60,52,72,.5)" stroke-width="2.5"/>
+          <path d="M296,246 L292,348" stroke="rgba(60,52,72,.5)" stroke-width="2.5"/>
+          <rect x="330" y="266" width="34" height="9" rx="4.5" fill="#7E8794"/>
+          <rect x="468" y="264" width="34" height="9" rx="4.5" fill="#7E8794"/>
+          <path d="M100,268 Q240,252 380,250 L520,250" stroke="rgba(255,255,255,.35)" stroke-width="5" stroke-linecap="round" fill="none" opacity=".5"/>
+          <polygon points="66,286 110,272 114,290 72,300" fill="#F4E6C0"/>
+          <polygon points="738,290 702,276 700,294 736,302" fill="#C0453F"/>
+          <circle cx="205" cy="352" r="52" fill="#0E0B12"/>
+          <circle cx="205" cy="352" r="30" fill="#E8E4EE"/>
+          <circle cx="205" cy="352" r="9" fill="#6E6880"/>
+          <path d="M205,326 L205,378 M179,352 L231,352 M187,334 L223,370 M223,334 L187,370" stroke="#6E6880" stroke-width="4"/>
+          <circle cx="615" cy="352" r="52" fill="#0E0B12"/>
+          <circle cx="615" cy="352" r="30" fill="#E8E4EE"/>
+          <circle cx="615" cy="352" r="9" fill="#6E6880"/>
+          <path d="M615,326 L615,378 M589,352 L641,352 M597,334 L633,370 M633,334 L597,370" stroke="#6E6880" stroke-width="4"/>
+        </svg>
+      </div>
+      <div class="ba__panel ba__before" aria-hidden="true">
+        <svg viewBox="0 0 800 460" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="bodyDam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#A8ADB4"/><stop offset=".55" stop-color="#878D95"/><stop offset="1" stop-color="#6B717A"/>
+            </linearGradient>
+            <linearGradient id="glassDam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#332B3F"/><stop offset="1" stop-color="#201A2A"/>
+            </linearGradient>
+            <radialGradient id="dent" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="rgba(20,15,26,.72)"/><stop offset=".7" stop-color="rgba(20,15,26,.4)"/><stop offset="1" stop-color="rgba(20,15,26,0)"/>
+            </radialGradient>
+          </defs>
+          <rect width="800" height="460" fill="#211A29"/>
+          <rect y="392" width="800" height="68" fill="#191322"/>
+          <ellipse cx="400" cy="400" rx="330" ry="18" fill="rgba(0,0,0,.45)"/>
+          <path d="M62,332 Q62,300 78,284 Q100,262 150,252 L240,240 Q310,178 395,174 L470,174 Q555,178 612,240 L695,252 Q732,260 740,290 L744,330 Q744,352 720,352 L683,352 A68,68 0 0 0 547,352 L273,352 A68,68 0 0 0 137,352 L86,352 Q62,352 62,332 Z" fill="url(#bodyDam)"/>
+          <path d="M262,238 Q318,188 396,184 L466,184 Q542,188 596,236 L560,242 L296,242 Z" fill="url(#glassDam)"/>
+          <rect x="424" y="184" width="10" height="58" rx="3" fill="url(#bodyDam)"/>
+          <path d="M270,244 L560,244" stroke="rgba(40,34,50,.5)" stroke-width="2"/>
+          <path d="M430,246 L430,348" stroke="rgba(40,34,50,.6)" stroke-width="2.5"/>
+          <path d="M296,246 L292,348" stroke="rgba(40,34,50,.6)" stroke-width="2.5"/>
+          <rect x="330" y="266" width="34" height="9" rx="4.5" fill="#6A727E"/>
+          <rect x="468" y="264" width="34" height="9" rx="4.5" fill="#6A727E"/>
+          <ellipse cx="152" cy="296" rx="62" ry="42" fill="url(#dent)"/>
+          <path d="M108,278 L138,300 L122,306 L158,326 M132,272 L150,290 L172,286 L186,312" stroke="#2C2536" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M96,312 L128,318 L118,332" stroke="#2C2536" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M300,262 L402,286 M318,278 L418,296 M336,296 L400,310" stroke="#EDE6F2" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+          <path d="M330,258 L338,270 M352,262 L366,280" stroke="#EDE6F2" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+          <polygon points="216,252 258,246 252,268 230,278 220,266" fill="rgba(35,28,44,.5)"/>
+          <path d="M222,254 L246,262 M232,270 L250,254" stroke="#231C2C" stroke-width="2.5" stroke-linecap="round"/>
+          <polygon points="66,286 110,272 114,290 72,300" fill="#8F8878"/>
+          <path d="M72,276 L106,296 M88,272 L96,298" stroke="#4B4356" stroke-width="3" stroke-linecap="round"/>
+          <polygon points="738,290 702,276 700,294 736,302" fill="#C0453F"/>
+          <path d="M62,332 Q62,344 74,350 L96,356 L92,338 Z" fill="#5D636C"/>
+          <circle cx="205" cy="352" r="52" fill="#0E0B12"/>
+          <circle cx="205" cy="352" r="30" fill="#C9C4D2"/>
+          <circle cx="205" cy="352" r="9" fill="#5E5870"/>
+          <path d="M205,326 L205,378 M179,352 L231,352 M187,334 L223,370 M223,334 L187,370" stroke="#5E5870" stroke-width="4"/>
+          <circle cx="615" cy="352" r="52" fill="#0E0B12"/>
+          <circle cx="615" cy="352" r="30" fill="#C9C4D2"/>
+          <circle cx="615" cy="352" r="9" fill="#5E5870"/>
+          <path d="M615,326 L615,378 M589,352 L641,352 M597,334 L633,370 M633,334 L597,370" stroke="#5E5870" stroke-width="4"/>
+        </svg>
+      </div>
+      <div class="ba__handle" aria-hidden="true"></div>
+      <div class="ba__grip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6"/></svg></div>
+      <div class="ba__hint">Drag · or use arrow keys</div>
+    </div>
+    <div class="stages reveal" id="stagesStrip" role="group" aria-label="Repair stages"></div>
+    <p class="stage-blurb" id="stageBlurb" aria-live="polite"></p>
+    <p class="reveal-note reveal" id="revealNote"></p>
+  </div>
+</section>
+
+<section id="services" style="background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Services</div>
+      <h2>Bodywork, start to invisible.</h2>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="claims">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Insurance claims</div>
+      <h2>Claims, without the fog.</h2>
+      <p class="stxt">Four steps, in plain language. The short version: the claim is yours, the choice of shop is yours, and the paperwork is our problem.</p>
+    </div>
+    <div class="claims-grid reveal" id="claimsGrid"></div>
+    <p class="claims-note reveal" id="claimsNote"></p>
+  </div>
+</section>
+
+<section id="process" style="background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How a repair runs</div>
+      <h2>Nothing happens without your OK.</h2>
+    </div>
+    <div class="proc-list reveal" id="procList"></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Worth the drive from anywhere in the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" class="owner-sec">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Ironwood Collision Co.</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">After the repair</div>
+    <h2>What owners say when they get the keys back.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--coal-2);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="estimate" id="estimate">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Get an estimate</div>
+    <h2>Send the damage. Get a straight answer.</h2>
+    <p>Tell us what happened — we'll follow up with numbers and next steps, usually the same day. Photos help; you can text them too.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qVehicle">Vehicle — year, make, model</label>
+        <input type="text" id="qVehicle" name="vehicle" placeholder="2019 Subaru Outback" />
+      </div>
+      <div class="qf-row">
+        <label for="qDamage">What happened?</label>
+        <textarea id="qDamage" name="damage" rows="3" placeholder="Backed into a post — rear bumper and tailgate. Paint cracked on the corner…"></textarea>
+      </div>
+      <div class="qf-row">
+        <label for="qPay">How are you paying?</label>
+        <select id="qPay" name="paying">
+          <option>Through an insurance claim</option>
+          <option>Out of pocket</option>
+          <option selected>Not sure yet</option>
+        </select>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Get my estimate</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Rather just talk to a human? <a href="tel:+12085550291" data-phone-link>Call or text (208) 555-0291</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Got it — we'll text you back with numbers and next steps, usually the same day.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Ironwood Collision Co.</b><br />
+      Auto body &amp; collision repair · <span data-city>Emmett, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550291" data-phone>(208) 555-0291</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550291"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550291?body=Hi%20Ironwood%2C%20can%20you%20take%20a%20look%20at%20some%20damage%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Ironwood Collision Co.",
+      "tagline": "Like it never happened.",
+      "phone": "(208) 555-0291",
+      "email": "hello@ironwoodcollision.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Emmett, ID"
+    },
+    "stats": [
+      {
+        "num": "1,400+",
+        "label": "Panels brought back to factory shape"
+      },
+      {
+        "num": "Zero",
+        "label": "Surprise charges — you approve every step first"
+      },
+      {
+        "num": "Emmett",
+        "label": "Born here, serving the whole Treasure Valley"
+      }
+    ],
+    "repairStages": [
+      {
+        "name": "Estimate",
+        "blurb": "We photograph, measure and map every panel the damage touched — then walk you through the plan in plain words, with numbers attached."
+      },
+      {
+        "name": "Teardown",
+        "blurb": "Panels come off so hidden damage can't hide. If we find more underneath, you hear about it before anything else happens — not on the invoice."
+      },
+      {
+        "name": "Paint match",
+        "blurb": "Your exact factory color code, tinted and test-sprayed until it disappears against the original panels. Blended past the repair so there's no edge to find."
+      },
+      {
+        "name": "Refinish",
+        "blurb": "Prime, base, clear — laid down in a sealed booth, not a driveway. Dust is the enemy of an invisible repair."
+      },
+      {
+        "name": "Cure & polish",
+        "blurb": "Baked, wet-sanded and machine-polished until the new panel reads exactly like the rest of the car. Then we detail it, because handing back a dusty car is rude."
+      }
+    ],
+    "revealNote": "Drag the divider — every repair moves through the same five gates, and you approve each one before we move to the next.",
+    "services": [
+      {
+        "title": "Collision repair",
+        "desc": "From fender benders to the crunch you'd rather not describe out loud. Structural measurement, panel repair or replacement, and reassembly that respects how the factory put it together."
+      },
+      {
+        "title": "Dent & panel work",
+        "desc": "Door dings, hail divots, grocery-cart craters. Small dents come out with finesse work; bigger ones get filler, block-sanding and refinish — whichever puts the panel right."
+      },
+      {
+        "title": "Paint & refinish",
+        "desc": "Factory color-code matching, blend work into neighboring panels, full resprays for sun-tired paint. Booth-sprayed and baked, never rattle-canned."
+      },
+      {
+        "title": "Bumper repair",
+        "desc": "Plastic repair and refinishing for scuffed, cracked or torn covers — and straight talk about when a new cover is genuinely the cheaper path."
+      },
+      {
+        "title": "Glass coordination",
+        "desc": "Cracked windshield in the same bad day? We coordinate the glass work alongside the body repair, so you make one phone call and one trip."
+      }
+    ],
+    "claims": [
+      {
+        "title": "Start your claim",
+        "desc": "Call your insurance company or file in their app. You'll get a claim number — that's all we need to get moving."
+      },
+      {
+        "title": "Get an estimate",
+        "desc": "Bring the car by, or send us photos to start. We put together a written, itemized estimate and walk you through what's cosmetic and what actually matters."
+      },
+      {
+        "title": "You pick the shop",
+        "desc": "The choice of repair shop is yours. An insurer can suggest one; the decision stays with you, and your coverage works the same either way."
+      },
+      {
+        "title": "We handle the paperwork",
+        "desc": "We document everything an adjuster needs — photos, measurements, supplements if teardown finds more — and keep you posted in plain language, not adjuster-speak."
+      }
+    ],
+    "claimsNote": "Paying out of pocket instead? Same estimate, same repair, same five gates — just without the claim number.",
+    "process": [
+      {
+        "title": "Drop off & blueprint",
+        "desc": "We map the whole repair before wrench meets bolt — parts, paint, timeline — and give you a real completion date, not a shrug."
+      },
+      {
+        "title": "Approve the plan",
+        "desc": "You see the blueprint and the numbers before work starts. Nothing gets repaired, replaced or billed without your OK."
+      },
+      {
+        "title": "Repair & refinish",
+        "desc": "Metal first, then paint, then reassembly. If teardown changes the plan, the phone rings before the work continues."
+      },
+      {
+        "title": "Walkaround & keys",
+        "desc": "We walk the car together, panel by panel, in daylight. You take the keys when it looks like nothing ever happened — that's the standard."
+      }
+    ],
+    "serviceArea": {
+      "region": "Gem County & the Treasure Valley",
+      "short": "Treasure Valley",
+      "cities": [
+        "Emmett",
+        "Eagle",
+        "Star",
+        "Meridian",
+        "Boise",
+        "Horseshoe Bend"
+      ]
+    },
+    "owner": {
+      "name": "Wade Ferris",
+      "heading": "The shop behind the booth",
+      "bio": "Wade Ferris straightened his first fender at fourteen, on a hay truck that had lost an argument with a gatepost. Twenty-odd years later the tools are better and the paint is fancier, but the job hasn't changed: put the car back the way the factory meant it, tell the owner the truth about what that takes, and don't hand back the keys until the repair is invisible. Ironwood is a small shop on purpose — every car gets the same two sets of eyes, and one of them is Wade's.",
+      "photo": ""
+    },
+    "testimonials": [
+      {
+        "quote": "",
+        "name": ""
+      },
+      {
+        "quote": "",
+        "name": ""
+      },
+      {
+        "quote": "",
+        "name": ""
+      }
+    ],
+    "faq": [
+      {
+        "q": "Do you work with insurance claims?",
+        "a": "Yes, all the time. Bring us your claim number and we'll handle the estimate, the photos and the adjuster paperwork. And plenty of our repairs have no claim at all — out-of-pocket work gets the exact same process."
+      },
+      {
+        "q": "How long will my repair take?",
+        "a": "Honest answer: it depends on parts. The blueprint we build at drop-off comes with a real completion date, and if a part delay moves it, you hear it from us the day we know — not when you call to ask."
+      },
+      {
+        "q": "Will the paint actually match?",
+        "a": "Yes. We pull your factory color code, tint it against your car's actual paint (paint fades — the code alone isn't enough), and blend into the neighboring panels so there's no hard edge where new meets old."
+      },
+      {
+        "q": "Can you fix just a small scratch or ding?",
+        "a": "Absolutely. Small jobs are welcome — a door ding or a scuffed bumper doesn't need an appointment weeks out. Send a photo and we'll tell you what it takes."
+      },
+      {
+        "q": "Do I need an appointment for an estimate?",
+        "a": "Nope. Swing by during shop hours, or text us photos of the damage to start — we'll follow up with numbers and next steps, usually the same day."
+      },
+      {
+        "q": "Do you stand behind the work?",
+        "a": "Every repair leaves with our written workmanship promise — ask for the current terms at drop-off. We'd rather you read them than take our word for it."
+      }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    document.querySelectorAll('[data-city-inline]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', can you take a look at some damage?'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // repair stages (signature)
+    renderStages(c);
+    document.getElementById('revealNote').textContent = c.revealNote || '';
+
+    // services
+    var icos = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7l-8.5 8.5a2.1 2.1 0 1 0 3 3L17 10"/><path d="M9 5l4-2 6 6-2 4-8-8z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.6 6 10a6 6 0 0 1-12 0c0-3.4 3-6 6-10z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="6" rx="3"/><path d="M6 10V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4-3h10l4 3v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 8h18"/></svg>'
+    ];
+    document.getElementById('svcGrid').innerHTML = c.services.map(function(s, i){
+      return '<div class="svc"><span class="s-ico">' + icos[i % icos.length] + '</span><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
+    }).join('');
+
+    // claims
+    document.getElementById('claimsGrid').innerHTML = c.claims.map(function(st){
+      return '<div class="ccard"><h3>' + esc(st.title) + '</h3><p>' + esc(st.desc) + '</p></div>';
+    }).join('');
+    document.getElementById('claimsNote').textContent = c.claimsNote || '';
+
+    // process
+    document.getElementById('procList').innerHTML = c.process.map(function(p, i){
+      return '<div class="pstep"><span class="pn">' + (i + 1) + '</span><div><h3>' + esc(p.title) + '</h3><p>' + esc(p.desc) + '</p></div></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    revealScan(document.body);
+  }
+
+  /* ---------- signature: Repair Reveal slider + stage strip ---------- */
+  var pos = 50, activeStage = -1;
+
+  function renderStages(c){
+    var stages = c.repairStages || [];
+    document.getElementById('stagesStrip').innerHTML = stages.map(function(s, i){
+      return '<button type="button" class="stage" data-stage="' + i + '" aria-pressed="false"><span class="n">' + (i + 1) + '</span>' + esc(s.name) + '</button>';
+    }).join('');
+    updateStage(true);
+  }
+
+  /* Map slider position to repair progress: pos=100 shows all damage
+     (start of the job, stage 1), pos=0 shows the finished car (last stage). */
+  function stageForPos(){
+    var stages = (CONTENT.repairStages || []);
+    if(!stages.length) return -1;
+    var progress = 100 - pos;
+    return Math.min(stages.length - 1, Math.floor(progress / (100 / stages.length)));
+  }
+  function updateStage(force){
+    var idx = stageForPos();
+    if(idx === activeStage && !force) return;
+    activeStage = idx;
+    var stages = CONTENT.repairStages || [];
+    document.querySelectorAll('#stagesStrip .stage').forEach(function(el, i){
+      el.classList.toggle('on', i === idx);
+      el.classList.toggle('done', i < idx);
+      el.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+    });
+    var blurb = document.getElementById('stageBlurb');
+    blurb.textContent = (stages[idx] && stages[idx].blurb) || '';
+  }
+
+  var ba = document.getElementById('ba');
+  var touched = false, dragging = false;
+  function setPos(p){
+    pos = Math.max(0, Math.min(100, p));
+    ba.style.setProperty('--pos', pos + '%');
+    ba.setAttribute('aria-valuenow', Math.round(pos));
+    updateStage();
+  }
+  function xToPct(clientX){
+    var r = ba.getBoundingClientRect();
+    return ((clientX - r.left) / r.width) * 100;
+  }
+  function markTouched(){ if(!touched){ touched = true; ba.classList.add('touched'); } }
+  function start(e){ dragging = true; markTouched(); move(e); }
+  function move(e){
+    if(!dragging) return;
+    var x = (e.touches ? e.touches[0].clientX : e.clientX);
+    setPos(xToPct(x));
+    if(e.cancelable) e.preventDefault();
+  }
+  function end(){ dragging = false; }
+
+  ba.addEventListener('mousedown', start);
+  window.addEventListener('mousemove', move, { passive: false });
+  window.addEventListener('mouseup', end);
+  ba.addEventListener('touchstart', start, { passive: false });
+  window.addEventListener('touchmove', move, { passive: false });
+  window.addEventListener('touchend', end);
+  ba.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft'){ setPos(pos - 4); e.preventDefault(); markTouched(); }
+    if(e.key === 'ArrowRight'){ setPos(pos + 4); e.preventDefault(); markTouched(); }
+    if(e.key === 'Home'){ setPos(100); e.preventDefault(); markTouched(); }
+    if(e.key === 'End'){ setPos(0); e.preventDefault(); markTouched(); }
+  });
+
+  /* stage pills jump the slider to the middle of that stage's band */
+  document.getElementById('stagesStrip').addEventListener('click', function(e){
+    var b = e.target.closest('[data-stage]');
+    if(!b) return;
+    markTouched();
+    var stages = CONTENT.repairStages || [];
+    var band = 100 / (stages.length || 1);
+    var i = +b.getAttribute('data-stage');
+    setPos(100 - (i * band + band / 2));
+  });
+
+  /* gentle auto-nudge on first view to signal it drags */
+  if(!reduce && 'IntersectionObserver' in window){
+    var ioNudge = new IntersectionObserver(function(en){
+      en.forEach(function(x){
+        if(x.isIntersecting && !touched){
+          var seq = [68, 32, 50], k = 0;
+          var t = setInterval(function(){
+            if(touched){ clearInterval(t); return; }
+            setPos(seq[k++]); if(k >= seq.length) clearInterval(t);
+          }, 520);
+          ioNudge.unobserve(ba);
+        }
+      });
+    }, { threshold: .5 });
+    ioNudge.observe(ba);
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      vehicle: document.getElementById('qVehicle').value.trim() || '(not given)',
+      damage: document.getElementById('qDamage').value.trim() || '(not described)',
+      paying: document.getElementById('qPay').value,
+      _subject: CONTENT.brand.name + ' — new estimate request from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get my estimate';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

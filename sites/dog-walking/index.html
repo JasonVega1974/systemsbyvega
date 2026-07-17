@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bluebird &amp; Biscuit Pet Care — Dog Walking &amp; Pet Sitting | Eagle, ID</title>
+<meta name="description" content="Dog walking, drop-in visits and overnight pet sitting in Eagle and the Treasure Valley. Solo walks and small matched pack walks, a free meet & greet first, and a photo report after every visit. Build your dog's week in twenty seconds." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Bluebird &amp; Biscuit Pet Care — Happy dogs, easy weeks." />
+<meta property="og:description" content="Solo walks, pack walks, drop-ins and overnight sitting around Eagle, ID. Pick your days, we handle the wiggles." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Varela+Round&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%233B9AE1'/%3E%3Cpath d='M18 38c2-9 9-14 17-14 5 0 8 2 10 5l7-3-4 7c1 8-5 15-14 15-4 0-7-1-9-3l-9 3 4-8c-1-1-2-1-2-2z' fill='%23FFFFFF'/%3E%3Ccircle cx='40' cy='30' r='2' fill='%2322364A'/%3E%3Ccircle cx='50' cy='49' r='4.5' fill='%23D9A05B'/%3E%3Ccircle cx='43' cy='53' r='2.6' fill='%23D9A05B'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Bluebird & Biscuit Pet Care",
+  "description": "Dog walking, drop-in visits and overnight pet sitting for Eagle and the Treasure Valley.",
+  "telephone": "+12085550312",
+  "email": "hello@bluebirdbiscuit.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Eagle", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --sky:#F7FAFD; --sky-soft:#FDFEFF; --panel:rgba(255,255,255,.86);
+    --blue:#3B9AE1; --blue-deep:#1F6FB4; --blue-bright:#5FB2EF; --blue-soft:rgba(59,154,225,.14);
+    --tan:#D9A05B; --tan-deep:#A9762F; --tan-soft:rgba(217,160,91,.20);
+    --grass:#6FBF4F; --grass-soft:rgba(111,191,79,.16);
+    --ink:#22364A; --muted:#5A6B7B; --hair:rgba(34,54,74,.13);
+    --card:rgba(255,255,255,.9); --card-brd:rgba(34,54,74,.10);
+    --shadow:0 22px 52px -24px rgba(31,111,180,.22);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--sky);color:var(--ink);font-family:'Varela Round',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--blue-deep);outline-offset:3px;border-radius:6px}
+  section{padding:76px 0}
+  h1,h2,h3{font-family:'Baloo 2',sans-serif;font-weight:700;letter-spacing:-.01em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-deep);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--tan);border-radius:2px}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(247,250,253,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(34,54,74,.04)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800;font-size:17px;color:var(--ink)}
+  .logo .mark{width:32px;height:32px;border-radius:12px;background:linear-gradient(150deg,var(--blue-bright),var(--blue-deep));display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark svg{width:17px;height:17px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:999px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:var(--blue-soft);color:var(--blue-deep)}
+  .nav a.cta{font-family:'Baloo 2';font-weight:700;font-size:13.5px;text-decoration:none;color:#fff;background:var(--blue-deep);padding:10px 19px;border-radius:999px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--blue);transform:translateY(-1px)}
+  @media(max-width:760px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:80px 0 88px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(9px 9px at 11% 20%,var(--tan-soft) 98%,transparent),
+      radial-gradient(13px 13px at 21% 74%,var(--blue-soft) 98%,transparent),
+      radial-gradient(7px 7px at 85% 22%,var(--grass-soft) 98%,transparent),
+      radial-gradient(11px 11px at 91% 64%,var(--tan-soft) 98%,transparent),
+      radial-gradient(6px 6px at 66% 10%,var(--blue-soft) 98%,transparent),
+      radial-gradient(720px 340px at 6% -10%,rgba(59,154,225,.10),transparent 68%),
+      radial-gradient(600px 320px at 98% 8%,rgba(217,160,91,.12),transparent 66%)}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.06;letter-spacing:-.015em;max-width:14ch;margin-top:20px}
+  .hero h1 .hl{color:var(--blue-deep)}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Baloo 2';font-weight:700;font-size:15px;text-decoration:none;color:#fff;background:var(--blue-deep);padding:14px 27px;border-radius:999px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--blue);transform:translateY(-2px)}
+  .btn-sec{font-family:'Baloo 2';font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--sky-soft);padding:14px 27px;border-radius:999px;transition:.18s}
+  .btn-sec:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+  .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:22px;padding:26px;box-shadow:var(--shadow);position:relative}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tan-deep);background:var(--tan-soft);border:1px solid rgba(217,160,91,.45);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  .hero-card .hc-line{font-family:'Baloo 2';font-weight:700;font-size:20px;line-height:1.42;color:var(--ink)}
+  .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  .hero-card .hc-bird{position:absolute;top:-20px;right:22px;width:44px;height:44px;border-radius:14px;background:linear-gradient(150deg,var(--blue-bright),var(--blue-deep));display:grid;place-items:center;color:#fff;box-shadow:0 10px 22px -8px rgba(31,111,180,.5)}
+  .hero-card .hc-bird svg{width:24px;height:24px}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1;margin-top:14px}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--sky-soft)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Baloo 2';font-weight:800;font-size:27px;color:var(--blue-deep)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+  .scard{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:24px;display:flex;flex-direction:column}
+  .scard .s-ico{width:44px;height:44px;border-radius:14px;background:var(--blue-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--blue-deep)}
+  .scard .s-ico svg{width:22px;height:22px}
+  .scard h3{font-size:17px}
+  .scard p{font-size:13.5px;color:var(--muted);margin-top:8px;flex:1}
+  .scard .s-price{margin-top:14px;font-family:'IBM Plex Mono';font-size:12px;font-weight:600;color:var(--tan-deep)}
+  .scard .s-price:empty{display:none}
+  @media(max-width:980px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
+
+  /* ---------- walk week builder ---------- */
+  .builder-wrap{display:grid;grid-template-columns:1.3fr .7fr;gap:28px;margin-top:32px;align-items:start}
+  .b-panel{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+  .b-step{font-family:'IBM Plex Mono';font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .b-step b{color:var(--blue-deep)}
+  .b-opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .b-opt{font-family:'Varela Round';font-size:13.5px;color:var(--ink);background:var(--sky-soft);border:1.5px solid var(--hair);border-radius:999px;padding:9px 15px;cursor:pointer;transition:.15s}
+  .b-opt:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+  .b-opt[aria-pressed="true"]{background:var(--blue-deep);border-color:var(--blue-deep);color:#fff}
+  .b-opt small{display:block;font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.02em;opacity:.75}
+  .week-scroll{overflow-x:auto;padding-bottom:6px}
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;min-width:540px}
+  .wday{display:flex;flex-direction:column;gap:6px}
+  .wday-t{font-family:'Baloo 2';font-weight:700;font-size:13px;color:var(--ink);background:var(--sky-soft);border:1.5px solid var(--hair);border-radius:12px;padding:12px 4px 10px;cursor:pointer;transition:.15s;text-align:center}
+  .wday-t small{display:block;font-family:'IBM Plex Mono';font-weight:400;font-size:9.5px;color:var(--muted);letter-spacing:.04em;margin-top:3px}
+  .wday-t:hover{border-color:var(--blue-deep)}
+  .wday-t[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-deep);color:var(--blue-deep)}
+  .wday-t[aria-pressed="true"] small{color:var(--blue-deep)}
+  .wday-time{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;color:var(--tan-deep);background:var(--tan-soft);border:1px solid rgba(217,160,91,.45);border-radius:9px;padding:6px 2px;cursor:pointer;transition:.12s;text-align:center}
+  .wday-time:hover{filter:brightness(.96)}
+  .wday-time[hidden]{display:none}
+  .b-price{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
+  .b-price .bp-label{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .b-price .bp-num{font-family:'Baloo 2';font-weight:800;font-size:44px;color:var(--blue-deep);line-height:1.05;margin-top:10px}
+  .b-price .bp-num span{font-size:17px;color:var(--muted);font-weight:700}
+  .b-price .bp-meta{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.6}
+  .b-price .bp-disc{display:inline-block;font-family:'IBM Plex Mono';font-size:11px;font-weight:600;color:#3d6e2a;background:var(--grass-soft);border:1px solid rgba(111,191,79,.4);border-radius:20px;padding:4px 11px;margin-top:12px}
+  .b-price .bp-disc:empty{display:none}
+  .b-price .bp-empty{font-size:14.5px;color:var(--muted)}
+  .b-price .bp-cta{margin-top:20px}
+  .b-note{margin-top:16px;font-size:13px;color:var(--muted);background:var(--tan-soft);border:1px solid rgba(217,160,91,.4);border-radius:12px;padding:11px 14px}
+  @media(max-width:900px){.builder-wrap{grid-template-columns:1fr}.b-price{position:static}}
+
+  /* ---------- how it works ---------- */
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:step}
+  .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:24px;counter-increment:step;position:relative}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Baloo 2';font-weight:800;font-size:38px;color:transparent;-webkit-text-stroke:1.6px var(--blue);display:block;margin-bottom:10px;opacity:.85}
+  .how-card h3{font-size:17px}
+  .how-card p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.how-grid{grid-template-columns:1fr}}
+
+  /* ---------- owner ---------- */
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:22px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:20px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--blue-deep);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6}
+  .tcard p:empty::before{content:"A tail-wag review is coming soon.";color:var(--muted);font-style:italic}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a dog's favorite human"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--blue-deep);background:var(--blue-soft);border:1px solid rgba(59,154,225,.3);padding:7px 13px;border-radius:20px}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Baloo 2';font-weight:700;font-size:16px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--blue-deep);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- booking form ---------- */
+  .book{background:var(--blue-deep);color:#fff;text-align:center}
+  .book .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
+  .book .eyebrow::before{background:var(--tan)}
+  .book h2{color:#fff;max-width:24ch;margin:12px auto 14px}
+  .book > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:11px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row select option{color:var(--ink)}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.16)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:var(--tan);color:#3a2a12;font-family:'Baloo 2';font-weight:700;font-size:15px;border:none;padding:15px;border-radius:999px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{filter:brightness(1.06)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
+  .qf-status.err{color:#FFD9C6;font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--ink);border-radius:20px;padding:32px;font-family:'Baloo 2';font-weight:700;font-size:17px;text-align:center}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
+  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--sky-soft);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Baloo 2';color:var(--ink)}
+  .footer__credit{opacity:.75}
+  .footer__credit a{color:var(--blue-deep);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--sky-soft);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(34,54,74,.1)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:999px;font-family:'Baloo 2';font-weight:700;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#fff;background:var(--blue-deep)}
+  .mobile-cta .text{color:var(--blue-deep);background:var(--blue-soft);border:1px solid rgba(59,154,225,.35)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h.01"/><path d="M3.4 18L12 9a5 5 0 0 1 8 4v1h2l-3 3H9l-2 2H3.4z"/><path d="M20 7l2-1-2-1-1-2-1 2 1 2z" transform="scale(.6) translate(12 2)"/></svg></span><span>Bluebird &amp; Biscuit</span><small>Pet Care</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#builder" class="tab">Build a Week</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a walk</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Dog walking &amp; pet sitting · Treasure Valley</div>
+      <h1 class="reveal">Happy dogs. <span class="hl">Easy weeks.</span></h1>
+      <p class="reveal">Midday walks, drop-in visits and overnight sitting — built around your dog's routine, not ours. Pick your days in the week builder below; we handle the wiggles, the weather and the squirrel diplomacy.</p>
+      <div class="hero-cta reveal">
+        <a href="#builder" class="btn-pri">Build your walk week</a>
+        <a href="#book" class="btn-sec">Book a meet &amp; greet</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-bird" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c2-6 7-9 12-7l4-2-2 4c1 5-3 9-8 9-2 0-3.5-.5-4.5-1.5L2 19z"/><circle cx="14.5" cy="9.5" r=".5" fill="currentColor"/></svg></span>
+      <span class="hc-badge">After every visit</span>
+      <p class="hc-line">4 tails wagged. 3 squirrels supervised. 0 puddles judged.</p>
+      <p class="hc-by">An actual afternoon report · photo + note, every time</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Services</div>
+      <h2>Four ways to a tired, happy dog.</h2>
+      <p class="stxt">Every service starts with a free meet &amp; greet, and every visit ends with a photo and a quick note about how it went.</p>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="builder" style="background:var(--sky-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The week builder</div>
+      <h2>Build your dog's week in twenty seconds.</h2>
+      <p class="stxt">Pick a service, a walk length and your days — the price does its own math. Tap a day's time chip to set morning, midday or afternoon.</p>
+    </div>
+    <div class="builder-wrap reveal">
+      <div class="b-panel">
+        <p class="b-step"><b>1.</b> Pick a service</p>
+        <div class="b-opts" id="svcOpts" role="group" aria-label="Service type"></div>
+        <p class="b-step"><b>2.</b> Walk length</p>
+        <div class="b-opts" id="lenOpts" role="group" aria-label="Walk length"></div>
+        <p class="b-step"><b>3.</b> Your days — tap to toggle, tap the time to change it</p>
+        <div class="week-scroll">
+          <div class="week-grid" id="weekGrid" role="group" aria-label="Days of the week"></div>
+        </div>
+        <p class="b-note" id="builderNote"></p>
+      </div>
+      <div class="b-price" aria-live="polite">
+        <p class="bp-label">Your plan</p>
+        <div id="priceOut"><p class="bp-empty">Pick at least one day to see your plan.</p></div>
+        <p class="bp-cta"><a class="btn-pri" href="#book" id="builderCta">Book this plan</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Three steps. Zero awkwardness.</h2>
+    </div>
+    <div class="how-grid reveal" id="howGrid"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--sky-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Bluebird &amp; Biscuit Pet Care</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">From the pack</div>
+    <h2>Tail-wag reviews.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="area" style="background:var(--sky-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Trotting all over the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Get started</div>
+    <h2>Let's meet your dog.</h2>
+    <p>Tell us who's wagging — we'll text you to set up your free meet &amp; greet.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qDog">Your dog (name &amp; breed)</label>
+          <input type="text" id="qDog" name="dog" placeholder="Maple, mini goldendoodle" />
+        </div>
+        <div class="qf-row">
+          <label for="qSvc">What do you need?</label>
+          <select id="qSvc" name="service"></select>
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Gate codes, quirks, the squirrel situation…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request my meet &amp; greet</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550312" data-phone-link>Call or text (208) 555-0312</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>You're in! We'll text you to set up your free meet &amp; greet — bring the wiggles.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Bluebird &amp; Biscuit Pet Care</b><br />
+      Dog walking &amp; pet sitting · <span data-city>Eagle, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550312" data-phone>(208) 555-0312</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550312"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550312?body=Hi%20Bluebird%20%26%20Biscuit%2C%20can%20you%20walk%20my%20dog%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     Builder rates are STRINGS holding whole dollars
+     ("18") so they round-trip through the admin's text
+     inputs; the page Number()s them before doing math.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Bluebird & Biscuit Pet Care",
+      "tagline": "Happy dogs, easy weeks.",
+      "phone": "(208) 555-0312",
+      "email": "hello@bluebirdbiscuit.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Eagle, ID"
+    },
+    "stats": [
+      { "num": "4 max", "label": "Dogs per pack walk — small groups, matched by vibe" },
+      { "num": "AM–PM", "label": "Morning, midday and afternoon slots, seven days a week" },
+      { "num": "Free", "label": "Meet & greet before any first walk — always" }
+    ],
+    "services": [
+      { "title": "Solo walks", "desc": "One dog (or one household), one walker, zero distractions. For shy pups, seniors, and dogs who like the trail to themselves.", "price": "from $18 / walk" },
+      { "title": "Pack walks", "desc": "Small matched groups of up to four. Your dog gets friends; you get a tired dog.", "price": "from $14 / walk" },
+      { "title": "Drop-in visits", "desc": "A potty break, fresh water, dinner served, and fifteen minutes of undivided attention while you're stuck at work.", "price": "from $16 / visit" },
+      { "title": "Overnight sitting", "desc": "We stay at your place so the routine stays theirs — same bed, same bowl, same 6 a.m. staring contest.", "price": "from $85 / night" }
+    ],
+    "walkServices": [
+      { "label": "Solo walk", "desc": "Just your dog + their walker", "rate20": "18", "rate30": "22", "rate45": "28" },
+      { "label": "Pack walk", "desc": "A small, matched group — max four", "rate20": "14", "rate30": "17", "rate45": "22" },
+      { "label": "Drop-in visit", "desc": "Food, water, play, potty break", "rate20": "16", "rate30": "20", "rate45": "26" }
+    ],
+    "walkSettings": {
+      "threeDayPct": "5",
+      "fiveDayPct": "10",
+      "note": "Demo pricing — set your real rates in the admin. Every plan starts with a free meet & greet, and you can pause or change days with a text."
+    },
+    "howItWorks": [
+      { "title": "Meet & greet", "desc": "We come to you. Your dog checks us out, you tell us the quirks — gate codes, leash rules, the squirrel situation. Free, no strings." },
+      { "title": "Trial walk", "desc": "One walk, full report: a photo, a note, and how they did — so you're never guessing how it's going." },
+      { "title": "Your routine", "desc": "Pick your days in the week builder and we show up like clockwork. Change or pause anytime with a text." }
+    ],
+    "serviceArea": {
+      "region": "Treasure Valley, Idaho",
+      "short": "Treasure Valley",
+      "cities": ["Eagle", "Star", "Meridian", "Garden City", "West Boise"]
+    },
+    "owner": {
+      "name": "Callie Munro",
+      "heading": "The human behind the leash",
+      "bio": "Callie Munro was the kid who kept a mental map of every dog on the block. After a decade of desk jobs and lunch breaks spent at the dog park, she finally did the obvious thing and made the dogs the job. Bluebird & Biscuit runs on routine — same walker, same route, same happy dance at the door — because dogs don't actually want variety. They want their person, their trail, and a treat at the end.",
+      "photo": ""
+    },
+    "testimonials": [
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" }
+    ],
+    "faq": [
+      { "q": "Do you walk in bad weather?", "a": "Rain, shine or Idaho sideways-snow — yes. In extreme heat or ice we shorten the route and swap in indoor play, and the visit note always says exactly what we did." },
+      { "q": "How do you get into my house?", "a": "Whatever you're comfortable with — a lockbox, a garage code or a smart lock. Access details live in your dog's file and nowhere else." },
+      { "q": "What about vaccinations?", "a": "You know your dog's health best. For pack walks we ask that dogs stay current on whatever their vet recommends, and that you flag anything contagious before a visit. Solo walks and drop-ins are more flexible — let's talk at the meet & greet." },
+      { "q": "How do you match pack walks?", "a": "Slowly and on purpose. Size, energy and walking style all matter, and every new dog starts with a solo walk or two so we know who they'll love trotting next to. Max four dogs, always the same crew." },
+      { "q": "Can I change my days?", "a": "Yep — a text is enough. Pause for vacation, add a Friday, drop to twice a week. Plans bend around real life; that's the point of the week builder." },
+      { "q": "Will I know how it went?", "a": "Every visit ends with a photo and a quick note — where we went, what they did, anything worth flagging. You'll probably know about the squirrel before you're home." }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+
+  var DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var DAY_FULL = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  var TIMES = ["Morning","Midday","Afternoon"];
+  var LENGTHS = ["20","30","45"];
+  var WEEKS_PER_MONTH = 4.3;
+
+  /* Builder state survives re-renders (admin edits arrive via content.json). */
+  var B = { svc: 0, len: "30", days: [false,false,false,false,false,false,false], times: [1,1,1,1,1,1,1] };
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', can you walk my dog?'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // services
+    var icos = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c2-6 7-9 12-7l4-2-2 4c1 5-3 9-8 9-2 0-3.5-.5-4.5-1.5L2 19z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5h6c3 0 5 2 5 5"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9v11h14V9"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>'
+    ];
+    document.getElementById('svcGrid').innerHTML = c.services.map(function(s, i){
+      return '<div class="scard"><span class="s-ico">' + icos[i % icos.length] + '</span><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p><div class="s-price">' + esc(s.price) + '</div></div>';
+    }).join('');
+
+    // service select in booking form
+    var svcSel = document.getElementById('qSvc');
+    svcSel.innerHTML = c.services.map(function(s){
+      return '<option value="' + esc(s.title) + '">' + esc(s.title) + '</option>';
+    }).join('') + '<option value="Not sure yet">Not sure yet</option>';
+
+    // walk week builder
+    renderBuilder(c);
+    document.getElementById('builderNote').textContent = (c.walkSettings || {}).note || '';
+
+    // how it works
+    document.getElementById('howGrid').innerHTML = c.howItWorks.map(function(st){
+      return '<div class="how-card"><h3>' + esc(st.title) + '</h3><p>' + esc(st.desc) + '</p></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    revealScan(document.body);
+  }
+
+  /* ---------- walk week builder ---------- */
+  function builderSvcs(c){ return (c.walkServices && c.walkServices.length) ? c.walkServices : []; }
+
+  function renderBuilder(c){
+    var svcs = builderSvcs(c);
+    if(B.svc >= svcs.length) B.svc = 0;               // stale-index guard after admin edits
+    if(LENGTHS.indexOf(B.len) < 0) B.len = LENGTHS[1];
+
+    document.getElementById('svcOpts').innerHTML = svcs.map(function(s, i){
+      return '<button type="button" class="b-opt" data-bsvc="' + i + '" aria-pressed="' + (i === B.svc) + '">' +
+        esc(s.label) + '<small>' + esc(s.desc) + '</small></button>';
+    }).join('');
+
+    var cur = svcs[B.svc];
+    document.getElementById('lenOpts').innerHTML = LENGTHS.map(function(L){
+      var r = cur ? Number(cur['rate' + L]) || 0 : 0;
+      return '<button type="button" class="b-opt" data-blen="' + L + '" aria-pressed="' + (L === B.len) + '">' +
+        L + ' min<small>$' + r + ' / visit</small></button>';
+    }).join('');
+
+    document.getElementById('weekGrid').innerHTML = DAYS.map(function(d, i){
+      var on = B.days[i];
+      return '<div class="wday">' +
+        '<button type="button" class="wday-t" data-bday="' + i + '" aria-pressed="' + on + '" aria-label="' + DAY_FULL[i] + (on ? ' — selected' : '') + '">' +
+          d + '<small>' + (on ? esc(B.len) + ' min' : '&nbsp;') + '</small></button>' +
+        '<button type="button" class="wday-time" data-btime="' + i + '"' + (on ? '' : ' hidden') +
+          ' aria-label="' + DAY_FULL[i] + ' time of day: ' + TIMES[B.times[i]] + ' — activate to change">' + esc(TIMES[B.times[i]]) + '</button>' +
+        '</div>';
+    }).join('');
+
+    renderPrice(c);
+
+    var wrap = document.getElementById('builder');
+    if(!wrap._wired){
+      wrap._wired = true;
+      wrap.addEventListener('click', function(e){
+        var b = e.target.closest('[data-bsvc],[data-blen],[data-bday],[data-btime]');
+        if(!b) return;
+        if(b.hasAttribute('data-bsvc')){ B.svc = +b.getAttribute('data-bsvc'); }
+        else if(b.hasAttribute('data-blen')){ B.len = b.getAttribute('data-blen'); }
+        else if(b.hasAttribute('data-bday')){ var i = +b.getAttribute('data-bday'); B.days[i] = !B.days[i]; }
+        else if(b.hasAttribute('data-btime')){ var j = +b.getAttribute('data-btime'); B.times[j] = (B.times[j] + 1) % TIMES.length; }
+        renderBuilder(CONTENT);
+      });
+    }
+  }
+
+  function planMath(c){
+    var svcs = builderSvcs(c);
+    var svc = svcs[B.svc];
+    if(!svc) return null;
+    var n = B.days.filter(Boolean).length;
+    var rate = Number(svc['rate' + B.len]) || 0;
+    var ws = c.walkSettings || {};
+    var pct = n >= 5 ? (Number(ws.fiveDayPct) || 0) : n >= 3 ? (Number(ws.threeDayPct) || 0) : 0;
+    var monthly = Math.round(rate * n * WEEKS_PER_MONTH * (1 - pct / 100));
+    return { svc: svc, n: n, rate: rate, pct: pct, monthly: monthly };
+  }
+
+  function renderPrice(c){
+    var out = document.getElementById('priceOut');
+    var m = planMath(c);
+    if(!m || !m.n){
+      out.innerHTML = '<p class="bp-empty">Pick at least one day to see your plan.</p>';
+      return;
+    }
+    var discChip = m.pct ? '<span class="bp-disc">' + (m.n >= 5 ? '5-day pack' : '3+ days') + ' — ' + m.pct + '% off</span>' : '';
+    out.innerHTML =
+      '<div class="bp-num">$' + m.monthly + '<span> / month</span></div>' +
+      '<p class="bp-meta">' + m.n + (m.n === 1 ? ' visit' : ' visits') + ' a week · ' + esc(m.svc.label) + ' · ' +
+        esc(B.len) + ' min · $' + m.rate + ' per visit</p>' + discChip;
+  }
+
+  function builderSummary(c){
+    var m = planMath(c);
+    if(!m || !m.n) return '';
+    var days = DAYS.filter(function(_, i){ return B.days[i]; }).map(function(d, k){
+      var idx = DAYS.indexOf(d);
+      return d + ' (' + TIMES[B.times[idx]].toLowerCase() + ')';
+    }).join(', ');
+    return 'From the week builder: ' + m.svc.label + ' · ' + B.len + ' min · ' + days + ' · about $' + m.monthly + '/mo';
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- builder -> booking form handoff ---------- */
+  document.getElementById('builderCta').addEventListener('click', function(){
+    var m = planMath(CONTENT);
+    if(!m || !m.n) return; // still scrolls to the form via the anchor
+    var sel = document.getElementById('qSvc');
+    var firstWord = (m.svc.label || '').split(/\s+/)[0].toLowerCase();
+    var matched = false;
+    Array.prototype.forEach.call(sel.options, function(o){
+      if(!matched && o.value.toLowerCase().indexOf(firstWord) === 0){ sel.value = o.value; matched = true; }
+    });
+    if(!matched) sel.value = 'Not sure yet';
+    var notes = document.getElementById('qNotes');
+    var summary = builderSummary(CONTENT);
+    if(summary && notes.value.indexOf('From the week builder:') < 0){
+      notes.value = summary + (notes.value ? '\n' + notes.value : '');
+    }
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      dog: document.getElementById('qDog').value.trim() || '(not given)',
+      service: document.getElementById('qSvc').value,
+      notes: document.getElementById('qNotes').value.trim(),
+      _subject: CONTENT.brand.name + ' — new meet & greet request from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request my meet & greet';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{
+  "brand": {
+    "name": "Bluebird & Biscuit Pet Care",
+    "tagline": "Happy dogs, easy weeks.",
+    "phone": "(208) 555-0312",
+    "email": "hello@bluebirdbiscuit.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Eagle, ID"
+  },
+  "stats": [
+    {
+      "num": "4 max",
+      "label": "Dogs per pack walk — small groups, matched by vibe"
+    },
+    {
+      "num": "AM–PM",
+      "label": "Morning, midday and afternoon slots, seven days a week"
+    },
+    {
+      "num": "Free",
+      "label": "Meet & greet before any first walk — always"
+    }
+  ],
+  "services": [
+    {
+      "title": "Solo walks",
+      "desc": "One dog (or one household), one walker, zero distractions. For shy pups, seniors, and dogs who like the trail to themselves.",
+      "price": "from $18 / walk"
+    },
+    {
+      "title": "Pack walks",
+      "desc": "Small matched groups of up to four. Your dog gets friends; you get a tired dog.",
+      "price": "from $14 / walk"
+    },
+    {
+      "title": "Drop-in visits",
+      "desc": "A potty break, fresh water, dinner served, and fifteen minutes of undivided attention while you're stuck at work.",
+      "price": "from $16 / visit"
+    },
+    {
+      "title": "Overnight sitting",
+      "desc": "We stay at your place so the routine stays theirs — same bed, same bowl, same 6 a.m. staring contest.",
+      "price": "from $85 / night"
+    }
+  ],
+  "walkServices": [
+    {
+      "label": "Solo walk",
+      "desc": "Just your dog + their walker",
+      "rate20": "18",
+      "rate30": "22",
+      "rate45": "28"
+    },
+    {
+      "label": "Pack walk",
+      "desc": "A small, matched group — max four",
+      "rate20": "14",
+      "rate30": "17",
+      "rate45": "22"
+    },
+    {
+      "label": "Drop-in visit",
+      "desc": "Food, water, play, potty break",
+      "rate20": "16",
+      "rate30": "20",
+      "rate45": "26"
+    }
+  ],
+  "walkSettings": {
+    "threeDayPct": "5",
+    "fiveDayPct": "10",
+    "note": "Demo pricing — set your real rates in the admin. Every plan starts with a free meet & greet, and you can pause or change days with a text."
+  },
+  "howItWorks": [
+    {
+      "title": "Meet & greet",
+      "desc": "We come to you. Your dog checks us out, you tell us the quirks — gate codes, leash rules, the squirrel situation. Free, no strings."
+    },
+    {
+      "title": "Trial walk",
+      "desc": "One walk, full report: a photo, a note, and how they did — so you're never guessing how it's going."
+    },
+    {
+      "title": "Your routine",
+      "desc": "Pick your days in the week builder and we show up like clockwork. Change or pause anytime with a text."
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Eagle",
+      "Star",
+      "Meridian",
+      "Garden City",
+      "West Boise"
+    ]
+  },
+  "owner": {
+    "name": "Callie Munro",
+    "heading": "The human behind the leash",
+    "bio": "Callie Munro was the kid who kept a mental map of every dog on the block. After a decade of desk jobs and lunch breaks spent at the dog park, she finally did the obvious thing and made the dogs the job. Bluebird & Biscuit runs on routine — same walker, same route, same happy dance at the door — because dogs don't actually want variety. They want their person, their trail, and a treat at the end.",
+    "photo": ""
+  },
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do you walk in bad weather?",
+      "a": "Rain, shine or Idaho sideways-snow — yes. In extreme heat or ice we shorten the route and swap in indoor play, and the visit note always says exactly what we did."
+    },
+    {
+      "q": "How do you get into my house?",
+      "a": "Whatever you're comfortable with — a lockbox, a garage code or a smart lock. Access details live in your dog's file and nowhere else."
+    },
+    {
+      "q": "What about vaccinations?",
+      "a": "You know your dog's health best. For pack walks we ask that dogs stay current on whatever their vet recommends, and that you flag anything contagious before a visit. Solo walks and drop-ins are more flexible — let's talk at the meet & greet."
+    },
+    {
+      "q": "How do you match pack walks?",
+      "a": "Slowly and on purpose. Size, energy and walking style all matter, and every new dog starts with a solo walk or two so we know who they'll love trotting next to. Max four dogs, always the same crew."
+    },
+    {
+      "q": "Can I change my days?",
+      "a": "Yep — a text is enough. Pause for vacation, add a Friday, drop to twice a week. Plans bend around real life; that's the point of the week builder."
+    },
+    {
+      "q": "Will I know how it went?",
+      "a": "Every visit ends with a photo and a quick note — where we went, what they did, anything worth flagging. You'll probably know about the squirrel before you're home."
+    }
+  ],
+  "social": []
+}

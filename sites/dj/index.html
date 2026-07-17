@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>DJ Site Kit — Nova · Pulse · Bloom | Demo</title>
+<meta name="description" content="One DJ site, three ready-to-go themes. Demo — this site kit is for sale." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--night:#07070b;--panel:#101018;--line:#23233a;--text:#F2F4FF;--muted:#9aa0b8;
+    --nova:#3D8BFF;--pulse:#2EE58A;--bloom:#FF4DA6}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--night);color:var(--text);font-family:'Montserrat',system-ui,sans-serif;min-height:100vh}
+  .wrap{max-width:1020px;margin:0 auto;padding:64px 20px 140px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(30px,5.4vw,52px);font-weight:900;letter-spacing:-.02em;line-height:1.05;margin:14px 0 12px}
+  h1 .nv{color:var(--nova)} h1 .pl{color:var(--pulse)} h1 .bl{color:var(--bloom)}
+  .sub{color:var(--muted);font-size:16px;line-height:1.6;max-width:640px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+  @media(max-width:820px){.cards{grid-template-columns:1fr}}
+  .card{display:block;text-decoration:none;color:var(--text);background:var(--panel);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;transition:transform .16s,border-color .16s}
+  .card:hover{transform:translateY(-4px)}
+  .card:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+  .swatch{height:150px;position:relative;overflow:hidden}
+  .swatch::after{content:"";position:absolute;inset:auto -10% -55% -10%;height:90%;border-radius:50%;filter:blur(2px);opacity:.55}
+  .card.nova .swatch{background:linear-gradient(135deg,#0a1428 0%,#12244d 55%,#3D8BFF 160%)}
+  .card.nova .swatch::after{background:radial-gradient(closest-side,#9CC7FF,transparent 70%)}
+  .card.nova:hover{border-color:var(--nova)}
+  .card.pulse .swatch{background:linear-gradient(135deg,#07130d 0%,#0e2b1c 55%,#2EE58A 160%)}
+  .card.pulse .swatch::after{background:radial-gradient(closest-side,#A9FFCF,transparent 70%)}
+  .card.pulse:hover{border-color:var(--pulse)}
+  .card.bloom .swatch{background:linear-gradient(135deg,#170812 0%,#3a0f28 55%,#FF4DA6 160%)}
+  .card.bloom .swatch::after{background:radial-gradient(closest-side,#FFA9D4,transparent 70%)}
+  .card.bloom:hover{border-color:var(--bloom)}
+  .bars{position:absolute;left:18px;bottom:14px;display:flex;gap:5px;align-items:flex-end;height:44px}
+  .bars i{width:6px;border-radius:3px;background:rgba(255,255,255,.85)}
+  .bars i:nth-child(1){height:40%}.bars i:nth-child(2){height:85%}.bars i:nth-child(3){height:55%}
+  .bars i:nth-child(4){height:100%}.bars i:nth-child(5){height:30%}.bars i:nth-child(6){height:70%}
+  .card-body{padding:18px 20px 22px}
+  .card-body h2{font-size:20px;font-weight:800;letter-spacing:-.01em}
+  .theme-tag{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+  .card-body p{color:var(--muted);font-size:13.5px;line-height:1.55;margin:8px 0 14px}
+  .go{font-weight:800;font-size:14px}
+  .card.nova .go{color:var(--nova)} .card.pulse .go{color:var(--pulse)} .card.bloom .go{color:var(--bloom)}
+  .note{margin-top:40px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    color:var(--muted);font-size:13.5px;line-height:1.65;max-width:720px}
+  .note b{color:var(--text)}
+  .disclosure{margin-top:26px;color:#6d7390;font-size:12px;line-height:1.7;max-width:720px}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<main class="wrap">
+  <p class="eyebrow">DJ Site Kit · Demo</p>
+  <h1>One DJ site. Three ready-to-go themes:<br><span class="nv">Nova</span> · <span class="pl">Pulse</span> · <span class="bl">Bloom</span>.</h1>
+  <p class="sub">The same fully-built performer site — hero visualizer, releases, show calendar, video library, merch rack, booking form, and a live owner admin panel — in three complete color identities. Open each one and pick your favorite.</p>
+
+  <div class="cards">
+    <a class="card nova" href="./blue/">
+      <div class="swatch" aria-hidden="true"><span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="card-body">
+        <span class="theme-tag">Theme 01 · Azure</span>
+        <h2>DJ Nova</h2>
+        <p>Cool-headed and cinematic — deep-night blues with an icy electric edge. Reads "headliner at a rooftop set."</p>
+        <span class="go">View Nova →</span>
+      </div>
+    </a>
+    <a class="card pulse" href="./green/">
+      <div class="swatch" aria-hidden="true"><span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="card-body">
+        <span class="theme-tag">Theme 02 · Neon</span>
+        <h2>DJ Pulse</h2>
+        <p>High-energy neon green on black — festival-lineup energy with a technical, drum-and-bass attitude.</p>
+        <span class="go">View Pulse →</span>
+      </div>
+    </a>
+    <a class="card bloom" href="./pink/">
+      <div class="swatch" aria-hidden="true"><span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="card-body">
+        <span class="theme-tag">Theme 03 · Hot Pink</span>
+        <h2>DJ Bloom</h2>
+        <p>Bold and playful — hot pink with violet undertones. Club-pop personality that owns every flyer it's on.</p>
+        <span class="go">View Bloom →</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="note">
+    <b>All three themes are included in the package.</b> You pick one at setup — your name, colors, links, shows,
+    and content go in, and the site ships with an owner admin panel so you can update everything yourself afterward.
+  </div>
+
+  <p class="disclosure">
+    Demo notice: DJ Nova, DJ Pulse, and DJ Bloom are fictional demo personas created to showcase this website
+    template — they are not real artists, and no affiliation with any real performer is implied. All stats, shows,
+    releases, and testimonial-style content shown inside the demos is placeholder content. This template is offered
+    for sale by Systems by Vega; when purchased, it is fully white-labeled with the buyer's own identity and content.
+  </p>
+</main>
+</body>
+</html>

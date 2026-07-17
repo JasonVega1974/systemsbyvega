@@ -1,0 +1,88 @@
+{
+  "brand": {
+    "name": "Osprey Moving Co.",
+    "tagline": "Local moves, zero chaos.",
+    "phone": "(208) 555-0341",
+    "email": "hello@ospreymoving.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Garden City, ID"
+  },
+  "stats": [
+    { "num": "7:58 am", "label": "When your 8 o'clock crew actually pulls up" },
+    { "num": "0", "label": "Surprise line items on the final bill" },
+    { "num": "1 day", "label": "Door to door, for most local moves" }
+  ],
+  "services": [
+    { "title": "Full-service local moves", "desc": "We bring the truck, the pads, the dollies and the crew. You point at things; they end up in the right room across town." },
+    { "title": "Loading & unloading only", "desc": "Renting your own truck or loading a storage container? A crew meets you on either end and does the heavy part right." },
+    { "title": "In-house moves", "desc": "New flooring, a nursery swap, a piano that needs to be downstairs — we move furniture within your home, padded and unhurried." },
+    { "title": "Packing add-on", "desc": "A packing crew the day before: boxes, paper and wrap included, kitchens and closets boxed and labeled so moving day starts at zero." }
+  ],
+  "loadItems": [
+    { "id": "bedroom", "label": "Bedroom", "group": "Rooms", "vol": "175", "heavy": false, "icon": "bed" },
+    { "id": "living", "label": "Living room", "group": "Rooms", "vol": "210", "heavy": false, "icon": "sofa" },
+    { "id": "kitchen", "label": "Kitchen", "group": "Rooms", "vol": "95", "heavy": false, "icon": "kitchen" },
+    { "id": "dining", "label": "Dining room", "group": "Rooms", "vol": "110", "heavy": false, "icon": "table" },
+    { "id": "office", "label": "Home office", "group": "Rooms", "vol": "85", "heavy": false, "icon": "desk" },
+    { "id": "garage", "label": "Garage & shed", "group": "Rooms", "vol": "160", "heavy": false, "icon": "garage" },
+    { "id": "boxes", "label": "Boxes ×10", "group": "Rooms", "vol": "35", "heavy": false, "icon": "box" },
+    { "id": "piano", "label": "Upright piano", "group": "Big & bulky", "vol": "70", "heavy": true, "icon": "piano" },
+    { "id": "safe", "label": "Gun safe", "group": "Big & bulky", "vol": "30", "heavy": true, "icon": "safe" },
+    { "id": "fridge", "label": "Fridge / freezer", "group": "Big & bulky", "vol": "60", "heavy": true, "icon": "fridge" },
+    { "id": "laundry", "label": "Washer & dryer", "group": "Big & bulky", "vol": "65", "heavy": true, "icon": "washer" },
+    { "id": "patio", "label": "Patio set", "group": "Big & bulky", "vol": "90", "heavy": false, "icon": "patio" },
+    { "id": "gym", "label": "Treadmill / gym gear", "group": "Big & bulky", "vol": "45", "heavy": true, "icon": "gym" }
+  ],
+  "crewTiers": [
+    { "maxVol": "450", "crew": "2", "label": "2 movers + truck", "rate": "129", "fit": "Studios, apartments, small two-beds" },
+    { "maxVol": "1050", "crew": "3", "label": "3 movers + truck", "rate": "179", "fit": "Most three-bed homes" },
+    { "maxVol": "999999", "crew": "4", "label": "4 movers + truck", "rate": "229", "fit": "Big houses, stairs everywhere, short timelines" }
+  ],
+  "trucks": [
+    { "maxVol": "250", "label": "Cargo van" },
+    { "maxVol": "700", "label": "16 ft box truck" },
+    { "maxVol": "1400", "label": "26 ft box truck" },
+    { "maxVol": "999999", "label": "Two trucks" }
+  ],
+  "loadSettings": {
+    "cuFtPerMoverHour": "110",
+    "baseHours": "1",
+    "heavyExtraHours": "0.5",
+    "rangePad": "1.35",
+    "minHours": "2"
+  },
+  "loadNote": "These are honest ballparks, not quotes — stairs, long carries and how tightly the boxes are packed all move the number. The walkthrough pins it down.",
+  "process": [
+    { "title": "The walkthrough", "desc": "Fifteen minutes, in person or over video. We see what's moving, flag the heavy stuff, and give you a number you can hold us to." },
+    { "title": "Protect first", "desc": "Floor runners down, door frames and stair rails padded before the first box moves. Your house gets wrapped, not just your furniture." },
+    { "title": "The load plan", "desc": "Heavy low, fragile last-on-first-off, every strap where the crew lead calls it. A tight load is a safe load." },
+    { "title": "Set down & settle", "desc": "Beds rebuilt, sofa where you want it, boxes to their labeled rooms. We're not done until you've walked the empty truck." }
+  ],
+  "billableNote": "The clock starts when the truck pulls up and stops when you tell us we're done. Travel inside the valley is built into the rate — you don't pay us to drive to you.",
+  "pricingNote": "Rates are straight hourly — no fuel surcharges, no stair fees, no heavy-item ambush on the final bill. Pianos and safes just need a heads-up at the walkthrough so the right rigging is on the truck.",
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Garden City", "Boise", "Meridian", "Eagle", "Nampa", "Star"]
+  },
+  "owner": {
+    "name": "Boone Latimer",
+    "heading": "The rule from the loading dock",
+    "bio": "Boone Latimer spent six summers loading produce trucks in the warehouse district, where a sloppy pallet meant somebody ate the loss. He started Osprey Moving Co. with one truck and the rule he learned on the dock: load it like it's yours, set it down like it's your grandmother's. Most of the crew came off those same docks — people who treat a tight load as a point of pride, not a chore.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "Do I have to empty every drawer?", "a": "Light, soft stuff — clothes, linens — can usually stay in dressers; we wrap and move the whole piece. Anything that rattles, leaks or breaks comes out. When in doubt, ask at the walkthrough." },
+    { "q": "Do you do long-distance moves?", "a": "No — we stay local on purpose. If you're headed beyond the valley, we'll gladly load your rental truck or container and point you to a long-haul carrier for the road part. We'd rather be great inside the valley than mediocre across three states." },
+    { "q": "Can you move my piano?", "a": "Uprights, yes — with the board, the straps and enough hands, planned at the walkthrough. Grands and player pianos want a specialty rig, and we'll say so honestly instead of improvising with your instrument." },
+    { "q": "What won't you move?", "a": "Propane tanks, gas cans with gas still in them, open liquids, and anything alive except your houseplants — those ride in your car, where the temperature is kinder. The crew lead flags anything else at the walkthrough, not on moving day." },
+    { "q": "What if something gets scuffed?", "a": "Tell the crew lead before the truck leaves and we make it right — that's the whole policy. Pieces you'd hate to lose get named at the walkthrough, wrapped first, and carried by the lead personally." },
+    { "q": "How far ahead should I book?", "a": "Two to three weeks for month-end and summer weekends; mid-month weekdays are often days away. In a genuine pinch, call — a small crew can sometimes slot a small move inside the week." }
+  ],
+  "social": []
+}

@@ -1,0 +1,60 @@
+{
+  "artist": {
+    "name": "DJ Nova",
+    "role": "DJ & Producer",
+    "location": "Your City",
+    "tagline": "High-energy electronic music with heart — built for the dance floor.",
+    "about": "This is demo copy — open the admin panel's Profile tab and make it yours. DJ Nova is a DJ and producer bringing high-energy sets and melodic, feel-good productions to every stage.\n\nFrom intimate club nights to festival mainstages, every set is built to connect — driving rhythms, soaring melodies, and moments the dance floor remembers.\n\nEvery word on this site (plus photos, releases, shows, and links) is editable from the built-in admin panel — no code required.",
+    "genres": ["Progressive House", "Melodic Techno", "Big Room", "Bass House", "Trance", "Festival EDM"]
+  },
+  "links": {
+    "spotifyArtistUrl": "",
+    "soundcloudUrl": "",
+    "bandsintownUrl": "",
+    "merchUrl": ""
+  },
+  "youtube": {
+    "channelUrl": "",
+    "channelId": "",
+    "apiKey": ""
+  },
+  "stats": [
+    { "num": "12K", "lab": "Monthly Listeners", "sub": "across platforms" },
+    { "num": "25K", "lab": "Social Followers", "sub": "and climbing" },
+    { "num": "40+", "lab": "Tracks Released", "sub": "original productions" },
+    { "num": "30+", "lab": "Shows Played", "sub": "clubs & festivals" }
+  ],
+  "heroMini": [
+    { "b": "40+", "s": "Original Tracks" },
+    { "b": "30+", "s": "Live Shows" },
+    { "b": "100%", "s": "Crowd Energy" }
+  ],
+  "releases": [
+    { "t": "Afterglow", "y": "2026", "c1": "#3D8BFF", "c2": "#FF9A3C", "url": "#" },
+    { "t": "Midnight Run", "y": "2026", "c1": "#57E7FF", "c2": "#1B3A8F", "url": "#" },
+    { "t": "Waveform", "y": "2026", "c1": "#FF9A3C", "c2": "#0A1433", "url": "#" },
+    { "t": "Gravity", "y": "2025", "c1": "#9CC7FF", "c2": "#FF9A3C", "url": "#" },
+    { "t": "Neon Skyline", "y": "2025", "c1": "#1B3A8F", "c2": "#3D8BFF", "url": "#" },
+    { "t": "Pulse Check", "y": "2025", "c1": "#3D8BFF", "c2": "#57E7FF", "url": "#" },
+    { "t": "Daybreak", "y": "2024", "c1": "#9CC7FF", "c2": "#3D8BFF", "url": "#" },
+    { "t": "First Light", "y": "EP", "c1": "#57E7FF", "c2": "#FF9A3C", "url": "#" }
+  ],
+  "shows": [
+    { "when": "Jun 2026", "t": "Summer Festival Mainstage", "p": "Demo show — replace with your real dates in the admin panel", "tag": "Festival", "up": true },
+    { "when": "2025", "t": "Warehouse Club Night", "p": "Headline set · demo entry", "tag": "Club" },
+    { "when": "2025", "t": "Rooftop Sessions", "p": "Sunset open-to-close set · demo entry", "tag": "Live" },
+    { "when": "2024", "t": "First Festival Booking", "p": "Where it all started · demo entry", "tag": "Festival" }
+  ],
+  "videos": [],
+  "merch": [],
+  "photos": [],
+  "portraitUrl": "",
+  "social": [
+    { "n": "Spotify", "url": "#" },
+    { "n": "SoundCloud", "url": "#" },
+    { "n": "YouTube", "url": "#" },
+    { "n": "Instagram", "url": "#" },
+    { "n": "TikTok", "url": "#" }
+  ],
+  "settings": { "showBooking": true }
+}

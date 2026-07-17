@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Swiftwater Courier Co. — Same-Day Delivery | Treasure Valley, ID</title>
+<meta name="description" content="Same-day and scheduled courier service across the Treasure Valley — documents, parcels and small freight. Zone-to-zone pricing you can see up front, a text at pickup and a photo at the door." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Swiftwater Courier Co. — Same day. Same valley." />
+<meta property="og:description" content="Price a run in ten seconds with the zone-to-zone quoter. Documents, parcels and small freight, moved across the valley today." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B0E14'/%3E%3Cpath d='M12 34h22l-6-10h8l12 14-12 14h-8l6-10H12z' fill='%23C8F31D'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Swiftwater Courier Co.",
+  "description": "Same-day and scheduled courier service — documents, parcels and small freight.",
+  "telephone": "+12085550329",
+  "email": "hello@swiftwatercourier.com",
+  "areaServed": "Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --bg:#0B0E14; --bg-2:#10151E; --panel:#131926;
+    --viz:#C8F31D; --viz-deep:#A6CC2B; --viz-soft:rgba(200,243,29,.12);
+    --steel:#9AA7B8; --ink:#F2F5F9; --muted:#93A0B1; --hair:rgba(242,245,249,.11);
+    --card:rgba(255,255,255,.035); --card-brd:rgba(242,245,249,.10);
+    --shadow:0 26px 60px -30px rgba(0,0,0,.65);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--viz);outline-offset:3px;border-radius:4px}
+  section{padding:78px 0}
+  h1,h2,h3{font-family:'Syne',sans-serif;font-weight:700;letter-spacing:-.01em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.08;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--viz);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--viz)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.86);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Syne';font-weight:800;font-size:17px;color:var(--ink)}
+  .logo .mark{width:31px;height:31px;border-radius:9px;background:var(--viz);display:grid;place-items:center;color:#10140A;flex:none}
+  .logo .mark svg{width:17px;height:17px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:600;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:rgba(200,243,29,.10);color:var(--viz)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#10140A;background:var(--viz);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--viz-deep);transform:translateY(-1px)}
+  @media(max-width:760px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 90px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background:
+      linear-gradient(105deg,transparent 42%,rgba(200,243,29,.05) 42.5%,transparent 44%),
+      linear-gradient(105deg,transparent 58%,rgba(200,243,29,.04) 58.5%,transparent 61%),
+      linear-gradient(105deg,transparent 72%,rgba(154,167,184,.05) 72.5%,transparent 74.5%),
+      radial-gradient(760px 360px at 6% -12%,rgba(200,243,29,.09),transparent 66%),
+      radial-gradient(620px 340px at 100% 6%,rgba(154,167,184,.08),transparent 64%)}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.03;letter-spacing:-.02em;max-width:15ch;margin-top:20px}
+  .hero h1 .hl{color:var(--viz)}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:#10140A;background:var(--viz);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--viz-deep);transform:translateY(-2px)}
+  .btn-sec{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--bg-2);padding:15px 26px;border-radius:12px;transition:.18s}
+  .btn-sec:hover{border-color:var(--viz);color:var(--viz)}
+  .hero-dash{margin-top:34px;max-width:420px}
+  .hero-dash svg{width:100%;height:auto;display:block}
+  .hero-dash .dashline{stroke-dasharray:7 11;animation:dashmove 5.5s linear infinite}
+  @keyframes dashmove{to{stroke-dashoffset:-180}}
+  @media(prefers-reduced-motion:reduce){.hero-dash .dashline{animation:none}}
+  .ticket{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+  .ticket .tk-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#10140A;background:var(--viz);border-radius:20px;padding:4px 11px;margin-bottom:16px}
+  .ticket .tk-route{font-family:'Syne';font-weight:700;font-size:19px;line-height:1.4}
+  .ticket .tk-route .arrow{color:var(--viz)}
+  .ticket .tk-log{margin-top:16px;font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);line-height:2}
+  .ticket .tk-log b{color:var(--ink);font-weight:600}
+  .ticket .tk-log .ok{color:var(--viz)}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.ticket{order:-1}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--bg-2)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Syne';font-weight:800;font-size:27px;color:var(--viz)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+  .svc{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px}
+  .svc .s-ico{width:42px;height:42px;border-radius:12px;background:var(--viz-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--viz)}
+  .svc .s-ico svg{width:21px;height:21px}
+  .svc h3{font-size:16.5px}
+  .svc p{font-size:13.5px;color:var(--muted);margin-top:8px}
+  @media(max-width:980px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.svc-grid{grid-template-columns:1fr}}
+
+  /* ---------- quoter ---------- */
+  .quote-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;margin-top:32px;align-items:start}
+  .q-steps{display:flex;flex-direction:column;gap:22px}
+  .q-step .q-label{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:10px}
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-family:'Inter Tight';font-size:13.5px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--card-brd);border-radius:11px;padding:10px 15px;cursor:pointer;transition:.15s;text-align:left}
+  .pill small{display:block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:500;color:var(--muted);margin-top:2px}
+  .pill:hover{border-color:var(--viz)}
+  .pill.on{background:var(--viz);border-color:var(--viz);color:#10140A}
+  .pill.on small{color:rgba(16,20,10,.65)}
+  .quote-panel{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
+  .quote-panel .qp-title{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+  .qp-lines{margin-top:16px;display:flex;flex-direction:column;gap:9px}
+  .qp-line{display:flex;justify-content:space-between;gap:14px;font-size:13.5px;color:var(--muted);border-bottom:1px dashed var(--hair);padding-bottom:9px}
+  .qp-line b{color:var(--ink);font-weight:600;font-family:'IBM Plex Mono';font-size:12.5px;white-space:nowrap}
+  .qp-total{margin-top:16px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .qp-total .amt{font-family:'Syne';font-weight:800;font-size:44px;color:var(--viz);line-height:1}
+  .qp-total .lbl{font-size:13px;color:var(--muted)}
+  .qp-min{margin-top:10px;font-size:12px;color:var(--muted)}
+  .qp-cta{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+  .qp-cta .btn-pri{text-align:center}
+  .qp-sms{font-size:13px;color:var(--muted);text-align:center}
+  .qp-sms a{color:var(--viz);font-weight:700}
+  .quote-note{margin-top:16px;font-size:13.5px;color:var(--muted);background:var(--viz-soft);border:1px solid rgba(200,243,29,.3);border-radius:10px;padding:11px 14px}
+  @media(max-width:900px){.quote-wrap{grid-template-columns:1fr}.quote-panel{position:static}}
+
+  /* ---------- dispatch ---------- */
+  .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;counter-reset:step}
+  .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;counter-increment:step}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Syne';font-weight:800;font-size:36px;color:transparent;-webkit-text-stroke:1.5px var(--viz);display:block;margin-bottom:10px;opacity:.9}
+  .how-card h3{font-size:16.5px}
+  .how-card p{font-size:13.5px;color:var(--muted);margin-top:8px}
+  @media(max-width:980px){.how-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.how-grid{grid-template-columns:1fr}}
+
+  /* ---------- business ---------- */
+  .biz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+  .biz{background:var(--card);border:1px solid var(--card-brd);border-left:3px solid var(--viz);border-radius:14px;padding:22px}
+  .biz h3{font-size:15.5px}
+  .biz p{font-size:13.5px;color:var(--muted);margin-top:8px}
+  .biz-cta{margin-top:26px}
+  @media(max-width:980px){.biz-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.biz-grid{grid-template-columns:1fr}}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--viz);background:var(--viz-soft);border:1px solid rgba(200,243,29,.28);padding:7px 13px;border-radius:20px}
+
+  /* ---------- owner ---------- */
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:20px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--viz);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6;font-weight:500}
+  .tcard p:empty::before{content:"A note from a business on the route is coming soon.";color:var(--muted);font-style:italic;font-weight:400}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a regular account"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Syne';font-weight:700;font-size:16px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--viz);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- booking form ---------- */
+  .book{background:var(--bg-2);border-top:1px solid var(--hair);text-align:center}
+  .book h2{max-width:26ch;margin:12px auto 14px}
+  .book > .wrap > .reveal > p{color:var(--muted);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:600px;margin:34px auto 0;text-align:left;background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--steel);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--card-brd);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:var(--ink)}
+  .qf-row select option{color:#10140A}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(242,245,249,.35)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:var(--viz);background:rgba(200,243,29,.05)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:var(--viz);color:#10140A;font-family:'Inter Tight';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{background:var(--viz-deep)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:var(--muted)}
+  .qf-status.err{color:#FFB4A3;font-weight:700}
+  .qf-success{max-width:600px;margin:34px auto 0;background:var(--viz);color:#10140A;border-radius:18px;padding:32px;font-family:'Syne';font-weight:700;font-size:17px;text-align:center}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:var(--muted)}
+  .qf-alt a{color:var(--viz);font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--bg-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Syne';color:var(--ink)}
+  .footer__credit{opacity:.8}
+  .footer__credit a{color:var(--viz);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(0,0,0,.45)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Inter Tight';font-weight:800;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#10140A;background:var(--viz)}
+  .mobile-cta .text{color:var(--viz);background:var(--viz-soft);border:1px solid rgba(200,243,29,.3)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--viz);color:#10140A;padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h11"/><path d="M10 6l8 6-8 6"/></svg></span><span>Swiftwater</span><small>Courier Co.</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">What we move</a>
+      <a href="#quote" class="tab">Price a run</a>
+      <a href="#business" class="tab">For business</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a pickup</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Same-day courier · Treasure Valley</div>
+      <h1 class="reveal">Send it across the valley. <span class="hl">Today.</span></h1>
+      <p class="reveal">Documents, parcels and small freight, moved between any two corners of the valley — scheduled routes for the regulars, same-day and rush when the clock is loud. You get a text at pickup and a photo at the door.</p>
+      <div class="hero-cta reveal">
+        <a href="#quote" class="btn-pri">Price my run ↓</a>
+        <a href="#book" class="btn-sec">Book a pickup</a>
+      </div>
+      <div class="hero-dash reveal" aria-hidden="true">
+        <svg viewBox="0 0 420 60" fill="none">
+          <path class="dashline" d="M6,44 C80,10 150,56 224,26 S360,40 414,18" stroke="rgba(200,243,29,.5)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="6" cy="44" r="5" fill="#C8F31D"/>
+          <circle cx="414" cy="18" r="5" fill="none" stroke="#C8F31D" stroke-width="2.5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ticket reveal" data-delay="1">
+      <span class="tk-badge">Live run · #1408</span>
+      <p class="tk-route">Zone 5 pickup <span class="arrow">⟶</span> Zone 1 drop</p>
+      <div class="tk-log">
+        <div><b>12:04</b> — run booked, window confirmed</div>
+        <div><b>12:31</b> — <span class="ok">picked up</span>, on the road</div>
+        <div><b>13:12</b> — <span class="ok">delivered</span> · photo sent · signed at the desk</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we move</div>
+      <h2>If it fits in the van, it's already late.</h2>
+      <p class="stxt">Four kinds of runs, one promise: it rides with one driver from your hands to theirs — nothing sits in a warehouse overnight.</p>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="quote" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Price a run</div>
+      <h2>Zone to zone. Math you can see.</h2>
+      <p class="stxt">Pick your two zones, the size and the speed — the quote builds itself, line by line. The number it shows is the number on the invoice.</p>
+    </div>
+    <div class="quote-wrap reveal">
+      <div class="q-steps">
+        <div class="q-step">
+          <div class="q-label">1 · Pickup zone</div>
+          <div class="pills" id="pickupPills" role="group" aria-label="Pickup zone"></div>
+        </div>
+        <div class="q-step">
+          <div class="q-label">2 · Drop-off zone</div>
+          <div class="pills" id="dropPills" role="group" aria-label="Drop-off zone"></div>
+        </div>
+        <div class="q-step">
+          <div class="q-label">3 · What is it?</div>
+          <div class="pills" id="sizePills" role="group" aria-label="Parcel size"></div>
+        </div>
+        <div class="q-step">
+          <div class="q-label">4 · How fast?</div>
+          <div class="pills" id="speedPills" role="group" aria-label="Speed"></div>
+        </div>
+        <p class="quote-note" id="quoteNote"></p>
+      </div>
+      <div class="quote-panel" aria-live="polite">
+        <p class="qp-title">Your quote</p>
+        <div class="qp-lines" id="qBreakdown"></div>
+        <div class="qp-total"><span class="lbl">Total, out the door</span><span class="amt" id="qTotal">$—</span></div>
+        <p class="qp-min" id="qMin"></p>
+        <div class="qp-cta">
+          <button type="button" class="btn-pri" id="quoteBook">Book this run</button>
+          <p class="qp-sms"><a id="quoteSms" href="sms:+12085550329">or text us this quote</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dispatch">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How dispatch works</div>
+      <h2>Four steps, and you can watch all of them.</h2>
+    </div>
+    <div class="how-grid reveal" id="dispatchGrid"></div>
+  </div>
+</section>
+
+<section id="business" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">For business</div>
+      <h2>Your delivery desk, without the desk.</h2>
+      <p class="stxt">Recurring accounts get a standing route, a consistent driver and one simple monthly invoice — and a human who answers when plans change at 4:55.</p>
+    </div>
+    <div class="biz-grid reveal" id="bizGrid"></div>
+    <div class="biz-cta reveal"><a href="#book" class="btn-sec">Set up a recurring route →</a></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Where we run</div>
+    <h2>Every run stays inside the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder &amp; dispatcher, Swiftwater Courier Co.</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">From the accounts</div>
+    <h2>What the regulars say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--bg-2);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask before the first run.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow" style="justify-content:center">Book a pickup</div>
+    <h2>Tell us the two addresses. We handle the miles.</h2>
+    <p>Book below and we'll text you a confirmed pickup window in a few minutes — usually faster.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qBiz">Business (optional)</label>
+        <input type="text" id="qBiz" name="business" placeholder="If this is a company run" />
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qPickup">Pickup address</label>
+          <input type="text" id="qPickup" name="pickup" placeholder="Street & city" />
+        </div>
+        <div class="qf-row">
+          <label for="qDrop">Drop-off address</label>
+          <input type="text" id="qDrop" name="dropoff" placeholder="Street & city" />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qWhen">When?</label>
+        <select id="qWhen" name="when">
+          <option>Today — same-day</option>
+          <option>Today — rush, direct drive</option>
+          <option>Scheduled — pick a day</option>
+          <option>Recurring route — let's talk</option>
+        </select>
+      </div>
+      <div class="qf-row">
+        <label for="qSummary">Run summary (auto-filled from the quoter)</label>
+        <input type="text" id="qSummary" name="summary" placeholder="Use the quoter above, or leave blank and we'll price it by text." />
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Fragile, heavy, gate codes, ask for Dana at the desk…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Book my pickup</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Rather just text a human? <a href="tel:+12085550329" data-phone-link>Call or text (208) 555-0329</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Booked. We'll text you a confirmed pickup window in a few minutes — keep your phone handy.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Swiftwater Courier Co.</b><br />
+      Same-day &amp; scheduled courier · <span data-city>Treasure Valley, ID</span>
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550329" data-phone>(208) 555-0329</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550329"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550329?body=Hi%20Swiftwater%2C%20I%20need%20a%20pickup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Swiftwater Courier Co.",
+      "tagline": "Same day. Same valley.",
+      "phone": "(208) 555-0329",
+      "email": "hello@swiftwatercourier.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Treasure Valley, ID"
+    },
+    "stats": [
+      { "num": "< 4 hrs", "label": "Same-day window, anywhere in the valley" },
+      { "num": "7 zones", "label": "One flat zone map — no mileage math" },
+      { "num": "2 texts", "label": "One at pickup, one with the drop-off photo" }
+    ],
+    "services": [
+      { "title": "Documents & filings", "desc": "Contracts, closings, court runs and signature chases — sealed, tracked and walked to the right desk, not left in a lobby." },
+      { "title": "Parcels & packages", "desc": "Anything you'd trust to a careful driver with a hand truck: samples, equipment, forgotten laptops, last-minute everything." },
+      { "title": "Scheduled routes", "desc": "A standing loop on your schedule — daily bank runs, morning transfers between locations, Friday pickups. Set it once, forget it." },
+      { "title": "Small freight", "desc": "Skids and totes under 300 lb. Loads a strong back and a ramp can handle — priced on the same zone map as everything else." }
+    ],
+    "quoterZones": [
+      { "label": "Boise Core" },
+      { "label": "West Boise & Garden City" },
+      { "label": "Meridian" },
+      { "label": "Eagle & Star" },
+      { "label": "Nampa & Caldwell" },
+      { "label": "Kuna & South Valley" },
+      { "label": "Outlying / valley edge" }
+    ],
+    "quoterSizes": [
+      { "label": "Envelope / small pack", "mult": "1" },
+      { "label": "Box — under 30 lb", "mult": "1.15" },
+      { "label": "Large box / tote — under 60 lb", "mult": "1.35" },
+      { "label": "Pallet-lite — skid under 300 lb", "mult": "2.2" }
+    ],
+    "quoterSpeeds": [
+      { "label": "Scheduled — next route through", "mult": "1" },
+      { "label": "Same-day — under 4 hours", "mult": "1.4" },
+      { "label": "Rush — direct drive", "mult": "2" }
+    ],
+    "quoterSettings": {
+      "bands": "14, 19, 24, 29, 34",
+      "minimum": "12",
+      "note": "Zone base uses how many zones apart pickup and drop-off sit — same zone is the first number, each zone further is the next. Every quote is the real price: no fuel surprises, no weekend markup."
+    },
+    "dispatch": [
+      { "title": "Book the run", "desc": "Text us or use the form — pickup, drop-off, what it is. You'll get a confirmed pickup window in minutes." },
+      { "title": "A driver is assigned", "desc": "One driver owns your run start to finish. No depots, no hand-offs, nothing sits in a warehouse overnight." },
+      { "title": "Live updates", "desc": "A text when it's picked up, a heads-up if anything changes, and an ETA that means something." },
+      { "title": "Proof at the door", "desc": "Photo of where it landed and who signed, texted the moment it's delivered. Done means proven." }
+    ],
+    "business": [
+      { "title": "Law & title offices", "desc": "Filings, closings and originals that absolutely cannot wait for tomorrow's mail." },
+      { "title": "Clinics & pharmacies", "desc": "Scheduled transfers between locations, handled by one consistent driver who knows the route." },
+      { "title": "Print & sign shops", "desc": "Finished jobs delivered to the client while the ink's barely dry — you look fast because you are." },
+      { "title": "Parts counters", "desc": "The gasket that's holding up a lift bay gets a direct drive, not a spot in tomorrow's loop." }
+    ],
+    "serviceArea": {
+      "region": "Treasure Valley, Idaho",
+      "short": "Treasure Valley",
+      "cities": ["Boise", "Garden City", "Meridian", "Eagle", "Star", "Nampa", "Caldwell", "Kuna"]
+    },
+    "owner": {
+      "name": "Marisol Trask",
+      "heading": "Started at a front desk, not behind a wheel",
+      "bio": "Marisol Trask ran the counter at a print shop for six years and kept a private tally of every courier who promised noon and showed up at four. When the tally hit a hundred she quit, bought a hatchback, and started driving the runs herself — with the two texts she always wished she'd gotten: one when the package is in hand, one with a photo at the door. Swiftwater still runs on that tally. The goal is simple: never be the reason somebody else starts one.",
+      "photo": ""
+    },
+    "testimonials": [
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" }
+    ],
+    "faq": [
+      { "q": "How fast is same-day, really?", "a": "Booked before 1 pm, delivered inside four hours — usually faster. Rush runs go direct: the driver picks up your item and drives straight to the drop, no other stops." },
+      { "q": "What won't you carry?", "a": "Nothing hazardous, nothing alive, nothing illegal, and nothing that belongs in an armored truck. If you're not sure, text us a photo — we'll give you a straight answer in minutes." },
+      { "q": "Do I get proof of delivery?", "a": "Every run ends with a photo of where it landed and the name of who took it, texted to you as it happens. If nobody's there, we call you before we do anything else." },
+      { "q": "How does the zone pricing work?", "a": "The valley is split into seven zones. Your base price is set by how many zones apart the pickup and drop-off are, then adjusted for size and speed. The quoter above shows the whole math — the number it gives is the number on the invoice." },
+      { "q": "Do you go outside the valley?", "a": "The edge zone covers the towns just past the usual map. Further than that is by arrangement — text the address and we'll quote it straight." },
+      { "q": "How do recurring routes work?", "a": "Pick the days and windows, we assign a consistent driver, and you get one simple invoice at the end of the month. Skip a day with a text — no penalty, no drama." }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+  var num = function(s, fb){ var n = parseFloat(String(s).replace(/[^0-9.]/g,'')); return isFinite(n) ? n : fb; };
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', I need a pickup'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // services
+    var svcIcos = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="8" rx="1"/><path d="M7 10V6h10v4"/><circle cx="8" cy="20" r="1.4"/><circle cx="16" cy="20" r="1.4"/></svg>'
+    ];
+    document.getElementById('svcGrid').innerHTML = c.services.map(function(s, i){
+      return '<div class="svc"><span class="s-ico">' + svcIcos[i % svcIcos.length] + '</span><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
+    }).join('');
+
+    // quoter
+    renderQuoter(c);
+
+    // dispatch
+    document.getElementById('dispatchGrid').innerHTML = c.dispatch.map(function(st){
+      return '<div class="how-card"><h3>' + esc(st.title) + '</h3><p>' + esc(st.desc) + '</p></div>';
+    }).join('');
+
+    // business
+    document.getElementById('bizGrid').innerHTML = c.business.map(function(b){
+      return '<div class="biz"><h3>' + esc(b.title) + '</h3><p>' + esc(b.desc) + '</p></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    revealScan(document.body);
+  }
+
+  /* ---------- zone-to-zone quoter ---------- */
+  var sel = { pickup: 2, drop: 0, size: 1, speed: 1 };
+
+  function pillRow(elId, items, key, subFn){
+    document.getElementById(elId).innerHTML = items.map(function(it, i){
+      var on = sel[key] === i;
+      return '<button type="button" class="pill' + (on ? ' on' : '') + '" data-qk="' + key + '" data-qi="' + i + '" aria-pressed="' + (on ? 'true' : 'false') + '">' +
+        esc(it.label) + (subFn ? '<small>' + esc(subFn(it)) + '</small>' : '') + '</button>';
+    }).join('');
+  }
+
+  function bands(c){
+    return String((c.quoterSettings || {}).bands || '').split(',').map(function(b){ return num(b, 0); }).filter(function(n){ return n > 0; });
+  }
+
+  function renderQuoter(c){
+    var zones = c.quoterZones || [], sizes = c.quoterSizes || [], speeds = c.quoterSpeeds || [];
+    if(sel.pickup >= zones.length) sel.pickup = 0;
+    if(sel.drop >= zones.length) sel.drop = 0;
+    if(sel.size >= sizes.length) sel.size = 0;
+    if(sel.speed >= speeds.length) sel.speed = 0;
+    pillRow('pickupPills', zones, 'pickup');
+    pillRow('dropPills', zones, 'drop');
+    pillRow('sizePills', sizes, 'size', function(s){ return '×' + num(s.mult, 1); });
+    pillRow('speedPills', speeds, 'speed', function(s){ return '×' + num(s.mult, 1); });
+    document.getElementById('quoteNote').textContent = (c.quoterSettings || {}).note || '';
+
+    var wrap = document.getElementById('quote');
+    if(!wrap._wired){
+      wrap._wired = true;
+      wrap.addEventListener('click', function(e){
+        var el = e.target.closest('[data-qk]');
+        if(!el) return;
+        sel[el.getAttribute('data-qk')] = +el.getAttribute('data-qi');
+        renderQuoter(CONTENT);
+      });
+    }
+    updateQuote(c);
+  }
+
+  function quoteParts(c){
+    var zones = c.quoterZones || [], sizes = c.quoterSizes || [], speeds = c.quoterSpeeds || [];
+    var z1 = zones[sel.pickup], z2 = zones[sel.drop], sz = sizes[sel.size], sp = speeds[sel.speed];
+    if(!z1 || !z2 || !sz || !sp) return null;
+    var bd = bands(c);
+    if(!bd.length) bd = [15];
+    var dist = Math.min(Math.abs(sel.pickup - sel.drop), bd.length - 1);
+    var base = bd[dist];
+    var minimum = num((c.quoterSettings || {}).minimum, 0);
+    var total = Math.max(minimum, Math.round(base * num(sz.mult, 1) * num(sp.mult, 1)));
+    return { z1: z1, z2: z2, sz: sz, sp: sp, dist: dist, base: base, minimum: minimum, total: total };
+  }
+
+  function updateQuote(c){
+    var q = quoteParts(c);
+    if(!q) return;
+    var apart = q.dist === 0 ? 'same zone' : q.dist + (q.dist === 1 ? ' zone apart' : ' zones apart');
+    document.getElementById('qBreakdown').innerHTML =
+      '<div class="qp-line"><span>' + esc(q.z1.label) + ' → ' + esc(q.z2.label) + ' <span class="mono">(' + esc(apart) + ')</span></span><b>$' + q.base + '</b></div>' +
+      '<div class="qp-line"><span>' + esc(q.sz.label) + '</span><b>×' + num(q.sz.mult, 1) + '</b></div>' +
+      '<div class="qp-line"><span>' + esc(q.sp.label) + '</span><b>×' + num(q.sp.mult, 1) + '</b></div>';
+    document.getElementById('qTotal').textContent = '$' + q.total;
+    document.getElementById('qMin').textContent = q.minimum ? 'Every run has a $' + q.minimum + ' minimum. The quoted price is the full price.' : '';
+    var summary = q.z1.label + ' → ' + q.z2.label + ' · ' + q.sz.label + ' · ' + q.sp.label + ' — $' + q.total;
+    var smsA = document.getElementById('quoteSms');
+    smsA.href = 'sms:' + telHref(c.brand.phone) + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', quote please: ' + summary);
+    updateQuote._summary = summary;
+  }
+
+  document.getElementById('quoteBook').addEventListener('click', function(){
+    var s = document.getElementById('qSummary');
+    if(updateQuote._summary) s.value = updateQuote._summary;
+    document.getElementById('book').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    setTimeout(function(){ document.getElementById('qName').focus({ preventScroll: true }); }, reduce ? 0 : 450);
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      business: document.getElementById('qBiz').value.trim() || '(not given)',
+      pickup: document.getElementById('qPickup').value.trim() || '(not given)',
+      dropoff: document.getElementById('qDrop').value.trim() || '(not given)',
+      when: document.getElementById('qWhen').value,
+      summary: document.getElementById('qSummary').value.trim() || '(quoter not used)',
+      notes: document.getElementById('qNotes').value.trim(),
+      _subject: CONTENT.brand.name + ' — new pickup request from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Book my pickup';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

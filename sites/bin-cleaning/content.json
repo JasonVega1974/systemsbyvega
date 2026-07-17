@@ -1,0 +1,176 @@
+{
+  "brand": {
+    "name": "Sage & Suds Bin Co.",
+    "tagline": "Fresh bins, zero effort.",
+    "phone": "(208) 555-0247",
+    "email": "hello@sagesudsbins.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Meridian, ID"
+  },
+  "stats": [
+    {
+      "num": "195°",
+      "label": "Hot pressure wash, every visit"
+    },
+    {
+      "num": "5 min",
+      "label": "At your curb — then we're gone"
+    },
+    {
+      "num": "100%",
+      "label": "Of the gunk leaves in our truck, not your gutter"
+    }
+  ],
+  "howItWorks": [
+    {
+      "title": "Book your route day",
+      "desc": "Pick a plan and tell us where the bins live. We match you to the route that follows your trash day."
+    },
+    {
+      "title": "Leave the bins at the curb",
+      "desc": "After pickup, just leave them out a little longer. You don't need to be home — most customers never see us."
+    },
+    {
+      "title": "Roll back a fresh bin",
+      "desc": "Hot wash, scrub, rinse, deodorize. The dirty water leaves in our reclaim tank — not down your gutter."
+    }
+  ],
+  "plans": [
+    {
+      "name": "Monthly Refresh",
+      "price": "$12",
+      "per": "/bin · visit",
+      "features": "Every month, right after pickup\nHot pressure wash, inside and out\nDeodorized — left smelling like nothing\nFirst-visit deep clean included",
+      "best": true,
+      "note": "Most popular"
+    },
+    {
+      "name": "Quarterly Clean",
+      "price": "$20",
+      "per": "/bin · visit",
+      "features": "Four visits a year\nSame hot wash and deodorizing\nA good fit for milder bins",
+      "best": false,
+      "note": ""
+    },
+    {
+      "name": "One-Time Rescue",
+      "price": "$35",
+      "per": "/first bin",
+      "features": "$15 each additional bin\nFor the bin you can smell from the porch\nNo plan required — try us once",
+      "best": false,
+      "note": ""
+    }
+  ],
+  "pricingNote": "Every plan covers trash, recycle or compost bins — mix and match. No contracts; pause, skip or cancel with a text.",
+  "routeZones": [
+    {
+      "id": "north",
+      "label": "North Meridian",
+      "day": "Tuesday",
+      "note": "We follow the Tuesday collection routes — bins get washed the same afternoon they're emptied."
+    },
+    {
+      "id": "south",
+      "label": "South Meridian",
+      "day": "Wednesday",
+      "note": "Wednesday pickup? We're right behind the truck. Leave your bins out until evening."
+    },
+    {
+      "id": "west",
+      "label": "West Meridian & Ten Mile",
+      "day": "Thursday",
+      "note": "Thursday routes west of Ten Mile, out toward the county line."
+    },
+    {
+      "id": "east",
+      "label": "East Meridian",
+      "day": "Friday",
+      "note": "Friday mornings, working east toward the Boise line."
+    },
+    {
+      "id": "eagle",
+      "label": "Eagle & Star",
+      "day": "Friday",
+      "note": "Friday afternoons, north of the river — Eagle and Star addresses."
+    },
+    {
+      "id": "kuna",
+      "label": "Kuna & everywhere else",
+      "day": "By arrangement",
+      "note": "Not on the map? Text us your address — if a route passes near you, we'll slot you in."
+    }
+  ],
+  "routeNote": "Route days follow the city's collection schedule. Holiday week? Everything slides one day — same as your pickup.",
+  "whyClean": [
+    {
+      "title": "The smell isn't the bin's fault",
+      "desc": "Trash residue bakes into the plastic all summer. A garden hose can't fix that — hot water and a scrub can."
+    },
+    {
+      "title": "Fewer flies, fewer surprises",
+      "desc": "A dirty bin is an open invitation for flies, ants and the occasional midnight raccoon inspection. A clean bin is just a bin."
+    },
+    {
+      "title": "Your driveway stays clean too",
+      "desc": "Everything we wash off goes into the truck's reclaim tank and gets disposed of properly — nothing runs down your driveway or into the storm drain."
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Meridian",
+      "Eagle",
+      "Star",
+      "Kuna",
+      "West Boise"
+    ]
+  },
+  "owner": {
+    "name": "Tessa Larkin",
+    "heading": "Why we started Sage & Suds",
+    "bio": "Tessa Larkin got tired of holding her breath every Tuesday. One July afternoon, after fishing a bag of week-old mystery out of the bottom of her can, she borrowed a pressure washer, cleaned every bin on her street, and realized nobody actually enjoys living with a dirty trash can — they just assume nothing can be done about it. Sage & Suds is the something: a truck, a hot-water wash, and a route that follows the garbage truck so your bin is clean an hour after it's empty.",
+    "photo": ""
+  },
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do I need to be home?",
+      "a": "Nope. Leave your bins at the curb after pickup and we'll take it from there. Most customers only know we came because the bin smells like nothing."
+    },
+    {
+      "q": "What happens to the dirty water?",
+      "a": "It leaves with us. The wash happens over a containment system on the truck, and the water goes into a reclaim tank for proper disposal — not down your driveway or into the storm drain."
+    },
+    {
+      "q": "My bin is… really bad. Can you fix it?",
+      "a": "Almost always, yes. The first visit on any plan is a deep clean, and the One-Time Rescue exists for exactly this bin. If a bin is genuinely beyond saving, we'll say so instead of charging you to polish it."
+    },
+    {
+      "q": "Which bins do you clean?",
+      "a": "Trash, recycling and compost carts — any standard roll-out bin. Mix and match on any plan; the per-bin price is the same."
+    },
+    {
+      "q": "How do I know which day you come?",
+      "a": "Check the route map above — we follow the city's collection schedule, so your wash day is built around your trash day. Holiday weeks slide one day, exactly like your pickup does."
+    },
+    {
+      "q": "Is there a contract?",
+      "a": "No. Plans are month-to-month, and a text message is enough to pause, skip a visit or cancel. We'd rather earn the next visit than lock you into it."
+    }
+  ],
+  "social": []
+}

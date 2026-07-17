@@ -1,0 +1,199 @@
+{
+  "brand": {
+    "name": "Swiftwater Courier Co.",
+    "tagline": "Same day. Same valley.",
+    "phone": "(208) 555-0329",
+    "email": "hello@swiftwatercourier.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Treasure Valley, ID"
+  },
+  "stats": [
+    {
+      "num": "< 4 hrs",
+      "label": "Same-day window, anywhere in the valley"
+    },
+    {
+      "num": "7 zones",
+      "label": "One flat zone map — no mileage math"
+    },
+    {
+      "num": "2 texts",
+      "label": "One at pickup, one with the drop-off photo"
+    }
+  ],
+  "services": [
+    {
+      "title": "Documents & filings",
+      "desc": "Contracts, closings, court runs and signature chases — sealed, tracked and walked to the right desk, not left in a lobby."
+    },
+    {
+      "title": "Parcels & packages",
+      "desc": "Anything you'd trust to a careful driver with a hand truck: samples, equipment, forgotten laptops, last-minute everything."
+    },
+    {
+      "title": "Scheduled routes",
+      "desc": "A standing loop on your schedule — daily bank runs, morning transfers between locations, Friday pickups. Set it once, forget it."
+    },
+    {
+      "title": "Small freight",
+      "desc": "Skids and totes under 300 lb. Loads a strong back and a ramp can handle — priced on the same zone map as everything else."
+    }
+  ],
+  "quoterZones": [
+    {
+      "label": "Boise Core"
+    },
+    {
+      "label": "West Boise & Garden City"
+    },
+    {
+      "label": "Meridian"
+    },
+    {
+      "label": "Eagle & Star"
+    },
+    {
+      "label": "Nampa & Caldwell"
+    },
+    {
+      "label": "Kuna & South Valley"
+    },
+    {
+      "label": "Outlying / valley edge"
+    }
+  ],
+  "quoterSizes": [
+    {
+      "label": "Envelope / small pack",
+      "mult": "1"
+    },
+    {
+      "label": "Box — under 30 lb",
+      "mult": "1.15"
+    },
+    {
+      "label": "Large box / tote — under 60 lb",
+      "mult": "1.35"
+    },
+    {
+      "label": "Pallet-lite — skid under 300 lb",
+      "mult": "2.2"
+    }
+  ],
+  "quoterSpeeds": [
+    {
+      "label": "Scheduled — next route through",
+      "mult": "1"
+    },
+    {
+      "label": "Same-day — under 4 hours",
+      "mult": "1.4"
+    },
+    {
+      "label": "Rush — direct drive",
+      "mult": "2"
+    }
+  ],
+  "quoterSettings": {
+    "bands": "14, 19, 24, 29, 34",
+    "minimum": "12",
+    "note": "Zone base uses how many zones apart pickup and drop-off sit — same zone is the first number, each zone further is the next. Every quote is the real price: no fuel surprises, no weekend markup."
+  },
+  "dispatch": [
+    {
+      "title": "Book the run",
+      "desc": "Text us or use the form — pickup, drop-off, what it is. You'll get a confirmed pickup window in minutes."
+    },
+    {
+      "title": "A driver is assigned",
+      "desc": "One driver owns your run start to finish. No depots, no hand-offs, nothing sits in a warehouse overnight."
+    },
+    {
+      "title": "Live updates",
+      "desc": "A text when it's picked up, a heads-up if anything changes, and an ETA that means something."
+    },
+    {
+      "title": "Proof at the door",
+      "desc": "Photo of where it landed and who signed, texted the moment it's delivered. Done means proven."
+    }
+  ],
+  "business": [
+    {
+      "title": "Law & title offices",
+      "desc": "Filings, closings and originals that absolutely cannot wait for tomorrow's mail."
+    },
+    {
+      "title": "Clinics & pharmacies",
+      "desc": "Scheduled transfers between locations, handled by one consistent driver who knows the route."
+    },
+    {
+      "title": "Print & sign shops",
+      "desc": "Finished jobs delivered to the client while the ink's barely dry — you look fast because you are."
+    },
+    {
+      "title": "Parts counters",
+      "desc": "The gasket that's holding up a lift bay gets a direct drive, not a spot in tomorrow's loop."
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Boise",
+      "Garden City",
+      "Meridian",
+      "Eagle",
+      "Star",
+      "Nampa",
+      "Caldwell",
+      "Kuna"
+    ]
+  },
+  "owner": {
+    "name": "Marisol Trask",
+    "heading": "Started at a front desk, not behind a wheel",
+    "bio": "Marisol Trask ran the counter at a print shop for six years and kept a private tally of every courier who promised noon and showed up at four. When the tally hit a hundred she quit, bought a hatchback, and started driving the runs herself — with the two texts she always wished she'd gotten: one when the package is in hand, one with a photo at the door. Swiftwater still runs on that tally. The goal is simple: never be the reason somebody else starts one.",
+    "photo": ""
+  },
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "How fast is same-day, really?",
+      "a": "Booked before 1 pm, delivered inside four hours — usually faster. Rush runs go direct: the driver picks up your item and drives straight to the drop, no other stops."
+    },
+    {
+      "q": "What won't you carry?",
+      "a": "Nothing hazardous, nothing alive, nothing illegal, and nothing that belongs in an armored truck. If you're not sure, text us a photo — we'll give you a straight answer in minutes."
+    },
+    {
+      "q": "Do I get proof of delivery?",
+      "a": "Every run ends with a photo of where it landed and the name of who took it, texted to you as it happens. If nobody's there, we call you before we do anything else."
+    },
+    {
+      "q": "How does the zone pricing work?",
+      "a": "The valley is split into seven zones. Your base price is set by how many zones apart the pickup and drop-off are, then adjusted for size and speed. The quoter above shows the whole math — the number it gives is the number on the invoice."
+    },
+    {
+      "q": "Do you go outside the valley?",
+      "a": "The edge zone covers the towns just past the usual map. Further than that is by arrangement — text the address and we'll quote it straight."
+    },
+    {
+      "q": "How do recurring routes work?",
+      "a": "Pick the days and windows, we assign a consistent driver, and you get one simple invoice at the end of the month. Skip a day with a text — no penalty, no drama."
+    }
+  ],
+  "social": []
+}

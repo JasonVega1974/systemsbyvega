@@ -1,0 +1,68 @@
+{
+  "brand": {
+    "name": "Ironwood Collision Co.",
+    "tagline": "Like it never happened.",
+    "phone": "(208) 555-0291",
+    "email": "hello@ironwoodcollision.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Emmett, ID"
+  },
+  "stats": [
+    { "num": "1,400+", "label": "Panels brought back to factory shape" },
+    { "num": "Zero", "label": "Surprise charges — you approve every step first" },
+    { "num": "Emmett", "label": "Born here, serving the whole Treasure Valley" }
+  ],
+  "repairStages": [
+    { "name": "Estimate", "blurb": "We photograph, measure and map every panel the damage touched — then walk you through the plan in plain words, with numbers attached." },
+    { "name": "Teardown", "blurb": "Panels come off so hidden damage can't hide. If we find more underneath, you hear about it before anything else happens — not on the invoice." },
+    { "name": "Paint match", "blurb": "Your exact factory color code, tinted and test-sprayed until it disappears against the original panels. Blended past the repair so there's no edge to find." },
+    { "name": "Refinish", "blurb": "Prime, base, clear — laid down in a sealed booth, not a driveway. Dust is the enemy of an invisible repair." },
+    { "name": "Cure & polish", "blurb": "Baked, wet-sanded and machine-polished until the new panel reads exactly like the rest of the car. Then we detail it, because handing back a dusty car is rude." }
+  ],
+  "revealNote": "Drag the divider — every repair moves through the same five gates, and you approve each one before we move to the next.",
+  "services": [
+    { "title": "Collision repair", "desc": "From fender benders to the crunch you'd rather not describe out loud. Structural measurement, panel repair or replacement, and reassembly that respects how the factory put it together." },
+    { "title": "Dent & panel work", "desc": "Door dings, hail divots, grocery-cart craters. Small dents come out with finesse work; bigger ones get filler, block-sanding and refinish — whichever puts the panel right." },
+    { "title": "Paint & refinish", "desc": "Factory color-code matching, blend work into neighboring panels, full resprays for sun-tired paint. Booth-sprayed and baked, never rattle-canned." },
+    { "title": "Bumper repair", "desc": "Plastic repair and refinishing for scuffed, cracked or torn covers — and straight talk about when a new cover is genuinely the cheaper path." },
+    { "title": "Glass coordination", "desc": "Cracked windshield in the same bad day? We coordinate the glass work alongside the body repair, so you make one phone call and one trip." }
+  ],
+  "claims": [
+    { "title": "Start your claim", "desc": "Call your insurance company or file in their app. You'll get a claim number — that's all we need to get moving." },
+    { "title": "Get an estimate", "desc": "Bring the car by, or send us photos to start. We put together a written, itemized estimate and walk you through what's cosmetic and what actually matters." },
+    { "title": "You pick the shop", "desc": "The choice of repair shop is yours. An insurer can suggest one; the decision stays with you, and your coverage works the same either way." },
+    { "title": "We handle the paperwork", "desc": "We document everything an adjuster needs — photos, measurements, supplements if teardown finds more — and keep you posted in plain language, not adjuster-speak." }
+  ],
+  "claimsNote": "Paying out of pocket instead? Same estimate, same repair, same five gates — just without the claim number.",
+  "process": [
+    { "title": "Drop off & blueprint", "desc": "We map the whole repair before wrench meets bolt — parts, paint, timeline — and give you a real completion date, not a shrug." },
+    { "title": "Approve the plan", "desc": "You see the blueprint and the numbers before work starts. Nothing gets repaired, replaced or billed without your OK." },
+    { "title": "Repair & refinish", "desc": "Metal first, then paint, then reassembly. If teardown changes the plan, the phone rings before the work continues." },
+    { "title": "Walkaround & keys", "desc": "We walk the car together, panel by panel, in daylight. You take the keys when it looks like nothing ever happened — that's the standard." }
+  ],
+  "serviceArea": {
+    "region": "Gem County & the Treasure Valley",
+    "short": "Treasure Valley",
+    "cities": ["Emmett", "Eagle", "Star", "Meridian", "Boise", "Horseshoe Bend"]
+  },
+  "owner": {
+    "name": "Wade Ferris",
+    "heading": "The shop behind the booth",
+    "bio": "Wade Ferris straightened his first fender at fourteen, on a hay truck that had lost an argument with a gatepost. Twenty-odd years later the tools are better and the paint is fancier, but the job hasn't changed: put the car back the way the factory meant it, tell the owner the truth about what that takes, and don't hand back the keys until the repair is invisible. Ironwood is a small shop on purpose — every car gets the same two sets of eyes, and one of them is Wade's.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "Do you work with insurance claims?", "a": "Yes, all the time. Bring us your claim number and we'll handle the estimate, the photos and the adjuster paperwork. And plenty of our repairs have no claim at all — out-of-pocket work gets the exact same process." },
+    { "q": "How long will my repair take?", "a": "Honest answer: it depends on parts. The blueprint we build at drop-off comes with a real completion date, and if a part delay moves it, you hear it from us the day we know — not when you call to ask." },
+    { "q": "Will the paint actually match?", "a": "Yes. We pull your factory color code, tint it against your car's actual paint (paint fades — the code alone isn't enough), and blend into the neighboring panels so there's no hard edge where new meets old." },
+    { "q": "Can you fix just a small scratch or ding?", "a": "Absolutely. Small jobs are welcome — a door ding or a scuffed bumper doesn't need an appointment weeks out. Send a photo and we'll tell you what it takes." },
+    { "q": "Do I need an appointment for an estimate?", "a": "Nope. Swing by during shop hours, or text us photos of the damage to start — we'll follow up with numbers and next steps, usually the same day." },
+    { "q": "Do you stand behind the work?", "a": "Every repair leaves with our written workmanship promise — ask for the current terms at drop-off. We'd rather you read them than take our word for it." }
+  ],
+  "social": []
+}

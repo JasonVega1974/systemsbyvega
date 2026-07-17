@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rimrock Garage — Auto Repair | Parma, ID</title>
+<meta name="description" content="Honest small-town auto repair in Parma, Idaho. Road test, lift check, one written number — nothing happens until you say go. Brakes, diagnostics, suspension, AC and the famous What's That Sound? translator." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Rimrock Garage — Fixed right. Explained first." />
+<meta property="og:description" content="The small-town garage that shows you the part. Describe the noise, get the usual suspects and an honest range — before you ever book." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23B3271E'/%3E%3Ccircle cx='32' cy='32' r='25' fill='none' stroke='%23F5EFE2' stroke-width='2'/%3E%3Cpath d='M41 20a8 8 0 0 0-10.9 9.4L19 40.5a3.6 3.6 0 1 0 5.1 5.1L35.2 34.5A8 8 0 0 0 44.6 23l-5.2 5.2-4.2-1.1-1.1-4.2z' fill='%23F5EFE2'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "name": "Rimrock Garage",
+  "description": "Honest small-town auto repair for Parma and the western Treasure Valley. Diagnose, approve, fix — in that order.",
+  "telephone": "+12085550183",
+  "email": "hello@rimrockgarage.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Parma", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Western Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --cream:#F5EFE2; --cream-soft:#FBF7EC; --panel:#FFFDF6;
+    --cherry:#B3271E; --cherry-bright:#C93A30; --cherry-deep:#8E1D15;
+    --navy:#1F3A5F; --navy-deep:#152B47;
+    --brass:#C9971C; --brass-soft:rgba(201,151,28,.16);
+    --ink:#2A2118; --muted:#6E6152; --hair:rgba(42,33,24,.15);
+    --card:#FFFDF6; --card-brd:rgba(42,33,24,.12);
+    --shadow:0 20px 46px -22px rgba(42,33,24,.22);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--navy);outline-offset:3px;border-radius:4px}
+  section{padding:76px 0}
+  h1,h2,h3{font-family:'Zilla Slab',serif;font-weight:700;letter-spacing:-.01em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:62ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--brass)}
+  .alt{background:var(--cream-soft);border-top:3px double var(--hair);border-bottom:3px double var(--hair)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(245,239,226,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(42,33,24,.05)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:11px;font-family:'Zilla Slab';font-weight:700;font-size:18px;color:var(--ink)}
+  .logo .mark{width:34px;height:34px;border-radius:50%;background:var(--cherry);box-shadow:inset 0 0 0 2.5px var(--cream),inset 0 0 0 4px var(--cherry);display:grid;place-items:center;color:var(--cream);flex:none}
+  .logo .mark svg{width:16px;height:16px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:rgba(31,58,95,.08);color:var(--navy)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#fff;background:var(--cherry);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--cherry-deep);transform:translateY(-1px)}
+  @media(max-width:800px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:78px 0 0;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background:
+      repeating-linear-gradient(-45deg,rgba(31,58,95,.045) 0 2px,transparent 2px 26px),
+      radial-gradient(700px 320px at 6% -8%,rgba(179,39,30,.07),transparent 68%),
+      radial-gradient(560px 300px at 96% 4%,var(--brass-soft),transparent 66%)}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px 84px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(36px,5.4vw,58px);font-weight:700;line-height:1.02;letter-spacing:-.015em;max-width:13ch;margin-top:20px}
+  .hero h1 .hl{color:var(--cherry)}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Source Sans 3';font-weight:800;font-size:15px;text-decoration:none;color:#fff;background:var(--cherry);padding:15px 26px;border-radius:11px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--cherry-deep);transform:translateY(-2px)}
+  .btn-sec{font-family:'Source Sans 3';font-weight:800;font-size:15px;text-decoration:none;color:var(--navy);border:1.5px solid var(--navy);background:transparent;padding:15px 26px;border-radius:11px;transition:.18s}
+  .btn-sec:hover{background:var(--navy);color:var(--cream)}
+  .hero-card{background:var(--card);border:1.5px solid var(--card-brd);outline:1px solid var(--card-brd);outline-offset:4px;border-radius:16px;padding:26px;box-shadow:var(--shadow)}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:var(--brass-soft);border:1px solid rgba(201,151,28,.45);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  .hero-card .hc-line{font-family:'Zilla Slab';font-weight:600;font-size:20px;line-height:1.4;color:var(--ink)}
+  .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  .checker{height:12px;opacity:.16;background:repeating-conic-gradient(var(--navy) 0 25%,transparent 0 50%) 0 0/12px 12px}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-bottom:3px double var(--hair);background:var(--cream-soft)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Zilla Slab';font-weight:700;font-size:28px;color:var(--cherry)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .svc{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:24px}
+  .svc .s-ico{width:42px;height:42px;border-radius:50%;background:var(--brass-soft);box-shadow:inset 0 0 0 1.5px rgba(201,151,28,.4);display:grid;place-items:center;margin-bottom:14px;color:var(--navy)}
+  .svc .s-ico svg{width:21px;height:21px}
+  .svc h3{font-size:17.5px}
+  .svc p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.svc-grid{grid-template-columns:1fr}}
+
+  /* ---------- sound diagnoser ---------- */
+  .snd-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;margin-top:32px;align-items:start}
+  .snd-step{font-family:'IBM Plex Mono';font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin:22px 0 10px}
+  .snd-step:first-child{margin-top:0}
+  .snd-pills{display:flex;flex-wrap:wrap;gap:9px}
+  .spill{font-family:'IBM Plex Mono';font-size:13px;font-weight:600;color:var(--ink);background:var(--panel);border:1.5px solid var(--hair);border-radius:24px;padding:9px 17px;cursor:pointer;transition:.15s}
+  .spill:hover{border-color:var(--cherry);color:var(--cherry)}
+  .spill.on{background:var(--cherry);border-color:var(--cherry);color:#fff}
+  .spill.when:hover{border-color:var(--navy);color:var(--navy)}
+  .spill.when.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .snd-note{margin-top:22px;font-size:13.5px;color:var(--muted);background:var(--brass-soft);border:1px solid rgba(201,151,28,.4);border-radius:10px;padding:11px 14px}
+  .snd-result{background:var(--card);border:1.5px solid var(--card-brd);outline:1px solid var(--card-brd);outline-offset:4px;border-radius:16px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
+  .snd-result .sr-empty{color:var(--muted);font-size:15px}
+  .snd-result .sr-combo{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .snd-result h3{font-size:15px;font-family:'IBM Plex Mono';font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin-top:16px}
+  .snd-result ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .snd-result li{font-size:14.5px;padding-left:20px;position:relative}
+  .snd-result li::before{content:"→";position:absolute;left:0;color:var(--cherry);font-weight:800}
+  .snd-result .sr-covers{font-size:14.5px;color:var(--muted);margin-top:8px}
+  .snd-result .sr-range{font-family:'Zilla Slab';font-weight:700;font-size:23px;color:var(--cherry);margin-top:16px;line-height:1.25}
+  .snd-result .sr-caveat{font-size:13.5px;font-style:italic;color:var(--muted);border-left:3px solid var(--brass);padding-left:12px;margin-top:14px}
+  .snd-result .sr-cta{margin-top:20px}
+  @media(max-width:900px){.snd-wrap{grid-template-columns:1fr}.snd-result{position:static}}
+
+  /* ---------- pricing ---------- */
+  .price-list{max-width:720px;margin:32px auto 0;background:var(--card);border:1.5px solid var(--card-brd);outline:1px solid var(--card-brd);outline-offset:4px;border-radius:16px;padding:30px 32px;box-shadow:var(--shadow)}
+  .prow{display:flex;align-items:baseline;gap:12px;padding:11px 0}
+  .prow + .prow{border-top:1px solid var(--hair)}
+  .prow .job{font-weight:700;font-size:15.5px;white-space:nowrap}
+  .prow .dots{flex:1;border-bottom:2px dotted var(--hair);transform:translateY(-4px)}
+  .prow .rng{font-family:'IBM Plex Mono';font-size:13.5px;font-weight:600;color:var(--cherry-deep);text-align:right}
+  .pricing-note{margin-top:20px;font-size:13.5px;color:var(--muted);text-align:center;max-width:64ch;margin-left:auto;margin-right:auto}
+  @media(max-width:560px){.prow{flex-wrap:wrap}.prow .job{white-space:normal}.prow .dots{display:none}.prow .rng{text-align:left;width:100%}}
+
+  /* ---------- process ---------- */
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:step}
+  .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:24px;counter-increment:step;position:relative}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Zilla Slab';font-weight:700;font-size:38px;color:transparent;-webkit-text-stroke:1.6px var(--cherry);display:block;margin-bottom:10px;opacity:.85}
+  .how-card h3{font-size:17px}
+  .how-card p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.how-grid{grid-template-columns:1fr}}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--navy);background:rgba(31,58,95,.08);border:1px solid rgba(31,58,95,.24);padding:7px 13px;border-radius:20px}
+
+  /* ---------- owner ---------- */
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:16px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:21px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--cherry-deep);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6;font-weight:500}
+  .tcard p:empty::before{content:"A word from a customer is coming soon.";color:var(--muted);font-style:italic;font-weight:400}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a neighbor with a running car"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Zilla Slab';font-weight:600;font-size:17px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--cherry);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- booking form ---------- */
+  .book{background:var(--navy-deep);color:#fff;text-align:center}
+  .book .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
+  .book .eyebrow::before{background:var(--brass)}
+  .book h2{color:#fff;max-width:24ch;margin:12px auto 14px}
+  .book > .wrap > .reveal > p{color:rgba(255,255,255,.82);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row select option{color:var(--ink)}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.16)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:var(--brass);color:var(--navy-deep);font-family:'Source Sans 3';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{filter:brightness(1.07)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
+  .qf-status.err{color:#FFD9C6;font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--ink);border-radius:16px;padding:32px;font-family:'Zilla Slab';font-weight:600;font-size:17px;text-align:center}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
+  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--cream-soft);border-top:3px double var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Zilla Slab';color:var(--ink)}
+  .footer__credit{opacity:.8}
+  .footer__credit a{color:var(--cherry-deep);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--cream-soft);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(42,33,24,.12)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Source Sans 3';font-weight:800;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#fff;background:var(--cherry)}
+  .mobile-cta .text{color:var(--navy);background:rgba(31,58,95,.1);border:1px solid rgba(31,58,95,.3)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--cream);padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17a2 2 0 1 0 3 3l5.7-5.7a4 4 0 0 0 5-5L15 12l-2.5-.5L12 9z"/></svg></span><span>Rimrock</span><small>Garage</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#sounds" class="tab">What's That Sound?</a>
+      <a href="#pricing" class="tab">Pricing</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a visit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Auto repair · Parma, Idaho</div>
+      <h1 class="reveal">Fixed right. <span class="hl">Explained first.</span></h1>
+      <p class="reveal">Rimrock is the garage that walks you under the lift. We road-test your car, point a flashlight at the actual problem, and hand you one written number — and nothing happens until you say go.</p>
+      <div class="hero-cta reveal">
+        <a href="#book" class="btn-pri">Book a visit</a>
+        <a href="#sounds" class="btn-sec">What's that sound? ↓</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">The Rimrock promise</span>
+      <p class="hc-line">You'll see the old part before you pay for the new one.</p>
+      <p class="hc-by">Road test · lift check · one written number · your call</p>
+    </div>
+  </div>
+  <div class="checker" aria-hidden="true"></div>
+</header>
+
+<section class="trust" style="padding:0">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Services</div>
+      <h2>Everything a daily driver needs.</h2>
+      <p class="stxt">From the squeal to the shimmy to the light on the dash — brought to you in plain English, with the old parts to prove it.</p>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="sounds" class="alt">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What's that sound?</div>
+      <h2>Describe the noise. We'll translate.</h2>
+      <p class="stxt">Pick what you hear and when you hear it. You'll get the usual suspects, what checking it involves, and an honest range — no email address required.</p>
+    </div>
+    <div class="snd-wrap reveal">
+      <div>
+        <p class="snd-step">1 · What do you hear?</p>
+        <div class="snd-pills" id="soundPills" role="group" aria-label="Type of noise"></div>
+        <p class="snd-step">2 · When do you hear it?</p>
+        <div class="snd-pills" id="whenPills" role="group" aria-label="When the noise happens"></div>
+        <p class="snd-note" id="soundNote"></p>
+      </div>
+      <div class="snd-result" id="soundResult" aria-live="polite">
+        <p class="sr-empty">Pick a sound and a moment — we'll tell you what it usually means.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <div class="eyebrow" style="justify-content:center">Straight-talk pricing</div>
+      <h2>Ranges up front. No mystery line items.</h2>
+    </div>
+    <div class="price-list reveal" id="priceList"></div>
+    <p class="pricing-note reveal" id="pricingNote"></p>
+  </div>
+</section>
+
+<section id="process" class="alt">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Diagnose. Approve. Fix. In that order.</h2>
+    </div>
+    <div class="how-grid reveal" id="howGrid"></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Close to home for the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" class="alt">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Owner, Rimrock Garage</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">Word of mouth</div>
+    <h2>What the regulars say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" class="alt" style="border-bottom:none">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Asked across the counter, answered here.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Book it</div>
+    <h2>Tell us what it's doing.</h2>
+    <p>Describe the noise, the light, the leak — in your own words. We'll call or text back with an honest read and next steps.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qVehicle">Your vehicle</label>
+        <input type="text" id="qVehicle" name="vehicle" placeholder="2014 F-150, 168k miles" />
+      </div>
+      <div class="qf-row">
+        <label for="qIssue">What's it doing?</label>
+        <textarea id="qIssue" name="issue" rows="3" placeholder="Clunks over bumps, mostly turning left out of the driveway…"></textarea>
+      </div>
+      <div class="qf-row">
+        <label for="qWhen">When works for a drop-off?</label>
+        <select id="qWhen" name="dropoff">
+          <option>Morning drop-off</option>
+          <option>Afternoon drop-off</option>
+          <option selected>Whenever's next available</option>
+          <option>Just a question for now</option>
+        </select>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Get me a straight answer</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Rather just talk? <a href="tel:+12085550183" data-phone-link>Call or text (208) 555-0183</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Got it. We'll call or text you back with a straight answer — usually the same day.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Rimrock Garage</b><br />
+      Honest auto repair · <span data-city>Parma, ID</span> &amp; the western Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550183" data-phone>(208) 555-0183</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550183"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550183?body=Hi%20Rimrock%2C%20can%20you%20take%20a%20look%20at%20my%20car%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Injected from content.json at build time so the two
+     stay byte-consistent — NEW-SITE-CHECKLIST.md rule #2.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Rimrock Garage",
+      "tagline": "Fixed right. Explained first.",
+      "phone": "(208) 555-0183",
+      "email": "hello@rimrockgarage.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Parma, ID"
+    },
+    "stats": [
+      {
+        "num": "20 yrs",
+        "label": "Turning wrenches in Canyon County"
+      },
+      {
+        "num": "1",
+        "label": "Written number before any work starts"
+      },
+      {
+        "num": "0",
+        "label": "Surprise line items on the final bill"
+      }
+    ],
+    "services": [
+      {
+        "title": "Brakes",
+        "desc": "Pads, rotors, lines, the works. The squeal you're ignoring is cheaper to fix today than next month."
+      },
+      {
+        "title": "Diagnostics",
+        "desc": "Check-engine lights, weird noises, mystery battery drains. We find the actual problem — not the most expensive possibility."
+      },
+      {
+        "title": "Oil & fluids",
+        "desc": "Oil, coolant, brake and transmission fluid — the boring stuff that keeps your car off our lift."
+      },
+      {
+        "title": "Suspension & steering",
+        "desc": "Shocks, struts, tie rods, sway bars. If the road feels louder or looser than it used to, that's our department."
+      },
+      {
+        "title": "Heating & AC",
+        "desc": "Blowing warm in July or cold in January? We trace it before we replace anything."
+      },
+      {
+        "title": "Pre-purchase look-overs",
+        "desc": "Buying used? Bring it by first. An hour with us can save you a truck payment's worth of regret."
+      }
+    ],
+    "sounds": [
+      {
+        "id": "squeal",
+        "label": "Squeal"
+      },
+      {
+        "id": "grind",
+        "label": "Grind"
+      },
+      {
+        "id": "knock",
+        "label": "Knock"
+      },
+      {
+        "id": "clunk",
+        "label": "Clunk"
+      },
+      {
+        "id": "hum",
+        "label": "Hum / whine"
+      },
+      {
+        "id": "click",
+        "label": "Click"
+      },
+      {
+        "id": "hiss",
+        "label": "Hiss"
+      }
+    ],
+    "soundWhens": [
+      {
+        "id": "braking",
+        "label": "When braking"
+      },
+      {
+        "id": "turning",
+        "label": "When turning"
+      },
+      {
+        "id": "accel",
+        "label": "When accelerating"
+      },
+      {
+        "id": "idle",
+        "label": "At idle"
+      },
+      {
+        "id": "cold",
+        "label": "On cold start"
+      },
+      {
+        "id": "always",
+        "label": "All the time"
+      }
+    ],
+    "soundResults": [
+      {
+        "sound": "squeal",
+        "when": "braking",
+        "culprits": "Brake-pad wear indicators doing their job\nGlazed pads or rotors",
+        "covers": "Brake inspection at all four corners — pads measured, rotors checked",
+        "range": "Typical fix: $280 – $460 an axle",
+        "caveat": "Could also be a pebble stuck in the backing plate — thirty seconds to fix and no charge. We look before we quote."
+      },
+      {
+        "sound": "grind",
+        "when": "braking",
+        "culprits": "Pads worn down to metal\nDamaged rotor faces",
+        "covers": "Brake teardown on the noisy corner — this one shouldn't wait",
+        "range": "Typical fix: $320 – $560 an axle",
+        "caveat": "Grinding brakes are past the maybe stage. Drive gently and come in this week."
+      },
+      {
+        "sound": "squeal",
+        "when": "cold",
+        "culprits": "Serpentine belt slipping while cold\nTired belt tensioner",
+        "covers": "Belt and tensioner check — five minutes with the hood up",
+        "range": "Typical fix: $130 – $290",
+        "caveat": "If it fades as the engine warms, that's the belt talking. Cheap now, stranded later."
+      },
+      {
+        "sound": "squeal",
+        "when": "turning",
+        "culprits": "Belt slipping under power-steering load\nLow power-steering fluid",
+        "covers": "Belt, tensioner and fluid check",
+        "range": "Typical fix: $40 – $290",
+        "caveat": "Could also be the pump starting to complain — we listen with a stethoscope, not a guess."
+      },
+      {
+        "sound": "knock",
+        "when": "accel",
+        "culprits": "Low-octane fuel or carbon buildup\nWorst case: an engine bearing knock",
+        "covers": "Listen and scan first, then a cylinder-health check only if it's earned",
+        "range": "Diagnostic $95 — applied to the repair",
+        "caveat": "Don't let anyone quote you an engine over the phone. This one gets diagnosed in person, every time."
+      },
+      {
+        "sound": "knock",
+        "when": "idle",
+        "culprits": "A loose exhaust heat shield — common and cheap\nAn engine mount going soft",
+        "covers": "Rattle hunt on the lift",
+        "range": "Typical fix: $45 – $180",
+        "caveat": "Nine times out of ten this is the heat shield: a clamp, not a catastrophe."
+      },
+      {
+        "sound": "clunk",
+        "when": "turning",
+        "culprits": "Sway-bar end links\nWorn tie-rod ends\nA CV joint on its way out",
+        "covers": "Front-end shakedown — every joint checked by hand",
+        "range": "Typical fix: $160 – $460 a side",
+        "caveat": "Front ends wear as a family. We'll tell you what needs doing now and what can honestly wait."
+      },
+      {
+        "sound": "clunk",
+        "when": "always",
+        "culprits": "Worn suspension bushings\nTired shocks or struts",
+        "covers": "Suspension check: bounce test, then the lift",
+        "range": "Typical fix: $200 – $700",
+        "caveat": "Loose cargo and forgotten jack handles cause more mystery clunks than you'd think. We check the simple stuff first, free."
+      },
+      {
+        "sound": "hum",
+        "when": "always",
+        "culprits": "A wheel bearing starting to howl\nChopped or cupped tire wear",
+        "covers": "Road test with ears on, then each wheel checked on the lift",
+        "range": "Typical fix: $240 – $490 a corner",
+        "caveat": "Tires and bearings imitate each other. The road test tells us which — before any parts get ordered."
+      },
+      {
+        "sound": "hum",
+        "when": "turning",
+        "culprits": "A loaded wheel bearing — hums louder swinging one direction",
+        "covers": "Road test both directions, then a bearing-play check",
+        "range": "Typical fix: $240 – $490",
+        "caveat": "If it gets louder turning left, it's usually the right-side bearing. Cars are funny like that."
+      },
+      {
+        "sound": "click",
+        "when": "turning",
+        "culprits": "An outer CV joint — especially if it clicks in tight circles",
+        "covers": "CV boot and joint inspection",
+        "range": "Typical fix: $280 – $540 a side",
+        "caveat": "A torn boot caught early is a $60 fix. Caught late, it's a whole axle. Early is better."
+      },
+      {
+        "sound": "hiss",
+        "when": "idle",
+        "culprits": "A vacuum leak\nA cooling-system hose weeping under pressure",
+        "covers": "Smoke test for vacuum, pressure test for coolant",
+        "range": "Typical fix: $95 – $320",
+        "caveat": "If the hiss comes with a sweet smell, that's coolant — top it up and come see us this week."
+      }
+    ],
+    "soundFallback": {
+      "culprits": "Honestly? Could be a few things — sounds travel through a car like rumors through a small town",
+      "covers": "A road test with you riding along and pointing at it, then the lift",
+      "range": "Diagnostic $95 — applied to the repair if we do the work",
+      "caveat": "Describing a noise through a form is hard. Book the diagnostic and point at it with us — that's exactly what it's for."
+    },
+    "soundNote": "A sound is a clue, not a diagnosis. This tool tells you what a noise usually means so you're not walking in blind — the real answer comes off the lift, not a webpage.",
+    "priceRanges": [
+      {
+        "job": "Front brake pads & rotors",
+        "range": "$280 – $460"
+      },
+      {
+        "job": "Full synthetic oil & filter",
+        "range": "$75 – $110"
+      },
+      {
+        "job": "Battery — tested, then replaced",
+        "range": "$170 – $280"
+      },
+      {
+        "job": "Alternator",
+        "range": "$400 – $680"
+      },
+      {
+        "job": "Wheel bearing",
+        "range": "$240 – $490"
+      },
+      {
+        "job": "Diagnostic (the honest hour)",
+        "range": "$95 — applied to the repair"
+      }
+    ],
+    "pricingNote": "Ranges, not games. The exact number depends on what your car needs and what parts cost that week — you get one written number before we start, and that's the number you pay.",
+    "process": [
+      {
+        "title": "Diagnose",
+        "desc": "Road test, lift check, scanner if it's earned one. We find the real problem and take a picture of it."
+      },
+      {
+        "title": "Approve",
+        "desc": "You get one number and a plain-English explanation. Nothing happens to your car until you say go."
+      },
+      {
+        "title": "Fix — and show you",
+        "desc": "We do the work you approved, and the old part rides home with you if you want it."
+      }
+    ],
+    "serviceArea": {
+      "region": "Western Treasure Valley, Idaho",
+      "short": "western Treasure Valley",
+      "cities": [
+        "Parma",
+        "Wilder",
+        "Notus",
+        "Greenleaf",
+        "Homedale",
+        "Caldwell"
+      ]
+    },
+    "owner": {
+      "name": "Denny Hollis",
+      "heading": "Why Rimrock exists",
+      "bio": "Denny Hollis started fixing hay trucks outside Parma the summer after high school and never really stopped. Twenty years later, Rimrock is the garage Denny always wanted to take his own truck to: somebody walks you under the lift, points a flashlight at the actual problem, and tells you what it costs before the wrenches come out. Half the job is fixing cars. The other half is translating them.",
+      "photo": ""
+    },
+    "testimonials": [
+      {
+        "quote": "",
+        "name": ""
+      },
+      {
+        "quote": "",
+        "name": ""
+      },
+      {
+        "quote": "",
+        "name": ""
+      }
+    ],
+    "faq": [
+      {
+        "q": "Do you work on my make and model?",
+        "a": "Almost certainly. Domestic, Asian, European — if it rolls in on wheels, we can probably work on it. The rare exceptions are exotic or dealer-locked jobs, and we'll tell you straight when you'd be better off elsewhere."
+      },
+      {
+        "q": "Do I need an appointment?",
+        "a": "It helps, but no. Call or text and we'll tell you honestly whether today, tomorrow or Thursday is realistic. Drop-offs before 8 a.m. usually get eyes on them the same day."
+      },
+      {
+        "q": "Will you actually show me what's wrong?",
+        "a": "Yes — that's the whole point of this garage. Photo, video, or walk under the lift with us. And the old part is yours to keep if you want it."
+      },
+      {
+        "q": "How do estimates work?",
+        "a": "We diagnose first, then you get one written number. If we open things up and find something different, work stops and your phone rings. The number only changes if you approve a new one."
+      },
+      {
+        "q": "New parts or used?",
+        "a": "Your call, with our honest read on each option. Some jobs deserve new OEM parts; some old trucks deserve a good used part at half the price. We'll tell you which is which."
+      },
+      {
+        "q": "My check-engine light came on. Do I panic?",
+        "a": "Probably not. If it's flashing, come in now. If it's steady, finish your errands and swing by — we'll pull the code and tell you whether it's a $12 gas cap or something real."
+      },
+      {
+        "q": "Do you stand behind the work?",
+        "a": "Yes. Every job leaves with our written workmanship guarantee — the exact terms are on paper at the counter and on your invoice, not buried in fine print on a website."
+      }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', can you take a look at my car?'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // services
+    var icos = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9"/><path d="M12 12l4.5-4.5"/><path d="M17 21h4"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.6 6 10a6 6 0 0 1-12 0c0-3.4 3-6 6-10z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l4-4 4 4 4-4 4 4"/><path d="M4 11l4-4 4 4 4-4 4 4"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5.5 6.5l13 11M18.5 6.5l-13 11"/><circle cx="12" cy="12" r="9"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'
+    ];
+    document.getElementById('svcGrid').innerHTML = c.services.map(function(s, i){
+      return '<div class="svc"><span class="s-ico">' + icos[i % icos.length] + '</span><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
+    }).join('');
+
+    // sound diagnoser
+    renderSounds(c);
+    document.getElementById('soundNote').textContent = c.soundNote || '';
+
+    // pricing
+    document.getElementById('priceList').innerHTML = c.priceRanges.map(function(p){
+      return '<div class="prow"><span class="job">' + esc(p.job) + '</span><span class="dots"></span><span class="rng">' + esc(p.range) + '</span></div>';
+    }).join('');
+    document.getElementById('pricingNote').textContent = c.pricingNote || '';
+
+    // process
+    document.getElementById('howGrid').innerHTML = c.process.map(function(st){
+      return '<div class="how-card"><h3>' + esc(st.title) + '</h3><p>' + esc(st.desc) + '</p></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    revealScan(document.body);
+  }
+
+  /* ---------- sound diagnoser: pills + result panel ---------- */
+  var selSound = '', selWhen = '';
+  function renderSounds(c){
+    document.getElementById('soundPills').innerHTML = (c.sounds || []).map(function(s){
+      return '<button type="button" class="spill" data-sound="' + esc(s.id) + '" aria-pressed="false">' + esc(s.label) + '</button>';
+    }).join('');
+    document.getElementById('whenPills').innerHTML = (c.soundWhens || []).map(function(w){
+      return '<button type="button" class="spill when" data-when="' + esc(w.id) + '" aria-pressed="false">' + esc(w.label) + '</button>';
+    }).join('');
+
+    var wrap = document.getElementById('sounds');
+    if(!wrap._wired){
+      wrap._wired = true;
+      wrap.addEventListener('click', function(e){
+        var sb = e.target.closest('[data-sound]');
+        var wb = e.target.closest('[data-when]');
+        if(sb){ selSound = sb.getAttribute('data-sound'); }
+        if(wb){ selWhen = wb.getAttribute('data-when'); }
+        if(sb || wb) syncSounds();
+      });
+    }
+    syncSounds();
+  }
+
+  function syncSounds(){
+    var c = CONTENT;
+    var soundOk = (c.sounds || []).some(function(s){ return s.id === selSound; });
+    var whenOk = (c.soundWhens || []).some(function(w){ return w.id === selWhen; });
+    if(!soundOk) selSound = '';
+    if(!whenOk) selWhen = '';
+    document.querySelectorAll('#sounds [data-sound]').forEach(function(el){
+      var on = el.getAttribute('data-sound') === selSound;
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('#sounds [data-when]').forEach(function(el){
+      var on = el.getAttribute('data-when') === selWhen;
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    var box = document.getElementById('soundResult');
+    if(!selSound || !selWhen){
+      var prompt = !selSound && !selWhen ? 'Pick a sound and a moment — we\'ll tell you what it usually means.'
+        : (!selWhen ? 'Now pick when you hear it.' : 'Now pick the sound itself.');
+      box.innerHTML = '<p class="sr-empty">' + prompt + '</p>';
+      return;
+    }
+    var r = (c.soundResults || []).filter(function(x){ return x.sound === selSound && x.when === selWhen; })[0] || c.soundFallback || {};
+    var sLbl = labelOf(c.sounds, selSound), wLbl = labelOf(c.soundWhens, selWhen);
+    var culprits = String(r.culprits || '').split('\n').filter(Boolean).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('');
+    box.innerHTML =
+      '<p class="sr-combo">' + esc(sLbl) + ' · ' + esc(wLbl) + '</p>' +
+      '<h3>Usual suspects</h3><ul>' + culprits + '</ul>' +
+      '<h3>What we\'d do</h3><p class="sr-covers">' + esc(r.covers || '') + '</p>' +
+      '<p class="sr-range">' + esc(r.range || '') + '</p>' +
+      (r.caveat ? '<p class="sr-caveat">' + esc(r.caveat) + '</p>' : '') +
+      '<p class="sr-cta"><a class="btn-pri" href="#book">Book the look</a></p>';
+  }
+  function labelOf(arr, id){
+    var hit = (arr || []).filter(function(x){ return x.id === id; })[0];
+    return hit ? hit.label : id;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      vehicle: document.getElementById('qVehicle').value.trim() || '(not given)',
+      issue: document.getElementById('qIssue').value.trim(),
+      dropoff: document.getElementById('qWhen').value,
+      _subject: CONTENT.brand.name + ' — new booking request from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get me a straight answer';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

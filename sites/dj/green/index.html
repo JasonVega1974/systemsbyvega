@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>DJ Pulse — Official Website</title>
+<meta name="description" content="DJ Pulse — DJ & producer. Music, shows, and bookings." />
+
+<!-- Open Graph — after deploy, add og:url and og:image lines pointing at your own domain (see README) -->
+<meta property="og:title" content="DJ Pulse — DJ & Producer" />
+<meta property="og:description" content="Official website — music, shows, and bookings." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="DJ Pulse" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "DJ Pulse",
+  "genre": "EDM",
+  "description": "DJ Pulse — DJ & producer. Official website: music, shows, and bookings."
+}
+</script>
+
+<style>
+@font-face{font-family:'Flipside';font-style:normal;font-weight:400;font-display:swap;src:url(data:font/woff2;base64,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) format('woff2')}
+/* ============================================================
+   Design tokens — Emerald Green & Ultraviolet theme
+   Night sky meets a glowing horizon with a living audio waveform.
+   ============================================================ */
+:root{
+  --night:    #000000;
+  --night-2:  #041410;
+  --violet:   #0E4A31;
+  --violet-2: #08301F;
+  --gold:     #2EE58A;
+  --gold-hi:  #A9FFCF;
+  --coral:    #B44DFF;
+  --cyan:     #57FFD1;
+  --cream:    #EBFBF1;
+  --muted:    #9CC9AE;
+  --line:     rgba(255,255,255,.10);
+
+  --maxw: 1180px;
+  --pad: clamp(20px, 5vw, 64px);
+  --r: 18px;
+
+  --f-disp: 'Montserrat', system-ui, sans-serif;
+  --f-body: 'Montserrat', system-ui, sans-serif;
+  --f-mono: 'Montserrat', system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(.2,.7,.2,1);
+  --ease-soft: cubic-bezier(.33,1,.68,1);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0 }
+html{ scroll-behavior:smooth }
+body{
+  font-family:var(--f-body);
+  background:var(--night);
+  color:var(--cream);
+  line-height:1.55;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; text-decoration:none }
+img{ max-width:100%; display:block }
+::selection{ background:var(--gold); color:var(--night) }
+
+/* focus visibility for keyboard users */
+:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:6px }
+
+.wrap{ max-width:var(--maxw); margin:0 auto; padding-inline:var(--pad) }
+.eyebrow{
+  font-family:var(--f-mono); font-size:12px; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--gold);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:""; width:26px; height:1px; background:var(--gold); opacity:.7 }
+
+h2.section-title{
+  font-family:var(--f-disp); font-weight:400;
+  font-size:clamp(38px, 7vw, 92px); line-height:.92;
+  letter-spacing:.01em; text-transform:uppercase;
+}
+.section-title .glow{
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold) 60%,var(--coral));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+/* ============================================================ NAV */
+header.nav{
+  position:fixed; inset:0 0 auto 0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px var(--pad);
+  transition:background .3s ease, backdrop-filter .3s ease, padding .3s ease;
+}
+header.nav.scrolled{
+  background:rgba(4,20,16,.72);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  padding-block:10px;
+}
+.brand{ font-family:var(--f-disp); font-size:22px; letter-spacing:.06em; display:flex; align-items:center; gap:9px;
+  opacity:0; transform:translateY(-4px); pointer-events:none; transition:opacity .3s ease, transform .3s ease }
+header.nav.scrolled .brand{ opacity:1; transform:none; pointer-events:auto }
+.brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 14px var(--gold) }
+.nav-links{ display:flex; gap:30px; align-items:center }
+.nav-links a{ font-size:14px; letter-spacing:.04em; color:var(--muted); transition:color .2s; white-space:nowrap }
+.nav-links a:hover{ color:var(--cream) }
+header.nav .nav-cta{ color:var(--night) }
+@media(min-width:681px) and (max-width:1040px){ .nav-links{ gap:20px } .nav-links a{ font-size:13px } }
+.nav-cta{
+  font-family:var(--f-body); font-weight:700; font-size:13px; letter-spacing:.06em;
+  text-transform:uppercase; padding:11px 20px; border-radius:999px;
+  background:var(--gold); color:var(--night);
+  box-shadow:0 6px 22px rgba(46,229,138,.32); transition:transform .15s, box-shadow .2s;
+}
+.nav-cta:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(46,229,138,.5) }
+.burger{ display:none; background:none; border:0; color:var(--cream); cursor:pointer; padding:6px }
+.burger svg{ width:26px; height:26px }
+
+/* ============================================================ HERO */
+.hero{ position:relative; min-height:100svh; display:flex; align-items:flex-end; overflow:hidden; isolation:isolate }
+/* twilight sky gradient */
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:-3;
+  background:
+    radial-gradient(120% 80% at 50% 120%, var(--gold) 0%, rgba(180,77,255,.45) 22%, rgba(20,101,63,.65) 48%, var(--night-2) 72%, var(--night) 100%);
+}
+/* deepen the top */
+.hero::after{
+  content:""; position:absolute; inset:0 0 40% 0; z-index:-2;
+  background:linear-gradient(180deg, var(--night) 0%, rgba(4,20,16,0) 100%);
+}
+#sky{ position:absolute; inset:0; z-index:-1; width:100%; height:100% }
+/* parallax star layers + scroll-synced aurora sweep — additive, sits behind the canvas */
+.hero-stars{ position:absolute; inset:0; z-index:-5; overflow:hidden; pointer-events:none }
+.hero-stars .layer{
+  position:absolute; inset:-10% -10%;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1.5px 1.5px at 60% 70%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1.5px 1.5px at 90% 55%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 10% 65%, rgba(255,255,255,.3), transparent);
+  background-repeat:repeat; background-size:340px 340px; will-change:transform;
+}
+.hero-stars .layer-1{ opacity:.55 }
+.hero-stars .layer-2{ background-size:520px 520px; opacity:.3 }
+.hero-aurora{
+  position:absolute; inset:0; z-index:-2; pointer-events:none; opacity:.55;
+  background:radial-gradient(70% 55% at var(--aurora-x,50%) 15%, rgba(87,255,209,.22), transparent 60%);
+  transition:opacity .4s ease; will-change:opacity;
+}
+@media (prefers-reduced-motion:reduce){ .hero-stars .layer, .hero-aurora{ transition:none } }
+
+.hero-inner{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 var(--pad) clamp(72px,13vh,128px) }
+.hero .eyebrow{ margin-bottom:22px; opacity:0; animation:rise .8s .2s forwards }
+.wordmark{
+  font-family:var(--f-disp); font-weight:400; text-transform:uppercase;
+  font-size:clamp(58px, 15.5vw, 178px); line-height:.82; letter-spacing:.005em; white-space:nowrap;
+  margin:0 0 6px -.04em;
+  color:#FFFFFF;
+  filter:drop-shadow(0 6px 34px rgba(0,0,0,.5)) drop-shadow(0 2px 6px rgba(0,0,0,.42)) drop-shadow(0 0 56px rgba(46,229,138,.22));
+  opacity:0; animation:rise 1s .35s forwards;
+}
+.hero-official{ margin:6px 0 18px; opacity:0; animation:rise 1s .48s forwards }
+.hero-official .ow{ display:flex; align-items:center; gap:14px;
+  font-family:var(--f-body); font-weight:600; font-size:clamp(12px,1.5vw,15px);
+  letter-spacing:.36em; text-transform:uppercase; color:var(--gold) }
+.hero-official .ow::before{ content:""; width:38px; height:1px; background:var(--gold); opacity:.85 }
+.hero-official .meta{ display:block; margin-top:9px; padding-left:52px;
+  font-size:clamp(11px,1.3vw,13px); letter-spacing:.18em; text-transform:uppercase; color:var(--muted) }
+.hero-tag{
+  font-size:clamp(17px,2.4vw,26px); font-weight:500; max-width:34ch;
+  color:var(--cream); opacity:0; animation:rise .9s .55s forwards;
+}
+.hero-tag b{ color:var(--gold); font-weight:700 }
+.hero-cta{ display:flex; gap:14px; flex-wrap:wrap; margin-top:30px; opacity:0; animation:rise .9s .7s forwards }
+.btn{
+  font-weight:700; letter-spacing:.05em; text-transform:uppercase; font-size:14px;
+  padding:15px 28px; border-radius:999px; cursor:pointer; border:1.5px solid transparent;
+  transition:transform .16s, box-shadow .22s, background .22s, color .22s; display:inline-flex; align-items:center; gap:10px;
+}
+.btn-primary{ background:var(--gold); color:var(--night); box-shadow:0 10px 30px rgba(46,229,138,.36) }
+.btn-primary:hover{ transform:translateY(-3px); box-shadow:0 16px 40px rgba(46,229,138,.55) }
+.btn-ghost{ background:rgba(255,255,255,.04); color:var(--cream); border-color:rgba(255,255,255,.22) }
+.btn-ghost:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-3px) }
+
+.hero-mini{
+  display:flex; gap:26px; flex-wrap:wrap; margin-top:38px; padding-top:24px;
+  border-top:1px solid var(--line); opacity:0; animation:rise .9s .85s forwards;
+}
+.hero-mini .m{ font-family:var(--f-mono) }
+.hero-mini .m b{ font-size:22px; color:var(--gold); font-weight:700; display:block; text-shadow:0 2px 14px rgba(0,0,0,.85), 0 0 6px rgba(0,0,0,.7) }
+.hero-mini .m span{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); text-shadow:0 1px 10px rgba(0,0,0,.9) }
+
+/* ============================================================ MARQUEE */
+.marquee{
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  background:linear-gradient(90deg, var(--violet-2), var(--night-2));
+  overflow:hidden; white-space:nowrap; padding:16px 0;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track{ display:inline-flex; gap:40px; will-change:transform; animation:scroll 32s linear infinite }
+.marquee:hover .marquee-track{ animation-play-state:paused }
+.marquee span{ font-family:var(--f-disp); font-size:22px; letter-spacing:.05em; color:var(--cream); text-transform:uppercase; opacity:.85 }
+.marquee span em{ color:var(--gold); font-style:normal; margin-left:40px }
+
+/* ============================================================ sections */
+section{ position:relative; padding:clamp(72px,11vh,140px) 0 }
+.head-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:46px }
+.head-row p.lede{ color:var(--muted); max-width:42ch; font-size:16px }
+
+/* STATS */
+.stats{ background:linear-gradient(180deg,var(--night),var(--night-2)) }
+.stat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px }
+.stat{
+  border:1px solid var(--line); border-radius:var(--r); padding:30px 24px;
+  background:linear-gradient(160deg, rgba(46,229,138,.06), rgba(180,77,255,.03));
+  position:relative; overflow:hidden;
+}
+.stat::after{ content:""; position:absolute; right:-30px; top:-30px; width:120px; height:120px; border-radius:50%;
+  background:radial-gradient(circle, rgba(46,229,138,.18), transparent 70%) }
+.stat .num{ font-family:var(--f-disp); font-size:clamp(40px,5.5vw,64px); line-height:1;
+  background:linear-gradient(180deg,#fff,var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent }
+.stat .lab{ font-family:var(--f-mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:12px }
+.stat .sub{ font-size:12.5px; color:var(--cream); opacity:.6; margin-top:6px }
+
+/* ABOUT */
+.about-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center }
+.about-copy p{ color:#DCF2E5; font-size:17px; margin-bottom:18px }
+.about-copy p.first::first-letter{ font-family:var(--f-disp); font-size:62px; float:left; line-height:.8; padding:6px 14px 0 0; color:var(--gold) }
+.creed{ display:flex; gap:10px; flex-wrap:wrap; margin-top:26px }
+.creed span{ font-family:var(--f-mono); font-size:12px; letter-spacing:.08em; padding:8px 14px; border:1px solid var(--line); border-radius:999px; color:var(--gold) }
+/* full long-form bio (expandable) */
+.bio{ margin-top:46px; border-top:1px solid var(--line); padding-top:30px }
+.bio-toggle{ display:inline-flex; align-items:center; gap:11px; cursor:pointer;
+  background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:999px;
+  color:var(--cream); font-family:var(--f-body); font-weight:700; font-size:13px;
+  letter-spacing:.05em; text-transform:uppercase; padding:13px 22px; transition:border-color .2s, color .2s }
+.bio-toggle:hover{ border-color:var(--gold); color:var(--gold) }
+.bio-toggle .bt-ic{ width:16px; height:16px; transition:transform .35s ease }
+.bio-toggle[aria-expanded="true"] .bt-ic{ transform:rotate(180deg) }
+.bio-full{ max-height:0; overflow:hidden; opacity:0; transition:max-height .65s var(--ease-out), opacity .45s ease }
+.bio-full.open{ max-height:2600px; opacity:1 }
+.bio-inner{ overflow:hidden }
+.bio-grid{ columns:2; column-gap:56px; padding-top:36px }
+.bio-block{ break-inside:avoid; margin-bottom:30px }
+.bio-block:last-child{ margin-bottom:0 }
+.bio-h{ font-family:var(--f-mono); font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:13px; display:flex; align-items:center; gap:11px }
+.bio-h::before{ content:""; width:22px; height:1px; background:var(--gold); opacity:.7 }
+.bio-block p{ color:#DCF2E5; font-size:15.5px; line-height:1.72; margin-bottom:12px; text-wrap:pretty }
+.bio-block p:last-child{ margin-bottom:0 }
+.bio-block em{ color:var(--gold-hi); font-style:normal }
+@media(max-width:720px){ .bio-grid{ columns:1; column-gap:0 } }
+.portrait{
+  position:relative; aspect-ratio:4/5; border-radius:24px; overflow:hidden;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(90% 70% at 50% 115%, var(--gold) 0%, var(--coral) 30%, var(--violet) 62%, var(--night) 100%);
+  display:grid; place-items:end center; isolation:isolate;
+}
+.portrait .silhouette{ width:78%; height:88%; align-self:end;
+  background:linear-gradient(180deg, transparent, rgba(4,20,16,.0) 30%, rgba(4,20,16,.85) 100%);
+  -webkit-mask:radial-gradient(60% 80% at 50% 100%, #000 60%, transparent 100%); mask:radial-gradient(60% 80% at 50% 100%, #000 60%, transparent 100%) }
+.portrait .ph-note{
+  position:absolute; inset:auto 14px 14px 14px; z-index:2; font-family:var(--f-mono); font-size:11px;
+  letter-spacing:.12em; text-transform:uppercase; color:rgba(235,251,241,.9);
+  background:rgba(4,20,16,.55); backdrop-filter:blur(6px); border:1px dashed rgba(255,255,255,.3);
+  border-radius:10px; padding:9px 12px; text-align:center;
+}
+.portrait .grain{ position:absolute; inset:0; z-index:1; opacity:.4; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E") }
+
+/* MUSIC */
+.music{ background:linear-gradient(180deg,var(--night-2),var(--night)) }
+.embeds{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:46px }
+.embed-card{ border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:rgba(0,0,0,.25); min-height:352px }
+.embed-card iframe{ width:100%; height:100%; min-height:352px; border:0; display:block }
+.release-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; perspective:800px }
+.release{
+  border:1px solid var(--line); border-radius:14px; padding:18px; background:rgba(255,255,255,.02);
+  transition:transform .25s var(--ease-out), border-color .2s, background .2s, box-shadow .25s var(--ease-out); position:relative; overflow:hidden;
+}
+.release:hover{
+  transform:translateY(-5px) rotateX(3deg) rotateY(-3deg); border-color:var(--gold); background:rgba(46,229,138,.05);
+  box-shadow:0 20px 44px rgba(46,229,138,.22);
+}
+.release .art{ aspect-ratio:1; border-radius:10px; margin-bottom:14px; display:grid; place-items:center;
+  font-family:var(--f-disp); font-size:30px; color:var(--night); position:relative; overflow:hidden }
+.release .art img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; transition:transform .3s ease }
+.release:hover .art img{ transform:scale(1.06) }
+.release .art span{ position:relative; z-index:1; text-align:center; padding:6px; line-height:.9; mix-blend-mode:soft-light; opacity:.92 }
+.release .art span.has-cover{ display:none }
+.release .yr{ font-family:var(--f-mono); font-size:11px; color:var(--gold); letter-spacing:.12em }
+.release h4{ font-size:16px; margin-top:3px; font-weight:600 }
+.release .play{ position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%;
+  background:var(--night); display:grid; place-items:center; opacity:0; transform:scale(.7); transition:.2s; z-index:2 }
+.release:hover .play{ opacity:1; transform:scale(1) }
+.release .play svg{ width:14px; height:14px; fill:var(--gold) }
+
+/* SHOWS / timeline */
+.shows{ background:linear-gradient(180deg,var(--night),var(--violet-2)) }
+.bit-btn{ display:inline-flex; align-items:center; gap:9px; white-space:nowrap;
+  font-weight:700; font-size:13px; letter-spacing:.05em; text-transform:uppercase;
+  padding:13px 22px; border-radius:999px; background:var(--gold); color:var(--night);
+  box-shadow:0 8px 26px rgba(46,229,138,.32); transition:transform .15s, box-shadow .2s; align-self:center }
+.bit-btn:hover{ transform:translateY(-3px); box-shadow:0 12px 34px rgba(46,229,138,.5) }
+.bit-foot{ display:flex; align-items:center; justify-content:center; gap:12px; margin-top:30px;
+  padding:18px 22px; border:1px solid var(--line); border-radius:var(--r); color:var(--cream);
+  font-weight:600; font-size:15px; background:rgba(255,255,255,.02); transition:border-color .2s, background .2s, color .2s }
+.bit-foot:hover{ border-color:var(--gold); color:var(--gold); background:rgba(46,229,138,.06) }
+.bit-foot svg{ flex:none }
+.timeline{ position:relative; margin-top:10px }
+.timeline::before{ content:""; position:absolute; left:11px; top:6px; bottom:6px; width:2px;
+  background:linear-gradient(180deg,var(--gold),var(--coral),transparent) }
+.show{
+  position:relative; padding:18px 0 18px 44px; border-bottom:1px solid var(--line);
+  display:flex; gap:18px; align-items:baseline; justify-content:space-between; flex-wrap:wrap;
+}
+.show::before{ content:""; position:absolute; left:4px; top:26px; width:16px; height:16px; border-radius:50%;
+  background:var(--gold); box-shadow:0 0 0 4px rgba(46,229,138,.18), 0 0 18px var(--gold) }
+.show.up::before{ background:var(--coral); box-shadow:0 0 0 4px rgba(180,77,255,.2), 0 0 18px var(--coral) }
+.show .when{ font-family:var(--f-mono); font-size:13px; color:var(--gold); min-width:120px }
+.show .what{ flex:1; min-width:240px }
+.show .what h4{ font-size:clamp(18px,2.4vw,24px); font-family:var(--f-body); font-weight:700 }
+.show .what p{ color:var(--muted); font-size:14px }
+.show .tag{ font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  padding:6px 11px; border-radius:999px; border:1px solid var(--line); color:var(--cream); white-space:nowrap }
+.show.up .tag{ background:var(--coral); color:#fff; border-color:transparent }
+
+/* MEDIA (video + photo) */
+.media{ background:var(--night) }
+.tabs{ display:inline-flex; gap:6px; padding:5px; border:1px solid var(--line); border-radius:999px; margin-bottom:34px }
+.tab{ font-family:var(--f-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+  padding:10px 20px; border-radius:999px; cursor:pointer; border:0; background:none; transition:.2s }
+.tab.active{ background:var(--gold); color:var(--night); font-weight:700 }
+.video-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px }
+.vid{ position:relative; aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+  background:linear-gradient(150deg, var(--violet), var(--night-2)); cursor:pointer; display:grid; place-items:center }
+.vid .vlabel{ position:absolute; left:14px; bottom:12px; right:14px; z-index:2 }
+.vid .vlabel h4{ font-size:15px; font-weight:600 }
+.vid .vlabel p{ font-family:var(--f-mono); font-size:11px; color:var(--gold); letter-spacing:.1em }
+.vid .pbtn{ width:62px; height:62px; border-radius:50%; background:rgba(46,229,138,.92); display:grid; place-items:center;
+  box-shadow:0 0 0 0 rgba(46,229,138,.5); transition:transform .2s; z-index:2 }
+.vid:hover .pbtn{ transform:scale(1.08); animation:pulse 1.6s infinite }
+.vid .pbtn svg{ width:22px; height:22px; fill:var(--night); margin-left:3px }
+.vid::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%, rgba(4,20,16,.8)) }
+
+.photo-grid{ columns:3; column-gap:18px }
+.photo-grid.hidden, .video-grid.hidden, .yt-lib.hidden{ display:none }
+.photo{ break-inside:avoid; margin-bottom:18px; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+  position:relative; display:grid; place-items:center; min-height:160px }
+.photo .ph{ font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; color:rgba(235,251,241,.75); text-transform:uppercase; text-align:center; padding:18px; z-index:1 }
+.photo.tall{ min-height:300px } .photo.mid{ min-height:230px }
+
+/* YOUTUBE LIBRARY */
+.yt-lib{ margin-bottom:34px }
+.yt-top{ display:grid; grid-template-columns:1fr 260px; gap:24px; margin-bottom:28px }
+.yt-featured{ position:relative; aspect-ratio:16/9; border-radius:var(--r); overflow:hidden; border:1px solid var(--line);
+  background:linear-gradient(150deg, var(--violet), var(--night-2)) }
+.yt-featured img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0 }
+.yt-featured iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
+.yt-featured::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%, rgba(4,20,16,.85)); z-index:1; pointer-events:none }
+.yt-featured.playing::after{ display:none }
+.yt-featured .pbtn{
+  position:absolute; inset:0; margin:auto; width:78px; height:78px; border-radius:50%;
+  background:rgba(46,229,138,.92); display:grid; place-items:center; cursor:pointer; transition:transform .2s; z-index:2; border:0;
+}
+.yt-featured:hover .pbtn{ transform:scale(1.08) }
+.yt-featured .pbtn svg{ width:28px; height:28px; fill:var(--night); margin-left:4px }
+.yt-featured .yt-meta{ position:absolute; left:18px; right:18px; bottom:16px; z-index:2 }
+.yt-featured .yt-meta h4{ font-size:clamp(16px,2.2vw,22px); font-weight:700 }
+.yt-featured .yt-meta p{ font-family:var(--f-mono); font-size:12px; color:var(--gold); letter-spacing:.06em; margin-top:4px }
+
+.yt-side{ display:flex; flex-direction:column; gap:12px; justify-content:center }
+.yt-cta{ width:100%; justify-content:center; font-size:12.5px; padding:14px 18px }
+
+.yt-controls{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:22px }
+.yt-search{ position:relative; flex:1; min-width:220px; max-width:360px }
+.yt-search svg{ position:absolute; left:14px; top:50%; transform:translateY(-50%); width:16px; height:16px; stroke:var(--muted); pointer-events:none }
+.yt-search input{
+  width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:999px;
+  padding:11px 16px 11px 38px; color:var(--cream); font-family:var(--f-body); font-size:14px;
+}
+.yt-search input:focus{ outline:none; border-color:var(--gold) }
+.yt-sort{ display:flex; align-items:center; gap:8px; font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted) }
+.yt-sort select{
+  background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:999px;
+  padding:9px 14px; color:var(--cream); font-family:var(--f-body); font-size:13px; cursor:pointer;
+}
+.yt-sort select:focus{ outline:none; border-color:var(--gold) }
+.yt-sort select option{ background:var(--night-2) }
+
+.yt-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px }
+.yt-card{ cursor:pointer; border:0; background:none; text-align:left; padding:0; color:inherit; font-family:inherit; display:block; width:100% }
+.yt-card .thumb{ position:relative; aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+  background:linear-gradient(150deg, var(--violet), var(--night-2)) }
+.yt-card .thumb img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .3s }
+.yt-card:hover .thumb img{ transform:scale(1.05) }
+.yt-card:focus-visible .thumb{ outline:2px solid var(--cyan); outline-offset:2px }
+.yt-card .dur{
+  position:absolute; right:8px; bottom:8px; background:rgba(0,0,0,.75); color:var(--cream);
+  font-family:var(--f-mono); font-size:11px; padding:3px 7px; border-radius:5px; z-index:2;
+}
+.yt-card .cover-badge{
+  position:absolute; left:8px; top:8px; background:var(--coral); color:#fff; font-family:var(--f-mono);
+  font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; padding:4px 8px; border-radius:999px; z-index:2;
+}
+.yt-card h5{
+  margin-top:10px; font-size:14.5px; font-weight:600; line-height:1.3;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.yt-card .yt-sub{ font-family:var(--f-mono); font-size:11px; color:var(--muted); margin-top:4px; display:flex; gap:8px }
+
+.yt-skel{
+  background:linear-gradient(100deg, rgba(255,255,255,.04) 30%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 70%);
+  background-size:200% 100%; animation:shimmer 1.4s infinite;
+}
+@keyframes shimmer{ from{ background-position:200% 0 } to{ background-position:-200% 0 } }
+
+.yt-more{ display:flex; margin:28px auto 0 }
+.yt-empty{ text-align:center; padding:40px 20px; color:var(--muted); font-family:var(--f-mono); font-size:13px }
+
+/* BOOKING */
+.booking{ background:linear-gradient(180deg,var(--violet-2),var(--night)) }
+.book-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:46px; align-items:start }
+.cal{ border:1px solid var(--line); border-radius:var(--r); padding:24px; background:rgba(0,0,0,.25) }
+.cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px }
+.cal-head b{ font-size:17px; font-weight:700 }
+.cal-nav{ background:rgba(255,255,255,.06); border:1px solid var(--line); color:var(--cream); width:34px; height:34px;
+  border-radius:9px; cursor:pointer; font-size:16px; display:grid; place-items:center; transition:.2s }
+.cal-nav:hover{ background:var(--gold); color:var(--night) }
+.cal-dow{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:8px }
+.cal-dow span{ text-align:center; font-family:var(--f-mono); font-size:11px; color:var(--muted) }
+.cal-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px }
+.cal-day{ aspect-ratio:1; border:0; background:rgba(255,255,255,.03); color:var(--cream); border-radius:9px;
+  font-family:var(--f-mono); font-size:13px; cursor:pointer; transition:.15s }
+.cal-day:hover:not(:disabled){ background:rgba(46,229,138,.25) }
+.cal-day:disabled{ opacity:.22; cursor:not-allowed }
+.cal-day.sel{ background:var(--gold); color:var(--night); font-weight:700; box-shadow:0 0 18px rgba(46,229,138,.5) }
+.cal-day.empty{ background:none; cursor:default }
+.cal-foot{ font-family:var(--f-mono); font-size:11.5px; color:var(--muted); margin-top:14px; letter-spacing:.04em }
+.cal-foot b{ color:var(--gold) }
+
+.book-form{ display:grid; grid-template-columns:1fr 1fr; gap:16px }
+.field{ display:flex; flex-direction:column; gap:7px }
+.field.full{ grid-column:1/-1 }
+.field label{ font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
+.field input, .field select, .field textarea{
+  background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:11px; padding:13px 15px;
+  color:var(--cream); font-family:var(--f-body); font-size:15px; transition:border-color .2s, background .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--gold); background:rgba(46,229,138,.05) }
+.field textarea{ resize:vertical; min-height:96px }
+.field select option{ background:var(--night-2) }
+.book-submit{ grid-column:1/-1 }
+.book-submit button{ width:100%; justify-content:center }
+.book-msg{
+  grid-column:1/-1; border:1px solid var(--gold); border-radius:14px; padding:20px 22px;
+  background:linear-gradient(160deg, rgba(46,229,138,.12), rgba(180,77,255,.06)); display:none;
+}
+.book-msg.show{ display:block; animation:rise .5s }
+.book-msg h4{ font-family:var(--f-disp); font-size:24px; color:var(--gold); margin-bottom:8px }
+.book-msg p{ font-size:14.5px; color:var(--cream) }
+.book-msg .auto{ font-family:var(--f-mono); font-size:12px; color:var(--muted); margin-top:12px; border-top:1px solid var(--line); padding-top:12px }
+
+/* FOOTER */
+footer{ background:var(--night); border-top:1px solid var(--line); padding:70px 0 36px; position:relative; overflow:hidden }
+footer::before{ content:""; position:absolute; inset:auto 0 0 0; height:50%; z-index:0;
+  background:radial-gradient(80% 100% at 50% 130%, rgba(46,229,138,.22), transparent 70%) }
+.foot-inner{ position:relative; z-index:1 }
+.foot-mark{ font-family:var(--f-disp); font-size:clamp(54px,13vw,150px); line-height:.85; text-transform:uppercase;
+  color:#fff; text-align:center;
+  margin-bottom:30px }
+.socials{ display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-bottom:36px }
+.soc{
+  display:inline-grid; place-items:center; width:50px; height:50px; border-radius:50%;
+  border:1px solid var(--line); background:rgba(255,255,255,.04);
+  transition:transform .16s, border-color .2s, background .2s;
+}
+.soc:hover{ transform:translateY(-3px); border-color:var(--gold); background:rgba(255,255,255,.09) }
+.soc svg{ width:24px; height:24px; display:block }
+.foot-bottom{ display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; align-items:center;
+  border-top:1px solid var(--line); padding-top:24px; font-family:var(--f-mono); font-size:12px; color:var(--muted) }
+.foot-bottom a{ color:var(--gold) }
+
+/* ============================================================ animations */
+@keyframes rise{ from{ opacity:0; transform:translateY(26px) } to{ opacity:1; transform:translateY(0) } }
+@keyframes scroll{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
+@keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(46,229,138,.5) } 70%{ box-shadow:0 0 0 16px rgba(46,229,138,0) } 100%{ box-shadow:0 0 0 0 rgba(46,229,138,0) } }
+.reveal{ opacity:0; transform:translateY(34px); transition:opacity .7s ease, transform .7s var(--ease-out) }
+.reveal.in{ opacity:1; transform:none }
+
+/* ============================================================ responsive */
+@media (max-width:980px){
+  .stat-grid{ grid-template-columns:repeat(2,1fr) }
+  .release-grid{ grid-template-columns:repeat(2,1fr) }
+  .embeds{ grid-template-columns:1fr }
+  .about-grid{ grid-template-columns:1fr; gap:34px }
+  .video-grid{ grid-template-columns:repeat(2,1fr) }
+  .photo-grid{ columns:2 }
+  .book-grid{ grid-template-columns:1fr; gap:30px }
+  .yt-top{ grid-template-columns:1fr }
+  .yt-side{ flex-direction:row }
+  .yt-grid{ grid-template-columns:repeat(2,1fr) }
+  .merch-grid{ grid-template-columns:repeat(2,1fr) }
+  .merch-cta-block{ align-items:flex-start }
+}
+@media (max-width:680px){
+  .nav-links{
+    position:fixed; inset:0 0 0 auto; width:min(78vw,320px); flex-direction:column; align-items:flex-start;
+    gap:22px; padding:90px 30px; background:rgba(4,20,16,.97); backdrop-filter:blur(16px);
+    transform:translateX(100%); transition:transform .35s ease; border-left:1px solid var(--line); z-index:55;
+  }
+  .nav-links.open{ transform:translateX(0) }
+  .nav-links a{ font-size:18px; color:var(--cream) }
+  .burger{ display:block; z-index:60 }
+  .nav .nav-cta.desktop{ display:none }
+  .stat-grid{ grid-template-columns:1fr 1fr }
+  .release-grid{ grid-template-columns:1fr 1fr }
+  .video-grid{ grid-template-columns:1fr }
+  .photo-grid{ columns:1 }
+  .book-form{ grid-template-columns:1fr }
+  .hero-mini{ gap:18px }
+  .yt-grid{ grid-template-columns:1fr }
+  .yt-side{ flex-direction:column }
+  .yt-controls{ flex-direction:column; align-items:stretch }
+  .yt-search{ max-width:none }
+  .merch-grid{ grid-template-columns:1fr 1fr }
+}
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important }
+  .marquee-track{ animation:none }
+  .reveal{ opacity:1; transform:none }
+}
+
+/* ============================================================ Montserrat brand weights
+   (old display face had a single weight; set heavy weights here) */
+.brand, .stat .num, .release .art, .marquee span, .book-msg h4{ font-weight:800 }
+h2.section-title{ font-weight:800; letter-spacing:-.01em }
+.wordmark{ font-weight:900; letter-spacing:-.02em; font-size:clamp(44px, 12.5vw, 132px) }
+.foot-mark{ font-weight:900; letter-spacing:-.02em }
+.eyebrow, .stat .lab, .cal-foot, .show .when, .release .yr,
+.vid .vlabel p, .hero-mini .m, .tab, .field label, .book-msg .auto,
+.foot-bottom, .cal-day, .cal-dow span, .ph-note, .photo .ph{ letter-spacing:.04em }
+
+/* ============================================================ Flipside display face
+   Applied to the wordmark, brand logo, footer mark, and all section titles. */
+.brand{ font-family:'Flipside','Montserrat',sans-serif; letter-spacing:.02em }
+.wordmark{ font-family:'Flipside','Montserrat',sans-serif; font-weight:400; letter-spacing:.015em; line-height:.92; font-size:clamp(38px, 10.5vw, 116px) }
+h2.section-title{ font-family:'Flipside','Montserrat',sans-serif; font-weight:400; letter-spacing:.015em; line-height:.98; font-size:clamp(30px, 5.6vw, 72px) }
+.foot-mark{ font-family:'Flipside','Montserrat',sans-serif; font-weight:400; letter-spacing:.015em }
+
+/* MERCH */
+.merch{ background:linear-gradient(180deg,var(--night),var(--night-2)) }
+.merch-cta-block{ display:flex; flex-direction:column; align-items:flex-end; gap:16px; text-align:right }
+.merch-cta-block .lede{ max-width:34ch }
+.merch-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; perspective:800px }
+.merch-card{
+  border:1px solid var(--line); border-radius:14px; padding:18px; background:rgba(255,255,255,.02);
+  transition:transform .25s var(--ease-out), border-color .2s, background .2s, box-shadow .25s var(--ease-out);
+  display:flex; flex-direction:column;
+}
+.merch-card:hover{
+  transform:translateY(-5px) rotateX(3deg) rotateY(-3deg); border-color:var(--gold); background:rgba(46,229,138,.05);
+  box-shadow:0 20px 44px rgba(46,229,138,.22);
+}
+.merch-card .shot{ aspect-ratio:1; border-radius:10px; margin-bottom:14px; overflow:hidden; position:relative;
+  background:linear-gradient(150deg, var(--violet), var(--night-2)) }
+.merch-card .shot img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .3s ease }
+.merch-card:hover .shot img{ transform:scale(1.06) }
+.merch-card h4{ font-size:16px; font-weight:600; margin-bottom:4px }
+.merch-card .price{ font-family:var(--f-mono); font-size:13px; color:var(--gold); letter-spacing:.06em; margin-bottom:14px }
+.merch-card .btn{ margin-top:auto; width:100%; justify-content:center; font-size:12.5px; padding:12px 16px }
+.merch-empty{
+  grid-column:1/-1; text-align:center; padding:50px 24px; border:1px dashed rgba(46,229,138,.4); border-radius:var(--r);
+  background:rgba(46,229,138,.04); display:flex; flex-direction:column; align-items:center; gap:18px;
+}
+.merch-empty p{ color:var(--cream); font-size:15px; max-width:42ch }
+
+/* ============================================================ full-width photo band (full image, no crop) */
+.photoband{ position:relative; width:100%; background:var(--night); overflow:hidden; isolation:isolate }
+.photoband img{ width:100%; height:auto; display:block }
+.photoband::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:40%; z-index:1; pointer-events:none;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,.42)) }
+.photoband .cap{ position:absolute; left:var(--pad); bottom:clamp(18px,3.2vw,40px); z-index:2; max-width:min(560px,82vw) }
+.photoband .cap .eyebrow{ margin-bottom:10px }
+.photoband .cap p{ font-family:var(--f-body); font-weight:600; font-size:clamp(17px,2.4vw,28px); line-height:1.2;
+  color:var(--cream); text-shadow:0 2px 18px rgba(0,0,0,.9), 0 0 6px rgba(0,0,0,.7) }
+@media(max-width:680px){
+  .photoband::after{ display:none }
+  .photoband .cap{ position:static; padding:16px var(--pad) 26px; max-width:none }
+  .photoband .cap p{ font-size:18px; text-shadow:none }
+}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="Home"><span class="dot"></span><span id="brandName">DJ Pulse</span></a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#about">The Sound</a>
+    <a href="#music">Music</a>
+    <a href="#shows">Shows</a>
+    <a href="#media">Media</a>
+    <a href="#merch">Merch</a>
+    <a href="#book">Booking</a>
+    <a href="#book" class="nav-cta">Book Now</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<a id="top"></a>
+<section class="hero">
+  <div class="hero-stars" aria-hidden="true"><span class="layer layer-1"></span><span class="layer layer-2"></span></div>
+  <div class="hero-aurora" aria-hidden="true"></div>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <h1 class="wordmark" id="wordmark">DJ Pulse</h1>
+    <div class="hero-official">
+      <span class="ow">Official Website</span>
+      <span class="meta" id="heroMeta">DJ &amp; Producer</span>
+    </div>
+    <p class="hero-tag" id="heroTag">High-energy electronic music with heart — built for the dance floor.</p>
+    <div class="hero-cta">
+      <a href="#book" class="btn btn-primary">Book Now
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#music" class="btn btn-ghost">Hear the sound</a>
+    </div>
+    <div class="hero-mini" id="heroMini"></div>
+  </div>
+</section>
+
+<!-- ============================ MARQUEE ============================ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee"></div>
+</div>
+
+<!-- ============================ STATS ============================ -->
+<section class="stats" id="stats">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">By the numbers</span>
+        <h2 class="section-title"><span class="glow">The reach</span></h2>
+      </div>
+      <p class="lede">Momentum across stages, streams, and a growing catalog — every figure updates from the admin panel.</p>
+    </div>
+    <div class="stat-grid" id="statGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">The Sound</span>
+        <h2 class="section-title">Who is <span class="glow" id="aboutName">DJ Pulse</span></h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <div id="aboutCopy">
+          <p class="first">Your story goes here — every word is editable from the admin panel.</p>
+        </div>
+        <div class="creed" id="creed"></div>
+      </div>
+      <div class="portrait reveal" id="portrait" aria-label="Artist portrait">
+        <div class="grain"></div>
+        <div class="silhouette"></div>
+        <div class="ph-note">▲ Upload your portrait<br>from the admin panel</div>
+      </div>
+    </div>
+
+    </div>
+</section>
+
+<!-- ============================ MUSIC ============================ -->
+<section class="music" id="music">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">Original productions</span>
+        <h2 class="section-title">The <span class="glow">Music</span></h2>
+      </div>
+      <p class="lede">Press play. Stream the full catalog on Spotify and SoundCloud, or dive into featured releases below.</p>
+    </div>
+
+    <div class="embeds reveal" id="embeds" style="display:none">
+      <div class="embed-card" id="spotifyEmbed" hidden></div>
+      <div class="embed-card" id="soundcloudEmbed" hidden></div>
+    </div>
+
+    <div class="release-grid reveal" id="releaseGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ SHOWS ============================ -->
+<section class="shows" id="shows">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">On stage</span>
+        <h2 class="section-title">Live &amp; <span class="glow">Festivals</span></h2>
+      </div>
+      <a class="bit-btn" id="showsBtn" href="#" target="_blank" rel="noopener" style="display:none">
+        All dates &amp; tickets
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+    <div class="timeline" id="timeline"></div>
+    <a class="bit-foot" id="showsFoot" href="#" target="_blank" rel="noopener" style="display:none">
+      Follow on Bandsintown for every upcoming show
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============================ MEDIA ============================ -->
+<section class="media" id="media">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">See it live</span>
+        <h2 class="section-title"><span class="glow">Watch</span> &amp; view</h2>
+      </div>
+      <p class="lede">Performance clips and photos. Videos sync straight from the YouTube channel; photos are wired for upload from the admin panel.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="video" role="tab" aria-selected="true">Videos</button>
+        <button class="tab" data-tab="photo" role="tab" aria-selected="false">Photos</button>
+      </div>
+    </div>
+
+    <div class="yt-lib reveal" id="ytLib">
+      <div class="yt-top">
+        <div class="yt-featured" id="ytFeatured" aria-live="polite">
+          <div class="yt-skel" style="position:absolute;inset:0"></div>
+        </div>
+        <div class="yt-side">
+          <a class="btn btn-primary yt-cta" id="ytSubscribe" href="#" target="_blank" rel="noopener" style="display:none">Subscribe on YouTube</a>
+          <a class="btn btn-ghost yt-cta" id="ytMusic" href="#" target="_blank" rel="noopener" style="display:none">Listen on YouTube Music</a>
+        </div>
+      </div>
+
+      <div class="yt-controls">
+        <div class="yt-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="ytSearch" placeholder="Search videos…" aria-label="Search videos">
+        </div>
+        <div class="yt-sort">
+          <label for="ytSort">Sort</label>
+          <select id="ytSort">
+            <option value="newest">Newest</option>
+            <option value="views">Most viewed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="yt-grid" id="ytGrid"></div>
+      <p class="yt-empty" id="ytEmpty" hidden></p>
+      <button class="btn btn-ghost yt-more" id="ytMore" hidden type="button">Load more</button>
+    </div>
+    <div class="photo-grid hidden reveal" id="photoGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ MERCH ============================ -->
+<section class="merch" id="merch">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">Rep the sound</span>
+        <h2 class="section-title">The <span class="glow">Merch</span></h2>
+      </div>
+      <div class="merch-cta-block">
+        <p class="lede">Tees, hoodies, and more from the official store.</p>
+        <a class="btn btn-primary" id="merchStoreBtn" href="#" target="_blank" rel="noopener" style="display:none">Shop the full store →</a>
+      </div>
+    </div>
+    <div class="merch-grid reveal" id="merchGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ BOOKING ============================ -->
+<section class="booking" id="book">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">Let's make it loud</span>
+        <h2 class="section-title">Book <span class="glow" id="bookName">DJ Pulse</span></h2>
+      </div>
+      <p class="lede">Festivals, clubs, weddings, private parties, brand events. Pick a date, send the details, and you'll get an instant confirmation — and a personal follow-up within 24 hours.</p>
+    </div>
+
+    <div class="book-grid">
+      <!-- calendar -->
+      <div class="cal reveal">
+        <div class="cal-head">
+          <button class="cal-nav" id="calPrev" aria-label="Previous month">‹</button>
+          <b id="calLabel">Month</b>
+          <button class="cal-nav" id="calNext" aria-label="Next month">›</button>
+        </div>
+        <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div class="cal-days" id="calDays"></div>
+        <p class="cal-foot">Selected: <b id="calSelected">— pick a date —</b></p>
+      </div>
+
+      <!-- form -->
+      <form class="book-form reveal" id="bookForm" novalidate>
+        <div class="field">
+          <label for="bName">Your name</label>
+          <input id="bName" name="name" type="text" placeholder="Jane Promoter" required>
+        </div>
+        <div class="field">
+          <label for="bEmail">Email</label>
+          <input id="bEmail" name="email" type="email" placeholder="you@email.com" required>
+        </div>
+        <div class="field">
+          <label for="bType">Event type</label>
+          <select id="bType" name="type">
+            <option>Festival</option><option>Club night</option><option>Private party</option>
+            <option>Wedding</option><option>Corporate / brand</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bDate">Event date</label>
+          <input id="bDate" name="date" type="text" placeholder="Pick on the calendar" readonly>
+        </div>
+        <div class="field full">
+          <label for="bDetails">Tell us about it</label>
+          <textarea id="bDetails" name="details" placeholder="Venue, city, set length, crowd size, budget range, vibe…"></textarea>
+        </div>
+        <div class="book-submit">
+          <button type="submit" class="btn btn-primary">Send booking request
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+        <div class="book-msg" id="bookMsg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-mark" id="footMark">DJ Pulse</div>
+    <div class="socials" id="socials"></div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> <span id="footName">DJ Pulse</span> · DJ &amp; Producer</span>
+      <span>Bookings: <a href="#book">request a date</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   DEFAULT CONTENT — demo/fallback data that ships with the page.
+   Everything here is overridden by content.json, which is what
+   the /admin panel edits. Change content in the admin, not here.
+   ============================================================ */
+const DEFAULT_SITE = {
+  artist: {
+    name: "DJ Pulse",
+    role: "DJ & Producer",
+    location: "Your City",
+    tagline: "High-energy electronic music with heart — built for the dance floor.",
+    about: "This is demo copy — open the admin panel's Profile tab and make it yours. DJ Pulse is a DJ and producer bringing high-energy sets and melodic, feel-good productions to every stage.\n\nFrom intimate club nights to festival mainstages, every set is built to connect — driving rhythms, soaring melodies, and moments the dance floor remembers.\n\nEvery word on this site (plus photos, releases, shows, and links) is editable from the built-in admin panel — no code required.",
+    genres: ["Progressive House","Melodic Techno","Big Room","Bass House","Trance","Festival EDM"]
+  },
+  links: {
+    spotifyArtistUrl: "",
+    soundcloudUrl: "",
+    bandsintownUrl: "",
+    merchUrl: ""
+  },
+  youtube: {
+    channelUrl: "",
+    channelId: "",
+    apiKey: ""
+  },
+  stats: [
+    { num:"12K", lab:"Monthly Listeners", sub:"across platforms" },
+    { num:"25K", lab:"Social Followers",  sub:"and climbing" },
+    { num:"40+", lab:"Tracks Released",   sub:"original productions" },
+    { num:"30+", lab:"Shows Played",      sub:"clubs & festivals" }
+  ],
+  heroMini: [
+    { b:"40+",  s:"Original Tracks" },
+    { b:"30+",  s:"Live Shows" },
+    { b:"100%", s:"Crowd Energy" }
+  ],
+  releases: [
+    { t:"Afterglow",    y:"2026", c1:"#2EE58A", c2:"#B44DFF", url:"#" },
+    { t:"Midnight Run", y:"2026", c1:"#57FFD1", c2:"#14653F", url:"#" },
+    { t:"Waveform",     y:"2026", c1:"#B44DFF", c2:"#07241A", url:"#" },
+    { t:"Gravity",      y:"2025", c1:"#A9FFCF", c2:"#B44DFF", url:"#" },
+    { t:"Neon Skyline", y:"2025", c1:"#14653F", c2:"#2EE58A", url:"#" },
+    { t:"Pulse Check",  y:"2025", c1:"#2EE58A", c2:"#57FFD1", url:"#" },
+    { t:"Daybreak",     y:"2024", c1:"#A9FFCF", c2:"#2EE58A", url:"#" },
+    { t:"First Light",  y:"EP",   c1:"#57FFD1", c2:"#B44DFF", url:"#" }
+  ],
+  shows: [
+    { when:"Jun 2026", t:"Summer Festival Mainstage", p:"Demo show — replace with your real dates in the admin panel", tag:"Festival", up:true },
+    { when:"2025",     t:"Warehouse Club Night",      p:"Headline set · demo entry", tag:"Club" },
+    { when:"2025",     t:"Rooftop Sessions",          p:"Sunset open-to-close set · demo entry", tag:"Live" },
+    { when:"2024",     t:"First Festival Booking",    p:"Where it all started · demo entry", tag:"Festival" }
+  ],
+  videos: [],
+  merch: [],
+  photos: [],
+  portraitUrl: "",
+  social: [
+    { n:"Spotify",    url:"#" },
+    { n:"SoundCloud", url:"#" },
+    { n:"YouTube",    url:"#" },
+    { n:"Instagram",  url:"#" },
+    { n:"TikTok",     url:"#" }
+  ],
+  settings: { showBooking:true }
+};
+
+/* ---------- helpers ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const make = (html)=>{ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild; };
+
+/* ---------- live content: default data above is the fallback; content.json (edited in /admin) overrides it ---------- */
+let DOM = DEFAULT_SITE;
+const ICONS = {
+  "Spotify":"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.8-.96a.63.63 0 0 1-.28-1.22c3.83-.87 7.1-.5 9.73 1.1.3.18.39.58.21.87zm1.23-2.74a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.97-1.17a.78.78 0 1 1-.45-1.49c3.63-1.1 8.15-.56 11.24 1.34.36.22.48.7.25 1.06zm.11-2.85C14.42 8.07 9.1 7.87 6.03 8.8a.94.94 0 1 1-.54-1.8c3.52-1.06 9.4-.86 13.1 1.34a.94.94 0 0 1-.96 1.62z",
+  "SoundCloud":"M11.5 9.4c-.28 0-.5.22-.5.5v6.6c0 .28.22.5.5.5h7.3c1.6 0 2.9-1.3 2.9-2.9s-1.3-2.9-2.9-2.9c-.3 0-.6.05-.86.14C17.4 8.5 15.4 7 13.1 7c-.6 0-1.1.5-1.1 1.1v.8c-.16-.3-.34-.5-.5-.5zM9.5 10c-.28 0-.5.22-.5.5v5.5c0 .28.22.5.5.5s.5-.22.5-.5v-5.5c0-.28-.22-.5-.5-.5zM7.5 10.5c-.28 0-.5.22-.5.5v5c0 .28.22.5.5.5s.5-.22.5-.5v-5c0-.28-.22-.5-.5-.5zM5.5 11c-.28 0-.5.22-.5.5v4.5c0 .28.22.5.5.5s.5-.22.5-.5v-4.5c0-.28-.22-.5-.5-.5zM3.5 11.5c-.28 0-.5.22-.5.5v4c0 .28.22.5.5.5s.5-.22.5-.5v-4c0-.28-.22-.5-.5-.5z",
+  "YouTube":"M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.76-1.77C19.34 5.1 12 5.1 12 5.1s-7.34 0-8.84.43A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.76 1.77c1.5.43 8.84.43 8.84.43s7.34 0 8.84-.43a2.5 2.5 0 0 0 1.76-1.77C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z",
+  "Instagram":"M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.37 1.06.42 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.17-1.06.37-2.23.42-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.37-1.06-.42-2.23C2.2 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.37 2.23-.42C8.42 2.2 8.8 2.2 12 2.2zm0 4.86A4.94 4.94 0 1 0 12 17a4.94 4.94 0 0 0 0-9.94zm0 8.14A3.2 3.2 0 1 1 12 8.8a3.2 3.2 0 0 1 0 6.4zm6.3-8.34a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z",
+  "X":"M18.2 2H21l-6.55 7.48L22.5 22h-6.6l-5.17-6.76L4.8 22H2l7.02-8.02L1.5 2h6.77l4.68 6.18L18.2 2zm-1.16 18h1.83L7.05 3.9H5.1L17.04 20z",
+  "TikTok":"M16.5 2c.3 2.06 1.45 3.62 3.5 3.9v2.5c-1.2.12-2.35-.18-3.5-.78v6.4c0 4.2-3.3 6.5-6.3 5.85-2.9-.62-4.2-3.5-3.5-6.1.6-2.25 2.7-3.55 4.9-3.4v2.6c-.5-.05-1.05.05-1.55.3-1 .5-1.45 1.65-1.05 2.7.45 1.15 1.85 1.6 2.95.95.8-.46 1.05-1.26 1.05-2.16V2h3.5z",
+  "Apple Music":"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm3.5 4.6v6.93c0 1.27-.9 2.07-2 2.07-1.05 0-1.86-.74-1.86-1.74s.8-1.74 1.85-1.74c.36 0 .7.09.98.25V8.4l-4 1.04v5.05c0 1.27-.9 2.07-2 2.07-1.05 0-1.86-.74-1.86-1.74s.8-1.74 1.85-1.74c.36 0 .7.09.99.25V7.5l5.6-1.46c.27-.07.5.12.5.4z"
+};
+
+function renderAll(){
+/* ---------- artist identity ---------- */
+const A = DOM.artist || {};
+const artistName = A.name || "Your Name";
+document.title = artistName + " — Official Website";
+["brandName","wordmark","aboutName","bookName","footName"].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=artistName; });
+const _fm=document.getElementById('footMark'); if(_fm) _fm.innerHTML = escYt(artistName).trim().split(/\s+/).join('<br>');
+const _hmeta=document.getElementById('heroMeta'); if(_hmeta) _hmeta.textContent = (A.role||'DJ & Producer') + (A.location ? ' · '+A.location : '');
+const _htag=document.getElementById('heroTag'); if(_htag) _htag.textContent = A.tagline || '';
+const _ac=document.getElementById('aboutCopy');
+if(_ac){
+  const paras=String(A.about||'').split(/\n\s*\n/).filter(Boolean);
+  _ac.innerHTML = paras.map((p,i)=>`<p${i===0?' class="first"':''}>${escYt(p)}</p>`).join('') || '<p class="first">Add your story in the admin panel.</p>';
+}
+const _cr=document.getElementById('creed');
+if(_cr) _cr.innerHTML = (A.genres||[]).map(g=>`<span>${escYt(g)}</span>`).join('');
+
+/* ---------- external links & embeds ---------- */
+renderEmbeds();
+renderLinks();
+
+/* ---------- render hero mini ---------- */
+$('#heroMini').innerHTML = DOM.heroMini.map(m=>`<div class="m"><b>${m.b}</b><span>${m.s}</span></div>`).join('');
+
+/* ---------- marquee (actual events + years, derived from shows) ---------- */
+const yearOf = w => (String(w).match(/\d{4}/)||[''])[0];
+const credits = DOM.shows.map(s => /\d{4}/.test(s.t) ? s.t : `${s.t} ${yearOf(s.when)}`.trim());
+const mk = credits.map(c=>`<span>${c}<em>✦</em></span>`).join('');
+$('#marquee').innerHTML = mk + mk; // duplicate for seamless loop
+
+/* ---------- stats ---------- */
+$('#statGrid').innerHTML = DOM.stats.map(s=>`
+  <div class="stat"><div class="num">${s.num}</div><div class="lab">${s.lab}</div><div class="sub">${s.sub}</div></div>`).join('');
+
+/* ---------- releases ---------- */
+renderReleaseGrid();
+
+/* ---------- merch ---------- */
+renderMerchGrid();
+
+/* ---------- shows ---------- */
+$('#timeline').innerHTML = DOM.shows.map(s=>`
+  <div class="show ${s.up?'up':''}">
+    <div class="when">${s.when}</div>
+    <div class="what"><h4>${s.t}</h4><p>${s.p}</p></div>
+    <div class="tag">${s.up?'★ Latest · ':''}${s.tag}</div>
+  </div>`).join('');
+
+/* ---------- photos ---------- */
+const palettes=[['#14653F','#2EE58A'],['#B44DFF','#07241A'],['#57FFD1','#14653F'],['#2EE58A','#B44DFF'],['#07241A','#57FFD1'],['#B44DFF','#2EE58A']];
+const photoSizes=['tall','mid','','mid','tall','','mid','tall',''];
+const _photos=(DOM.photos&&DOM.photos.length)?DOM.photos:photoSizes.map((sz)=>({url:'',size:sz}));
+$('#photoGrid').innerHTML = _photos.map((p,i)=>{
+  const sz=(p&&p.size)||photoSizes[i%photoSizes.length]||'';
+  if(p&&p.url) return `<div class="photo ${sz}" style="position:relative;overflow:hidden"><img src="${p.url}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>`;
+  const g=`linear-gradient(${150+i*15}deg,${palettes[i%palettes.length][0]},${palettes[i%palettes.length][1]})`;
+  return `<div class="photo ${sz}" style="background:${g}"><div class="ph">Photo slot ${i+1}<br>upload-ready</div></div>`;
+}).join('');
+
+/* ---------- media tabs (attach once) ---------- */
+if(!window.__dvTabs){ window.__dvTabs=1;
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});
+  t.classList.add('active'); t.setAttribute('aria-selected','true');
+  const v=t.dataset.tab==='video';
+  $('#ytLib').classList.toggle('hidden',!v);
+  $('#photoGrid').classList.toggle('hidden',v);
+}));
+}
+
+/* ---------- socials (full-colour brand logos) ---------- */
+const SOC_COLORS = {
+  "Spotify":"#1DB954", "SoundCloud":"#FF5500", "YouTube":"#FF0000",
+  "X":"#FFFFFF", "Apple Music":"#FA243C"
+};
+function socIcon(s){
+  const P = s.p || ICONS[s.n] || '';
+  if(s.n==="Instagram"){
+    return `<svg viewBox="0 0 24 24"><defs>
+      <linearGradient id="igGrad" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#FEDA77"/><stop offset=".45" stop-color="#DD2A7B"/>
+        <stop offset=".75" stop-color="#9537B8"/><stop offset="1" stop-color="#515BD4"/>
+      </linearGradient></defs><path fill="url(#igGrad)" d="${P}"/></svg>`;
+  }
+  if(s.n==="TikTok"){
+    return `<svg viewBox="0 0 24 24">
+      <path d="${P}" fill="#25F4EE" transform="translate(-1.1 .9)"/>
+      <path d="${P}" fill="#FE2C55" transform="translate(1.1 -.9)"/>
+      <path d="${P}" fill="#FFFFFF"/></svg>`;
+  }
+  return `<svg viewBox="0 0 24 24"><path fill="${SOC_COLORS[s.n]||'#EBFBF1'}" d="${P}"/></svg>`;
+}
+$('#socials').innerHTML = DOM.social.map(s=>`
+  <a class="soc" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.n}" title="${s.n}">${socIcon(s)}</a>`).join('');
+
+/* ---------- section visibility toggles ---------- */
+const _showBk = !(DOM.settings && DOM.settings.showBooking===false);
+const _bk=document.getElementById('book'); if(_bk) _bk.style.display=_showBk?'':'none';
+document.querySelectorAll('a[href="#book"]').forEach(a=>{ a.style.display=_showBk?'':'none'; });
+
+if(DOM.portraitUrl){ const _p=$('#portrait'); if(_p){ _p.innerHTML='<img src="'+DOM.portraitUrl+'" alt="" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;z-index:2">'; } }
+} /* ---------- end renderAll ---------- */
+
+/* ---------- release grid (cover art matched in from gallery-manifest.json once it loads; see buildCoverMap below) ---------- */
+let releaseCoverMap = new Map();
+function renderReleaseGrid(){
+  $('#releaseGrid').innerHTML = DOM.releases.map(r=>{
+    const cover = releaseCoverMap.get(normTitle(r.t));
+    const art = cover ? `<img src="${cover}" alt="" loading="lazy" decoding="async">` : '';
+    return `
+  <a class="release" href="${r.url}" target="_blank" rel="noopener">
+    <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <div class="art" style="background:linear-gradient(150deg,${r.c1},${r.c2})">${art}<span${cover?' class="has-cover"':''}>${r.t}</span></div>
+    <div class="yr">${r.y}</div><h4>${r.t}</h4>
+  </a>`;
+  }).join('');
+}
+
+/* ---------- merch (manually curated in content.json — no product API) ---------- */
+function renderMerchGrid(){
+  const grid=$('#merchGrid'); if(!grid) return;
+  const items = DOM.merch || [];
+  const storeUrl = String((DOM.links && DOM.links.merchUrl) || '').trim();
+  const sec = document.getElementById('merch');
+  const show = !!(items.length || storeUrl);
+  if(sec) sec.style.display = show ? '' : 'none';
+  document.querySelectorAll('a[href="#merch"]').forEach(a=>{ a.style.display = show ? '' : 'none'; });
+  if(!show) return;
+  if(!items.length){
+    grid.innerHTML = `<div class="merch-empty">
+      <p>New merch drops soon — for now, shop the full store.</p>
+      <a class="btn btn-primary" href="${storeUrl}" target="_blank" rel="noopener">Shop the store →</a>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = items.map(m=>`
+  <div class="merch-card">
+    <div class="shot">${m.image?`<img src="${m.image}" alt="" loading="lazy" decoding="async">`:''}</div>
+    <h4>${m.name||''}</h4>
+    <div class="price">${m.price||''}</div>
+    ${(m.streamlabsUrl||storeUrl)?`<a class="btn btn-primary" href="${m.streamlabsUrl||storeUrl}" target="_blank" rel="noopener">Shop Now →</a>`:''}
+  </div>`).join('');
+}
+
+/* ---------- music embeds (Spotify / SoundCloud, set in admin Settings) ---------- */
+const THEME_PRIMARY = '#2EE58A';
+function renderEmbeds(){
+  const L = DOM.links || {};
+  const wrapEl = document.getElementById('embeds');
+  const sp = document.getElementById('spotifyEmbed'), sc = document.getElementById('soundcloudEmbed');
+  if(!wrapEl || !sp || !sc) return;
+  const spId = (String(L.spotifyArtistUrl||'').match(/artist\/([A-Za-z0-9]+)/)||[])[1] || '';
+  if(spId){
+    sp.hidden = false;
+    sp.innerHTML = `<iframe loading="lazy" title="Spotify player" src="https://open.spotify.com/embed/artist/${spId}?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  } else { sp.hidden = true; sp.innerHTML=''; }
+  const scUrl = String(L.soundcloudUrl||'').trim();
+  const scOk = /^https:\/\/(www\.)?soundcloud\.com\/.+/.test(scUrl);
+  if(scOk){
+    sc.hidden = false;
+    sc.innerHTML = `<iframe loading="lazy" title="SoundCloud player" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(scUrl)}&color=%23${THEME_PRIMARY.slice(1)}&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true"></iframe>`;
+  } else { sc.hidden = true; sc.innerHTML=''; }
+  const n = (spId?1:0)+(scOk?1:0);
+  wrapEl.style.display = n ? '' : 'none';
+  wrapEl.style.gridTemplateColumns = n===2 ? '' : '1fr';
+}
+
+/* ---------- outbound links (Bandsintown / merch store / YouTube CTAs) ---------- */
+function renderLinks(){
+  const L = DOM.links || {}, Y = DOM.youtube || {};
+  const bit = String(L.bandsintownUrl||'').trim();
+  ['showsBtn','showsFoot'].forEach(id=>{
+    const el = document.getElementById(id); if(!el) return;
+    el.style.display = bit ? '' : 'none';
+    if(bit) el.href = bit;
+  });
+  const mb = document.getElementById('merchStoreBtn');
+  const mu = String(L.merchUrl||'').trim();
+  if(mb){ mb.style.display = mu ? '' : 'none'; if(mu) mb.href = mu; }
+  const cu = String(Y.channelUrl||'').trim();
+  const sub = document.getElementById('ytSubscribe');
+  if(sub){ sub.style.display = cu ? '' : 'none'; if(cu) sub.href = cu; }
+  const cid = String(Y.channelId||'').trim();
+  const mus = document.getElementById('ytMusic');
+  if(mus){ mus.style.display = cid ? '' : 'none'; if(cid) mus.href = 'https://music.youtube.com/channel/'+cid.replace(/^UU/,'UC'); }
+}
+
+/* ============================================================
+   YOUTUBE LIBRARY — pulls the channel's uploads straight from the
+   YouTube Data API using the key + channel ID saved in the admin
+   Settings tab. RSS fallback if the API fails; CTA-only if both do.
+   ============================================================ */
+const YT = { all:[], visible:9, sort:'newest', query:'', activeId:null, ready:false, coverMap:new Map() };
+
+function normTitle(s){
+  return (s||'').toLowerCase()
+    .replace(/\(feat\.[^)]*\)/g,' ')
+    .replace(/\bfeat\.[^-|]*/g,' ')
+    .replace(/\b(official\s*)?(audio|video|lyric video|lyrics|visualizer|music video)\b/g,' ')
+    .replace(/[^\p{L}\p{N}]+/gu,' ')
+    .trim().replace(/\s+/g,' ');
+}
+function escYt(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function extractYtId(raw){
+  if(!raw) return '';
+  raw = String(raw).trim();
+  if(/^[\w-]{11}$/.test(raw)) return raw;
+  const m = raw.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+  return m ? m[1] : '';
+}
+function fmtViews(n){
+  if(!n) return '';
+  if(n>=1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'')+'M views';
+  if(n>=1000) return (n/1000).toFixed(1).replace(/\.0$/,'')+'K views';
+  return n+' view'+(n===1?'':'s');
+}
+function fmtAgo(iso){
+  if(!iso) return '';
+  const secs=(Date.now()-new Date(iso).getTime())/1000;
+  const units=[['yr',31536000],['mo',2592000],['wk',604800],['day',86400],['hr',3600],['min',60]];
+  for(const [label,unitSecs] of units){ const v=Math.floor(secs/unitSecs); if(v>=1) return `${v} ${label}${v>1?'s':''} ago`; }
+  return 'just now';
+}
+
+const galleryManifestPromise = fetch('gallery-manifest.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).catch(()=>[]);
+async function buildCoverMap(){
+  const manifest = await galleryManifestPromise;
+  const map = new Map();
+  (Array.isArray(manifest)?manifest:[]).forEach(m=>{ if(m && m.title && m.image_file) map.set(normTitle(m.title), m.image_file); });
+  return map;
+}
+function logUnmatchedTitles(){
+  const unmatched = YT.all.filter(v=>!YT.coverMap.has(normTitle(v.title)));
+  if(unmatched.length){
+    console.groupCollapsed(`[YouTube Library] ${unmatched.length} video title(s) unmatched to gallery-manifest.json`);
+    unmatched.forEach(v=>console.info(v.title));
+    console.groupEnd();
+  }
+}
+
+function parseYouTubeRSS(xml){
+  const doc = new DOMParser().parseFromString(xml,'application/xml');
+  return Array.from(doc.getElementsByTagNameNS('*','entry')).map(entry=>{
+    const get=(tag)=>{ const el=entry.getElementsByTagNameNS('*',tag)[0]; return el?el.textContent:''; };
+    const id = get('videoId');
+    const thumbEl = entry.getElementsByTagNameNS('*','thumbnail')[0];
+    const thumb = thumbEl ? thumbEl.getAttribute('url') : (id?`https://i.ytimg.com/vi/${id}/hqdefault.jpg`:'');
+    return { id, title:get('title'), publishedAt:get('published')||null, duration:'', views:0, thumb:{medium:thumb,high:thumb} };
+  }).filter(v=>v.id);
+}
+
+function currentFeaturedVideo(){
+  if(YT.activeId){ const m=YT.all.find(v=>v.id===YT.activeId); if(m) return m; }
+  const override = extractYtId(DOM.settings && DOM.settings.featuredVideoId);
+  if(override){ const m=YT.all.find(v=>v.id===override); if(m) return m; }
+  return YT.all[0];
+}
+
+function renderYtFeatured(video){
+  const el=$('#ytFeatured'); if(!el || !video) return;
+  el.classList.remove('playing');
+  el.dataset.id = video.id;
+  const thumb = (video.thumb && (video.thumb.maxres||video.thumb.high||video.thumb.medium)) || '';
+  el.innerHTML = `
+    <img src="${thumb}" alt="" loading="eager" onerror="this.style.display='none'">
+    <button class="pbtn" type="button" aria-label="Play ${escYt(video.title)}">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="yt-meta"><h4>${escYt(video.title)}</h4><p>${fmtAgo(video.publishedAt)}${video.views?' · '+fmtViews(video.views):''}</p></div>`;
+  el.querySelector('.pbtn').addEventListener('click', ()=>playFeatured(video));
+}
+
+function playFeatured(video){
+  const el=$('#ytFeatured'); if(!el) return;
+  el.classList.add('playing');
+  el.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0" title="${escYt(video.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  YT.activeId = video.id;
+}
+
+function filteredSortedVideos(){
+  const q = YT.query.trim().toLowerCase();
+  let list = YT.all.filter(v=> !q || v.title.toLowerCase().includes(q));
+  list = list.slice();
+  if(YT.sort==='views') list.sort((a,b)=> (b.views||0)-(a.views||0));
+  else list.sort((a,b)=> new Date(b.publishedAt||0) - new Date(a.publishedAt||0));
+  return list;
+}
+
+function renderYtGrid(){
+  const list = filteredSortedVideos();
+  const shown = list.slice(0, YT.visible);
+  const grid=$('#ytGrid'), empty=$('#ytEmpty'), more=$('#ytMore');
+  if(!list.length){
+    grid.innerHTML=''; empty.hidden=false; empty.textContent='No videos match your search.'; more.hidden=true; return;
+  }
+  empty.hidden=true;
+  grid.innerHTML = shown.map(v=>{
+    const cover = YT.coverMap.get(normTitle(v.title));
+    const thumb = (v.thumb && (v.thumb.medium||v.thumb.high)) || '';
+    return `<button class="yt-card" type="button" data-id="${v.id}">
+      <div class="thumb">
+        <img src="${thumb}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'">
+        ${v.duration?`<span class="dur">${v.duration}</span>`:''}
+        ${cover?`<span class="cover-badge">Single available</span>`:''}
+      </div>
+      <h5>${escYt(v.title)}</h5>
+      <p class="yt-sub"><span>${fmtAgo(v.publishedAt)}</span>${v.views?`<span>${fmtViews(v.views)}</span>`:''}</p>
+    </button>`;
+  }).join('');
+  more.hidden = list.length <= YT.visible;
+  grid.querySelectorAll('.yt-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const v = YT.all.find(x=>x.id===card.dataset.id);
+      if(!v) return;
+      renderYtFeatured(v);
+      playFeatured(v);
+      $('#ytFeatured').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+    });
+  });
+}
+
+function bindYtControls(){
+  if(window.__ytControlsBound) return; window.__ytControlsBound=true;
+  $('#ytSearch').addEventListener('input', e=>{ YT.query=e.target.value; YT.visible=9; renderYtGrid(); });
+  $('#ytSort').addEventListener('change', e=>{ YT.sort=e.target.value; YT.visible=9; renderYtGrid(); });
+  $('#ytMore').addEventListener('click', ()=>{ YT.visible+=9; renderYtGrid(); });
+}
+
+function renderYtUnavailable(){
+  $('#ytFeatured').innerHTML = '';
+  $('#ytGrid').innerHTML = '';
+  const empty=$('#ytEmpty');
+  empty.hidden=false;
+  const cu=String((DOM.youtube&&DOM.youtube.channelUrl)||'').trim();
+  empty.innerHTML = cu
+    ? 'Videos are taking a breather — <a href="'+cu+'" target="_blank" rel="noopener" style="color:var(--gold)">watch on YouTube</a> in the meantime.'
+    : 'Connect your YouTube channel in the admin panel (Settings tab) and your videos will appear here automatically.';
+  $('#ytMore').hidden=true;
+  const controls=document.querySelector('.yt-controls'); if(controls) controls.hidden=true;
+}
+
+function fmtDuration(iso){
+  const m=/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(iso||'');
+  if(!m) return '';
+  const h=+(m[1]||0), mi=+(m[2]||0), s=+(m[3]||0), ss=String(s).padStart(2,'0');
+  return h>0 ? h+':'+String(mi).padStart(2,'0')+':'+ss : mi+':'+ss;
+}
+async function ytApi(key,path,params){
+  const url=new URL('https://www.googleapis.com/youtube/v3/'+path);
+  Object.entries(params).forEach(([k,v])=>url.searchParams.set(k,v));
+  url.searchParams.set('key',key);
+  const r=await fetch(url);
+  if(!r.ok) throw new Error('YouTube API '+r.status);
+  return r.json();
+}
+async function fetchYtLibrary(key,channelId){
+  const uploads=channelId.replace(/^UC/,'UU');
+  let ids=[], pageToken='', pages=0;
+  do{
+    const page=await ytApi(key,'playlistItems',Object.assign(
+      {part:'contentDetails',playlistId:uploads,maxResults:'50'},
+      pageToken?{pageToken}:{}));
+    (page.items||[]).forEach(it=>{ const id=it.contentDetails&&it.contentDetails.videoId; if(id) ids.push(id); });
+    pageToken=page.nextPageToken||''; pages++;
+  }while(pageToken && pages<8);
+  const videos=[];
+  for(let i=0;i<ids.length;i+=50){
+    const page=await ytApi(key,'videos',{part:'snippet,statistics,contentDetails,status',id:ids.slice(i,i+50).join(',')});
+    (page.items||[]).forEach(v=>{
+      const st=v.status||{};
+      if(st.privacyStatus!=='public') return;
+      if(st.uploadStatus && st.uploadStatus!=='processed') return;
+      const th=(v.snippet&&v.snippet.thumbnails)||{};
+      videos.push({
+        id:v.id,
+        title:(v.snippet&&v.snippet.title)||'',
+        publishedAt:(v.snippet&&v.snippet.publishedAt)||null,
+        duration:fmtDuration(v.contentDetails&&v.contentDetails.duration),
+        views:Number((v.statistics&&v.statistics.viewCount)||0),
+        thumb:Object.assign(
+          {medium:(th.medium&&th.medium.url)||(th.default&&th.default.url)||'',
+           high:(th.high&&th.high.url)||(th.medium&&th.medium.url)||''},
+          th.maxres?{maxres:th.maxres.url}:{})
+      });
+    });
+  }
+  videos.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
+  return videos;
+}
+async function loadYouTubeLibrary(){
+  const grid=$('#ytGrid');
+  grid.innerHTML = Array.from({length:6}).map(()=>'<div class="yt-card"><div class="thumb yt-skel"></div></div>').join('');
+  const Y=DOM.youtube||{};
+  const key=String(Y.apiKey||'').trim();
+  const cid=String(Y.channelId||'').trim().replace(/^UU/,'UC');
+  let videos=[];
+  if(key && cid){
+    try{ videos=await fetchYtLibrary(key,cid); }
+    catch(e){ console.warn('[YouTube] API load failed:', e.message||e); }
+  }
+  if(!videos.length && cid){
+    try{
+      const rss=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id='+cid))
+        .then(r=> r.ok ? r.text() : Promise.reject(new Error('rss failed')));
+      videos=parseYouTubeRSS(rss);
+    }catch(e2){}
+  }
+  if(!videos.length){ renderYtUnavailable(); return; }
+  YT.all=videos;
+  YT.coverMap = await buildCoverMap();
+  YT.ready = true;
+  bindYtControls();
+  renderYtFeatured(currentFeaturedVideo());
+  renderYtGrid();
+  const controls=document.querySelector('.yt-controls'); if(controls) controls.hidden=false;
+}
+
+$('#yr').textContent = new Date().getFullYear();
+
+/* paint with defaults immediately, then swap in live content.json (edited via /admin) */
+renderAll();
+fetch('content.json',{cache:'no-store'})
+  .then(r=>r.ok?r.json():null)
+  .catch(()=>null)
+  .then(d=>{
+    if(d&&typeof d==='object'){
+      const merged=Object.assign({},DEFAULT_SITE,d);
+      merged.artist=Object.assign({},DEFAULT_SITE.artist,d.artist||{});
+      merged.links=Object.assign({},DEFAULT_SITE.links,d.links||{});
+      merged.youtube=Object.assign({},DEFAULT_SITE.youtube,d.youtube||{});
+      DOM=merged; renderAll();
+    }
+    loadYouTubeLibrary();
+  });
+buildCoverMap().then(map=>{ releaseCoverMap=map; renderReleaseGrid(); });
+
+/* ============================================================ NAV behaviour */
+const nav=$('#nav'), burger=$('#burger'), navLinks=$('#navLinks');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled', scrollY>40));
+burger.addEventListener('click',()=>{
+  const open=navLinks.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  navLinks.classList.remove('open'); burger.setAttribute('aria-expanded',false);
+}));
+
+/* ============================================================ scroll reveal */
+const io=new IntersectionObserver((es)=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ============================================================ magnetic buttons — desktop fine-pointer only, respects reduced motion */
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer:fine)').matches) return;
+  document.querySelectorAll('.btn').forEach(btn=>{
+    btn.addEventListener('mousemove', e=>{
+      const r=btn.getBoundingClientRect();
+      const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2;
+      btn.style.transform=`translateY(${-3+y*0.25}px) translateX(${x*0.15}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform=''; });
+  });
+})();
+
+/* ---------- full bio expander ---------- */
+(function(){
+  const t=$('#bioToggle'), f=$('#bioFull'); if(!t||!f) return;
+  t.addEventListener('click',()=>{
+    const open=f.classList.toggle('open');
+    t.setAttribute('aria-expanded',open);
+    t.querySelector('.bt-label').textContent = open ? 'Show less' : 'Read the full story';
+  });
+})();
+
+/* ============================================================ BOOKING calendar */
+const calDays=$('#calDays'), calLabel=$('#calLabel'), calSel=$('#calSelected'), dateInput=$('#bDate');
+let view=new Date(); view.setDate(1);
+const today=new Date(); today.setHours(0,0,0,0);
+let selected=null;
+const MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function renderCal(){
+  calLabel.textContent = `${MON[view.getMonth()]} ${view.getFullYear()}`;
+  const start=view.getDay(), days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+  let html='';
+  for(let i=0;i<start;i++) html+='<button class="cal-day empty" disabled tabindex="-1"></button>';
+  for(let d=1;d<=days;d++){
+    const date=new Date(view.getFullYear(),view.getMonth(),d);
+    const past=date<today;
+    const isSel=selected && date.getTime()===selected.getTime();
+    html+=`<button class="cal-day${isSel?' sel':''}" data-d="${d}" ${past?'disabled':''}>${d}</button>`;
+  }
+  calDays.innerHTML=html;
+  calDays.querySelectorAll('.cal-day:not(.empty):not([disabled])').forEach(b=>b.addEventListener('click',()=>{
+    selected=new Date(view.getFullYear(),view.getMonth(),+b.dataset.d);
+    const txt=selected.toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric',year:'numeric'});
+    calSel.textContent=txt; dateInput.value=txt;
+    renderCal();
+  }));
+}
+$('#calPrev').addEventListener('click',()=>{ view.setMonth(view.getMonth()-1); renderCal(); });
+$('#calNext').addEventListener('click',()=>{ view.setMonth(view.getMonth()+1); renderCal(); });
+renderCal();
+
+/* ============================================================ BOOKING submit (front-end simulation) */
+$('#bookForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const f=e.target, name=f.name.value.trim(), email=f.email.value.trim();
+  const msg=$('#bookMsg');
+  if(!name||!email||!dateInput.value){
+    msg.className='book-msg show';
+    msg.innerHTML=`<h4>Almost there</h4><p>Add your name, email, and pick a date on the calendar so we can get back to you.</p>`;
+    msg.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  msg.className='book-msg show';
+  msg.innerHTML=`
+    <h4>Demo — request previewed ✦</h4>
+    <p>Thanks, ${name.split(' ')[0]} — this demo just previewed a <b>${f.type.value}</b> request for <b>${dateInput.value}</b>. On your live site, this request goes straight to your inbox.</p>
+    <p class="auto">Demo form — no email was sent and nothing was booked. The live version connects to your email or booking service.</p>`;
+  msg.scrollIntoView({behavior:'smooth',block:'center'});
+  f.querySelectorAll('input,textarea').forEach(i=>{ if(i.type!=='submit') i.value=''; });
+  dateInput.value=''; calSel.textContent='— pick a date —'; selected=null; renderCal();
+});
+
+/* ============================================================ HERO canvas: rising embers + live music waveform
+   A beat-driven audio visualizer: bass bars (left) move slow & heavy and slam on
+   each kick; treble bars (right) flicker fast; a traveling sweep moves energy across
+   like a track playing; the waveform mirrors as a reflection on the gold horizon. */
+(function(){
+  const c=$('#sky'), ctx=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TAU=Math.PI*2;
+  const hash=n=>{ const s=Math.sin(n*12.9898)*43758.545; return s-Math.floor(s); };
+  let W,H,DPR,parts=[],bars=0,raf,t0=performance.now();
+
+  function size(){
+    DPR=Math.min(devicePixelRatio||1,2);
+    W=c.width=innerWidth*DPR; H=c.height=c.offsetHeight*DPR;
+    bars=Math.max(26, Math.round((W/DPR)/7));    // dense + responsive
+  }
+  function seed(){
+    parts=[]; const n=Math.round((W/DPR)/16);
+    for(let i=0;i<n;i++) parts.push({
+      x:Math.random()*W, y:Math.random()*H, r:(Math.random()*1.5+.4)*DPR,
+      s:(Math.random()*.45+.12)*DPR, a:Math.random()*.55+.2, hue:Math.random()<.5?'#A9FFCF':'#57FFD1'
+    });
+  }
+  // per-bar amplitude (0..~1.5). i: bar index, now: seconds, kick: beat envelope
+  function amp(i, now, kick){
+    const p=i/(bars-1), treble=p, h1=hash(i), h2=hash(i+97);
+    const spd=2.2+treble*15, ph=h1*TAU;
+    let a = 0.55*Math.abs(Math.sin(now*spd+ph))            // fast detail
+          + 0.30*Math.abs(Math.sin(now*spd*0.5+h2*TAU))    // mid body
+          + 0.25*(0.5+0.5*Math.sin(now*1.6+p*7));          // slow common swell
+    a *= 0.70+0.30*(0.5+0.5*Math.sin(p*9-now*3.2));        // traveling sweep across
+    a += kick*(1-treble)*0.95 + kick*0.12;                 // beat: bass slams hardest
+    a *= 0.75+0.25*h2;                                     // per-bar variety
+    const env=Math.pow(Math.sin(p*Math.PI),0.55);          // taper the edges
+    return a*(0.30+0.70*env);
+  }
+  function bar(x,y,w,h,r){
+    if(h<=0) return;
+    if(ctx.roundRect){ ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fill(); }
+    else ctx.fillRect(x,y,w,h);
+  }
+  function frame(now){
+    const baseY=H*0.89, maxUp=H*0.103, maxDown=H*0.038;
+    const slot=W/bars, bw=Math.max(2*DPR, slot*0.56), r=bw*0.5;
+    const bps=126/60, kick=Math.pow(1-((now*bps)%1),4);    // 126 BPM kick
+
+    ctx.clearRect(0,0,W,H);
+
+    // embers drifting up (behind)
+    for(const pt of parts){
+      pt.y-=pt.s; pt.x+=Math.sin(now+pt.y*0.01)*0.2*DPR;
+      if(pt.y<-10){ pt.y=H+10; pt.x=Math.random()*W; }
+      ctx.beginPath(); ctx.arc(pt.x,pt.y,pt.r,0,TAU);
+      ctx.fillStyle=pt.hue; ctx.globalAlpha=pt.a*(0.45+0.45*Math.sin(now*2+pt.x));
+      ctx.fill();
+    }
+    ctx.globalAlpha=1;
+
+    // precompute amplitudes once
+    const A=new Array(bars);
+    for(let i=0;i<bars;i++) A[i]=Math.min(amp(i,now,kick),1.5);
+
+    const grad=ctx.createLinearGradient(0,0,W,0);
+    grad.addColorStop(0,'#B44DFF'); grad.addColorStop(.5,'#2EE58A'); grad.addColorStop(1,'#A9FFCF');
+
+    // reflection below the horizon (draw first, dim)
+    ctx.globalAlpha=0.18; ctx.fillStyle=grad;
+    for(let i=0;i<bars;i++){ const x=i*slot+(slot-bw)/2; bar(x, baseY+1, bw, A[i]*maxDown, r); }
+    ctx.globalAlpha=1;
+
+    // main bars
+    ctx.fillStyle=grad;
+    for(let i=0;i<bars;i++){ const x=i*slot+(slot-bw)/2; bar(x, baseY-A[i]*maxUp, bw, A[i]*maxUp, r); }
+
+    // bright glowing tips
+    ctx.fillStyle='#DFFFED'; ctx.globalAlpha=0.92;
+    for(let i=0;i<bars;i++){
+      const up=A[i]*maxUp; if(up<bw) continue;
+      bar(i*slot+(slot-bw)/2, baseY-up, bw, Math.min(bw,3.4*DPR), r);
+    }
+    ctx.globalAlpha=1;
+
+    // glowing horizon line
+    ctx.strokeStyle=grad; ctx.lineWidth=2*DPR;
+    ctx.shadowColor='#2EE58A'; ctx.shadowBlur=16*DPR;
+    ctx.beginPath(); ctx.moveTo(0,baseY); ctx.lineTo(W,baseY); ctx.stroke();
+    ctx.shadowBlur=0;
+  }
+  function loop(){ frame((performance.now()-t0)/1000); raf=requestAnimationFrame(loop); }
+  function start(){ size(); seed(); cancelAnimationFrame(raf); reduce?frame(2):loop(); }
+  addEventListener('resize',()=>{ clearTimeout(window._rz); window._rz=setTimeout(start,150); });
+  start();
+})();
+
+/* ============================================================ HERO parallax stars + aurora sweep (scroll-synced, additive over the canvas above) */
+(function(){
+  const hero=$('.hero'), stars=document.querySelectorAll('.hero-stars .layer'), aurora=$('.hero-aurora');
+  if(!hero || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking=false;
+  function update(){
+    ticking=false;
+    const rect=hero.getBoundingClientRect();
+    const progress=Math.min(1, Math.max(0, -rect.top/(rect.height||1)));
+    stars.forEach((layer,i)=>{ layer.style.transform=`translateY(${progress*(24+i*36)}px)`; });
+    if(aurora){ aurora.style.opacity=String(.55*(1-progress*.8)); aurora.style.setProperty('--aurora-x',`${50+progress*18}%`); }
+  }
+  addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(update); } }, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

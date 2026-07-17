@@ -1,0 +1,93 @@
+{
+  "brand": {
+    "name": "Huckleberry Sitters",
+    "tagline": "Go out. Bedtime is handled.",
+    "phone": "(208) 555-0338",
+    "email": "hello@huckleberrysitters.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Star, ID"
+  },
+  "stats": [
+    { "num": "1", "label": "family at a time — your house, your rules, your routine" },
+    { "num": "10 min", "label": "early, every visit — the handoff never gets skipped" },
+    { "num": "0", "label": "surprise fees — the rate we agree on is the rate you pay" }
+  ],
+  "services": [
+    { "title": "Date Night", "from": "from $16/hr", "desc": "An evening out without the group-text scramble. Your sitter arrives before you leave, runs the routine you set, and sends you out the door unhurried." },
+    { "title": "After School", "from": "from $16/hr", "desc": "Pickup-time to parent-time coverage — snacks, homework minutes, and backyard energy burned off before dinner." },
+    { "title": "Occasional Daytime", "from": "from $16/hr", "desc": "Work-from-home crunch days, appointments, a morning to yourself — daytime hours booked by the block, no weekly commitment." },
+    { "title": "Mother's Helper", "from": "from $14/hr", "desc": "An extra pair of hands while you're home — new-baby weeks, big-family evenings, party prep. You stay in charge; we keep the little ones busy." }
+  ],
+  "ageBands": [
+    { "id": "infant", "label": "Infant (0–1)" },
+    { "id": "toddler", "label": "Toddler (1–3)" },
+    { "id": "preschool", "label": "Preschool (3–5)" },
+    { "id": "school", "label": "School-age (5–12)" }
+  ],
+  "careTimes": [
+    { "id": "weekeve", "label": "Weekday evening", "bump": "0" },
+    { "id": "weekend", "label": "Weekend evening", "bump": "2" },
+    { "id": "afterschool", "label": "After school", "bump": "0" },
+    { "id": "daytime", "label": "Occasional daytime", "bump": "0" }
+  ],
+  "careNeeds": [
+    { "id": "homework", "label": "Homework help" },
+    { "id": "dinner", "label": "Simple dinner" },
+    { "id": "bedtime", "label": "Bedtime routine" },
+    { "id": "tidy", "label": "Light tidy-up" },
+    { "id": "pets", "label": "Pet-friendly sitter" }
+  ],
+  "rundown": [
+    { "slot": "Arrival", "need": "", "desc": "Your sitter arrives ten minutes early for the handoff — house notes, allergies, routines, and where the snacks live." },
+    { "slot": "Settling in", "need": "", "desc": "Shoes off, coats up, and straight into whatever your kids are into — blocks, backyard, board games. Screens follow your house rules; we default to off." },
+    { "slot": "Homework", "need": "homework", "desc": "Backpacks open before the fun stuff. Your sitter sits with them through worksheets and reading minutes — encouraging, not doing it for them." },
+    { "slot": "Dinner", "need": "dinner", "desc": "Something simple and kid-approved — mac and cheese, quesadillas, whatever you've left in the fridge with instructions." },
+    { "slot": "Tidy-up", "need": "tidy", "desc": "Toys back in bins, dishes in the dishwasher, kitchen wiped down. You come home to the house you left." },
+    { "slot": "Pet check", "need": "pets", "desc": "Dog let out, water bowls topped up, cat left to supervise from the stairs. Sitters comfortable around animals, matched on request." },
+    { "slot": "Wind-down", "need": "", "desc": "Lights lower, voices lower — a book pile and quiet play so bedtime doesn't arrive as a surprise." },
+    { "slot": "Bedtime", "need": "bedtime", "desc": "Your routine, run your way — bath if it's a bath night, teeth, one more book (just one), and the door left open the exact right amount." },
+    { "slot": "Your note at pickup", "need": "", "desc": "What they ate, what they played, how bedtime landed — waiting for you in a quick note when you walk in." }
+  ],
+  "rates": {
+    "base": "16",
+    "perExtraKid": "3",
+    "weekendBump": "2"
+  },
+  "ratesNote": "Every rate is confirmed together before your first booking — and the number we agree on is the number you pay. No booking fees, no surge pricing, no app taking a cut.",
+  "howItWorks": [
+    { "title": "Say hello first", "desc": "Every new family starts with a meet-and-greet. The sitter comes by, the kids size them up, and you ask everything you want to ask." },
+    { "title": "Book your evening", "desc": "Text us or use the form below — the date, the hours, the crew. We confirm your sitter and the rate before anything is locked in." },
+    { "title": "Leave your notes", "desc": "Routines, allergies, the bedtime order of operations. Your sitter runs your evening the way you would — not a stranger's version of it." }
+  ],
+  "approach": [
+    { "title": "Engagement over screens", "desc": "Sitters come with pockets full of games, not a tablet. Screens follow your house rules — and our default is off." },
+    { "title": "Your routines, run your way", "desc": "Dinner rules, homework order, bedtime steps — you set them, we follow them. Kids relax when their evening looks familiar." },
+    { "title": "You'll never wonder", "desc": "Plans change? You get a text. Great evening? You get the story at pickup — what they ate, what they played, how bedtime landed." }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": ["Star", "Eagle", "Middleton", "Garden City", "West Boise"]
+  },
+  "owner": {
+    "name": "Maren Voss",
+    "heading": "How Huckleberry started",
+    "bio": "Maren Voss was the seventh number in every group text that started with \"this is so last minute, but…\". A mom of three in Star, she was the neighbor who always knew a sitter — until knowing one wasn't enough, and she started matching them to families on purpose. Huckleberry Sitters is that habit, grown up: a small circle of sitters she'd trust with her own three, a meet-and-greet before any booking, and evenings that run on your family's routine instead of a stranger's guesswork.",
+    "photo": ""
+  },
+  "testimonials": [
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" },
+    { "quote": "", "name": "" }
+  ],
+  "faq": [
+    { "q": "Are you a daycare?", "a": "No — and that's on purpose. We're the babysitter: one family at a time, in your own home, on your schedule. We don't run a facility, we don't do all-day group care, and your kids never leave the house. If you need full-time weekday care, a daycare is the right tool — we're the evenings-and-in-between people." },
+    { "q": "Do we meet the sitter before we book?", "a": "Always. Every new family starts with a meet-and-greet — the sitter comes by, the kids size them up, you ask everything you want to ask. You book a sitter after you've met them, never before." },
+    { "q": "Who are your sitters?", "a": "People we know personally, not names from an app. Every sitter starts as someone from our own circle here in Star, and every family meets them before booking. If the fit isn't right, we'll suggest someone else — no hard feelings." },
+    { "q": "What does it cost?", "a": "The base rate covers one kid; each additional kid and weekend evenings add a little. The exact math is in the rates section, and the planner above estimates it for your crew. We confirm the final rate together before your first booking." },
+    { "q": "What about bedtime?", "a": "You write the routine, we run it — bath nights, teeth, which stuffed animal is the right one, how far the door stays open. Kids do best with their own routine, so we don't improvise a new one." },
+    { "q": "Can you handle pets?", "a": "A dog that needs letting out, a cat that needs ignoring — tap \"Pet-friendly sitter\" in the planner and we'll match you with someone comfortable around animals. For pets with special handling, leave notes like you would for the kids." },
+    { "q": "What if our plans change?", "a": "Text us. Evenings can be rebooked or cancelled without drama — we'd rather keep your trust than charge you for a night that didn't happen." }
+  ],
+  "social": []
+}

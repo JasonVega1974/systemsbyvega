@@ -1,0 +1,276 @@
+{
+  "brand": {
+    "name": "Rimrock Garage",
+    "tagline": "Fixed right. Explained first.",
+    "phone": "(208) 555-0183",
+    "email": "hello@rimrockgarage.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Parma, ID"
+  },
+  "stats": [
+    {
+      "num": "20 yrs",
+      "label": "Turning wrenches in Canyon County"
+    },
+    {
+      "num": "1",
+      "label": "Written number before any work starts"
+    },
+    {
+      "num": "0",
+      "label": "Surprise line items on the final bill"
+    }
+  ],
+  "services": [
+    {
+      "title": "Brakes",
+      "desc": "Pads, rotors, lines, the works. The squeal you're ignoring is cheaper to fix today than next month."
+    },
+    {
+      "title": "Diagnostics",
+      "desc": "Check-engine lights, weird noises, mystery battery drains. We find the actual problem — not the most expensive possibility."
+    },
+    {
+      "title": "Oil & fluids",
+      "desc": "Oil, coolant, brake and transmission fluid — the boring stuff that keeps your car off our lift."
+    },
+    {
+      "title": "Suspension & steering",
+      "desc": "Shocks, struts, tie rods, sway bars. If the road feels louder or looser than it used to, that's our department."
+    },
+    {
+      "title": "Heating & AC",
+      "desc": "Blowing warm in July or cold in January? We trace it before we replace anything."
+    },
+    {
+      "title": "Pre-purchase look-overs",
+      "desc": "Buying used? Bring it by first. An hour with us can save you a truck payment's worth of regret."
+    }
+  ],
+  "sounds": [
+    { "id": "squeal", "label": "Squeal" },
+    { "id": "grind", "label": "Grind" },
+    { "id": "knock", "label": "Knock" },
+    { "id": "clunk", "label": "Clunk" },
+    { "id": "hum", "label": "Hum / whine" },
+    { "id": "click", "label": "Click" },
+    { "id": "hiss", "label": "Hiss" }
+  ],
+  "soundWhens": [
+    { "id": "braking", "label": "When braking" },
+    { "id": "turning", "label": "When turning" },
+    { "id": "accel", "label": "When accelerating" },
+    { "id": "idle", "label": "At idle" },
+    { "id": "cold", "label": "On cold start" },
+    { "id": "always", "label": "All the time" }
+  ],
+  "soundResults": [
+    {
+      "sound": "squeal",
+      "when": "braking",
+      "culprits": "Brake-pad wear indicators doing their job\nGlazed pads or rotors",
+      "covers": "Brake inspection at all four corners — pads measured, rotors checked",
+      "range": "Typical fix: $280 – $460 an axle",
+      "caveat": "Could also be a pebble stuck in the backing plate — thirty seconds to fix and no charge. We look before we quote."
+    },
+    {
+      "sound": "grind",
+      "when": "braking",
+      "culprits": "Pads worn down to metal\nDamaged rotor faces",
+      "covers": "Brake teardown on the noisy corner — this one shouldn't wait",
+      "range": "Typical fix: $320 – $560 an axle",
+      "caveat": "Grinding brakes are past the maybe stage. Drive gently and come in this week."
+    },
+    {
+      "sound": "squeal",
+      "when": "cold",
+      "culprits": "Serpentine belt slipping while cold\nTired belt tensioner",
+      "covers": "Belt and tensioner check — five minutes with the hood up",
+      "range": "Typical fix: $130 – $290",
+      "caveat": "If it fades as the engine warms, that's the belt talking. Cheap now, stranded later."
+    },
+    {
+      "sound": "squeal",
+      "when": "turning",
+      "culprits": "Belt slipping under power-steering load\nLow power-steering fluid",
+      "covers": "Belt, tensioner and fluid check",
+      "range": "Typical fix: $40 – $290",
+      "caveat": "Could also be the pump starting to complain — we listen with a stethoscope, not a guess."
+    },
+    {
+      "sound": "knock",
+      "when": "accel",
+      "culprits": "Low-octane fuel or carbon buildup\nWorst case: an engine bearing knock",
+      "covers": "Listen and scan first, then a cylinder-health check only if it's earned",
+      "range": "Diagnostic $95 — applied to the repair",
+      "caveat": "Don't let anyone quote you an engine over the phone. This one gets diagnosed in person, every time."
+    },
+    {
+      "sound": "knock",
+      "when": "idle",
+      "culprits": "A loose exhaust heat shield — common and cheap\nAn engine mount going soft",
+      "covers": "Rattle hunt on the lift",
+      "range": "Typical fix: $45 – $180",
+      "caveat": "Nine times out of ten this is the heat shield: a clamp, not a catastrophe."
+    },
+    {
+      "sound": "clunk",
+      "when": "turning",
+      "culprits": "Sway-bar end links\nWorn tie-rod ends\nA CV joint on its way out",
+      "covers": "Front-end shakedown — every joint checked by hand",
+      "range": "Typical fix: $160 – $460 a side",
+      "caveat": "Front ends wear as a family. We'll tell you what needs doing now and what can honestly wait."
+    },
+    {
+      "sound": "clunk",
+      "when": "always",
+      "culprits": "Worn suspension bushings\nTired shocks or struts",
+      "covers": "Suspension check: bounce test, then the lift",
+      "range": "Typical fix: $200 – $700",
+      "caveat": "Loose cargo and forgotten jack handles cause more mystery clunks than you'd think. We check the simple stuff first, free."
+    },
+    {
+      "sound": "hum",
+      "when": "always",
+      "culprits": "A wheel bearing starting to howl\nChopped or cupped tire wear",
+      "covers": "Road test with ears on, then each wheel checked on the lift",
+      "range": "Typical fix: $240 – $490 a corner",
+      "caveat": "Tires and bearings imitate each other. The road test tells us which — before any parts get ordered."
+    },
+    {
+      "sound": "hum",
+      "when": "turning",
+      "culprits": "A loaded wheel bearing — hums louder swinging one direction",
+      "covers": "Road test both directions, then a bearing-play check",
+      "range": "Typical fix: $240 – $490",
+      "caveat": "If it gets louder turning left, it's usually the right-side bearing. Cars are funny like that."
+    },
+    {
+      "sound": "click",
+      "when": "turning",
+      "culprits": "An outer CV joint — especially if it clicks in tight circles",
+      "covers": "CV boot and joint inspection",
+      "range": "Typical fix: $280 – $540 a side",
+      "caveat": "A torn boot caught early is a $60 fix. Caught late, it's a whole axle. Early is better."
+    },
+    {
+      "sound": "hiss",
+      "when": "idle",
+      "culprits": "A vacuum leak\nA cooling-system hose weeping under pressure",
+      "covers": "Smoke test for vacuum, pressure test for coolant",
+      "range": "Typical fix: $95 – $320",
+      "caveat": "If the hiss comes with a sweet smell, that's coolant — top it up and come see us this week."
+    }
+  ],
+  "soundFallback": {
+    "culprits": "Honestly? Could be a few things — sounds travel through a car like rumors through a small town",
+    "covers": "A road test with you riding along and pointing at it, then the lift",
+    "range": "Diagnostic $95 — applied to the repair if we do the work",
+    "caveat": "Describing a noise through a form is hard. Book the diagnostic and point at it with us — that's exactly what it's for."
+  },
+  "soundNote": "A sound is a clue, not a diagnosis. This tool tells you what a noise usually means so you're not walking in blind — the real answer comes off the lift, not a webpage.",
+  "priceRanges": [
+    {
+      "job": "Front brake pads & rotors",
+      "range": "$280 – $460"
+    },
+    {
+      "job": "Full synthetic oil & filter",
+      "range": "$75 – $110"
+    },
+    {
+      "job": "Battery — tested, then replaced",
+      "range": "$170 – $280"
+    },
+    {
+      "job": "Alternator",
+      "range": "$400 – $680"
+    },
+    {
+      "job": "Wheel bearing",
+      "range": "$240 – $490"
+    },
+    {
+      "job": "Diagnostic (the honest hour)",
+      "range": "$95 — applied to the repair"
+    }
+  ],
+  "pricingNote": "Ranges, not games. The exact number depends on what your car needs and what parts cost that week — you get one written number before we start, and that's the number you pay.",
+  "process": [
+    {
+      "title": "Diagnose",
+      "desc": "Road test, lift check, scanner if it's earned one. We find the real problem and take a picture of it."
+    },
+    {
+      "title": "Approve",
+      "desc": "You get one number and a plain-English explanation. Nothing happens to your car until you say go."
+    },
+    {
+      "title": "Fix — and show you",
+      "desc": "We do the work you approved, and the old part rides home with you if you want it."
+    }
+  ],
+  "serviceArea": {
+    "region": "Western Treasure Valley, Idaho",
+    "short": "western Treasure Valley",
+    "cities": [
+      "Parma",
+      "Wilder",
+      "Notus",
+      "Greenleaf",
+      "Homedale",
+      "Caldwell"
+    ]
+  },
+  "owner": {
+    "name": "Denny Hollis",
+    "heading": "Why Rimrock exists",
+    "bio": "Denny Hollis started fixing hay trucks outside Parma the summer after high school and never really stopped. Twenty years later, Rimrock is the garage Denny always wanted to take his own truck to: somebody walks you under the lift, points a flashlight at the actual problem, and tells you what it costs before the wrenches come out. Half the job is fixing cars. The other half is translating them.",
+    "photo": ""
+  },
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do you work on my make and model?",
+      "a": "Almost certainly. Domestic, Asian, European — if it rolls in on wheels, we can probably work on it. The rare exceptions are exotic or dealer-locked jobs, and we'll tell you straight when you'd be better off elsewhere."
+    },
+    {
+      "q": "Do I need an appointment?",
+      "a": "It helps, but no. Call or text and we'll tell you honestly whether today, tomorrow or Thursday is realistic. Drop-offs before 8 a.m. usually get eyes on them the same day."
+    },
+    {
+      "q": "Will you actually show me what's wrong?",
+      "a": "Yes — that's the whole point of this garage. Photo, video, or walk under the lift with us. And the old part is yours to keep if you want it."
+    },
+    {
+      "q": "How do estimates work?",
+      "a": "We diagnose first, then you get one written number. If we open things up and find something different, work stops and your phone rings. The number only changes if you approve a new one."
+    },
+    {
+      "q": "New parts or used?",
+      "a": "Your call, with our honest read on each option. Some jobs deserve new OEM parts; some old trucks deserve a good used part at half the price. We'll tell you which is which."
+    },
+    {
+      "q": "My check-engine light came on. Do I panic?",
+      "a": "Probably not. If it's flashing, come in now. If it's steady, finish your errands and swing by — we'll pull the code and tell you whether it's a $12 gas cap or something real."
+    },
+    {
+      "q": "Do you stand behind the work?",
+      "a": "Yes. Every job leaves with our written workmanship guarantee — the exact terms are on paper at the counter and on your invoice, not buried in fine print on a website."
+    }
+  ],
+  "social": []
+}

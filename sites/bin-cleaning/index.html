@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sage & Suds Bin Co. — Trash Bin Cleaning | Meridian, ID</title>
+<meta name="description" content="Curbside trash, recycle and compost bin cleaning in Meridian and the Treasure Valley. Hot pressure wash, deodorized, wash water reclaimed — on your trash day, without you lifting a finger. Find your route day." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sage & Suds Bin Co. — Fresh bins, zero effort." />
+<meta property="og:description" content="Curbside bin cleaning that follows the garbage truck. Find your route day and never scrub a bin again." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F8A6C'/%3E%3Cpath d='M22 24h20l-2.4 24a3 3 0 0 1-3 2.8h-9.2a3 3 0 0 1-3-2.8z' fill='%23F3F8F5'/%3E%3Crect x='19' y='19' width='26' height='5' rx='2.5' fill='%23F3F8F5'/%3E%3Ccircle cx='45' cy='15' r='3.4' fill='%23A8C823'/%3E%3Ccircle cx='51' cy='23' r='2.2' fill='%23A8C823'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Sage & Suds Bin Co.",
+  "description": "Curbside trash, recycle and compost bin cleaning for Meridian and the Treasure Valley.",
+  "telephone": "+12085550247",
+  "email": "hello@sagesudsbins.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Meridian", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --mint:#F3F8F5; --mint-soft:#FBFDFC; --panel:rgba(255,255,255,.82);
+    --spruce:#0F8A6C; --spruce-bright:#27A585; --spruce-deep:#0B6B54;
+    --lime:#A8C823; --lime-soft:rgba(168,200,35,.18);
+    --ink:#1F3229; --muted:#57685E; --hair:rgba(31,50,41,.13);
+    --card:rgba(255,255,255,.85); --card-brd:rgba(31,50,41,.10);
+    --shadow:0 22px 52px -24px rgba(15,70,55,.24);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--mint);color:var(--ink);font-family:'Figtree',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--spruce-deep);outline-offset:3px;border-radius:4px}
+  section{padding:76px 0}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;letter-spacing:-.015em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.1;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--spruce-deep);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--lime)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(243,248,245,.88);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(31,50,41,.04)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque';font-weight:800;font-size:17px;color:var(--ink)}
+  .logo .mark{width:31px;height:31px;border-radius:10px;background:linear-gradient(150deg,var(--spruce-bright),var(--spruce-deep));display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark svg{width:16px;height:16px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:rgba(15,138,108,.1);color:var(--spruce-deep)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#fff;background:var(--spruce-deep);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--spruce);transform:translateY(-1px)}
+  @media(max-width:760px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:80px 0 88px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(9px 9px at 12% 18%,var(--lime-soft) 98%,transparent),
+      radial-gradient(14px 14px at 22% 72%,rgba(39,165,133,.14) 98%,transparent),
+      radial-gradient(7px 7px at 84% 24%,var(--lime-soft) 98%,transparent),
+      radial-gradient(11px 11px at 90% 66%,rgba(39,165,133,.12) 98%,transparent),
+      radial-gradient(6px 6px at 68% 12%,rgba(168,200,35,.22) 98%,transparent),
+      radial-gradient(720px 340px at 8% -10%,rgba(15,138,108,.10),transparent 68%),
+      radial-gradient(600px 320px at 98% 8%,rgba(168,200,35,.12),transparent 66%)}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.04;letter-spacing:-.02em;max-width:14ch;margin-top:20px}
+  .hero h1 .hl{color:var(--spruce-deep)}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Figtree';font-weight:800;font-size:15px;text-decoration:none;color:#fff;background:var(--spruce-deep);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--spruce);transform:translateY(-2px)}
+  .btn-sec{font-family:'Figtree';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--mint-soft);padding:15px 26px;border-radius:12px;transition:.18s}
+  .btn-sec:hover{border-color:var(--spruce-deep);color:var(--spruce-deep)}
+  .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+  .hero-card .hc-line{font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;line-height:1.4;color:var(--ink)}
+  .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--lime-soft);border:1px solid rgba(168,200,35,.45);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--mint-soft)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Bricolage Grotesque';font-weight:800;font-size:27px;color:var(--spruce-deep)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* ---------- how it works ---------- */
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:step}
+  .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;counter-increment:step;position:relative}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Bricolage Grotesque';font-weight:800;font-size:38px;color:transparent;-webkit-text-stroke:1.6px var(--spruce);display:block;margin-bottom:10px;opacity:.85}
+  .how-card h3{font-size:17px}
+  .how-card p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.how-grid{grid-template-columns:1fr}}
+
+  /* ---------- plans ---------- */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .pcard{background:var(--card);border:1.5px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .pcard.best{border-color:var(--spruce-deep);box-shadow:0 0 0 1px var(--spruce-deep),var(--shadow)}
+  .pcard .pnote{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:4px 11px;border-radius:20px;margin-bottom:10px}
+  .pcard h3{font-size:18px}
+  .pcard .pnum{font-family:'Bricolage Grotesque';font-weight:800;font-size:36px;margin-top:8px}
+  .pcard .pnum span{font-family:'Figtree';font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}
+  .pcard ul{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:9px}
+  .pcard li{font-size:13.5px;color:var(--muted);padding-left:20px;position:relative}
+  .pcard li::before{content:"✓";position:absolute;left:0;color:var(--spruce-deep);font-weight:800}
+  .pricing-note{margin-top:20px;font-size:13.5px;color:var(--muted);text-align:center}
+  @media(max-width:900px){.price-grid{grid-template-columns:1fr}}
+
+  /* ---------- route finder ---------- */
+  .routes-wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;margin-top:32px;align-items:start}
+  .route-map{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+  .route-map svg{width:100%;height:auto;display:block}
+  .rz{cursor:pointer;transition:fill .15s}
+  .rz:hover{fill:rgba(15,138,108,.22)}
+  .rz.on{fill:rgba(15,138,108,.34);stroke:var(--spruce-deep);stroke-width:2.5}
+  .rz:focus-visible{outline:2.5px solid var(--spruce-deep);outline-offset:2px}
+  .rz-name{font-family:'Figtree',sans-serif;font-size:13px;font-weight:700;fill:var(--ink);pointer-events:none}
+  .rz-day{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--spruce-deep);pointer-events:none}
+  .route-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .rchip{font-family:'IBM Plex Mono';font-size:12px;font-weight:500;color:var(--ink);background:var(--mint-soft);border:1px solid var(--hair);border-radius:20px;padding:7px 13px;cursor:pointer;transition:.15s;font-weight:600}
+  .rchip:hover{border-color:var(--spruce-deep);color:var(--spruce-deep)}
+  .rchip.on{background:var(--spruce-deep);border-color:var(--spruce-deep);color:#fff}
+  .route-detail{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
+  .route-detail .rd-empty{color:var(--muted);font-size:15px}
+  .route-detail .rd-zone{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .route-detail .rd-day{font-family:'Bricolage Grotesque';font-weight:800;font-size:34px;color:var(--spruce-deep);margin-top:8px;line-height:1.05}
+  .route-detail .rd-note{font-size:14.5px;color:var(--muted);margin-top:12px;line-height:1.6}
+  .route-detail .rd-cta{margin-top:20px}
+  .route-note{margin-top:16px;font-size:13.5px;color:var(--muted);background:var(--lime-soft);border:1px solid rgba(168,200,35,.4);border-radius:10px;padding:11px 14px}
+  @media(max-width:900px){.routes-wrap{grid-template-columns:1fr}.route-detail{position:static}}
+
+  /* ---------- why ---------- */
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .wcard{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px}
+  .wcard .w-ico{width:42px;height:42px;border-radius:12px;background:var(--lime-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--spruce-deep)}
+  .wcard .w-ico svg{width:21px;height:21px}
+  .wcard h3{font-size:16.5px}
+  .wcard p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.why-grid{grid-template-columns:1fr}}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--spruce-deep);background:rgba(15,138,108,.10);border:1px solid rgba(15,138,108,.26);padding:7px 13px;border-radius:20px}
+
+  /* ---------- owner ---------- */
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:20px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--spruce-deep);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6;font-weight:500}
+  .tcard p:empty::before{content:"A note from a neighbor on the route is coming soon.";color:var(--muted);font-style:italic;font-weight:400}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a customer on the route"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Bricolage Grotesque';font-weight:700;font-size:16px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--spruce-deep);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- signup form ---------- */
+  .signup{background:var(--spruce-deep);color:#fff;text-align:center}
+  .signup .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
+  .signup .eyebrow::before{background:var(--lime)}
+  .signup h2{color:#fff;max-width:24ch;margin:12px auto 14px}
+  .signup > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row select option{color:var(--ink)}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.16)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:var(--lime);color:var(--ink);font-family:'Figtree';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{filter:brightness(1.06)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
+  .qf-status.err{color:#FFD9C6;font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--ink);border-radius:18px;padding:32px;font-family:'Bricolage Grotesque';font-weight:700;font-size:17px;text-align:center}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
+  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--mint-soft);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Bricolage Grotesque';color:var(--ink)}
+  .footer__credit{opacity:.75}
+  .footer__credit a{color:var(--spruce-deep);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--mint-soft);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(31,50,41,.1)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Figtree';font-weight:800;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#fff;background:var(--spruce-deep)}
+  .mobile-cta .text{color:var(--spruce-deep);background:rgba(15,138,108,.11);border:1px solid rgba(15,138,108,.3)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l-1 13a1.5 1.5 0 0 1-1.5 1.4h-5A1.5 1.5 0 0 1 8 20z"/><path d="M5.5 7h13"/><path d="M10 4h4"/></svg></span><span>Sage &amp; Suds</span><small>Bin Co.</small></div>
+    <div class="nav-links">
+      <a href="#plans" class="tab">Plans</a>
+      <a href="#routes" class="tab">Route Days</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#signup" class="cta">Get Fresh Bins</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Curbside bin cleaning · Treasure Valley</div>
+      <h1 class="reveal">Fresh bins. <span class="hl">Zero effort.</span></h1>
+      <p class="reveal">Your trash can gets emptied every week — it never gets cleaned. We follow the garbage truck with a hot pressure wash, scrub and deodorize your bins at the curb, and haul the dirty water away with us. You don't even need to be home.</p>
+      <div class="hero-cta reveal">
+        <a href="#signup" class="btn-pri">Get my bins cleaned</a>
+        <a href="#routes" class="btn-sec">Find my route day ↓</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">The goal, every visit</span>
+      <p class="hc-line">A bin that smells like&nbsp;… nothing at all.</p>
+      <p class="hc-by">Hot wash · scrubbed · deodorized · water reclaimed</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Three steps. You do half of one.</h2>
+    </div>
+    <div class="how-grid reveal" id="howGrid"></div>
+  </div>
+</section>
+
+<section id="plans" style="background:var(--mint-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Plans</div>
+      <h2>Flat per-bin pricing. Pick a rhythm.</h2>
+      <p class="stxt">Trash, recycle or compost — every bin is the same flat price, and the math is already done for you.</p>
+    </div>
+    <div class="price-grid reveal" id="priceGrid"></div>
+    <p class="pricing-note" id="pricingNote"></p>
+  </div>
+</section>
+
+<section id="routes">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Find your route day</div>
+      <h2>We follow the garbage truck. Literally.</h2>
+      <p class="stxt">Tap your part of the map — your wash day is built around your trash day, so bins get cleaned the same day they're emptied.</p>
+    </div>
+    <div class="routes-wrap reveal">
+      <div>
+        <div class="route-map" id="routeMap"></div>
+        <div class="route-chips" id="routeChips" role="group" aria-label="Route zones"></div>
+        <p class="route-note" id="routeNote"></p>
+      </div>
+      <div class="route-detail" id="routeDetail" aria-live="polite">
+        <p class="rd-empty">Tap your part of the map to see your route day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why" style="background:var(--mint-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Why bother</div>
+      <h2>Because a hose can't do this.</h2>
+    </div>
+    <div class="why-grid reveal" id="whyGrid"></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>On routes across the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--mint-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Sage &amp; Suds Bin Co.</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">From the route</div>
+    <h2>What the neighbors say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--mint-soft);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="signup" id="signup">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Get started</div>
+    <h2>Never scrub a bin again.</h2>
+    <p>Tell us where the bins live — we'll text you to confirm your route day and first visit.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qAddress">Street address &amp; city</label>
+        <input type="text" id="qAddress" name="address" placeholder="123 Elm St, Meridian" />
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qBins">How many bins?</label>
+          <select id="qBins" name="bins">
+            <option>1 bin</option>
+            <option selected>2 bins</option>
+            <option>3 bins</option>
+            <option>4+ bins</option>
+          </select>
+        </div>
+        <div class="qf-row">
+          <label for="qPlan">Which plan?</label>
+          <select id="qPlan" name="plan"></select>
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Gate codes, bin hiding spots, a bin that needs extra love…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Sign me up</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550247" data-phone-link>Call or text (208) 555-0247</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>You're on the list! We'll text you to confirm your route day and your first wash.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Sage &amp; Suds Bin Co.</b><br />
+      Curbside bin cleaning · <span data-city>Meridian, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550247" data-phone>(208) 555-0247</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550247"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550247?body=Hi%20Sage%20%26%20Suds%2C%20can%20you%20clean%20my%20bins%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Sage & Suds Bin Co.",
+      "tagline": "Fresh bins, zero effort.",
+      "phone": "(208) 555-0247",
+      "email": "hello@sagesudsbins.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Meridian, ID"
+    },
+    "stats": [
+      { "num": "195°", "label": "Hot pressure wash, every visit" },
+      { "num": "5 min", "label": "At your curb — then we're gone" },
+      { "num": "100%", "label": "Of the gunk leaves in our truck, not your gutter" }
+    ],
+    "howItWorks": [
+      { "title": "Book your route day", "desc": "Pick a plan and tell us where the bins live. We match you to the route that follows your trash day." },
+      { "title": "Leave the bins at the curb", "desc": "After pickup, just leave them out a little longer. You don't need to be home — most customers never see us." },
+      { "title": "Roll back a fresh bin", "desc": "Hot wash, scrub, rinse, deodorize. The dirty water leaves in our reclaim tank — not down your gutter." }
+    ],
+    "plans": [
+      { "name": "Monthly Refresh", "price": "$12", "per": "/bin · visit", "features": "Every month, right after pickup\nHot pressure wash, inside and out\nDeodorized — left smelling like nothing\nFirst-visit deep clean included", "best": true, "note": "Most popular" },
+      { "name": "Quarterly Clean", "price": "$20", "per": "/bin · visit", "features": "Four visits a year\nSame hot wash and deodorizing\nA good fit for milder bins", "best": false, "note": "" },
+      { "name": "One-Time Rescue", "price": "$35", "per": "/first bin", "features": "$15 each additional bin\nFor the bin you can smell from the porch\nNo plan required — try us once", "best": false, "note": "" }
+    ],
+    "pricingNote": "Every plan covers trash, recycle or compost bins — mix and match. No contracts; pause, skip or cancel with a text.",
+    "routeZones": [
+      { "id": "north", "label": "North Meridian", "day": "Tuesday", "note": "We follow the Tuesday collection routes — bins get washed the same afternoon they're emptied." },
+      { "id": "south", "label": "South Meridian", "day": "Wednesday", "note": "Wednesday pickup? We're right behind the truck. Leave your bins out until evening." },
+      { "id": "west", "label": "West Meridian & Ten Mile", "day": "Thursday", "note": "Thursday routes west of Ten Mile, out toward the county line." },
+      { "id": "east", "label": "East Meridian", "day": "Friday", "note": "Friday mornings, working east toward the Boise line." },
+      { "id": "eagle", "label": "Eagle & Star", "day": "Friday", "note": "Friday afternoons, north of the river — Eagle and Star addresses." },
+      { "id": "kuna", "label": "Kuna & everywhere else", "day": "By arrangement", "note": "Not on the map? Text us your address — if a route passes near you, we'll slot you in." }
+    ],
+    "routeNote": "Route days follow the city's collection schedule. Holiday week? Everything slides one day — same as your pickup.",
+    "whyClean": [
+      { "title": "The smell isn't the bin's fault", "desc": "Trash residue bakes into the plastic all summer. A garden hose can't fix that — hot water and a scrub can." },
+      { "title": "Fewer flies, fewer surprises", "desc": "A dirty bin is an open invitation for flies, ants and the occasional midnight raccoon inspection. A clean bin is just a bin." },
+      { "title": "Your driveway stays clean too", "desc": "Everything we wash off goes into the truck's reclaim tank and gets disposed of properly — nothing runs down your driveway or into the storm drain." }
+    ],
+    "serviceArea": {
+      "region": "Treasure Valley, Idaho",
+      "short": "Treasure Valley",
+      "cities": ["Meridian", "Eagle", "Star", "Kuna", "West Boise"]
+    },
+    "owner": {
+      "name": "Tessa Larkin",
+      "heading": "Why we started Sage & Suds",
+      "bio": "Tessa Larkin got tired of holding her breath every Tuesday. One July afternoon, after fishing a bag of week-old mystery out of the bottom of her can, she borrowed a pressure washer, cleaned every bin on her street, and realized nobody actually enjoys living with a dirty trash can — they just assume nothing can be done about it. Sage & Suds is the something: a truck, a hot-water wash, and a route that follows the garbage truck so your bin is clean an hour after it's empty.",
+      "photo": ""
+    },
+    "testimonials": [
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" },
+      { "quote": "", "name": "" }
+    ],
+    "faq": [
+      { "q": "Do I need to be home?", "a": "Nope. Leave your bins at the curb after pickup and we'll take it from there. Most customers only know we came because the bin smells like nothing." },
+      { "q": "What happens to the dirty water?", "a": "It leaves with us. The wash happens over a containment system on the truck, and the water goes into a reclaim tank for proper disposal — not down your driveway or into the storm drain." },
+      { "q": "My bin is… really bad. Can you fix it?", "a": "Almost always, yes. The first visit on any plan is a deep clean, and the One-Time Rescue exists for exactly this bin. If a bin is genuinely beyond saving, we'll say so instead of charging you to polish it." },
+      { "q": "Which bins do you clean?", "a": "Trash, recycling and compost carts — any standard roll-out bin. Mix and match on any plan; the per-bin price is the same." },
+      { "q": "How do I know which day you come?", "a": "Check the route map above — we follow the city's collection schedule, so your wash day is built around your trash day. Holiday weeks slide one day, exactly like your pickup does." },
+      { "q": "Is there a contract?", "a": "No. Plans are month-to-month, and a text message is enough to pause, skip a visit or cancel. We'd rather earn the next visit than lock you into it." }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+
+  /* Fixed map geometry for up to 6 zones (index-matched to routeZones).
+     Extra zones beyond 6 still appear as chips below the map. */
+  var ZONE_GEO = [
+    { d: "M22,22 h306 a14,14 0 0 1 14,14 v86 a14,14 0 0 1 -14,14 h-306 a14,14 0 0 1 -14,-14 v-86 a14,14 0 0 1 14,-14 z", lx: 175, ly: 74 },
+    { d: "M22,284 h306 a14,14 0 0 1 14,14 v86 a14,14 0 0 1 -14,14 h-306 a14,14 0 0 1 -14,-14 v-86 a14,14 0 0 1 14,-14 z", lx: 175, ly: 336 },
+    { d: "M22,150 h140 a14,14 0 0 1 14,14 v92 a14,14 0 0 1 -14,14 h-140 a14,14 0 0 1 -14,-14 v-92 a14,14 0 0 1 14,-14 z", lx: 95, ly: 202 },
+    { d: "M190,150 h138 a14,14 0 0 1 14,14 v92 a14,14 0 0 1 -14,14 h-138 a14,14 0 0 1 -14,-14 v-92 a14,14 0 0 1 14,-14 z", lx: 262, ly: 202 },
+    { d: "M368,22 h244 a14,14 0 0 1 14,14 v154 a14,14 0 0 1 -14,14 h-244 a14,14 0 0 1 -14,-14 v-154 a14,14 0 0 1 14,-14 z", lx: 490, ly: 108 },
+    { d: "M368,222 h244 a14,14 0 0 1 14,14 v148 a14,14 0 0 1 -14,14 h-244 a14,14 0 0 1 -14,-14 v-148 a14,14 0 0 1 14,-14 z", lx: 490, ly: 302 }
+  ];
+  function dayShort(day){
+    var d = String(day||'');
+    return /^(Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day$/i.test(d) ? d.slice(0,3).toUpperCase() : '· · ·';
+  }
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', can you clean my bins?'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // how it works
+    document.getElementById('howGrid').innerHTML = c.howItWorks.map(function(st){
+      return '<div class="how-card"><h3>' + esc(st.title) + '</h3><p>' + esc(st.desc) + '</p></div>';
+    }).join('');
+
+    // plans
+    document.getElementById('priceGrid').innerHTML = c.plans.map(function(p){
+      var feats = (p.features || '').split('\n').filter(Boolean).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');
+      return '<div class="pcard' + (p.best ? ' best' : '') + '">' +
+        (p.best ? '<span class="pnote">' + esc(p.note || 'Most popular') + '</span>' : '') +
+        '<h3>' + esc(p.name) + '</h3>' +
+        '<div class="pnum">' + esc(p.price) + '<span> ' + esc(p.per) + '</span></div>' +
+        '<ul>' + feats + '</ul></div>';
+    }).join('');
+    document.getElementById('pricingNote').textContent = c.pricingNote || '';
+
+    // plan select in signup form
+    var planSel = document.getElementById('qPlan');
+    planSel.innerHTML = c.plans.map(function(p){
+      return '<option value="' + esc(p.name) + '">' + esc(p.name) + ' (' + esc(p.price) + esc(p.per) + ')</option>';
+    }).join('') + '<option value="Not sure yet">Not sure yet</option>';
+
+    // route finder
+    renderRoutes(c);
+    document.getElementById('routeNote').textContent = c.routeNote || '';
+
+    // why
+    var icos = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.6 6 10a6 6 0 0 1-12 0c0-3.4 3-6 6-10z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M6 20V9l6-5 6 5v11"/></svg>'
+    ];
+    document.getElementById('whyGrid').innerHTML = c.whyClean.map(function(w, i){
+      return '<div class="wcard"><span class="w-ico">' + icos[i % icos.length] + '</span><h3>' + esc(w.title) + '</h3><p>' + esc(w.desc) + '</p></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    revealScan(document.body);
+  }
+
+  /* ---------- route finder: map + chips + detail panel ---------- */
+  var activeZone = -1;
+  function renderRoutes(c){
+    var zones = c.routeZones || [];
+    var svg = '<svg viewBox="0 0 640 420" role="img" aria-label="Stylized service-area map with clickable route zones">';
+    // decorative river across the right block
+    svg += '<path d="M340,205 C420,190 470,225 560,205 S620,215 636,208" fill="none" stroke="rgba(39,165,133,.35)" stroke-width="5" stroke-linecap="round"/>';
+    zones.slice(0, ZONE_GEO.length).forEach(function(z, i){
+      var g = ZONE_GEO[i];
+      svg += '<g><path class="rz" d="' + g.d + '" fill="rgba(15,138,108,.12)" stroke="rgba(31,50,41,.18)" stroke-width="1.5" tabindex="0" role="button" aria-pressed="false" data-zone="' + i + '" aria-label="' + esc(z.label) + ' — ' + esc(z.day) + '"></path>' +
+        '<text class="rz-day" x="' + g.lx + '" y="' + (g.ly - 10) + '" text-anchor="middle">' + esc(dayShort(z.day)) + '</text>' +
+        '<text class="rz-name" x="' + g.lx + '" y="' + (g.ly + 12) + '" text-anchor="middle">' + esc(z.label) + '</text></g>';
+    });
+    svg += '</svg>';
+    document.getElementById('routeMap').innerHTML = svg;
+
+    document.getElementById('routeChips').innerHTML = zones.map(function(z, i){
+      return '<button type="button" class="rchip" data-zone="' + i + '" aria-pressed="false">' + esc(z.label) + '</button>';
+    }).join('');
+
+    var wrap = document.getElementById('routes');
+    if(!wrap._wired){
+      wrap._wired = true;
+      wrap.addEventListener('click', function(e){
+        var el = e.target.closest('[data-zone]');
+        if(el) activateZone(+el.getAttribute('data-zone'));
+      });
+      wrap.addEventListener('keydown', function(e){
+        var el = e.target.closest('path[data-zone]');
+        if(el && (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar')){
+          e.preventDefault();
+          activateZone(+el.getAttribute('data-zone'));
+        }
+      });
+    }
+    if(activeZone >= 0 && activeZone < zones.length) activateZone(activeZone);
+  }
+
+  function activateZone(i){
+    var zones = CONTENT.routeZones || [];
+    var z = zones[i];
+    if(!z) return;
+    activeZone = i;
+    document.querySelectorAll('#routes [data-zone]').forEach(function(el){
+      var on = +el.getAttribute('data-zone') === i;
+      el.classList.toggle('on', on);
+      el.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.getElementById('routeDetail').innerHTML =
+      '<p class="rd-zone">' + esc(z.label) + '</p>' +
+      '<p class="rd-day">' + esc(z.day) + '</p>' +
+      '<p class="rd-note">' + esc(z.note) + '</p>' +
+      '<p class="rd-cta"><a class="btn-pri" href="#signup">Start my plan</a></p>';
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      address: document.getElementById('qAddress').value.trim() || '(not given)',
+      bins: document.getElementById('qBins').value,
+      plan: document.getElementById('qPlan').value,
+      notes: document.getElementById('qNotes').value.trim(),
+      _subject: CONTENT.brand.name + ' — new signup from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Sign me up';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

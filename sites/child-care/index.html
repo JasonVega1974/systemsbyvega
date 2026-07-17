@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Huckleberry Sitters — Babysitting | Star, ID</title>
+<meta name="description" content="Date-night and after-school babysitting in Star and the Treasure Valley. Meet your sitter first, keep your own routine, and build your evening with the sitter planner." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Huckleberry Sitters — Go out. Bedtime is handled." />
+<meta property="og:description" content="Babysitting the neighborly way: you meet every sitter first, your routine runs the evening, and the planner sketches your night before you book it." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237A5BA6'/%3E%3Ccircle cx='26' cy='38' r='9' fill='%23FDF7EF'/%3E%3Ccircle cx='42' cy='32' r='7' fill='%23FDF7EF'/%3E%3Ccircle cx='36' cy='46' r='6' fill='%23FDF7EF'/%3E%3Cpath d='M40 20c4-6 10-7 12-7-1 4-4 9-9 10z' fill='%23F2B84B'/%3E%3C/svg%3E" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Huckleberry Sitters",
+  "description": "Date-night and after-school babysitting for families in Star and the Treasure Valley.",
+  "telephone": "+12085550338",
+  "email": "hello@huckleberrysitters.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Star", "addressRegion": "ID", "addressCountry": "US" },
+  "areaServed": "Treasure Valley, Idaho"
+}
+</script>
+<style>
+  :root{
+    --oat:#FDF7EF; --oat-soft:#FFFDF9; --panel:rgba(255,255,255,.86);
+    --huck:#7A5BA6; --huck-bright:#916FBF; --huck-deep:#5E4485;
+    --sun:#F2B84B; --sun-soft:rgba(242,184,75,.22);
+    --ink:#3A3128; --muted:#7A6E5F; --hair:rgba(58,49,40,.14);
+    --card:rgba(255,255,255,.9); --card-brd:rgba(58,49,40,.10);
+    --shadow:0 22px 52px -26px rgba(94,68,133,.26);
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--oat);color:var(--ink);font-family:'Atkinson Hyperlegible',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--huck-deep);outline-offset:3px;border-radius:4px}
+  section{padding:76px 0}
+  h1,h2,h3{font-family:'Fredoka',sans-serif;font-weight:600;letter-spacing:-.01em}
+  h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
+  .stxt{font-size:16.5px;color:var(--muted);max-width:62ch}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--huck-deep);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--sun)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(253,247,239,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
+  .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(58,49,40,.04)}
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fredoka';font-weight:700;font-size:17px;color:var(--ink)}
+  .logo .mark{width:31px;height:31px;border-radius:10px;background:linear-gradient(150deg,var(--huck-bright),var(--huck-deep));display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark svg{width:17px;height:17px}
+  .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .nav-links{display:flex;align-items:center;gap:4px}
+  .nav a.tab{font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+  .nav a.tab:hover{background:rgba(122,91,166,.1);color:var(--huck-deep)}
+  .nav a.cta{font-weight:700;font-family:'Fredoka';font-size:13.5px;text-decoration:none;color:#fff;background:var(--huck-deep);padding:10px 18px;border-radius:999px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--huck);transform:translateY(-1px)}
+  @media(max-width:760px){
+    .nav-links a.tab{display:none}
+    .nav-in{padding:12px 20px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:80px 0 88px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(10px 10px at 11% 20%,rgba(122,91,166,.16) 98%,transparent),
+      radial-gradient(7px 7px at 20% 70%,var(--sun-soft) 98%,transparent),
+      radial-gradient(8px 8px at 83% 22%,rgba(122,91,166,.14) 98%,transparent),
+      radial-gradient(12px 12px at 91% 64%,var(--sun-soft) 98%,transparent),
+      radial-gradient(6px 6px at 66% 10%,rgba(242,184,75,.3) 98%,transparent),
+      radial-gradient(720px 340px at 6% -12%,rgba(122,91,166,.10),transparent 68%),
+      radial-gradient(620px 320px at 98% 6%,rgba(242,184,75,.13),transparent 66%)}
+  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:700;line-height:1.06;letter-spacing:-.015em;max-width:15ch;margin-top:20px}
+  .hero h1 .hl{color:var(--huck-deep)}
+  .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:52ch;margin-top:20px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+  .btn-pri{font-family:'Fredoka';font-weight:600;font-size:15px;text-decoration:none;color:#fff;background:var(--huck-deep);padding:15px 28px;border-radius:999px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--huck);transform:translateY(-2px)}
+  .btn-sec{font-family:'Fredoka';font-weight:600;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--oat-soft);padding:15px 28px;border-radius:999px;transition:.18s}
+  .btn-sec:hover{border-color:var(--huck-deep);color:var(--huck-deep)}
+  .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:22px;padding:26px;box-shadow:var(--shadow)}
+  .hero-card .hc-line{font-family:'Fredoka';font-weight:600;font-size:20px;line-height:1.4;color:var(--ink)}
+  .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--sun-soft);border:1px solid rgba(242,184,75,.5);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1}}
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--oat-soft)}
+  .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
+  .tstat{text-align:center}
+  .tstat b{display:block;font-family:'Fredoka';font-weight:700;font-size:27px;color:var(--huck-deep)}
+  .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+  @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
+  .svc-card{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow)}
+  .svc-card h3{font-size:19px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .svc-card .from{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;color:var(--huck-deep);background:rgba(122,91,166,.1);border:1px solid rgba(122,91,166,.25);border-radius:20px;padding:4px 11px;white-space:nowrap}
+  .svc-card p{font-size:14.5px;color:var(--muted);margin-top:10px}
+  @media(max-width:820px){.svc-grid{grid-template-columns:1fr}}
+
+  /* ---------- sitter match planner ---------- */
+  .pl-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;margin-top:32px;align-items:start}
+  .pl-controls{display:flex;flex-direction:column;gap:22px}
+  .pl-fs{border:1px solid var(--card-brd);border-radius:18px;background:var(--card);padding:20px;box-shadow:var(--shadow)}
+  .pl-fs legend{font-family:'Fredoka';font-weight:600;font-size:15.5px;padding:0 8px;margin-left:-8px}
+  .pl-fs .fs-hint{font-size:12.5px;color:var(--muted);margin:4px 0 12px}
+  .pl-ages{display:flex;flex-direction:column;gap:9px}
+  .age-row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--oat-soft);border:1px solid var(--hair);border-radius:12px;padding:9px 12px}
+  .age-row.on{border-color:var(--huck-deep);background:rgba(122,91,166,.07)}
+  .age-row .al{font-weight:700;font-size:14px}
+  .stepper{display:flex;align-items:center;gap:10px}
+  .stepper button{width:30px;height:30px;border-radius:9px;border:1.5px solid var(--hair);background:#fff;color:var(--ink);font-family:'Fredoka';font-weight:700;font-size:17px;line-height:1;cursor:pointer;transition:.15s}
+  .stepper button:hover{border-color:var(--huck-deep);color:var(--huck-deep)}
+  .stepper .cnt{font-family:'Fredoka';font-weight:700;font-size:16px;min-width:18px;text-align:center}
+  .pl-pills{display:flex;flex-wrap:wrap;gap:8px}
+  .plpill{font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600;color:var(--ink);background:var(--oat-soft);border:1px solid var(--hair);border-radius:20px;padding:8px 14px;cursor:pointer;transition:.15s}
+  .plpill:hover{border-color:var(--huck-deep);color:var(--huck-deep)}
+  .plpill.on{background:var(--huck-deep);border-color:var(--huck-deep);color:#fff}
+  .pl-out{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
+  .pl-empty{color:var(--muted);font-size:15px}
+  .est{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;background:var(--sun-soft);border:1px solid rgba(242,184,75,.5);border-radius:14px;padding:16px 18px}
+  .est .num{font-family:'Fredoka';font-weight:700;font-size:36px;color:var(--huck-deep);line-height:1}
+  .est .meta{font-size:13.5px;color:var(--muted)}
+  .est-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .tl{list-style:none;margin-top:20px;border-left:2px solid rgba(122,91,166,.3);padding-left:18px;display:flex;flex-direction:column;gap:14px}
+  .tl li{position:relative}
+  .tl li::before{content:"";position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--huck-bright);border:2px solid var(--oat-soft)}
+  .tl .slot{font-family:'IBM Plex Mono';font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--huck-deep)}
+  .tl p{font-size:14px;color:var(--muted);margin-top:3px}
+  .pl-cta{margin-top:22px}
+  @media(max-width:900px){.pl-grid{grid-template-columns:1fr}.pl-out{position:static}}
+
+  /* ---------- how it works ---------- */
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:step}
+  .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;counter-increment:step;position:relative}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Fredoka';font-weight:700;font-size:38px;color:transparent;-webkit-text-stroke:1.6px var(--huck);display:block;margin-bottom:10px;opacity:.85}
+  .how-card h3{font-size:17px}
+  .how-card p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.how-grid{grid-template-columns:1fr}}
+
+  /* ---------- approach ---------- */
+  .app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .acard{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px}
+  .acard .a-ico{width:42px;height:42px;border-radius:12px;background:var(--sun-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--huck-deep)}
+  .acard .a-ico svg{width:21px;height:21px}
+  .acard h3{font-size:16.5px}
+  .acard p{font-size:14px;color:var(--muted);margin-top:8px}
+  @media(max-width:820px){.app-grid{grid-template-columns:1fr}}
+
+  /* ---------- service area ---------- */
+  .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--huck-deep);background:rgba(122,91,166,.09);border:1px solid rgba(122,91,166,.25);padding:7px 13px;border-radius:20px}
+
+  /* ---------- owner ---------- */
+  .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
+  .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
+  .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
+  .owner-bio h3{font-size:20px}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--huck-deep);margin-top:2px;letter-spacing:.02em}
+  .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
+  @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
+
+  /* ---------- rates ---------- */
+  .rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .rcard{background:var(--card);border:1.5px solid var(--card-brd);border-radius:18px;padding:26px;text-align:center;box-shadow:var(--shadow)}
+  .rcard .rnum{font-family:'Fredoka';font-weight:700;font-size:34px;color:var(--huck-deep)}
+  .rcard .rlbl{font-size:13.5px;color:var(--muted);margin-top:6px}
+  .rates-note{margin-top:20px;font-size:13.5px;color:var(--muted);text-align:center;max-width:70ch;margin-left:auto;margin-right:auto}
+  @media(max-width:820px){.rate-grid{grid-template-columns:1fr}}
+
+  /* ---------- testimonials ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  .tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px}
+  .tcard p{font-size:15px;color:var(--ink);line-height:1.6;font-weight:400}
+  .tcard p:empty::before{content:"A note from a family down the street is coming soon.";color:var(--muted);font-style:italic}
+  .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted)}
+  .tcard .tname:empty::before{content:"— a local family"}
+  @media(max-width:900px){.test-grid{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{margin-top:28px}
+  .qa{border-bottom:1px solid var(--hair)}
+  .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Fredoka';font-weight:600;font-size:16px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--huck-deep);font-size:20px;flex:none;transition:transform .2s}
+  .qa[open] summary .pm{transform:rotate(45deg)}
+  .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
+
+  /* ---------- booking form ---------- */
+  .book{background:var(--huck-deep);color:#fff;text-align:center}
+  .book .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
+  .book .eyebrow::before{background:var(--sun)}
+  .book h2{color:#fff;max-width:26ch;margin:12px auto 14px}
+  .book > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
+  .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px}
+  .qf-row{margin-bottom:15px}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row select option{color:var(--ink)}
+  .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.16)}
+  .qf-row textarea{resize:vertical;line-height:1.5}
+  .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
+  .hp{position:absolute;left:-9999px;opacity:0}
+  .qf-submit{width:100%;background:var(--sun);color:var(--ink);font-family:'Fredoka';font-weight:600;font-size:15px;border:none;padding:15px;border-radius:999px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{filter:brightness(1.06)}
+  .qf-submit:disabled{opacity:.6;cursor:default}
+  .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
+  .qf-status.err{color:#FFD9C6;font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--ink);border-radius:18px;padding:32px;font-family:'Fredoka';font-weight:600;font-size:17px;text-align:center}
+  .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
+  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--oat-soft);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
+  .foot-in b{font-family:'Fredoka';color:var(--ink)}
+  .footer__credit{opacity:.75}
+  .footer__credit a{color:var(--huck-deep);text-decoration:none;font-weight:700}
+
+  /* ---------- mobile call/text bar ---------- */
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--oat-soft);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(58,49,40,.1)}
+  .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:999px;font-family:'Fredoka';font-weight:600;font-size:14px;text-decoration:none}
+  .mobile-cta .call{color:#fff;background:var(--huck-deep)}
+  .mobile-cta .text{color:var(--huck-deep);background:rgba(122,91,166,.11);border:1px solid rgba(122,91,166,.3)}
+  .mobile-cta svg{width:18px;height:18px}
+  @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="svDemoBanner" role="note" aria-label="Demo site notice">
+  <span class="svDemoBanner__dot" aria-hidden="true"></span>
+  <span>Demo — this site is for sale</span>
+  <a href="/sites/">View all sites →</a>
+</div>
+<style>
+#svDemoBanner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;background:#161B22;color:#fff;font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.01em;padding:9px 16px;border-radius:20px;border:1px solid #323A48;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100vw - 24px);text-align:center}
+#svDemoBanner .svDemoBanner__dot{width:7px;height:7px;border-radius:50%;background:#F3922F;flex:none}
+#svDemoBanner a{color:#F3922F;font-weight:700;text-decoration:none}
+#svDemoBanner a:hover{text-decoration:underline}
+@media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="14" r="4"/><circle cx="16" cy="11" r="3"/><path d="M15 5c1.5-2 4-2.5 5-2.5-.3 1.5-1.5 3.5-3.5 4"/></svg></span><span>Huckleberry Sitters</span></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#planner" class="tab">Planner</a>
+      <a href="#rates" class="tab">Rates</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a sitter</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Babysitting · Star &amp; the Treasure Valley</div>
+      <h1 class="reveal">Go out. <span class="hl">Bedtime is handled.</span></h1>
+      <p class="reveal">Huckleberry Sitters matches Treasure Valley families with sitters they've actually met — for date nights, after-school gaps and everything in between. Your routine, your rules, a familiar face at the door.</p>
+      <div class="hero-cta reveal">
+        <a href="#planner" class="btn-pri">Plan your evening</a>
+        <a href="#how" class="btn-sec">How it works ↓</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">What pickup sounds like</span>
+      <p class="hc-line">"The kids asked when she's coming back."</p>
+      <p class="hc-by">— the review we aim for, every single visit</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we cover</div>
+      <h2>Evenings out, afternoons in, and the in-between.</h2>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="planner" style="background:var(--oat-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Plan your evening</div>
+      <h2>Sketch the night before you book it.</h2>
+      <p class="stxt">Tell us who needs watching, when, and what would help — a sample evening builds itself, with an estimated rate for your crew. Every plan is confirmed together before your first booking; this is the starting picture.</p>
+    </div>
+    <div class="pl-grid reveal">
+      <div class="pl-controls">
+        <fieldset class="pl-fs">
+          <legend>Who needs watching?</legend>
+          <p class="fs-hint">Add a count for each age group.</p>
+          <div class="pl-ages" id="plAges"></div>
+        </fieldset>
+        <fieldset class="pl-fs">
+          <legend>When do you usually need us?</legend>
+          <p class="fs-hint">Pick one — you can always mix later.</p>
+          <div class="pl-pills" id="plTimes" role="group" aria-label="When you need care"></div>
+        </fieldset>
+        <fieldset class="pl-fs">
+          <legend>What would help?</legend>
+          <p class="fs-hint">Tap any that apply.</p>
+          <div class="pl-pills" id="plNeeds" role="group" aria-label="What would help"></div>
+        </fieldset>
+      </div>
+      <div class="pl-out" id="planOut" aria-live="polite">
+        <div id="planBody"><p class="pl-empty">Add at least one kid on the left and your sample evening appears here.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Meet first. Book second. Relax third.</h2>
+    </div>
+    <div class="how-grid reveal" id="howGrid"></div>
+  </div>
+</section>
+
+<section id="approach" style="background:var(--oat-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Our approach</div>
+      <h2>What an evening with us looks like.</h2>
+    </div>
+    <div class="app-grid reveal" id="appGrid"></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Where we sit</div>
+    <h2>Families across the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--oat-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Huckleberry Sitters</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rates">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Rates</div>
+      <h2>Simple math, settled up front.</h2>
+    </div>
+    <div class="rate-grid reveal" id="rateGrid"></div>
+    <p class="rates-note reveal" id="ratesNote"></p>
+  </div>
+</section>
+
+<section id="testimonials" style="background:var(--oat-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">From our families</div>
+    <h2>In their words, once they've said them.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything parents ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Get started</div>
+    <h2>Put a night on the calendar.</h2>
+    <p>Tell us about your crew — we'll text you back to set up a meet-and-greet with a sitter who fits.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qCity">Neighborhood / city</label>
+        <input type="text" id="qCity" name="city" placeholder="Star, ID" />
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qKids">How many kids?</label>
+          <select id="qKids" name="kids">
+            <option>1</option>
+            <option selected>2</option>
+            <option>3</option>
+            <option>4+</option>
+          </select>
+        </div>
+        <div class="qf-row">
+          <label for="qWhen">When do you need us?</label>
+          <select id="qWhen" name="when"></select>
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="4" placeholder="Ages, routines, the dog, the plan from the planner above…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request a meet-and-greet</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550338" data-phone-link>Call or text (208) 555-0338</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Got it! We'll text you to line up a meet-and-greet with a sitter who fits your crew.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Huckleberry Sitters</b><br />
+      Babysitting · <span data-city>Star, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550338" data-phone>(208) 555-0338</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550338"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550338?body=Hi%20Huckleberry%20Sitters%2C%20are%20you%20free%20this%20weekend%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     ===================================================== */
+  var DEFAULT_CONTENT = {
+    "brand": {
+      "name": "Huckleberry Sitters",
+      "tagline": "Go out. Bedtime is handled.",
+      "phone": "(208) 555-0338",
+      "email": "hello@huckleberrysitters.com",
+      "leadEmail": "info@kingdom-creatives.com",
+      "city": "Star, ID"
+    },
+    "stats": [
+      {
+        "num": "1",
+        "label": "family at a time — your house, your rules, your routine"
+      },
+      {
+        "num": "10 min",
+        "label": "early, every visit — the handoff never gets skipped"
+      },
+      {
+        "num": "0",
+        "label": "surprise fees — the rate we agree on is the rate you pay"
+      }
+    ],
+    "services": [
+      {
+        "title": "Date Night",
+        "from": "from $16/hr",
+        "desc": "An evening out without the group-text scramble. Your sitter arrives before you leave, runs the routine you set, and sends you out the door unhurried."
+      },
+      {
+        "title": "After School",
+        "from": "from $16/hr",
+        "desc": "Pickup-time to parent-time coverage — snacks, homework minutes, and backyard energy burned off before dinner."
+      },
+      {
+        "title": "Occasional Daytime",
+        "from": "from $16/hr",
+        "desc": "Work-from-home crunch days, appointments, a morning to yourself — daytime hours booked by the block, no weekly commitment."
+      },
+      {
+        "title": "Mother's Helper",
+        "from": "from $14/hr",
+        "desc": "An extra pair of hands while you're home — new-baby weeks, big-family evenings, party prep. You stay in charge; we keep the little ones busy."
+      }
+    ],
+    "ageBands": [
+      {
+        "id": "infant",
+        "label": "Infant (0–1)"
+      },
+      {
+        "id": "toddler",
+        "label": "Toddler (1–3)"
+      },
+      {
+        "id": "preschool",
+        "label": "Preschool (3–5)"
+      },
+      {
+        "id": "school",
+        "label": "School-age (5–12)"
+      }
+    ],
+    "careTimes": [
+      {
+        "id": "weekeve",
+        "label": "Weekday evening",
+        "bump": "0"
+      },
+      {
+        "id": "weekend",
+        "label": "Weekend evening",
+        "bump": "2"
+      },
+      {
+        "id": "afterschool",
+        "label": "After school",
+        "bump": "0"
+      },
+      {
+        "id": "daytime",
+        "label": "Occasional daytime",
+        "bump": "0"
+      }
+    ],
+    "careNeeds": [
+      {
+        "id": "homework",
+        "label": "Homework help"
+      },
+      {
+        "id": "dinner",
+        "label": "Simple dinner"
+      },
+      {
+        "id": "bedtime",
+        "label": "Bedtime routine"
+      },
+      {
+        "id": "tidy",
+        "label": "Light tidy-up"
+      },
+      {
+        "id": "pets",
+        "label": "Pet-friendly sitter"
+      }
+    ],
+    "rundown": [
+      {
+        "slot": "Arrival",
+        "need": "",
+        "desc": "Your sitter arrives ten minutes early for the handoff — house notes, allergies, routines, and where the snacks live."
+      },
+      {
+        "slot": "Settling in",
+        "need": "",
+        "desc": "Shoes off, coats up, and straight into whatever your kids are into — blocks, backyard, board games. Screens follow your house rules; we default to off."
+      },
+      {
+        "slot": "Homework",
+        "need": "homework",
+        "desc": "Backpacks open before the fun stuff. Your sitter sits with them through worksheets and reading minutes — encouraging, not doing it for them."
+      },
+      {
+        "slot": "Dinner",
+        "need": "dinner",
+        "desc": "Something simple and kid-approved — mac and cheese, quesadillas, whatever you've left in the fridge with instructions."
+      },
+      {
+        "slot": "Tidy-up",
+        "need": "tidy",
+        "desc": "Toys back in bins, dishes in the dishwasher, kitchen wiped down. You come home to the house you left."
+      },
+      {
+        "slot": "Pet check",
+        "need": "pets",
+        "desc": "Dog let out, water bowls topped up, cat left to supervise from the stairs. Sitters comfortable around animals, matched on request."
+      },
+      {
+        "slot": "Wind-down",
+        "need": "",
+        "desc": "Lights lower, voices lower — a book pile and quiet play so bedtime doesn't arrive as a surprise."
+      },
+      {
+        "slot": "Bedtime",
+        "need": "bedtime",
+        "desc": "Your routine, run your way — bath if it's a bath night, teeth, one more book (just one), and the door left open the exact right amount."
+      },
+      {
+        "slot": "Your note at pickup",
+        "need": "",
+        "desc": "What they ate, what they played, how bedtime landed — waiting for you in a quick note when you walk in."
+      }
+    ],
+    "rates": {
+      "base": "16",
+      "perExtraKid": "3",
+      "weekendBump": "2"
+    },
+    "ratesNote": "Every rate is confirmed together before your first booking — and the number we agree on is the number you pay. No booking fees, no surge pricing, no app taking a cut.",
+    "howItWorks": [
+      {
+        "title": "Say hello first",
+        "desc": "Every new family starts with a meet-and-greet. The sitter comes by, the kids size them up, and you ask everything you want to ask."
+      },
+      {
+        "title": "Book your evening",
+        "desc": "Text us or use the form below — the date, the hours, the crew. We confirm your sitter and the rate before anything is locked in."
+      },
+      {
+        "title": "Leave your notes",
+        "desc": "Routines, allergies, the bedtime order of operations. Your sitter runs your evening the way you would — not a stranger's version of it."
+      }
+    ],
+    "approach": [
+      {
+        "title": "Engagement over screens",
+        "desc": "Sitters come with pockets full of games, not a tablet. Screens follow your house rules — and our default is off."
+      },
+      {
+        "title": "Your routines, run your way",
+        "desc": "Dinner rules, homework order, bedtime steps — you set them, we follow them. Kids relax when their evening looks familiar."
+      },
+      {
+        "title": "You'll never wonder",
+        "desc": "Plans change? You get a text. Great evening? You get the story at pickup — what they ate, what they played, how bedtime landed."
+      }
+    ],
+    "serviceArea": {
+      "region": "Treasure Valley, Idaho",
+      "short": "Treasure Valley",
+      "cities": [
+        "Star",
+        "Eagle",
+        "Middleton",
+        "Garden City",
+        "West Boise"
+      ]
+    },
+    "owner": {
+      "name": "Maren Voss",
+      "heading": "How Huckleberry started",
+      "bio": "Maren Voss was the seventh number in every group text that started with \"this is so last minute, but…\". A mom of three in Star, she was the neighbor who always knew a sitter — until knowing one wasn't enough, and she started matching them to families on purpose. Huckleberry Sitters is that habit, grown up: a small circle of sitters she'd trust with her own three, a meet-and-greet before any booking, and evenings that run on your family's routine instead of a stranger's guesswork.",
+      "photo": ""
+    },
+    "testimonials": [
+      {
+        "quote": "",
+        "name": ""
+      },
+      {
+        "quote": "",
+        "name": ""
+      },
+      {
+        "quote": "",
+        "name": ""
+      }
+    ],
+    "faq": [
+      {
+        "q": "Are you a daycare?",
+        "a": "No — and that's on purpose. We're the babysitter: one family at a time, in your own home, on your schedule. We don't run a facility, we don't do all-day group care, and your kids never leave the house. If you need full-time weekday care, a daycare is the right tool — we're the evenings-and-in-between people."
+      },
+      {
+        "q": "Do we meet the sitter before we book?",
+        "a": "Always. Every new family starts with a meet-and-greet — the sitter comes by, the kids size them up, you ask everything you want to ask. You book a sitter after you've met them, never before."
+      },
+      {
+        "q": "Who are your sitters?",
+        "a": "People we know personally, not names from an app. Every sitter starts as someone from our own circle here in Star, and every family meets them before booking. If the fit isn't right, we'll suggest someone else — no hard feelings."
+      },
+      {
+        "q": "What does it cost?",
+        "a": "The base rate covers one kid; each additional kid and weekend evenings add a little. The exact math is in the rates section, and the planner above estimates it for your crew. We confirm the final rate together before your first booking."
+      },
+      {
+        "q": "What about bedtime?",
+        "a": "You write the routine, we run it — bath nights, teeth, which stuffed animal is the right one, how far the door stays open. Kids do best with their own routine, so we don't improvise a new one."
+      },
+      {
+        "q": "Can you handle pets?",
+        "a": "A dog that needs letting out, a cat that needs ignoring — tap \"Pet-friendly sitter\" in the planner and we'll match you with someone comfortable around animals. For pets with special handling, leave notes like you would for the kids."
+      },
+      {
+        "q": "What if our plans change?",
+        "a": "Text us. Evenings can be rebooked or cancelled without drama — we'd rather keep your trust than charge you for a night that didn't happen."
+      }
+    ],
+    "social": []
+  };
+
+  var CONTENT = DEFAULT_CONTENT;
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+  var num = function(x){ var n = parseFloat(x); return isNaN(n) ? 0 : n; };
+
+  /* ---------- render ---------- */
+  function renderContent(c){
+    document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
+    document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
+    var telLink = telHref(c.brand.phone);
+    document.querySelectorAll('[data-phone]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = c.brand.phone; });
+    document.querySelectorAll('[data-phone-link]').forEach(function(el){ el.href = 'tel:' + telLink; el.textContent = 'Call or text ' + c.brand.phone; });
+    document.querySelectorAll('.mobile-cta .call').forEach(function(el){ el.href = 'tel:' + telLink; });
+    document.querySelectorAll('.mobile-cta .text').forEach(function(el){ el.href = 'sms:' + telLink + '?body=' + encodeURIComponent('Hi ' + c.brand.name + ', are you free this weekend?'); });
+
+    // trust stats
+    document.getElementById('trustStats').innerHTML = c.stats.map(function(s){
+      return '<div class="tstat"><b>' + esc(s.num) + '</b><span>' + esc(s.label) + '</span></div>';
+    }).join('');
+
+    // services
+    document.getElementById('svcGrid').innerHTML = c.services.map(function(s){
+      return '<div class="svc-card"><h3>' + esc(s.title) + '<span class="from">' + esc(s.from) + '</span></h3><p>' + esc(s.desc) + '</p></div>';
+    }).join('');
+
+    // how it works
+    document.getElementById('howGrid').innerHTML = c.howItWorks.map(function(st){
+      return '<div class="how-card"><h3>' + esc(st.title) + '</h3><p>' + esc(st.desc) + '</p></div>';
+    }).join('');
+
+    // approach
+    var icos = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'
+    ];
+    document.getElementById('appGrid').innerHTML = c.approach.map(function(a, i){
+      return '<div class="acard"><span class="a-ico">' + icos[i % icos.length] + '</span><h3>' + esc(a.title) + '</h3><p>' + esc(a.desc) + '</p></div>';
+    }).join('');
+
+    // service area
+    document.getElementById('areaShort').textContent = c.serviceArea.short;
+    document.getElementById('areaChips').innerHTML = (c.serviceArea.cities || []).map(function(city){
+      return '<span class="achip">' + esc(city) + '</span>';
+    }).join('');
+
+    // owner
+    document.getElementById('ownerEyebrow').textContent = c.owner.heading || 'Our story';
+    document.getElementById('ownerName').textContent = c.owner.name;
+    document.getElementById('ownerBio').textContent = c.owner.bio;
+    var photoWrap = document.getElementById('ownerPhotoWrap');
+    photoWrap.innerHTML = c.owner.photo ? '<img src="' + esc(c.owner.photo) + '" alt="' + esc(c.owner.name) + '">' : '';
+
+    // rates
+    var r = c.rates || {};
+    document.getElementById('rateGrid').innerHTML =
+      '<div class="rcard"><div class="rnum">$' + esc(r.base) + '/hr</div><div class="rlbl">the base rate — one kid, one evening</div></div>' +
+      '<div class="rcard"><div class="rnum">+$' + esc(r.perExtraKid) + '/hr</div><div class="rlbl">for each additional kid</div></div>' +
+      '<div class="rcard"><div class="rnum">+$' + esc(r.weekendBump) + '/hr</div><div class="rlbl">on weekend evenings</div></div>';
+    document.getElementById('ratesNote').textContent = c.ratesNote || '';
+
+    // when-select in booking form
+    var whenSel = document.getElementById('qWhen');
+    whenSel.innerHTML = (c.careTimes || []).map(function(t){
+      return '<option value="' + esc(t.label) + '">' + esc(t.label) + '</option>';
+    }).join('') + '<option value="Flexible">Flexible / not sure yet</option>';
+
+    // testimonials
+    document.getElementById('testGrid').innerHTML = c.testimonials.map(function(t){
+      return '<div class="tcard"><p>' + esc(t.quote) + '</p><div class="tname">' + esc(t.name) + '</div></div>';
+    }).join('');
+
+    // faq
+    document.getElementById('faqList').innerHTML = c.faq.map(function(f, i){
+      return '<details class="qa"' + (i === 0 ? ' open' : '') + '><summary>' + esc(f.q) + '<span class="pm">+</span></summary><div class="ans">' + esc(f.a) + '</div></details>';
+    }).join('');
+
+    // planner
+    renderPlannerControls(c);
+    renderPlan(c);
+
+    revealScan(document.body);
+  }
+
+  /* ---------- sitter match planner ---------- */
+  var plState = { counts: {}, time: null, needs: {} };
+
+  function renderPlannerControls(c){
+    // stale-id guards: drop state for ids that no longer exist
+    var bandIds = (c.ageBands || []).map(function(b){ return b.id; });
+    Object.keys(plState.counts).forEach(function(k){ if(bandIds.indexOf(k) === -1) delete plState.counts[k]; });
+    var timeIds = (c.careTimes || []).map(function(t){ return t.id; });
+    if(timeIds.indexOf(plState.time) === -1) plState.time = timeIds[0] || null;
+    var needIds = (c.careNeeds || []).map(function(n){ return n.id; });
+    Object.keys(plState.needs).forEach(function(k){ if(needIds.indexOf(k) === -1) delete plState.needs[k]; });
+
+    document.getElementById('plAges').innerHTML = (c.ageBands || []).map(function(b){
+      var n = plState.counts[b.id] || 0;
+      return '<div class="age-row' + (n > 0 ? ' on' : '') + '"><span class="al">' + esc(b.label) + '</span>' +
+        '<span class="stepper">' +
+        '<button type="button" data-band="' + esc(b.id) + '" data-delta="-1" aria-label="Fewer ' + esc(b.label) + '">−</button>' +
+        '<span class="cnt">' + n + '</span>' +
+        '<button type="button" data-band="' + esc(b.id) + '" data-delta="1" aria-label="More ' + esc(b.label) + '">+</button>' +
+        '</span></div>';
+    }).join('');
+
+    document.getElementById('plTimes').innerHTML = (c.careTimes || []).map(function(t){
+      var on = t.id === plState.time;
+      return '<button type="button" class="plpill' + (on ? ' on' : '') + '" data-time="' + esc(t.id) + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(t.label) + '</button>';
+    }).join('');
+
+    document.getElementById('plNeeds').innerHTML = (c.careNeeds || []).map(function(nd){
+      var on = !!plState.needs[nd.id];
+      return '<button type="button" class="plpill' + (on ? ' on' : '') + '" data-need="' + esc(nd.id) + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(nd.label) + '</button>';
+    }).join('');
+
+    var wrap = document.getElementById('planner');
+    if(!wrap._wired){
+      wrap._wired = true;
+      wrap.addEventListener('click', function(e){
+        var st = e.target.closest('[data-band]');
+        if(st){
+          var id = st.getAttribute('data-band'), d = +st.getAttribute('data-delta');
+          plState.counts[id] = Math.max(0, Math.min(4, (plState.counts[id] || 0) + d));
+          renderPlannerControls(CONTENT); renderPlan(CONTENT);
+          return;
+        }
+        var tp = e.target.closest('[data-time]');
+        if(tp){
+          plState.time = tp.getAttribute('data-time');
+          renderPlannerControls(CONTENT); renderPlan(CONTENT);
+          return;
+        }
+        var np = e.target.closest('[data-need]');
+        if(np){
+          var nid = np.getAttribute('data-need');
+          plState.needs[nid] = !plState.needs[nid];
+          renderPlannerControls(CONTENT); renderPlan(CONTENT);
+          return;
+        }
+        if(e.target.closest('#planCta')) sendPlanToForm();
+      });
+    }
+  }
+
+  function totalKids(){
+    return Object.keys(plState.counts).reduce(function(sum, k){ return sum + (plState.counts[k] || 0); }, 0);
+  }
+
+  function renderPlan(c){
+    var body = document.getElementById('planBody');
+    var kids = totalKids();
+    if(!kids){
+      body.innerHTML = '<p class="pl-empty">Add at least one kid on the left and your sample evening appears here.</p>';
+      return;
+    }
+    var time = (c.careTimes || []).filter(function(t){ return t.id === plState.time; })[0] || null;
+    var r = c.rates || {};
+    var rate = num(r.base) + num(r.perExtraKid) * (kids - 1) + (time ? num(time.bump) : 0);
+
+    var crew = (c.ageBands || []).filter(function(b){ return (plState.counts[b.id] || 0) > 0; })
+      .map(function(b){ return esc(b.label) + ' ×' + plState.counts[b.id]; }).join(', ');
+
+    var steps = (c.rundown || []).filter(function(s){ return !s.need || plState.needs[s.need]; });
+
+    var html = '<div class="est"><span class="num">$' + rate + '/hr</span>' +
+      '<span class="meta">estimated for ' + kids + (kids === 1 ? ' kid' : ' kids') +
+      (time ? ' · ' + esc(time.label).toLowerCase() : '') + '</span></div>' +
+      '<p class="est-note">' + crew + '. We confirm the exact rate together before your first booking — every family\'s evening looks a little different.</p>';
+
+    html += '<ul class="tl">' + steps.map(function(s){
+      return '<li><span class="slot">' + esc(s.slot) + '</span><p>' + esc(s.desc) + '</p></li>';
+    }).join('') + '</ul>';
+
+    html += '<p class="pl-cta"><button type="button" class="btn-pri" id="planCta">Request this plan</button></p>';
+    body.innerHTML = html;
+  }
+
+  function sendPlanToForm(){
+    var c = CONTENT, kids = totalKids();
+    var time = (c.careTimes || []).filter(function(t){ return t.id === plState.time; })[0];
+    var crew = (c.ageBands || []).filter(function(b){ return (plState.counts[b.id] || 0) > 0; })
+      .map(function(b){ return b.label + ' ×' + plState.counts[b.id]; }).join(', ');
+    var needs = (c.careNeeds || []).filter(function(n){ return plState.needs[n.id]; })
+      .map(function(n){ return n.label; }).join(', ');
+    var summary = 'From the planner: ' + kids + (kids === 1 ? ' kid' : ' kids') + ' (' + crew + ')' +
+      (time ? ' · ' + time.label : '') + (needs ? ' · ' + needs : '');
+    document.getElementById('qNotes').value = summary;
+    var kidsSel = document.getElementById('qKids');
+    kidsSel.value = kids >= 4 ? '4+' : String(kids);
+    if(time){
+      var whenSel = document.getElementById('qWhen');
+      for(var i = 0; i < whenSel.options.length; i++){
+        if(whenSel.options[i].value === time.label){ whenSel.selectedIndex = i; break; }
+      }
+    }
+    document.getElementById('book').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    setTimeout(function(){ document.getElementById('qName').focus({ preventScroll: true }); }, reduce ? 0 : 600);
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function revealScan(root){
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    if(!io){
+      io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    nodes.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- nav solidify ---------- */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- desktop sms:/tel: guard ---------- */
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="sms:"], a[href^="tel:"]');
+    if(!a || isMobile) return;
+    e.preventDefault();
+    toast('Call or text ' + CONTENT.brand.phone);
+  });
+
+  /* ---------- lead form (FormSubmit) ---------- */
+  var LEAD = { provider: 'formsubmit', email: '' };
+  function applyRuntime(c){ LEAD.email = (c.brand||{}).leadEmail || LEAD.email; }
+  applyRuntime(CONTENT);
+
+  var form = document.getElementById('quoteForm');
+  var status = document.getElementById('qfStatus');
+  var success = document.getElementById('qfSuccess');
+  var submitBtn = document.getElementById('qfSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var honey = form.querySelector('[name="_honey"]');
+    if(honey && honey.value) return; // honeypot tripped, silently drop
+
+    var name = document.getElementById('qName').value.trim();
+    var phone = document.getElementById('qPhone').value.trim();
+    if(!name || !phone){
+      status.textContent = 'Please fill in your name and phone number.';
+      status.classList.add('err');
+      return;
+    }
+    status.textContent = ''; status.classList.remove('err');
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+
+    var payload = {
+      name: name, phone: phone,
+      city: document.getElementById('qCity').value.trim() || '(not given)',
+      kids: document.getElementById('qKids').value,
+      when: document.getElementById('qWhen').value,
+      notes: document.getElementById('qNotes').value.trim(),
+      _subject: CONTENT.brand.name + ' — new request from ' + name,
+      _template: 'table', _captcha: 'false'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(LEAD.email), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === 'true' || res.success === true)){
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        throw new Error('formsubmit rejected');
+      }
+    }).catch(function(){
+      status.innerHTML = 'Something didn\'t go through — text us directly at <strong>' + esc(CONTENT.brand.phone) + '</strong> instead.';
+      status.classList.add('err');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request a meet-and-greet';
+    });
+  });
+
+  /* ---------- boot ---------- */
+  renderContent(CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if(d){
+        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
+        applyRuntime(CONTENT);
+        renderContent(CONTENT);
+      }
+    })
+    .catch(function(){});
+})();
+</script>
+</body>
+</html>

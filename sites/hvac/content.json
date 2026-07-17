@@ -1,0 +1,198 @@
+{
+  "brand": {
+    "name": "Whitecloud Heating & Air",
+    "tagline": "Warm in January. Cool in July.",
+    "phone": "(208) 555-0263",
+    "email": "hello@whitecloudair.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Caldwell, ID"
+  },
+  "stats": [
+    {
+      "num": "2x",
+      "label": "A year your system should get looked at — spring and fall. We do both."
+    },
+    {
+      "num": "21-pt",
+      "label": "Inspection on every tune-up, heating or cooling"
+    },
+    {
+      "num": "$0",
+      "label": "Surprise charges — you approve the number before we start"
+    }
+  ],
+  "services": [
+    {
+      "pole": "heat",
+      "title": "Heating",
+      "desc": "Furnace repair, replacement and fall tune-ups. If it rattles, short-cycles or just won't keep up, we find out why before we talk money."
+    },
+    {
+      "pole": "cool",
+      "title": "Cooling",
+      "desc": "AC repair, new installs and spring readiness. We size a replacement to your actual house — not to the biggest unit on the truck."
+    },
+    {
+      "pole": "air",
+      "title": "Air quality",
+      "desc": "Filters, duct sealing and humidity balance — the stuff you feel every day and see on the dust rag."
+    },
+    {
+      "pole": "plan",
+      "title": "Maintenance plans",
+      "desc": "Twice-a-year tune-ups on a schedule you never think about, with priority scheduling when the weather turns mean."
+    }
+  ],
+  "plans": [
+    {
+      "name": "One-Time Tune-Up",
+      "price": "$89",
+      "per": "/visit",
+      "features": "Heating or cooling — pick the season\n21-point inspection and cleaning\nFilter swap included (have your size handy)\nStraight answers, no sales pitch",
+      "best": false,
+      "note": ""
+    },
+    {
+      "name": "Season Pass",
+      "price": "$159",
+      "per": "/year",
+      "features": "Two visits — spring cooling, fall heating\nPriority scheduling in heat waves and cold snaps\nFilter swap at every visit\n10% off any repair, any time",
+      "best": true,
+      "note": "Most popular"
+    },
+    {
+      "name": "Whole-Home Plan",
+      "price": "$249",
+      "per": "/year",
+      "features": "Everything in Season Pass\nCovers two systems, or homes over 3,000 sq ft\nWater heater check-in at every visit\nFirst in line when the schedule fills up",
+      "best": false,
+      "note": ""
+    }
+  ],
+  "pricingNote": "Repairs are always quoted flat and approved by you before work starts — a plan is never required to get service.",
+  "systemMap": [
+    {
+      "id": "furnace",
+      "label": "Furnace",
+      "symptoms": "Short-cycling, rattling, weak heat, a burner that won't stay lit.",
+      "covers": "Burner cleaning, blower and ignition test, heat-exchanger look, carbon-monoxide reading.",
+      "range": "$89 tune-up · repairs quoted flat first"
+    },
+    {
+      "id": "filter",
+      "label": "Return filter",
+      "symptoms": "Dust on every shelf, indoor allergies, airflow that feels lazy.",
+      "covers": "Filter swap, return-plenum check, and a size recommendation you can buy anywhere.",
+      "range": "Included with every visit"
+    },
+    {
+      "id": "waterheater",
+      "label": "Water heater",
+      "symptoms": "Lukewarm showers, popping sounds from the tank, rusty tint in hot water.",
+      "covers": "Flush, element and valve test, temperature check and an honest age assessment.",
+      "range": "$79 check + flush"
+    },
+    {
+      "id": "ducts",
+      "label": "Ductwork",
+      "symptoms": "One room always hot, one always cold, whistling behind the walls.",
+      "covers": "Leak check, a sealing quote if it needs one, and balancing between rooms.",
+      "range": "Free look during any visit"
+    },
+    {
+      "id": "thermostat",
+      "label": "Thermostat",
+      "symptoms": "Readings that don't match the room, schedules that won't stick, short-cycling.",
+      "covers": "Calibration, wiring check, smart-thermostat setup and a five-minute lesson.",
+      "range": "$49 with any visit"
+    },
+    {
+      "id": "attic",
+      "label": "Attic insulation",
+      "symptoms": "Upstairs bakes in July, heating bills creep up every January.",
+      "covers": "Depth check, air-gap inspection, and a plain-numbers estimate if it's thin.",
+      "range": "Free with any tune-up"
+    },
+    {
+      "id": "condenser",
+      "label": "AC condenser",
+      "symptoms": "Warm air from the vents, ice on the lines, a unit that hums but won't spin.",
+      "covers": "Coil cleaning, pressure check, capacitor and fan test, refrigerant-line inspection.",
+      "range": "$89 tune-up · repairs quoted flat first"
+    }
+  ],
+  "sysNote": "Not sure where the noise is coming from? Tap the closest thing — or just call and describe it. Guessing is our job, not yours.",
+  "seasonal": [
+    {
+      "kind": "cool",
+      "title": "Spring — cooling prep",
+      "desc": "Book in April or May, before the first 95° week fills every schedule in the valley.",
+      "items": "Condenser coil wash\nPressure and capacitor test\nAirflow and filter check\nCondensate drain clear"
+    },
+    {
+      "kind": "warm",
+      "title": "Fall — heating prep",
+      "desc": "Book in September or October, before the first hard freeze finds the weak spot for you.",
+      "items": "Burner and ignition cleaning\nHeat-exchanger inspection\nCarbon-monoxide reading\nFilter swap and thermostat check"
+    }
+  ],
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Caldwell",
+      "Nampa",
+      "Middleton",
+      "Greenleaf",
+      "Notus",
+      "Wilder"
+    ]
+  },
+  "owner": {
+    "name": "Doyle Pruett",
+    "heading": "Why Whitecloud exists",
+    "bio": "Doyle Pruett spent a decade running no-heat calls for a big outfit and grew to hate the commission sheet more than the cold crawl spaces. The person diagnosing your furnace shouldn't be paid extra to declare it dead. So he started Whitecloud: one crew, both seasons, and the price on paper before the panel comes off. Winter or summer doesn't matter to the mountains — it shouldn't matter to your living room either.",
+    "photo": ""
+  },
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do you take emergency calls?",
+      "a": "Yes. No-heat and no-cool calls jump the line, plan members first. Call rather than use the form if the house is uncomfortable right now — the form is for scheduling, the phone is for today."
+    },
+    {
+      "q": "How often does a system really need a tune-up?",
+      "a": "Twice a year — cooling in spring, heating in fall. Skipping years doesn't break anything immediately; it just means the first 100° week or the first freeze gets to pick when you find the problem."
+    },
+    {
+      "q": "Repair or replace — how do you decide?",
+      "a": "Simple math, done in front of you: if a repair costs more than half of what a new system would, and the unit is past its expected years, we'll say replace. If a $220 part buys you three more winters, we'll say repair. You decide either way."
+    },
+    {
+      "q": "Which brands do you work on?",
+      "a": "All of them. Furnaces and ACs are more alike than the badges suggest. If a part is genuinely unavailable for an old unit, we'll tell you before anything is taken apart."
+    },
+    {
+      "q": "How long does a new install take?",
+      "a": "Most straight swaps are one day — comfortable morning to late afternoon. Add ductwork changes and it can stretch to two. You'll get the timeline with the quote, in writing."
+    },
+    {
+      "q": "Do plans renew automatically?",
+      "a": "Only if you ask for that. The default is a reminder text when your year is up — renew with a yes, or just let it lapse. No gotchas."
+    }
+  ],
+  "social": []
+}
