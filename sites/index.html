@@ -153,9 +153,6 @@
   .fb{font-family:'Archivo';font-weight:800;color:#fff;margin-bottom:4px}
   .foot-link{color:var(--con-muted);text-decoration:none;font-weight:600}
   .foot-link:hover{color:var(--con-amber)}
-
-  .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
-  .reveal.in{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -194,7 +191,7 @@
 </header>
 
 <section class="gallery" id="gallery">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="step">The gallery</div>
     <h2>Click into any demo. It's the real, live site.</h2>
     <p class="stxt">These aren't mockups — every card below is a fully functional site running its own booking form, pricing logic, and signature interaction. Explore one, then tell me which business it's for.</p>
@@ -1123,7 +1120,7 @@
 </section>
 
 <section class="how">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="step">How it works</div>
     <h2>Pick one. I white-label it. You run it.</h2>
     <p class="stxt">Every site in the shop is a finished, working product — not a starting point. Buying one is a customization job, not a build from scratch.</p>
@@ -1148,7 +1145,7 @@
 </section>
 
 <section class="final" id="contact">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="step">Want one of these?</div>
     <h2>Tell me which site — I'll take it from there.</h2>
     <p>Send a line about your business and which demo caught your eye. I'll reply within one business day with pricing and what customizing it would look like for you.</p>
@@ -1193,10 +1190,6 @@
 </footer>
 
 <script>
-  // reveal on scroll
-  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.12});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
   // "Want this site?" — scroll to the contact form and pre-fill the message with the chosen site
   document.querySelectorAll('.want-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
