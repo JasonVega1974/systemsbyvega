@@ -9,7 +9,7 @@
   "stats": [
     { "num": "14+", "label": "Years behind the hood" },
     { "num": "300+", "label": "Builds delivered" },
-    { "num": "AWS", "label": "Certified welder" }
+    { "num": "1", "label": "Welder, start to finish" }
   ],
   "projects": [
     { "no": "JOB-0417", "cat": "gates", "title": "Ridgeline Driveway Gate", "spec": "2in sq tube · 11ga panel · MIG · 16ft dual swing", "status": "Delivered", "image": "", "tone": "a" },
@@ -26,7 +26,7 @@
     { "icon": "trailer", "title": "Trailers — Build & Repair", "desc": "New utility and flatbed builds to your spec, plus frame repair, deck swaps, ramps, and axle work on whatever you're towing now." },
     { "icon": "repair", "title": "Structural & Farm Repair", "desc": "Cracked loader arms, bent implements, broken corral panels, sagging carports. If it broke in the field, I've probably fixed one like it." },
     { "icon": "fire", "title": "Furniture & Firepits", "desc": "Tables, benches, shelving frames, and plasma-cut firepits that turn a back patio into the place everyone ends up standing around." },
-    { "icon": "mobile", "title": "Mobile Welding", "desc": "The rig comes to you — field, jobsite, or driveway. Same certified welds without hauling a broken machine across the county." },
+    { "icon": "mobile", "title": "Mobile Welding", "desc": "The rig comes to you — field, jobsite, or driveway. Same clean welds without hauling a broken machine across the county." },
     { "icon": "plasma", "title": "CNC Plasma Signs", "desc": "Ranch signs, address plaques, business logos cut clean from plate on the 4x8 plasma table. Send a sketch — I'll make it steel." }
   ],
   "specs": [

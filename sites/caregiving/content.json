@@ -10,7 +10,7 @@
   "stats": [
     { "num": "8 yrs", "label": "Supporting Treasure Valley families" },
     { "num": "12", "label": "Caregivers on our team" },
-    { "num": "100%", "label": "Background-checked, every hire" }
+    { "num": "1:1", "label": "One caregiver, not a rotation" }
   ],
   "careNeeds": [
     { "id": "companionship", "label": "Companionship Visits", "desc": "Conversation, a shared activity, someone present so a day doesn't pass alone.", "days": ["Mon", "Wed", "Fri"], "time": "Afternoon" },
@@ -44,7 +44,7 @@
   ],
   "faq": [
     { "q": "Is this medical care?", "a": "No. Hearth & Home provides non-medical companion care — help around the house, company, transportation, and support with daily routines. If your family needs skilled nursing or medical care, we're glad to help point you toward a home-health agency that can." },
-    { "q": "How are your caregivers vetted?", "a": "Every caregiver on our team passes a background check and an in-person interview before their first visit, and we check in with families regularly to make sure the match is working." },
+    { "q": "How do you match a caregiver to our family?", "a": "We start with an in-person conversation about your routines, needs and preferences, then introduce a caregiver we think is a good fit — and we check in with you regularly to make sure the match is working." },
     { "q": "Can the care plan change over time?", "a": "Yes — most families start with one or two visits a week and adjust as needs change. Nothing here is a long-term contract you're locked into." },
     { "q": "What if we just need companionship, nothing else?", "a": "That's plenty. Companionship-only visits are one of our most requested plans — someone to talk to, play cards with, or just be in the house." },
     { "q": "How quickly can we get started?", "a": "A free in-home consultation is usually within a few days, and most families have a caregiver matched and a first visit scheduled within a week after that." },
