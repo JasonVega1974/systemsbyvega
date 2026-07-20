@@ -72,11 +72,16 @@
 
   /* ---------- hero ---------- */
   .hero{padding:78px 0 0;position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  /* north-star: layered 5-stop atmospheric depth over the cream field (ref dj-site-blue hero radial, line 134) */
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;z-index:0;
     background:
+      radial-gradient(1200px 680px at 50% -24%, rgba(255,253,246,.95) 0%, rgba(245,239,226,.55) 30%, rgba(201,151,28,.08) 58%, rgba(31,58,95,.07) 80%, rgba(31,58,95,.12) 100%),
       repeating-linear-gradient(-45deg,rgba(31,58,95,.045) 0 2px,transparent 2px 26px),
-      radial-gradient(700px 320px at 6% -8%,rgba(179,39,30,.07),transparent 68%),
-      radial-gradient(560px 300px at 96% 4%,var(--brass-soft),transparent 66%)}
+      radial-gradient(720px 340px at 4% -8%, rgba(179,39,30,.14) 0%, rgba(179,39,30,.06) 40%, transparent 70%),
+      radial-gradient(600px 320px at 98% 6%, rgba(201,151,28,.22) 0%, var(--brass-soft) 45%, transparent 72%)}
+  /* north-star: feTurbulence fractalNoise film grain over the retro field (ref dj-site-blue .grain, line 283) */
+  .hero-grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.05;mix-blend-mode:multiply;z-index:0}
+  .hero-in{z-index:1}
   .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px 84px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
   .hero h1{font-size:clamp(36px,5.4vw,58px);font-weight:700;line-height:1.02;letter-spacing:-.015em;max-width:13ch;margin-top:20px}
   .hero h1 .hl{color:var(--cherry)}
@@ -133,6 +138,16 @@
   .snd-result .sr-caveat{font-size:13.5px;font-style:italic;color:var(--muted);border-left:3px solid var(--brass);padding-left:12px;margin-top:14px}
   .snd-result .sr-cta{margin-top:20px}
   @media(max-width:900px){.snd-wrap{grid-template-columns:1fr}.snd-result{position:static}}
+
+  /* ---------- north-star: rendered garage bay + car (inline SVG, layered gradients + feTurbulence) ---------- */
+  .car-stage{position:relative;margin-top:30px;border:1.5px solid var(--card-brd);outline:1px solid var(--card-brd);outline-offset:4px;border-radius:16px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+  .car-scene{display:block;width:100%;height:auto}
+  /* physics-eased zone highlight groups (ref dj-site-blue rAF decay loop, line 1524) */
+  .car-zone{opacity:0;transform-box:fill-box;transform-origin:center;will-change:opacity,transform}
+  .car-cap{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid var(--hair);background:var(--cream-soft);font-family:'IBM Plex Mono';font-size:12.5px;letter-spacing:.02em;color:var(--muted)}
+  .car-cap .dot{width:9px;height:9px;border-radius:50%;background:var(--brass);box-shadow:0 0 0 3px rgba(201,151,28,.2);flex:none}
+  #carZoneLabel{color:var(--navy);font-weight:600}
+  @media(prefers-reduced-motion:reduce){.car-zone{transition:none}}
 
   /* ---------- pricing ---------- */
   .price-list{max-width:720px;margin:32px auto 0;background:var(--card);border:1.5px solid var(--card-brd);outline:1px solid var(--card-brd);outline-offset:4px;border-radius:16px;padding:30px 32px;box-shadow:var(--shadow)}
@@ -263,6 +278,11 @@
 </nav>
 
 <header class="hero">
+  <!-- north-star: static feTurbulence fractalNoise grain (renders JS-off), ref dj-site-blue .grain line 283 -->
+  <svg class="hero-grain" aria-hidden="true" preserveAspectRatio="none">
+    <filter id="heroGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#heroGrain)"/>
+  </svg>
   <div class="hero-in">
     <div>
       <div class="eyebrow reveal">Auto repair · Parma, Idaho</div>
@@ -304,6 +324,243 @@
       <h2>Describe the noise. We'll translate.</h2>
       <p class="stxt">Pick what you hear and when you hear it. You'll get the usual suspects, what checking it involves, and an honest range — no email address required.</p>
     </div>
+
+    <!-- ===================================================================
+         NORTH-STAR VISUAL: rendered garage bay + stylized car (inline SVG only)
+         Techniques mirrored from dj-site-blue/index.html:
+           - feTurbulence (+feDisplacementMap/feColorMatrix): brushed metal, grime,
+             concrete + film grain textures         (ref line 283)
+           - layered 4+ stop gradients for paint sheen / depth / floor (ref 134,270)
+           - branching path work (body, cabin, spring, gear teeth)
+           - detail density (spokes, rivets, vents, bumpers, trim, caliper)
+           - physics/eased animation: zones lit by a rAF spring (ref rAF loop, 1524)
+         Base scene is STATIC HTML (renders with JS off); zone glows are additive.
+         ==================================================================== -->
+    <div class="car-stage reveal" id="carStage">
+      <svg class="car-scene" viewBox="0 0 820 400" role="img" preserveAspectRatio="xMidYMid meet"
+           aria-label="Stylized garage bay with a car; the area we would inspect lights up as you pick a sound and a moment.">
+        <defs>
+          <!-- layered 5-stop atmospheric backdrop (ref dj-site-blue line 134) -->
+          <radialGradient id="bayGlow" cx="52%" cy="28%" r="82%">
+            <stop offset="0%" stop-color="#FFFDF6"/>
+            <stop offset="30%" stop-color="#F6F0E3"/>
+            <stop offset="58%" stop-color="#EADFC8"/>
+            <stop offset="82%" stop-color="#DFD3B8"/>
+            <stop offset="100%" stop-color="#CFC3A4"/>
+          </radialGradient>
+          <!-- concrete floor: 4-stop gradient -->
+          <linearGradient id="bayFloor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C9BFA6"/>
+            <stop offset="42%" stop-color="#B7AC90"/>
+            <stop offset="78%" stop-color="#A2977B"/>
+            <stop offset="100%" stop-color="#8E846A"/>
+          </linearGradient>
+          <!-- car paint: 5-stop sheen->shadow (ref dj-site-blue line 270) -->
+          <linearGradient id="carPaint" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#EC5A50"/>
+            <stop offset="18%" stop-color="#C93A30"/>
+            <stop offset="46%" stop-color="#B3271E"/>
+            <stop offset="76%" stop-color="#8E1D15"/>
+            <stop offset="100%" stop-color="#5E140E"/>
+          </linearGradient>
+          <!-- lower rocker: darker 4-stop -->
+          <linearGradient id="carPaintLo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8E1D15"/>
+            <stop offset="45%" stop-color="#6E1710"/>
+            <stop offset="100%" stop-color="#3E0D09"/>
+          </linearGradient>
+          <!-- chrome: 4-stop -->
+          <linearGradient id="carChrome" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="34%" stop-color="#DFE3E6"/>
+            <stop offset="70%" stop-color="#9AA1A6"/>
+            <stop offset="100%" stop-color="#565C62"/>
+          </linearGradient>
+          <!-- glass: 4-stop sky reflection -->
+          <linearGradient id="carGlass" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#C6D8E4"/>
+            <stop offset="38%" stop-color="#8FB0C6"/>
+            <stop offset="72%" stop-color="#5E7E96"/>
+            <stop offset="100%" stop-color="#3C5568"/>
+          </linearGradient>
+          <radialGradient id="carTire" cx="50%" cy="46%" r="56%">
+            <stop offset="0%" stop-color="#4A443C"/>
+            <stop offset="60%" stop-color="#2A2620"/>
+            <stop offset="100%" stop-color="#141109"/>
+          </radialGradient>
+          <radialGradient id="carRim" cx="46%" cy="42%" r="60%">
+            <stop offset="0%" stop-color="#F2F2EF"/>
+            <stop offset="42%" stop-color="#CFCFC9"/>
+            <stop offset="74%" stop-color="#9A9A94"/>
+            <stop offset="100%" stop-color="#63635D"/>
+          </radialGradient>
+          <radialGradient id="carRotor" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stop-color="#D2D6DA"/>
+            <stop offset="60%" stop-color="#9AA0A6"/>
+            <stop offset="100%" stop-color="#666C72"/>
+          </radialGradient>
+          <!-- zone glows -->
+          <radialGradient id="glowBrakes" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FF7A3D" stop-opacity=".92"/>
+            <stop offset="55%" stop-color="#E8534A" stop-opacity=".42"/>
+            <stop offset="100%" stop-color="#E8534A" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glowEngine" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F2C24F" stop-opacity=".9"/>
+            <stop offset="55%" stop-color="#C9971C" stop-opacity=".4"/>
+            <stop offset="100%" stop-color="#C9971C" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glowSusp" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#5C8AC0" stop-opacity=".9"/>
+            <stop offset="55%" stop-color="#1F3A5F" stop-opacity=".42"/>
+            <stop offset="100%" stop-color="#1F3A5F" stop-opacity="0"/>
+          </radialGradient>
+
+          <!-- feTurbulence brushed-metal streaks + desaturate (ref dj-site-blue 283) -->
+          <filter id="carBrushed" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.16" numOctaves="2" seed="7" stitchTiles="stitch" result="n"/>
+            <feColorMatrix in="n" type="saturate" values="0"/>
+          </filter>
+          <!-- feTurbulence grime speckle -> dark translucent via feColorMatrix -->
+          <filter id="carGrime" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" seed="11" result="g"/>
+            <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.14  0 0 0 0 0.11  0 0 0 0 0.07  0 0 0 0.9 -0.52"/>
+          </filter>
+          <!-- feTurbulence + feDisplacementMap + feColorMatrix: rough concrete edge -->
+          <filter id="bayConcrete" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="cn"/>
+            <feDisplacementMap in="SourceGraphic" in2="cn" scale="7" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+            <feColorMatrix in="disp" type="saturate" values="0.35"/>
+          </filter>
+          <filter id="carContact" x="-40%" y="-60%" width="180%" height="260%">
+            <feGaussianBlur stdDeviation="9"/>
+          </filter>
+
+          <clipPath id="carBodyClip">
+            <path d="M150,300 L150,270 Q150,250 172,248 L252,246 Q270,246 284,230 L354,168 Q362,158 378,157 L516,157 Q540,157 556,175 L612,228 Q620,236 640,237 L712,240 Q738,242 742,270 L744,300 L668,300 A64,64 0 0 1 540,300 L300,300 A64,64 0 0 1 172,300 Z"/>
+          </clipPath>
+        </defs>
+
+        <!-- backdrop + textured concrete floor -->
+        <rect x="0" y="0" width="820" height="400" fill="url(#bayGlow)"/>
+        <g filter="url(#bayConcrete)">
+          <rect x="0" y="298" width="820" height="102" fill="url(#bayFloor)"/>
+        </g>
+        <rect x="0" y="298" width="820" height="102" fill="#000" opacity=".05"/>
+        <!-- painted lane stripe (enamel-sign detail) -->
+        <rect x="60" y="360" width="700" height="6" rx="3" fill="#C9971C" opacity=".5"/>
+
+        <!-- contact shadows -->
+        <ellipse cx="236" cy="368" rx="84" ry="15" fill="#241B12" opacity=".4" filter="url(#carContact)"/>
+        <ellipse cx="604" cy="368" rx="84" ry="15" fill="#241B12" opacity=".4" filter="url(#carContact)"/>
+
+        <!-- ===== wheels (behind body) ===== -->
+        <g>
+          <!-- rear -->
+          <circle cx="236" cy="300" r="60" fill="url(#carTire)"/>
+          <circle cx="236" cy="300" r="60" fill="none" stroke="#0C0A06" stroke-width="2"/>
+          <circle cx="236" cy="300" r="38" fill="url(#carRim)" stroke="#4A4A44" stroke-width="1.5"/>
+          <g stroke="#7C7C76" stroke-width="4" stroke-linecap="round">
+            <path d="M236,300 L236,266"/><path d="M236,300 L268,318"/><path d="M236,300 L204,318"/>
+            <path d="M236,300 L262,282"/><path d="M236,300 L210,282"/>
+          </g>
+          <circle cx="236" cy="300" r="9" fill="#8E8E88" stroke="#5A5A54" stroke-width="1.5"/>
+          <!-- front -->
+          <circle cx="604" cy="300" r="60" fill="url(#carTire)"/>
+          <circle cx="604" cy="300" r="60" fill="none" stroke="#0C0A06" stroke-width="2"/>
+          <circle cx="604" cy="300" r="38" fill="url(#carRim)" stroke="#4A4A44" stroke-width="1.5"/>
+          <g stroke="#7C7C76" stroke-width="4" stroke-linecap="round">
+            <path d="M604,300 L604,266"/><path d="M604,300 L636,318"/><path d="M604,300 L572,318"/>
+            <path d="M604,300 L630,282"/><path d="M604,300 L578,282"/>
+          </g>
+          <circle cx="604" cy="300" r="9" fill="#8E8E88" stroke="#5A5A54" stroke-width="1.5"/>
+        </g>
+
+        <!-- ===== car body (branching path) ===== -->
+        <path d="M150,300 L150,270 Q150,250 172,248 L252,246 Q270,246 284,230 L354,168 Q362,158 378,157 L516,157 Q540,157 556,175 L612,228 Q620,236 640,237 L712,240 Q738,242 742,270 L744,300 L668,300 A64,64 0 0 1 540,300 L300,300 A64,64 0 0 1 172,300 Z" fill="url(#carPaint)"/>
+        <!-- lower rocker band -->
+        <path d="M172,300 A64,64 0 0 0 300,300 L540,300 A64,64 0 0 0 668,300 L744,300 L744,286 L150,286 L150,300 Z" fill="url(#carPaintLo)" opacity=".9"/>
+        <!-- brushed-metal sheen, clipped to body -->
+        <g clip-path="url(#carBodyClip)">
+          <rect x="140" y="150" width="620" height="160" filter="url(#carBrushed)" opacity=".1" style="mix-blend-mode:overlay"/>
+          <rect x="140" y="252" width="620" height="58" filter="url(#carGrime)" opacity=".5"/>
+          <!-- top sheen sweep -->
+          <path d="M150,270 L354,168 Q362,158 378,157 L516,157 L470,190 L300,196 Z" fill="#FFFFFF" opacity=".12"/>
+        </g>
+
+        <!-- cabin glass (branching) + B-pillar -->
+        <path d="M300,232 L360,176 Q366,170 378,169 L430,169 L430,232 Z" fill="url(#carGlass)"/>
+        <path d="M442,169 L512,169 Q532,169 544,182 L578,214 L570,232 L442,232 Z" fill="url(#carGlass)"/>
+        <rect x="430" y="169" width="12" height="63" fill="#7A1810"/>
+        <!-- window highlight streaks -->
+        <path d="M320,224 L372,180 L384,180 L332,224 Z" fill="#FFFFFF" opacity=".28"/>
+        <path d="M470,224 L524,180 L536,182 L482,224 Z" fill="#FFFFFF" opacity=".22"/>
+
+        <!-- chrome belt trim + door + handle + rivets -->
+        <rect x="150" y="234" width="470" height="4" rx="2" fill="url(#carChrome)"/>
+        <path d="M436,238 L436,300" stroke="#5E140E" stroke-width="2.5" opacity=".7"/>
+        <rect x="392" y="252" width="30" height="7" rx="3.5" fill="url(#carChrome)"/>
+        <g fill="#3E0D09" opacity=".55">
+          <circle cx="180" cy="292" r="2"/><circle cx="360" cy="292" r="2"/>
+          <circle cx="520" cy="292" r="2"/><circle cx="700" cy="292" r="2"/>
+        </g>
+        <!-- hood vents (engine detail density) -->
+        <g stroke="#5E140E" stroke-width="2" opacity=".5" stroke-linecap="round">
+          <path d="M636,250 L706,250"/><path d="M636,258 L706,258"/><path d="M636,266 L700,266"/>
+        </g>
+        <!-- bumpers + lights -->
+        <rect x="738" y="262" width="12" height="40" rx="4" fill="url(#carChrome)"/>
+        <rect x="146" y="258" width="10" height="40" rx="4" fill="url(#carChrome)"/>
+        <ellipse cx="726" cy="252" rx="12" ry="10" fill="#FBE9B0" stroke="url(#carChrome)" stroke-width="2"/>
+        <rect x="156" y="246" width="14" height="14" rx="3" fill="#C93A30" stroke="#7A1810" stroke-width="1.5"/>
+
+        <!-- ===== ZONE: BRAKES (front wheel) ===== -->
+        <g class="car-zone" id="carZoneBrakes">
+          <circle cx="604" cy="300" r="86" fill="url(#glowBrakes)"/>
+          <circle cx="604" cy="300" r="48" fill="url(#carRotor)" opacity=".85"/>
+          <g stroke="#7E848A" stroke-width="1.4" opacity=".7">
+            <path d="M604,258 L604,342"/><path d="M562,300 L646,300"/>
+            <path d="M574,270 L634,330"/><path d="M634,270 L574,330"/>
+          </g>
+          <!-- caliper -->
+          <rect x="592" y="250" width="24" height="30" rx="6" fill="#B3271E" stroke="#5E140E" stroke-width="2"/>
+          <circle cx="604" cy="300" r="60" fill="none" stroke="#FF7A3D" stroke-width="3" opacity=".9"/>
+        </g>
+
+        <!-- ===== ZONE: ENGINE (hood / bay) ===== -->
+        <g class="car-zone" id="carZoneEngine">
+          <ellipse cx="672" cy="212" rx="112" ry="86" fill="url(#glowEngine)"/>
+          <!-- cog + travel arrows -->
+          <g transform="translate(676,206)">
+            <circle r="24" fill="#EDE6CF" stroke="#8E6E12" stroke-width="3"/>
+            <g fill="#8E6E12">
+              <rect x="-3.5" y="-33" width="7" height="10" rx="2"/><rect x="-3.5" y="23" width="7" height="10" rx="2"/>
+              <rect x="-33" y="-3.5" width="10" height="7" rx="2"/><rect x="23" y="-3.5" width="10" height="7" rx="2"/>
+              <rect x="-26" y="-26" width="8" height="8" rx="2" transform="rotate(45)"/>
+              <rect x="18" y="18" width="8" height="8" rx="2" transform="rotate(45)"/>
+            </g>
+            <circle r="9" fill="#C9971C"/>
+          </g>
+          <path d="M600,196 L588,196 L588,190 L578,202 L588,214 L588,208 L600,208 Z" fill="#8E6E12" opacity=".85"/>
+        </g>
+
+        <!-- ===== ZONE: SUSPENSION (rear wheel + coil) ===== -->
+        <g class="car-zone" id="carZoneSuspension">
+          <ellipse cx="236" cy="286" rx="112" ry="92" fill="url(#glowSusp)"/>
+          <!-- coil spring (branching zigzag) -->
+          <path d="M214,236 L258,246 L214,256 L258,266 L214,276 L258,286 L214,296"
+                fill="none" stroke="#5C8AC0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- shock body -->
+          <rect x="228" y="230" width="16" height="70" rx="6" fill="#2E3A48" stroke="#1F3A5F" stroke-width="2" opacity=".92"/>
+          <circle cx="236" cy="300" r="60" fill="none" stroke="#5C8AC0" stroke-width="3" opacity=".85"/>
+        </g>
+      </svg>
+      <div class="car-cap">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="carZoneLabel">Pick a sound below — the bay lights up the zone we&rsquo;d check.</span>
+      </div>
+    </div>
+
     <div class="snd-wrap reveal">
       <div>
         <p class="snd-step">1 · What do you hear?</p>
@@ -884,6 +1141,8 @@
       el.classList.toggle('on', on);
       el.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    // light up the rendered bay for the chosen sound (physics-eased, additive)
+    setCarZone(selSound ? zoneFor(selSound, selWhen) : '');
     var box = document.getElementById('soundResult');
     if(!selSound || !selWhen){
       var prompt = !selSound && !selWhen ? 'Pick a sound and a moment — we\'ll tell you what it usually means.'
@@ -905,6 +1164,72 @@
   function labelOf(arr, id){
     var hit = (arr || []).filter(function(x){ return x.id === id; })[0];
     return hit ? hit.label : id;
+  }
+
+  /* ---------- rendered-bay zone highlight ----------
+     Physics-eased glow, mirroring the north-star's requestAnimationFrame
+     decay loop (dj-site-blue/index.html line 1524). Each zone runs a small
+     spring toward a target (1 = lit, 0 = dark) with a touch of overshoot so
+     the highlight "pops" then settles. Purely presentational + additive:
+     the sound/timing/result DATA still binds from content.json. */
+  var carEls = {
+    brakes: document.getElementById('carZoneBrakes'),
+    engine: document.getElementById('carZoneEngine'),
+    suspension: document.getElementById('carZoneSuspension')
+  };
+  var carLabelEl = document.getElementById('carZoneLabel');
+  var carZoneNames = { brakes: 'Front brakes', engine: 'Engine bay', suspension: 'Suspension & wheels' };
+  var carDefaultLabel = carLabelEl ? carLabelEl.textContent : '';
+  var carState = { brakes:{x:0,v:0,t:0}, engine:{x:0,v:0,t:0}, suspension:{x:0,v:0,t:0} };
+  var carKeys = ['brakes','engine','suspension'];
+  var carRAF = null, carLast = 0, carActive = '';
+
+  // map a chosen sound + moment to the mechanical zone we'd inspect
+  function zoneFor(sound, when){
+    if(when === 'braking') return 'brakes';
+    if(sound === 'squeal' && (when === 'cold' || when === 'turning')) return 'engine';
+    var m = { squeal:'brakes', grind:'brakes', knock:'engine', hiss:'engine',
+              clunk:'suspension', hum:'suspension', click:'suspension' };
+    return m[sound] || 'engine';
+  }
+
+  function applyCarState(){
+    carKeys.forEach(function(k){
+      var el = carEls[k]; if(!el) return;
+      var x = carState[k].x;
+      el.style.opacity = Math.max(0, Math.min(1, x));
+      el.style.transform = 'scale(' + (0.9 + 0.1 * Math.max(0, Math.min(1.12, x))) + ')';
+    });
+  }
+
+  function carTick(now){
+    var dt = Math.min(0.05, (now - carLast) / 1000 || 0.016); carLast = now;
+    var STIFF = 210, DAMP = 22, moving = false;   // slight overshoot -> physical pop
+    carKeys.forEach(function(k){
+      var s = carState[k];
+      var a = -STIFF * (s.x - s.t) - DAMP * s.v;
+      s.v += a * dt; s.x += s.v * dt;
+      if(Math.abs(s.x - s.t) > 0.001 || Math.abs(s.v) > 0.001){ moving = true; }
+      else { s.x = s.t; s.v = 0; }
+    });
+    applyCarState();
+    carRAF = moving ? requestAnimationFrame(carTick) : null;
+  }
+
+  function setCarZone(zone){
+    carActive = zone || '';
+    carKeys.forEach(function(k){ carState[k].t = (k === zone) ? 1 : 0; });
+    if(carLabelEl){
+      carLabelEl.textContent = zone ? ('Checking: ' + (carZoneNames[zone] || zone)) : carDefaultLabel;
+    }
+    if(!carEls.brakes) return;
+    if(reduce){   // reduced-motion: snap to target, no animation loop
+      carKeys.forEach(function(k){ carState[k].x = carState[k].t; carState[k].v = 0; });
+      applyCarState();
+      return;
+    }
+    carLast = performance.now();
+    if(!carRAF){ carRAF = requestAnimationFrame(carTick); }
   }
 
   /* ---------- reveal on scroll ---------- */

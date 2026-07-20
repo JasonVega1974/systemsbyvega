@@ -699,7 +699,87 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     <div class="wheel reveal" id="wheel">
       <div class="wheel__in">
         <div class="wheel__tabs" id="wheelTabs" role="tablist" aria-label="Choose a season"></div>
-        <div class="wheel__body" id="wheelBody"></div>
+        <div class="wheel__body" id="wheelBody">
+          <div class="wheel__art">
+            <img class="wheel__photo" id="wheelPhoto" alt="" hidden />
+            <!-- Static base scene (renders with JS off); JS only re-tints per season. feTurbulence textures + layered atmospheric gradients — north-star: dj-site-blue -->
+            <svg class="yard-scene" id="yardScene" data-season="summer" viewBox="0 0 400 500" fill="none" role="img" aria-label="Illustration of the yard through the seasons" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <!-- 5-stop atmospheric sky (horizon glow follows the season via --sky) -->
+                <linearGradient id="yd-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#0b1830"/><stop offset="34%" stop-color="#243050"/>
+                  <stop offset="62%" stop-color="#4f5486"/><stop offset="84%" stop-color="var(--sky,#9c93ff)"/>
+                  <stop offset="100%" stop-color="#ece7ff"/>
+                </linearGradient>
+                <radialGradient id="yd-sun" cx=".5" cy=".5" r=".5">
+                  <stop offset="0" stop-color="#fff7e0" stop-opacity=".9"/>
+                  <stop offset="45%" stop-color="#ffe9b8" stop-opacity=".45"/>
+                  <stop offset="100%" stop-color="#ffe9b8" stop-opacity="0"/>
+                </radialGradient>
+                <!-- 4-stop ground relief overlay -->
+                <linearGradient id="yd-relief" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity=".18"/><stop offset="28%" stop-color="#ffffff" stop-opacity="0"/>
+                  <stop offset="72%" stop-color="#000000" stop-opacity=".12"/><stop offset="100%" stop-color="#000000" stop-opacity=".4"/>
+                </linearGradient>
+                <!-- 4-stop bark (cylindrical light-to-dark) -->
+                <linearGradient id="yd-bark" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#6d4c31"/><stop offset="38%" stop-color="#49331f"/>
+                  <stop offset="72%" stop-color="#352518"/><stop offset="100%" stop-color="#22170e"/>
+                </linearGradient>
+                <!-- neutral canopy light/shadow depth, layered over the season-tinted foliage -->
+                <radialGradient id="yd-canopy" cx=".36" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity=".36"/><stop offset="46%" stop-color="#ffffff" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#04140b" stop-opacity=".52"/>
+                </radialGradient>
+                <!-- feTurbulence fractalNoise grass texture — north-star: dj-site-blue grain -->
+                <filter id="yd-grass" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.11" numOctaves="3" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/></filter>
+                <!-- feTurbulence + feDisplacementMap foliage texture -->
+                <filter id="yd-leaf" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="0.15" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/></filter>
+                <!-- fine atmospheric grain -->
+                <filter id="yd-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .05 0"/></filter>
+                <!-- feTurbulence snow-crust texture -->
+                <filter id="yd-snowtex" x="-6%" y="-6%" width="112%" height="112%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.13" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6"/></filter>
+              </defs>
+              <rect x="0" y="0" width="400" height="500" fill="url(#yd-sky)"/>
+              <circle cx="300" cy="96" r="120" fill="url(#yd-sun)"/>
+              <!-- distant hills (receding branching silhouettes) -->
+              <path d="M0 330 Q80 292 170 312 T330 300 T400 316 V500 H0 Z" fill="#28304c" opacity=".5"/>
+              <path d="M0 356 Q100 322 210 342 T400 336 V500 H0 Z" fill="#1b2540" opacity=".68"/>
+              <!-- ground: season base (--ground) + relief gradient + grass texture -->
+              <path class="yard-ground" d="M0 372 Q130 356 230 368 T400 360 V500 H0 Z"/>
+              <path d="M0 372 Q130 356 230 368 T400 360 V500 H0 Z" fill="url(#yd-relief)"/>
+              <rect x="0" y="366" width="400" height="134" fill="#0e2216" filter="url(#yd-grass)" opacity=".5"/>
+              <!-- tree: branching trunk + limbs (bark gradient) -->
+              <path d="M198 452 C 195 400 188 360 192 316 C 194 292 184 276 168 264 M192 316 C 190 292 204 278 226 272 M193 338 C 198 322 218 316 240 322 M196 388 C 190 368 174 360 154 364" stroke="url(#yd-bark)" stroke-width="11" stroke-linecap="round" fill="none"/>
+              <path d="M198 452 C 195 400 188 360 192 316" stroke="#1d130b" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".5"/>
+              <!-- canopy: season-tinted foliage (yard-tree=--foliage) + turbulence texture + light/shadow depth -->
+              <g>
+                <path class="yard-tree" d="M150 238 Q108 196 150 154 Q182 118 226 138 Q272 116 292 160 Q322 190 292 232 Q276 276 224 266 Q176 286 150 238 Z"/>
+                <path d="M150 238 Q108 196 150 154 Q182 118 226 138 Q272 116 292 160 Q322 190 292 232 Q276 276 224 266 Q176 286 150 238 Z" fill="#0a1f12" filter="url(#yd-leaf)" opacity=".5"/>
+                <path d="M150 238 Q108 196 150 154 Q182 118 226 138 Q272 116 292 160 Q322 190 292 232 Q276 276 224 266 Q176 286 150 238 Z" fill="url(#yd-canopy)"/>
+              </g>
+              <!-- season overlays (toggled by data-season) -->
+              <g class="yard-blossom">
+                <circle cx="160" cy="176" r="5" fill="#f4dcea"/><circle cx="200" cy="150" r="4.4" fill="#f4dcea"/>
+                <circle cx="244" cy="164" r="5.2" fill="#f4dcea"/><circle cx="210" cy="196" r="4.2" fill="#f7e6f0"/>
+                <circle cx="180" cy="214" r="4.6" fill="#f7e6f0"/><circle cx="268" cy="196" r="4" fill="#f4dcea"/>
+              </g>
+              <g class="yard-leaffall">
+                <path d="M120 392 q6 -4 10 2 q-5 5 -10 -2 Z" fill="#C4622E"/><path d="M270 402 q6 -4 10 2 q-5 5 -10 -2 Z" fill="#D98A52"/>
+                <path d="M196 420 q6 -4 10 2 q-5 5 -10 -2 Z" fill="#E0A25E"/><path d="M150 410 q5 -3 9 2 q-4 4 -9 -2 Z" fill="#C4622E"/>
+              </g>
+              <g class="yard-snow">
+                <path d="M150 232 Q200 208 292 226 Q276 248 224 244 Q182 258 150 232 Z" fill="#f2f0e6" fill-opacity=".9" filter="url(#yd-snowtex)"/>
+                <rect x="0" y="360" width="400" height="22" fill="#f2f0e6" fill-opacity=".82" filter="url(#yd-snowtex)"/>
+              </g>
+              <g class="yard-fx" aria-hidden="true"></g>
+              <!-- atmospheric grain overlay -->
+              <rect x="0" y="0" width="400" height="500" filter="url(#yd-grain)" opacity=".55" style="mix-blend-mode:soft-light"/>
+            </svg>
+            <span class="wheel__caption" id="wheelCaption"></span>
+          </div>
+          <div class="wheel__info" id="wheelInfo"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -861,17 +941,14 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     </div>
     <div class="reviews-grid">
       <div class="review reveal" data-delay="1">
-        <div class="review__stars" aria-hidden="true">★★★★★</div>
         <div class="review__quote"></div>
         <div class="review__who">— Add a real review here</div>
       </div>
       <div class="review reveal" data-delay="2">
-        <div class="review__stars" aria-hidden="true">★★★★★</div>
         <div class="review__quote"></div>
         <div class="review__who">— Add a real review here</div>
       </div>
       <div class="review reveal" data-delay="3">
-        <div class="review__stars" aria-hidden="true">★★★★★</div>
         <div class="review__quote"></div>
         <div class="review__who">— Add a real review here</div>
       </div>
@@ -1142,6 +1219,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 
   var wheelTabs = document.getElementById('wheelTabs');
   var wheelBody = document.getElementById('wheelBody');
+  var wheelInfo = document.getElementById('wheelInfo');
+  var wheelCaption = document.getElementById('wheelCaption');
+  var wheelPhoto = document.getElementById('wheelPhoto');
+  var yardScene = document.getElementById('yardScene');
   var activeSeason = null;
 
   function seasonForMonth(seasons, month){
