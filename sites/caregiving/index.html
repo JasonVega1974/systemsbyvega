@@ -206,6 +206,74 @@
   #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+  /* ============================================================
+     PREMIUM VISUAL PASS — hero illustration + dimensional care plan.
+     Techniques (north-star: dj-site-blue): feTurbulence fractalNoise
+     grain, layered 4-5 stop atmospheric gradients, physics-eased
+     (spring cubic-bezier) settle motion. All motion additive; the
+     base artwork is static inline SVG and renders with JS off.
+     ============================================================ */
+  /* enriched hero atmosphere — layered 4-stop golden-hour + sage wash (overrides flat base) */
+  .hero::before{z-index:0;background:
+    radial-gradient(760px 380px at 86% -8%,rgba(212,162,76,.24),rgba(212,162,76,.11) 32%,rgba(212,162,76,.03) 56%,transparent 68%),
+    radial-gradient(660px 340px at 8% 2%,rgba(124,148,115,.16),rgba(124,148,115,.05) 46%,transparent 62%),
+    linear-gradient(168deg,transparent 0%,transparent 54%,rgba(212,162,76,.05) 78%,rgba(124,148,115,.08) 100%)}
+  /* feTurbulence fractalNoise paper grain overlay (north-star: dj-site-blue .grain) */
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.4;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E")}
+  .hero-in{z-index:2}
+
+  /* hero illustration frame */
+  .hero-illo{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--card-brd);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.55);aspect-ratio:48/44;background:#F3E7D2}
+  .hero-illo svg{display:block;width:100%;height:100%}
+  /* slow warm light breathing on the golden-hour window + lamp glow (physics-eased envelope) */
+  @keyframes glowBreathe{0%,100%{opacity:.82}50%{opacity:1}}
+  .hero-illo .glow{animation:glowBreathe 7.5s ease-in-out infinite}
+  /* dust motes drifting up through the light shaft (additive) */
+  @keyframes moteDrift{0%{transform:translate(0,0);opacity:0}14%{opacity:.75}100%{transform:translate(-16px,-130px);opacity:0}}
+  .hero-illo .dust{animation:moteDrift linear infinite}
+
+  /* care-plan section: warm ambient gradient field behind the builder */
+  #plan{position:relative}
+  #plan::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
+    radial-gradient(720px 420px at 78% 0%,rgba(212,162,76,.10),transparent 60%),
+    radial-gradient(620px 380px at 4% 96%,rgba(124,148,115,.10),transparent 58%)}
+  #plan .wrap{position:relative;z-index:1}
+
+  /* dimensional plan panel — layered 3-stop paper gradient + grain + inner sheen + soft cast shadow */
+  .plan-panel{position:relative;overflow:hidden;border:1px solid var(--card-brd);
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.35'/%3E%3C/svg%3E"),
+      linear-gradient(180deg,#FFFDF9,#FBF4E7 62%,#F5EBD6);
+    box-shadow:0 26px 60px -26px rgba(58,52,44,.30),inset 0 1px 0 rgba(255,255,255,.75)}
+  /* dimensional day cards — warm paper with top-light falloff + soft contact shadow */
+  .pw-day{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.3'/%3E%3C/svg%3E"),
+      linear-gradient(180deg,#FFFEFA 0%,#FCF6EA 58%,#F3E8D2 100%);
+    border:1px solid rgba(58,52,44,.11);
+    box-shadow:0 7px 15px -9px rgba(58,52,44,.30),inset 0 1px 0 rgba(255,255,255,.8)}
+  /* dimensional visit pills — sage gradient chip with sheen + micro-shadow */
+  .pw-pill{background:linear-gradient(180deg,rgba(150,172,139,.34),rgba(124,148,115,.22) 60%,rgba(92,115,85,.24));
+    border:1px solid rgba(92,115,85,.30);
+    box-shadow:0 3px 7px -4px rgba(58,52,44,.34),inset 0 1px 0 rgba(255,255,255,.55)}
+  /* care-need cards — subtle paper depth */
+  .cn-card{background:linear-gradient(180deg,#FFFDF9,#FAF3E6);
+    box-shadow:0 12px 28px -20px rgba(58,52,44,.26),inset 0 1px 0 rgba(255,255,255,.6)}
+  /* physics-eased settle when the week (re)renders — day rise + spring-overshoot pill (north-star: decay envelopes) */
+  @keyframes dayRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes pillSettle{0%{opacity:0;transform:translateY(-8px) scale(.92)}62%{opacity:1;transform:translateY(2px) scale(1.03)}100%{opacity:1;transform:none}}
+  .plan-week .pw-day{animation:dayRise .5s cubic-bezier(.22,1,.36,1) both}
+  .plan-week .pw-day:nth-child(2){animation-delay:.05s}
+  .plan-week .pw-day:nth-child(3){animation-delay:.1s}
+  .plan-week .pw-day:nth-child(4){animation-delay:.15s}
+  .plan-week .pw-day:nth-child(5){animation-delay:.2s}
+  .plan-week .pw-day:nth-child(6){animation-delay:.25s}
+  .plan-week .pw-day:nth-child(7){animation-delay:.3s}
+  .pw-pill{animation:pillSettle .55s cubic-bezier(.34,1.56,.64,1) both}
+  /* reduced-motion: kill all added motion, base artwork stays fully visible */
+  @media(prefers-reduced-motion:reduce){
+    .hero-illo .glow,.hero-illo .dust{animation:none!important;opacity:1!important}
+    .plan-week .pw-day,.pw-pill{animation:none!important}
+  }
+
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
   .reveal.in{opacity:1;transform:none}
@@ -250,9 +318,93 @@
         <a href="#plan" class="btn-sec">Build a sample care plan ↓</a>
       </div>
     </div>
-    <div class="hero-card reveal" data-delay="1">
-      <p class="hc-quote">"Knowing someone checks on Mom every week lets the rest of us breathe again."</p>
-      <p class="hc-by">— what families tell us, in their own words</p>
+    <!-- HERO ILLUSTRATION: golden-hour living-room corner. Inline SVG (static, renders JS-off).
+         Techniques (north-star: dj-site-blue): 5-stop golden-hour window gradient, 4-stop wall/
+         floor/chair/lamp gradients, feTurbulence grain (+feColorMatrix tint), feDisplacementMap
+         light-shaft warp, feGaussianBlur contact shadow, branching path work (chair/plant/blanket),
+         additive breathing glow + drifting motes. -->
+    <div class="hero-illo reveal" data-delay="1">
+      <svg viewBox="0 0 480 440" role="img" aria-label="A warm, softly lit living-room corner at golden hour — an armchair by a sunlit window.">
+        <defs>
+          <linearGradient id="hh-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E6CC"/><stop offset=".45" stop-color="#EAD7B6"/><stop offset=".8" stop-color="#DFC79E"/><stop offset="1" stop-color="#D3BA88"/></linearGradient>
+          <linearGradient id="hh-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BE8D52"/><stop offset=".4" stop-color="#A9793F"/><stop offset="1" stop-color="#8B5F30"/></linearGradient>
+          <linearGradient id="hh-win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8E6"/><stop offset=".3" stop-color="#FFE7B0"/><stop offset=".55" stop-color="#F8CA7B"/><stop offset=".8" stop-color="#E9AA5C"/><stop offset="1" stop-color="#CF8C48"/></linearGradient>
+          <radialGradient id="hh-lamp" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FFF4D2" stop-opacity=".95"/><stop offset=".4" stop-color="#FBDA8C" stop-opacity=".68"/><stop offset=".75" stop-color="#EAB35F" stop-opacity=".24"/><stop offset="1" stop-color="#EAB35F" stop-opacity="0"/></radialGradient>
+          <linearGradient id="hh-chair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8EA584"/><stop offset=".5" stop-color="#78916D"/><stop offset="1" stop-color="#607759"/></linearGradient>
+          <linearGradient id="hh-shaft" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEBB2" stop-opacity=".6"/><stop offset="1" stop-color="#FFEBB2" stop-opacity="0"/></linearGradient>
+          <radialGradient id="hh-vig" cx=".5" cy=".42" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3A2A12" stop-opacity=".2"/></radialGradient>
+          <!-- feTurbulence fractalNoise + feColorMatrix warm-tinted grain -->
+          <filter id="hh-grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.20  0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0.55 0"/></filter>
+          <filter id="hh-soft"><feGaussianBlur stdDeviation="6"/></filter>
+          <!-- feDisplacementMap warp for an organic light-shaft edge -->
+          <filter id="hh-warp"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="10"/></filter>
+        </defs>
+        <!-- wall, floor, baseboard -->
+        <rect width="480" height="300" fill="url(#hh-wall)"/>
+        <rect y="300" width="480" height="140" fill="url(#hh-floor)"/>
+        <rect y="297" width="480" height="5" fill="#7A5528" opacity=".5"/>
+        <rect width="480" height="300" filter="url(#hh-grain)" opacity=".1"/>
+        <!-- window frame + golden-hour glass (breathing glow) -->
+        <g class="glow">
+          <rect x="300" y="46" width="150" height="182" rx="6" fill="#EFE0C4"/>
+          <rect x="308" y="54" width="134" height="166" rx="3" fill="url(#hh-win)"/>
+          <rect x="372" y="54" width="6" height="166" fill="#EFE0C4"/>
+          <rect x="308" y="129" width="134" height="6" fill="#EFE0C4"/>
+          <rect x="300" y="228" width="150" height="10" rx="3" fill="#E4D3B2"/>
+        </g>
+        <!-- warm light shaft, displacement-warped soft edge -->
+        <polygon points="316,60 440,72 360,440 150,440" fill="url(#hh-shaft)" filter="url(#hh-warp)" opacity=".7"/>
+        <!-- framed landscape on the wall -->
+        <g>
+          <rect x="70" y="72" width="86" height="104" rx="4" fill="#C9A86A"/>
+          <rect x="78" y="80" width="70" height="88" rx="2" fill="#ECDDC1"/>
+          <path d="M78 150 L104 120 L120 138 L140 108 L148 120 L148 168 L78 168 Z" fill="#9CAF88" opacity=".85"/>
+          <circle cx="128" cy="100" r="8" fill="#F3C871"/>
+        </g>
+        <!-- contact shadow under the chair -->
+        <ellipse cx="210" cy="406" rx="122" ry="20" fill="#3A2A12" opacity=".22" filter="url(#hh-soft)"/>
+        <!-- armchair (wingback) — branching path silhouette, cushion, arm rolls, folds, legs -->
+        <g>
+          <path d="M120 252 q-8 -96 40 -104 q60 -10 120 0 q52 8 44 104 l-6 122 q-100 14 -196 0 Z" fill="url(#hh-chair)"/>
+          <path d="M126 322 q80 22 172 0 l-8 54 q-78 16 -156 0 Z" fill="#84997B"/>
+          <path d="M120 302 q-18 4 -18 40 l4 44 q22 8 40 4 l0 -84 Z" fill="#6F8867"/>
+          <path d="M324 302 q18 4 18 40 l-4 44 q-22 8 -40 4 l0 -84 Z" fill="#6F8867"/>
+          <path d="M170 262 q60 -8 120 0" stroke="#9EB495" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>
+          <path d="M150 382 q104 18 200 0" stroke="#566B4E" stroke-width="2" fill="none" opacity=".5"/>
+          <rect x="150" y="390" width="12" height="20" rx="3" fill="#6B4A24"/>
+          <rect x="300" y="390" width="12" height="20" rx="3" fill="#6B4A24"/>
+          <!-- draped throw blanket, branching folds -->
+          <path d="M104 318 q40 -10 72 -2 q-4 40 -16 70 q-30 8 -58 2 q6 -36 2 -70 Z" fill="#D4A24C"/>
+          <path d="M118 324 q26 -4 48 0 M112 352 q30 6 58 2" stroke="#B4822F" stroke-width="2.5" fill="none" opacity=".55" stroke-linecap="round"/>
+        </g>
+        <!-- side table + lamp with warm radial glow -->
+        <g>
+          <ellipse class="glow" cx="392" cy="356" rx="48" ry="32" fill="url(#hh-lamp)"/>
+          <rect x="372" y="352" width="44" height="62" rx="4" fill="#7A5528"/>
+          <rect x="368" y="346" width="52" height="10" rx="3" fill="#8A6230"/>
+          <rect x="390" y="296" width="6" height="52" fill="#5C4326"/>
+          <path d="M372 296 h44 l-8 -34 h-28 Z" fill="#F7E3B0"/>
+          <path d="M372 296 h44 l-3 -12 h-38 Z" fill="#FBEFC8"/>
+        </g>
+        <!-- potted plant, branching fronds -->
+        <g>
+          <path d="M40 360 q4 -70 -6 -110 M40 360 q0 -60 22 -96 M40 360 q-2 -54 -26 -84 M40 360 q6 -50 40 -70 M40 360 q-6 -48 -40 -64" stroke="#6E8A5E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M28 252 q-14 -6 -20 -22 M34 226 q-12 -10 -12 -28 M48 238 q10 -12 8 -30 M60 266 q16 -8 20 -26 M16 278 q-16 -4 -22 -20" stroke="#7FA06B" stroke-width="6" fill="none" stroke-linecap="round" opacity=".9"/>
+          <path d="M18 360 h44 l-6 46 q-16 6 -32 0 Z" fill="#B06A3A"/>
+          <path d="M18 360 h44 l-2 14 q-20 6 -40 0 Z" fill="#C98150"/>
+        </g>
+        <!-- dust motes in the shaft (drift up; additive, reduced-motion disables) -->
+        <g fill="#FFF3CE">
+          <circle class="dust" cx="300" cy="384" r="2.4" style="animation-duration:9s;animation-delay:0s"/>
+          <circle class="dust" cx="332" cy="412" r="1.8" style="animation-duration:11s;animation-delay:2s"/>
+          <circle class="dust" cx="268" cy="402" r="2" style="animation-duration:10s;animation-delay:4s"/>
+          <circle class="dust" cx="352" cy="360" r="1.6" style="animation-duration:12s;animation-delay:1s"/>
+          <circle class="dust" cx="312" cy="432" r="2.2" style="animation-duration:9.5s;animation-delay:3s"/>
+        </g>
+        <!-- global grain + vignette for photographic depth -->
+        <rect width="480" height="440" filter="url(#hh-grain)" opacity=".07"/>
+        <rect width="480" height="440" fill="url(#hh-vig)"/>
+      </svg>
     </div>
   </div>
 </header>

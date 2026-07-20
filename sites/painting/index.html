@@ -182,7 +182,16 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
    HERO
    ========================================================= */
 .hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
-  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden;
+  /* layered atmospheric depth — north-star: dj-site-blue (stacked multi-stop gradients) */
+  background:
+    radial-gradient(120% 82% at 78% 6%, rgba(201,123,99,.17) 0%, rgba(201,123,99,.05) 34%, transparent 62%),
+    radial-gradient(90% 70% at 10% 100%, rgba(156,175,136,.10) 0%, transparent 55%),
+    linear-gradient(180deg,#17130f 0%,#131110 42%,#100e0c 78%,#0b0a09 100%)}
+/* feTurbulence fractalNoise grain — north-star: dj-site-blue -->
+   sits above the gradient wash, below the content (z-index:2) and motes */
+.hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)' opacity='0.55'/%3E%3C/svg%3E")}
 .hero > .wrap{width:100%;position:relative;z-index:2}
 .hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
 @media(max-height:780px){.hero{align-items:flex-start}}
@@ -261,7 +270,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   background:linear-gradient(160deg,rgba(34,30,26,.7),rgba(11,10,9,.6));
   border:1px solid var(--card-brd);box-shadow:0 18px 40px -24px rgba(0,0,0,.6)}
 .viz__room svg{width:100%;height:100%;display:block}
-.room-wall{transition:fill .45s ease}
+/* physics decay ease on recolor — north-star: dj-site-blue */
+.room-wall{transition:fill .55s cubic-bezier(.22,.61,.36,1)}
 .viz__caption{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;
   font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--cream-soft);background:linear-gradient(0deg,rgba(8,7,6,.8),transparent)}
@@ -599,7 +609,128 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     <div class="viz reveal" id="viz">
       <div class="viz__in">
         <div class="viz__body">
-          <div class="viz__room" id="vizRoom" role="img" aria-label="Room illustration with a wall that recolors to match the selected swatch"></div>
+          <div class="viz__room" id="vizRoom" role="img" aria-label="A sunlit room with one accent wall that recolors to the selected paint">
+            <!-- BASE ROOM SCENE IS STATIC (renders with JS off). JS only recolors #roomWall;
+                 the fixed lighting model below (window daylight, lamp glow, ambient occlusion,
+                 feTurbulence plaster) sits ABOVE the color so any swatch reads as paint under
+                 real room light rather than a flat fill. -->
+            <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <!-- feTurbulence fractalNoise plaster grain — north-star: dj-site-blue -->
+                <filter id="bpPlaster" x="-2%" y="-2%" width="104%" height="104%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch" result="t"/>
+                  <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0"/>
+                </filter>
+                <!-- window daylight spill: 5-stop, brightest at the window (right), fading across the wall -->
+                <linearGradient id="bpDay" x1="1" y1="0.1" x2="0" y2="0.72">
+                  <stop offset="0" stop-color="#fff7e8" stop-opacity="0.6"/>
+                  <stop offset="0.22" stop-color="#ffe6c4" stop-opacity="0.34"/>
+                  <stop offset="0.5" stop-color="#ffd39c" stop-opacity="0.14"/>
+                  <stop offset="0.78" stop-color="#3a2f28" stop-opacity="0"/>
+                  <stop offset="1" stop-color="#1a1512" stop-opacity="0.12"/>
+                </linearGradient>
+                <!-- warm floor-lamp glow on the wall: 4-stop radial -->
+                <radialGradient id="bpLamp" cx="0.18" cy="0.84" r="0.55">
+                  <stop offset="0" stop-color="#ffcf8f" stop-opacity="0.66"/>
+                  <stop offset="0.4" stop-color="#f0a862" stop-opacity="0.26"/>
+                  <stop offset="0.75" stop-color="#8a5230" stop-opacity="0.05"/>
+                  <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+                </radialGradient>
+                <!-- ambient occlusion: wall darkens into the ceiling (top) and the left return wall -->
+                <linearGradient id="bpAOtop" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#000000" stop-opacity="0.32"/>
+                  <stop offset="0.16" stop-color="#000000" stop-opacity="0.06"/>
+                  <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="bpAOleft" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#000000" stop-opacity="0.38"/>
+                  <stop offset="0.14" stop-color="#000000" stop-opacity="0.05"/>
+                  <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+                </linearGradient>
+                <!-- floor wood: 4-stop sheen -->
+                <linearGradient id="bpFloor" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#3b2a1e"/>
+                  <stop offset="0.35" stop-color="#2a1d14"/>
+                  <stop offset="0.7" stop-color="#241811"/>
+                  <stop offset="1" stop-color="#1a120c"/>
+                </linearGradient>
+                <!-- ceiling: 4-stop -->
+                <linearGradient id="bpCeil" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#2a2620"/>
+                  <stop offset="0.6" stop-color="#211d18"/>
+                  <stop offset="1" stop-color="#181410"/>
+                </linearGradient>
+                <!-- left return wall (receding, in shadow) -->
+                <linearGradient id="bpLeft" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#14100c"/>
+                  <stop offset="1" stop-color="#241d16"/>
+                </linearGradient>
+                <!-- window sky: 3-stop cool→warm -->
+                <linearGradient id="bpSky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#bcd3e0"/>
+                  <stop offset="0.45" stop-color="#e8d8b8"/>
+                  <stop offset="1" stop-color="#f3c78f"/>
+                </linearGradient>
+                <!-- lamp bulb glow -->
+                <radialGradient id="bpBulb" cx="0.5" cy="0.5" r="0.5">
+                  <stop offset="0" stop-color="#ffe6b0" stop-opacity="0.95"/>
+                  <stop offset="0.5" stop-color="#ffbf6a" stop-opacity="0.4"/>
+                  <stop offset="1" stop-color="#ffbf6a" stop-opacity="0"/>
+                </radialGradient>
+                <clipPath id="bpWall"><rect x="84" y="26" width="316" height="216"/></clipPath>
+              </defs>
+
+              <!-- ceiling + floor -->
+              <rect x="0" y="0" width="400" height="26" fill="url(#bpCeil)"/>
+              <rect x="0" y="242" width="400" height="58" fill="url(#bpFloor)"/>
+              <!-- floor plank + perspective lines (branching detail toward the viewer) -->
+              <path d="M60 300 L150 242 M200 300 L214 242 M362 300 L300 242" stroke="#0d0906" stroke-opacity="0.5" stroke-width="1.5"/>
+              <path d="M0 262 H400 M0 281 H400" stroke="#3a2a1c" stroke-opacity="0.22" stroke-width="1"/>
+              <!-- left return wall gives the room depth -->
+              <path d="M0 0 L84 26 L84 242 L0 300 Z" fill="url(#bpLeft)"/>
+
+              <!-- ACCENT WALL: base color + lighting model, isolated so blends stay local to the wall -->
+              <g clip-path="url(#bpWall)" style="isolation:isolate">
+                <rect id="roomWall" class="room-wall" x="84" y="26" width="316" height="216" fill="#9CAF88"/>
+                <!-- plaster grain (feTurbulence) -->
+                <rect x="84" y="26" width="316" height="216" filter="url(#bpPlaster)" style="mix-blend-mode:soft-light" opacity="0.4"/>
+                <!-- warm lamp glow, lower-left -->
+                <rect x="84" y="26" width="316" height="216" fill="url(#bpLamp)" style="mix-blend-mode:screen"/>
+                <!-- window daylight spill from the right -->
+                <rect x="84" y="26" width="316" height="216" fill="url(#bpDay)" style="mix-blend-mode:screen"/>
+                <!-- ambient occlusion into ceiling + left corner -->
+                <rect x="84" y="26" width="316" height="216" fill="url(#bpAOtop)" style="mix-blend-mode:multiply"/>
+                <rect x="84" y="26" width="316" height="216" fill="url(#bpAOleft)" style="mix-blend-mode:multiply"/>
+              </g>
+
+              <!-- crown molding + baseboard -->
+              <rect x="84" y="26" width="316" height="5" fill="#F4EDE3" fill-opacity="0.9"/>
+              <rect x="84" y="236" width="316" height="6" fill="#e7ddcd" fill-opacity="0.8"/>
+              <rect x="84" y="240" width="316" height="3" fill="#000000" fill-opacity="0.3"/>
+
+              <!-- framed picture on the accent wall -->
+              <rect x="150" y="78" width="80" height="98" rx="2" fill="#0f0b08" fill-opacity="0.5"/>
+              <rect x="156" y="84" width="68" height="86" fill="#2a3a3a"/>
+              <path d="M156 152 L180 120 L198 142 L216 108 L224 130 L224 170 L156 170 Z" fill="#5b7d6a" fill-opacity="0.85"/>
+              <circle cx="207" cy="100" r="6" fill="#e8c98a" fill-opacity="0.85"/>
+              <rect x="153" y="81" width="74" height="92" fill="none" stroke="#c9a06a" stroke-width="2.5" stroke-opacity="0.7"/>
+
+              <!-- window on the accent wall (daylight source) -->
+              <rect x="288" y="52" width="92" height="128" rx="2" fill="url(#bpSky)"/>
+              <rect x="288" y="52" width="92" height="128" fill="none" stroke="#F4EDE3" stroke-opacity="0.85" stroke-width="5"/>
+              <path d="M334 52 V180 M288 116 H380" stroke="#F4EDE3" stroke-opacity="0.8" stroke-width="4"/>
+              <rect x="282" y="180" width="104" height="6" fill="#F4EDE3" fill-opacity="0.7"/>
+              <!-- daylight shaft onto the floor -->
+              <path d="M300 186 L360 186 L342 242 L250 242 Z" fill="#ffe6bf" fill-opacity="0.1" style="mix-blend-mode:screen"/>
+
+              <!-- floor lamp, front-left, casting the warm glow -->
+              <ellipse cx="58" cy="250" rx="72" ry="26" fill="url(#bpBulb)" opacity="0.5"/>
+              <path d="M44 214 L72 214 L66 226 L50 226 Z" fill="#2a2018"/>
+              <circle cx="58" cy="220" r="10" fill="url(#bpBulb)"/>
+              <rect x="56.5" y="226" width="3" height="60" fill="#1c1712"/>
+              <path d="M42 288 H74" stroke="#1c1712" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
           <div class="viz__panel">
             <p class="viz__intro" id="vizIntro">Pick a color below — the accent wall updates instantly.</p>
             <div class="swatches" id="swatches" role="group" aria-label="Paint swatches"></div>
@@ -969,21 +1100,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   var vizIntro = document.getElementById('vizIntro');
   var activeSwatch = null;
 
-  function roomSvg(){
-    return '<svg viewBox="0 0 400 300" fill="none" role="img" aria-label="Illustration of a room with one accent wall">' +
-      '<rect x="0" y="0" width="400" height="240" fill="#2A241E"/>' +
-      '<rect class="room-wall" id="roomWall" x="0" y="0" width="400" height="240" fill="#4A3F35"/>' +
-      '<rect x="0" y="240" width="400" height="60" fill="#1B1815"/>' +
-      '<rect x="0" y="234" width="400" height="8" fill="#F4EDE3" fill-opacity=".85"/>' +
-      '<rect x="40" y="60" width="90" height="130" rx="4" fill="#1B1815" fill-opacity=".55" stroke="#F4EDE3" stroke-opacity=".2" stroke-width="3"/>' +
-      '<circle cx="118" cy="128" r="4" fill="#F4EDE3" fill-opacity=".5"/>' +
-      '<rect x="200" y="40" width="120" height="90" rx="4" fill="#8FA8C4" fill-opacity=".35" stroke="#F4EDE3" stroke-opacity=".2" stroke-width="3"/>' +
-      '<rect x="200" y="40" width="60" height="90" fill="#F4EDE3" fill-opacity=".08"/>' +
-      '<path d="M290 300 L290 200 C 290 176 306 176 306 200 L306 300" fill="#26221D"/>' +
-      '<rect x="270" y="292" width="56" height="8" rx="2" fill="#26221D"/>' +
-      '</svg>';
-  }
-  vizRoom.innerHTML = roomSvg();
+  // Base room scene is now STATIC inline SVG in the markup (renders with JS off).
+  // JS only recolors the accent wall; the fixed lighting model above does the rest.
   var roomWall = document.getElementById('roomWall');
 
   function applySwatch(sw){
@@ -1097,7 +1215,6 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     var grid = document.getElementById('reviewsGrid');
     grid.innerHTML = (CONTENT.testimonials || []).map(function(t, i){
       return '<div class="review reveal" data-delay="' + ((i % 3) + 1) + '">' +
-        '<div class="review__stars" aria-hidden="true">★★★★★</div>' +
         '<div class="review__quote">' + esc(t.quote || '') + '</div>' +
         '<div class="review__who">— ' + esc(t.name || 'Add a real review here') + '</div></div>';
     }).join('');

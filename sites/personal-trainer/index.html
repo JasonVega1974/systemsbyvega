@@ -521,6 +521,24 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   .reveal{opacity:1;transform:none}
   .btn::after{display:none}
 }
+
+/* =========================================================
+   PREMIUM VISUAL PASS — hero illustration & goal emblems
+   Layered gradients + feTurbulence texture + physics motion.
+   ========================================================= */
+.portrait__illo{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+.portrait__figure{transform-box:fill-box;transform-origin:170px 240px;animation:cvSurge 5.5s ease-in-out infinite}
+@keyframes cvSurge{0%,100%{transform:translateY(2px)}50%{transform:translateY(-6px)}}
+.portrait__spark{pointer-events:none}
+.goal-emblem{width:min(190px,50vw);margin:2px auto 34px;filter:drop-shadow(0 26px 44px rgba(0,0,0,.55))}
+.goal-emblem svg{width:100%;height:auto;display:block;overflow:visible}
+.emblem{opacity:0;transform:scale(.86);transform-box:fill-box;transform-origin:100px 100px;
+  transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.34,1.56,.64,1)}
+.emblem.is-active{opacity:1;transform:scale(1)}
+@media(prefers-reduced-motion:reduce){
+  .portrait__figure{animation:none}
+  .emblem{transition:opacity .2s linear;transform:none}
+}
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
 </head>
@@ -537,6 +555,87 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 #svDemoBanner a:hover{text-decoration:underline}
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
+
+<!-- ============ PREMIUM VISUAL PASS — shared SVG filters & gradients ============
+     Techniques (north-star: dj-site-blue): feTurbulence fractalNoise grain,
+     feDisplacementMap organic edges, feColorMatrix tint, layered 5-stop gradients
+     for depth/sheen/lighting. Referenced by the hero illustration and goal emblems.
+     Hidden defs — paints nothing on its own. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <!-- feTurbulence fractalNoise grit grain (feColorMatrix tints it ember) — north-star: dj-site-blue -->
+    <filter id="cvGrain" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 0.55  0 0 0 0 0.32  0 0 0 0.6 0"/>
+    </filter>
+    <!-- feTurbulence + feDisplacementMap: warps the energy arcs so they read organic, not CAD -->
+    <filter id="cvDisplace" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="4" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- soft bloom glow -->
+    <filter id="cvGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- 5-stop luminous core: white-hot -> ember -> deep -> void -->
+    <radialGradient id="cvCore" cx="50%" cy="46%" r="60%">
+      <stop offset="0%" stop-color="#fff3ea"/>
+      <stop offset="18%" stop-color="#FF7A47"/>
+      <stop offset="44%" stop-color="#FF5A2E"/>
+      <stop offset="72%" stop-color="#8A2A10"/>
+      <stop offset="100%" stop-color="#14181c" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 4-stop ember->teal energy-arc stroke -->
+    <linearGradient id="cvArc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8A2A10"/>
+      <stop offset="38%" stop-color="#FF5A2E"/>
+      <stop offset="70%" stop-color="#FF7A47"/>
+      <stop offset="100%" stop-color="#4FD8C4"/>
+    </linearGradient>
+    <!-- graphite floor light (3-stop) -->
+    <radialGradient id="cvFloor" cx="50%" cy="104%" r="80%">
+      <stop offset="0%" stop-color="#222a31"/>
+      <stop offset="42%" stop-color="#171c21"/>
+      <stop offset="100%" stop-color="#0c0f12"/>
+    </radialGradient>
+    <!-- figure rim-light body (3-stop) -->
+    <linearGradient id="cvFigure" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b333b"/>
+      <stop offset="55%" stop-color="#161b20"/>
+      <stop offset="100%" stop-color="#0b0e11"/>
+    </linearGradient>
+    <!-- 5-stop brushed-steel sheen (strength emblem + bar) -->
+    <linearGradient id="cvSteel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2f5"/>
+      <stop offset="28%" stop-color="#aeb8c2"/>
+      <stop offset="52%" stop-color="#6b7580"/>
+      <stop offset="74%" stop-color="#aeb8c2"/>
+      <stop offset="100%" stop-color="#3a424b"/>
+    </linearGradient>
+    <!-- teal run gradient (4-stop) -->
+    <linearGradient id="cvRun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a9fff2"/>
+      <stop offset="40%" stop-color="#4FD8C4"/>
+      <stop offset="78%" stop-color="#268b7e"/>
+      <stop offset="100%" stop-color="#123f39"/>
+    </linearGradient>
+    <!-- postpartum sunrise/bloom (4-stop radial) -->
+    <radialGradient id="cvBloom" cx="50%" cy="72%" r="72%">
+      <stop offset="0%" stop-color="#ffe0cd"/>
+      <stop offset="40%" stop-color="#FF7A47"/>
+      <stop offset="76%" stop-color="#c9506f"/>
+      <stop offset="100%" stop-color="#3a1c2a"/>
+    </radialGradient>
+    <!-- over-50 peak/endurance (4-stop) -->
+    <linearGradient id="cvPeak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dcefe9"/>
+      <stop offset="40%" stop-color="#7fae9f"/>
+      <stop offset="74%" stop-color="#3f6f6a"/>
+      <stop offset="100%" stop-color="#182726"/>
+    </linearGradient>
+  </defs>
+</svg>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav" aria-label="Main">
@@ -578,8 +677,36 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
       <div class="hero__portrait">
         <!-- Rebrand note: drop <img src="assets/portrait.jpg" alt="…" /> inside .portrait
              (before the corner spans) and the dumbbell-mark treatment disappears automatically -->
-        <div class="portrait" role="img" aria-label="Cora Vale Fitness mark — dumbbell on graphite">
-          <span class="portrait__wash" aria-hidden="true"></span>
+        <div class="portrait" role="img" aria-label="Cora Vale Fitness — an athlete mid-lift inside a burst of ember and teal light">
+          <!-- PREMIUM VISUAL PASS: kinetic hero illustration. Layered 5-stop gradients (cvCore/cvFloor)
+               for depth & glow, feDisplacementMap-warped energy arcs, rim-lit athlete silhouette,
+               feTurbulence grain overlay, and a RAF gravity-spark fountain. north-star: dj-site-blue.
+               Base (core/arcs/figure/grain) is static SVG — renders fully with JS off; sparks additive. -->
+          <svg class="portrait__illo" viewBox="0 0 340 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="340" height="420" fill="url(#cvFloor)"/>
+            <ellipse cx="170" cy="248" rx="158" ry="158" fill="url(#cvCore)" opacity=".92"/>
+            <!-- radiating light shafts -->
+            <g opacity=".45" filter="url(#cvGlow)">
+              <path d="M170 248 L118 12 L150 10 Z" fill="url(#cvArc)" opacity=".22"/>
+              <path d="M170 248 L242 26 L210 20 Z" fill="url(#cvArc)" opacity=".18"/>
+            </g>
+            <!-- kinetic energy arcs (feDisplacementMap organic edges) -->
+            <g fill="none" stroke="url(#cvArc)" filter="url(#cvDisplace)" stroke-linecap="round">
+              <path d="M34 318 C112 148 228 148 306 300" stroke-width="7" opacity=".9"/>
+              <path d="M58 350 C120 224 236 224 288 332" stroke-width="4" opacity=".55"/>
+            </g>
+            <!-- athlete mid overhead-press (rim-lit silhouette) -->
+            <g class="portrait__figure">
+              <path d="M150 168 L118 126 M190 168 L222 126" stroke="url(#cvFigure)" stroke-width="12" stroke-linecap="round"/>
+              <rect x="100" y="116" width="140" height="9" rx="4.5" fill="url(#cvSteel)"/>
+              <circle cx="170" cy="126" r="17" fill="url(#cvFigure)" stroke="#FF5A2E" stroke-width="1.3" stroke-opacity=".5"/>
+              <path d="M170 145 C155 147 148 158 149 173 L154 220 L130 312 L145 316 L171 232 L197 316 L212 312 L188 220 L193 173 C194 158 187 147 170 145 Z"
+                    fill="url(#cvFigure)" stroke="#FF5A2E" stroke-width="1.3" stroke-opacity=".5"/>
+            </g>
+            <!-- feTurbulence grain overlay -->
+            <rect width="340" height="420" filter="url(#cvGrain)" opacity=".5" style="mix-blend-mode:overlay" pointer-events="none"/>
+            <g class="portrait__sparks"></g>
+          </svg>
           <span class="portrait__corner portrait__corner--tl" aria-hidden="true"></span>
           <span class="portrait__corner portrait__corner--br" aria-hidden="true"></span>
         </div>
@@ -596,6 +723,54 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
       <span class="eyebrow">Pick your goal</span>
       <h2 class="section-title">Find Your Path</h2>
       <p class="lead" style="margin:0 auto">Every client starts somewhere different. Choose the goal closest to yours and the program, the numbers below it, and the FAQ all change to match.</p>
+    </div>
+
+    <!-- PREMIUM VISUAL PASS: illustrated goal emblems. Each is a layered-gradient + feTurbulence-grain
+         + glow illustration that swaps as the goal changes. The strength emblem is marked active in
+         static HTML so the base artwork renders with JS off; JS only toggles which one is active. -->
+    <div class="goal-emblem reveal" id="goalEmblem" aria-hidden="true">
+      <svg viewBox="0 0 200 200" width="200" height="200">
+        <g data-emblem="strength" class="emblem is-active">
+          <circle cx="100" cy="100" r="82" fill="url(#cvCore)" opacity=".16"/>
+          <g filter="url(#cvGlow)">
+            <rect x="52" y="93" width="96" height="14" rx="7" fill="url(#cvSteel)"/>
+            <rect x="40" y="78" width="14" height="44" rx="5" fill="url(#cvSteel)"/>
+            <rect x="24" y="86" width="12" height="28" rx="4" fill="url(#cvSteel)"/>
+            <rect x="146" y="78" width="14" height="44" rx="5" fill="url(#cvSteel)"/>
+            <rect x="164" y="86" width="12" height="28" rx="4" fill="url(#cvSteel)"/>
+          </g>
+        </g>
+        <g data-emblem="first5k" class="emblem">
+          <circle cx="100" cy="100" r="82" fill="url(#cvRun)" opacity=".14"/>
+          <path d="M28 142 Q100 108 172 142" fill="none" stroke="url(#cvRun)" stroke-width="7" stroke-linecap="round" opacity=".8" filter="url(#cvGlow)"/>
+          <g fill="url(#cvRun)" filter="url(#cvGlow)">
+            <circle cx="104" cy="62" r="9"/>
+            <path d="M104 72 l-7 24 l-17 10 l4 8 l19 -10 l6 -14 l10 17 l-4 21 l8 2 l7 -25 l-11 -19 l15 -8 l-4 -8 l-21 10 z"/>
+          </g>
+          <g stroke="#a9fff2" stroke-width="3" stroke-linecap="round" opacity=".55">
+            <path d="M38 84 h20"/><path d="M32 99 h28"/><path d="M40 114 h18"/>
+          </g>
+        </g>
+        <g data-emblem="postpartum" class="emblem">
+          <circle cx="100" cy="112" r="82" fill="url(#cvBloom)" opacity=".2"/>
+          <circle cx="100" cy="118" r="34" fill="url(#cvBloom)" filter="url(#cvGlow)"/>
+          <g stroke="url(#cvBloom)" stroke-width="5" stroke-linecap="round" opacity=".85">
+            <path d="M100 60 v-14"/><path d="M138 74 l10 -10"/><path d="M62 74 l-10 -10"/>
+            <path d="M150 112 h16"/><path d="M34 112 h16"/>
+          </g>
+          <path d="M30 150 h140" stroke="#ffe0cd" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+        </g>
+        <g data-emblem="over50" class="emblem">
+          <circle cx="100" cy="100" r="82" fill="url(#cvPeak)" opacity=".16"/>
+          <g filter="url(#cvGlow)">
+            <path d="M28 152 L84 64 L118 118 L140 88 L174 152 Z" fill="url(#cvPeak)"/>
+            <path d="M84 64 L100 90 L92 96 L76 82 Z" fill="#eaf3f0" opacity=".7"/>
+          </g>
+          <circle cx="142" cy="70" r="15" fill="#dcefe9" opacity=".85" filter="url(#cvGlow)"/>
+        </g>
+        <!-- feTurbulence grain over the emblem stage -->
+        <rect width="200" height="200" filter="url(#cvGrain)" opacity=".24" style="mix-blend-mode:overlay" pointer-events="none"/>
+      </svg>
     </div>
 
     <div class="goal-pills reveal" id="goalPills" role="group" aria-label="Choose your training goal"></div>
@@ -875,6 +1050,54 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     }
   }
 
+  // ---- goal emblem swap (additive; the static base emblem renders with JS off) ----
+  function setEmblem(id){
+    var stage = document.getElementById('goalEmblem');
+    if(!stage) return;
+    var all = stage.querySelectorAll('[data-emblem]'), found = false;
+    for(var i=0;i<all.length;i++){
+      var on = all[i].getAttribute('data-emblem') === id;
+      all[i].classList.toggle('is-active', on);
+      if(on) found = true;
+    }
+    if(!found && all[0]) all[0].classList.add('is-active');
+  }
+
+  // ---- hero spark fountain: gravity acceleration + momentum (north-star physics: dj-site-blue).
+  //      Purely additive over the static hero illustration; disabled under reduced-motion. ----
+  (function(){
+    if(reduce) return;
+    var illo = document.querySelector('.portrait__illo');
+    var group = illo && illo.querySelector('.portrait__sparks');
+    if(!group) return;
+    var NS = 'http://www.w3.org/2000/svg', sparks = [], GRAV = 0.045, since = 0;
+    function spawn(){
+      var c = document.createElementNS(NS,'circle');
+      var s = { el:c, x:170 + (Math.random()*44 - 22), y:250, vx:(Math.random()*1.5 - 0.75),
+                vy:-(1.7 + Math.random()*1.5), life:0, max:80 + Math.random()*46, r:1 + Math.random()*1.9 };
+      c.setAttribute('r', s.r.toFixed(2));
+      c.setAttribute('fill', Math.random() < 0.7 ? '#FF7A47' : '#4FD8C4');
+      c.setAttribute('class','portrait__spark');
+      group.appendChild(c); sparks.push(s);
+    }
+    function tick(){
+      if(++since > 7 && sparks.length < 44){ spawn(); since = 0; }
+      for(var i=sparks.length-1;i>=0;i--){
+        var s = sparks[i];
+        s.vy += GRAV;                 // gravity acceleration
+        s.x += s.vx; s.y += s.vy;     // momentum
+        s.life++;
+        var o = Math.max(0, 1 - s.life / s.max);
+        s.el.setAttribute('cx', s.x.toFixed(1));
+        s.el.setAttribute('cy', s.y.toFixed(1));
+        s.el.setAttribute('opacity', (o * 0.9).toFixed(2));
+        if(s.life >= s.max){ if(s.el.parentNode) group.removeChild(s.el); sparks.splice(i,1); }
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
   /* =====================================================
      CONTENT — everything the owner edits in one object.
      DEFAULT_CONTENT ships inline (renders immediately);
@@ -1065,6 +1288,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     renderGoalPills(CONTENT.goals);
     renderGoalPanel();
     renderFaq(CONTENT.faq);
+    setEmblem(id);
     var goalSel = document.getElementById('b-goal');
     if(goalSel) goalSel.value = id;
     if(!opts.silent){
