@@ -68,14 +68,19 @@
 
   /* ---------- hero ---------- */
   .hero{padding:84px 0 90px;position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  /* north-star (dj-site-blue): layered 5-stop atmospheric radials for depth over reflective lane-marking streaks */
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.7;
     background:
-      linear-gradient(105deg,transparent 42%,rgba(200,243,29,.05) 42.5%,transparent 44%),
-      linear-gradient(105deg,transparent 58%,rgba(200,243,29,.04) 58.5%,transparent 61%),
-      linear-gradient(105deg,transparent 72%,rgba(154,167,184,.05) 72.5%,transparent 74.5%),
-      radial-gradient(760px 360px at 6% -12%,rgba(200,243,29,.09),transparent 66%),
-      radial-gradient(620px 340px at 100% 6%,rgba(154,167,184,.08),transparent 64%)}
-  .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+      linear-gradient(105deg,transparent 42%,rgba(200,243,29,.06) 42.5%,transparent 44%),
+      linear-gradient(105deg,transparent 58%,rgba(200,243,29,.045) 58.5%,transparent 61%),
+      linear-gradient(105deg,transparent 72%,rgba(154,167,184,.055) 72.5%,transparent 74.5%),
+      radial-gradient(900px 520px at 8% -14%,rgba(200,243,29,.14) 0%,rgba(200,243,29,.06) 26%,rgba(166,204,43,.03) 48%,rgba(11,14,20,0) 70%),
+      radial-gradient(720px 420px at 100% 4%,rgba(154,167,184,.13) 0%,rgba(154,167,184,.05) 40%,rgba(11,14,20,0) 72%),
+      radial-gradient(1200px 900px at 50% 122%,rgba(19,25,38,.9) 0%,rgba(16,21,30,.55) 34%,rgba(11,14,20,.2) 60%,rgba(11,14,20,0) 100%)}
+  /* feTurbulence fractalNoise grain — north-star: dj-site-blue */
+  .hero-grain{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")}
+  .hero-in{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
   .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.03;letter-spacing:-.02em;max-width:15ch;margin-top:20px}
   .hero h1 .hl{color:var(--viz)}
   .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
@@ -141,6 +146,26 @@
   .qp-sms a{color:var(--viz);font-weight:700}
   .quote-note{margin-top:16px;font-size:13.5px;color:var(--muted);background:var(--viz-soft);border:1px solid rgba(200,243,29,.3);border-radius:10px;padding:11px 14px}
   @media(max-width:900px){.quote-wrap{grid-template-columns:1fr}.quote-panel{position:static}}
+
+  /* ---------- signature zone map (north-star: dj-site-blue grain/gradients/physics + sage-suds inline-SVG map) ---------- */
+  .map-stage{margin-top:32px;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:18px 18px 14px;box-shadow:var(--shadow)}
+  .map-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .map-mode{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+  .map-mode b{color:var(--viz)}
+  .map-legend{display:flex;gap:16px;font-family:'IBM Plex Mono';font-size:11px;color:var(--muted)}
+  .map-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+  .lg-p{background:var(--viz)} .lg-d{background:#6FE3FF}
+  .zone-map svg{width:100%;height:auto;display:block;border-radius:12px}
+  /* organic map regions — spring-eased fill (overshoot cubic-bezier), north-star decay feel */
+  .mp-zn{cursor:pointer;fill:rgba(255,255,255,.03);stroke:rgba(154,167,184,.35);stroke-width:1.4;transition:fill .25s cubic-bezier(.34,1.56,.64,1),stroke .2s}
+  .mp-zn:hover{fill:rgba(200,243,29,.12);stroke:var(--viz)}
+  .mp-zn.pickup{fill:rgba(200,243,29,.26);stroke:var(--viz);stroke-width:2.4}
+  .mp-zn.drop{fill:rgba(111,227,255,.20);stroke:#6FE3FF;stroke-width:2.4}
+  .mp-zn:focus-visible{outline:none;stroke:var(--viz);stroke-width:2.8}
+  .mp-zn-name{font-family:'Inter Tight',sans-serif;font-size:11.5px;font-weight:700;fill:var(--ink);pointer-events:none;paint-order:stroke;stroke:rgba(11,14,20,.85);stroke-width:3.2px;stroke-linejoin:round}
+  .mp-zn-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:.06em;fill:var(--steel);pointer-events:none;paint-order:stroke;stroke:rgba(11,14,20,.8);stroke-width:2.6px;stroke-linejoin:round}
+  @media(prefers-reduced-motion:reduce){.mp-zn{transition-duration:.01ms}}
+  @media(max-width:560px){.mp-zn-name{font-size:10.5px}.mp-zn-sub{display:none}.map-legend{display:none}}
 
   /* ---------- dispatch ---------- */
   .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;counter-reset:step}
@@ -269,6 +294,7 @@
 </nav>
 
 <header class="hero">
+  <div class="hero-grain" aria-hidden="true"></div>
   <div class="hero-in">
     <div>
       <div class="eyebrow reveal">Same-day courier · Treasure Valley</div>
@@ -320,6 +346,146 @@
       <h2>Zone to zone. Math you can see.</h2>
       <p class="stxt">Pick your two zones, the size and the speed — the quote builds itself, line by line. The number it shows is the number on the invoice.</p>
     </div>
+
+    <!-- SIGNATURE map: geometry is STATIC inline SVG (renders JS-off); zone names/aria bind from content.json.quoterZones.
+         Techniques mirror north-star (dj-site-blue): feTurbulence terrain + feDisplacementMap river, layered 5-stop
+         relief gradients, branching route lines, and an rAF physics-eased route draw wired in JS. -->
+    <div class="map-stage reveal">
+      <div class="map-head">
+        <div class="map-mode" id="mapMode">Tap a region to set your <b>pickup</b> zone</div>
+        <div class="map-legend" aria-hidden="true">
+          <span><i class="lg-p"></i>Pickup</span>
+          <span><i class="lg-d"></i>Drop-off</span>
+        </div>
+      </div>
+      <div class="zone-map" id="zoneMap">
+        <svg viewBox="0 0 680 440" role="group" aria-label="Service-area zone map. Choose a pickup region, then a drop-off region.">
+          <defs>
+            <!-- feTurbulence fractalNoise terrain grain, tinted + clipped to land — north-star: dj-site-blue -->
+            <filter id="mpTerrain" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="4" seed="11" result="n"/>
+              <!-- feColorMatrix tints the noise hi-vis chartreuse and sets its alpha -->
+              <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.78  0 0 0 0 0.95  0 0 0 0 0.11  0 0 0 0.30 0"/>
+              <feComposite in2="SourceGraphic" operator="in"/>
+            </filter>
+            <!-- feTurbulence + feDisplacementMap = naturally wavy river edge — north-star: dj-site-blue -->
+            <filter id="mpRiver" x="-8%" y="-60%" width="116%" height="220%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" seed="4" result="rn"/>
+              <feDisplacementMap in="SourceGraphic" in2="rn" scale="11" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <!-- soft relief drop-shadow under the land mass -->
+            <filter id="mpRelief" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b"/>
+              <feOffset in="b" dy="5" result="o"/>
+              <feComponentTransfer in="o" result="s"><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+              <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <!-- layered 5-stop asphalt relief gradient (lit ridge -> shadowed valley) -->
+            <linearGradient id="mpLand" x1="0" y1="0" x2="0.3" y2="1">
+              <stop offset="0" stop-color="#212B3D"/><stop offset="0.32" stop-color="#1A2130"/>
+              <stop offset="0.6" stop-color="#141A27"/><stop offset="0.82" stop-color="#10151F"/>
+              <stop offset="1" stop-color="#0B0F17"/>
+            </linearGradient>
+            <!-- 4-stop water-depth gradient -->
+            <linearGradient id="mpWater" x1="0" y1="0" x2="1" y2="0.2">
+              <stop offset="0" stop-color="#3A6B7A"/><stop offset="0.4" stop-color="#2C5866"/>
+              <stop offset="0.72" stop-color="#20434F"/><stop offset="1" stop-color="#183640"/>
+            </linearGradient>
+            <radialGradient id="mpAtm" cx="0.5" cy="0.06" r="1">
+              <stop offset="0" stop-color="#C8F31D" stop-opacity="0.14"/>
+              <stop offset="0.42" stop-color="#C8F31D" stop-opacity="0.04"/>
+              <stop offset="1" stop-color="#0B0E14" stop-opacity="0.5"/>
+            </radialGradient>
+            <!-- endpoint highlight glow (rAF physics-pulsed) -->
+            <radialGradient id="mpZoneGlow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#C8F31D" stop-opacity="0.78"/>
+              <stop offset="0.55" stop-color="#C8F31D" stop-opacity="0.28"/>
+              <stop offset="1" stop-color="#C8F31D" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="mpDropGlow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#6FE3FF" stop-opacity="0.7"/>
+              <stop offset="0.55" stop-color="#6FE3FF" stop-opacity="0.26"/>
+              <stop offset="1" stop-color="#6FE3FF" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="mpRouteGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#C8F31D"/><stop offset="1" stop-color="#6FE3FF"/>
+            </linearGradient>
+          </defs>
+
+          <!-- land mass: layered relief gradient + soft drop shadow -->
+          <path d="M40,60 Q30,30 70,26 Q200,18 340,24 Q500,18 620,30 Q655,34 650,80 Q656,220 648,360 Q644,408 600,410 Q340,418 90,410 Q40,412 34,366 Q28,220 34,90 Q36,68 40,60 Z" fill="url(#mpLand)" filter="url(#mpRelief)"/>
+          <!-- feTurbulence terrain grain, clipped to the land shape -->
+          <path d="M40,60 Q30,30 70,26 Q200,18 340,24 Q500,18 620,30 Q655,34 650,80 Q656,220 648,360 Q644,408 600,410 Q340,418 90,410 Q40,412 34,366 Q28,220 34,90 Q36,68 40,60 Z" fill="#C8F31D" filter="url(#mpTerrain)" opacity="0.5" pointer-events="none"/>
+          <path d="M40,60 Q30,30 70,26 Q200,18 340,24 Q500,18 620,30 Q655,34 650,80 Q656,220 648,360 Q644,408 600,410 Q340,418 90,410 Q40,412 34,366 Q28,220 34,90 Q36,68 40,60 Z" fill="url(#mpAtm)" pointer-events="none"/>
+
+          <!-- contour detail lines -->
+          <g fill="none" stroke="rgba(154,167,184,.12)" stroke-width="1.1" stroke-dasharray="2 7" pointer-events="none">
+            <path d="M40,150 Q220,132 360,150 T640,144"/>
+            <path d="M40,300 Q220,282 380,300 T648,296"/>
+          </g>
+
+          <!-- Boise River: displacement-map wavy edge + water-depth gradient -->
+          <path d="M2,205 C120,182 235,232 360,210 C485,188 575,214 690,200" fill="none" stroke="url(#mpWater)" stroke-width="12" stroke-linecap="round" filter="url(#mpRiver)" opacity="0.9" pointer-events="none"/>
+          <path d="M2,203 C120,180 235,230 360,208 C485,186 575,212 690,198" fill="none" stroke="rgba(200,243,29,.18)" stroke-width="2" stroke-linecap="round" filter="url(#mpRiver)" pointer-events="none"/>
+
+          <!-- branching route network (highways + spurs), reflective gray -->
+          <g fill="none" stroke="rgba(154,167,184,.5)" stroke-linecap="round" pointer-events="none">
+            <path d="M108,222 Q220,236 274,232 Q360,226 470,178 Q548,150 632,168" stroke-width="3.2"/>
+            <path d="M215,118 Q245,178 272,230" stroke-width="2.2"/>
+            <path d="M356,146 Q410,164 468,176" stroke-width="2.2"/>
+            <path d="M356,344 Q312,300 274,244" stroke-width="2.2"/>
+            <path d="M470,186 Q520,258 552,318" stroke-width="2.2"/>
+          </g>
+          <g fill="none" stroke="rgba(200,243,29,.28)" stroke-width="1" stroke-dasharray="3 7" pointer-events="none">
+            <path d="M108,222 Q220,236 274,232 Q360,226 470,178 Q548,150 632,168"/>
+          </g>
+
+          <!-- rAF damped-spring endpoint glows (positioned + scaled by drawRoute) -->
+          <circle id="mpPulseA" cx="0" cy="0" r="1" fill="url(#mpZoneGlow)" opacity="0" pointer-events="none"/>
+          <circle id="mpPulseB" cx="0" cy="0" r="1" fill="url(#mpDropGlow)" opacity="0" pointer-events="none"/>
+
+          <!-- clickable zones: geometry STATIC (renders JS-off); labels/aria bind from content.json.quoterZones -->
+          <g class="mp-zones">
+            <path class="mp-zn" data-mapzone="0" tabindex="0" role="button" aria-pressed="false" aria-label="Boise Core zone" d="M408,175 C408,140 434,114 470,113 C509,113 533,142 532,177 C531,213 506,238 468,236 C433,234 409,210 408,175 Z"/>
+            <path class="mp-zn" data-mapzone="1" tabindex="0" role="button" aria-pressed="false" aria-label="West Boise and Garden City zone" d="M295,140 C295,106 320,82 356,80 C394,80 417,108 416,142 C415,176 392,200 354,198 C320,196 296,174 295,140 Z"/>
+            <path class="mp-zn" data-mapzone="2" tabindex="0" role="button" aria-pressed="false" aria-label="Meridian zone" d="M210,235 C210,201 235,177 271,176 C309,176 332,205 331,238 C330,272 306,296 268,294 C235,292 211,269 210,235 Z"/>
+            <path class="mp-zn" data-mapzone="3" tabindex="0" role="button" aria-pressed="false" aria-label="Eagle and Star zone" d="M157,110 C157,78 180,52 215,50 C252,50 275,80 274,112 C273,146 250,170 214,168 C182,166 158,144 157,110 Z"/>
+            <path class="mp-zn" data-mapzone="4" tabindex="0" role="button" aria-pressed="false" aria-label="Nampa and Caldwell zone" d="M62,215 C62,182 86,158 121,157 C158,157 180,185 179,217 C178,250 155,273 119,271 C87,269 63,248 62,215 Z"/>
+            <path class="mp-zn" data-mapzone="5" tabindex="0" role="button" aria-pressed="false" aria-label="Kuna and South Valley zone" d="M295,350 C295,317 320,293 356,292 C394,292 417,320 416,353 C415,386 392,409 354,407 C320,405 296,383 295,350 Z"/>
+            <path class="mp-zn" data-mapzone="6" tabindex="0" role="button" aria-pressed="false" aria-label="Outlying valley edge zone" d="M497,325 C497,292 521,268 556,267 C593,267 615,295 614,327 C613,360 590,383 554,381 C522,379 498,358 497,325 Z"/>
+            <g pointer-events="none">
+              <text class="mp-zn-name" data-zn="0" x="470" y="171" text-anchor="middle">Boise Core</text>
+              <text class="mp-zn-sub" data-zs="0" x="470" y="186" text-anchor="middle">ZONE 1</text>
+              <text class="mp-zn-name" data-zn="1" x="356" y="136" text-anchor="middle">West Boise</text>
+              <text class="mp-zn-sub" data-zs="1" x="356" y="151" text-anchor="middle">ZONE 2</text>
+              <text class="mp-zn-name" data-zn="2" x="271" y="231" text-anchor="middle">Meridian</text>
+              <text class="mp-zn-sub" data-zs="2" x="271" y="246" text-anchor="middle">ZONE 3</text>
+              <text class="mp-zn-name" data-zn="3" x="215" y="106" text-anchor="middle">Eagle &amp; Star</text>
+              <text class="mp-zn-sub" data-zs="3" x="215" y="121" text-anchor="middle">ZONE 4</text>
+              <text class="mp-zn-name" data-zn="4" x="120" y="211" text-anchor="middle">Nampa</text>
+              <text class="mp-zn-sub" data-zs="4" x="120" y="226" text-anchor="middle">ZONE 5</text>
+              <text class="mp-zn-name" data-zn="5" x="356" y="346" text-anchor="middle">Kuna</text>
+              <text class="mp-zn-sub" data-zs="5" x="356" y="361" text-anchor="middle">ZONE 6</text>
+              <text class="mp-zn-name" data-zn="6" x="555" y="321" text-anchor="middle">Outlying</text>
+              <text class="mp-zn-sub" data-zs="6" x="555" y="336" text-anchor="middle">ZONE 7</text>
+            </g>
+          </g>
+
+          <!-- animated route line (rAF eased dash-draw between pickup -> drop) + travelling marker -->
+          <path id="mpRoute" d="" fill="none" stroke="url(#mpRouteGrad)" stroke-width="3.4" stroke-linecap="round" opacity="0" pointer-events="none"/>
+          <circle id="mpVeh" r="5" fill="#F2F5F9" opacity="0" pointer-events="none"/>
+
+          <!-- compass rose (detail) -->
+          <g transform="translate(56,372)" pointer-events="none" opacity="0.8">
+            <circle r="15" fill="none" stroke="rgba(154,167,184,.35)" stroke-width="1.2"/>
+            <path d="M0,-13 L4,0 L0,4 L-4,0 Z" fill="#C8F31D"/>
+            <path d="M0,13 L4,0 L0,-4 L-4,0 Z" fill="rgba(154,167,184,.4)"/>
+            <text x="0" y="-17" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" font-weight="700" fill="#C8F31D">N</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
     <div class="quote-wrap reveal">
       <div class="q-steps">
         <div class="q-step">
@@ -663,6 +829,22 @@
   /* ---------- zone-to-zone quoter ---------- */
   var sel = { pickup: 2, drop: 0, size: 1, speed: 1 };
 
+  /* Zone centroids (index-matched to content.json.quoterZones). The map GEOMETRY is
+     static SVG in the markup (renders JS-off); these only position the rAF route draw
+     + endpoint glows. Short static default labels live in the SVG; wrapLabel() below
+     re-flows the live content.json names over them at runtime. */
+  var ZONE_C = [
+    { x: 470, y: 175 }, // 0
+    { x: 356, y: 140 }, // 1
+    { x: 271, y: 235 }, // 2
+    { x: 215, y: 110 }, // 3
+    { x: 120, y: 215 }, // 4
+    { x: 356, y: 350 }, // 5
+    { x: 555, y: 325 }  // 6
+  ];
+  var mapMode = 'pickup';   // which endpoint the next map tap sets
+  var routeKey = '';        // last drawn pickup-drop pair (animate only on change)
+
   function pillRow(elId, items, key, subFn){
     document.getElementById(elId).innerHTML = items.map(function(it, i){
       var on = sel[key] === i;
@@ -691,13 +873,157 @@
     if(!wrap._wired){
       wrap._wired = true;
       wrap.addEventListener('click', function(e){
-        var el = e.target.closest('[data-qk]');
-        if(!el) return;
-        sel[el.getAttribute('data-qk')] = +el.getAttribute('data-qi');
-        renderQuoter(CONTENT);
+        var pill = e.target.closest('[data-qk]');
+        if(pill){
+          sel[pill.getAttribute('data-qk')] = +pill.getAttribute('data-qi');
+          renderQuoter(CONTENT);
+          return;
+        }
+        var zn = e.target.closest('[data-mapzone]');
+        if(zn) tapMapZone(+zn.getAttribute('data-mapzone'));
+      });
+      wrap.addEventListener('keydown', function(e){
+        var zn = e.target.closest('[data-mapzone]');
+        if(zn && (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar')){
+          e.preventDefault();
+          tapMapZone(+zn.getAttribute('data-mapzone'));
+        }
       });
     }
+    syncMap(c);
     updateQuote(c);
+  }
+
+  /* Two-tap map selection: first tap sets pickup, next sets drop, then repeats.
+     Sets the same sel.* state the pills use, so the quote + pills stay in lock-step. */
+  function tapMapZone(i){
+    var zones = CONTENT.quoterZones || [];
+    if(i < 0 || i >= zones.length) return;
+    if(mapMode === 'pickup'){ sel.pickup = i; mapMode = 'drop'; }
+    else { sel.drop = i; mapMode = 'pickup'; }
+    renderQuoter(CONTENT);
+  }
+
+  /* wrap a live zone label across up to two <tspan> lines centred on its centroid */
+  function wrapLabel(el, label, cx){
+    while(el.firstChild) el.removeChild(el.firstChild);
+    var words = String(label || '').split(/\s+/).filter(Boolean), lines = [label || ''];
+    if(words.length > 1 && String(label).length > 11){
+      var best = 1, bestDiff = 1e9, joined = words.join(' ');
+      for(var k = 1; k < words.length; k++){
+        var a = words.slice(0, k).join(' '), b = words.slice(k).join(' ');
+        var diff = Math.abs(a.length - b.length);
+        if(diff < bestDiff){ bestDiff = diff; best = k; }
+      }
+      lines = [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+      void joined;
+    }
+    var y0 = parseFloat(el.getAttribute('y')) - (lines.length - 1) * 6.5;
+    lines.forEach(function(ln, idx){
+      var ts = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+      ts.setAttribute('x', cx); ts.setAttribute('y', (y0 + idx * 13).toFixed(1));
+      ts.textContent = ln;
+      el.appendChild(ts);
+    });
+  }
+
+  /* Bind live DATA onto the STATIC base map (geometry never moves): names, aria,
+     show/hide + pickup/drop highlight classes. Then (re)draw the route. */
+  function syncMap(c){
+    var zones = c.quoterZones || [];
+    for(var i = 0; i < ZONE_C.length; i++){
+      var path = document.querySelector('#zoneMap .mp-zn[data-mapzone="' + i + '"]');
+      var name = document.querySelector('#zoneMap [data-zn="' + i + '"]');
+      var sub  = document.querySelector('#zoneMap [data-zs="' + i + '"]');
+      var z = zones[i], has = !!z;
+      if(path){
+        path.style.display = has ? '' : 'none';
+        path.classList.toggle('pickup', has && sel.pickup === i);
+        path.classList.toggle('drop', has && sel.drop === i && sel.drop !== sel.pickup);
+        var role = (sel.pickup === i ? ' (pickup)' : sel.drop === i ? ' (drop-off)' : '');
+        if(z) path.setAttribute('aria-label', z.label + ' zone' + role);
+        path.setAttribute('aria-pressed', (has && (sel.pickup === i || sel.drop === i)) ? 'true' : 'false');
+      }
+      if(name){ name.style.display = has ? '' : 'none'; if(z) wrapLabel(name, z.label, +name.getAttribute('x')); }
+      if(sub){ sub.style.display = has ? '' : 'none'; }
+    }
+    var mode = document.getElementById('mapMode');
+    if(mode){
+      mode.innerHTML = mapMode === 'pickup'
+        ? 'Tap a region to set your <b>pickup</b> zone'
+        : 'Now tap your <b style="color:#6FE3FF">drop-off</b> zone';
+    }
+    drawRoute();
+  }
+
+  /* rAF physics: an eased dash-draw sweeps the route line pickup -> drop while a marker
+     rides along it, and damped-spring glows bloom at both ends — the momentum/decay feel
+     of the north-star (dj-site-blue) rAF loop. Reduced-motion snaps to the final state. */
+  function springPulse(el, cx, cy, target){
+    if(el._raf) cancelAnimationFrame(el._raf);
+    el.setAttribute('cx', cx); el.setAttribute('cy', cy); el.setAttribute('opacity', '0.95');
+    if(reduce){ el.setAttribute('r', target); return; }
+    var r = 3, v = 0, k = 0.15, damp = 0.62, last = performance.now();
+    function step(now){
+      var dt = Math.min(2.5, (now - last) / 16.67); last = now;
+      v = (v + (target - r) * k) * damp; r += v * dt;
+      el.setAttribute('r', r.toFixed(2));
+      if(Math.abs(target - r) > 0.4 || Math.abs(v) > 0.25){ el._raf = requestAnimationFrame(step); }
+      else { el.setAttribute('r', target); }
+    }
+    el._raf = requestAnimationFrame(step);
+  }
+
+  function drawRoute(){
+    var route = document.getElementById('mpRoute'), veh = document.getElementById('mpVeh');
+    var a = ZONE_C[sel.pickup], b = ZONE_C[sel.drop];
+    if(!route || !a || !b) return;
+    var pulseA = document.getElementById('mpPulseA'), pulseB = document.getElementById('mpPulseB');
+
+    // same zone -> a tight loop marker, no line
+    if(sel.pickup === sel.drop){
+      route.setAttribute('opacity', '0'); if(veh) veh.setAttribute('opacity', '0');
+      if(pulseA) springPulse(pulseA, a.x, a.y, 60);
+      if(pulseB) pulseB.setAttribute('opacity', '0');
+      routeKey = sel.pickup + '-' + sel.drop;
+      return;
+    }
+
+    // gentle arced path (control point offset perpendicular to the A->B chord)
+    var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    var dx = b.x - a.x, dy = b.y - a.y, len = Math.sqrt(dx*dx + dy*dy) || 1;
+    var off = Math.min(70, len * 0.22);
+    var cx = mx - (dy / len) * off, cy = my - (dx / len) * -off;
+    route.setAttribute('d', 'M' + a.x + ',' + a.y + ' Q' + cx.toFixed(1) + ',' + cy.toFixed(1) + ' ' + b.x + ',' + b.y);
+
+    if(pulseA) springPulse(pulseA, a.x, a.y, 54);
+    if(pulseB) springPulse(pulseB, b.x, b.y, 48);
+
+    var total = route.getTotalLength();
+    var key = sel.pickup + '-' + sel.drop;
+    route.setAttribute('opacity', '1');
+    route.style.strokeDasharray = total;
+
+    if(reduce || key === routeKey){
+      route.style.strokeDashoffset = '0';
+      if(veh){ var end = route.getPointAtLength(total); veh.setAttribute('cx', end.x); veh.setAttribute('cy', end.y); veh.setAttribute('opacity', reduce ? '1' : '0'); }
+      routeKey = key;
+      return;
+    }
+    routeKey = key;
+
+    // eased draw-on with an ease-out decay curve + a marker riding the growing tip
+    if(veh) veh.setAttribute('opacity', '1');
+    var start = performance.now(), dur = 900;
+    if(route._raf) cancelAnimationFrame(route._raf);
+    function step(now){
+      var t = Math.min(1, (now - start) / dur);
+      var e = 1 - Math.pow(1 - t, 3); // cubic ease-out (decay)
+      route.style.strokeDashoffset = (total * (1 - e)).toFixed(1);
+      if(veh){ var p = route.getPointAtLength(total * e); veh.setAttribute('cx', p.x.toFixed(1)); veh.setAttribute('cy', p.y.toFixed(1)); }
+      if(t < 1){ route._raf = requestAnimationFrame(step); }
+    }
+    route._raf = requestAnimationFrame(step);
   }
 
   function quoteParts(c){
