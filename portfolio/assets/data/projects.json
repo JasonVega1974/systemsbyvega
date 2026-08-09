@@ -18,8 +18,8 @@
   {
     "id": "kingdom-creatives",
     "name": "Kingdom Creatives",
-    "tagline": "Church digital services studio",
-    "description": "Kingdom Creatives is a faith-driven digital studio that builds and manages church and ministry websites on a WordPress Multisite platform, using Elementor and a curated plugin stack for consistent, maintainable design. Clonable site templates and a built-in sponsorship program let new ministries launch a polished, full-featured web presence in a fraction of the usual time and cost.",
+    "tagline": "Sponsor-funded websites for underserved churches",
+    "description": "Many faithful churches do meaningful ministry every week while operating with outdated websites and limited digital tools that quietly add stress to already overextended pastors. Through sponsor-funded partnerships, Kingdom Creatives provides modern church websites, sermon tools, and communication systems to underserved churches at no cost to the church. Every tool is designed to reduce administrative load, simplify communication, and help pastors stay focused on shepherding people rather than managing platforms — built for churches, designed for pastors, guided by the Gospel.",
     "url": "https://kingdom-creatives.com",
     "thumb": "assets/img/kingdom-creatives.jpg",
     "category": "Faith & Family",
@@ -157,18 +157,6 @@
       "Demo"
     ],
     "status": "Demo",
-    "featured": true
-  },
-  {
-    "id": "sitelab",
-    "name": "Site Shop",
-    "tagline": "White-labeled small-business site templates, ready to launch",
-    "description": "14 ready-to-sell small-business websites — landscaping, pressure washing, detailing, personal training, BBQ, dumpster rental, tattoo, fabrication, contracting, painting, plumbing, electrician, companion care, and roofing — each with a signature interactive feature and an owner-editable live CMS. Browse the full gallery and click into any live demo.",
-    "url": "https://systemsbyvega.com/sites/",
-    "thumb": "assets/img/sitelab.jpg",
-    "category": "Commercial",
-    "tags": ["Templates", "Web", "Local business"],
-    "status": "Live",
     "featured": true
   },
   {
