@@ -32,6 +32,22 @@
     "featured": true
   },
   {
+    "id": "churchfortruckers",
+    "name": "Church for Truckers",
+    "tagline": "Faith on the road. Hope at every mile.",
+    "description": "Church for Truckers is a ministry web presence for a trucker-focused congregation in Farmington, Missouri — service times, location, and a way for drivers passing through to connect. Built and deployed under the Kingdom Creatives umbrella.",
+    "url": "https://churchfortruckers.org",
+    "thumb": "assets/img/churchfortruckers.jpg",
+    "category": "Faith & Family",
+    "tags": [
+      "Web",
+      "Church",
+      "Ministry"
+    ],
+    "status": "Live",
+    "featured": false
+  },
+  {
     "id": "yourlifecc",
     "name": "YourLife CC",
     "tagline": "Faith & family progressive web app",
