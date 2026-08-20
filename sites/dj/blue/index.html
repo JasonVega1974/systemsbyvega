@@ -235,6 +235,9 @@ section{ position:relative; padding:clamp(72px,11vh,140px) 0 }
   background:linear-gradient(180deg,#fff,var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent }
 .stat .lab{ font-family:var(--f-mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:12px }
 .stat .sub{ font-size:12.5px; color:var(--cream); opacity:.6; margin-top:6px }
+.demo-note{ margin-top:22px; padding:16px 18px; border:1px solid var(--line); border-radius:var(--r);
+  background:rgba(255,255,255,.03); color:var(--muted); font-size:12.5px; line-height:1.7; max-width:820px }
+.foot-disclosure{ margin-top:18px; color:var(--muted); opacity:.85; font-size:12px; line-height:1.7; max-width:760px }
 
 /* ABOUT */
 .about-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center }
@@ -670,12 +673,15 @@ h2.section-title{ font-family:'Flipside','Montserrat',sans-serif; font-weight:40
   <div class="wrap">
     <div class="head-row reveal">
       <div>
-        <span class="eyebrow">By the numbers</span>
+        <span class="eyebrow">At a glance</span>
         <h2 class="section-title"><span class="glow">The reach</span></h2>
       </div>
-      <p class="lede">Momentum across stages, streams, and a growing catalog — every figure updates from the admin panel.</p>
+      <p class="lede">Momentum across stages, streams, and a growing catalog — every card updates from the admin panel.</p>
     </div>
     <div class="stat-grid" id="statGrid"></div>
+    <!-- SWAP:DISCLOSURE -->
+    <p class="demo-note reveal">Demo notice: DJ Nova is a fictional demo persona created to showcase this website template — not a real artist, and no affiliation with any real performer is implied. All stats, shows, releases, and testimonial-style content on this page is placeholder content.</p>
+    <!-- /SWAP:DISCLOSURE -->
   </div>
 </section>
 
@@ -883,6 +889,9 @@ h2.section-title{ font-family:'Flipside','Montserrat',sans-serif; font-weight:40
       <span>© <span id="yr"></span> <span id="footName">DJ Nova</span> · DJ &amp; Producer</span>
       <span>Bookings: <a href="#book">request a date</a></span>
     </div>
+    <!-- SWAP:DISCLOSURE -->
+    <p class="foot-disclosure">Demonstration website for a fictional DJ. DJ Nova is not a real artist; all stats, shows, releases, and testimonial-style content shown here is placeholder content. Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a>.</p>
+    <!-- /SWAP:DISCLOSURE -->
   </div>
 </footer>
 
@@ -913,15 +922,15 @@ const DEFAULT_SITE = {
     apiKey: ""
   },
   stats: [
-    { num:"12K", lab:"Monthly Listeners", sub:"across platforms" },
-    { num:"25K", lab:"Social Followers",  sub:"and climbing" },
-    { num:"40+", lab:"Tracks Released",   sub:"original productions" },
-    { num:"30+", lab:"Shows Played",      sub:"clubs & festivals" }
+    { num:"Streaming", lab:"Listeners",       sub:"across every platform" },
+    { num:"Growing",   lab:"Social Following", sub:"and climbing" },
+    { num:"Original",  lab:"Tracks Released",  sub:"own productions" },
+    { num:"Live",      lab:"Shows Played",     sub:"clubs & festivals" }
   ],
   heroMini: [
-    { b:"40+",  s:"Original Tracks" },
-    { b:"30+",  s:"Live Shows" },
-    { b:"100%", s:"Crowd Energy" }
+    { b:"Original", s:"Tracks" },
+    { b:"Live",     s:"Shows" },
+    { b:"All-in",   s:"Crowd Energy" }
   ],
   releases: [
     { t:"Afterglow",    y:"2026", c1:"#3D8BFF", c2:"#FF9A3C", url:"#" },

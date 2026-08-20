@@ -7,12 +7,12 @@
   },
   "stats": [
     {
-      "num": "9 yrs",
+      "num": "Custom",
       "label": "Tattooing"
     },
     {
-      "num": "1,200+",
-      "label": "Pieces healed"
+      "num": "Healed",
+      "label": "Pieces followed through"
     },
     {
       "num": "Private",
@@ -135,7 +135,7 @@
       "image": ""
     }
   ],
-  "bio": "Rae started tattooing in 2017 the way most stubborn people do — hand-poking her own ankle in a college apartment, then apprenticing for two years under a traditional shop in Garden City until the machine felt like a pencil. She went private in 2021: no walk-ins, no five chairs buzzing at once, just one client and one drawing at a time. Blackwork and single-needle fine line are home base; she takes color projects when the idea genuinely needs it. If your concept isn't a fit, she'll say so and point you to someone in the valley who's better for it.",
+  "bio": "Rae started tattooing the way most stubborn people do — hand-poking her own ankle in a college apartment, then apprenticing under a traditional shop in Garden City until the machine felt like a pencil. She went private not long after: no walk-ins, no five chairs buzzing at once, just one client and one drawing at a time. Blackwork and single-needle fine line are home base; she takes color projects when the idea genuinely needs it. If your concept isn't a fit, she'll say so and point you to someone in the valley who's better for it.",
   "chips": [
     {
       "t": "By appointment only"

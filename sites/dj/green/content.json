@@ -19,15 +19,15 @@
     "apiKey": ""
   },
   "stats": [
-    { "num": "12K", "lab": "Monthly Listeners", "sub": "across platforms" },
-    { "num": "25K", "lab": "Social Followers", "sub": "and climbing" },
-    { "num": "40+", "lab": "Tracks Released", "sub": "original productions" },
-    { "num": "30+", "lab": "Shows Played", "sub": "clubs & festivals" }
+    { "num": "Streaming", "lab": "Listeners", "sub": "across every platform" },
+    { "num": "Growing", "lab": "Social Following", "sub": "and climbing" },
+    { "num": "Original", "lab": "Tracks Released", "sub": "own productions" },
+    { "num": "Live", "lab": "Shows Played", "sub": "clubs & festivals" }
   ],
   "heroMini": [
-    { "b": "40+", "s": "Original Tracks" },
-    { "b": "30+", "s": "Live Shows" },
-    { "b": "100%", "s": "Crowd Energy" }
+    { "b": "Original", "s": "Tracks" },
+    { "b": "Live", "s": "Shows" },
+    { "b": "All-in", "s": "Crowd Energy" }
   ],
   "releases": [
     { "t": "Afterglow", "y": "2026", "c1": "#2EE58A", "c2": "#B44DFF", "url": "#" },

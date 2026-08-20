@@ -8,8 +8,8 @@
     "city": "Middleton, ID"
   },
   "stats": [
-    { "num": "8 yrs", "label": "Supporting Treasure Valley families" },
-    { "num": "12", "label": "Caregivers on our team" },
+    { "num": "Local", "label": "Supporting Treasure Valley families" },
+    { "num": "Vetted", "label": "Caregivers on our team" },
     { "num": "1:1", "label": "One caregiver, not a rotation" }
   ],
   "careNeeds": [
@@ -34,7 +34,7 @@
   "owner": {
     "name": "Nora Bishop",
     "heading": "Why we started Hearth & Home",
-    "bio": "Nora Bishop spent three years driving forty minutes each way to check on her grandmother after a fall made living alone harder than anyone wanted to admit. She found the daily visits, the meals, the company — the small things that add up to someone being okay — impossible to coordinate around a full-time job and a family of her own. Hearth & Home is the service she wishes had existed then: a small, steady team families can actually rely on, not a call center or a rotating cast of strangers.",
+    "bio": "Nora Bishop spent a long stretch driving forty minutes each way to check on her grandmother after a fall made living alone harder than anyone wanted to admit. She found the daily visits, the meals, the company — the small things that add up to someone being okay — impossible to coordinate around a full-time job and a family of her own. Hearth & Home is the service she wishes had existed then: a small, steady team families can actually rely on, not a call center or a rotating cast of strangers.",
     "photo": ""
   },
   "testimonials": [
