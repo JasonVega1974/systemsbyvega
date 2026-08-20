@@ -89,7 +89,7 @@
    avoid. Only four bands are dark, and they are spaced so the eye resets
    between them.
 */
-.plate, #proof, #founder, .foot{
+.plate, #catalog, #proof, #founder, .foot{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -103,6 +103,17 @@
   --acc-ink: #1a1206;
   --elev:    var(--lift-1);
   --elev-2:  var(--lift-2);
+  --feat:      var(--con-amber);
+  --feat-glow: rgba(243,146,47,.20);
+  /* Family colours are re-declared brighter here. The light-ground set below
+     is chosen dark enough to read on paper, which makes it invisible on
+     #141821 — the same hue cannot serve both grounds. */
+  --fam-sale-resale:   #F3922F;
+  --fam-haul-clear:    #4FD1A5;
+  --fam-curb-exterior: #6FB8F0;
+  --fam-auto:          #B79BFF;
+  --fam-home-trade:    #FF8A6B;
+  --fam-people-pets:   #A9D65C;
   background:var(--bg);
   color:var(--tx);
 }
@@ -120,10 +131,12 @@
   --acc-ink: #1a1206;
   --elev:    var(--shadow);
   --elev-2:  0 14px 36px rgba(20,28,40,.1);
+  --feat:      var(--amber);
+  --feat-glow: rgba(232,121,27,.14);
   background:var(--bg);
   color:var(--tx);
 }
-#catalog, #registry, #faq{
+#registry, #faq{
   --bg:      var(--paper);
   --surface: var(--panel);
   --surface-2:var(--panel);
@@ -137,6 +150,8 @@
   --acc-ink: #1a1206;
   --elev:    var(--shadow);
   --elev-2:  0 14px 36px rgba(20,28,40,.1);
+  --feat:      var(--amber);
+  --feat-glow: rgba(232,121,27,.14);
   background:var(--bg);
   color:var(--tx);
 }
@@ -288,8 +303,8 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 
 /* .scard.feat, promoted: the amber-bordered card now marks a business you can
    buy today rather than a featured service. */
-.entry.is-open{border-color:var(--amber);
-  box-shadow:0 0 0 1px var(--amber),0 14px 36px rgba(232,121,27,.14)}
+.entry.is-open{border-color:var(--feat);
+  box-shadow:0 0 0 1px var(--feat),0 14px 36px var(--feat-glow)}
 .tag-open{display:inline-flex;align-items:center;background:var(--con-amber);color:#1a1206;
   padding:6px 13px;border-radius:20px;font-family:var(--display);font-weight:700;
   font-size:11px;letter-spacing:.1em;text-transform:uppercase}
@@ -307,7 +322,7 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 
 .legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-family:var(--mono);
   font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-3)}
-.legend i{font-style:normal;color:var(--amber-text)}
+.legend i{font-style:normal;color:var(--acc)}
 
 /* ---------------------------------------------------------------- forms --- */
 .field{margin-bottom:16px}
