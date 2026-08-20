@@ -23,6 +23,10 @@ const crypto = require('crypto');
 const BREVO_KEY     = process.env.BREVO_API_KEY;
 const DIGEST_SECRET = process.env.SBV_DIGEST_SECRET;
 
+/* Trailing slashes get pasted in by accident; '<url>//fail' would 404 silently
+   and the switch would look healthy while alerting nothing. */
+const HEARTBEAT_URL = (process.env.SBV_HEARTBEAT_URL || '').replace(/\/+$/, '');
+
 const FROM = { name: 'Systems by Vega', email: 'info@kingdom-creatives.com' };
 const TO   = [{ email: 'info@kingdom-creatives.com', name: 'Jason Vega' }];
 
@@ -31,6 +35,22 @@ function secretOk(given) {
   const a = crypto.createHash('sha256').update(given).digest();
   const b = crypto.createHash('sha256').update(DIGEST_SECRET).digest();
   return crypto.timingSafeEqual(a, b);
+}
+
+/* Dead man's switch. The digest email is its own success signal, so what is
+   actually needed is notice when that signal STOPS - including the cases this
+   code can never observe, like pg_cron not firing or the project being paused.
+
+   Pinged only on a confirmed send. A heartbeat that fires regardless of outcome
+   is worse than none: it manufactures confidence. Awaited rather than
+   fire-and-forget, because the function is frozen once the response returns. */
+async function heartbeat(suffix) {
+  if (!HEARTBEAT_URL) return;
+  try {
+    await fetch(HEARTBEAT_URL + suffix, { signal: AbortSignal.timeout(5000) });
+  } catch (e) {
+    console.error('[digest] heartbeat ping failed:', e.message);
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -67,11 +87,15 @@ module.exports = async function handler(req, res) {
     });
     if (!r.ok) {
       const detail = await r.text().catch(() => '');
+      await heartbeat('/fail');
       return res.status(502).json({ ok: false, error: 'brevo_failed', status: r.status,
         message: detail.slice(0, 300) });
     }
+    await heartbeat('');
     return res.status(200).json({ ok: true, sent: true, bytes: text.length });
   } catch (e) {
+    console.error('[digest] brevo unreachable:', e.message);
+    await heartbeat('/fail');
     return res.status(502).json({ ok: false, error: 'brevo_unreachable' });
   }
 };
