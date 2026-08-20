@@ -80,6 +80,7 @@ module.exports = async function handler(req, res) {
       })
     });
   } catch (e) {
+    console.error('[demand] insert threw:', e.message);
     return bad(res, 502, 'insert_failed',
       'That did not save, so you are not on the list. This is at our end, not yours.');
   }
@@ -91,6 +92,8 @@ module.exports = async function handler(req, res) {
   }
 
   if (!insert.ok) {
+    const detail = await insert.text().catch(() => '');
+    console.error('[demand] insert failed:', insert.status, detail.slice(0, 300));
     return bad(res, 502, 'insert_failed',
       'That did not save, so you are not on the list. This is at our end, not yours.');
   }
@@ -117,7 +120,17 @@ module.exports = async function handler(req, res) {
         })
       });
       emailed = r.ok;
-    } catch (e) { emailed = false; }
+      if (!r.ok) {
+        /* Status only. Brevo echoes the recipient address back in its error
+           body, and a subscriber's email does not belong in a runtime log. */
+        console.error('[demand] brevo rejected with status', r.status);
+      }
+    } catch (e) {
+      /* The row is already written. This only decides whether the person
+         got their confirmation - it must be visible, not swallowed. */
+      console.error('[demand] brevo unreachable:', e.message);
+      emailed = false;
+    }
   }
 
   return res.status(201).json({ ok: true, emailed: emailed });
