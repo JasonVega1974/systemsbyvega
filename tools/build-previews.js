@@ -29,7 +29,10 @@ const DIRECTIONS = [
   { key: 'b', css: 'sbv-b.css', name: 'Premium operator console',
     blurb: 'Cool near-black, milled panels, violet accent. The catalog as an instrument.' },
   { key: 'c', css: 'sbv-c.css', name: 'Bold catalog, dark edition',
-    blurb: 'Black ground, a saturated colour band per family. Printed ink, not light.' }
+    blurb: 'Black ground, a saturated colour band per family. Printed ink, not light.' },
+  { key: 'd', css: 'sbv-d.css', name: 'House colours',
+    blurb: "Direction B's layout in the original Systems by Vega identity — navy, amber, Archivo, the V-square.",
+    fonts: 'https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap' }
 ];
 
 function switcher(active) {
@@ -55,6 +58,9 @@ function switcher(active) {
 </style>`;
 }
 
+const WORDS = ["no","One","Two","Three","Four","Five","Six"];
+const COUNT_WORD = WORDS[DIRECTIONS.length] || String(DIRECTIONS.length);
+
 function main() {
   if (!fs.existsSync(PAGE)) {
     console.error('index.html not found — run node tools/build-catalog.js first');
@@ -75,7 +81,23 @@ function main() {
     }
 
     let html = base
-      .split('/assets/sbv.css').join('/assets/' + d.css)
+      .split('/assets/sbv.css').join('/assets/' + d.css);
+
+    // Swap the webfont request when a direction uses a different family set.
+    // Built by locating the tag rather than by regex, so a stray character in
+    // a Google Fonts URL can never quietly fail to match.
+    if (d.fonts) {
+      const i = html.indexOf('<link href="https://fonts.googleapis.com');
+      if (i === -1) {
+        console.error('no Google Fonts <link> found in index.html — refusing to emit /' +
+                      d.key + ' with the wrong typefaces');
+        process.exit(1);
+      }
+      const j = html.indexOf('>', i);
+      html = html.slice(0, i) + '<link href="' + d.fonts + '" rel="stylesheet">' + html.slice(j + 1);
+    }
+
+    html = html
       .replace(/<title>[\s\S]*?<\/title>/,
         '<title>' + d.key.toUpperCase() + ' — ' + d.name + ' · Systems by Vega</title>')
       // preview routes must never be indexed or treated as canonical
@@ -122,9 +144,9 @@ ul{list-style:none;display:grid;gap:12px}
 .foot{margin-top:28px;font:12px/1.7 ui-monospace,Consolas,monospace;color:#70707E}
 </style></head><body>
 <div class="wrap">
-  <h1>Three dark directions</h1>
+  <h1>${COUNT_WORD} dark directions</h1>
   <p class="sub">Same content, same structure, same data. Only the design system differs.
-  Pick one and the other two get deleted.</p>
+  Pick one and the other ${DIRECTIONS.length - 1} get deleted.</p>
   <ul>${cards}
   </ul>
   <p class="foot">Preview only · noindex · not linked from the live site</p>
@@ -134,7 +156,7 @@ ul{list-style:none;display:grid;gap:12px}
   fs.mkdirSync(path.join(ROOT, 'preview'), { recursive: true });
   fs.writeFileSync(path.join(ROOT, 'preview', 'index.html'), index);
 
-  console.log('previews built: /a /b /c /preview');
+  console.log('previews built: ' + DIRECTIONS.map(d => '/' + d.key).join(' ') + ' /preview');
   DIRECTIONS.forEach(d => console.log('  /' + d.key + '  ' + d.name));
 }
 
