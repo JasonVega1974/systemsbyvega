@@ -126,6 +126,9 @@ module.exports = async function handler(req, res) {
       rows   // full rows, for the CSV export
     });
   } catch (e) {
+    /* The status codes live only here. Without this line a 502 is
+       indistinguishable from any other failure in the log. */
+    console.error('[owner] read failed:', e.message);
     return res.status(502).json({ ok: false, error: 'read_failed',
       message: 'Could not read the registry. Nothing was changed.' });
   }
