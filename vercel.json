@@ -6,6 +6,11 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/pricing/",
+      "destination": "/#websites",
+      "permanent": true
+    },
+    {
       "source": "/pricing",
       "destination": "/#websites",
       "permanent": true
