@@ -95,7 +95,7 @@
       if (!rows.length) return '';
 
       return '<div class="family" style="--fam:var(--fam-' + esc(fam.key) + ')">' +
-               '<div class="plate-head">' +
+               '<div class="plate-head reveal">' +
                  '<span class="plate-no">Plate ' + esc(fam.code) + '</span>' +
                  '<h2 class="plate-title">' + esc(fam.name) + '</h2>' +
                '</div>' +
