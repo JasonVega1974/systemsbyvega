@@ -7,4 +7,5 @@ PHASE-0-PLAN.md
 BREVO-SETUP.md
 DIGEST-SETUP.md
 DNS-MIGRATION.md
+.gitignore
 .claude/
