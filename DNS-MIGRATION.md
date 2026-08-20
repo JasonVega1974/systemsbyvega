@@ -66,21 +66,29 @@ just means the cutover takes hours to fully propagate instead of minutes.
 2.4 **Environment Variables** — add these three now, scoped to **all**
 environments. Get the values from Supabase → your project → **Settings → API**.
 
-| Name | Value |
-|---|---|
-| `SUPABASE_URL` | `https://newjbexmvltvtmxollca.supabase.co` |
-| `SUPABASE_PUBLISHABLE_KEY` | Supabase → Settings → API → the **publishable** key |
-| `BREVO_API_KEY` | from `BREVO-SETUP.md` |
-| `SBV_OWNER_KEY` | a long random string you invent — it gates `/__owner__/` |
+| Name | Value | Used by |
+|---|---|---|
+| `SUPABASE_URL` | `https://newjbexmvltvtmxollca.supabase.co` | both endpoints |
+| `SUPABASE_PUBLISHABLE_KEY` | Supabase → Settings → API → the **publishable** key | `/api/demand` |
+| `BREVO_API_KEY` | from `BREVO-SETUP.md` | `/api/demand` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API → the **service_role** secret | `/api/owner` |
+| `SBV_OWNER_KEY` | a long random string you invent — 32+ characters | `/api/owner` |
 
-> **There is deliberately no service-role key in this list.** `/api/demand`
-> writes the registry row with the same publishable key the browser has, so Row
-> Level Security stays the thing protecting that table rather than being bypassed
-> by a privileged key. The publishable key is already in `index.html` on purpose —
-> it is restricted by RLS and is safe in public source.
+> **Why only one of these bypasses RLS.** `/api/demand` writes the registry row
+> with the same publishable key the browser has, so Row Level Security stays the
+> thing protecting that table. `/api/owner` is the single exception: `sbv_demand`
+> has no SELECT policy for anyone, by design, so the console genuinely cannot read
+> it any other way. That is why the service-role key appears in exactly one file
+> and behind a key check.
 >
-> Any secret goes **here and nowhere else**: never in a file, never in a commit,
-> never in chat.
+> The publishable key is in `index.html` on purpose — it is restricted by RLS and
+> is safe in public source. The other two are secrets: **Vercel and nowhere else**,
+> never in a file, never in a commit, never in chat.
+>
+> Generate the owner key with something like
+> `node -e "console.log(require('crypto').randomBytes(24).toString('base64url'))"`
+> and paste the output straight into Vercel. There is no lockout on wrong
+> attempts, so length is the whole defence — do not pick a memorable phrase.
 
 2.5 **Deploy.** You'll get a URL like `systemsbyvega-xxxx.vercel.app`.
 
@@ -96,6 +104,7 @@ environments. Get the values from Supabase → your project → **Settings → A
 - [ ] `/demo/` loads
 - [ ] `/pricing/` **redirects** to `/#websites`
 - [ ] `/read-me.md` returns **404** — that file is no longer served
+- [ ] `/__owner__/` loads, refuses a wrong key, and opens with the right one
 - [ ] On a phone, or a 360px window: no sideways scrolling anywhere
 
 **If any of these fail, stop and tell me.** Fixing them on the `.vercel.app` URL

@@ -102,10 +102,6 @@ function main() {
   }
 
   const fig = R.figures(seed.niches);
-  const revised = new Date().toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  });
-
   const seedScript =
     '\n<script>window.SBV_SEED=' +
     JSON.stringify({ families: seed.families, niches: seed.niches }) +
@@ -114,7 +110,6 @@ function main() {
   let html = fs.readFileSync(PAGE, 'utf8');
   const before = html;
 
-  html = inject(html, 'REVISED',      'Revised ' + revised);
   html = inject(html, 'THESIS_OPEN',  R.thesisOpen(fig.open));
   html = inject(html, 'TOTAL',        String(fig.total));
   html = inject(html, 'OPEN',         String(fig.open));
@@ -123,9 +118,7 @@ function main() {
   html = inject(html, 'SEED_SCRIPT',  seedScript);
 
   if (CHECK) {
-    // Ignore the date line when checking — it moves every day by design.
-    const norm = s => s.replace(/(<!-- BUILD:REVISED -->)[^<]*/, '$1');
-    if (norm(before) !== norm(html)) {
+    if (before !== html) {
       console.error('index.html is out of date with the seed. Run: node tools/build-catalog.js');
       process.exit(1);
     }
@@ -137,7 +130,7 @@ function main() {
 
   console.log('built index.html from seed');
   console.log(`  ${fig.total} listed · ${fig.open} open · ${fig.inLine} in line · ${fig.websiteOnly} website-only`);
-  console.log(`  ${seed.families.length} family plates · revised ${revised}`);
+  console.log(`  ${seed.families.length} family plates`);
 }
 
 main();

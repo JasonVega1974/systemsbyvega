@@ -68,6 +68,15 @@
   --body:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
 
+  /* Own Your Town plate tokens — verbatim from GarageSaleBiz HEAD:niches.html */
+  --plate-ink:    #16130E;
+  --flame:        #E8471F;   /* arrows only — outlined in ink, so not a text bg */
+  --stamp:        #C0311F;   /* the source palette rubber-stamp red */
+  --open-green:   #17703D;   /* source #1E8A4C darkened */
+  --metal:        #A8ADB5;
+  --shadow-hard:  6px 6px 0 rgba(0,0,0,.5);
+  --shadow-hover: 10px 12px 0 rgba(0,0,0,.55);
+
   --lift-1: 0 1px 2px rgba(0,0,0,.35), 0 6px 18px -8px rgba(0,0,0,.5);
   --lift-2: 0 1px 0 rgba(255,255,255,.06) inset, 0 18px 44px -16px rgba(0,0,0,.75);
 
@@ -202,8 +211,6 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
   transition:border-color .15s}
 .link:hover{border-bottom-color:var(--acc)}
 
-.rule-double{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);height:4px}
-.rule-hair{border-top:1px solid var(--rule)}
 
 /* ------------------------------------------------------------------ nav --- */
 .nav{position:sticky;top:0;z-index:60;background:rgba(20,24,33,.92);
@@ -234,10 +241,6 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 .plate::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(760px 340px at 82% -10%,rgba(243,146,47,.16),transparent 70%)}
 .plate > *{position:relative}
-.plate-meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  padding-top:22px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--tx-3)}
 .plate-body{padding:64px 0 8px;text-align:center}
 .plate-sub{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--acc);margin:0 0 22px}
@@ -277,50 +280,149 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 .family{margin-bottom:52px}
 .family:last-child{margin-bottom:0}
 
-/* ---------------------------------------------------------- the catalog --- */
-/* The card is the agency page's .scard, unchanged in its bones. */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* ---------------------------------------------------------- the catalog ---
+   THE "OWN YOUR TOWN" PLATE, ported from GarageSaleBiz HEAD:niches.html.
+   Every device is the original's: the ruled surface, two galvanised staples
+   punched through the top edge, the tilted circular sticker, the stamped
+   status pill, the mono index label, the dashed divider, the red-arrow row.
+
+   ONE ADAPTATION. The source had six yellow plates. Twenty-nine would be a
+   yellow wall and the eye would stop separating them, so the paper tone varies
+   by family — yellow kept for Sale & Resale, the family holding both open
+   platforms. The board then reads as different forms pinned up together
+   rather than one sign repeated.
+
+   Every paper carries the same near-black ink and all six are light enough to
+   do it at AA. The plates sit on the dark catalog band, which is what makes
+   them read as pinned objects rather than as the page itself.               */
+
+.family[data-fam="sale-resale"]   { --pa:#FFCE3B; --pb:#F5BE1E; }  /* yard-sign yellow */
+.family[data-fam="haul-clear"]    { --pa:#DCC29A; --pb:#D0B387; }  /* kraft */
+.family[data-fam="curb-exterior"] { --pa:#AEDCC4; --pb:#9CD0B6; }  /* mint */
+.family[data-fam="auto"]          { --pa:#B4C9E2; --pb:#A4BAD7; }  /* carbon blue */
+.family[data-fam="home-trade"]    { --pa:#F2C6C0; --pb:#E7B4AD; }  /* receipt pink */
+.family[data-fam="people-pets"]   { --pa:#E6DFA8; --pb:#DAD296; }  /* manila */
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 26px;padding-top:10px}
 @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:600px){.grid{grid-template-columns:1fr}}
+@media (max-width:600px){.grid{grid-template-columns:1fr;gap:30px}}
 
-.entry{background:var(--surface);border:1px solid var(--rule);border-radius:13px;padding:24px;
-  display:flex;flex-direction:column;position:relative;box-shadow:var(--elev);
-  transition:transform .18s,box-shadow .18s,border-color .18s}
-@media (min-width:601px){.entry{min-height:264px}}
-.entry:hover{transform:translateY(-3px);box-shadow:var(--elev-2)}
+/* the plate */
+.entry.sheet{
+  position:relative;
+  display:flex;flex-direction:column;
+  padding:26px 22px 20px;
+  color:var(--plate-ink);
+  background:
+    repeating-linear-gradient(180deg, rgba(0,0,0,.05) 0 2px, rgba(255,255,255,.05) 2px 4px, transparent 4px 9px),
+    linear-gradient(180deg, var(--pa,#FFCE3B), var(--pb,#F5BE1E));
+  border:3px solid var(--plate-ink);
+  border-radius:6px;
+  box-shadow:var(--shadow-hard);
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+@media (min-width:601px){.entry.sheet{min-height:268px}}
 
-.entry-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
-.cat-no{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.08em;color:var(--acc-tx)}
-.fam-tag{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--fam);border:1px solid var(--fam);
-  border-radius:20px;padding:4px 9px;white-space:nowrap}
-.entry .job{font-size:14.5px;color:var(--tx-2);margin-top:8px;line-height:1.55}
-/* the agency page's .psign, doing caveat duty */
-.entry .caveat{font-family:var(--mono);font-size:10.5px;line-height:1.55;color:var(--tx-3);
-  margin-top:12px;padding:10px 12px;background:var(--bg);
-  border:1px solid var(--rule);border-radius:9px}
-.entry-foot{margin-top:auto;padding-top:16px;border-top:1px solid var(--rule)}
+/* Pinned by hand, not machine-set. Kept under 1.2deg so a row of three still
+   reads as a row. */
+.grid > .entry.sheet:nth-child(odd){transform:rotate(-1deg)}
+.grid > .entry.sheet:nth-child(even){transform:rotate(1deg)}
+.entry.sheet:hover{transform:rotate(0) translateY(-5px);box-shadow:var(--shadow-hover);z-index:2}
+.entry.sheet:focus-within{transform:rotate(0);z-index:2}
 
-/* .scard.feat, promoted: the amber-bordered card now marks a business you can
-   buy today rather than a featured service. */
-.entry.is-open{border-color:var(--feat);
-  box-shadow:0 0 0 1px var(--feat),0 14px 36px var(--feat-glow)}
-.tag-open{display:inline-flex;align-items:center;background:var(--con-amber);color:#1a1206;
-  padding:6px 13px;border-radius:20px;font-family:var(--display);font-weight:700;
-  font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-.entry.is-website{background:var(--bg)}
+/* staples through the top edge */
+.staple{
+  position:absolute;top:-5px;width:22px;height:8px;border-radius:2px;
+  background:linear-gradient(180deg,#C9CED6,var(--metal) 55%,#7E848E);
+  border:1px solid #5C616A;box-shadow:0 1px 0 rgba(0,0,0,.4);
+}
+.staple.l{left:14%;transform:rotate(-2deg)}
+.staple.r{right:14%;transform:rotate(2deg)}
 
-.status-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.status-line{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--tx-3)}
-.count{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--tx);
-  font-variant-numeric:tabular-nums}
-.count .dim{color:var(--tx-3);font-weight:400}
-.price{font-family:var(--mono);font-size:12.5px;color:var(--tx-2);margin-top:12px}
-.price b{color:var(--tx);font-weight:600}
-.entry .link{display:flex;align-items:center;min-height:44px;width:fit-content;max-width:100%;margin-top:2px}
+/* the tilted circular sticker */
+.sticker{
+  position:absolute;top:-16px;right:-12px;
+  width:74px;height:74px;border-radius:50%;
+  display:grid;place-items:center;text-align:center;
+  transform:rotate(9deg);
+  border:3px solid var(--plate-ink);
+  box-shadow:3px 3px 0 rgba(0,0,0,.45);
+  font-family:var(--mono);font-weight:600;line-height:1.05;
+  z-index:3;
+}
+/* The price sticker carries white text, and the source flame (#E8471F) gives
+   only 3.92:1 against it. --stamp is the same palette one step deeper and
+   reaches 5.7:1. The flame stays where it belongs — the CTA arrow, which is
+   outlined in ink and is decorative, not a text background. */
+.sticker.hot{background:var(--stamp);color:#fff}
+.sticker.soon{background:#F6F0E1;color:var(--plate-ink)}
+.sticker .big{font-size:17px;display:block}
+.sticker .small{font-size:8px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-top:2px}
 
-.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-family:var(--mono);
+/* index label + stamped status pill */
+.card-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;
+  padding-right:66px}          /* clears the sticker */
+.code{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.16em;color:var(--plate-ink)}
+.tok{
+  font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:3px 8px;border-radius:99px;border:2px solid var(--plate-ink);
+}
+/* #1E8A4C under white is 4.38:1 — a hair under AA at pill size. Darkened
+   just far enough to clear it; the shift is invisible next to the original. */
+.tok.open{background:var(--open-green);color:#fff}
+.tok.wait{background:transparent;color:var(--plate-ink)}
+.tok.site{background:rgba(22,19,14,.09);color:var(--plate-ink)}
+
+.entry.sheet h3{
+  font-family:var(--display);font-weight:900;
+  font-size:clamp(23px,3.4vw,28px);line-height:1.02;letter-spacing:-.02em;
+  text-transform:uppercase;color:var(--plate-ink);
+}
+.entry.sheet .job{margin-top:9px;font-size:14px;line-height:1.5;font-weight:500;
+  color:rgba(22,19,14,.84)}
+.entry.sheet .caveat{
+  margin-top:11px;padding:8px 10px;font-family:var(--mono);font-size:10.5px;line-height:1.5;
+  color:rgba(22,19,14,.8);background:rgba(255,255,255,.42);
+  border:1px solid rgba(22,19,14,.28);border-radius:4px;
+}
+
+/* dashed divider + red-arrow CTA row */
+.entry-foot{margin-top:auto;padding-top:0}
+.card-go{
+  margin-top:14px;padding-top:12px;border-top:2px dashed rgba(22,19,14,.4);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;text-decoration:none;color:var(--plate-ink);
+  font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+}
+.card-go:hover span{text-decoration:underline;text-underline-offset:3px}
+.go-arrow{width:26px;height:14px;flex:none}
+.go-arrow path{fill:var(--flame);stroke:var(--plate-ink);stroke-width:4}
+.card-note{margin-top:8px;font-family:var(--mono);font-size:10.5px;line-height:1.5;
+  color:rgba(22,19,14,.72)}
+.card-note b{font-weight:700;color:var(--plate-ink)}
+.card-alt{
+  display:inline-flex;align-items:center;min-height:44px;margin-top:2px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(22,19,14,.74);text-decoration:underline;text-underline-offset:3px;
+}
+.card-alt:hover{color:var(--plate-ink)}
+
+/* the two you can buy today stay the loudest things on the board */
+.entry.sheet.is-open{border-width:4px;box-shadow:var(--shadow-hover)}
+.entry.sheet.is-website-only{opacity:.94}
+
+/* Narrow screens: the sticker overhangs the plate by 12px and the plates are
+   rotated, so both are pulled in to keep the band from scrolling sideways. */
+@media (max-width:600px){
+  .grid > .entry.sheet:nth-child(odd),
+  .grid > .entry.sheet:nth-child(even){transform:none}
+  .entry.sheet:hover{transform:translateY(-4px)}
+  .sticker{width:64px;height:64px;top:-12px;right:-6px}
+  .sticker .big{font-size:15px}
+  .card-meta{padding-right:58px}
+}
+
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);
   font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-3)}
 .legend i{font-style:normal;color:var(--acc)}
 

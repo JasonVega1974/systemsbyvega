@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Demand console · Systems by Vega</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3922F'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial,sans-serif' font-size='36' font-weight='900' text-anchor='middle' fill='%231a1206'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Deliberately self-contained. This page must keep working if the public
+   stylesheet is mid-redesign — it is the tool, not the shop window. */
+:root{
+  --con:#141821; --con-2:#1C2230; --con-hair:#2C3444; --con-text:#E8ECF2;
+  --con-muted:#949EAE; --amber:#F3922F; --amber-deep:#C9620C;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--con);color:var(--con-text);font-family:var(--body);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+header{border-bottom:1px solid var(--con-hair);padding:16px 0;position:sticky;top:0;
+  background:rgba(20,24,33,.94);backdrop-filter:blur(10px);z-index:10}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:16px;display:inline-flex;
+  align-items:center;gap:10px;color:#fff;text-decoration:none}
+.brand::before{content:"V";width:24px;height:24px;border-radius:6px;
+  background:linear-gradient(135deg,var(--amber),var(--amber-deep));display:grid;
+  place-items:center;color:#1a1206;font-size:13px;font-weight:900;font-family:var(--display)}
+.tagline{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--con-muted)}
+
+main{padding:34px 0 80px}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(24px,4vw,34px);
+  letter-spacing:-.025em;margin-bottom:8px}
+h2{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.015em;
+  margin:34px 0 12px}
+p.sub{color:var(--con-muted);max-width:62ch}
+
+.gate{max-width:420px;margin:60px auto;background:var(--con-2);border:1px solid var(--con-hair);
+  border-radius:13px;padding:26px}
+label{display:block;font-family:var(--display);font-weight:700;font-size:13px;margin-bottom:7px}
+input{width:100%;font-family:var(--mono);font-size:15px;padding:13px 14px;min-height:48px;
+  background:rgba(0,0,0,.3);color:var(--con-text);border:1px solid #39434F;border-radius:9px}
+input:focus{border-color:var(--amber);outline:none;box-shadow:0 0 0 3px rgba(243,146,47,.16)}
+.btn{font-family:var(--display);font-weight:700;font-size:15px;padding:13px 22px;min-height:48px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+  border:1px solid var(--amber);border-radius:9px;background:var(--amber);color:#1a1206;
+  transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px -10px var(--amber)}
+.btn-ghost{background:transparent;color:var(--con-text);border-color:#39434F}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.msg{font-family:var(--mono);font-size:12.5px;line-height:1.65;padding:12px 14px;
+  border:1px solid var(--con-hair);border-radius:9px;background:var(--con-2);margin-top:14px}
+.msg-err{border-left:3px solid #E4694A}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 6px}
+@media(max-width:640px){.tiles{grid-template-columns:1fr}}
+.tile{background:var(--con-2);border:1px solid var(--con-hair);border-radius:11px;padding:18px}
+.tile b{display:block;font-family:var(--display);font-weight:900;font-size:30px;line-height:1;
+  color:var(--amber);font-variant-numeric:tabular-nums}
+.tile span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--con-muted);margin-top:8px}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--con-hair);border-radius:11px;background:var(--con-2)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--con-hair);white-space:nowrap}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--con-muted);font-weight:600;position:sticky;top:0;background:var(--con-2)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+td.name{white-space:normal;font-weight:600}
+.zero td{color:var(--con-muted)}
+.pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:20px;padding:3px 8px}
+.s-open{color:#F3922F}.s-in_line{color:#6FB8F0}.s-website_only{color:var(--con-muted)}
+.bar{height:6px;border-radius:3px;background:var(--amber);min-width:2px;display:block}
+
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--con-muted);margin-top:10px;line-height:1.7}
+.hide{display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hrow">
+    <a class="brand" href="/">Systems by Vega</a>
+    <span class="tagline">Demand console · private</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ─────────────────────────── gate ─────────────────────────── -->
+  <section id="gate" class="gate">
+    <h1>Demand console</h1>
+    <p class="sub" style="font-size:14px;margin-bottom:18px">
+      Who asked for what, and where. Read-only.
+    </p>
+    <form id="gateForm">
+      <label for="key">Owner key</label>
+      <input id="key" type="password" autocomplete="current-password" spellcheck="false" required>
+      <div class="btn-row">
+        <button class="btn" id="go" type="submit">Open the console</button>
+      </div>
+    </form>
+    <p class="msg msg-err hide" id="gateMsg"></p>
+    <p class="hint">
+      The key is not stored in this page. It is held for this browser tab only and
+      is compared on the server.
+    </p>
+  </section>
+
+  <!-- ─────────────────────────── report ───────────────────────── -->
+  <section id="report" class="hide">
+    <h1>Demand console</h1>
+    <p class="sub">Ranked by how many people asked. This is the list that decides what gets built next.</p>
+
+    <div class="tiles">
+      <div class="tile"><b id="t-rows">—</b><span>People in line</span></div>
+      <div class="tile"><b id="t-niches">—</b><span>Businesses asked for</span></div>
+      <div class="tile"><b id="t-cities">—</b><span>Distinct city requests</span></div>
+    </div>
+    <p class="hint" id="stamp"></p>
+
+    <div class="btn-row">
+      <button class="btn" id="csvNiche" type="button">Download CSV — by niche</button>
+      <button class="btn btn-ghost" id="csvRows" type="button">Download CSV — every row</button>
+      <button class="btn btn-ghost" id="refresh" type="button">Refresh</button>
+      <button class="btn btn-ghost" id="lock" type="button">Lock</button>
+    </div>
+
+    <h2>By business</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>№</th><th>Business</th><th>Status</th>
+          <th style="text-align:right">In line</th>
+          <th style="text-align:right">Cities</th>
+          <th>Weight</th><th>Latest</th>
+        </tr></thead>
+        <tbody id="nicheBody"></tbody>
+      </table>
+    </div>
+
+    <h2>By city, within business</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Business</th><th>City</th><th style="text-align:right">In line</th>
+        </tr></thead>
+        <tbody id="cityBody"></tbody>
+      </table>
+    </div>
+    <p class="hint" id="cityEmpty"></p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var KEY_STORE = 'sbv_owner_key';
+  var data = null;
+
+  function el(id){ return document.getElementById(id); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function say(msg){ var m=el('gateMsg'); m.textContent=msg; m.classList.remove('hide'); }
+  function clearSay(){ el('gateMsg').classList.add('hide'); }
+
+  function load(key){
+    var btn = el('go');
+    btn.disabled = true; btn.textContent = 'Opening…';
+    return fetch('/api/owner', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ key: key })
+    }).then(function(r){ return r.json().then(function(d){ return {s:r.status,d:d||{}}; }); })
+      .then(function(o){
+        btn.disabled = false; btn.textContent = 'Open the console';
+        if (o.s === 401) { say('That key was not accepted.'); sessionStorage.removeItem(KEY_STORE); return; }
+        if (!o.d.ok)     { say(o.d.message || 'Could not read the registry.'); return; }
+        sessionStorage.setItem(KEY_STORE, key);
+        data = o.d;
+        render();
+      }).catch(function(){
+        btn.disabled = false; btn.textContent = 'Open the console';
+        say('The request did not complete. Nothing was changed.');
+      });
+  }
+
+  function render(){
+    clearSay();
+    el('gate').classList.add('hide');
+    el('report').classList.remove('hide');
+
+    el('t-rows').textContent   = data.totals.rows;
+    el('t-niches').textContent = data.totals.niches_with_demand;
+    el('t-cities').textContent = data.totals.cities;
+    el('stamp').textContent = 'Read ' + new Date(data.generated_at).toLocaleString();
+
+    var max = data.byNiche.reduce(function(m,n){ return Math.max(m, n.total); }, 0) || 1;
+    el('nicheBody').innerHTML = data.byNiche.map(function(n){
+      var pct = Math.round((n.total / max) * 100);
+      return '<tr class="' + (n.total ? '' : 'zero') + '">' +
+        '<td class="num" style="text-align:left">' + esc(n.catalog_no) + '</td>' +
+        '<td class="name">' + esc(n.name) + '</td>' +
+        '<td><span class="pill s-' + esc(n.status) + '">' + esc(n.status.replace(/_/g,' ')) + '</span></td>' +
+        '<td class="num">' + n.total + '</td>' +
+        '<td class="num">' + n.cities + '</td>' +
+        /* No bar at all at zero. .bar has a min-width so a short bar stays
+           visible, which means a 0% bar still paints a tick — and a tick next
+           to "0" reads as "a little bit of demand". */
+        '<td style="width:160px">' +
+          (n.total ? '<span class="bar" style="width:' + Math.max(pct,3) + '%"></span>' : '') +
+        '</td>' +
+        '<td class="num" style="text-align:left">' + (n.latest ? esc(n.latest.slice(0,10)) : '—') + '</td>' +
+      '</tr>';
+    }).join('');
+
+    var cb = el('cityBody');
+    cb.innerHTML = data.byCity.map(function(c){
+      return '<tr><td class="name">' + esc(c.niche_name) + '</td>' +
+             '<td>' + esc(c.city_label) + '</td>' +
+             '<td class="num">' + c.total + '</td></tr>';
+    }).join('');
+    el('cityEmpty').textContent = data.byCity.length
+      ? ''
+      : 'No city rows yet. Every business above is at zero until somebody joins a line.';
+  }
+
+  /* CSV is built here rather than server-side so the export always matches
+     exactly what is on screen. */
+  function toCsv(headers, rows){
+    var q = function(v){
+      v = (v == null ? '' : String(v));
+      return /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+    };
+    return headers.join(',') + '\n' + rows.map(function(r){ return r.map(q).join(','); }).join('\n');
+  }
+  function download(name, csv){
+    var blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8'});
+    var url  = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+  function stamp(){ return new Date().toISOString().slice(0,10); }
+
+  /* ------------------------------------------------------------- wiring */
+  el('gateForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    clearSay();
+    var k = el('key').value.trim();
+    if (!k) { say('Enter the owner key.'); return; }
+    load(k);
+  });
+
+  el('refresh').addEventListener('click', function(){
+    var k = sessionStorage.getItem(KEY_STORE);
+    if (k) load(k);
+  });
+
+  el('lock').addEventListener('click', function(){
+    sessionStorage.removeItem(KEY_STORE);
+    data = null;
+    el('key').value = '';
+    el('report').classList.add('hide');
+    el('gate').classList.remove('hide');
+  });
+
+  el('csvNiche').addEventListener('click', function(){
+    if (!data) return;
+    download('sbv-demand-by-niche-' + stamp() + '.csv', toCsv(
+      ['catalog_no','slug','name','family','status','in_line','cities','latest'],
+      data.byNiche.map(function(n){
+        return [n.catalog_no,n.slug,n.name,n.family,n.status,n.total,n.cities,n.latest||''];
+      })
+    ));
+  });
+
+  el('csvRows').addEventListener('click', function(){
+    if (!data) return;
+    download('sbv-demand-rows-' + stamp() + '.csv', toCsv(
+      ['created_at','niche_slug','city_label','state_code','email','full_name','source'],
+      data.rows.map(function(r){
+        return [r.created_at,r.niche_slug,r.city_label,r.state_code||'',r.email,r.full_name||'',r.source];
+      })
+    ));
+  });
+
+  // A key already in this tab means we can go straight in.
+  var existing = sessionStorage.getItem(KEY_STORE);
+  if (existing) load(existing);
+})();
+</script>
+
+</body>
+</html>
