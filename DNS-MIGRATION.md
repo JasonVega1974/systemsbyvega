@@ -2,10 +2,16 @@
 
 **You run every step in this file. I can't click dashboards.**
 
-Ordered so the site is never down. The trick is that both hosts serve the **same
-repo**, so during the hours DNS is propagating — some visitors hitting GitHub,
-some hitting Vercel — everyone gets a working site either way. That only holds
+Ordered so the site is never down. The trick is that both hosts serve a **working
+site**, so during the hours DNS is propagating — some visitors hitting GitHub,
+some hitting Vercel — nobody lands on a dead domain. That only holds
 if you do Part 2 before Part 4. Don't reorder them.
+
+> **Correction: they are not the same site.** GitHub Pages serves the
+> `systemsbyvega` repo; Vercel serves `systemsbyvega-catalog`, which is well
+> ahead of it. During propagation visitors get one of two *different* working
+> sites. Zero downtime holds because both are up, not because they match.
+> Content parity does not hold, and rolling back means serving the older site.
 
 Nothing here is reversible-by-accident: the one genuinely one-way step is 6.3,
 and by then you'll have verified everything.
@@ -16,14 +22,15 @@ and by then you'll have verified everything.
 
 | | |
 |---|---|
-| Repo | `github.com/JasonVega1974/systemsbyvega` |
+| Repo (Vercel builds this) | `github.com/JasonVega1974/systemsbyvega-catalog` |
+| Repo (old GitHub Pages source) | `github.com/JasonVega1974/systemsbyvega` |
 | Domain | `systemsbyvega.com` (registered at GoDaddy) |
 | Currently | GitHub Pages, custom domain set via the `CNAME` file |
 | Moving to | Vercel |
 | Total hands-on time | ~25 minutes, split by a 24-hour wait in Part 1 |
 
-**Do not delete the `CNAME` file.** Vercel ignores it, and leaving it means
-rolling back to GitHub Pages is a two-click operation rather than a rebuild.
+**You do not need to touch the `CNAME` file.** Vercel ignores it. Note that
+GitHub deletes it for you at step 6.3 - see the warning there.
 
 ---
 
@@ -49,7 +56,10 @@ just means the cutover takes hours to fully propagate instead of minutes.
 
 2.1 Go to **vercel.com** → log in with GitHub → **Add New… → Project**
 
-2.2 **Import** `JasonVega1974/systemsbyvega`
+2.2 **Import** `JasonVega1974/systemsbyvega-catalog`
+
+> Not `systemsbyvega`. That is the old Pages repo, it has no `vercel.json`, and
+> it sits many commits behind. Importing it deploys the wrong site.
 
 2.3 On the configure screen:
 - **Framework Preset:** `Other`
@@ -102,7 +112,11 @@ environments. Get the values from Supabase → your project → **Settings → A
 - [ ] `/showcase/` — the territory map draws (proves `us-states.json` resolved)
 - [ ] `/portfolio/` — project grid renders (proves `projects.json` resolved)
 - [ ] `/demo/` loads
-- [ ] `/pricing/` **redirects** to `/#websites`
+- [ ] `/pricing/` **redirects** to `/#websites` - test the trailing-slash form
+      specifically. With `"trailingSlash": true`, Vercel rewrites `/pricing` to
+      `/pricing/` *before* evaluating redirects, so a rule whose source is
+      `/pricing` never matches and the retired page is served with a 200. The
+      fix is an explicit `/pricing/` source.
 - [ ] `/read-me.md` returns **404** — that file is no longer served
 - [ ] `/__owner__/` loads, refuses a wrong key, and opens with the right one
 - [ ] On a phone, or a 360px window: no sideways scrolling anywhere
@@ -192,9 +206,21 @@ certificates and absolute URLs all behave differently on the real domain.
 > This is the one-way step. Until you do it, GitHub Pages still claims the
 > domain, and that claim can cause certificate renewal failures on Vercel weeks
 > later. Do it — just do it last.
+>
+> **GitHub deletes `CNAME` for you.** Clearing the custom domain auto-commits
+> a deletion of that file to `systemsbyvega`. Expect the commit. It will *not*
+> trigger a Vercel deploy, because Vercel builds `systemsbyvega-catalog`.
+>
+> **Check both repos.** Both contain a `CNAME` naming the domain. If Pages is
+> enabled on the catalog repo too, that is a second claim on the domain and the
+> same certificate hazard applies.
 
-6.4 GoDaddy → put the five records' **TTL back to 1 hour**. Low TTL means more
-lookups forever, and you don't need it any more.
+6.4 GoDaddy → put the **TTL back to 1 hour**. Low TTL means more lookups
+forever, and you don't need it any more.
+
+> That is **two** records now, not the five you lowered in Part 1: Part 4
+> replaced the four GitHub `A` records with a single Vercel one. Leave the MX
+> records untouched.
 
 ---
 
@@ -206,11 +232,14 @@ than fixing forward:
 1. GoDaddy → delete the Vercel `A` record
 2. Re-add the four GitHub Pages `A` records for `@`:
    `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-3. Point the `www` CNAME back to `jasonvega1974.github.io`
+3. Point the `www` CNAME back to `systemsbyvega.com` (the apex - that is what
+   it held before the migration, not `jasonvega1974.github.io`)
 4. GitHub → Settings → Pages → set the custom domain back to `systemsbyvega.com`
 
 With TTL at 600 this takes effect in about ten minutes. The `CNAME` file is still
-in the repo, which is what makes step 4 work.
+in the repo only until step 6.3, which deletes it. After that, step 4 above is
+what recreates it: setting the custom domain in the Pages UI writes the file
+back. Rollback still works, just not for the reason stated.
 
 ---
 
