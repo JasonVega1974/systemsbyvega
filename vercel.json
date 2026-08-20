@@ -6,6 +6,11 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/api/(.*).js",
+      "destination": "/api/$1",
+      "permanent": false
+    },
+    {
       "source": "/pricing/",
       "destination": "/#websites",
       "permanent": true
