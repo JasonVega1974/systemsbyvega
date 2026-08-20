@@ -1,0 +1,7 @@
+# Internal working documents — kept in git, never uploaded to the CDN.
+# tools/ IS uploaded: the build command runs from it. It contains no secrets
+# and duplicates logic that is necessarily public in assets/catalog-render.js.
+docs/
+sql/
+PHASE-0-PLAN.md
+.claude/
