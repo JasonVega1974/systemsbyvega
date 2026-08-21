@@ -520,3 +520,323 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
   .anim .grid .entry{transition-delay:0s !important}
   .entry:hover,.btn:hover,a.proof-shot:hover{transform:none}
 }
+
+/* ==========================================================================
+   ADDED LAYER — motion, filters, language
+   --------------------------------------------------------------------------
+   Everything below is additive. No rule here changes a colour, a size or a
+   position the page already had; delete the whole block and the page looks
+   exactly as it did before. That property is what made it safe to write.
+
+   Two constraints shaped it:
+
+   1. .entry.sheet already owns `transform` twice — once for the ±1deg pin
+      rotation and once for the hover lift. So nothing here touches `transform`
+      on a card. The twitch animates the INDIVIDUAL `rotate:` and `translate:`
+      properties instead, which compose on top of `transform` rather than
+      replacing it. Neither existing rule had to move.
+
+   2. sbv.js rebuilds #catalog-root from scratch every time live rows arrive.
+      Anything held as JS state on a card would be destroyed by that repaint.
+      So the twitch is pure CSS keyed off nth-child, and the filter re-applies
+      itself after every paint.
+   ========================================================================== */
+
+/* ------------------------------------------------------------ scroll rail --- */
+/* Sits above the sticky nav rather than under it: a progress line the nav
+   covers halfway down the page is worse than no progress line. */
+.rail{position:fixed;top:0;left:0;right:0;height:3px;z-index:80;pointer-events:none}
+.rail i{display:block;height:100%;
+  background:linear-gradient(90deg,var(--con-amber),var(--flame));
+  transform:scaleX(var(--p,0));transform-origin:0 50%}
+
+/* ------------------------------------------------------------- nav tools --- */
+.nav-tools{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.lang{
+  -webkit-appearance:none;appearance:none;
+  font-family:var(--display);font-weight:700;font-size:12.5px;color:#C2CAD6;
+  background-color:rgba(255,255,255,.06);
+  border:1px solid #2C3444;border-radius:7px;
+  padding:9px 26px 9px 30px;min-height:40px;cursor:pointer;
+  transition:color .18s,background-color .18s,border-color .18s;
+  /* globe left, chevron right — both drawn inline, so the picker costs no
+     request and cannot render as a broken image on a slow connection */
+  background-image:
+    url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C2CAD6' stroke-width='1.9'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23949EAE' stroke-width='3'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E");
+  background-repeat:no-repeat,no-repeat;
+  background-position:9px 50%,right 8px top 52%;
+  background-size:14px 14px,10px 10px;
+}
+.lang:hover{color:#fff;background-color:rgba(255,255,255,.1);border-color:#3A4453}
+.lang option{background:#1C2230;color:#E8ECF2}
+
+/* Mobile had no navigation at all before this — .nav-links was display:none
+   with nothing put in its place, so a phone visitor could not jump between
+   sections. The links become a scrollable chip row on a second line instead
+   of disappearing. */
+@media (max-width:820px){
+  .nav-in{flex-wrap:wrap;gap:6px 10px;padding-bottom:7px}
+  .nav-brand{min-height:38px}
+  .nav-links{
+    display:flex;order:3;flex:1 0 100%;gap:6px;
+    overflow-x:auto;overscroll-behavior-x:contain;
+    scrollbar-width:none;-ms-overflow-style:none;
+    margin-inline:calc(var(--gutter) * -1);
+    padding-inline:var(--gutter);
+    -webkit-overflow-scrolling:touch;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{
+    padding:7px 13px;font-size:12.5px;min-height:36px;white-space:nowrap;
+    background:rgba(255,255,255,.055);border:1px solid #262E3C;
+  }
+}
+
+/* ------------------------------------------------------------ hero board --- */
+/* A miniature of the catalog itself, drawn behind the headline: one tile per
+   listed business, in its family colour, with the open ones lit green. It
+   carries the same three figures the ledger bar states in words directly
+   below it — so the decoration is not decoration, it is the data at a glance.
+
+   Absolutely positioned and aria-hidden, so it contributes no layout and no
+   accessible text. Nothing on the page moves when it arrives, and if the
+   script that builds it never runs, the hero is exactly what it was. */
+.plate > .board{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+  /* Cleared out of the middle so the headline never competes with it. */
+  -webkit-mask-image:radial-gradient(56% 60% at 50% 44%,transparent 34%,#000 76%);
+  mask-image:radial-gradient(56% 60% at 50% 44%,transparent 34%,#000 76%);
+}
+.board-tile{transform-box:fill-box;transform-origin:50% 0;opacity:0}
+html.no-js .board-tile{opacity:1}
+.anim .board-tile{animation:tile-pin .75s cubic-bezier(.2,.9,.3,1.3) both var(--d,0s)}
+@keyframes tile-pin{
+  0%  {opacity:0;transform:translateY(18px) scale(.84)}
+  65% {opacity:1}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+/* No graphic under 980px. On a phone the hero is the headline and nothing
+   else, and a pattern behind 36px type is a legibility tax. */
+@media (max-width:979px){.plate > .board{display:none}}
+html.no-js .plate > .board{display:none}
+
+/* --------------------------------------------------------- ledger counter --- */
+/* The figures roll up to their value once. Tabular figures so the cell does
+   not jitter in width while the digits change. */
+.ledger-cell b{font-variant-numeric:tabular-nums}
+
+/* ----------------------------------------------------------- filter chips --- */
+/* Twenty-nine plates is a wall. The chips turn it into four short boards, and
+   the count line states what is on screen so nobody wonders whether the rest
+   failed to load. */
+.filterbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px 18px;
+  flex-wrap:wrap;margin:0 0 28px;padding:13px 15px;
+  background:var(--surface);border:1px solid var(--rule);border-radius:12px;
+  position:sticky;top:54px;z-index:40;
+}
+@media (max-width:820px){.filterbar{position:static;padding:12px}}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  font-family:var(--display);font-weight:700;font-size:13px;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 14px;min-height:40px;cursor:pointer;
+  color:var(--tx-2);background:transparent;
+  border:1px solid var(--rule);border-radius:999px;
+  transition:color .16s,background .16s,border-color .16s,transform .16s;
+}
+.chip:hover{color:var(--tx);border-color:var(--acc);transform:translateY(-1px)}
+.chip .chip-n{
+  font-family:var(--mono);font-weight:600;font-size:10.5px;
+  padding:2px 6px;border-radius:999px;
+  background:rgba(127,127,127,.18);color:inherit;
+}
+.chip[aria-pressed="true"]{
+  color:var(--acc-ink,#1a1206);background:var(--acc);border-color:var(--acc);
+}
+.chip[aria-pressed="true"] .chip-n{background:rgba(0,0,0,.22)}
+.chip .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.chip[data-filter="is-open"] .dot{background:var(--open-green)}
+.chip[data-filter="is-in-line"] .dot{background:var(--con-amber)}
+.chip[data-filter="is-website-only"] .dot{background:var(--metal)}
+.filter-count{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--tx-3);margin:0;
+}
+.filter-empty{font-family:var(--body);font-size:15px;color:var(--tx-2);padding:26px 2px;margin:0}
+/* The filter hides plates with the hidden attribute. .entry.sheet is display:flex,
+   which outranks the user-agent [hidden] rule, so it has to be restated here. */
+[hidden]{display:none !important}
+
+/* When the board is re-filtered the surviving plates get re-pinned rather than
+   simply appearing. It is 260ms, and it is the difference between a list that
+   updated and a board somebody just rearranged. */
+@keyframes re-pin{
+  0%  {opacity:0;rotate:-2.4deg;translate:0 -7px}
+  60% {opacity:1}
+  100%{opacity:1;rotate:0deg;translate:0 0}
+}
+
+/* --------------------------------------------------------------- twitch --- */
+/* Paper stapled to a board does not hold perfectly still. Each plate spends
+   roughly nine tenths of its cycle motionless, then rustles for about a fifth
+   of a second: under a degree of rotation, pivoting from the staple line
+   rather than the centre, with a couple of pixels of drop. Small enough that
+   you notice the board is alive before you notice any one card moving.
+
+   The randomness is structural, not scripted. Delay runs on a 7-cycle and
+   duration on a 5-cycle — 35 combinations, both coprime with the 3-column
+   grid, so no two neighbours ever share a phase. A per-family offset on top
+   stops the first plate of each family lining up with the first plate of every
+   other family. Because the durations differ, phases drift apart permanently
+   instead of re-converging on some later beat. */
+@keyframes sheet-twitch{
+  0%,  88%  {rotate:0deg;    translate:0 0}
+  90%       {rotate:-.72deg; translate:0 1.5px}
+  92.5%     {rotate:.52deg;  translate:.5px 2px}
+  95%       {rotate:-.26deg; translate:0 1px}
+  97.5%     {rotate:.1deg;   translate:0 0}
+  100%      {rotate:0deg;    translate:0 0}
+}
+.anim .entry.sheet.in{
+  transform-origin:50% 8px;   /* the staple line, so it swings from its pin */
+  animation:sheet-twitch var(--tw-dur,11s) cubic-bezier(.25,.6,.35,1)
+            calc(var(--tw-fam,0s) + var(--tw-delay,0s)) infinite;
+}
+/* Hover and focus take the plate out of the rustle; otherwise the twitch
+   fights the lift. */
+.anim .entry.sheet.in:hover,
+.anim .entry.sheet.in:focus-within{animation-name:none;rotate:0deg;translate:0 0}
+/* Re-pin wins over the twitch for its 260ms, then the twitch resumes. */
+.anim .entry.sheet.re-pin{
+  animation:re-pin .26s cubic-bezier(.2,.85,.3,1.1) both var(--rp,0s) !important;
+}
+
+/* delay — 7-cycle */
+.grid > .entry.sheet:nth-child(7n+1){--tw-delay:0s}
+.grid > .entry.sheet:nth-child(7n+2){--tw-delay:1.6s}
+.grid > .entry.sheet:nth-child(7n+3){--tw-delay:3.1s}
+.grid > .entry.sheet:nth-child(7n+4){--tw-delay:4.7s}
+.grid > .entry.sheet:nth-child(7n+5){--tw-delay:6.2s}
+.grid > .entry.sheet:nth-child(7n+6){--tw-delay:7.8s}
+.grid > .entry.sheet:nth-child(7n+7){--tw-delay:9.3s}
+/* duration — 5-cycle */
+.grid > .entry.sheet:nth-child(5n+1){--tw-dur:11s}
+.grid > .entry.sheet:nth-child(5n+2){--tw-dur:13.4s}
+.grid > .entry.sheet:nth-child(5n+3){--tw-dur:9.6s}
+.grid > .entry.sheet:nth-child(5n+4){--tw-dur:14.7s}
+.grid > .entry.sheet:nth-child(5n+5){--tw-dur:12.1s}
+/* per-family offset — nth-child resets inside every .grid, so without this the
+   first plate of all six families would share a delay of zero */
+.family[data-fam="sale-resale"]   .grid > .entry.sheet{--tw-fam:0s}
+.family[data-fam="haul-clear"]    .grid > .entry.sheet{--tw-fam:.9s}
+.family[data-fam="curb-exterior"] .grid > .entry.sheet{--tw-fam:2.2s}
+.family[data-fam="auto"]          .grid > .entry.sheet{--tw-fam:3.5s}
+.family[data-fam="home-trade"]    .grid > .entry.sheet{--tw-fam:1.4s}
+.family[data-fam="people-pets"]   .grid > .entry.sheet{--tw-fam:2.9s}
+
+/* One column, plates un-rotated: the rustle is halved. At that size a
+   full-width card moving a whole degree reads as a layout bug. */
+@media (max-width:600px){
+  @keyframes sheet-twitch{
+    0%,  90%  {rotate:0deg;    translate:0 0}
+    92%       {rotate:-.34deg; translate:0 1px}
+    94.5%     {rotate:.24deg;  translate:0 1.5px}
+    97%       {rotate:-.1deg;  translate:0 .5px}
+    100%      {rotate:0deg;    translate:0 0}
+  }
+}
+
+/* ------------------------------------------------------------ card depth --- */
+/* The plate already lifted on hover. What it was not doing was behaving like
+   an object: the sticker peels back toward flat, the staples catch the light,
+   and the arrow leans the way it points. */
+.entry.sheet .sticker{transition:transform .2s cubic-bezier(.2,.8,.3,1.35)}
+.entry.sheet:hover .sticker{transform:rotate(2deg) scale(1.07)}
+.staple{transition:box-shadow .2s ease,filter .2s ease}
+.entry.sheet:hover .staple{filter:brightness(1.22);box-shadow:0 2px 3px rgba(0,0,0,.45)}
+.card-go .go-arrow{transition:transform .2s cubic-bezier(.2,.8,.3,1.4)}
+.card-go:hover .go-arrow{transform:translateX(4px)}
+
+/* The two that are open should be the two your eye lands on. A slow breath on
+   the border, not a flash — the only thing on the board that pulses, and it
+   stops the moment you touch it. */
+@keyframes open-breathe{
+  0%,100%{box-shadow:var(--shadow-hover),0 0 0 0 rgba(23,112,61,0)}
+  50%    {box-shadow:var(--shadow-hover),0 0 0 5px rgba(23,112,61,.20)}
+}
+.anim .entry.sheet.is-open.in{
+  animation:sheet-twitch var(--tw-dur,11s) cubic-bezier(.25,.6,.35,1)
+            calc(var(--tw-fam,0s) + var(--tw-delay,0s)) infinite,
+            open-breathe 3.6s ease-in-out infinite;
+}
+.anim .entry.sheet.is-open.in:hover,
+.anim .entry.sheet.is-open.in:focus-within{animation:none;rotate:0deg;translate:0 0}
+
+/* -------------------------------------------------------------- exit card --- */
+.exit{
+  position:fixed;inset:0;z-index:100;display:grid;place-items:center;
+  padding:24px;background:rgba(10,13,18,.62);
+  opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s;
+}
+.exit[data-open="1"]{opacity:1;visibility:visible}
+.exit-card{
+  position:relative;max-width:430px;width:100%;
+  background:#FFFDF7;color:var(--plate-ink);
+  border:3px solid var(--plate-ink);border-radius:8px;
+  box-shadow:var(--shadow-hover);
+  padding:30px 28px 26px;
+  transform:translateY(16px) rotate(-.6deg);
+  transition:transform .24s cubic-bezier(.2,.9,.3,1.2);
+}
+.exit[data-open="1"] .exit-card{transform:translateY(0) rotate(-.6deg)}
+.exit-card h3{font-size:22px;margin-bottom:10px;color:var(--plate-ink)}
+.exit-card p{font-size:15px;line-height:1.6;color:rgba(22,19,14,.78);margin-bottom:6px}
+.exit-card .fine{color:rgba(22,19,14,.62);margin-top:14px}
+.exit-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.exit-cta .btn{flex:1 1 auto;justify-content:center}
+.exit-cta .btn-pri{background:var(--amber);border-color:var(--amber);color:#1a1206}
+.exit-cta .btn-sec{color:var(--plate-ink);border-color:rgba(22,19,14,.3)}
+.exit-close{
+  position:absolute;top:5px;right:6px;width:40px;height:40px;
+  background:none;border:0;cursor:pointer;font-size:24px;line-height:1;
+  color:rgba(22,19,14,.55);border-radius:8px;
+}
+.exit-close:hover{color:var(--plate-ink);background:rgba(0,0,0,.06)}
+
+/* --------------------------------------------------- translated typography --- */
+/* Spanish runs roughly 20% longer than English, and the one place on this page
+   with no room to give is the round sticker — 74px of circle with a word in
+   the middle of it. "Soon" fits at 17px; "Pronto" does not. Scoped to
+   non-English so the English board is byte-for-byte what it was. */
+html:not([lang="en"]) .sticker.soon .big{font-size:13.5px}
+html:not([lang="en"]) .sticker .small{font-size:7.5px;letter-spacing:.04em}
+html:not([lang="en"]) .sticker .big,
+html:not([lang="en"]) .sticker .small{padding:0 4px;max-width:100%}
+
+/* --------------------------------------------------------- language notice --- */
+/* Shown only when a translation is active. The legal blocks are deliberately
+   NOT translated — a mistranslated disclaimer is a liability, not a feature —
+   so the page has to say which version governs. */
+.legal-note{
+  font-family:var(--mono);font-size:10.5px;line-height:1.7;
+  letter-spacing:.04em;color:var(--tx-3);margin-top:10px;
+}
+
+/* ------------------------------------------------------- reduced motion --- */
+/* One switch turns off everything this block added. None of it is load
+   bearing: with motion off the board is still a board, the filters still
+   filter, and every figure still reads. */
+@media (prefers-reduced-motion:reduce){
+  .anim .entry.sheet.in,
+  .anim .entry.sheet.is-open.in,
+  .anim .entry.sheet.re-pin,
+  .anim .board-tile{animation:none !important;rotate:0deg;translate:0 0}
+  .board-tile{opacity:1}
+  .entry.sheet:hover .sticker,
+  .card-go:hover .go-arrow{transform:none}
+  .exit,.exit-card{transition:none}
+  .chip:hover{transform:none}
+}

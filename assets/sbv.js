@@ -28,7 +28,45 @@
   };
 
   function el(id) { return document.getElementById(id); }
-  function set(id, v) { var e = el(id); if (e) e.textContent = String(v); }
+
+  var REDUCED = window.matchMedia &&
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Ledger figures roll to their value rather than snapping to it. This matters
+     more than it sounds: these three numbers change TWICE on a normal load —
+     once from the pre-rendered seed and again when live rows land — and a
+     figure that silently swaps is a figure nobody trusts they read correctly.
+     Rolling makes the correction visible.
+
+     Each node carries its own token so a second call cancels the first
+     mid-flight instead of two loops fighting over the same text. */
+  var rollToken = 0;
+  function roll(node, to) {
+    var from = parseInt(String(node.textContent).replace(/\D/g, ''), 10);
+    if (isNaN(from)) from = 0;
+    if (from === to || REDUCED || !window.requestAnimationFrame) {
+      node.textContent = String(to);
+      return;
+    }
+    var mine = ++rollToken;
+    node.setAttribute('data-roll', String(mine));
+    var t0 = null, dur = 620;
+    requestAnimationFrame(function step(ts) {
+      if (node.getAttribute('data-roll') !== String(mine)) return;   // superseded
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      var e = 1 - Math.pow(1 - p, 3);
+      node.textContent = String(Math.round(from + (to - from) * e));
+      if (p < 1) requestAnimationFrame(step);
+    });
+  }
+
+  function set(id, v) {
+    var e = el(id);
+    if (!e) return;
+    if (/^\d+$/.test(String(v))) { roll(e, parseInt(v, 10)); return; }
+    e.textContent = String(v);
+  }
 
   function rest(path, opts) {
     if (!cfg.url || !cfg.key) return Promise.reject(new Error('unconfigured'));
@@ -62,6 +100,13 @@
       root.innerHTML = R.catalog(state.families, state.niches, state.counts);
       wireLineLinks();
       observe();
+      /* The repaint just destroyed every card, so anything that decorates a
+         card has to be re-run: the active filter, the chip counts, and the
+         translation — live rows arrive in English regardless of the language
+         the visitor picked. Order matters; translate last so the counts are
+         computed off the DOM before its words change. */
+      applyFilter(true);
+      translate();
     }
     var sel = el('f-niche');
     if (sel) {
@@ -132,6 +177,9 @@
       out.className = 'note ' + (isErr ? 'note-err' : 'note-ok');
       out.innerHTML = msg;
       out.hidden = false;
+      /* These strings are built here rather than living in the HTML, so they
+         arrive in English after the page has already been translated. */
+      translate();
     }
     function reset() { btn.disabled = false; btn.textContent = 'Get in line'; }
 
@@ -228,12 +276,270 @@
     Array.prototype.forEach.call(document.querySelectorAll('.reveal:not(.in)'), function (e) { io.observe(e); });
   }
 
+  /* ------------------------------------------------------------- language */
+  /* i18n.js owns the dictionary and the walk; this is only the hook the
+     repaint needs. Guarded because the page has to work if that file 404s. */
+  function translate() {
+    if (window.SBVi18n) window.SBVi18n.apply();
+  }
+
+  /* --------------------------------------------------------------- filter */
+  /* Twenty-nine plates is a wall. Four chips turn it into four short boards.
+
+     The filter is a single class name compared against the class the renderer
+     already puts on every card — is-open / is-in-line / is-website-only — so
+     nothing had to be added to catalog-render.js and the two paths cannot
+     drift. State lives in this closure, not on the DOM, which is what lets it
+     survive paint() wiping #catalog-root out from under it. */
+  var filter = '';
+
+  function applyFilter(quiet) {
+    var root = el('catalog-root');
+    var bar  = el('filterbar');
+    if (!root) return;
+
+    var cards = root.querySelectorAll('.entry.sheet');
+    if (!cards.length) return;
+
+    var shown = 0;
+    Array.prototype.forEach.call(cards, function (card) {
+      var on = !filter || card.classList.contains(filter);
+      card.hidden = !on;
+      card.classList.remove('re-pin');
+      if (!on) return;
+      if (!quiet && !REDUCED) {
+        /* Staggered so the surviving plates get re-pinned in a sweep rather
+           than all flinching at once. Capped, or a wide filter would ripple
+           for a second and a half. */
+        card.style.setProperty('--rp', Math.min(shown * 22, 260) + 'ms');
+        card.classList.add('re-pin');
+      }
+      shown++;
+    });
+
+    /* A family heading with no plates under it reads as a loading failure. */
+    Array.prototype.forEach.call(root.querySelectorAll('.family'), function (fam) {
+      fam.hidden = !fam.querySelector('.entry.sheet:not([hidden])');
+    });
+
+    if (!quiet && !REDUCED) {
+      setTimeout(function () {
+        Array.prototype.forEach.call(cards, function (c) { c.classList.remove('re-pin'); });
+      }, 560);
+    }
+
+    /* Chip counts, recomputed from the DOM rather than from state, so they
+       cannot disagree with what is actually on the board. */
+    if (bar) {
+      Array.prototype.forEach.call(bar.querySelectorAll('[data-count]'), function (b) {
+        var k = b.getAttribute('data-count');
+        b.textContent = String(k ? root.querySelectorAll('.entry.sheet.' + k).length : cards.length);
+      });
+      Array.prototype.forEach.call(bar.querySelectorAll('.chip'), function (c) {
+        c.setAttribute('aria-pressed', c.getAttribute('data-filter') === filter ? 'true' : 'false');
+      });
+      var n = el('fc-n'), t = el('fc-t');
+      if (n) n.textContent = String(shown);
+      if (t) t.textContent = String(cards.length);
+      bar.hidden = false;      /* only now: the chips do nothing without JS */
+    }
+
+    var empty = el('filter-empty');
+    if (empty) empty.hidden = shown > 0;
+  }
+
+  function wireFilters() {
+    var bar = el('filterbar');
+    if (!bar) return;
+    bar.addEventListener('click', function (e) {
+      var chip = e.target.closest ? e.target.closest('.chip') : null;
+      if (!chip) return;
+      var next = chip.getAttribute('data-filter') || '';
+      if (next === filter) return;
+      filter = next;
+      applyFilter(false);
+    });
+  }
+
+  /* ----------------------------------------------------------- hero board */
+  /* One tile per listed business, in its family's paper colour, the open ones
+     pinned in green. Built from state.niches — the same array the ledger bar
+     counts — so the picture and the figures printed under it cannot disagree.
+
+     Decorative and aria-hidden. It is generated rather than authored because
+     twenty-nine hand-written rects would be a second place the catalog is
+     written down, and that is exactly the drift this codebase avoids. */
+  var PAPER = {
+    'sale-resale':   '#FFCE3B',
+    'haul-clear':    '#DCC29A',
+    'curb-exterior': '#AEDCC4',
+    'auto':          '#B4C9E2',
+    'home-trade':    '#F2C6C0',
+    'people-pets':   '#E6DFA8'
+  };
+
+  function heroBoard() {
+    var host = el('hero-board');
+    if (!host || !state.niches.length) return;
+    if (window.matchMedia && window.matchMedia('(max-width: 979px)').matches) return;
+
+    /* A fixed sequence, not Math.random: the board should look the same on
+       every load and on every machine, or it is not a design. */
+    var seed = 20250820;
+    function rnd() { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
+
+    var COLS = 10, CW = 122, CH = 128, TW = 74, TH = 56;
+    var rows = Math.ceil(state.niches.length / COLS);
+    var W = COLS * CW, H = rows * CH + 36;
+
+    var parts = [];
+    state.niches.forEach(function (n, i) {
+      var c = i % COLS, r = Math.floor(i / COLS);
+      /* Generous jitter on purpose. On a strict grid twenty-nine rectangles
+         read as a UI pattern; off the grid they read as paper somebody pinned
+         up one sheet at a time, which is the whole idea of the page. */
+      var x = c * CW + 22 + (rnd() * 26 - 13);
+      var y = r * CH + 26 + (rnd() * 22 - 11);
+      var rot = (rnd() * 9 - 4.5).toFixed(2);
+      var fill = PAPER[n.family] || '#DCC29A';
+      var open = n.status === 'open';
+      /* Paper, not grey: the family colour has to survive being laid over a
+         near-black band, and under about a third opacity it does not. */
+      var face = open ? '.62' : '.34';
+      var line = open ? '.40' : '.20';
+
+      parts.push(
+        '<g transform="rotate(' + rot + ' ' + (x + TW / 2) + ' ' + y + ')">' +
+          '<g class="board-tile" style="--d:' + (0.25 + i * 0.032).toFixed(3) + 's">' +
+            '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + TW + '" height="' + TH +
+              '" rx="3" fill="' + fill + '" opacity="' + face + '"/>' +
+            '<rect x="' + (x + 9).toFixed(1) + '" y="' + (y + 15).toFixed(1) + '" width="' + (TW - 30) +
+              '" height="3.5" rx="1.8" fill="#16130E" opacity="' + line + '"/>' +
+            '<rect x="' + (x + 9).toFixed(1) + '" y="' + (y + 26).toFixed(1) + '" width="' + (TW - 19) +
+              '" height="3.5" rx="1.8" fill="#16130E" opacity="' + (open ? '.28' : '.13') + '"/>' +
+            '<rect x="' + (x + 9).toFixed(1) + '" y="' + (y + 37).toFixed(1) + '" width="' + (TW - 40) +
+              '" height="3.5" rx="1.8" fill="#16130E" opacity="' + (open ? '.28' : '.13') + '"/>' +
+            '<circle cx="' + (x + TW / 2).toFixed(1) + '" cy="' + (y + 2).toFixed(1) + '" r="3.6" fill="' +
+              (open ? '#2FBF6B' : '#F3922F') + '" opacity="' + (open ? '1' : '.5') + '"/>' +
+          '</g>' +
+        '</g>'
+      );
+    });
+
+    host.innerHTML =
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid slice" ' +
+        'width="100%" height="100%" focusable="false" style="opacity:.5">' +
+        parts.join('') +
+      '</svg>';
+  }
+
+  /* ----------------------------------------------------------- scroll rail */
+  function wireRail() {
+    var fill = el('rail-fill');
+    if (!fill) return;
+    var queued = false;
+    function paintRail() {
+      queued = false;
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? Math.min(1, Math.max(0, window.pageYOffset / h)) : 0;
+      fill.style.setProperty('--p', p.toFixed(4));
+    }
+    window.addEventListener('scroll', function () {
+      if (queued) return;
+      queued = true;
+      (window.requestAnimationFrame || setTimeout)(paintRail);
+    }, { passive: true });
+    window.addEventListener('resize', paintRail, { passive: true });
+    paintRail();
+  }
+
+  /* ------------------------------------------------------------- exit card */
+  /* The rules that keep this from being the thing everybody hates:
+       - desktop only; there is no honest mouse-leave signal on a touch screen
+       - once per SESSION, not once per visit-ever, and never twice
+       - armed only after twenty seconds, so it cannot fire on a bounce
+       - only on an exit toward the tab bar, not on a mouse crossing any edge
+       - Escape closes it, the backdrop closes it, and focus is returned
+     It offers the thing that is already free on this page and says so. */
+  function wireExit() {
+    var box = el('exit');
+    if (!box || !box.querySelector) return;
+    if (!window.matchMedia || !window.matchMedia('(min-width: 821px)').matches) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    try { if (sessionStorage.getItem('sbv.exit')) return; } catch (e) { return; }
+
+    var card = box.querySelector('.exit-card');
+    var armed = false, last = null;
+    setTimeout(function () { armed = true; }, 20000);
+
+    function focusables() {
+      return card.querySelectorAll('a[href],button:not([disabled])');
+    }
+
+    function onKey(e) {
+      if (e.key === 'Escape' || e.keyCode === 27) { close(); return; }
+      if (e.key !== 'Tab' && e.keyCode !== 9) return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], lastEl = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
+      else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
+    }
+
+    function open() {
+      if (!armed || box.getAttribute('data-open') === '1') return;
+      try { sessionStorage.setItem('sbv.exit', '1'); } catch (e) { /* ignore */ }
+      last = document.activeElement;
+      box.hidden = false;
+      void box.offsetHeight;                 /* so the transition has a start */
+      box.setAttribute('data-open', '1');
+      var f = focusables();
+      if (f.length) f[f.length - 1].focus(); /* "Keep browsing", not the CTA */
+      document.addEventListener('keydown', onKey);
+    }
+
+    function close() {
+      if (box.getAttribute('data-open') !== '1') return;
+      box.setAttribute('data-open', '0');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function () { box.hidden = true; }, 240);
+      if (last && last.focus) last.focus();
+    }
+
+    /* relatedTarget null on a mouseout means the pointer left the document
+       entirely; clientY near zero means it left upward, toward the tab bar. */
+    document.addEventListener('mouseout', function (e) {
+      if (e.relatedTarget) return;
+      if (e.clientY > 6) return;
+      open();
+    });
+
+    box.addEventListener('click', function (e) {
+      if (e.target === box) close();                        /* backdrop */
+    });
+    var no = el('exit-no'), x = el('exit-close'), go = el('exit-go');
+    if (no) no.addEventListener('click', close);
+    if (x)  x.addEventListener('click', close);
+    if (go) go.addEventListener('click', close);            /* the href still runs */
+  }
+
   function boot() {
     document.documentElement.classList.remove('no-js');
     wireLineLinks();
     wireForm();
     wireFaq();
     observe();
+
+    /* Everything below decorates a catalog that is already in the HTML, so it
+       runs before the network is touched and is correct whether or not the
+       live overlay ever arrives. */
+    wireFilters();
+    applyFilter(true);
+    heroBoard();
+    wireRail();
+    wireExit();
+
     loadLive();
   }
 
