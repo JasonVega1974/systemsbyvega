@@ -144,8 +144,10 @@ window.SBV_LANG.es = {
   'Run the whole sale when a household has to be emptied — pricing, staffing, and the day itself.':
     'Maneje la venta completa cuando hay que vaciar una casa — precios, personal y el día de la venta.',
   'Garage Sales': 'Ventas de Garaje',
-  'Map every sale in town and be the page shoppers check on Saturday morning.':
-    'Ubique cada venta del pueblo y sea la página que los compradores revisan el sábado por la mañana.',
+  "Run other people's garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.":
+    'Maneje las ventas de garaje de otras personas en sus tres ciudades — y sea el mapa que todo comprador del pueblo revisa el sábado por la mañana.',
+  'Run other people’s garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.':
+    'Maneje las ventas de garaje de otras personas en sus tres ciudades — y sea el mapa que todo comprador del pueblo revisa el sábado por la mañana.',
   'Local Auctions': 'Subastas Locales',
   'Run the bidding for estates, farms, and storage lots — catalog, consignors, gavel.':
     'Dirija las pujas de patrimonios, granjas y bodegas — catálogo, consignatarios, martillo.',
@@ -354,6 +356,42 @@ window.SBV_LANG.es = {
   'Showcase': 'Muestrario',
   'Portfolio': 'Portafolio',
   'Demo': 'Demostración',
+
+  /* ---------------------------------------------------------- plate modal */
+  /* Row labels and the per-status sentences sbv.js injects. Nothing here is
+     per-business — the business's own words come off the card, already
+     translated by the entries above. */
+  'The job': 'El trabajo',
+  'What you get': 'Qué recibe',
+  'Territory': 'Territorio',
+  'Price': 'Precio',
+
+  'The site, the documents, the training, the tools. You operate under your own business name and keep what you collect.':
+    'El sitio, los documentos, la capacitación, las herramientas. Usted opera bajo el nombre de su propio negocio y se queda con lo que cobra.',
+  'One operator per city. Your cities are written to the registry, and the availability checker reads that row before anyone else can pay for them.':
+    'Un operador por ciudad. Sus ciudades quedan escritas en el registro, y el verificador de disponibilidad lee ese renglón antes de que nadie más pueda pagarlas.',
+  'Not a franchise. No royalty, no franchise fee, and no control over how you operate.':
+    'No es una franquicia. Sin regalías, sin cuota de franquicia y sin control sobre cómo opera.',
+
+  'Nothing yet — this one is not built. What exists today is the line, and this is the honest answer rather than a date.':
+    'Nada todavía — este no está construido. Lo que existe hoy es la fila, y esa es la respuesta honesta en lugar de una fecha.',
+  'One operator per city, once it exists. Getting in line records that you want this business in your city. It is not a reservation and it does not hold anything.':
+    'Un operador por ciudad, una vez que exista. Ponerse en fila registra que usted quiere este negocio en su ciudad. No es una reservación y no aparta nada.',
+  'No price yet. Nothing is charged and there is nothing to cancel.':
+    'Todavía no hay precio. No se cobra nada y no hay nada que cancelar.',
+  'If it gets built, you get the first offer on your city before it is listed publicly.':
+    'Si se construye, usted recibe la primera oferta sobre su ciudad antes de que se publique.',
+
+  'The site white-labelled to your business name, colours and contact details. Domain connected, lead form to your inbox, owner admin panel, setup guide.':
+    'El sitio con la marca de su negocio, sus colores y sus datos de contacto. Dominio conectado, formulario de contacto a su correo, panel de administración y guía de configuración.',
+  'This one is a website, not a territory — no exclusivity, no city, no registry.':
+    'Este es un sitio web, no un territorio — sin exclusividad, sin ciudad, sin registro.',
+  'Licensed trades and chair-based work are sold as websites, because a territory would be selling you something we cannot deliver.':
+    'Los oficios con licencia y el trabajo que depende de una silla se venden como sitio web, porque un territorio sería venderle algo que no podemos entregar.',
+
+  'Check it out on garagesalebiz.com →': 'Véalo en garagesalebiz.com →',
+  'Check it out on estatesalebiz.com →': 'Véalo en estatesalebiz.com →',
+  'Check it out here →': 'Véalo aquí →',
 
   /* ------------------------------------------------------------ exit card */
   'Before you close the tab.': 'Antes de cerrar la pestaña.',

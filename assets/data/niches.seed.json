@@ -17,7 +17,7 @@
 
     { "slug": "garage-sales", "catalog_no": "SR-02", "name": "Garage Sales", "family": "sale-resale", "sort": 2,
       "status": "open", "open_url": "https://garagesalebiz.com", "price_label": "$249 once · 3 cities",
-      "job_line": "Map every sale in town and be the page shoppers check on Saturday morning.",
+      "job_line": "Run other people's garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.",
       "demo_path": null, "website_offer": false },
 
     { "slug": "local-auctions", "catalog_no": "SR-03", "name": "Local Auctions", "family": "sale-resale", "sort": 3,

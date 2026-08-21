@@ -106,6 +106,7 @@
          the visitor picked. Order matters; translate last so the counts are
          computed off the DOM before its words change. */
       applyFilter(true);
+      enhanceCards();
       translate();
     }
     var sel = el('f-niche');
@@ -524,6 +525,269 @@
     if (go) go.addEventListener('click', close);            /* the href still runs */
   }
 
+  /* ---------------------------------------------------------- plate modal */
+  /* WHERE THE CONTENT COMES FROM, and why it matters.
+
+     Every word in the modal is either read off the card that opened it, or
+     chosen by that card's status from a fixed set of sentences that are
+     already true elsewhere on this page. Nothing is authored per business.
+
+     That is a deliberate constraint, not a shortcut. catalog-render.js already
+     warns that any field the markup reads must exist on the rows sbv_niches
+     returns, or it renders once and vanishes when the live overlay lands. A
+     modal with its own per-niche prose would need twenty-nine new rows of copy
+     in the database, and every sentence of it would be a fresh claim about a
+     business. Deriving instead means the modal cannot drift from the card and
+     cannot say anything the catalog does not already say.
+
+     Display text comes from the DOM; urls and prices come from state, which is
+     the same array that rendered the DOM. */
+
+  var STATUS_COPY = {
+    'is-open': {
+      get:  'The site, the documents, the training, the tools. You operate under your own ' +
+            'business name and keep what you collect.',
+      terr: 'One operator per city. Your cities are written to the registry, and the ' +
+            'availability checker reads that row before anyone else can pay for them.',
+      fine: 'Not a franchise. No royalty, no franchise fee, and no control over how you operate.'
+    },
+    'is-in-line': {
+      get:  'Nothing yet — this one is not built. What exists today is the line, and this ' +
+            'is the honest answer rather than a date.',
+      terr: 'One operator per city, once it exists. Getting in line records that you want ' +
+            'this business in your city. It is not a reservation and it does not hold anything.',
+      price:'No price yet. Nothing is charged and there is nothing to cancel.',
+      fine: 'If it gets built, you get the first offer on your city before it is listed publicly.'
+    },
+    'is-website-only': {
+      get:  'The site white-labelled to your business name, colours and contact details. ' +
+            'Domain connected, lead form to your inbox, owner admin panel, setup guide.',
+      terr: 'This one is a website, not a territory — no exclusivity, no city, no registry.',
+      price:'$299 launch-ready · $499 custom',
+      fine: 'Licensed trades and chair-based work are sold as websites, because a territory ' +
+            'would be selling you something we cannot deliver.'
+    }
+  };
+
+  var modalCard = null;      /* the .entry.sheet the modal was opened from */
+  var modalLast = null;      /* focus to restore on close */
+
+  function txt(root, sel) {
+    var e = root.querySelector(sel);
+    return e ? e.textContent.trim() : '';
+  }
+
+  function row(key, val) {
+    return '<div class="nm-row"><span class="nm-k">' + key + '</span>' +
+           '<div class="nm-v">' + val + '</div></div>';
+  }
+
+  function statusOf(card) {
+    if (card.classList.contains('is-open')) return 'is-open';
+    if (card.classList.contains('is-in-line')) return 'is-in-line';
+    return 'is-website-only';
+  }
+
+  function fillModal(card) {
+    var slug = String(card.id || '').replace(/^n-/, '');
+    var n    = state.niches.filter(function (x) { return x.slug === slug; })[0] || {};
+    var st   = statusOf(card);
+    var copy = STATUS_COPY[st];
+    var fam  = state.families.filter(function (f) { return f.key === card.getAttribute('data-fam'); })[0] || {};
+    var box  = el('nm-card');
+
+    /* The family colour has exactly one definition on this page — the .family
+       rule in the stylesheet. Rather than repeat the palette for the modal,
+       read what the card actually resolved to. */
+    var cs = getComputedStyle(card);
+    box.style.setProperty('--pa', cs.getPropertyValue('--pa').trim() || '#FFCE3B');
+    box.style.setProperty('--pb', cs.getPropertyValue('--pb').trim() || '#F5BE1E');
+
+    el('nm-code').textContent = txt(card, '.code');
+    var tokSrc = card.querySelector('.tok');
+    var tok = el('nm-tok');
+    tok.className = tokSrc ? tokSrc.className : 'tok';
+    tok.textContent = tokSrc ? tokSrc.textContent.trim() : '';
+
+    el('nm-title').textContent = txt(card, 'h3');
+    el('nm-fam').textContent   = fam.name || '';
+    el('nm-note').textContent  = fam.note || '';
+
+    var rows = row('The job', R.esc(txt(card, '.job')));
+
+    var cav = txt(card, '.caveat');
+    if (cav) rows += '<div class="nm-caveat">' + R.esc(cav) + '</div>';
+
+    rows += row('What you get', copy.get);
+    rows += row('Territory', copy.terr);
+    rows += row('Price', R.esc(copy.price || n.price_label || ''));
+
+    /* Only ever shown above the floor the renderer already enforces, and in the
+       renderer's own words, so the modal and the card cannot disagree. */
+    var c = state.counts[slug];
+    if (c && typeof c.waiting === 'number' && c.waiting > R.FLOOR) {
+      rows += row('In line', '<b>' + c.waiting + '</b> in line');
+    }
+
+    el('nm-rows').innerHTML = rows;
+
+    /* ------------------------------------------------------------ actions */
+    var foot = '';
+    if (st === 'is-open' && n.open_url) {
+      var host = String(n.open_url).replace(/^https?:\/\//, '').replace(/\/$/, '');
+      foot += '<a class="btn btn-pri" href="' + R.esc(n.open_url) + '">' +
+              'Check it out on ' + R.esc(host) + '&nbsp;&rarr;</a>';
+    } else if (st === 'is-in-line') {
+      foot += '<button type="button" class="btn btn-pri" id="nm-line" data-niche="' +
+              R.esc(slug) + '">Claim a spot</button>';
+      if (n.website_offer && n.demo_path) {
+        foot += '<a class="btn btn-ghost" href="' + R.esc(n.demo_path) + '">See the site</a>';
+      }
+    } else if (n.demo_path) {
+      foot += '<a class="btn btn-pri" href="' + R.esc(n.demo_path) + '">' +
+              'Check it out here&nbsp;&rarr;</a>';
+    }
+    el('nm-foot').innerHTML = foot + '<p class="nm-fine">' + copy.fine + '</p>';
+
+    var line = el('nm-line');
+    if (line) {
+      line.addEventListener('click', function () {
+        var sel = el('f-niche');
+        if (sel) { sel.value = slug; onNicheChange(); }
+        closeModal();
+        var target = el('line');
+        if (target) target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+      });
+    }
+
+    /* The boilerplate above was just injected in English. If a translation is
+       active it has to be applied to it before anyone sees it. */
+    translate();
+  }
+
+  function nmFocusables() {
+    return el('nm-card').querySelectorAll('a[href],button:not([disabled])');
+  }
+
+  function nmKey(e) {
+    if (e.key === 'Escape' || e.keyCode === 27) { closeModal(); return; }
+    if (e.key !== 'Tab' && e.keyCode !== 9) return;
+    var f = nmFocusables();
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function openModal(card) {
+    var box = el('nm'), inner = el('nm-card');
+    if (!box || !inner || !R) return;
+
+    modalCard = card;
+    modalLast = document.activeElement;
+    fillModal(card);
+
+    box.hidden = false;
+    void box.offsetHeight;
+    box.setAttribute('data-open', '1');
+    document.body.style.overflow = 'hidden';      /* the page must not scroll behind it */
+
+    /* The plate is unpinned from the board and enlarged: the modal starts at
+       the exact position and size of the card that was clicked, then travels to
+       its own place. Measuring both rects and animating the difference is the
+       only way to make the two feel like the same object. */
+    if (!REDUCED && inner.animate) {
+      var from = card.getBoundingClientRect();
+      var to   = inner.getBoundingClientRect();
+      var s    = Math.max(0.2, from.width / to.width);
+      var dx   = (from.left + from.width / 2) - (to.left + to.width / 2);
+      var dy   = (from.top + from.height / 2) - (to.top + to.height / 2);
+      inner.animate([
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')', opacity: 0.35 },
+        { transform: 'translate(0,0) scale(1)', opacity: 1 }
+      ], { duration: 360, easing: 'cubic-bezier(.2,.85,.3,1.03)' });
+    }
+
+    var f = nmFocusables();
+    if (f.length) f[0].focus();
+    document.addEventListener('keydown', nmKey);
+  }
+
+  function closeModal() {
+    var box = el('nm'), inner = el('nm-card');
+    if (!box || box.getAttribute('data-open') !== '1') return;
+
+    /* Back to the plate it came from, if that plate is still on the board —
+       a filter change while the modal was open can have removed it. */
+    if (!REDUCED && inner.animate && modalCard && !modalCard.hidden) {
+      var from = modalCard.getBoundingClientRect();
+      var to   = inner.getBoundingClientRect();
+      if (from.width) {
+        var s  = Math.max(0.2, from.width / to.width);
+        var dx = (from.left + from.width / 2) - (to.left + to.width / 2);
+        var dy = (from.top + from.height / 2) - (to.top + to.height / 2);
+        inner.animate([
+          { transform: 'translate(0,0) scale(1)', opacity: 1 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')', opacity: 0 }
+        ], { duration: 240, easing: 'cubic-bezier(.4,0,.7,.3)' });
+      }
+    }
+
+    box.setAttribute('data-open', '0');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', nmKey);
+    setTimeout(function () { box.hidden = true; }, 240);
+    if (modalLast && modalLast.focus) modalLast.focus();
+    modalCard = null;
+  }
+
+  /* Promote every plate into something that opens. Done here rather than in
+     catalog-render.js because with JavaScript off there is no modal to open,
+     and a control that does nothing is worse than no control. The <h3> becomes
+     a real button so the keyboard and a screen reader get a labelled target;
+     the card surface handles the mouse. The existing text NODE is moved rather
+     than re-created, so the language layer's record of its English original
+     survives the promotion. */
+  function enhanceCards() {
+    var root = el('catalog-root');
+    if (!root) return;
+    Array.prototype.forEach.call(root.querySelectorAll('.entry.sheet'), function (card) {
+      if (card.classList.contains('is-clickable')) return;
+      var h3 = card.querySelector('h3');
+      if (h3 && !h3.querySelector('.card-open')) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'card-open';
+        while (h3.firstChild) b.appendChild(h3.firstChild);
+        h3.appendChild(b);
+      }
+      card.classList.add('is-clickable');
+    });
+  }
+
+  function wireModal() {
+    var box = el('nm');
+    if (!box) return;
+
+    /* One delegated listener on the catalog, so the repaint cannot orphan it. */
+    var root = el('catalog-root');
+    if (root) {
+      root.addEventListener('click', function (e) {
+        if (!e.target.closest) return;
+        /* Links and the form buttons keep their own behaviour. */
+        if (e.target.closest('a')) return;
+        var card = e.target.closest('.entry.sheet');
+        if (!card) return;
+        e.preventDefault();
+        openModal(card);
+      });
+    }
+
+    box.addEventListener('click', function (e) { if (e.target === box) closeModal(); });
+    var x = el('nm-close');
+    if (x) x.addEventListener('click', closeModal);
+  }
+
   function boot() {
     document.documentElement.classList.remove('no-js');
     wireLineLinks();
@@ -536,6 +800,8 @@
        live overlay ever arrives. */
     wireFilters();
     applyFilter(true);
+    enhanceCards();
+    wireModal();
     heroBoard();
     wireRail();
     wireExit();
