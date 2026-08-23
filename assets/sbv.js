@@ -471,7 +471,13 @@
     try { if (sessionStorage.getItem('sbv.exit')) return; } catch (e) { return; }
 
     var card = box.querySelector('.exit-card');
-    var armed = false, last = null;
+    /* `shown` is the once-per-PAGELOAD latch, and it is the fix for "it keeps
+       popping up". sessionStorage is only read once, when wireExit runs, so it
+       cannot stop a second open within the same pageload. close() puts
+       data-open back to '0', which was the only other thing open() checked —
+       so every later exit gesture reopened the card, including right after
+       the visitor pressed "Keep browsing". */
+    var armed = false, shown = false, last = null;
     setTimeout(function () { armed = true; }, 20000);
 
     function focusables() {
@@ -489,7 +495,9 @@
     }
 
     function open() {
-      if (!armed || box.getAttribute('data-open') === '1') return;
+      if (shown || !armed || box.getAttribute('data-open') === '1') return;
+      shown = true;
+      document.removeEventListener('mouseout', onOut);
       try { sessionStorage.setItem('sbv.exit', '1'); } catch (e) { /* ignore */ }
       last = document.activeElement;
       box.hidden = false;
@@ -510,11 +518,12 @@
 
     /* relatedTarget null on a mouseout means the pointer left the document
        entirely; clientY near zero means it left upward, toward the tab bar. */
-    document.addEventListener('mouseout', function (e) {
+    function onOut(e) {
       if (e.relatedTarget) return;
       if (e.clientY > 6) return;
       open();
-    });
+    }
+    document.addEventListener('mouseout', onOut);
 
     box.addEventListener('click', function (e) {
       if (e.target === box) close();                        /* backdrop */
