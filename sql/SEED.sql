@@ -13,7 +13,7 @@ insert into public.sbv_niches
   (slug, catalog_no, name, family, job_line, caveat, status, open_url, price_label, demo_path, website_offer, sort)
 values
   ('estate-sales', 'SR-01', 'Estate Sales', 'sale-resale', 'Run the whole sale when a household has to be emptied — pricing, staffing, and the day itself.', null, 'open'::public.sbv_niche_status, 'https://estatesalebiz.com', '$497 + $39/mo · 3 cities', null, false, 1),
-  ('garage-sales', 'SR-02', 'Garage Sales', 'sale-resale', 'Map every sale in town and be the page shoppers check on Saturday morning.', null, 'open'::public.sbv_niche_status, 'https://garagesalebiz.com', '$249 once · 3 cities', null, false, 2),
+  ('garage-sales', 'SR-02', 'Garage Sales', 'sale-resale', 'Run other people''s garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.', null, 'open'::public.sbv_niche_status, 'https://garagesalebiz.com', '$249 once · 3 cities', null, false, 2),
   ('local-auctions', 'SR-03', 'Local Auctions', 'sale-resale', 'Run the bidding for estates, farms, and storage lots — catalog, consignors, gavel.', 'Auctioneer licensing varies by state. Check yours before you get in line.', 'in_line'::public.sbv_niche_status, null, null, null, false, 3),
   ('consignment-vintage', 'SR-04', 'Consignment & Vintage', 'sale-resale', 'Sell other people''s furniture and finds on a split, without owning the inventory.', null, 'in_line'::public.sbv_niche_status, null, null, null, false, 4),
   ('market-vendors', 'SR-05', 'Market Vendors', 'sale-resale', 'Be the booth directory and sign-up desk for the markets in your county.', null, 'in_line'::public.sbv_niche_status, null, null, null, false, 5),
