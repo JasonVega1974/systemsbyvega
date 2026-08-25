@@ -27,7 +27,7 @@
       "caveat": "Auctioneer licensing varies by state. Check yours before you get in line." },
 
     { "slug": "consignment-vintage", "catalog_no": "SR-04", "name": "Consignment & Vintage", "family": "sale-resale", "sort": 4,
-      "status": "in_line", "open_url": null, "price_label": null,
+      "status": "open", "open_url": "https://consignmentbiz.com", "price_label": "$197 once · 1 city",
       "job_line": "Sell other people's furniture and finds on a split, without owning the inventory.",
       "demo_path": null, "website_offer": false },
 

@@ -138,6 +138,7 @@ window.SBV_LANG.es = {
   '$299 launch-ready · $499 custom': '$299 listo para lanzar · $499 personalizado',
   '$497 + $39/mo · 3 cities · estatesalebiz.com': '$497 + $39/mes · 3 ciudades · estatesalebiz.com',
   '$249 once · 3 cities · garagesalebiz.com': '$249 pago único · 3 ciudades · garagesalebiz.com',
+  '$197 once · 1 city · consignmentbiz.com': '$197 pago único · 1 ciudad · consignmentbiz.com',
 
   /* ----------------------------------------------------------- the niches */
   'Estate Sales': 'Ventas de Patrimonio',

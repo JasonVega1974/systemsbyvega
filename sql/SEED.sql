@@ -15,7 +15,7 @@ values
   ('estate-sales', 'SR-01', 'Estate Sales', 'sale-resale', 'Run the whole sale when a household has to be emptied — pricing, staffing, and the day itself.', null, 'open'::public.sbv_niche_status, 'https://estatesalebiz.com', '$497 + $39/mo · 3 cities', null, false, 1),
   ('garage-sales', 'SR-02', 'Garage Sales', 'sale-resale', 'Run other people''s garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.', null, 'open'::public.sbv_niche_status, 'https://garagesalebiz.com', '$249 once · 3 cities', null, false, 2),
   ('local-auctions', 'SR-03', 'Local Auctions', 'sale-resale', 'Run the bidding for estates, farms, and storage lots — catalog, consignors, gavel.', 'Auctioneer licensing varies by state. Check yours before you get in line.', 'in_line'::public.sbv_niche_status, null, null, null, false, 3),
-  ('consignment-vintage', 'SR-04', 'Consignment & Vintage', 'sale-resale', 'Sell other people''s furniture and finds on a split, without owning the inventory.', null, 'in_line'::public.sbv_niche_status, null, null, null, false, 4),
+  ('consignment-vintage', 'SR-04', 'Consignment & Vintage', 'sale-resale', 'Sell other people''s furniture and finds on a split, without owning the inventory.', null, 'open'::public.sbv_niche_status, 'https://consignmentbiz.com', '$197 once · 1 city', null, false, 4),
   ('market-vendors', 'SR-05', 'Market Vendors', 'sale-resale', 'Be the booth directory and sign-up desk for the markets in your county.', null, 'in_line'::public.sbv_niche_status, null, null, null, false, 5),
   ('junk-removal', 'HC-01', 'Junk Removal', 'haul-clear', 'Take the cleanout calls — garages, estates, and the stuff nobody wants to load.', null, 'in_line'::public.sbv_niche_status, null, null, null, false, 10),
   ('delivery', 'HC-02', 'Delivery & Courier', 'haul-clear', 'Move packages across town same-day, on a zone map you set.', null, 'in_line'::public.sbv_niche_status, null, null, '/sites/delivery/', true, 11),
@@ -55,6 +55,6 @@ on conflict (slug) do update set
   sort          = excluded.sort;
 
 -- Expected after this runs: 29 rows,
---   2 open,
---   11 in line,
+--   3 open,
+--   10 in line,
 --   16 website-only.
