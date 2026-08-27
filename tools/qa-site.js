@@ -128,7 +128,9 @@ if (content) {
   for (const [k, m] of [['"plans"', 'plans[] -> pricing[]'], ['"packages"', 'packages[] -> pricing[]'],
                         ['"author"', 'author -> name'], ['"lab"', 'lab -> label'], ['"cat"', 'cat -> tag'],
                         ['"period"', 'period -> per'], ['"platform"', 'platform -> icon'],
-                        ['"meta"', 'meta -> tag']]) {
+                        ['"meta"', 'meta -> tag'],
+                        ['"area"', 'brand.area -> serviceArea.region'],
+                        ['"about"', 'about -> owner']]) {
     if (flat.includes(k)) found.push(m);
   }
   /* The highlight flag has been written three ways: best, featured, popular.
@@ -296,10 +298,23 @@ const nicheCode = strip(nicheJs);
 
 /* D-P: the animation may live in scene.js (self-contained scene) or in niche.js
    (a spring helper the renderer calls). Grade the animation, not its address. */
+/* A loop passes a callback it can NAME, because that is what re-scheduling
+   requires. Counting calls instead graded metal-fabrication as animated on the
+   strength of a nested double-rAF style-flush and a toast fade (decision 7).
+   Checked against all 21 converted sites: same verdict everywhere the count rule
+   was right, and correct where it was not. */
+function rafLoop(s) {
+  const ids = [...s.matchAll(/requestAnimationFrame\(\s*([A-Za-z_$][\w$]*)\s*\)/g)].map(m => m[1]);
+  for (const id of new Set(ids)) {
+    if (new RegExp('function\\s+' + id + '\\b').test(s)) return true;
+    if (new RegExp('(?:var|let|const)\\s+' + id + '\\s*=').test(s)) return true;
+  }
+  return false;
+}
 const rafCount = s => (s.match(/requestAnimationFrame/g) || []).length;
 /* Two or more calls means it re-schedules itself, i.e. it loops. A single call
    is a deferred style write — a toast fade — not a signature animation. */
-const LOOPS = 2;
+const LOOPS = 2;   // retained for reference; superseded by rafLoop() (decision 7)
 
 /* D-S: the animation may equally be CSS. Collect every @keyframes whose name is
    used in an animation shorthand carrying `infinite`, minus chrome. */
@@ -347,9 +362,9 @@ const shared = loopsElsewhere(slug);
 const uniqueLoops = allCssLoops.filter(l => !shared.has(l));
 const borrowed = allCssLoops.filter(l => shared.has(l));
 
-const animHome = rafCount(sceneCode) >= LOOPS ? 'scene.js'
-               : rafCount(nicheCode) >= LOOPS ? 'niche.js'
-               : uniqueLoops.length            ? 'sections.css' : null;
+const animHome = rafLoop(sceneCode) ? 'scene.js'
+               : rafLoop(nicheCode) ? 'niche.js'
+               : uniqueLoops.length ? 'sections.css' : null;
 const oneShot = !animHome && (rafCount(sceneCode) + rafCount(nicheCode)) > 0;
 const isStub = !animHome;
 
@@ -411,7 +426,11 @@ else ok('illustration def ids are prefixed (§6.2)', svgIds.length + ' checked')
    #team, #meet. Accept any of them: the requirement is that the operator is on
    the page, not that one id was chosen. */
 const need = { 'FAQ': /id="faq"/i,
-               'owner': /id="(owner|about|team|meet|who)"/i,
+               /* Either the id convention, or the owner render hooks: the id has
+                  been spelled six ways now (owner, about, team, meet, who, why),
+                  and "why" is generic enough that matching it blind would pass a
+                  section that has nothing to do with an owner. */
+               'owner': /id="(owner|about|team|meet|who)"|id="meet(Title|Desc|Photo)"|class="[^"]*\bmeet__/i,
                'form': /<form/i };
 for (const [k, re] of Object.entries(need)) re.test(sections_) ? ok('section: ' + k) : bad('section: ' + k);
 
