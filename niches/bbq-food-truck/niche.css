@@ -1,0 +1,42 @@
+/* bbq-food-truck — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #0C0A08;   /* was --char */
+  --ground:       #171310;   /* was --coal */
+  --panel:        #1F1913;   /* was --coal-2 */
+  --accent:       #E8590C;   /* was --ember */
+  --accent-2:     #FF7A2F;   /* was --ember-hot */
+  --accent-deep:  #9C3D06;   /* was --ember-deep */
+  --accent-alt:   #E3B341;   /* was --mustard */
+  --ink:          #F6EBD9;   /* was --paper */
+  --ink-dim:      #E4D4BC;   /* was --paper-dim */
+  --muted:        #B09A7E;
+  --hair-accent:  rgba(232,89,12,.16);   /* was --line */
+  --hair:         rgba(246,235,217,.10);
+  --card:         rgba(31,25,19,.66);
+  --card-brd:     rgba(232,89,12,.20);
+  --glow:         rgba(232,89,12,.5);
+  --shadow:       0 26px 60px -22px rgba(0,0,0,.8);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #180B04;
+  --sheen-hi:     #FFFDF7;
+  --sheen-lo:     #E2C79B;
+  --sheen-accent: #FFD68A;
+  --ground-2:     #12100D;
+  --ground-3:     #0A0806;
+  --panel-2:      #221710;
+  --panel-3:      #140E09;
+  --accent-alt-2: #D89A5E;
+  --placeholder:  #7d6a55;
+  --err:          #E0616B;
+  --err-ink:      #FF9AA2;
+  --ink-max:      #fff;
+  --ink-bright:   var(--ink-max);
+
+  --display: 'Alfa Slab One', Georgia, serif;
+  --body:    'Nunito Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
