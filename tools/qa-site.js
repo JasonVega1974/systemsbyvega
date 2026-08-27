@@ -50,7 +50,32 @@ const slug = args.find(a => !a.startsWith('--'));
 const builtFlag = args.indexOf('--built');
 if (!slug) { console.error('usage: node tools/qa-site.js <slug> [--built <dir>]'); process.exit(2); }
 
+/* A themed niche (dj) keeps shared structure here, and per-theme niche.css,
+   content overlay and og.png under themes/<theme>/. */
+const themeFlag = args.indexOf('--theme');
+const theme = themeFlag > -1 ? args[themeFlag + 1] : '';
 const SRC = path.join(REPO, 'niches', slug);
+const THEME_SRC = theme ? path.join(SRC, 'themes', theme) : SRC;
+/* Auditing a themed niche without naming a theme would look for a niche.css
+   that is not there and read content missing its overlay. Fail loudly — an
+   unverified result is not a pass. */
+if (!theme && fs.existsSync(path.join(SRC, 'themes'))) {
+  console.error(slug + ' is a themed niche — pass --theme <name> (' +
+                fs.readdirSync(path.join(SRC, 'themes')).join(', ') + ')');
+  process.exit(2);
+}
+function deepMerge(base, over) {
+  if (Array.isArray(over)) return over;
+  if (!over || typeof over !== 'object') return over === undefined ? base : over;
+  const out = Object.assign({}, base);
+  for (const k of Object.keys(over)) {
+    out[k] = (base && typeof base[k] === 'object' && !Array.isArray(base[k]))
+      ? deepMerge(base[k], over[k]) : deepMerge(undefined, over[k]);
+  }
+  return out;
+}
+/* niche.css, og.svg and og.png come from the theme; everything else is shared. */
+const homeOf = f => (['niche.css', 'og.png', 'og.svg'].includes(f) ? THEME_SRC : SRC);
 const BUILT = builtFlag > -1 ? path.resolve(args[builtFlag + 1]) : path.join(REPO, 'sites', slug);
 
 let failures = 0, warnings = 0;
@@ -68,10 +93,17 @@ section('§9.1 structural');
 const REQUIRED_FILES = ['content.json', 'niche.css', 'sections.css', 'niche.js', 'scene.js', 'sections.html', 'brief.md'];
 // scene.svg is OPTIONAL (§6.1) — only niches with a shared <defs> block have one.
 for (const f of REQUIRED_FILES) {
-  exists(path.join(SRC, f)) ? ok('present  ' + f) : bad('missing  ' + f);
+  exists(path.join(homeOf(f), f)) ? ok('present  ' + f) : bad('missing  ' + f);
 }
 
-const raw = read(path.join(SRC, 'content.json'));
+/* The merged view is what actually ships, so it is what gets audited. */
+let raw = read(path.join(SRC, 'content.json'));
+if (theme && raw) {
+  const ov = path.join(THEME_SRC, 'content.json');
+  if (fs.existsSync(ov)) {
+    raw = JSON.stringify(deepMerge(JSON.parse(raw), JSON.parse(fs.readFileSync(ov, 'utf8'))), null, 2) + '\n';
+  }
+}
 let content = null;
 if (raw) {
   try { content = JSON.parse(raw); ok('content.json parses'); }
@@ -82,7 +114,10 @@ if (content) {
   // required fields
   // brand.tagline is OPTIONAL (D-Q): not every source has one, and cropping a
   // title or a hero sentence into a tagline is writing copy for the operator.
-  const req = [['brand.name'], ['brand.phone'], ['brand.email'], ['brand.leadEmail'],
+  // brand.phone and brand.email are OPTIONAL too: dj takes bookings through a
+  // form and publishes neither. leadEmail stays required — that is where leads
+  // route, not a contact detail the operator picks.
+  const req = [['brand.name'], ['brand.leadEmail'],
                ['brand.city'],
                ['seo.title'], ['seo.description'], ['seo.ogTitle'], ['seo.ogDescription'],
                ['seo.schemaType'], ['seo.canonical'], ['seo.themeColor']];
@@ -101,6 +136,11 @@ if (content) {
   if (!content.serviceArea || !content.serviceArea.region) {
     warn('no serviceArea — falling back to brand.city',
          JSON.stringify((content.brand || {}).city || ''));
+  }
+  for (const f of ['phone', 'email']) {
+    if (!(content.brand || {})[f]) {
+      warn('no brand.' + f, 'absent in the source; not invented (D-Q reasoning)');
+    }
   }
   if (!(content.brand || {}).tagline) {
     warn('no brand.tagline — share card and JSON-LD slogan omit it',
@@ -180,7 +220,7 @@ if (content) {
 }
 
 // token contract
-const nicheCss = read(path.join(SRC, 'niche.css'));
+const nicheCss = read(path.join(THEME_SRC, 'niche.css'));
 if (nicheCss) {
   const REQ_TOKENS = ['--scheme', '--ground', '--ink', '--panel', '--muted', '--hair',
                       '--accent', '--accent-ink', '--accent-deep', '--display', '--body', '--mono'];
@@ -251,6 +291,7 @@ const ALLOW = [
      claim attaches N+ to years, jobs, clients, projects or reviews — none of
      which are here, and years/yrs has its own NUMS branch anyway. */
   /for the next \d+\s*years?/i,                     // forward-looking, not a record
+  /\d\+[A-Za-z_$(]/,                                 // arithmetic inside a template expr, not "150+ shows"
   /^\s*(\/\/|\/\*|\*)/                               // developer comments
 ];
 
@@ -391,7 +432,11 @@ const animCode = animHome === 'sections.css' ? sectionsCss
                : animHome === 'niche.js'     ? nicheCode : sceneCode;
 const gatesOnReduce = animHome === 'sections.css'
   ? /@media[^{]*prefers-reduced-motion[\s\S]*?animation:\s*none/i.test(sectionsCss)
+  /* Any conditional that consults reduce counts — an if, a guard inside the
+     loop, or a ternary like reduce?frame(2):loop(). Requiring one shape has
+     already failed two legitimate scenes. */
   : /if\s*\([^)]*\breduce\b/.test(animCode) ||
+    /\breduce\s*\?/.test(animCode) ||
     /prefers-reduced-motion/.test(animCode);
 gatesOnReduce
   ? ok('scene gates on reduced motion (§7.1)')
@@ -425,6 +470,10 @@ else ok('illustration def ids are prefixed (§6.2)', svgIds.length + ' checked')
 /* The owner section goes by several ids across the estate — #owner, #about,
    #team, #meet. Accept any of them: the requirement is that the operator is on
    the page, not that one id was chosen. */
+/* FAQ is a WARN, not a failure: a DJ landing page has none, and authoring one
+   would be writing copy for the operator. owner and form stay hard — a site
+   with no owner section and no form is not a lead-generating site. */
+const softSections = new Set(['FAQ']);
 const need = { 'FAQ': /id="faq"/i,
                /* Either the id convention, or the owner render hooks: the id has
                   been spelled six ways now (owner, about, team, meet, who, why),
@@ -432,7 +481,11 @@ const need = { 'FAQ': /id="faq"/i,
                   section that has nothing to do with an owner. */
                'owner': /id="(owner|about|team|meet|who)"|id="meet(Title|Desc|Photo)"|class="[^"]*\bmeet__/i,
                'form': /<form/i };
-for (const [k, re] of Object.entries(need)) re.test(sections_) ? ok('section: ' + k) : bad('section: ' + k);
+for (const [k, re] of Object.entries(need)) {
+  re.test(sections_) ? ok('section: ' + k)
+    : softSections.has(k) ? warn('no ' + k + ' section', 'not every product has one; not authored on the operator\'s behalf')
+    : bad('section: ' + k);
+}
 
 /* Consent (§9.3). Check the BUILT page, not sections.html: the control is
    injected at build time for niches that lack one, so a source-level check

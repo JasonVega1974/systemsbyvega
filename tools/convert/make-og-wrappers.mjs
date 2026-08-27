@@ -19,12 +19,47 @@ const REPO = path.resolve(HERE, '..', '..').replace(/\\/g, '/');
 const OUT = (process.argv[2] || path.join(os.tmpdir(), 'sitelab-og')).replace(/\\/g, '/');
 fs.mkdirSync(OUT, { recursive: true });
 
-const slugs = fs.readdirSync(REPO + '/niches', { withFileTypes: true })
-  .filter(d => d.isDirectory()).map(d => d.name);
+function deepMerge(base, over) {
+  if (Array.isArray(over)) return over;
+  if (!over || typeof over !== 'object') return over === undefined ? base : over;
+  const out = Object.assign({}, base);
+  for (const k of Object.keys(over)) {
+    out[k] = (base && typeof base[k] === 'object' && !Array.isArray(base[k]))
+      ? deepMerge(base[k], over[k]) : deepMerge(undefined, over[k]);
+  }
+  return out;
+}
 
-for (const s of slugs) {
-  const svg = fs.readFileSync(`${REPO}/niches/${s}/og.svg`, 'utf8');
-  const cj = JSON.parse(fs.readFileSync(`${REPO}/niches/${s}/content.json`, 'utf8'));
+/* One entry per CARD, not per niche: a themed niche contributes one for each
+   themes/<t>/ that has an og.svg, named "<slug>-<theme>" so the wrapper files
+   and the screenshots that follow stay unambiguous. */
+function cards() {
+  const out = [];
+  for (const d of fs.readdirSync(REPO + '/niches', { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const base = `${REPO}/niches/${d.name}`;
+    const themes = `${base}/themes`;
+    if (fs.existsSync(themes)) {
+      for (const t of fs.readdirSync(themes)) {
+        if (fs.existsSync(`${themes}/${t}/og.svg`)) {
+          out.push({ slug: d.name, theme: t, dir: `${themes}/${t}`, name: `${d.name}-${t}` });
+        }
+      }
+    } else if (fs.existsSync(`${base}/og.svg`)) {
+      out.push({ slug: d.name, theme: '', dir: base, name: d.name });
+    }
+  }
+  return out;
+}
+
+for (const card of cards()) {
+  const s = card.name;
+  const svg = fs.readFileSync(`${card.dir}/og.svg`, 'utf8');
+  let cj = JSON.parse(fs.readFileSync(`${REPO}/niches/${card.slug}/content.json`, 'utf8'));
+  if (card.theme) {
+    const ov = `${card.dir}/content.json`;
+    if (fs.existsSync(ov)) cj = deepMerge(cj, JSON.parse(fs.readFileSync(ov, 'utf8')));
+  }
   const fonts = (cj.seo || {}).fontsHref || '';
 
   const html = `<!DOCTYPE html>

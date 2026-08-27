@@ -29,6 +29,23 @@ if (!one && !all) { console.error('usage: node tools/build-og.js <slug> | --all'
 const esc = s => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+function deepMerge(base, over) {
+  if (Array.isArray(over)) return over;
+  if (!over || typeof over !== 'object') return over === undefined ? base : over;
+  const out = Object.assign({}, base);
+  for (const k of Object.keys(over)) {
+    out[k] = (base && typeof base[k] === 'object' && !Array.isArray(base[k]))
+      ? deepMerge(base[k], over[k]) : deepMerge(undefined, over[k]);
+  }
+  return out;
+}
+
+/* A themed niche draws its card from the theme's palette and merged content. */
+const themeArg = () => {
+  const i = process.argv.slice(2).indexOf('--theme');
+  return i > -1 ? process.argv.slice(2)[i + 1] : '';
+};
+
 /* Pull a token's value out of niche.css, following one level of var() aliasing. */
 function tokens(css) {
   const t = {};
@@ -63,8 +80,14 @@ function wrap(text, perLine, max) {
 
 function card(slug) {
   const SRC = path.join(REPO, 'niches', slug);
-  const c = JSON.parse(fs.readFileSync(path.join(SRC, 'content.json'), 'utf8'));
-  const T = tokens(fs.readFileSync(path.join(SRC, 'niche.css'), 'utf8'));
+  const theme = themeArg();
+  const THEME_SRC = theme ? path.join(SRC, 'themes', theme) : SRC;
+  let c = JSON.parse(fs.readFileSync(path.join(SRC, 'content.json'), 'utf8'));
+  if (theme) {
+    const ov = path.join(THEME_SRC, 'content.json');
+    if (fs.existsSync(ov)) c = deepMerge(c, JSON.parse(fs.readFileSync(ov, 'utf8')));
+  }
+  const T = tokens(fs.readFileSync(path.join(THEME_SRC, 'niche.css'), 'utf8'));
 
   const ground = T['--ground'] || '#101010';
   const groundDeep = T['--ground-deep'] || ground;
@@ -152,7 +175,9 @@ const slugs = all
   : [one];
 
 for (const s of slugs) {
-  const out = path.join(REPO, 'niches', s, 'og.svg');
+  const th = themeArg();
+  const out = th ? path.join(REPO, 'niches', s, 'themes', th, 'og.svg')
+                 : path.join(REPO, 'niches', s, 'og.svg');
   const svg = card(s);
   fs.writeFileSync(out, svg, 'utf8');
   console.log('  ' + path.relative(REPO, out).replace(/\\/g, '/').padEnd(38) + svg.split('\n').length + ' lines');

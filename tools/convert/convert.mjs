@@ -172,13 +172,32 @@ w('sections.html',
 ${tokenise(rename(body)).trim()}`);
 
 /* ---- scene.js --------------------------------------------------------- */
+/* sceneReplace is to scene.js what jsReplace is to niche.js. The scene is
+   excised BEFORE jsReplace runs, so a jsReplace aimed at scene content silently
+   targets text that is no longer there — dj needed it because its canvas builds
+   the gradient in JavaScript, and without swapping those literals for theme
+   tokens all three themes would render the same palette.
+   A miss ABORTS, for the same reason jsReplace does. */
+function sceneText() {
+  let s = seg(CFG.sceneJs[0], CFG.sceneJs[1]);
+  for (const [from, to] of (CFG.sceneReplace || [])) {
+    const n = s.split(from).length - 1;
+    if (!n) {
+      console.error('ABORT: sceneReplace matched nothing:\n  ' + from.split('\n')[0].slice(0, 120));
+      process.exit(1);
+    }
+    s = s.split(from).join(to);
+  }
+  return s;
+}
+
 w('scene.js', CFG.sceneJs
   ? `/* ${slug}/scene.js — the signature animation, extracted verbatim from the
    original's main script. base.js calls window.initScene(reduce) after first
    render; the block below closes over that parameter exactly as it closed over
    the outer-scope \`reduce\` before, so the reduced-motion path is unchanged. */
 window.initScene = function (reduce) {
-${seg(CFG.sceneJs[0], CFG.sceneJs[1])}
+${sceneText()}
 };`
   : CFG.animationInNiche ? `/* ${slug}/scene.js — the animation lives in niche.js.
    ${CFG.animationInNiche}
@@ -211,9 +230,22 @@ function braceSpan(s, from) {
   return null;
 }
 let js = seg(CFG.js[0], CFG.js[1]);
-const dcI = js.indexOf('var DEFAULT_CONTENT');
-const [, dcB] = braceSpan(js, dcI);
-js = js.slice(0, dcI) + js.slice(dcB).replace(/^\s*;\s*/, '');
+/* The inlined content object is removed here because build-site.js re-inlines it
+   from content.json. It is NOT always spelled "var DEFAULT_CONTENT": dj declares
+   `const DEFAULT_SITE`. indexOf then returned -1, braceSpan(-1) found the first
+   brace in the whole script, and js.slice(0,-1)+js.slice(dcB) DUPLICATED most of
+   the file — surfacing three steps later as "scene block appears 2 times".
+   Match the declaration, and abort rather than corrupt when there is none. */
+const dcM = /(?:var|let|const)\s+(DEFAULT_CONTENT|DEFAULT_SITE)\s*=\s*\{/.exec(js);
+if (!dcM) {
+  console.error('ABORT: no inlined content object found (var/let/const DEFAULT_CONTENT | DEFAULT_SITE = {…}).');
+  console.error('       build-site.js re-inlines it from content.json, so the original declaration must be removed.');
+  process.exit(1);
+}
+const dcI = dcM.index;
+const span = braceSpan(js, dcI);
+if (!span) { console.error('ABORT: unbalanced braces in ' + dcM[1]); process.exit(1); }
+js = js.slice(0, dcI) + js.slice(span[1]).replace(/^\s*;\s*/, '');
 /* base.js calls window.renderContent, but a niche may name its renderer
    anything — painting uses renderAll(). Derive it from the boot marker instead
    of assuming, which silently exported an undefined identifier. */
@@ -250,8 +282,25 @@ if (bootI < 0) {
   let gap = '', afterEnd = bootStmtEnd;
 
   if (fetchI > -1 && fetchI - bootStmtEnd < 400) {       // the fetch chain belongs to boot
-    const catchI = js.indexOf('.catch(', fetchI);
-    const semi = js.indexOf(';', catchI > -1 ? catchI : fetchI);
+    /* Find the END of the whole fetch statement by depth, not by "first ; after
+       .catch(". Most niches chain .then(…).catch(…); so the shortcut worked, but
+       dj chains .then().catch().then(d=>{ … }); — the semicolon it found sat
+       INSIDE the last callback, cutting the statement in half and leaving an
+       orphaned fragment that failed to parse three steps later.
+       Walk from the fetch call, tracking (), {} and string/template literals,
+       and stop at the first ; that is genuinely at depth zero. */
+    let semi = -1;
+    {
+      let depth = 0, q = null;
+      for (let p = fetchI; p < js.length; p++) {
+        const ch = js[p], prev = js[p - 1];
+        if (q) { if (ch === q && prev !== '\\') q = null; continue; }
+        if (ch === '"' || ch === "'" || ch === '`') { q = ch; continue; }
+        if (ch === '(' || ch === '{' || ch === '[') depth++;
+        else if (ch === ')' || ch === '}' || ch === ']') depth--;
+        else if (ch === ';' && depth === 0) { semi = p; break; }
+      }
+    }
     if (semi > -1) {
       /* base.js calls initReveal() and initScene(reduce) itself, so those two
          must NOT survive the cut or they run twice. Everything else is this
@@ -322,10 +371,17 @@ for (const [from, to] of (CFG.jsReplace || [])) {
   }
   js = js.split(from).join(to);
 }
-/* The source script is one IIFE. We re-wrap it in niche.js, so drop BOTH ends:
-   the opener below, and a trailing "})();" if the retained tail still carries it
-   (it does whenever code follows the boot statement). */
-js = js.replace(/\s*\}\s*\)\s*\(\s*\)\s*;\s*$/, '\n');
+/* Most source scripts are ONE outer IIFE. We re-wrap in niche.js, so both ends
+   of that wrapper have to go.
+
+   But dj is not: its script is top-level code plus several INDEPENDENT IIFEs.
+   Stripping a trailing "})();" there removed the LAST inner IIFE's closer, the
+   re-wrap's own "})();" then closed that inner one instead, and the wrapper was
+   left open — surfacing only as "Unexpected end of input".
+   So strip the tail only when the segment actually opens with an IIFE. */
+const wrappedInIife = /^\s*\(function\s*\(\s*\)\s*\{/.test(js);
+if (wrappedInIife) js = js.replace(/\s*\}\s*\)\s*\(\s*\)\s*;\s*$/, '\n');
+else console.log('  source script is not a single IIFE — trailing wrapper not stripped');
 js = js.replace(/^\(function\(\)\{\s*/, '').replace(/^\s*"use strict";\s*/, '')
        .replace(/^\s*var reduce = window\.matchMedia\([^)]*\)\.matches;\s*/m, '')
        .replace(/^\s*var CONTENT\s*=\s*DEFAULT_CONTENT;\s*/m, '');
@@ -349,7 +405,16 @@ ${js.trimEnd()}
   window.renderContent = ` + RENDER_FN + `;
 })();
 `;
-try { new vm.Script(nicheJs); } catch (e) { console.error('ABORT: niche.js syntax: ' + e.message); process.exit(1); }
+try { new vm.Script(nicheJs); } catch (e) {
+  /* Dump the failing file. A syntax error here means an excision or a jsReplace
+     cut in the wrong place, and "Unexpected end of input" says nothing about
+     WHERE — guessing at it wastes far more time than writing the artefact out. */
+  const bad = path.join(OUT, 'niche.js.bad');
+  fs.writeFileSync(bad, nicheJs, 'utf8');
+  console.error('ABORT: niche.js syntax: ' + e.message);
+  console.error('       wrote ' + path.relative(REPO, bad) + ' for inspection');
+  process.exit(1);
+}
 w('niche.js', nicheJs);
 
 /* ---- content.json ----------------------------------------------------- */

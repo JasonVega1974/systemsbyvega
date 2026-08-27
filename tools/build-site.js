@@ -26,15 +26,35 @@ const args = process.argv.slice(2);
 const slug = args.find(a => !a.startsWith('--'));
 const outFlag = args.indexOf('--out');
 const isDemo = args.includes('--demo');
+/* A themed niche (dj) keeps shared structure at niches/<slug>/ and per-theme
+   niche.css + content overlay + og.png under niches/<slug>/themes/<theme>/.
+   Without --theme nothing below changes shape, so every existing site builds
+   byte-for-byte as before. */
+const themeFlag = args.indexOf('--theme');
+const theme = themeFlag > -1 ? args[themeFlag + 1] : '';
 
 if (!slug) {
-  console.error('usage: node tools/build-site.js <slug> [--out <dir>] [--demo]');
+  console.error('usage: node tools/build-site.js <slug> [--theme <name>] [--out <dir>] [--demo]');
   process.exit(2);
 }
 
 const TPL = path.join(REPO, '_template');
 const SRC = path.join(REPO, 'niches', slug);
-const OUT = outFlag > -1 ? path.resolve(args[outFlag + 1]) : path.join(REPO, 'sites', slug);
+const THEME_SRC = theme ? path.join(SRC, 'themes', theme) : SRC;
+if (theme && !fs.existsSync(THEME_SRC)) {
+  console.error('no such theme: ' + path.relative(REPO, THEME_SRC));
+  process.exit(1);
+}
+/* A themed niche must be asked for by theme. Building it unthemed would read a
+   niche.css that is not there and fail confusingly, so say why. */
+if (!theme && fs.existsSync(path.join(SRC, 'themes'))) {
+  console.error(slug + ' is a themed niche — pass --theme <name> (' +
+                fs.readdirSync(path.join(SRC, 'themes')).join(', ') + ')');
+  process.exit(1);
+}
+const OUT = outFlag > -1 ? path.resolve(args[outFlag + 1])
+          : theme       ? path.join(REPO, 'sites', slug, theme)
+                        : path.join(REPO, 'sites', slug);
 
 const read = p => {
   if (!fs.existsSync(p)) { console.error('missing input: ' + path.relative(REPO, p)); process.exit(1); }
@@ -44,14 +64,35 @@ const read = p => {
 const shell      = read(path.join(TPL, 'index.html'));
 const baseCss    = read(path.join(TPL, 'base.css'));
 const baseJs     = read(path.join(TPL, 'base.js'));
-const nicheCss   = read(path.join(SRC, 'niche.css'));
+const nicheCss   = read(path.join(THEME_SRC, 'niche.css'));
 const nicheJs    = read(path.join(SRC, 'niche.js'));
 const sceneSvg   = read(path.join(SRC, 'scene.svg'));
 const sceneJs    = read(path.join(SRC, 'scene.js'));
 let   sections   = read(path.join(SRC, 'sections.html'));
 const sectionCss = fs.existsSync(path.join(SRC, 'sections.css'))
   ? fs.readFileSync(path.join(SRC, 'sections.css'), 'utf8') : '';
-const contentRaw = read(path.join(SRC, 'content.json'));
+/* Shared content, with the theme's overlay merged over it. The overlay holds
+   only what genuinely differs — for dj that is artist.name, artist.about and
+   four seo strings, two values plus their SEO echo out of 105.
+   The MERGED result is what gets inlined as DEFAULT_CONTENT and what is written
+   to <out>/content.json, so the two still cannot drift and the gate's
+   single-source check keeps working. */
+function deepMerge(base, over) {
+  if (Array.isArray(over)) return over;
+  if (!over || typeof over !== 'object') return over === undefined ? base : over;
+  const out = Object.assign({}, base);
+  for (const k of Object.keys(over)) {
+    out[k] = (base && typeof base[k] === 'object' && !Array.isArray(base[k]))
+      ? deepMerge(base[k], over[k]) : deepMerge(undefined, over[k]);
+  }
+  return out;
+}
+let contentRaw = read(path.join(SRC, 'content.json'));
+if (theme) {
+  const overlayPath = path.join(THEME_SRC, 'content.json');
+  const overlay = fs.existsSync(overlayPath) ? JSON.parse(fs.readFileSync(overlayPath, 'utf8')) : {};
+  contentRaw = JSON.stringify(deepMerge(JSON.parse(contentRaw), overlay), null, 2) + '\n';
+}
 
 /* ---- consent control (§9.3) --------------------------------------------
  * A form that collects a phone number for follow-up needs consent. Injected
@@ -199,11 +240,21 @@ fs.writeFileSync(path.join(OUT, 'content.json'), contentRaw, 'utf8');
 /* The share card. og.png is a COMMITTED ARTIFACT rasterised from og.svg — see
    SITELAB_TEMPLATE.md §8.1. Facebook, X and LinkedIn do not render SVG for
    og:image, so the PNG is what ships and what the <head> points at. */
-const ogPng = path.join(SRC, 'og.png');
+/* Optional runtime assets a niche ships beside content.json. dj fetches
+   gallery-manifest.json to map release cover art; the fetch is guarded and
+   falls back to [], but a 404 logs a red console error on every load of a site
+   we are selling. Shipping the empty manifest removes it at the source.
+   Copied only when the niche actually has one. */
+for (const extra of ['gallery-manifest.json']) {
+  const from = path.join(SRC, extra);
+  if (fs.existsSync(from)) fs.copyFileSync(from, path.join(OUT, extra));
+}
+
+const ogPng = path.join(THEME_SRC, 'og.png');
 if (fs.existsSync(ogPng)) {
   fs.copyFileSync(ogPng, path.join(OUT, 'og.png'));
 } else {
-  console.warn('  ! no og.png for ' + slug + ' — run: node tools/build-og.js ' + slug + ', then rasterise (§8.1)');
+  console.warn('  ! no og.png for ' + slug + ' — run: node tools/build-og.js ' + slug + (theme ? ' --theme ' + theme : '') + ', then rasterise (§8.1)');
 }
 
 const rel = p => path.relative(REPO, p).replace(/\\/g, '/');

@@ -11,15 +11,43 @@ import { execFileSync } from 'node:child_process';
    scratchpad; the absolute path they used to carry pointed at one machine. */
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, '..', '..').replace(/\\/g, '/');
-const slug = process.argv[2];
-const builtDir = process.argv[3];
+/* Flags are stripped before positionals so --theme can sit anywhere without
+   shifting the optional pinned-original argument. */
+const argv = process.argv.slice(2);
+const tIdx = argv.indexOf('--theme');
+const theme = tIdx > -1 ? argv[tIdx + 1] : '';
+/* Guard the -1 sentinel: with no --theme, tIdx is -1 and "i !== tIdx + 1"
+   would drop argv[0] — the slug. */
+const pos = argv.filter((a, i) =>
+  (tIdx < 0 || (i !== tIdx && i !== tIdx + 1)) && !a.startsWith('--'));
+const slug = pos[0];
+const builtDir = pos[1];
+function deepMerge(base, over) {
+  if (Array.isArray(over)) return over;
+  if (!over || typeof over !== 'object') return over === undefined ? base : over;
+  const out = Object.assign({}, base);
+  for (const k of Object.keys(over)) {
+    out[k] = (base && typeof base[k] === 'object' && !Array.isArray(base[k]))
+      ? deepMerge(base[k], over[k]) : deepMerge(undefined, over[k]);
+  }
+  return out;
+}
+/* The merged view is what the build inlines, so it is what the single-source
+   check has to compare against. */
+function nicheContent() {
+  const base = JSON.parse(fs.readFileSync(`${REPO}/niches/${slug}/content.json`, 'utf8'));
+  if (!theme) return base;
+  const ov = `${REPO}/niches/${slug}/themes/${theme}/content.json`;
+  return fs.existsSync(ov) ? deepMerge(base, JSON.parse(fs.readFileSync(ov, 'utf8'))) : base;
+}
 const CFG = (await import('./convert.' + slug + '.mjs').catch(() => ({ default: null }))).default;
 
 /* Optional 4th arg: a pinned copy of the ORIGINAL to compare against — e.g. an
    extract of git HEAD. Needed once the build has overwritten sites/<slug>/,
    because otherwise the gate compares the new file with itself and every check
    passes vacuously. */
-const origDir = process.argv[4] || `${REPO}/sites/${slug}`;
+const origDir = pos[2] || (theme ? `${REPO}/sites/${slug}/${theme}`
+                                 : `${REPO}/sites/${slug}`);
 const A = fs.readFileSync(`${origDir}/index.html`, 'utf8');
 const B = fs.readFileSync(`${builtDir}/index.html`, 'utf8');
 
@@ -30,7 +58,33 @@ const diff = (a, b) => ({ onlyA: [...a].filter(x => !b.has(x)), onlyB: [...b].fi
 
 /* normalise the original's identity tokens + literals into canonical names */
 const MAP = CFG ? CFG.tokenMap : {};
-const LIT = CFG ? CFG.literals : {};
+/* The literals map in the config was derived from ONE variant (dj was converted
+   from blue), so for another theme its hexes never appear and every themed
+   declaration reads as missing. Derive the map from the THEME own niche.css
+   instead: each token there declares that theme value, which is exactly the
+   value -> token normalisation this comparison needs. */
+let LIT = CFG ? CFG.literals : {};
+if (theme) {
+  const tcss = REPO + '/niches/' + slug + '/themes/' + theme + '/niche.css';
+  if (fs.existsSync(tcss)) {
+    const themed = {};
+    for (const m of fs.readFileSync(tcss, 'utf8').matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) {
+      const tok = m[1], val = m[2].trim();
+      if (!/^(#|rgba?\()/i.test(val)) continue;
+      if (!(val in themed)) themed[val] = tok;
+      /* Zero alpha is written both ways in these sources — rgba(r,g,b,0) and
+         rgba(r,g,b,.0) — and a token records only one. Register the other
+         spelling against the same token or half of them read as missing. */
+      const alt = /,\s*\.0\)$/.test(val) ? val.replace(/,\s*\.0\)$/, ',0)')
+                : /,\s*0\)$/.test(val)   ? val.replace(/,\s*0\)$/, ',.0)') : null;
+      if (alt && !(alt in themed)) themed[alt] = tok;
+    }
+    /* MERGE, do not replace. The config's map still carries entries the theme's
+       :root does not declare, and a blue hex simply never appears in green's
+       original, so keeping both is harmless and losing either is not. */
+    LIT = Object.assign({}, LIT, themed);
+  }
+}
 const normTok = s => {
   let t = s;
   // var(--k) and var(--k, — boundary-matched so a replacement is never re-read
@@ -88,7 +142,7 @@ const cssOf = s => (s.match(/<style[^>]*>[\s\S]*?<\/style>/g) || []).join('\n')
 
 // 5. content values reach the built page
 {
-  const cj = JSON.parse(fs.readFileSync(`${REPO}/niches/${slug}/content.json`, 'utf8'));
+  const cj = nicheContent();
   const leaves = (o, out = []) => {
     if (typeof o === 'string') { if (o.trim().length >= 10) out.push(o); return out; }
     if (Array.isArray(o)) { o.forEach(v => leaves(v, out)); return out; }
@@ -151,7 +205,7 @@ const cssOf = s => (s.match(/<style[^>]*>[\s\S]*?<\/style>/g) || []).join('\n')
   let okk = false;
   if (m) { try {
     okk = JSON.stringify(JSON.parse(m[1])) ===
-          JSON.stringify(JSON.parse(fs.readFileSync(`${REPO}/niches/${slug}/content.json`, 'utf8')));
+          JSON.stringify(nicheContent());
   } catch {} }
   check('single source of truth', okk, okk ? 'DEFAULT_CONTENT === content.json (generated)' : 'MISMATCH');
 }
