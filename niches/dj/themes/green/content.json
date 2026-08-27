@@ -1,0 +1,17 @@
+{
+  "brand": {
+    "name": "DJ Pulse"
+  },
+  "owner": {
+    "name": "DJ Pulse",
+    "bio": "This is demo copy — open the admin panel's Profile tab and make it yours. DJ Pulse is a DJ and producer bringing high-energy sets and melodic, feel-good productions to every stage.\n\nFrom intimate club nights to festival mainstages, every set is built to connect — driving rhythms, soaring melodies, and moments the dance floor remembers.\n\nEvery word on this site (plus photos, releases, shows, and links) is editable from the built-in admin panel — no code required."
+  },
+  "seo": {
+    "title": "DJ Pulse — Official Website",
+    "description": "DJ Pulse — DJ & producer. Music, shows, and bookings.",
+    "ogTitle": "DJ Pulse — DJ & Producer",
+    "ogDescription": "Official website — music, shows, and bookings.",
+    "canonical": "https://systemsbyvega.com/sites/dj/green/",
+    "ogImage": "https://systemsbyvega.com/sites/dj/green/og.png"
+  }
+}

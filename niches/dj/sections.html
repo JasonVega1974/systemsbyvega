@@ -1,0 +1,273 @@
+<!-- dj/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="Home"><span class="dot"></span><span id="brandName">DJ Nova</span></a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#about">The Sound</a>
+    <a href="#music">Music</a>
+    <a href="#shows">Shows</a>
+    <a href="#media">Media</a>
+    <a href="#merch">Merch</a>
+    <a href="#book">Booking</a>
+    <a href="#book" class="nav-cta">Book Now</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<a id="top"></a>
+<section class="hero">
+  <div class="hero-stars" aria-hidden="true"><span class="layer layer-1"></span><span class="layer layer-2"></span></div>
+  <div class="hero-aurora" aria-hidden="true"></div>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <h1 class="wordmark" id="wordmark">DJ Nova</h1>
+    <div class="hero-official">
+      <span class="ow">Official Website</span>
+      <span class="meta" id="heroMeta">DJ &amp; Producer</span>
+    </div>
+    <p class="hero-tag" id="heroTag">High-energy electronic music with heart — built for the dance floor.</p>
+    <div class="hero-cta">
+      <a href="#book" class="btn btn-primary">Book Now
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#music" class="btn btn-ghost">Hear the sound</a>
+    </div>
+    <div class="hero-mini" id="heroMini"></div>
+  </div>
+</section>
+
+<!-- ============================ MARQUEE ============================ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee"></div>
+</div>
+
+<!-- ============================ STATS ============================ -->
+<section class="stats" id="stats">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">At a glance</span>
+        <h2 class="section-title"><span class="glow">The reach</span></h2>
+      </div>
+      <p class="lede">Momentum across stages, streams, and a growing catalog — every card updates from the admin panel.</p>
+    </div>
+    <div class="stat-grid" id="statGrid"></div>
+    <!-- SWAP:DISCLOSURE -->
+    <p class="demo-note reveal">Demo notice: DJ Nova is a fictional demo persona created to showcase this website template — not a real artist, and no affiliation with any real performer is implied. All stats, shows, releases, and testimonial-style content on this page is placeholder content.</p>
+    <!-- /SWAP:DISCLOSURE -->
+  </div>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">The Sound</span>
+        <h2 class="section-title">Who is <span class="glow" id="aboutName">DJ Nova</span></h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <div id="aboutCopy">
+          <p class="first">Your story goes here — every word is editable from the admin panel.</p>
+        </div>
+        <div class="creed" id="creed"></div>
+      </div>
+      <div class="portrait reveal" id="portrait" aria-label="Artist portrait">
+        <div class="grain"></div>
+        <div class="silhouette"></div>
+        <div class="ph-note">▲ Upload your portrait<br>from the admin panel</div>
+      </div>
+    </div>
+
+    </div>
+</section>
+
+<!-- ============================ MUSIC ============================ -->
+<section class="music" id="music">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">Original productions</span>
+        <h2 class="section-title">The <span class="glow">Music</span></h2>
+      </div>
+      <p class="lede">Press play. Stream the full catalog on Spotify and SoundCloud, or dive into featured releases below.</p>
+    </div>
+
+    <div class="embeds reveal" id="embeds" style="display:none">
+      <div class="embed-card" id="spotifyEmbed" hidden></div>
+      <div class="embed-card" id="soundcloudEmbed" hidden></div>
+    </div>
+
+    <div class="release-grid reveal" id="releaseGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ SHOWS ============================ -->
+<section class="shows" id="shows">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">On stage</span>
+        <h2 class="section-title">Live &amp; <span class="glow">Festivals</span></h2>
+      </div>
+      <a class="bit-btn" id="showsBtn" href="#" target="_blank" rel="noopener" style="display:none">
+        All dates &amp; tickets
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+    <div class="timeline" id="timeline"></div>
+    <a class="bit-foot" id="showsFoot" href="#" target="_blank" rel="noopener" style="display:none">
+      Follow on Bandsintown for every upcoming show
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============================ MEDIA ============================ -->
+<section class="media" id="media">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">See it live</span>
+        <h2 class="section-title"><span class="glow">Watch</span> &amp; view</h2>
+      </div>
+      <p class="lede">Performance clips and photos. Videos sync straight from the YouTube channel; photos are wired for upload from the admin panel.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="video" role="tab" aria-selected="true">Videos</button>
+        <button class="tab" data-tab="photo" role="tab" aria-selected="false">Photos</button>
+      </div>
+    </div>
+
+    <div class="yt-lib reveal" id="ytLib">
+      <div class="yt-top">
+        <div class="yt-featured" id="ytFeatured" aria-live="polite">
+          <div class="yt-skel" style="position:absolute;inset:0"></div>
+        </div>
+        <div class="yt-side">
+          <a class="btn btn-primary yt-cta" id="ytSubscribe" href="#" target="_blank" rel="noopener" style="display:none">Subscribe on YouTube</a>
+          <a class="btn btn-ghost yt-cta" id="ytMusic" href="#" target="_blank" rel="noopener" style="display:none">Listen on YouTube Music</a>
+        </div>
+      </div>
+
+      <div class="yt-controls">
+        <div class="yt-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="ytSearch" placeholder="Search videos…" aria-label="Search videos">
+        </div>
+        <div class="yt-sort">
+          <label for="ytSort">Sort</label>
+          <select id="ytSort">
+            <option value="newest">Newest</option>
+            <option value="views">Most viewed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="yt-grid" id="ytGrid"></div>
+      <p class="yt-empty" id="ytEmpty" hidden></p>
+      <button class="btn btn-ghost yt-more" id="ytMore" hidden type="button">Load more</button>
+    </div>
+    <div class="photo-grid hidden reveal" id="photoGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ MERCH ============================ -->
+<section class="merch" id="merch">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">Rep the sound</span>
+        <h2 class="section-title">The <span class="glow">Merch</span></h2>
+      </div>
+      <div class="merch-cta-block">
+        <p class="lede">Tees, hoodies, and more from the official store.</p>
+        <a class="btn btn-primary" id="merchStoreBtn" href="#" target="_blank" rel="noopener" style="display:none">Shop the full store →</a>
+      </div>
+    </div>
+    <div class="merch-grid reveal" id="merchGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ BOOKING ============================ -->
+<section class="booking" id="book">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow">Let's make it loud</span>
+        <h2 class="section-title">Book <span class="glow" id="bookName">DJ Nova</span></h2>
+      </div>
+      <p class="lede">Festivals, clubs, weddings, private parties, brand events. Pick a date, send the details, and you'll get an instant confirmation — and a personal follow-up within 24 hours.</p>
+    </div>
+
+    <div class="book-grid">
+      <!-- calendar -->
+      <div class="cal reveal">
+        <div class="cal-head">
+          <button class="cal-nav" id="calPrev" aria-label="Previous month">‹</button>
+          <b id="calLabel">Month</b>
+          <button class="cal-nav" id="calNext" aria-label="Next month">›</button>
+        </div>
+        <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div class="cal-days" id="calDays"></div>
+        <p class="cal-foot">Selected: <b id="calSelected">— pick a date —</b></p>
+      </div>
+
+      <!-- form -->
+      <form class="book-form reveal" id="bookForm" novalidate>
+        <div class="field">
+          <label for="bName">Your name</label>
+          <input id="bName" name="name" type="text" placeholder="Jane Promoter" required>
+        </div>
+        <div class="field">
+          <label for="bEmail">Email</label>
+          <input id="bEmail" name="email" type="email" placeholder="you@email.com" required>
+        </div>
+        <div class="field">
+          <label for="bType">Event type</label>
+          <select id="bType" name="type">
+            <option>Festival</option><option>Club night</option><option>Private party</option>
+            <option>Wedding</option><option>Corporate / brand</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bDate">Event date</label>
+          <input id="bDate" name="date" type="text" placeholder="Pick on the calendar" readonly>
+        </div>
+        <div class="field full">
+          <label for="bDetails">Tell us about it</label>
+          <textarea id="bDetails" name="details" placeholder="Venue, city, set length, crowd size, budget range, vibe…"></textarea>
+        </div>
+        <div class="book-submit">
+          <button type="submit" class="btn btn-primary">Send booking request
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+        <div class="book-msg" id="bookMsg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-mark" id="footMark">DJ Nova</div>
+    <div class="socials" id="socials"></div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> <span id="footName">DJ Nova</span> · DJ &amp; Producer</span>
+      <span>Bookings: <a href="#book">request a date</a></span>
+    </div>
+    <!-- SWAP:DISCLOSURE -->
+    <p class="foot-disclosure">Demonstration website for a fictional DJ. DJ Nova is not a real artist; all stats, shows, releases, and testimonial-style content shown here is placeholder content. Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a>.</p>
+    <!-- /SWAP:DISCLOSURE -->
+  </div>
+</footer>

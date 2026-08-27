@@ -1,60 +1,197 @@
 {
-  "artist": {
-    "name": "DJ Bloom",
-    "role": "DJ & Producer",
-    "location": "Your City",
+  "brand": {
     "tagline": "High-energy electronic music with heart — built for the dance floor.",
-    "about": "This is demo copy — open the admin panel's Profile tab and make it yours. DJ Bloom is a DJ and producer bringing high-energy sets and melodic, feel-good productions to every stage.\n\nFrom intimate club nights to festival mainstages, every set is built to connect — driving rhythms, soaring melodies, and moments the dance floor remembers.\n\nEvery word on this site (plus photos, releases, shows, and links) is editable from the built-in admin panel — no code required.",
-    "genres": ["Progressive House", "Melodic Techno", "Big Room", "Bass House", "Trance", "Festival EDM"]
+    "city": "Your City",
+    "leadEmail": "info@kingdom-creatives.com",
+    "name": "DJ Bloom"
   },
-  "links": {
-    "spotifyArtistUrl": "",
-    "soundcloudUrl": "",
-    "bandsintownUrl": "",
-    "merchUrl": ""
-  },
-  "youtube": {
-    "channelUrl": "",
-    "channelId": "",
-    "apiKey": ""
+  "owner": {
+    "photo": "",
+    "name": "DJ Bloom",
+    "bio": "This is demo copy — open the admin panel's Profile tab and make it yours. DJ Bloom is a DJ and producer bringing high-energy sets and melodic, feel-good productions to every stage.\n\nFrom intimate club nights to festival mainstages, every set is built to connect — driving rhythms, soaring melodies, and moments the dance floor remembers.\n\nEvery word on this site (plus photos, releases, shows, and links) is editable from the built-in admin panel — no code required."
   },
   "stats": [
-    { "num": "Streaming", "lab": "Listeners", "sub": "across every platform" },
-    { "num": "Growing", "lab": "Social Following", "sub": "and climbing" },
-    { "num": "Original", "lab": "Tracks Released", "sub": "own productions" },
-    { "num": "Live", "lab": "Shows Played", "sub": "clubs & festivals" }
+    {
+      "num": "Streaming",
+      "label": "Listeners",
+      "sub": "across every platform"
+    },
+    {
+      "num": "Growing",
+      "label": "Social Following",
+      "sub": "and climbing"
+    },
+    {
+      "num": "Original",
+      "label": "Tracks Released",
+      "sub": "own productions"
+    },
+    {
+      "num": "Live",
+      "label": "Shows Played",
+      "sub": "clubs & festivals"
+    }
   ],
-  "heroMini": [
-    { "b": "Original", "s": "Tracks" },
-    { "b": "Live", "s": "Shows" },
-    { "b": "All-in", "s": "Crowd Energy" }
+  "social": [
+    {
+      "label": "Spotify",
+      "url": "#"
+    },
+    {
+      "label": "SoundCloud",
+      "url": "#"
+    },
+    {
+      "label": "YouTube",
+      "url": "#"
+    },
+    {
+      "label": "Instagram",
+      "url": "#"
+    },
+    {
+      "label": "TikTok",
+      "url": "#"
+    }
   ],
   "releases": [
-    { "t": "Afterglow", "y": "2026", "c1": "#FF4DA6", "c2": "#8B5CFF", "url": "#" },
-    { "t": "Midnight Run", "y": "2026", "c1": "#57E7FF", "c2": "#6E1E5C", "url": "#" },
-    { "t": "Waveform", "y": "2026", "c1": "#8B5CFF", "c2": "#240B22", "url": "#" },
-    { "t": "Gravity", "y": "2025", "c1": "#FFA9D4", "c2": "#8B5CFF", "url": "#" },
-    { "t": "Neon Skyline", "y": "2025", "c1": "#6E1E5C", "c2": "#FF4DA6", "url": "#" },
-    { "t": "Pulse Check", "y": "2025", "c1": "#FF4DA6", "c2": "#57E7FF", "url": "#" },
-    { "t": "Daybreak", "y": "2024", "c1": "#FFA9D4", "c2": "#FF4DA6", "url": "#" },
-    { "t": "First Light", "y": "EP", "c1": "#57E7FF", "c2": "#8B5CFF", "url": "#" }
+    {
+      "t": "Afterglow",
+      "y": "2026",
+      "url": "#",
+      "c1": "var(--accent)",
+      "c2": "var(--accent-alt)"
+    },
+    {
+      "t": "Midnight Run",
+      "y": "2026",
+      "url": "#",
+      "c1": "var(--accent-3)",
+      "c2": "var(--accent-mid)"
+    },
+    {
+      "t": "Waveform",
+      "y": "2026",
+      "url": "#",
+      "c1": "var(--accent-alt)",
+      "c2": "var(--ground-3)"
+    },
+    {
+      "t": "Gravity",
+      "y": "2025",
+      "url": "#",
+      "c1": "var(--accent-2)",
+      "c2": "var(--accent-alt)"
+    },
+    {
+      "t": "Neon Skyline",
+      "y": "2025",
+      "url": "#",
+      "c1": "var(--accent-mid)",
+      "c2": "var(--accent)"
+    },
+    {
+      "t": "Pulse Check",
+      "y": "2025",
+      "url": "#",
+      "c1": "var(--accent)",
+      "c2": "var(--accent-3)"
+    },
+    {
+      "t": "Daybreak",
+      "y": "2024",
+      "url": "#",
+      "c1": "var(--accent-2)",
+      "c2": "var(--accent)"
+    },
+    {
+      "t": "First Light",
+      "y": "EP",
+      "url": "#",
+      "c1": "var(--accent-3)",
+      "c2": "var(--accent-alt)"
+    }
   ],
-  "shows": [
-    { "when": "Jun 2026", "t": "Summer Festival Mainstage", "p": "Demo show — replace with your real dates in the admin panel", "tag": "Festival", "up": true },
-    { "when": "2025", "t": "Warehouse Club Night", "p": "Headline set · demo entry", "tag": "Club" },
-    { "when": "2025", "t": "Rooftop Sessions", "p": "Sunset open-to-close set · demo entry", "tag": "Live" },
-    { "when": "2024", "t": "First Festival Booking", "p": "Where it all started · demo entry", "tag": "Festival" }
-  ],
-  "videos": [],
-  "merch": [],
-  "photos": [],
-  "portraitUrl": "",
-  "social": [
-    { "n": "Spotify", "url": "#" },
-    { "n": "SoundCloud", "url": "#" },
-    { "n": "YouTube", "url": "#" },
-    { "n": "Instagram", "url": "#" },
-    { "n": "TikTok", "url": "#" }
-  ],
-  "settings": { "showBooking": true }
+  "niche": {
+    "role": "DJ & Producer",
+    "genres": [
+      "Progressive House",
+      "Melodic Techno",
+      "Big Room",
+      "Bass House",
+      "Trance",
+      "Festival EDM"
+    ],
+    "links": {
+      "spotifyArtistUrl": "",
+      "soundcloudUrl": "",
+      "bandsintownUrl": "",
+      "merchUrl": ""
+    },
+    "youtube": {
+      "channelUrl": "",
+      "channelId": "",
+      "apiKey": ""
+    },
+    "heroMini": [
+      {
+        "b": "Original",
+        "s": "Tracks"
+      },
+      {
+        "b": "Live",
+        "s": "Shows"
+      },
+      {
+        "b": "All-in",
+        "s": "Crowd Energy"
+      }
+    ],
+    "shows": [
+      {
+        "when": "Jun 2026",
+        "t": "Summer Festival Mainstage",
+        "p": "Demo show — replace with your real dates in the admin panel",
+        "tag": "Festival",
+        "up": true
+      },
+      {
+        "when": "2025",
+        "t": "Warehouse Club Night",
+        "p": "Headline set · demo entry",
+        "tag": "Club"
+      },
+      {
+        "when": "2025",
+        "t": "Rooftop Sessions",
+        "p": "Sunset open-to-close set · demo entry",
+        "tag": "Live"
+      },
+      {
+        "when": "2024",
+        "t": "First Festival Booking",
+        "p": "Where it all started · demo entry",
+        "tag": "Festival"
+      }
+    ],
+    "videos": [],
+    "merch": [],
+    "photos": [],
+    "settings": {
+      "showBooking": true
+    }
+  },
+  "seo": {
+    "priceRange": "",
+    "schemaType": "MusicGroup",
+    "themeColor": "#000000",
+    "favicon": "",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap",
+    "title": "DJ Bloom — Official Website",
+    "description": "DJ Bloom — DJ & producer. Music, shows, and bookings.",
+    "ogTitle": "DJ Bloom — DJ & Producer",
+    "ogDescription": "Official website — music, shows, and bookings.",
+    "canonical": "https://systemsbyvega.com/sites/dj/pink/",
+    "ogImage": "https://systemsbyvega.com/sites/dj/pink/og.png"
+  }
 }

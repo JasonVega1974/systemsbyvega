@@ -1,0 +1,95 @@
+/* dj/themes/green/niche.css — tokens only. Structure lives in
+   _template/base.css and niches/dj/sections.css, both SHARED by all three
+   themes. Only the values below differ: the three variants were byte-identical
+   once colour and brand were normalised. */
+:root{
+  --scheme: dark;
+  --ground:       #000000;   /* was --night */
+  --ground-2:     #041410;   /* was --night-2 */
+  --accent-deep:  #0E4A31;   /* was --violet */
+  --accent-deep-2:#08301F;   /* was --violet-2 */
+  --accent:       #2EE58A;   /* was --gold */
+  --accent-2:     #A9FFCF;   /* was --gold-hi */
+  --accent-alt:   #B44DFF;   /* was --coral */
+  --accent-3:     #57FFD1;   /* was --cyan */
+  --ink:          #EBFBF1;   /* was --cream */
+  --muted:        #9CC9AE;
+  --hair:         rgba(255,255,255,.10);   /* was --line */
+  --maxw:         1180px;
+  --pad:          clamp(20px, 5vw, 64px);
+  --radius:       18px;   /* was --r */
+  --display:      'Montserrat', system-ui, sans-serif;   /* was --f-disp */
+  --body:         'Montserrat', system-ui, sans-serif;   /* was --f-body */
+  --mono:         'Montserrat', system-ui, sans-serif;   /* was --f-mono */
+  --ease-out:     cubic-bezier(.2,.7,.2,1);
+  --ease-soft:    cubic-bezier(.33,1,.68,1);
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ground-2-a72: rgba(4,20,16,.72);
+  --accent-a32:   rgba(46,229,138,.32);
+  --accent-a5:    rgba(46,229,138,.5);
+  --accent-alt-a45:rgba(180,77,255,.45);
+  --accent-deep-a65:rgba(20,101,63,.65);
+  --ground-2-a0:  rgba(4,20,16,.0);
+  --sheen-a5:     rgba(255,255,255,.5);
+  --sheen-a4:     rgba(255,255,255,.4);
+  --sheen-a35:    rgba(255,255,255,.35);
+  --sheen-a3:     rgba(255,255,255,.3);
+  --accent-3-a22: rgba(87,255,209,.22);
+  --sheen-a1:     #fff;
+  --ground-a5:    rgba(0,0,0,.5);
+  --ground-a42:   rgba(0,0,0,.42);
+  --accent-a22:   rgba(46,229,138,.22);
+  --accent-a36:   rgba(46,229,138,.36);
+  --accent-a55:   rgba(46,229,138,.55);
+  --sheen-a04:    rgba(255,255,255,.04);
+  --sheen-a22:    rgba(255,255,255,.22);
+  --ground-a85:   rgba(0,0,0,.85);
+  --ground-a7:    rgba(0,0,0,.7);
+  --ground-a9:    rgba(0,0,0,.9);
+  --ground-a1:    #000;
+  --accent-a06:   rgba(46,229,138,.06);
+  --accent-alt-a03:rgba(180,77,255,.03);
+  --accent-a18:   rgba(46,229,138,.18);
+  --sheen-a03:    rgba(255,255,255,.03);
+  --ink-dim:      #DCF2E5;
+  --ground-2-a85: rgba(4,20,16,.85);
+  --ink-a9:       rgba(235,251,241,.9);
+  --ground-2-a55: rgba(4,20,16,.55);
+  --ground-a25:   rgba(0,0,0,.25);
+  --sheen-a02:    rgba(255,255,255,.02);
+  --accent-a05:   rgba(46,229,138,.05);
+  --accent-alt-a2:rgba(180,77,255,.2);
+  --accent-a92:   rgba(46,229,138,.92);
+  --ground-2-a8:  rgba(4,20,16,.8);
+  --ink-a75:      rgba(235,251,241,.75);
+  --ground-a75:   rgba(0,0,0,.75);
+  --sheen-a09:    rgba(255,255,255,.09);
+  --sheen-a06:    rgba(255,255,255,.06);
+  --accent-a25:   rgba(46,229,138,.25);
+  --accent-a12:   rgba(46,229,138,.12);
+  --accent-alt-a06:rgba(180,77,255,.06);
+  --accent-a0:    rgba(46,229,138,0);
+  --ground-2-a97: rgba(4,20,16,.97);
+  --accent-a4:    rgba(46,229,138,.4);
+  --accent-a04:   rgba(46,229,138,.04);
+  --panel:        var(--ground-2);
+  --accent-ink:   var(--ground);
+  --card:         var(--sheen-a03);
+  --card-brd:     var(--sheen-a09);
+  --shadow:       0 28px 60px -24px rgba(0,0,0,.8);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--sheen);
+  --sheen-lo:     var(--sheen-a3);
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ok:           var(--accent-3);
+  --ground-deep:  var(--ground);
+  --hair-accent:  var(--hair);
+  --ink-max:      var(--sheen);
+  --ink-bright:   #DFFFED;
+
+  --display: 'Montserrat', system-ui, sans-serif;
+  --body:    'Montserrat', system-ui, sans-serif;
+  --mono:    'Montserrat', system-ui, sans-serif;
+}
