@@ -96,6 +96,30 @@ export default {
      systemMap[] carries per-component price ranges as free text ("$89 tune-up ·
      repairs quoted flat first") and is the second interactive surface, so it
      stays whole under niche alongside sysNote. */
+  jsReplace: [
+  /* Folded back in from a hand-edit (see the config-record fix). These were
+     applied directly to niche.js during the runtime work; without them here a
+     re-conversion silently reverts the fix, and this file stops being the
+     record tools/convert/README.md says it is. */
+    ["c.plans.map(function(p){",
+     "c.pricing.map(function(p){"],
+    ["var feats = (p.features || '').split('\\n').filter(Boolean).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');",
+     "/* Canonical shape (§4.2): pricing[], features is an ARRAY, highlight is the\n         flag, label is the name, and price is a NUMBER — formatting is the\n         renderer's job, which is why the currency symbol is added here.\n         The old note field held \"Most popular\", which is exactly what highlight\n         already means, so it was dropped and the badge text is literal now. */\n      var feats = (p.features || []).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');"],
+    ["(p.best ? ' best' : '')",
+     "(p.highlight ? ' best' : '')"],
+    /* note held exactly "Most popular", which is what highlight already means,
+       so the field was dropped and the badge renders that literal. */
+    ["(p.best ? '<span class=\"pnote\">' + esc(p.note || 'Most popular') + '</span>' : '')",
+     "(p.highlight ? '<span class=\"pnote\">Most popular</span>' : '')"],
+    ["esc(p.name)",
+     "esc(p.label)"],
+    /* price is a NUMBER now (89, not "$89"), so the renderer adds the symbol. */
+    ["'<div class=\"pnum\">' + esc(p.price)",
+     "'<div class=\"pnum\">$' + esc(p.price)"],
+    ["var pole = svcIcos[s.pole] ? s.pole : 'plan';",
+     "/* pole was renamed to the canonical services[].icon (§4.2). */\n      var pole = svcIcos[s.icon] ? s.icon : 'plan';"],
+  ],
+
   transform(src, out) {
     for (const k of ['stats', 'testimonials', 'faq', 'social']) if (src[k]) out[k] = src[k];
 

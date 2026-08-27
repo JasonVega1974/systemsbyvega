@@ -72,6 +72,25 @@ export default {
   /* plans[] -> pricing[]: name -> label, price display string -> blurb (D-M),
      features \n string -> array, best -> highlight, note carried through.
      howItWorks / routeZones / routeNote / whyClean / pricingNote -> niche. */
+  jsReplace: [
+  /* Folded back in from a hand-edit (see the config-record fix). These were
+     applied directly to niche.js during the runtime work; without them here a
+     re-conversion silently reverts the fix, and this file stops being the
+     record tools/convert/README.md says it is. */
+    ["c.plans.map(function(p){",
+     "c.pricing.map(function(p){"],
+    ["var feats = (p.features || '').split('\\n').filter(Boolean).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');",
+     "/* Canonical shape (§4.2): pricing[], features is an ARRAY, highlight is the\n         flag, label is the name, and this niche carries its price in blurb. */\n      var feats = (p.features || []).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');"],
+    ["(p.best ? ' best' : '')",
+     "(p.highlight ? ' best' : '')"],
+    ["(p.best ? '<span class=\"pnote\">'",
+     "(p.highlight ? '<span class=\"pnote\">'"],
+    ["esc(p.name)",
+     "esc(p.label)"],
+    ["esc(p.price)",
+     "esc(p.blurb)"],
+  ],
+
   transform(src, out) {
     out.pricing = (src.plans || []).map(p => ({
       label: p.name,

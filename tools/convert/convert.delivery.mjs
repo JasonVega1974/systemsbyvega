@@ -68,6 +68,15 @@ export default {
      quoterZones x quoterSizes x quoterSpeeds against quoterSettings.bands.
      pricing[] is optional in the canonical schema, so nothing is invented.
      services[] {title,desc} is already canonical. */
+  jsReplace: [
+  /* Folded back in from a hand-edit (see the config-record fix). These were
+     applied directly to niche.js during the runtime work; without them here a
+     re-conversion silently reverts the fix, and this file stops being the
+     record tools/convert/README.md says it is. */
+    ["el.setAttribute('r', r.toFixed(2));",
+     "/* The spring can overshoot below zero on the first frames (r starts at 3\n         and v is unbounded), and <circle r=\"-0.16\"> is an SVG error the browser\n         logs and then ignores. Clamp the ATTRIBUTE, not r itself — the spring\n         must keep its real value or the damping stops converging. */\n      el.setAttribute('r', Math.max(0, r).toFixed(2));"],
+  ],
+
   transform(src, out) {
     for (const k of ['stats', 'services', 'testimonials', 'faq', 'social']) if (src[k]) out[k] = src[k];
     out.niche = {
