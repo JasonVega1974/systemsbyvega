@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{{ROBOTS}}
+<title>{{SEO_TITLE}}</title>
+<meta name="description" content="{{SEO_DESCRIPTION}}" />
+<meta name="theme-color" content="{{SEO_THEME_COLOR}}" />
+
+<link rel="canonical" href="{{SEO_CANONICAL}}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{SEO_CANONICAL}}" />
+<meta property="og:title" content="{{SEO_OG_TITLE}}" />
+<meta property="og:description" content="{{SEO_OG_DESCRIPTION}}" />
+<meta property="og:image" content="{{SEO_OG_IMAGE}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="{{SEO_OG_IMAGE}}" />
+
+<link rel="icon" href="{{FAVICON}}" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="{{FONTS_HREF}}" rel="stylesheet" />
+
+<script type="application/ld+json">
+{{JSON_LD}}
+</script>
+
+<style>
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+{{NICHE_CSS}}
+/* ── shared structural CSS ────────────────────────────────────────────── */
+{{BASE_CSS}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+{{SECTIONS_CSS}}
+</style>
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
+</head>
+<body>
+{{DEMO_BANNER}}
+
+{{SCENE_SVG}}
+
+{{SECTIONS}}
+
+<script>
+/* Inlined from niches/{{SLUG}}/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {{DEFAULT_CONTENT}};
+</script>
+
+<script>
+{{NICHE_JS}}
+</script>
+
+<script>
+{{SCENE_JS}}
+</script>
+
+<script>
+{{BASE_JS}}
+</script>
+
+</body>
+</html>

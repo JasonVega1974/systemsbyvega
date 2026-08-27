@@ -1,0 +1,40 @@
+/* painting — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #0B0A09;   /* was --char-deep */
+  --ground:       #131110;   /* was --char */
+  --panel-2:      #1B1815;   /* was --char-2 */
+  --panel:        #221E1A;
+  --accent:       #C97B63;   /* was --terracotta */
+  --accent-2:     #DE9880;   /* was --terracotta-bright */
+  --accent-deep:  #8F4E3B;   /* was --terracotta-deep */
+  --accent-alt:   #9CAF88;   /* was --sage */
+  --ink:          #F4EDE3;   /* was --cream */
+  --ink-bright:   #FBF7F0;   /* was --cream-soft */
+  --ink-dim:      #C4B8AA;   /* was --stone */
+  --muted:        #8F8377;
+  --hair-accent:  rgba(201,123,99,.16);   /* was --line */
+  --hair:         rgba(244,237,227,.12);
+  --card:         rgba(34,30,26,.6);
+  --card-brd:     rgba(244,237,227,.13);
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #221208;
+  --sheen-hi:     #fffdf9;
+  --sheen-lo:     #d8cbb8;
+  --ground-2:     #0F0D0C;
+  --panel-3:      #17130f;
+  --panel-4:      #100e0c;
+  --placeholder:  #6b6157;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ink-max:      #fff;
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Fraunces', Georgia, serif;
+  --body:    'Karla', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

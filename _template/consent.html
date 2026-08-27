@@ -1,0 +1,13 @@
+<!-- Canonical consent control (SITELAB_TEMPLATE.md §9.3).
+
+     Injected by tools/build-site.js into any form that has no *-consent
+     checkbox. Niches that already ship one keep their own markup and their own
+     wording; the build only adds the privacy link if it is missing.
+
+     Detection accepts ANY *-consent id — contracting uses q-consent, and
+     injecting a second checkbox would be worse than injecting none. -->
+<label class="consent">
+  <input type="checkbox" id="b-consent" required />
+  <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.
+    See our <a href="/legal/privacy.html">privacy policy</a>.</span>
+</label>

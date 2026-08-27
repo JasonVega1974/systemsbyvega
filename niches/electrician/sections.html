@@ -1,0 +1,307 @@
+<!-- electrician/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Voltridge Electric home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M34 10 L20 36 L30 36 L26 54 L46 26 L34 26 Z" fill="var(--accent-ink)"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Voltridge Electric<span>Treasure Valley electrician</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#switchboard">Services</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#quote">Get a quote</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550195">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0195</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="sparks" id="sparks" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Electrician · Treasure Valley, Idaho</span></div>
+        <h1><span class="l1">Wired Right,</span><span class="l2">The First Time.</span></h1>
+        <p class="hero__sub">Panel upgrades, EV chargers, lighting, troubleshooting, generators, smart-home wiring — flip a breaker below to see exactly what we do and what it runs, before you ever pick up the phone.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#switchboard">See the switchboard</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550195">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Seasoned</b><span>Running wire in the Valley</span></div>
+          <div class="proof"><b>Same-day</b><span>Service calls answered</span></div>
+          <div class="proof"><b>Kuna, ID</b><span>Home base</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <svg viewBox="0 0 420 420" fill="none" role="img" aria-label="Illustration: an open breaker panel with one switch lit">
+          <rect x="90" y="40" width="240" height="340" rx="22" fill="#11162B" stroke="#2A335C" stroke-width="2"/>
+          <rect x="90" y="40" width="240" height="46" rx="22" fill="#171D38"/>
+          <circle cx="210" cy="63" r="5" fill="#3C34A8"/>
+          <g>
+            <rect x="118" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="122" y="118" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+            <rect x="168" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="172" y="118" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+            <rect x="218" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#7DF9FF" stroke-width="2"/>
+            <rect x="222" y="118" width="34" height="24" rx="6" fill="#7DF9FF">
+              <animate attributeName="opacity" values="1;.55;1" dur="2.2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="268" y="112" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="272" y="118" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+          </g>
+          <g>
+            <rect x="118" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="122" y="206" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+            <rect x="168" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="172" y="206" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+            <rect x="218" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="222" y="206" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+            <rect x="268" y="200" width="42" height="70" rx="10" fill="#0A0D1C" stroke="#2A335C" stroke-width="1.5"/>
+            <rect x="272" y="206" width="34" height="24" rx="6" fill="var(--panel-3)"/>
+          </g>
+          <path d="M236 292 L214 330 L226 330 L208 366 L252 322 L232 322 Z" fill="#6C63FF" opacity=".9"/>
+          <path d="M50 380 H370" stroke="#EAF0FF" stroke-opacity=".18" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,46 C120,20 240,20 360,42 C480,58 600,58 720,34 C840,14 960,14 1080,36 C1200,54 1320,54 1440,30 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Estimate before we start</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text before we show up</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/><path d="M3 21h18"/></svg>Locally owned &amp; operated</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M1 12h4M19 12h4M4.2 19.8l2.8-2.8M17 7l2.8-2.8"/></svg>Permits pulled when required</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: BREAKER SWITCHBOARD (doubles as Services) ============ -->
+<section class="section" id="switchboard">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Services</span>
+      <h2 class="section-title">Flip a breaker. See what it powers.</h2>
+      <p class="lead" style="margin:0 auto">Six things we do all day, every day. Flip as many as apply — the panel below fills in with exactly what each one covers.</p>
+    </div>
+
+    <div class="board reveal" id="board">
+      <div class="board__in">
+        <div class="board__hint">Panel status: <span id="onCount">0</span> of 6 circuits active</div>
+        <div class="breakers" id="breakers" role="group" aria-label="Service switchboard"></div>
+        <div class="board__readout" id="readout"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What it runs</span>
+      <h2 class="section-title">One service call. Real ranges up front.</h2>
+      <p class="lead" style="margin:0 auto">Every job gets a firm number before we start. These are the ranges most jobs land in — your actual quote depends on what we find.</p>
+    </div>
+    <div class="pricing-wrap">
+      <div class="call-card reveal">
+        <div class="call-card__label">Service call</div>
+        <div class="call-card__price" id="callPrice">$95</div>
+        <div class="call-card__note" id="callNote">First-hour diagnostic — applied toward the repair if you move forward that day.</div>
+      </div>
+      <div class="ranges reveal" data-delay="1" id="rangesList"></div>
+    </div>
+    <p class="pricing-note reveal" id="pricingNote">Bigger project, or not sure which box it falls in? <b>Text us a few details and we'll give you a real number.</b></p>
+  </div>
+</section>
+
+<!-- ============ SERVICE AREA ============ -->
+<section class="section" id="area">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Where we work</span>
+      <h2 class="section-title">The Treasure Valley, door to door</h2>
+    </div>
+    <div class="chips reveal" id="areaChips"></div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner beside an open panel with a multimeter">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <circle cx="300" cy="108" r="58" stroke="#EAF0FF" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="300" cy="108" r="84" stroke="#EAF0FF" stroke-opacity=".06" stroke-width="1.5"/>
+          <rect x="60" y="260" width="280" height="90" rx="14" fill="#171D38" stroke="#2A335C" stroke-width="1.5"/>
+          <rect x="86" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="126" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="166" y="280" width="30" height="50" rx="7" fill="#7DF9FF" opacity=".85"/>
+          <rect x="206" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="246" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <rect x="286" y="280" width="30" height="50" rx="7" fill="#0A0D1C"/>
+          <circle cx="196" cy="210" r="18" fill="#26332B" opacity=".001"/>
+          <circle cx="196" cy="208" r="18" fill="var(--panel-4)"/>
+          <path d="M178 226 C 168 242 168 262 176 286 L 224 286 C 232 262 232 242 214 226 Z" fill="var(--panel-4)"/>
+          <path d="M176 286 L168 308 M224 286 L236 306" stroke="var(--panel-4)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M16 380 H384" stroke="#EAF0FF" stroke-opacity=".18" stroke-width="2"/>
+          <text x="200" y="418" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="4" fill="#8590B8" opacity=".85">ONE VAN. ONE CREW.</text>
+          <text id="ownerCaption" x="200" y="440" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="2.5" fill="#8590B8" opacity=".7">ANSWERS HIS OWN PHONE</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The person who quotes the job</h2>
+        <div class="owner__desc" id="ownerDesc">Nate Cordero started running wire as an apprentice on new-construction crews around the Treasure Valley, then moved into service work — the calls where something's already broken and somebody's waiting on you to fix it. Voltridge Electric is the one-van operation he always wanted: he answers his own phone, quotes the job before he starts, and doesn't leave a panel looking like a spider built it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">From the panel</span>
+      <h2 class="section-title">What the neighbors say</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review reveal" data-delay="1"><div class="review__quote"></div><div class="review__who">— Add a real review here</div></div>
+      <div class="review reveal" data-delay="2"><div class="review__quote"></div><div class="review__who">— Add a real review here</div></div>
+      <div class="review reveal" data-delay="3"><div class="review__quote"></div><div class="review__who">— Add a real review here</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE FORM ============ -->
+<section class="section cta" id="quote">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Get a quote</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Tell us what's going on</h2>
+      <p class="lead" style="margin:0 auto">A few lines is plenty. We'll text you back within the hour (during business hours) with a real number or a next step — not a callback promise.</p>
+      <p class="cta__phone">Active hazard — sparking, burning smell, dead panel? Call or text <a href="tel:+12085550195" data-phone>(208) 555-0195</a> now.</p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="urgency" role="group" aria-label="How urgent is this">
+        <button type="button" data-val="scheduled" aria-pressed="true">Scheduled visit</button>
+        <button type="button" data-val="emergency" aria-pressed="false">Active hazard</button>
+      </div>
+      <p class="urgency-note" id="urgencyNote">Routine work — we'll confirm a time that works for you.</p>
+
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Property address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Ridge Ave" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Kuna" required />
+        </div>
+        <div class="field">
+          <label for="b-service">What do you need? <em>*</em></label>
+          <select id="b-service" name="service" required></select>
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="What's happening, when it started, whatever's useful…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your selection (auto-filled from the switchboard above)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Flip a breaker above, or leave blank and we'll confirm by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm the quote and schedule. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Get my quote</button>
+        <a class="book__alt" href="sms:+12085550195?body=Hi%20Voltridge%20Electric!%20I'd%20like%20a%20quote.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h3>You're on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M34 10 L20 36 L30 36 L26 54 L46 26 L34 26 Z" fill="var(--accent-ink)"/></svg>
+      </span>
+      <div><b data-brand>Voltridge Electric</b><span data-tagline>Wired right, the first time.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550195" data-phone>(208) 555-0195</a> · <a href="mailto:hello@voltridgeelectric.com" id="footEmail">hello@voltridgeelectric.com</a><br />
+      <span id="footServe">Serving Kuna · Nampa · Meridian · Boise · Star</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Voltridge Electric</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550195"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550195?body=Hi%20Voltridge%20Electric!%20I'd%20like%20a%20quote."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>

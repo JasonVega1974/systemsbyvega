@@ -1,0 +1,38 @@
+/* car-detailing — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #070A0E;   /* was --graphite-deep */
+  --ground:       #0E131A;   /* was --graphite */
+  --panel:        #161E28;   /* was --graphite-2 */
+  --panel-2:      #1E2A38;   /* was --steel */
+  --accent:       #2DD4CE;   /* was --gloss */
+  --accent-2:     #5CE8E2;   /* was --gloss-bright */
+  --accent-deep:  #12A39C;   /* was --gloss-deep */
+  --ink:          #D9E6EF;   /* was --chrome */
+  --ink-max:      #EDF3F7;   /* was --ice */
+  --ink-bright:   #F7FBFD;   /* was --ice-soft */
+  --ink-dim:      #9DB1C0;   /* was --steel-txt */
+  --muted:        #748799;
+  --hair-accent:  rgba(45,212,206,.14);   /* was --line */
+  --hair:         rgba(217,230,239,.12);
+  --card:         rgba(22,30,40,.55);
+  --card-brd:     rgba(217,230,239,.13);
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.75);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #062522;
+  --ground-2:     #0b1017;
+  --sheen-lo:     #b9ccd9;
+  --sheen-hi:     #ffffff;
+  --accent-shade: #0a2b29;
+  --placeholder:  #5f6b78;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Saira Condensed', system-ui, sans-serif;
+  --body:    'Manrope', system-ui, -apple-system, sans-serif;
+  --mono:    'Space Mono', ui-monospace, Consolas, monospace;
+}

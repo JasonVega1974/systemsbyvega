@@ -2,82 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex">
 <title>Larkspur &amp; Ledge Landscape Co. — Year-Round Lawn &amp; Yard Care | Meridian, ID</title>
 <meta name="description" content="Flat-rate maintenance plans and seasonal yard services — spring cleanups, summer mowing, fall leaf haul-away and winter snow removal. Serving the Treasure Valley. Pick your season, see what's next, and get a real price. Call or text (208) 555-0134." />
 <meta name="theme-color" content="#0E1712" />
 
-<!-- Social sharing -->
-<meta property="og:type" content="website" />
 <link rel="canonical" href="https://systemsbyvega.com/sites/landscaping/" />
+<meta property="og:type" content="website" />
 <meta property="og:url" content="https://systemsbyvega.com/sites/landscaping/" />
 <meta property="og:title" content="Larkspur &amp; Ledge Landscape Co. — Every Season, Handled Right." />
 <meta property="og:description" content="Flat-rate maintenance plans and seasonal yard services for the Treasure Valley. See exactly what your yard needs this season and get a real price in seconds." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://systemsbyvega.com/sites/landscaping/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://systemsbyvega.com/sites/landscaping/og.png" />
 
-<!-- Favicon: a larkspur sprig rising from a stone ledge -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238177F2'/%3E%3Cpath d='M6 44 L58 44 L52 55 L12 55 Z' fill='%2318261B'/%3E%3Cpath d='M32 44 C30 32 34 24 30 12' stroke='%2318261B' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='12' r='4.2' fill='%23F2F0E6'/%3E%3Ccircle cx='24.5' cy='20' r='3.4' fill='%23F2F0E6'/%3E%3Ccircle cx='36' cy='22' r='3.1' fill='%23F2F0E6'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<!-- Local business structured data (helps Google show you).
-     Keep phone/plans in sync with the visible copy and CONTENT.plans in the script. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Larkspur & Ledge Landscape Co.",
-  "description": "Year-round lawn and yard care — flat-rate maintenance plans plus seasonal services (spring cleanups, summer mowing, fall leaf haul-away, winter snow removal).",
+  "description": "Flat-rate maintenance plans and seasonal yard services — spring cleanups, summer mowing, fall leaf haul-away and winter snow removal. Serving the Treasure Valley. Pick your season, see what's next, and get a real price. Call or text (208) 555-0134.",
   "telephone": "+12085550134",
   "email": "hello@larkspurledge.com",
-  "areaServed": "Treasure Valley, Idaho — Meridian, Boise, Eagle, Star, Kuna, Middleton",
+  "areaServed": "Treasure Valley, Idaho",
   "priceRange": "$65-$385",
   "slogan": "Every season, handled right.",
   "makesOffer": [
-    { "@type": "Offer", "name": "Basic Mow & Edge (monthly plan)", "price": "120", "priceCurrency": "USD" },
-    { "@type": "Offer", "name": "Full Yard Care (monthly plan)", "price": "210", "priceCurrency": "USD" },
-    { "@type": "Offer", "name": "Estate Grounds (monthly plan)", "price": "385", "priceCurrency": "USD" }
+    {
+      "@type": "Offer",
+      "name": "Basic Mow & Edge",
+      "price": "120",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Full Yard Care",
+      "price": "210",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Estate Grounds",
+      "price": "385",
+      "priceCurrency": "USD"
+    }
   ]
 }
 </script>
 
 <style>
-/* =========================================================
-   LARKSPUR & LEDGE LANDSCAPE CO. — tokens
-   Trade identity: deep loam/soil base, larkspur violet-blue
-   primary (the flower the name borrows), warm clay secondary
-   (the "Ledge" — stone, sparingly), sage-cream type.
-   ========================================================= */
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+/* landscaping — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
 :root{
-  --loam-deep:#0A100B;
-  --loam:#101A13;
-  --loam-2:#17251C;
-  --moss:#213424;
-  --larkspur:#8177F2;
-  --larkspur-bright:#9C93FF;
-  --larkspur-deep:#4B3FA8;
-  --clay:#D98A52;
-  --cream:#F2F0E6;
-  --cream-soft:#FAF9F2;
-  --stone:#B9C2B4;
-  --muted:#8B948A;
-  --line:rgba(129,119,242,.16);
-  --hair:rgba(242,240,230,.12);
-  --card:rgba(23,37,28,.55);
-  --card-brd:rgba(242,240,230,.13);
-  --shadow:0 24px 60px -20px rgba(0,0,0,.72);
-  --maxw:1140px;
-}
+  --scheme: dark;
+  --ground-deep:  #0A100B;   /* was --loam-deep */
+  --ground:       #101A13;   /* was --loam */
+  --panel:        #17251C;   /* was --loam-2 */
+  --panel-2:      #213424;   /* was --moss */
+  --accent:       #8177F2;   /* was --larkspur */
+  --accent-2:     #9C93FF;   /* was --larkspur-bright */
+  --accent-deep:  #4B3FA8;   /* was --larkspur-deep */
+  --accent-alt:   #D98A52;   /* was --clay */
+  --ink:          #F2F0E6;   /* was --cream */
+  --ink-bright:   #FAF9F2;   /* was --cream-soft */
+  --ink-dim:      #B9C2B4;   /* was --stone */
+  --muted:        #8B948A;
+  --hair-accent:  rgba(129,119,242,.16);   /* was --line */
+  --hair:         rgba(242,240,230,.12);
+  --card:         rgba(23,37,28,.55);
+  --card-brd:     rgba(242,240,230,.13);
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:         1140px;
 
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #12101F;
+  --sheen-hi:     #fffdf9;
+  --sheen-lo:     #cfc9b4;
+  --ground-2:     #0C1710;
+  --placeholder:  #5c6459;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ink-max:      #fff;
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Oswald', system-ui, sans-serif;
+  --body:    'Work Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'Space Mono', ui-monospace, Consolas, monospace;
+}
+/* ── shared structural CSS ────────────────────────────────────────────── */
+/* _template/base.css — structural CSS shared by every SiteLab niche.
+   A rule lives here when its class/id hooks appear in the markup of two or more
+   deployed sites, or when it targets elements only. A rule used by exactly one
+   niche belongs in that niche's sections.css instead (SITELAB_TEMPLATE.md §3).
+   Colour and type come from niches/<slug>/niche.css. Never put a literal colour
+   in this file: reference a token from the §5 contract. */
+/* =========================================================
+   SAWTOOTH DUMPSTER CO. — tokens
+   High-desert identity: deep pine green base, safety-yellow
+   primary (amber-deep gradient end), warm sand/kraft type.
+   ========================================================= */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Work Sans',system-ui,sans-serif;
-  background:var(--loam);
-  color:var(--cream);
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
   line-height:1.7;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
@@ -85,24 +122,24 @@ body{
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
-/* atmospheric backdrop for the whole page */
+/* warm high-desert backdrop for the whole page */
 body::before{
   content:"";
   position:fixed;inset:0;z-index:-2;
   background:
-    radial-gradient(1100px 640px at 84% -8%, rgba(129,119,242,.18), transparent 60%),
-    radial-gradient(900px 700px at 4% 12%, rgba(33,52,36,.6), transparent 62%),
-    radial-gradient(760px 520px at 50% 110%, rgba(217,138,82,.06), transparent 60%),
-    linear-gradient(180deg,#0C1710 0%, #101A13 45%, #0A100B 100%);
+    radial-gradient(1100px 640px at 82% -10%, rgba(216,155,0,.16), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(29,58,44,.55), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(255,196,0,.07), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, var(--ground) 45%, var(--ground-deep) 100%);
 }
-/* faint garden-bed dot texture */
+/* faint topographic contour rings */
 body::after{
   content:"";
   position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
-    repeating-radial-gradient(circle at 20% 20%, transparent 0 52px, rgba(242,240,230,.035) 52px 53px),
-    repeating-radial-gradient(circle at 82% 66%, transparent 0 68px, rgba(129,119,242,.035) 68px 69px),
-    repeating-radial-gradient(circle at 55% -8%, transparent 0 84px, rgba(242,240,230,.02) 84px 85px);
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 52px, rgba(242,233,216,.035) 52px 53px),
+    repeating-radial-gradient(circle at 84% 68%, transparent 0 68px, rgba(255,196,0,.03) 68px 69px),
+    repeating-radial-gradient(circle at 55% -10%, transparent 0 84px, rgba(242,233,216,.022) 84px 85px);
   opacity:.9;
 }
 
@@ -110,50 +147,51 @@ body::after{
 
 /* ---------- shared type ---------- */
 .eyebrow{
-  font-family:'Space Mono',monospace;font-weight:700;
-  text-transform:uppercase;letter-spacing:.2em;
-  font-size:.74rem;color:var(--larkspur-bright);
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--accent);
   display:inline-flex;align-items:center;gap:.6rem;
 }
 .eyebrow::before{
   content:"";width:26px;height:2px;border-radius:2px;flex:none;
-  background:linear-gradient(90deg,var(--larkspur-bright),transparent);
+  background:linear-gradient(90deg,var(--accent),transparent);
 }
 .section-title{
-  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
-  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.03;letter-spacing:.01em;
-  background:linear-gradient(180deg,#fffdf9 0%,var(--cream) 55%,#cfc9b4 100%);
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.lead{color:var(--stone);font-size:1.08rem;max-width:58ch}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
 
 /* ---------- buttons ---------- */
 .btn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
-  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
   font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
-  color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
-  box-shadow:0 12px 30px -10px rgba(129,119,242,.55), inset 0 1px 0 rgba(255,255,255,.35);
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
   overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
 }
-.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(129,119,242,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.55)}
 .btn:active{transform:translateY(0)}
+/* headlight shine sweep */
 .btn::after{
   content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
   transform:skewX(-18deg);transition:left .6s ease;
 }
 .btn:hover::after{left:130%}
 .btn--ghost{
-  background:rgba(129,119,242,.08);color:var(--cream-soft);
-  border:1px solid rgba(129,119,242,.35);
+  background:rgba(255,196,0,.07);color:var(--ink-bright);
+  border:1px solid rgba(255,196,0,.35);
   box-shadow:none;backdrop-filter:blur(6px);
 }
-.btn--ghost:hover{background:rgba(129,119,242,.16);box-shadow:0 10px 26px -14px rgba(129,119,242,.5)}
+.btn--ghost:hover{background:var(--hair-accent);box-shadow:0 10px 26px -14px rgba(255,196,0,.5)}
 .btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
 .btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
 input:focus-visible,select:focus-visible,textarea:focus-visible{
-  outline:3px solid var(--larkspur-bright);outline-offset:3px;
+  outline:3px solid var(--accent-2);outline-offset:3px;
 }
 
 /* =========================================================
@@ -165,32 +203,32 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   padding:16px 0;
 }
 .nav.solid{
-  background:rgba(10,16,11,.88);backdrop-filter:blur(14px);
+  background:rgba(8,19,14,.86);backdrop-filter:blur(14px);
   box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
   padding:10px 0;
 }
 .nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
-  box-shadow:0 8px 20px -8px rgba(129,119,242,.6)}
-.brand__mark svg{width:28px;height:28px}
-.brand__name{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--cream-soft)}
-.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
-  letter-spacing:.2em;margin-top:4px;color:var(--muted)}
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.6)}
+.brand__mark svg{width:30px;height:30px}
+.brand__name{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;margin-top:4px;color:var(--muted)}
 .nav__links{display:flex;align-items:center;gap:28px}
-.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
-  text-transform:uppercase;font-size:.76rem;color:var(--cream);opacity:.82;transition:opacity .2s,color .2s}
-.nav__links a.link:hover{opacity:1;color:var(--larkspur-bright)}
-.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Oswald',sans-serif;
-  font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;
-  padding:.6rem 1.05rem;border-radius:10px;color:#12101F;white-space:nowrap;flex-shrink:0;
-  background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
-  box-shadow:0 10px 24px -12px rgba(129,119,242,.7), inset 0 1px 0 rgba(255,255,255,.35);}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--accent-2)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Anybody',sans-serif;font-stretch:62.5%;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.45);}
 .nav__call svg{width:16px;height:16px}
 @media(max-width:900px){.nav__links a.link{display:none}}
-@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.02em}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
 @media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
 
 /* =========================================================
@@ -205,35 +243,35 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 
 .hero__tag{margin-bottom:20px}
 .hero h1{
-  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.96;letter-spacing:.005em;margin-bottom:8px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px;
 }
 .hero h1 .l1{
-  background:linear-gradient(180deg,#fffdf9 0%,var(--cream) 50%,#cfc9b4 100%);
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 4px 20px rgba(242,240,230,.14));display:block;
+  filter:drop-shadow(0 4px 20px rgba(242,233,216,.14));display:block;
 }
 .hero h1 .l2{
-  color:var(--larkspur-bright);display:block;
-  text-shadow:0 4px 30px rgba(129,119,242,.4);
+  color:var(--accent);display:block;
+  text-shadow:0 4px 30px rgba(255,196,0,.38);
 }
-.hero__sub{font-size:1.16rem;color:var(--stone);max-width:50ch;margin:18px 0 30px}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:48ch;margin:18px 0 30px}
 @media(max-width:900px){.hero__sub{margin-inline:auto}}
 .hero__cta{display:flex;gap:14px;flex-wrap:wrap}
 @media(max-width:900px){.hero__cta{justify-content:center}}
 .hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
 @media(max-width:900px){.hero__proof{justify-content:center}}
 .proof{display:flex;flex-direction:column;line-height:1.1}
-.proof b{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.6rem;color:#fff;letter-spacing:.02em}
-.proof span{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
 .proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
 @media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
 
-/* hero art: a terraced stone ledge with larkspur in bloom, drawn inline */
+/* hero art: roll-off box under a mountain ridge, drawn inline */
 .hero__art{position:relative;display:flex;justify-content:center}
 .hero__art .halo{
   position:absolute;inset:-4% -8% 6%;border-radius:50%;
-  background:radial-gradient(closest-side, rgba(129,119,242,.22), rgba(129,119,242,.06) 55%, transparent 72%);
+  background:radial-gradient(closest-side, rgba(255,196,0,.22), rgba(255,196,0,.06) 55%, transparent 72%);
   filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
 }
 .hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
@@ -241,8 +279,345 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
 
-/* drifting garden pollen */
+/* drifting high-desert dust motes */
 .motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* ridge divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--panel);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--panel),rgba(19,42,32,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.08em;
+  font-size:.84rem;color:var(--ink);padding:.6rem 1.15rem;border-radius:10px;text-transform:uppercase;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5);transition:.15s;user-select:none;white-space:nowrap}
+.pill:hover span{border-color:rgba(255,196,0,.5)}
+.pill input:checked + span{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -10px rgba(255,196,0,.7)}
+.pill input:focus-visible + span{outline:3px solid var(--accent-2);outline-offset:2px}
+.price-box .btn{width:100%;margin-top:18px}
+.reveal.in .meter__bar{width:var(--w)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,196,0,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
+.step p{color:var(--muted);font-size:.98rem}
+.nogo .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(29,58,44,.6),rgba(10,22,16,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,196,0,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,233,216,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Sawtooth Dumpster Co., how long they've been hauling in the Valley, and why they got sick of watching neighbors get quote-gamed. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:700;font-size:1.04rem;color:var(--ink-bright)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,196,0,.4);color:var(--accent);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, var(--hair-accent), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(29,58,44,.7), transparent 60%),
+    linear-gradient(160deg,var(--panel),var(--ground-2));
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--accent-2);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(8,19,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px}
+.field em{color:var(--accent-2);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,12,9,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,12,9,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD34D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(255,196,0,.06);border-style:dashed;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:var(--err);box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+/* date input: keep the picker icon visible on dark bg */
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--accent);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--accent-2)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:var(--err-ink)}
+.book__msg.ok{color:var(--accent-2)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(29,58,44,.55),rgba(10,22,16,.6));
+  border:1px solid rgba(255,196,0,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,196,0,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-dim);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--accent-2)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-dim);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--accent-2)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,19,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.7)}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+/* landscaping/sections.css — rules for this niche's own sections.
+   85 rule(s) were identical to base.css and dropped; 147 kept.
+   Inlined after base.css, so anything here overrides shared chrome. */
+body{
+  font-family:'Work Sans',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* atmospheric backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 84% -8%, rgba(129,119,242,.18), transparent 60%),
+    radial-gradient(900px 700px at 4% 12%, rgba(33,52,36,.6), transparent 62%),
+    radial-gradient(760px 520px at 50% 110%, rgba(217,138,82,.06), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, #101A13 45%, #0A100B 100%);
+}
+/* faint garden-bed dot texture */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 20% 20%, transparent 0 52px, rgba(242,240,230,.035) 52px 53px),
+    repeating-radial-gradient(circle at 82% 66%, transparent 0 68px, rgba(129,119,242,.035) 68px 69px),
+    repeating-radial-gradient(circle at 55% -8%, transparent 0 84px, rgba(242,240,230,.02) 84px 85px);
+  opacity:.9;
+}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'Space Mono',monospace;font-weight:700;
+  text-transform:uppercase;letter-spacing:.2em;
+  font-size:.74rem;color:var(--accent-2);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--accent-2),transparent);
+}
+.section-title{
+  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.03;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--ink-dim);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(129,119,242,.55), inset 0 1px 0 rgba(255,255,255,.35);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(129,119,242,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn--ghost{
+  background:rgba(129,119,242,.08);color:var(--ink-bright);
+  border:1px solid rgba(129,119,242,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(129,119,242,.16);box-shadow:0 10px 26px -14px rgba(129,119,242,.5)}
+.nav.solid{
+  background:rgba(10,16,11,.88);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(129,119,242,.6)}
+.brand__mark svg{width:28px;height:28px}
+.brand__name{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.2em;margin-top:4px;color:var(--muted)}
+.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Oswald',sans-serif;
+  font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(129,119,242,.7), inset 0 1px 0 rgba(255,255,255,.35);}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.02em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+.hero h1{
+  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.96;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(242,240,230,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--accent-2);display:block;
+  text-shadow:0 4px 30px rgba(129,119,242,.4);
+}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof b{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(129,119,242,.22), rgba(129,119,242,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
 .mote{position:absolute;bottom:-4%;width:4px;height:4px;border-radius:50%;
   background:radial-gradient(circle,rgba(156,147,255,.9),rgba(156,147,255,0) 70%);
   opacity:0;animation:mote linear infinite}
@@ -254,25 +629,13 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   100%{transform:translate3d(-14px,-108vh,0);opacity:0}
 }
 
-/* hedge-line divider under hero */
-.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--loam-2);z-index:0;pointer-events:none}
-
 /* =========================================================
    TRUST STRIP
    ========================================================= */
-.trust{background:linear-gradient(180deg,var(--loam-2),rgba(23,37,28,.4));border-block:1px solid var(--hair)}
-.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust{background:linear-gradient(180deg,var(--panel),rgba(23,37,28,.4));border-block:1px solid var(--hair)}
 .trust__item{display:flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;
-  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--cream)}
-.trust__item svg{width:20px;height:20px;color:var(--larkspur-bright);flex:none}
-
-/* =========================================================
-   SECTION base
-   ========================================================= */
-.section{padding:92px 0}
-.section__head{max-width:660px;margin-bottom:44px}
-.section__head.center{margin-inline:auto;text-align:center}
-.section__head .section-title{margin:14px 0 16px}
+  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent-2);flex:none}
 
 /* =========================================================
    SIGNATURE — SEASON WHEEL
@@ -284,7 +647,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 }
 .wheel::before{
   content:"";display:block;height:6px;
-  background:linear-gradient(90deg,var(--larkspur),var(--clay));
+  background:linear-gradient(90deg,var(--accent),var(--accent-alt));
 }
 .wheel__in{padding:clamp(20px,3.2vw,32px)}
 
@@ -294,17 +657,17 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
   border:1px solid var(--card-brd);border-radius:14px;padding:14px 10px;background:rgba(19,30,21,.45);
   font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
-  font-size:.92rem;color:var(--stone);transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
+  font-size:.92rem;color:var(--ink-dim);transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
 }
 .tab svg{width:26px;height:26px;color:var(--muted);transition:color .18s ease}
 .tab span{font-family:'Space Mono',monospace;font-weight:400;font-size:.66rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
 .tab:hover{border-color:rgba(129,119,242,.4);transform:translateY(-2px)}
 .tab[aria-selected="true"]{
-  border-color:var(--larkspur);background:rgba(129,119,242,.1);color:var(--cream-soft);
-  box-shadow:0 0 0 1px var(--larkspur), 0 18px 40px -22px rgba(129,119,242,.45);
+  border-color:var(--accent);background:rgba(129,119,242,.1);color:var(--ink-bright);
+  box-shadow:0 0 0 1px var(--accent), 0 18px 40px -22px rgba(129,119,242,.45);
 }
-.tab[aria-selected="true"] svg{color:var(--larkspur-bright)}
-.tab[aria-selected="true"] span{color:var(--larkspur-bright)}
+.tab[aria-selected="true"] svg{color:var(--accent-2)}
+.tab[aria-selected="true"] span{color:var(--accent-2)}
 
 .wheel__body{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(22px,3vw,38px);align-items:start}
 @media(max-width:820px){.wheel__body{grid-template-columns:1fr}}
@@ -316,30 +679,30 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .wheel__art > svg{width:100%;height:100%;display:block}
 .wheel__caption{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;
   font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--stone);background:linear-gradient(0deg,rgba(8,13,9,.75),transparent)}
+  color:var(--ink-dim);background:linear-gradient(0deg,rgba(8,13,9,.75),transparent)}
 
 .wheel__range{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--clay);margin-bottom:8px;display:block}
-.wheel__blurb{color:var(--stone);font-size:1rem;margin-bottom:22px}
+  text-transform:uppercase;color:var(--accent-alt);margin-bottom:8px;display:block}
+.wheel__blurb{color:var(--ink-dim);font-size:1rem;margin-bottom:22px}
 
 .svc-list{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
 .svc{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
   border:1px solid var(--card-brd);border-radius:14px;padding:14px 16px;background:rgba(19,30,21,.4)}
 .svc__body{min-width:0}
-.svc__name{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.02rem;color:var(--cream-soft);letter-spacing:.01em}
+.svc__name{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.02rem;color:var(--ink-bright);letter-spacing:.01em}
 .svc__desc{color:var(--muted);font-size:.88rem;margin-top:4px}
-.svc__price{flex:none;text-align:right;font-family:'Oswald',sans-serif;font-weight:700;font-size:1.15rem;color:var(--larkspur-bright)}
+.svc__price{flex:none;text-align:right;font-family:'Oswald',sans-serif;font-weight:700;font-size:1.15rem;color:var(--accent-2)}
 .svc__price small{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.6rem;
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
 
 .wheel__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
 .wheel__alt{font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--stone);text-decoration:underline;text-underline-offset:3px}
-.wheel__alt:hover{color:var(--larkspur-bright)}
+  color:var(--ink-dim);text-decoration:underline;text-underline-offset:3px}
+.wheel__alt:hover{color:var(--accent-2)}
 
 /* season-scene illustration groups (recolored/toggled by JS per season) */
-.yard-scene .yard-tree{fill:var(--foliage,#3c5c3f);transition:fill .5s ease}
-.yard-scene .yard-ground{fill:var(--ground,#233826);transition:fill .5s ease}
+.yard-scene .yard-tree{fill:var(--scene-foliage,#3c5c3f);transition:fill .5s ease}
+.yard-scene .yard-ground{fill:var(--scene-ground,#233826);transition:fill .5s ease}
 .yard-scene .yard-blossom{opacity:0;transition:opacity .5s ease}
 .yard-scene .yard-leaffall{opacity:0;transition:opacity .5s ease}
 .yard-scene .yard-snow{opacity:0;transition:opacity .5s ease}
@@ -352,13 +715,12 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
    ========================================================= */
 .scope{background:linear-gradient(180deg,rgba(23,37,28,.35),transparent)}
 .scope .section__head{margin-bottom:30px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
 .chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;
-  font-size:.8rem;letter-spacing:.03em;color:var(--cream);padding:.5rem 1rem;border-radius:20px;
+  font-size:.8rem;letter-spacing:.03em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
   border:1px solid var(--card-brd);background:rgba(12,20,14,.5)}
-.chip svg{width:14px;height:14px;color:var(--larkspur-bright);flex:none}
+.chip svg{width:14px;height:14px;color:var(--accent-2);flex:none}
 .scope__alt{text-align:center;color:var(--muted);font-size:.95rem;max-width:60ch;margin:26px auto 0}
-.scope__alt b{color:var(--cream)}
+.scope__alt b{color:var(--ink)}
 
 /* =========================================================
    BENEFITS
@@ -369,10 +731,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   backdrop-filter:blur(8px);transition:transform .22s ease,border-color .22s ease}
 .benefit:hover{transform:translateY(-6px);border-color:rgba(129,119,242,.4)}
 .benefit__ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;
-  background:linear-gradient(135deg,rgba(129,119,242,.22),rgba(75,63,168,.14));color:var(--larkspur-bright)}
+  background:linear-gradient(135deg,rgba(129,119,242,.22),rgba(75,63,168,.14));color:var(--accent-2)}
 .benefit__ic svg{width:24px;height:24px}
 .benefit h3{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.02em;
-  font-size:1.1rem;margin-bottom:8px;color:#fff}
+  font-size:1.1rem;margin-bottom:8px;color:var(--ink-max)}
 .benefit p{color:var(--muted);font-size:.96rem}
 
 /* =========================================================
@@ -383,49 +745,33 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .plan-card{position:relative;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
   padding:30px 26px;backdrop-filter:blur(8px);display:flex;flex-direction:column;transition:transform .22s ease,border-color .22s ease}
 .plan-card:hover{transform:translateY(-6px)}
-.plan-card--best{border-color:var(--larkspur);box-shadow:0 0 0 1px var(--larkspur),0 24px 60px -30px rgba(129,119,242,.5)}
+.plan-card--best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 24px 60px -30px rgba(129,119,242,.5)}
 .plan-card__pill{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
   font-family:'Space Mono',monospace;font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
-  color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
   padding:.4rem .9rem;border-radius:999px;box-shadow:0 8px 20px -10px rgba(129,119,242,.7)}
 .plan-card__tier{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.02em;
-  font-size:1.3rem;color:var(--cream-soft)}
+  font-size:1.3rem;color:var(--ink-bright)}
 .plan-card__freq{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);margin:6px 0 18px}
 .plan-card__price{font-family:'Oswald',sans-serif;font-weight:700;font-size:2.6rem;line-height:1;
-  color:var(--larkspur-bright);margin-bottom:4px}
+  color:var(--accent-2);margin-bottom:4px}
 .plan-card__price small{font-family:'Space Mono',monospace;font-weight:400;font-size:.8rem;color:var(--muted);letter-spacing:.04em}
 .plan-card__features{list-style:none;margin:18px 0 22px;display:flex;flex-direction:column;gap:10px;flex:1}
-.plan-card__features li{display:flex;align-items:flex-start;gap:.6rem;color:var(--stone);font-size:.92rem}
-.plan-card__features svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--larkspur-bright)}
+.plan-card__features li{display:flex;align-items:flex-start;gap:.6rem;color:var(--ink-dim);font-size:.92rem}
+.plan-card__features svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--accent-2)}
 .plans-note{text-align:center;color:var(--muted);font-size:.94rem;max-width:60ch;margin:26px auto 0}
-.plans-note b{color:var(--cream)}
-
-/* =========================================================
-   HOW IT WORKS
-   ========================================================= */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+.plans-note b{color:var(--ink)}
 @media(max-width:820px){.steps{grid-template-columns:1fr}}
-.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
-  border-radius:18px;backdrop-filter:blur(8px)}
 .step__n{counter-increment:step;font-family:'Oswald',sans-serif;font-weight:700;
   font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(129,119,242,.6);
   display:block;margin-bottom:12px}
-.step__n::before{content:"0" counter(step)}
 .step h3{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;
-  letter-spacing:.02em;font-size:1.15rem;margin-bottom:8px;color:#fff}
-.step p{color:var(--muted);font-size:.98rem}
-
-/* =========================================================
-   MEET THE OWNER
-   ========================================================= */
-.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+  letter-spacing:.02em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
 @media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
 .owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
   background:linear-gradient(160deg,rgba(33,52,36,.6),rgba(12,20,14,.6));
   border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
-.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
-.owner__photo > svg{width:100%;height:100%;display:block}
 .owner__photo:not(:has(img,svg))::before{
   content:"";position:absolute;inset:0;
   background:
@@ -435,27 +781,14 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .owner__photo:not(:has(img,svg))::after{
   content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
   font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:.74rem;
-  color:var(--stone);opacity:.6;padding:20px;text-align:center;pointer-events:none}
-.owner__body .section-title{margin:14px 0 22px}
-.owner__desc{color:var(--cream);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
-  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
 .owner__desc:empty::before{
   content:"Short bio goes here — who runs Larkspur & Ledge, how long they've been in the dirt, and why the plans are flat-rate instead of a guessing game. Replace this placeholder with the real thing.";
   color:var(--muted);opacity:.7;font-style:italic;display:block}
-
-/* =========================================================
-   FAQ
-   ========================================================= */
-.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
 .faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
-  font-family:'Oswald',sans-serif;font-weight:600;font-size:1.04rem;color:var(--cream-soft)}
-.faq summary::-webkit-details-marker{display:none}
+  font-family:'Oswald',sans-serif;font-weight:600;font-size:1.04rem;color:var(--ink-bright)}
 .faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid rgba(129,119,242,.4);color:var(--larkspur-bright);transition:transform .25s ease;font-family:'Work Sans',sans-serif;font-weight:400}
-.faq[open] summary .plus{transform:rotate(45deg)}
-.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
-.faq__body b{color:var(--cream)}
+  border:1px solid rgba(129,119,242,.4);color:var(--accent-2);transition:transform .25s ease;font-family:'Work Sans',sans-serif;font-weight:400}
 
 /* =========================================================
    TESTIMONIALS
@@ -463,8 +796,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 @media(max-width:820px){.reviews-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
 .review{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;backdrop-filter:blur(8px)}
-.review__stars{color:var(--clay);font-size:.9rem;letter-spacing:.15em;margin-bottom:12px}
-.review__quote{color:var(--cream);font-size:.98rem;line-height:1.6;min-height:70px}
+.review__stars{color:var(--accent-alt);font-size:.9rem;letter-spacing:.15em;margin-bottom:12px}
+.review__quote{color:var(--ink);font-size:.98rem;line-height:1.6;min-height:70px}
 .review__quote:empty::before{content:"Real review coming soon.";color:var(--muted);opacity:.7;font-style:italic}
 .review__who{margin-top:16px;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted)}
@@ -476,78 +809,39 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   background:
     radial-gradient(700px 340px at 18% 0%, rgba(129,119,242,.14), transparent 60%),
     radial-gradient(600px 340px at 92% 100%, rgba(33,52,36,.7), transparent 60%),
-    linear-gradient(160deg,#17251C,#0C1710);
+    linear-gradient(160deg,#17251C,var(--ground-2));
   border-block:1px solid var(--hair)}
-.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
-.cta__phone a{color:var(--larkspur-bright);font-weight:600}
 
 .book{max-width:760px;margin:0 auto;background:rgba(12,20,14,.62);
   border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
   backdrop-filter:blur(10px);box-shadow:var(--shadow)}
-.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
 @media(max-width:640px){.book__grid{grid-template-columns:1fr}}
-.field{min-width:0}
-.field--wide{grid-column:1 / -1}
 .field label{display:block;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--clay);margin-bottom:6px}
-.field em{color:var(--larkspur-bright);font-style:normal;font-weight:700}
+  text-transform:uppercase;color:var(--accent-alt);margin-bottom:6px}
 .field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
-  background:rgba(6,10,7,.7);border:1px solid var(--card-brd);color:var(--cream-soft);
+  background:rgba(6,10,7,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
   font-family:'Work Sans',sans-serif;font-size:1rem}
-.field textarea{resize:vertical;min-height:74px}
-.field input::placeholder,.field textarea::placeholder{color:#5c6459}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--larkspur);background:rgba(6,10,7,.9)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(6,10,7,.9)}
 .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239C93FF' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
-.field input[readonly]{background:rgba(129,119,242,.06);border-style:dashed;color:var(--cream);
+.field input[readonly]{background:rgba(129,119,242,.06);border-style:dashed;color:var(--ink);
   font-family:'Space Mono',monospace;font-size:.86rem}
-.field.invalid input,.field.invalid select,.field.invalid textarea{
-  border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
-.field input[type="date"]{color-scheme:dark}
-
-.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
-  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
-.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--larkspur);cursor:pointer}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-
-.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
-.book__actions .btn[disabled]{opacity:.7;cursor:progress}
-.book__alt{font-family:'Space Mono',monospace;letter-spacing:.06em;color:var(--cream);opacity:.85;
+.book__alt{font-family:'Space Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
   text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
-.book__alt:hover{opacity:1;color:var(--larkspur-bright)}
-.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
-.book__msg.err{color:#ff9aa2}
-.book__msg.ok{color:var(--larkspur-bright)}
 
 .book-done{max-width:600px;margin:0 auto;text-align:center;
   background:linear-gradient(180deg,rgba(33,52,36,.55),rgba(12,20,14,.6));
   border:1px solid rgba(129,119,242,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
   box-shadow:0 0 0 1px rgba(129,119,242,.2),var(--shadow);backdrop-filter:blur(10px)}
 .book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
-  color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
   box-shadow:0 12px 30px -10px rgba(129,119,242,.8)}
-.book-done__ic svg{width:34px;height:34px}
 .book-done h3{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
   font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
-  background:linear-gradient(180deg,#fffdf9,var(--cream));-webkit-background-clip:text;background-clip:text;color:transparent}
-.book-done p{color:var(--stone);font-size:1.05rem;margin-bottom:22px}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
-.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
-.footer__brand{display:flex;align-items:center;gap:14px}
-.footer__brand .brand__mark{width:52px;height:52px}
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
 .footer__brand b{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;color:#fff;font-size:1rem;display:block}
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
 .footer__brand span{color:var(--muted);font-size:.8rem;font-family:'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
-.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
-.footer__meta a{color:var(--larkspur-bright)}
-.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
-.footer__credit a{color:var(--stone);text-decoration:underline;text-underline-offset:2px}
-.footer__credit a:hover{color:var(--larkspur-bright)}
 @media(max-width:640px){.footer__meta{text-align:left}}
 
 /* =========================================================
@@ -559,18 +853,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
   font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;
   text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
-.mobile-cta .call{color:#12101F;background:linear-gradient(135deg,var(--larkspur-bright),var(--larkspur-deep));
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
   box-shadow:0 8px 20px -8px rgba(129,119,242,.7)}
-.mobile-cta .text{color:var(--cream-soft);background:rgba(129,119,242,.1);border:1px solid rgba(129,119,242,.35)}
-.mobile-cta svg{width:20px;height:20px}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(129,119,242,.1);border:1px solid rgba(129,119,242,.35)}
 @media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
-
-/* reveal-on-scroll */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
-[data-delay="1"]{transition-delay:.08s}
-[data-delay="2"]{transition-delay:.16s}
-[data-delay="3"]{transition-delay:.24s}
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto!important}
@@ -594,15 +880,22 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
 
+<!-- landscaping/scene.svg — this site keeps its illustrations inline in
+     sections.html rather than in a shared <defs> block. Placeholder so the
+     build slot resolves; see brief.md. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+<!-- landscaping/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap nav__in">
     <a class="brand" href="#top" aria-label="Larkspur & Ledge Landscape Co. home">
       <span class="brand__mark" aria-hidden="true">
         <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="#12101F"/>
-          <path d="M32 44 C30 32 34 24 30 12" stroke="#12101F" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <circle cx="30" cy="12" r="4.2" fill="#12101F"/>
+          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="var(--accent-ink)"/>
+          <path d="M32 44 C30 32 34 24 30 12" stroke="var(--accent-ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="4.2" fill="var(--accent-ink)"/>
         </svg>
       </span>
       <span class="brand__name" id="brandName">Larkspur &amp; Ledge Landscape Co.<span>Treasure Valley landscaping</span></span>
@@ -711,13 +1004,13 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
                   <stop offset="100%" stop-color="#ece7ff"/>
                 </linearGradient>
                 <radialGradient id="yd-sun" cx=".5" cy=".5" r=".5">
-                  <stop offset="0" stop-color="#fff7e0" stop-opacity=".9"/>
+                  <stop offset="0" stop-color="var(--ink-max)7e0" stop-opacity=".9"/>
                   <stop offset="45%" stop-color="#ffe9b8" stop-opacity=".45"/>
                   <stop offset="100%" stop-color="#ffe9b8" stop-opacity="0"/>
                 </radialGradient>
                 <!-- 4-stop ground relief overlay -->
                 <linearGradient id="yd-relief" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff" stop-opacity=".18"/><stop offset="28%" stop-color="#ffffff" stop-opacity="0"/>
+                  <stop offset="0" stop-color="var(--ink-max)fff" stop-opacity=".18"/><stop offset="28%" stop-color="var(--ink-max)fff" stop-opacity="0"/>
                   <stop offset="72%" stop-color="#000000" stop-opacity=".12"/><stop offset="100%" stop-color="#000000" stop-opacity=".4"/>
                 </linearGradient>
                 <!-- 4-stop bark (cylindrical light-to-dark) -->
@@ -727,7 +1020,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
                 </linearGradient>
                 <!-- neutral canopy light/shadow depth, layered over the season-tinted foliage -->
                 <radialGradient id="yd-canopy" cx=".36" cy=".3" r=".8">
-                  <stop offset="0" stop-color="#ffffff" stop-opacity=".36"/><stop offset="46%" stop-color="#ffffff" stop-opacity="0"/>
+                  <stop offset="0" stop-color="var(--ink-max)fff" stop-opacity=".36"/><stop offset="46%" stop-color="var(--ink-max)fff" stop-opacity="0"/>
                   <stop offset="100%" stop-color="#04140b" stop-opacity=".52"/>
                 </radialGradient>
                 <!-- feTurbulence fractalNoise grass texture — north-star: dj-site-blue grain -->
@@ -1007,7 +1300,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 
       <label class="consent">
         <input type="checkbox" id="b-consent" required />
-        <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.</span>
+        <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply. See our <a href="/legal/privacy.html">privacy policy</a>.</span>
       </label>
 
       <!-- spam honeypot: real people leave this empty -->
@@ -1038,9 +1331,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     <div class="footer__brand">
       <span class="brand__mark" aria-hidden="true">
         <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="#12101F"/>
-          <path d="M32 44 C30 32 34 24 30 12" stroke="#12101F" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <circle cx="30" cy="12" r="4.2" fill="#12101F"/>
+          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="var(--accent-ink)"/>
+          <path d="M32 44 C30 32 34 24 30 12" stroke="var(--accent-ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="4.2" fill="var(--accent-ink)"/>
         </svg>
       </span>
       <div><b data-brand>Larkspur &amp; Ledge Landscape Co.</b><span data-tagline>Every season, handled right.</span></div>
@@ -1062,9 +1355,230 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 </div>
 
 <script>
-(function(){
-  "use strict";
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Inlined from niches/landscaping/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {
+  "brand": {
+    "name": "Larkspur & Ledge Landscape Co.",
+    "tagline": "Every season, handled right.",
+    "phone": "(208) 555-0134",
+    "email": "hello@larkspurledge.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Meridian, ID"
+  },
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Meridian",
+      "Boise",
+      "Eagle",
+      "Star",
+      "Kuna",
+      "Middleton"
+    ]
+  },
+  "owner": {
+    "name": "Mara Quist",
+    "bio": "Mara Quist grew up two blocks from a nursery and spent every summer of high school working the register, then the greenhouses, then the crews. Now she's running her own — Larkspur & Ledge started as one truck and a trailer, and it still runs on the same rule: show up when you say you will, and leave the yard looking better than the photo you were quoted from. She's still out on jobs most weeks, not just behind a desk.",
+    "photo": ""
+  },
+  "pricing": [
+    {
+      "label": "Basic Mow & Edge",
+      "price": 120,
+      "per": "mo",
+      "blurb": "Weekly, April – October",
+      "features": [
+        "Weekly mow, edge & blow",
+        "Clippings cleared off walks & drives",
+        "Text alert before every visit",
+        "Skip weeks for vacation, no penalty"
+      ],
+      "highlight": false
+    },
+    {
+      "label": "Full Yard Care",
+      "price": 210,
+      "per": "mo",
+      "blurb": "Weekly, April – October",
+      "features": [
+        "Everything in Basic Mow & Edge",
+        "Monthly bed weeding",
+        "Quarterly shrub trim",
+        "Spring & fall fertilization included",
+        "Priority scheduling"
+      ],
+      "highlight": true
+    },
+    {
+      "label": "Estate Grounds",
+      "price": 385,
+      "per": "mo",
+      "blurb": "Twice-weekly in peak season",
+      "features": [
+        "Everything in Full Yard Care",
+        "Twice-weekly mow, June – August",
+        "Irrigation system checks",
+        "Seasonal color rotation",
+        "Dedicated crew lead"
+      ],
+      "highlight": false
+    }
+  ],
+  "social": [],
+  "niche": {
+    "seasons": [
+      {
+        "id": "spring",
+        "label": "Spring",
+        "startMonth": 3,
+        "monthRange": "March – May",
+        "photo": "",
+        "blurb": "Everything wakes up at once — beds, weeds and grass all in the same week. We knock out the reset before it gets away from you.",
+        "services": [
+          {
+            "name": "Spring Cleanup",
+            "price": 189,
+            "unit": "one-time",
+            "desc": "Bed edging, debris haul-away, first mow of the year and a fertilizer kickoff."
+          },
+          {
+            "name": "Mulch Refresh",
+            "price": 249,
+            "unit": "from",
+            "desc": "Fresh mulch delivered and spread in every bed — dyed or natural, your call."
+          },
+          {
+            "name": "Irrigation Startup",
+            "price": 95,
+            "unit": "one-time",
+            "desc": "System flush, zone-by-zone check, and head adjustments before the heat hits."
+          }
+        ]
+      },
+      {
+        "id": "summer",
+        "label": "Summer",
+        "startMonth": 6,
+        "monthRange": "June – August",
+        "photo": "",
+        "blurb": "Grass grows fast, weeds grow faster. This is the season where a missed week actually shows.",
+        "services": [
+          {
+            "name": "Bed Weeding & Edging Refresh",
+            "price": 129,
+            "unit": "one-time",
+            "desc": "A deep pass through every bed — pulled weeds, crisp edges, hauled away."
+          },
+          {
+            "name": "Shrub & Hedge Shaping",
+            "price": 149,
+            "unit": "one-time",
+            "desc": "Hand-shaped or sheared to the look you want, clippings bagged and gone."
+          },
+          {
+            "name": "Weed & Pest Spot Treatment",
+            "price": 79,
+            "unit": "one-time",
+            "desc": "Targeted treatment for the patches store-bought spray never fixes."
+          }
+        ]
+      },
+      {
+        "id": "fall",
+        "label": "Fall",
+        "startMonth": 9,
+        "monthRange": "September – November",
+        "photo": "",
+        "blurb": "Leaves don't stop until the trees are bare. We keep the yard from disappearing under them.",
+        "services": [
+          {
+            "name": "Fall Cleanup & Leaf Haul-Away",
+            "price": 199,
+            "unit": "one-time",
+            "desc": "Every leaf, every bed, hauled off-site — not blown into your neighbor's yard."
+          },
+          {
+            "name": "Core Aeration & Overseed",
+            "price": 175,
+            "unit": "one-time",
+            "desc": "Opens up compacted soil and gets new grass established before the ground freezes."
+          },
+          {
+            "name": "Irrigation Winterization",
+            "price": 85,
+            "unit": "one-time",
+            "desc": "Full system blowout so a hard freeze doesn't split a line you can't see."
+          }
+        ]
+      },
+      {
+        "id": "winter",
+        "label": "Winter",
+        "startMonth": 12,
+        "monthRange": "December – February",
+        "photo": "",
+        "blurb": "Idaho winters don't care about your morning meeting. We do the driveway before you wake up.",
+        "services": [
+          {
+            "name": "Snow Removal",
+            "price": 65,
+            "unit": "per push",
+            "desc": "Driveway and walkways cleared before your first alarm, every storm."
+          },
+          {
+            "name": "Dormant Pruning",
+            "price": 139,
+            "unit": "one-time",
+            "desc": "The one time of year trees and shrubs can be cut hard without stressing them."
+          },
+          {
+            "name": "Bed & Gutter Winter Clear-Out",
+            "price": 119,
+            "unit": "one-time",
+            "desc": "Debris out of beds and gutters before ice turns it into a dam."
+          }
+        ]
+      }
+    ],
+    "misc": {
+      "plansNote": "Corner lot, acreage, or something in between? Text us your square footage and we'll quote it exact.",
+      "scopeNote": "None of that is off the table — just outside our flat-rate plans. Text us a photo and we'll quote it separately."
+    }
+  },
+  "seo": {
+    "title": "Larkspur &amp; Ledge Landscape Co. — Year-Round Lawn &amp; Yard Care | Meridian, ID",
+    "description": "Flat-rate maintenance plans and seasonal yard services — spring cleanups, summer mowing, fall leaf haul-away and winter snow removal. Serving the Treasure Valley. Pick your season, see what's next, and get a real price. Call or text (208) 555-0134.",
+    "ogTitle": "Larkspur &amp; Ledge Landscape Co. — Every Season, Handled Right.",
+    "ogDescription": "Flat-rate maintenance plans and seasonal yard services for the Treasure Valley. See exactly what your yard needs this season and get a real price in seconds.",
+    "priceRange": "$65-$385",
+    "schemaType": "LocalBusiness",
+    "canonical": "https://systemsbyvega.com/sites/landscaping/",
+    "themeColor": "#0E1712",
+    "favicon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238177F2'/%3E%3Cpath d='M6 44 L58 44 L52 55 L12 55 Z' fill='%2318261B'/%3E%3Cpath d='M32 44 C30 32 34 24 30 12' stroke='%2318261B' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='12' r='4.2' fill='%23F2F0E6'/%3E%3Ccircle cx='24.5' cy='20' r='3.4' fill='%23F2F0E6'/%3E%3Ccircle cx='36' cy='22' r='3.1' fill='%23F2F0E6'/%3E%3C/svg%3E",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/landscaping/og.png"
+  }
+};
+</script>
+
+<script>
+/* landscaping/niche.js — this niche's renderer and interactive logic.
+   Shared utilities come from _template/base.js via SL; the aliases below keep
+   every extracted call site unchanged. base.js owns the reduced-motion flag,
+   the reveal observer, the content fetch/merge lifecycle, and calling
+   window.renderContent(). val/setErr/showDone are NOT aliased — this niche
+   defines its own with different signatures. */
+(function () {
+  'use strict';
+
+  var SL = window.SL;
+  var esc = SL.esc, num = SL.num, telHref = SL.telHref;
+  var reduce = SL.reduce;
+  var CONTENT = window.DEFAULT_CONTENT;
+
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* =====================================================
      OWNER-EDITABLE CONTENT
@@ -1078,80 +1592,11 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
      JSON-LD offers/priceRange in <head> and the meta
      description.)
      ===================================================== */
-  var DEFAULT_CONTENT = {
-    brand: {
-      name: "Larkspur & Ledge Landscape Co.",
-      tagline: "Every season, handled right.",
-      phone: "(208) 555-0134",
-      email: "hello@larkspurledge.com",
-      leadEmail: "info@kingdom-creatives.com",
-      city: "Meridian, ID"
-    },
-    seasons: [
-      { id: "spring", label: "Spring", startMonth: 3, monthRange: "March – May", photo: "",
-        blurb: "Everything wakes up at once — beds, weeds and grass all in the same week. We knock out the reset before it gets away from you.",
-        services: [
-          { name: "Spring Cleanup", price: 189, unit: "one-time", desc: "Bed edging, debris haul-away, first mow of the year and a fertilizer kickoff." },
-          { name: "Mulch Refresh", price: 249, unit: "from", desc: "Fresh mulch delivered and spread in every bed — dyed or natural, your call." },
-          { name: "Irrigation Startup", price: 95, unit: "one-time", desc: "System flush, zone-by-zone check, and head adjustments before the heat hits." }
-        ] },
-      { id: "summer", label: "Summer", startMonth: 6, monthRange: "June – August", photo: "",
-        blurb: "Grass grows fast, weeds grow faster. This is the season where a missed week actually shows.",
-        services: [
-          { name: "Bed Weeding & Edging Refresh", price: 129, unit: "one-time", desc: "A deep pass through every bed — pulled weeds, crisp edges, hauled away." },
-          { name: "Shrub & Hedge Shaping", price: 149, unit: "one-time", desc: "Hand-shaped or sheared to the look you want, clippings bagged and gone." },
-          { name: "Weed & Pest Spot Treatment", price: 79, unit: "one-time", desc: "Targeted treatment for the patches store-bought spray never fixes." }
-        ] },
-      { id: "fall", label: "Fall", startMonth: 9, monthRange: "September – November", photo: "",
-        blurb: "Leaves don't stop until the trees are bare. We keep the yard from disappearing under them.",
-        services: [
-          { name: "Fall Cleanup & Leaf Haul-Away", price: 199, unit: "one-time", desc: "Every leaf, every bed, hauled off-site — not blown into your neighbor's yard." },
-          { name: "Core Aeration & Overseed", price: 175, unit: "one-time", desc: "Opens up compacted soil and gets new grass established before the ground freezes." },
-          { name: "Irrigation Winterization", price: 85, unit: "one-time", desc: "Full system blowout so a hard freeze doesn't split a line you can't see." }
-        ] },
-      { id: "winter", label: "Winter", startMonth: 12, monthRange: "December – February", photo: "",
-        blurb: "Idaho winters don't care about your morning meeting. We do the driveway before you wake up.",
-        services: [
-          { name: "Snow Removal", price: 65, unit: "per push", desc: "Driveway and walkways cleared before your first alarm, every storm." },
-          { name: "Dormant Pruning", price: 139, unit: "one-time", desc: "The one time of year trees and shrubs can be cut hard without stressing them." },
-          { name: "Bed & Gutter Winter Clear-Out", price: 119, unit: "one-time", desc: "Debris out of beds and gutters before ice turns it into a dam." }
-        ] }
-    ],
-    plans: [
-      { tier: "Basic Mow & Edge", price: 120, per: "mo", freq: "Weekly, April – October", best: false,
-        features: ["Weekly mow, edge & blow", "Clippings cleared off walks & drives", "Text alert before every visit", "Skip weeks for vacation, no penalty"] },
-      { tier: "Full Yard Care", price: 210, per: "mo", freq: "Weekly, April – October", best: true,
-        features: ["Everything in Basic Mow & Edge", "Monthly bed weeding", "Quarterly shrub trim", "Spring & fall fertilization included", "Priority scheduling"] },
-      { tier: "Estate Grounds", price: 385, per: "mo", freq: "Twice-weekly in peak season", best: false,
-        features: ["Everything in Full Yard Care", "Twice-weekly mow, June – August", "Irrigation system checks", "Seasonal color rotation", "Dedicated crew lead"] }
-    ],
-    serviceArea: {
-      region: "Treasure Valley, Idaho",
-      short: "Treasure Valley",
-      cities: ["Meridian", "Boise", "Eagle", "Star", "Kuna", "Middleton"]
-    },
-    owner: {
-      name: "Mara Quist",
-      bio: "Mara Quist grew up two blocks from a nursery and spent every summer of high school working the register, then the greenhouses, then the crews. Now she's running her own — Larkspur & Ledge started as one truck and a trailer, and it still runs on the same rule: show up when you say you will, and leave the yard looking better than the photo you were quoted from. She's still out on jobs most weeks, not just behind a desk.",
-      photo: ""
-    },
-    misc: {
-      plansNote: "Corner lot, acreage, or something in between? Text us your square footage and we'll quote it exact.",
-      scopeNote: "None of that is off the table — just outside our flat-rate plans. Text us a photo and we'll quote it separately."
-    },
-    social: []
-  };
-
-  var CONTENT = DEFAULT_CONTENT;
-
-  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+/* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
      submission emails a one-time activation link to LEAD.email; click it once and
      every booking after that lands in that inbox, formatted as a table. */
   var LEAD = { provider: 'formsubmit', email: '', sms: '' };
 
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function num(v){ var n = Number(v); return isFinite(n) ? n : 0; }
-  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
   function slugify(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 
   function applyRuntime(c){
@@ -1317,8 +1762,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
     if(scene){
       scene.setAttribute('data-season', season.id);
       var colors = SEASON_COLORS[season.id] || SEASON_COLORS.spring;
-      scene.style.setProperty('--foliage', colors.foliage);
-      scene.style.setProperty('--ground', colors.ground);
+      scene.style.setProperty('--scene-foliage', colors.foliage);
+      scene.style.setProperty('--scene-ground', colors.ground);
       scene.style.setProperty('--sky', colors.sky);
     }
 
@@ -1624,12 +2069,132 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   }
 
   // paint from the inline defaults immediately, then merge the live override
-  renderContent(CONTENT);
-  fetch('content.json', {cache: 'no-store'})
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(CONTENT); } })
-    .catch(function(){}); // 404 / offline: the defaults stand
+  /* boot handed to base.js */ // 404 / offline: the defaults stand
+
+  window.renderContent = renderContent;
 })();
 </script>
+
+<script>
+/* landscaping/scene.js — NO SIGNATURE ANIMATION.
+   This site arrived without one: its only requestAnimationFrame is a toast
+   fade. Per SITELAB_TEMPLATE.md §9.3 that is a Phase 3 gap, deliberately not
+   filled during consolidation so the conversion diff stays reviewable.
+   qa-site.js reports it every run until it is built.
+   Contract when it is: check reduce FIRST, rAF, self-terminate, clear transform. */
+window.initScene = function (reduce) {
+  if (reduce) return;
+  /* TODO (Phase 3): seasonal transition — foliage and ground settle between seasons on the wheel */
+};
+</script>
+
+<script>
+/* _template/base.js — utilities and the content lifecycle.
+   Shared by every niche. Niche-specific rendering lives in niches/<slug>/niche.js,
+   which must define window.renderContent(CONTENT). */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+  function telDigits(p) { return String(p || '').replace(/[^0-9+]/g, ''); }
+  function telHref(p) { return 'tel:' + telDigits(p); }
+  function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
+  function initReveal() {
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!els.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Form POST. Returns a promise; the niche decides what to render on success. */
+  function postForm(endpoint, payload) {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+  }
+
+  /* Consent gate (§9.3).
+     Runs in the CAPTURE phase, ahead of the niche's own submit handler, so a
+     checkbox the BUILD injected is enforced even though that niche's JS knows
+     nothing about it.
+
+     It does NOT stopPropagation: the niche handler still runs and sets its own
+     message if it has one. We only supply wording when nobody else did, checked
+     on the next tick — so the 8 sites that already gate keep their own copy and
+     the injected sites get a sensible default. Enforcement is uniform; wording
+     is not overridden. */
+  function consentGate(e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var box = form.querySelector('input[type="checkbox"][id$="consent"]');
+    if (!box || box.checked) return;
+
+    e.preventDefault();
+    box.focus();
+
+    var msg = form.querySelector('[id$="Msg"]');
+    var before = msg ? msg.textContent : null;
+    setTimeout(function () {
+      if (!msg || msg.textContent !== before) return;   // the niche spoke first
+      msg.textContent = 'Please tick the consent box so we can reply to you.';
+      if (msg.className.indexOf('err') < 0) msg.className += ' err';
+    }, 0);
+  }
+  document.addEventListener('submit', consentGate, true);
+
+  /* The content lifecycle.
+     DEFAULT_CONTENT is inlined by the build from content.json, so the two can
+     never disagree. The fetch exists so an operator edit goes live without a
+     rebuild; on failure the inlined copy already rendered. */
+  function boot() {
+    var CONTENT = window.DEFAULT_CONTENT || {};
+    window.CONTENT = CONTENT;
+    if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    initReveal();
+    if (typeof window.initScene === 'function') window.initScene(reduce);
+
+    fetch('content.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        CONTENT = Object.assign({}, window.DEFAULT_CONTENT, d);
+        window.CONTENT = CONTENT;
+        if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+      })
+      .catch(function () { /* offline or 404: the inlined defaults stand */ });
+  }
+
+  /* setErr and showDone are intentionally absent: every niche examined
+     defines its own with a different signature. Sharing them would be a
+     silent behaviour change, not a saving. */
+  window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>

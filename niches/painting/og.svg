@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Bristlecone Paint Co. — Every wall, exactly right.">
+  <title>Bristlecone Paint Co.</title>
+  <defs>
+    <linearGradient id="painting-og-ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0F0D0C"/>
+      <stop offset="0.55" stop-color="#131110"/>
+      <stop offset="1" stop-color="#0B0A09"/>
+    </linearGradient>
+    <radialGradient id="painting-og-glow" cx="0.86" cy="-0.08" r="0.75">
+      <stop offset="0" stop-color="#C97B63" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#C97B63" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="painting-og-glow2" cx="0.04" cy="1.05" r="0.6">
+      <stop offset="0" stop-color="#C97B63" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#C97B63" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#painting-og-ground)"/>
+  <rect width="1200" height="630" fill="url(#painting-og-glow)"/>
+  <rect width="1200" height="630" fill="url(#painting-og-glow2)"/>
+
+  <!-- accent spine, left edge -->
+  <rect x="0" y="0" width="10" height="630" fill="#C97B63"/>
+
+  <!-- eyebrow: where they work -->
+  <text x="90" y="140" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="21"
+        letter-spacing="4.6" fill="#8F8377">TREASURE VALLEY, IDAHO</text>
+
+  <!-- headline: the business -->
+  <text x="90" y="330" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="800" fill="#F4EDE3">Bristlecone Paint Co.</text>
+
+  <!-- accent rule -->
+  <rect x="90" y="374" width="132" height="7" fill="#C97B63"/>
+
+  <!-- tagline -->
+  <text x="90" y="446" font-family="Karla, system-ui, sans-serif" font-size="34" fill="#C4B8AA">Every wall, exactly right.</text>
+
+  <!-- footer rule -->
+  <rect x="90" y="536" width="1020" height="1" fill="#F4EDE3" opacity="0.16"/>
+
+  <!-- wordmark -->
+  <circle cx="97" cy="577" r="7" fill="#C97B63"/>
+  <text x="116" y="584" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20"
+        letter-spacing="3.4" fill="#8F8377">SYSTEMS BY VEGA</text>
+
+  <text x="1110" y="584" text-anchor="end" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20"
+        letter-spacing="1.6" fill="#C97B63">$450-$9800</text>
+</svg>

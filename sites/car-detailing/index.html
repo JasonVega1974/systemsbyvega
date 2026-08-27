@@ -2,82 +2,119 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex">
 <title>Kestrel Detail Co. — Mobile Car Detailing That Comes to You | Boise, ID</title>
 <meta name="description" content="Mobile car detailing in Boise & the Treasure Valley — we bring the water, power and polish to your driveway. Flat pricing from $89, most cars done in a couple of hours. Book in 60 seconds. Call or text (208) 555-0166." />
 <meta name="theme-color" content="#0E131A" />
 
-<!-- Social sharing -->
-<meta property="og:type" content="website" />
 <link rel="canonical" href="https://systemsbyvega.com/sites/car-detailing/" />
+<meta property="og:type" content="website" />
 <meta property="og:url" content="https://systemsbyvega.com/sites/car-detailing/" />
 <meta property="og:title" content="Kestrel Detail Co. — Showroom Shine, Curbside." />
 <meta property="og:description" content="Mobile car detailing that comes to your driveway across Boise & the Treasure Valley. Flat pricing from $89. Book your detail in 60 seconds." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://systemsbyvega.com/sites/car-detailing/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://systemsbyvega.com/sites/car-detailing/og.png" />
 
-<!-- Favicon: a car profile with a shine spark, on gloss cyan -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232DD4CE'/%3E%3Cpath d='M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z' fill='%230E131A'/%3E%3Ccircle cx='26' cy='45' r='4' fill='%230E131A'/%3E%3Ccircle cx='47' cy='45' r='4' fill='%230E131A'/%3E%3Cpath d='M46 15 l2 5 5 2 -5 2 -2 5 -2-5 -5-2 5-2 z' fill='%230E131A'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-<!-- Local business structured data (helps Google show you).
-     Keep phone/email/prices in sync with the visible copy and the packages in the script. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "AutoDetailing",
   "name": "Kestrel Detail Co.",
-  "description": "Mobile car detailing that comes to your driveway. Full interior and exterior detailing with flat, up-front pricing across Boise and the Treasure Valley.",
+  "description": "Mobile car detailing in Boise & the Treasure Valley — we bring the water, power and polish to your driveway. Flat pricing from $89, most cars done in a couple of hours. Book in 60 seconds. Call or text (208) 555-0166.",
   "telephone": "+12085550166",
   "email": "hello@kestreldetail.com",
-  "areaServed": "Boise, Idaho — Boise, Meridian, Eagle, Nampa, Kuna, Star, Garden City",
+  "areaServed": "Boise & the Treasure Valley",
   "priceRange": "$89-$329",
   "slogan": "Showroom shine, curbside.",
   "makesOffer": [
-    { "@type": "Offer", "name": "Express Refresh", "price": "89", "priceCurrency": "USD" },
-    { "@type": "Offer", "name": "Full Detail", "price": "189", "priceCurrency": "USD" },
-    { "@type": "Offer", "name": "Showroom Detail", "price": "329", "priceCurrency": "USD" }
+    {
+      "@type": "Offer",
+      "name": "Express Refresh",
+      "price": "89",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Full Detail",
+      "price": "189",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Showroom Detail",
+      "price": "329",
+      "priceCurrency": "USD"
+    }
   ]
 }
 </script>
 
 <style>
-/* =========================================================
-   KESTREL DETAIL CO. — tokens
-   Identity: midnight-garage graphite base, gloss-cyan
-   "wax shine" primary, cool chrome/ice type. Reads clean,
-   detailed and reflective — nothing like a dumpster yard.
-   ========================================================= */
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+/* car-detailing — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
 :root{
-  --graphite-deep:#070A0E;
-  --graphite:#0E131A;
-  --graphite-2:#161E28;
-  --steel:#1E2A38;
-  --gloss:#2DD4CE;
-  --gloss-bright:#5CE8E2;
-  --gloss-deep:#12A39C;
-  --chrome:#D9E6EF;
-  --ice:#EDF3F7;
-  --ice-soft:#F7FBFD;
-  --steel-txt:#9DB1C0;
-  --muted:#748799;
-  --line:rgba(45,212,206,.14);
-  --hair:rgba(217,230,239,.12);
-  --card:rgba(22,30,40,.55);
-  --card-brd:rgba(217,230,239,.13);
-  --shadow:0 24px 60px -20px rgba(0,0,0,.75);
-  --maxw:1140px;
-}
+  --scheme: dark;
+  --ground-deep:  #070A0E;   /* was --graphite-deep */
+  --ground:       #0E131A;   /* was --graphite */
+  --panel:        #161E28;   /* was --graphite-2 */
+  --panel-2:      #1E2A38;   /* was --steel */
+  --accent:       #2DD4CE;   /* was --gloss */
+  --accent-2:     #5CE8E2;   /* was --gloss-bright */
+  --accent-deep:  #12A39C;   /* was --gloss-deep */
+  --ink:          #D9E6EF;   /* was --chrome */
+  --ink-max:      #EDF3F7;   /* was --ice */
+  --ink-bright:   #F7FBFD;   /* was --ice-soft */
+  --ink-dim:      #9DB1C0;   /* was --steel-txt */
+  --muted:        #748799;
+  --hair-accent:  rgba(45,212,206,.14);   /* was --line */
+  --hair:         rgba(217,230,239,.12);
+  --card:         rgba(22,30,40,.55);
+  --card-brd:     rgba(217,230,239,.13);
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.75);
+  --maxw:         1140px;
 
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #062522;
+  --ground-2:     #0b1017;
+  --sheen-lo:     #b9ccd9;
+  --sheen-hi:     #ffffff;
+  --accent-shade: #0a2b29;
+  --placeholder:  #5f6b78;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Saira Condensed', system-ui, sans-serif;
+  --body:    'Manrope', system-ui, -apple-system, sans-serif;
+  --mono:    'Space Mono', ui-monospace, Consolas, monospace;
+}
+/* ── shared structural CSS ────────────────────────────────────────────── */
+/* _template/base.css — structural CSS shared by every SiteLab niche.
+   A rule lives here when its class/id hooks appear in the markup of two or more
+   deployed sites, or when it targets elements only. A rule used by exactly one
+   niche belongs in that niche's sections.css instead (SITELAB_TEMPLATE.md §3).
+   Colour and type come from niches/<slug>/niche.css. Never put a literal colour
+   in this file: reference a token from the §5 contract. */
+/* =========================================================
+   SAWTOOTH DUMPSTER CO. — tokens
+   High-desert identity: deep pine green base, safety-yellow
+   primary (amber-deep gradient end), warm sand/kraft type.
+   ========================================================= */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Manrope',system-ui,sans-serif;
-  background:var(--graphite);
-  color:var(--ice);
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
   line-height:1.7;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
@@ -85,23 +122,24 @@ body{
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
-/* cool reflective backdrop for the whole page */
+/* warm high-desert backdrop for the whole page */
 body::before{
   content:"";
   position:fixed;inset:0;z-index:-2;
   background:
-    radial-gradient(1100px 640px at 82% -10%, rgba(45,212,206,.15), transparent 60%),
-    radial-gradient(900px 700px at 6% 14%, rgba(30,42,56,.6), transparent 62%),
-    radial-gradient(760px 520px at 50% 108%, rgba(92,232,226,.06), transparent 60%),
-    linear-gradient(180deg,#0b1017 0%, #0E131A 45%, #070A0E 100%);
+    radial-gradient(1100px 640px at 82% -10%, rgba(216,155,0,.16), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(29,58,44,.55), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(255,196,0,.07), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, var(--ground) 45%, var(--ground-deep) 100%);
 }
-/* faint reflected-light streaks (a garage floor sheen) */
+/* faint topographic contour rings */
 body::after{
   content:"";
   position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
-    repeating-linear-gradient(115deg, transparent 0 78px, rgba(217,230,239,.02) 78px 79px),
-    repeating-linear-gradient(65deg, transparent 0 120px, rgba(45,212,206,.022) 120px 121px);
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 52px, rgba(242,233,216,.035) 52px 53px),
+    repeating-radial-gradient(circle at 84% 68%, transparent 0 68px, rgba(255,196,0,.03) 68px 69px),
+    repeating-radial-gradient(circle at 55% -10%, transparent 0 84px, rgba(242,233,216,.022) 84px 85px);
   opacity:.9;
 }
 
@@ -109,83 +147,89 @@ body::after{
 
 /* ---------- shared type ---------- */
 .eyebrow{
-  font-family:'Space Mono',monospace;font-weight:700;
-  text-transform:uppercase;letter-spacing:.2em;
-  font-size:.74rem;color:var(--gloss);
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--accent);
   display:inline-flex;align-items:center;gap:.6rem;
 }
 .eyebrow::before{
   content:"";width:26px;height:2px;border-radius:2px;flex:none;
-  background:linear-gradient(90deg,var(--gloss),transparent);
+  background:linear-gradient(90deg,var(--accent),transparent);
 }
 .section-title{
-  font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
-  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.0;letter-spacing:.01em;
-  background:linear-gradient(180deg,#ffffff 0%,var(--ice) 55%,#b9ccd9 100%);
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.lead{color:var(--steel-txt);font-size:1.08rem;max-width:58ch}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
 
 /* ---------- buttons ---------- */
 .btn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
-  font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  font-size:1.05rem;padding:.95rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
-  color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
-  box-shadow:0 12px 30px -10px rgba(45,212,206,.6), inset 0 1px 0 rgba(255,255,255,.45);
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
   overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
 }
-.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(45,212,206,.8), inset 0 1px 0 rgba(255,255,255,.5)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.55)}
 .btn:active{transform:translateY(0)}
-/* wax-shine sweep */
+/* headlight shine sweep */
 .btn::after{
   content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
   transform:skewX(-18deg);transition:left .6s ease;
 }
 .btn:hover::after{left:130%}
 .btn--ghost{
-  background:rgba(45,212,206,.07);color:var(--ice-soft);
-  border:1px solid rgba(45,212,206,.35);
+  background:rgba(255,196,0,.07);color:var(--ink-bright);
+  border:1px solid rgba(255,196,0,.35);
   box-shadow:none;backdrop-filter:blur(6px);
 }
-.btn--ghost:hover{background:rgba(45,212,206,.14);box-shadow:0 10px 26px -14px rgba(45,212,206,.5)}
-.btn--lg{font-size:1.15rem;padding:1.1rem 2.2rem}
+.btn--ghost:hover{background:var(--hair-accent);box-shadow:0 10px 26px -14px rgba(255,196,0,.5)}
+.btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
 .btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
 input:focus-visible,select:focus-visible,textarea:focus-visible{
-  outline:3px solid var(--gloss-bright);outline-offset:3px;
+  outline:3px solid var(--accent-2);outline-offset:3px;
 }
 
 /* =========================================================
    NAV
    ========================================================= */
-.nav{position:fixed;top:0;left:0;right:0;z-index:60;
-  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;padding:16px 0}
-.nav.solid{background:rgba(7,10,14,.86);backdrop-filter:blur(14px);
-  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;padding:10px 0}
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(8,19,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
 .nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
-  box-shadow:0 8px 20px -8px rgba(45,212,206,.6)}
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.6)}
 .brand__mark svg{width:30px;height:30px}
-.brand__name{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;
-  text-transform:uppercase;font-size:1rem;line-height:1;color:var(--ice-soft)}
-.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
-  letter-spacing:.2em;margin-top:5px;color:var(--muted)}
+.brand__name{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;margin-top:4px;color:var(--muted)}
 .nav__links{display:flex;align-items:center;gap:28px}
-.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
-  text-transform:uppercase;font-size:.74rem;color:var(--ice);opacity:.8;transition:opacity .2s,color .2s}
-.nav__links a.link:hover{opacity:1;color:var(--gloss-bright)}
-.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Saira Condensed',sans-serif;
-  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.92rem;
-  padding:.55rem 1.05rem;border-radius:10px;color:#062522;white-space:nowrap;flex-shrink:0;
-  background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
-  box-shadow:0 10px 24px -12px rgba(45,212,206,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--accent-2)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Anybody',sans-serif;font-stretch:62.5%;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.45);}
 .nav__call svg{width:16px;height:16px}
 @media(max-width:900px){.nav__links a.link{display:none}}
-@media(max-width:520px){.nav__call{font-size:.82rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
-@media(max-width:380px){.nav__call{font-size:.76rem;padding:.45rem .65rem;gap:.3rem}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
 
 /* =========================================================
    HERO
@@ -198,26 +242,367 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 @media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
 
 .hero__tag{margin-bottom:20px}
-.hero h1{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
-  font-size:clamp(2.6rem,7vw,4.9rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px}
-.hero h1 .l1{background:linear-gradient(180deg,#ffffff 0%,var(--ice) 50%,#b9ccd9 100%);
+.hero h1{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 4px 20px rgba(217,230,239,.14));display:block}
-.hero h1 .l2{color:var(--gloss);display:block;text-shadow:0 4px 30px rgba(45,212,206,.4)}
-.hero__sub{font-size:1.16rem;color:var(--steel-txt);max-width:50ch;margin:18px 0 30px}
+  filter:drop-shadow(0 4px 20px rgba(242,233,216,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--accent);display:block;
+  text-shadow:0 4px 30px rgba(255,196,0,.38);
+}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:48ch;margin:18px 0 30px}
 @media(max-width:900px){.hero__sub{margin-inline:auto}}
 .hero__cta{display:flex;gap:14px;flex-wrap:wrap}
 @media(max-width:900px){.hero__cta{justify-content:center}}
 .hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
 @media(max-width:900px){.hero__proof{justify-content:center}}
 .proof{display:flex;flex-direction:column;line-height:1.1}
-.proof b{font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:1.6rem;color:#fff;letter-spacing:.02em}
-.proof span{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.proof b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
 .proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
 @media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
 
-/* hero art: a car under a wax-shine sweep, drawn inline */
+/* hero art: roll-off box under a mountain ridge, drawn inline */
 .hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,196,0,.22), rgba(255,196,0,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+.hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting high-desert dust motes */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* ridge divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--panel);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--panel),rgba(19,42,32,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.08em;
+  font-size:.84rem;color:var(--ink);padding:.6rem 1.15rem;border-radius:10px;text-transform:uppercase;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5);transition:.15s;user-select:none;white-space:nowrap}
+.pill:hover span{border-color:rgba(255,196,0,.5)}
+.pill input:checked + span{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -10px rgba(255,196,0,.7)}
+.pill input:focus-visible + span{outline:3px solid var(--accent-2);outline-offset:2px}
+.price-box .btn{width:100%;margin-top:18px}
+.reveal.in .meter__bar{width:var(--w)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,196,0,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
+.step p{color:var(--muted);font-size:.98rem}
+.nogo .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(29,58,44,.6),rgba(10,22,16,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,196,0,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,233,216,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Sawtooth Dumpster Co., how long they've been hauling in the Valley, and why they got sick of watching neighbors get quote-gamed. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:700;font-size:1.04rem;color:var(--ink-bright)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,196,0,.4);color:var(--accent);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, var(--hair-accent), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(29,58,44,.7), transparent 60%),
+    linear-gradient(160deg,var(--panel),var(--ground-2));
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--accent-2);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(8,19,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px}
+.field em{color:var(--accent-2);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,12,9,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,12,9,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD34D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(255,196,0,.06);border-style:dashed;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:var(--err);box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+/* date input: keep the picker icon visible on dark bg */
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--accent);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--accent-2)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:var(--err-ink)}
+.book__msg.ok{color:var(--accent-2)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(29,58,44,.55),rgba(10,22,16,.6));
+  border:1px solid rgba(255,196,0,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,196,0,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-dim);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--accent-2)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-dim);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--accent-2)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,19,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.7)}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+/* car-detailing/sections.css — rules for this niche's own sections.
+   82 rule(s) were identical to base.css and dropped; 138 kept.
+   Inlined after base.css, so anything here overrides shared chrome. */
+body{
+  font-family:'Manrope',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink-max);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* cool reflective backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 82% -10%, rgba(45,212,206,.15), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(30,42,56,.6), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(92,232,226,.06), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, #0E131A 45%, #070A0E 100%);
+}
+/* faint reflected-light streaks (a garage floor sheen) */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(115deg, transparent 0 78px, rgba(217,230,239,.02) 78px 79px),
+    repeating-linear-gradient(65deg, transparent 0 120px, rgba(45,212,206,.022) 120px 121px);
+  opacity:.9;
+}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'Space Mono',monospace;font-weight:700;
+  text-transform:uppercase;letter-spacing:.2em;
+  font-size:.74rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.section-title{
+  font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.0;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink-max) 55%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--ink-dim);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1.05rem;padding:.95rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(45,212,206,.6), inset 0 1px 0 rgba(255,255,255,.45);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(45,212,206,.8), inset 0 1px 0 rgba(255,255,255,.5)}
+/* wax-shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn--ghost{
+  background:rgba(45,212,206,.07);color:var(--ink-bright);
+  border:1px solid rgba(45,212,206,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:rgba(45,212,206,.14);box-shadow:0 10px 26px -14px rgba(45,212,206,.5)}
+.btn--lg{font-size:1.15rem;padding:1.1rem 2.2rem}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;padding:16px 0}
+.nav.solid{background:rgba(7,10,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;padding:10px 0}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(45,212,206,.6)}
+.brand__name{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;font-size:1rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'Space Mono',monospace;font-weight:400;font-size:.58rem;
+  letter-spacing:.2em;margin-top:5px;color:var(--muted)}
+.nav__links a.link{font-family:'Space Mono',monospace;font-weight:400;letter-spacing:.08em;
+  text-transform:uppercase;font-size:.74rem;color:var(--ink-max);opacity:.8;transition:opacity .2s,color .2s}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Saira Condensed',sans-serif;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.92rem;
+  padding:.55rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(45,212,206,.7), inset 0 1px 0 rgba(255,255,255,.4)}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.82rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.76rem;padding:.45rem .65rem;gap:.3rem}}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+.hero h1{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.6rem,7vw,4.9rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px}
+.hero h1 .l1{background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink-max) 50%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(217,230,239,.14));display:block}
+.hero h1 .l2{color:var(--accent);display:block;text-shadow:0 4px 30px rgba(45,212,206,.4)}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:50ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof b{font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
 .hero__art .halo{position:absolute;inset:2% -8% 8%;border-radius:50%;
   background:radial-gradient(closest-side, rgba(45,212,206,.22), rgba(45,212,206,.06) 55%, transparent 72%);
   filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0}
@@ -225,9 +610,6 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
-
-/* drifting shine sparkles */
-.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .mote{position:absolute;bottom:-4%;width:4px;height:4px;border-radius:50%;
   background:radial-gradient(circle,rgba(92,232,226,.95),rgba(92,232,226,0) 70%);
   opacity:0;animation:mote linear infinite}
@@ -239,25 +621,12 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   100%{transform:translate3d(-14px,-108vh,0);opacity:0}
 }
 
-/* wave divider under hero */
-.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--graphite-2);z-index:0;pointer-events:none}
-
 /* =========================================================
    TRUST STRIP
    ========================================================= */
-.trust{background:linear-gradient(180deg,var(--graphite-2),rgba(22,30,40,.4));border-block:1px solid var(--hair)}
-.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust{background:linear-gradient(180deg,var(--panel),rgba(22,30,40,.4));border-block:1px solid var(--hair)}
 .trust__item{display:flex;align-items:center;gap:.6rem;font-family:'Space Mono',monospace;
-  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--ice)}
-.trust__item svg{width:20px;height:20px;color:var(--gloss);flex:none}
-
-/* =========================================================
-   SECTION base
-   ========================================================= */
-.section{padding:92px 0}
-.section__head{max-width:660px;margin-bottom:44px}
-.section__head.center{margin-inline:auto;text-align:center}
-.section__head .section-title{margin:14px 0 16px}
+  font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;color:var(--ink-max)}
 
 /* =========================================================
    SIGNATURE — CAR HOTSPOT DIAGRAM
@@ -269,7 +638,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   box-shadow:var(--shadow);backdrop-filter:blur(10px);overflow:hidden}
 /* gloss stripe across the top — the "wax line" touch */
 .diagram::before{content:"";display:block;grid-column:1/-1;height:8px;
-  background:repeating-linear-gradient(-45deg,var(--gloss) 0 14px,#0a2b29 14px 28px);opacity:.85}
+  background:repeating-linear-gradient(-45deg,var(--accent) 0 14px,var(--accent-shade) 14px 28px);opacity:.85}
 @media(max-width:820px){.diagram{grid-template-columns:1fr}}
 
 .diagram__stage{position:relative;padding:clamp(18px,3vw,30px)}
@@ -284,17 +653,17 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 
 /* hotspot markers overlaid on the car */
 .hot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;
-  border:2px solid var(--gloss);background:rgba(11,16,23,.65);color:var(--gloss-bright);
+  border:2px solid var(--accent);background:rgba(11,16,23,.65);color:var(--accent-2);
   cursor:pointer;display:grid;place-items:center;padding:0;transition:transform .18s ease, background .18s ease;
   box-shadow:0 0 0 6px rgba(45,212,206,.12)}
-.hot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gloss-bright);
-  box-shadow:0 0 10px var(--gloss-bright)}
-.hot::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--gloss);
+.hot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent-2);
+  box-shadow:0 0 10px var(--accent-2)}
+.hot::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--accent);
   opacity:.7;animation:ping 2.4s ease-out infinite}
 @keyframes ping{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(1.9);opacity:0}}
 .hot:hover{transform:translate(-50%,-50%) scale(1.12);background:rgba(45,212,206,.2)}
-.hot[aria-pressed="true"]{background:var(--gloss);box-shadow:0 0 0 8px rgba(45,212,206,.22)}
-.hot[aria-pressed="true"]::before{background:#062522;box-shadow:none}
+.hot[aria-pressed="true"]{background:var(--accent);box-shadow:0 0 0 8px rgba(45,212,206,.22)}
+.hot[aria-pressed="true"]::before{background:var(--accent-ink);box-shadow:none}
 .hot[aria-pressed="true"]::after{animation:none;opacity:0}
 
 .diagram__panel{padding:clamp(18px,3vw,30px) clamp(20px,3vw,34px) clamp(24px,4vw,38px)}
@@ -302,17 +671,17 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .diagram__zone{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
   font-size:clamp(1.8rem,4vw,2.6rem);line-height:1;margin:6px 0 12px;
-  background:linear-gradient(180deg,#fff,var(--gloss-bright));-webkit-background-clip:text;background-clip:text;color:transparent}
-.diagram__blurb{color:var(--steel-txt);font-size:1.02rem;min-height:5.5em}
+  background:linear-gradient(180deg,var(--ink-max),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.diagram__blurb{color:var(--ink-dim);font-size:1.02rem;min-height:5.5em}
 .diagram__hint{margin-top:16px;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted)}
 .zone-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .zone-chips button{font-family:'Space Mono',monospace;font-weight:400;font-size:.74rem;letter-spacing:.04em;
-  color:var(--ice);padding:.45rem .85rem;border-radius:9px;cursor:pointer;
+  color:var(--ink-max);padding:.45rem .85rem;border-radius:9px;cursor:pointer;
   border:1px solid var(--card-brd);background:rgba(7,10,14,.5);transition:.15s}
 .zone-chips button:hover{border-color:rgba(45,212,206,.5)}
-.zone-chips button[aria-pressed="true"]{color:#062522;border-color:transparent;
-  background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep))}
+.zone-chips button[aria-pressed="true"]{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep))}
 
 /* =========================================================
    PACKAGES (pricing)
@@ -322,27 +691,27 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .pkg{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--card-brd);
   border-radius:18px;padding:26px 24px;backdrop-filter:blur(8px);transition:transform .22s ease,border-color .22s ease}
 .pkg:hover{transform:translateY(-6px);border-color:rgba(45,212,206,.4)}
-.pkg--best{border-color:var(--gloss);box-shadow:0 0 0 1px var(--gloss),0 26px 60px -30px rgba(45,212,206,.5)}
+.pkg--best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 26px 60px -30px rgba(45,212,206,.5)}
 .pkg__flag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);white-space:nowrap;
   font-family:'Space Mono',monospace;font-weight:700;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
-  color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
   padding:.35rem .8rem;border-radius:20px;box-shadow:0 8px 20px -8px rgba(45,212,206,.7)}
 .pkg__name{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
-  font-size:1.6rem;line-height:1;color:var(--ice-soft)}
+  font-size:1.6rem;line-height:1;color:var(--ink-bright)}
 .pkg__dur{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--gloss);margin-top:8px}
+  color:var(--accent);margin-top:8px}
 .pkg__price{font-family:'Saira Condensed',sans-serif;font-weight:900;font-size:2.9rem;line-height:1;margin:14px 0 4px;
-  background:linear-gradient(180deg,#fff 0%,var(--gloss-bright) 55%,var(--gloss) 100%);
+  background:linear-gradient(180deg,var(--ink-max) 0%,var(--accent-2) 55%,var(--accent) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .pkg__price small{font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.14em;color:var(--muted);
   -webkit-text-fill-color:var(--muted);text-transform:uppercase;margin-left:6px}
-.pkg__best{color:var(--steel-txt);font-size:.92rem;margin:2px 0 16px}
+.pkg__best{color:var(--ink-dim);font-size:.92rem;margin:2px 0 16px}
 .pkg__list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:22px}
-.pkg__list li{display:flex;gap:.6rem;font-size:.94rem;color:var(--ice)}
-.pkg__list svg{width:17px;height:17px;color:var(--gloss);flex:none;margin-top:.28rem}
+.pkg__list li{display:flex;gap:.6rem;font-size:.94rem;color:var(--ink-max)}
+.pkg__list svg{width:17px;height:17px;color:var(--accent);flex:none;margin-top:.28rem}
 .pkg .btn{width:100%;margin-top:auto}
 .pkg__note{text-align:center;color:var(--muted);font-size:.95rem;max-width:60ch;margin:26px auto 0}
-.pkg__note b{color:var(--ice)}
+.pkg__note b{color:var(--ink-max)}
 
 /* =========================================================
    ADD-ONS
@@ -352,25 +721,16 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .addon{background:rgba(7,10,14,.5);border:1px solid var(--card-brd);border-radius:14px;padding:18px 18px 16px}
 .addon__top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .addon__name{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
-  font-size:1.15rem;color:var(--ice-soft);letter-spacing:.02em}
-.addon__price{font-family:'Space Mono',monospace;font-weight:700;font-size:.9rem;color:var(--gloss-bright);flex:none}
+  font-size:1.15rem;color:var(--ink-bright);letter-spacing:.02em}
+.addon__price{font-family:'Space Mono',monospace;font-weight:700;font-size:.9rem;color:var(--accent-2);flex:none}
 .addon__desc{color:var(--muted);font-size:.86rem;margin-top:6px}
 .addon__foot{text-align:center;color:var(--muted);font-size:.92rem;margin-top:24px}
-
-/* =========================================================
-   HOW IT WORKS
-   ========================================================= */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
 @media(max-width:820px){.steps{grid-template-columns:1fr}}
-.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
-  border-radius:18px;backdrop-filter:blur(8px)}
 .step__n{counter-increment:step;font-family:'Saira Condensed',sans-serif;font-weight:900;
   font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(45,212,206,.65);
   display:block;margin-bottom:12px}
-.step__n::before{content:"0" counter(step)}
 .step h3{font-family:'Saira Condensed',sans-serif;font-weight:800;text-transform:uppercase;
-  letter-spacing:.03em;font-size:1.2rem;margin-bottom:8px;color:#fff}
-.step p{color:var(--muted);font-size:.98rem}
+  letter-spacing:.03em;font-size:1.2rem;margin-bottom:8px;color:var(--ink-max)}
 
 /* =========================================================
    RESULTS GALLERY
@@ -383,26 +743,18 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   border:1px solid var(--card-brd);box-shadow:var(--shadow)}
 .result img{width:100%;height:100%;object-fit:cover;display:block}
 .result__cap{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;
-  font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.03em;color:var(--ice);
+  font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.03em;color:var(--ink-max);
   background:linear-gradient(180deg,transparent,rgba(7,10,14,.85))}
 .results-empty{border:1px dashed var(--card-brd);border-radius:16px;padding:44px 24px;text-align:center;
   background:repeating-linear-gradient(45deg,transparent 0 14px,rgba(217,230,239,.03) 14px 15px)}
-.results-empty svg{width:34px;height:34px;color:var(--gloss);opacity:.7;margin:0 auto 12px}
+.results-empty svg{width:34px;height:34px;color:var(--accent);opacity:.7;margin:0 auto 12px}
 .results-empty p{color:var(--muted);font-family:'Space Mono',monospace;font-size:.8rem;
   letter-spacing:.06em;text-transform:uppercase}
-
-/* =========================================================
-   MEET THE OWNER
-   ========================================================= */
-.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
 @media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
 .owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
   background:linear-gradient(160deg,rgba(30,42,56,.6),rgba(11,16,23,.6));
   border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
-.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
-.owner__photo > svg{width:100%;height:100%;display:block}
-.owner__body .section-title{margin:14px 0 22px}
-.owner__desc{color:var(--ice);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+.owner__desc{color:var(--ink-max);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
   background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px}
 
 /* =========================================================
@@ -412,25 +764,16 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 @media(max-width:820px){.quotes{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
 .quote{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px 22px;
   backdrop-filter:blur(8px);display:flex;flex-direction:column;gap:14px}
-.quote__stars{display:flex;gap:3px;color:var(--gloss)}
+.quote__stars{display:flex;gap:3px;color:var(--accent)}
 .quote__stars svg{width:16px;height:16px}
-.quote__body{color:var(--ice);font-size:1rem;line-height:1.6}
+.quote__body{color:var(--ink-max);font-size:1rem;line-height:1.6}
 .quote__body:empty::before{content:"Real review coming soon — the space is ready for it.";color:var(--muted);font-style:italic}
-.quote__who{font-family:'Space Mono',monospace;font-size:.76rem;letter-spacing:.04em;color:var(--gloss-bright);margin-top:auto}
-
-/* =========================================================
-   FAQ
-   ========================================================= */
-.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.quote__who{font-family:'Space Mono',monospace;font-size:.76rem;letter-spacing:.04em;color:var(--accent-2);margin-top:auto}
 .faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
-  font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.14rem;color:var(--ice-soft)}
-.faq summary::-webkit-details-marker{display:none}
+  font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:1.14rem;color:var(--ink-bright)}
 .faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid rgba(45,212,206,.4);color:var(--gloss);transition:transform .25s ease;font-family:'Manrope',sans-serif;font-weight:400}
-.faq[open] summary .plus{transform:rotate(45deg)}
-.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
-.faq__body b{color:var(--ice)}
+  border:1px solid rgba(45,212,206,.4);color:var(--accent);transition:transform .25s ease;font-family:'Manrope',sans-serif;font-weight:400}
+.faq__body b{color:var(--ink-max)}
 
 /* =========================================================
    BOOKING
@@ -439,72 +782,35 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   background:
     radial-gradient(700px 340px at 18% 0%, rgba(45,212,206,.14), transparent 60%),
     radial-gradient(600px 340px at 92% 100%, rgba(30,42,56,.7), transparent 60%),
-    linear-gradient(160deg,#161E28,#0b1017);
+    linear-gradient(160deg,#161E28,var(--ground-2));
   border-block:1px solid var(--hair)}
-.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
-.cta__phone a{color:var(--gloss-bright);font-weight:600}
 .book{max-width:760px;margin:0 auto;background:rgba(7,10,14,.62);
   border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
   backdrop-filter:blur(10px);box-shadow:var(--shadow)}
-.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
 @media(max-width:640px){.book__grid{grid-template-columns:1fr}}
-.field{min-width:0}
-.field--wide{grid-column:1 / -1}
 .field label{display:block;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;
   text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.field em{color:var(--gloss-bright);font-style:normal;font-weight:700}
 .field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
-  background:rgba(5,8,11,.7);border:1px solid var(--card-brd);color:var(--ice-soft);
+  background:rgba(5,8,11,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
   font-family:'Manrope',sans-serif;font-size:1rem}
-.field textarea{resize:vertical;min-height:74px}
-.field input::placeholder,.field textarea::placeholder{color:#5f6b78}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gloss);background:rgba(5,8,11,.9)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,8,11,.9)}
 .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235CE8E2' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
-.field.invalid input,.field.invalid select,.field.invalid textarea{
-  border-color:#e0616b;box-shadow:0 0 0 2px rgba(224,97,107,.22)}
-.field input[type="date"]{color-scheme:dark}
-.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
-  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
-.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--gloss);cursor:pointer}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
-.book__actions .btn[disabled]{opacity:.7;cursor:progress}
-.book__alt{font-family:'Space Mono',monospace;letter-spacing:.06em;color:var(--ice);opacity:.85;
+.book__alt{font-family:'Space Mono',monospace;letter-spacing:.06em;color:var(--ink-max);opacity:.85;
   text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
-.book__alt:hover{opacity:1;color:var(--gloss-bright)}
-.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
-.book__msg.err{color:#ff9aa2}
-.book__msg.ok{color:var(--gloss-bright)}
 .book-done{max-width:600px;margin:0 auto;text-align:center;
   background:linear-gradient(180deg,rgba(30,42,56,.55),rgba(11,16,23,.6));
   border:1px solid rgba(45,212,206,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
   box-shadow:0 0 0 1px rgba(45,212,206,.2),var(--shadow);backdrop-filter:blur(10px)}
 .book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
-  color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
   box-shadow:0 12px 30px -10px rgba(45,212,206,.8)}
-.book-done__ic svg{width:34px;height:34px}
 .book-done h3{font-family:'Saira Condensed',sans-serif;font-weight:900;text-transform:uppercase;
   font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
-  background:linear-gradient(180deg,#fff,var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}
-.book-done p{color:var(--steel-txt);font-size:1.05rem;margin-bottom:22px}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
-.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
-.footer__brand{display:flex;align-items:center;gap:14px}
-.footer__brand .brand__mark{width:52px;height:52px}
+  background:linear-gradient(180deg,var(--ink-max),var(--ink-max));-webkit-background-clip:text;background-clip:text;color:transparent}
 .footer__brand b{font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.09em;
-  text-transform:uppercase;color:#fff;font-size:1.05rem;display:block}
+  text-transform:uppercase;color:var(--ink-max);font-size:1.05rem;display:block}
 .footer__brand span{color:var(--muted);font-size:.8rem;font-family:'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
-.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
-.footer__meta a{color:var(--gloss-bright)}
-.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
-.footer__credit a{color:var(--steel-txt);text-decoration:underline;text-underline-offset:2px}
-.footer__credit a:hover{color:var(--gloss-bright)}
 @media(max-width:640px){.footer__meta{text-align:left}}
 
 /* =========================================================
@@ -516,18 +822,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
   font-family:'Saira Condensed',sans-serif;font-weight:800;letter-spacing:.05em;
   text-transform:uppercase;font-size:1.02rem;padding:.9rem;border-radius:12px}
-.mobile-cta .call{color:#062522;background:linear-gradient(135deg,var(--gloss-bright),var(--gloss-deep));
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
   box-shadow:0 8px 20px -8px rgba(45,212,206,.7)}
-.mobile-cta .text{color:var(--ice-soft);background:rgba(45,212,206,.1);border:1px solid rgba(45,212,206,.35)}
-.mobile-cta svg{width:20px;height:20px}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(45,212,206,.1);border:1px solid rgba(45,212,206,.35)}
 @media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
-
-/* reveal-on-scroll */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
-[data-delay="1"]{transition-delay:.08s}
-[data-delay="2"]{transition-delay:.16s}
-[data-delay="3"]{transition-delay:.24s}
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto!important}
@@ -552,6 +850,13 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
 
+<!-- car-detailing/scene.svg — this site keeps its illustrations inline in
+     sections.html rather than in a shared <defs> block. Placeholder so the
+     build slot resolves; see brief.md. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+<!-- car-detailing/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap nav__in">
@@ -913,7 +1218,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 
       <label class="consent">
         <input type="checkbox" id="b-consent" required />
-        <span>Text me to confirm my window and price. Message &amp; data rates may apply.</span>
+        <span>Text me to confirm my window and price. Message &amp; data rates may apply. See our <a href="/legal/privacy.html">privacy policy</a>.</span>
       </label>
 
       <!-- spam honeypot: real people leave this empty -->
@@ -967,9 +1272,176 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
 </div>
 
 <script>
-(function(){
-  "use strict";
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Inlined from niches/car-detailing/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {
+  "brand": {
+    "name": "Kestrel Detail Co.",
+    "tagline": "Showroom shine, curbside.",
+    "phone": "(208) 555-0166",
+    "email": "hello@kestreldetail.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Boise, ID"
+  },
+  "serviceArea": {
+    "region": "Boise & the Treasure Valley",
+    "short": "Treasure Valley",
+    "cities": [
+      "Boise",
+      "Meridian",
+      "Eagle",
+      "Nampa",
+      "Kuna",
+      "Star",
+      "Garden City"
+    ]
+  },
+  "owner": {
+    "name": "Theo Marsh",
+    "bio": "Theo Marsh has been detailing cars around Boise since his first job cleaning up trade-ins for a used lot. Kestrel Detail Co. is the one-van operation he always wanted to run: he shows up to your driveway with water, power and everything else, does the work himself, and doesn't leave until the car looks like the day you fell for it. No lot to drop off at, no shuttle to catch, no upsell games — just an honest detail and a number you agreed to before he started.",
+    "photo": ""
+  },
+  "pricing": [
+    {
+      "label": "Express Refresh",
+      "price": 89,
+      "per": "~1 hour",
+      "blurb": "A fast reset between details — dust, crumbs and a clean exterior.",
+      "features": [
+        "Hand wash & dry",
+        "Wheels & tires cleaned",
+        "Interior vacuum",
+        "Windows in & out",
+        "Dash & console wiped down"
+      ],
+      "highlight": false
+    },
+    {
+      "label": "Full Detail",
+      "price": 189,
+      "per": "~3 hours",
+      "blurb": "Our most-booked service — inside and out, top to bottom.",
+      "features": [
+        "Everything in Express Refresh",
+        "Interior deep-clean & shampoo",
+        "Leather cleaned & conditioned",
+        "Clay bar & spray sealant",
+        "Door jambs & trim dressed",
+        "Streak-free glass treatment"
+      ],
+      "highlight": true
+    },
+    {
+      "label": "Showroom Detail",
+      "price": 329,
+      "per": "~5 hours",
+      "blurb": "The full reset — for sale-ready cars or once-a-year deep love.",
+      "features": [
+        "Everything in Full Detail",
+        "Machine paint decon & polish",
+        "Hand-applied paint sealant",
+        "Carpet & upholstery extraction",
+        "Headliner & vents detailed",
+        "Engine bay cleaned & dressed"
+      ],
+      "highlight": false
+    }
+  ],
+  "testimonials": [],
+  "social": [],
+  "niche": {
+    "addons": [
+      {
+        "name": "Pet hair removal",
+        "price": 35,
+        "desc": "Embedded fur pulled from seats and carpets."
+      },
+      {
+        "name": "Headlight restore",
+        "price": 45,
+        "desc": "Cut the haze, bring back clear lenses (pair)."
+      },
+      {
+        "name": "Engine bay clean",
+        "price": 40,
+        "desc": "Degreased, rinsed and dressed to shine."
+      },
+      {
+        "name": "Odor treatment",
+        "price": 30,
+        "desc": "Neutralize smoke, pets and gym-bag funk."
+      },
+      {
+        "name": "Shampoo & extract",
+        "price": 55,
+        "desc": "Deep hot-water extraction on carpets and cloth seats."
+      }
+    ],
+    "zones": [
+      {
+        "id": "paint",
+        "label": "Paint & body",
+        "blurb": "A foam pre-soak lifts grit before a gentle two-bucket hand wash, then bug and tar spots come off by hand. Clay and a spray sealant leave the finish slick and beading — not just clean, protected."
+      },
+      {
+        "id": "glass",
+        "label": "Glass & mirrors",
+        "blurb": "Inside and out, edge to edge, including the streaks everyone misses at the top of the windshield and the smudges on the mirrors. Ask for a rain-repellent treatment and we'll add it."
+      },
+      {
+        "id": "interior",
+        "label": "Interior & seats",
+        "blurb": "Vacuumed down to the seat tracks, mats shampooed, leather cleaned and conditioned, plastics wiped down. Steam where it needs it — and no greasy shine left behind on the dash."
+      },
+      {
+        "id": "wheels",
+        "label": "Wheels & tires",
+        "blurb": "Barrels, faces and lug nuts scrubbed, brake dust and iron fallout dissolved, then a satin dressing on the tires. It's the first thing people notice and the first thing most washes skip."
+      },
+      {
+        "id": "trim",
+        "label": "Trim & details",
+        "blurb": "Faded black trim brought back, door jambs wiped, vents and cupholders dug out, badges detailed. The small stuff that makes a whole car read as cared-for."
+      }
+    ],
+    "notes": {
+      "pkgAddon": "Bigger rig — truck, van, or a third-row SUV packed with life? Add $20–$40 depending on size. Not sure which package? Book \"help me pick\" and we'll sort it when we see the car.",
+      "addonFoot": "Something not on the list? Text us a photo and we'll tell you straight whether it's worth doing."
+    },
+    "results": []
+  },
+  "seo": {
+    "title": "Kestrel Detail Co. — Mobile Car Detailing That Comes to You | Boise, ID",
+    "description": "Mobile car detailing in Boise & the Treasure Valley — we bring the water, power and polish to your driveway. Flat pricing from $89, most cars done in a couple of hours. Book in 60 seconds. Call or text (208) 555-0166.",
+    "ogTitle": "Kestrel Detail Co. — Showroom Shine, Curbside.",
+    "ogDescription": "Mobile car detailing that comes to your driveway across Boise & the Treasure Valley. Flat pricing from $89. Book your detail in 60 seconds.",
+    "priceRange": "$89-$329",
+    "schemaType": "AutoDetailing",
+    "canonical": "https://systemsbyvega.com/sites/car-detailing/",
+    "themeColor": "#0E131A",
+    "favicon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232DD4CE'/%3E%3Cpath d='M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z' fill='%230E131A'/%3E%3Ccircle cx='26' cy='45' r='4' fill='%230E131A'/%3E%3Ccircle cx='47' cy='45' r='4' fill='%230E131A'/%3E%3Cpath d='M46 15 l2 5 5 2 -5 2 -2 5 -2-5 -5-2 5-2 z' fill='%230E131A'/%3E%3C/svg%3E",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/car-detailing/og.png"
+  }
+};
+</script>
+
+<script>
+/* car-detailing/niche.js — this niche's renderer and interactive logic.
+   Shared utilities come from _template/base.js via SL; the aliases below keep
+   every extracted call site unchanged. base.js owns the reduced-motion flag,
+   the reveal observer, the content fetch/merge lifecycle, and calling
+   window.renderContent(). val/setErr/showDone are NOT aliased — this niche
+   defines its own with different signatures. */
+(function () {
+  'use strict';
+
+  var SL = window.SL;
+  var esc = SL.esc, num = SL.num, telHref = SL.telHref;
+  var reduce = SL.reduce;
+  var CONTENT = window.DEFAULT_CONTENT;
+
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* =====================================================
      OWNER-EDITABLE CONTENT
@@ -983,74 +1455,11 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
      (Static copy the admin does NOT touch: the JSON-LD
      offers/priceRange in <head> and the meta description.)
      ===================================================== */
-  var DEFAULT_CONTENT = {
-    brand: {
-      name: "Kestrel Detail Co.",
-      tagline: "Showroom shine, curbside.",
-      phone: "(208) 555-0166",
-      email: "hello@kestreldetail.com",
-      leadEmail: "info@kingdom-creatives.com",
-      city: "Boise, ID"
-    },
-    packages: [
-      { name: "Express Refresh", price: 89, duration: "~1 hour", popular: false,
-        best: "A fast reset between details — dust, crumbs and a clean exterior.",
-        includes: "Hand wash & dry\nWheels & tires cleaned\nInterior vacuum\nWindows in & out\nDash & console wiped down" },
-      { name: "Full Detail", price: 189, duration: "~3 hours", popular: true,
-        best: "Our most-booked service — inside and out, top to bottom.",
-        includes: "Everything in Express Refresh\nInterior deep-clean & shampoo\nLeather cleaned & conditioned\nClay bar & spray sealant\nDoor jambs & trim dressed\nStreak-free glass treatment" },
-      { name: "Showroom Detail", price: 329, duration: "~5 hours", popular: false,
-        best: "The full reset — for sale-ready cars or once-a-year deep love.",
-        includes: "Everything in Full Detail\nMachine paint decon & polish\nHand-applied paint sealant\nCarpet & upholstery extraction\nHeadliner & vents detailed\nEngine bay cleaned & dressed" }
-    ],
-    addons: [
-      { name: "Pet hair removal", price: 35, desc: "Embedded fur pulled from seats and carpets." },
-      { name: "Headlight restore", price: 45, desc: "Cut the haze, bring back clear lenses (pair)." },
-      { name: "Engine bay clean", price: 40, desc: "Degreased, rinsed and dressed to shine." },
-      { name: "Odor treatment", price: 30, desc: "Neutralize smoke, pets and gym-bag funk." },
-      { name: "Shampoo & extract", price: 55, desc: "Deep hot-water extraction on carpets and cloth seats." }
-    ],
-    notes: {
-      pkgAddon: "Bigger rig — truck, van, or a third-row SUV packed with life? Add $20–$40 depending on size. Not sure which package? Book \"help me pick\" and we'll sort it when we see the car.",
-      addonFoot: "Something not on the list? Text us a photo and we'll tell you straight whether it's worth doing."
-    },
-    zones: [
-      { id: "paint",    label: "Paint & body",
-        blurb: "A foam pre-soak lifts grit before a gentle two-bucket hand wash, then bug and tar spots come off by hand. Clay and a spray sealant leave the finish slick and beading — not just clean, protected." },
-      { id: "glass",    label: "Glass & mirrors",
-        blurb: "Inside and out, edge to edge, including the streaks everyone misses at the top of the windshield and the smudges on the mirrors. Ask for a rain-repellent treatment and we'll add it." },
-      { id: "interior", label: "Interior & seats",
-        blurb: "Vacuumed down to the seat tracks, mats shampooed, leather cleaned and conditioned, plastics wiped down. Steam where it needs it — and no greasy shine left behind on the dash." },
-      { id: "wheels",   label: "Wheels & tires",
-        blurb: "Barrels, faces and lug nuts scrubbed, brake dust and iron fallout dissolved, then a satin dressing on the tires. It's the first thing people notice and the first thing most washes skip." },
-      { id: "trim",     label: "Trim & details",
-        blurb: "Faded black trim brought back, door jambs wiped, vents and cupholders dug out, badges detailed. The small stuff that makes a whole car read as cared-for." }
-    ],
-    results: [],
-    testimonials: [],
-    serviceArea: {
-      region: "Boise & the Treasure Valley",
-      short: "Treasure Valley",
-      cities: ["Boise", "Meridian", "Eagle", "Nampa", "Kuna", "Star", "Garden City"]
-    },
-    owner: {
-      name: "Theo Marsh",
-      bio: "Theo Marsh has been detailing cars around Boise since his first job cleaning up trade-ins for a used lot. Kestrel Detail Co. is the one-van operation he always wanted to run: he shows up to your driveway with water, power and everything else, does the work himself, and doesn't leave until the car looks like the day you fell for it. No lot to drop off at, no shuttle to catch, no upsell games — just an honest detail and a number you agreed to before he started.",
-      photo: ""
-    },
-    social: []
-  };
-
-  var CONTENT = DEFAULT_CONTENT;
-
-  /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
+/* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
      submission emails a one-time activation link to LEAD.email; click it once and
      every booking after that lands in that inbox, formatted as a table. */
   var LEAD = { provider: 'formsubmit', email: '', sms: '' };
 
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function num(v){ var n = Number(v); return isFinite(n) ? n : 0; }
-  function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
 
   function applyRuntime(c){
     LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
@@ -1435,12 +1844,132 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{
   }
 
   // paint from the inline defaults immediately, then merge the live override
-  renderContent(CONTENT);
-  fetch('content.json', {cache: 'no-store'})
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){ if(d){ CONTENT = Object.assign({}, DEFAULT_CONTENT, d); renderContent(CONTENT); } })
-    .catch(function(){}); // 404 / offline: the defaults stand
+  /* boot handed to base.js */ // 404 / offline: the defaults stand
+
+  window.renderContent = renderContent;
 })();
 </script>
+
+<script>
+/* car-detailing/scene.js — NO SIGNATURE ANIMATION.
+   This site arrived without one: its only requestAnimationFrame is a toast
+   fade. Per SITELAB_TEMPLATE.md §9.3 that is a Phase 3 gap, deliberately not
+   filled during consolidation so the conversion diff stays reviewable.
+   qa-site.js reports it every run until it is built.
+   Contract when it is: check reduce FIRST, rAF, self-terminate, clear transform. */
+window.initScene = function (reduce) {
+  if (reduce) return;
+  /* TODO (Phase 3): foam/gloss sweep across the hero car, settling to a static sheen */
+};
+</script>
+
+<script>
+/* _template/base.js — utilities and the content lifecycle.
+   Shared by every niche. Niche-specific rendering lives in niches/<slug>/niche.js,
+   which must define window.renderContent(CONTENT). */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+  function telDigits(p) { return String(p || '').replace(/[^0-9+]/g, ''); }
+  function telHref(p) { return 'tel:' + telDigits(p); }
+  function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
+  function initReveal() {
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!els.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Form POST. Returns a promise; the niche decides what to render on success. */
+  function postForm(endpoint, payload) {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+  }
+
+  /* Consent gate (§9.3).
+     Runs in the CAPTURE phase, ahead of the niche's own submit handler, so a
+     checkbox the BUILD injected is enforced even though that niche's JS knows
+     nothing about it.
+
+     It does NOT stopPropagation: the niche handler still runs and sets its own
+     message if it has one. We only supply wording when nobody else did, checked
+     on the next tick — so the 8 sites that already gate keep their own copy and
+     the injected sites get a sensible default. Enforcement is uniform; wording
+     is not overridden. */
+  function consentGate(e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var box = form.querySelector('input[type="checkbox"][id$="consent"]');
+    if (!box || box.checked) return;
+
+    e.preventDefault();
+    box.focus();
+
+    var msg = form.querySelector('[id$="Msg"]');
+    var before = msg ? msg.textContent : null;
+    setTimeout(function () {
+      if (!msg || msg.textContent !== before) return;   // the niche spoke first
+      msg.textContent = 'Please tick the consent box so we can reply to you.';
+      if (msg.className.indexOf('err') < 0) msg.className += ' err';
+    }, 0);
+  }
+  document.addEventListener('submit', consentGate, true);
+
+  /* The content lifecycle.
+     DEFAULT_CONTENT is inlined by the build from content.json, so the two can
+     never disagree. The fetch exists so an operator edit goes live without a
+     rebuild; on failure the inlined copy already rendered. */
+  function boot() {
+    var CONTENT = window.DEFAULT_CONTENT || {};
+    window.CONTENT = CONTENT;
+    if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    initReveal();
+    if (typeof window.initScene === 'function') window.initScene(reduce);
+
+    fetch('content.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        CONTENT = Object.assign({}, window.DEFAULT_CONTENT, d);
+        window.CONTENT = CONTENT;
+        if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+      })
+      .catch(function () { /* offline or 404: the inlined defaults stand */ });
+  }
+
+  /* setErr and showDone are intentionally absent: every niche examined
+     defines its own with a different signature. Sharing them would be a
+     silent behaviour change, not a saving. */
+  window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>

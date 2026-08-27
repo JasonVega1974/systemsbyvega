@@ -1,0 +1,40 @@
+/* plumbing — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #080B12;   /* was --slate-deep */
+  --ground:       #0D121C;   /* was --slate */
+  --panel:        #141C29;   /* was --slate-2 */
+  --panel-2:      #1D2838;   /* was --steel */
+  --accent:       #2E6FF2;   /* was --cobalt */
+  --accent-2:     #5C93FF;   /* was --cobalt-bright */
+  --accent-deep:  #1846A8;   /* was --cobalt-deep */
+  --accent-alt:   #C97A4A;   /* was --copper */
+  --accent-alt-2: #E3986A;   /* was --copper-bright */
+  --ink:          #EAF0FB;   /* was --ice */
+  --ink-bright:   #F5F8FD;   /* was --ice-soft */
+  --muted:        #8CA0BC;
+  --hair-accent:  rgba(46,111,242,.16);   /* was --line */
+  --hair:         rgba(234,240,251,.12);
+  --card:         rgba(20,28,41,.55);
+  --card-brd:     rgba(234,240,251,.13);
+  --ok:           #2FBE7A;   /* was --green */
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #04101f;
+  --sheen-lo:     #c9d8f5;
+  --err:          #e4574f;
+  --err-ink:      #ff8a75;
+  --ink-max:      #fff;
+  --ink-dim:      var(--muted);
+  --ground-2:     var(--ground-deep);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Chivo', system-ui, sans-serif;
+  --body:    'Public Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

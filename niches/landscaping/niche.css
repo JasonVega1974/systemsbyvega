@@ -1,0 +1,38 @@
+/* landscaping — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #0A100B;   /* was --loam-deep */
+  --ground:       #101A13;   /* was --loam */
+  --panel:        #17251C;   /* was --loam-2 */
+  --panel-2:      #213424;   /* was --moss */
+  --accent:       #8177F2;   /* was --larkspur */
+  --accent-2:     #9C93FF;   /* was --larkspur-bright */
+  --accent-deep:  #4B3FA8;   /* was --larkspur-deep */
+  --accent-alt:   #D98A52;   /* was --clay */
+  --ink:          #F2F0E6;   /* was --cream */
+  --ink-bright:   #FAF9F2;   /* was --cream-soft */
+  --ink-dim:      #B9C2B4;   /* was --stone */
+  --muted:        #8B948A;
+  --hair-accent:  rgba(129,119,242,.16);   /* was --line */
+  --hair:         rgba(242,240,230,.12);
+  --card:         rgba(23,37,28,.55);
+  --card-brd:     rgba(242,240,230,.13);
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #12101F;
+  --sheen-hi:     #fffdf9;
+  --sheen-lo:     #cfc9b4;
+  --ground-2:     #0C1710;
+  --placeholder:  #5c6459;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ink-max:      #fff;
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Oswald', system-ui, sans-serif;
+  --body:    'Work Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'Space Mono', ui-monospace, Consolas, monospace;
+}

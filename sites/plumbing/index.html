@@ -1,69 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cascade & Copper Plumbing — Fast, Honest Plumbing | Kuna, ID</title>
-<meta name="description" content="Leak repair, water heaters, repiping, drain cleaning and emergency plumbing across the Treasure Valley. Flat service call, written quotes before we start, and a live calculator for what that drip is actually costing you.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Cascade & Copper Plumbing — Kuna, ID">
-<meta property="og:description" content="Fast, honest plumbing across the Treasure Valley. See what your drip is costing you, then book a fix.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E6FF2'/%3E%3Cpath d='M32 14c8 10 12 16 12 22a12 12 0 0 1-24 0c0-6 4-12 12-22z' fill='%23EAF0FB'/%3E%3C/svg%3E">
+<meta name="description" content="Leak repair, water heaters, repiping, drain cleaning and emergency plumbing across the Treasure Valley. Flat service call, written quotes before we start, and a live calculator for what that drip is actually costing you." />
+<meta name="theme-color" content="#0D121C" />
+
+<link rel="canonical" href="https://systemsbyvega.com/sites/plumbing/" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://systemsbyvega.com/sites/plumbing/" />
+<meta property="og:title" content="Cascade & Copper Plumbing — Kuna, ID" />
+<meta property="og:description" content="Fast, honest plumbing across the Treasure Valley. See what your drip is costing you, then book a fix." />
+<meta property="og:image" content="https://systemsbyvega.com/sites/plumbing/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://systemsbyvega.com/sites/plumbing/og.png" />
+
+<link rel="icon" href="" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Plumber",
   "name": "Cascade & Copper Plumbing",
+  "description": "Leak repair, water heaters, repiping, drain cleaning and emergency plumbing across the Treasure Valley. Flat service call, written quotes before we start, and a live calculator for what that drip is actually costing you.",
   "telephone": "+12085550195",
   "email": "hello@cascadecopperplumbing.com",
-  "areaServed": ["Kuna, ID", "Boise, ID", "Meridian, ID", "Nampa, ID", "Eagle, ID", "Star, ID"],
-  "address": { "@type": "PostalAddress", "addressLocality": "Kuna", "addressRegion": "ID", "addressCountry": "US" },
-  "priceRange": "$"
+  "areaServed": "Treasure Valley, Idaho",
+  "priceRange": "$",
+  "slogan": "Fast, honest plumbing — Kuna to Boise."
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+/* plumbing — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
 :root{
-  --slate-deep:#080B12;
-  --slate:#0D121C;
-  --slate-2:#141C29;
-  --steel:#1D2838;
-  --cobalt:#2E6FF2;
-  --cobalt-bright:#5C93FF;
-  --cobalt-deep:#1846A8;
-  --copper:#C97A4A;
-  --copper-bright:#E3986A;
-  --ice:#EAF0FB;
-  --ice-soft:#F5F8FD;
-  --muted:#8CA0BC;
-  --line:rgba(46,111,242,.16);
-  --hair:rgba(234,240,251,.12);
-  --card:rgba(20,28,41,.55);
-  --card-brd:rgba(234,240,251,.13);
-  --green:#2FBE7A;
-  --shadow:0 24px 60px -20px rgba(0,0,0,.72);
-  --maxw:1140px;
+  --scheme: dark;
+  --ground-deep:  #080B12;   /* was --slate-deep */
+  --ground:       #0D121C;   /* was --slate */
+  --panel:        #141C29;   /* was --slate-2 */
+  --panel-2:      #1D2838;   /* was --steel */
+  --accent:       #2E6FF2;   /* was --cobalt */
+  --accent-2:     #5C93FF;   /* was --cobalt-bright */
+  --accent-deep:  #1846A8;   /* was --cobalt-deep */
+  --accent-alt:   #C97A4A;   /* was --copper */
+  --accent-alt-2: #E3986A;   /* was --copper-bright */
+  --ink:          #EAF0FB;   /* was --ice */
+  --ink-bright:   #F5F8FD;   /* was --ice-soft */
+  --muted:        #8CA0BC;
+  --hair-accent:  rgba(46,111,242,.16);   /* was --line */
+  --hair:         rgba(234,240,251,.12);
+  --card:         rgba(20,28,41,.55);
+  --card-brd:     rgba(234,240,251,.13);
+  --ok:           #2FBE7A;   /* was --green */
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #04101f;
+  --sheen-lo:     #c9d8f5;
+  --err:          #e4574f;
+  --err-ink:      #ff8a75;
+  --ink-max:      #fff;
+  --ink-dim:      var(--muted);
+  --ground-2:     var(--ground-deep);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-accent: var(--accent-2);
+
+  --display: 'Chivo', system-ui, sans-serif;
+  --body:    'Public Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
 }
+/* ── shared structural CSS ────────────────────────────────────────────── */
+/* _template/base.css — structural CSS shared by every SiteLab niche.
+   A rule lives here when its class/id hooks appear in the markup of two or more
+   deployed sites, or when it targets elements only. A rule used by exactly one
+   niche belongs in that niche's sections.css instead (SITELAB_TEMPLATE.md §3).
+   Colour and type come from niches/<slug>/niche.css. Never put a literal colour
+   in this file: reference a token from the §5 contract. */
+/* =========================================================
+   SAWTOOTH DUMPSTER CO. — tokens
+   High-desert identity: deep pine green base, safety-yellow
+   primary (amber-deep gradient end), warm sand/kraft type.
+   ========================================================= */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--slate-deep);color:var(--ice);font-family:'Public Sans',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* warm high-desert backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 82% -10%, rgba(216,155,0,.16), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(29,58,44,.55), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(255,196,0,.07), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, var(--ground) 45%, var(--ground-deep) 100%);
+}
+/* faint topographic contour rings */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 52px, rgba(242,233,216,.035) 52px 53px),
+    repeating-radial-gradient(circle at 84% 68%, transparent 0 68px, rgba(255,196,0,.03) 68px 69px),
+    repeating-radial-gradient(circle at 55% -10%, transparent 0 84px, rgba(242,233,216,.022) 84px 85px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+.section-title{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:active{transform:translateY(0)}
+/* headlight shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(255,196,0,.07);color:var(--ink-bright);
+  border:1px solid rgba(255,196,0,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:var(--hair-accent);box-shadow:0 10px 26px -14px rgba(255,196,0,.5)}
+.btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--accent-2);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(8,19,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.6)}
+.brand__mark svg{width:30px;height:30px}
+.brand__name{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--accent-2)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Anybody',sans-serif;font-stretch:62.5%;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.45);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(242,233,216,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--accent);display:block;
+  text-shadow:0 4px 30px rgba(255,196,0,.38);
+}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:48ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* hero art: roll-off box under a mountain ridge, drawn inline */
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,196,0,.22), rgba(255,196,0,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+.hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting high-desert dust motes */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* ridge divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--panel);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--panel),rgba(19,42,32,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.08em;
+  font-size:.84rem;color:var(--ink);padding:.6rem 1.15rem;border-radius:10px;text-transform:uppercase;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5);transition:.15s;user-select:none;white-space:nowrap}
+.pill:hover span{border-color:rgba(255,196,0,.5)}
+.pill input:checked + span{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -10px rgba(255,196,0,.7)}
+.pill input:focus-visible + span{outline:3px solid var(--accent-2);outline-offset:2px}
+.price-box .btn{width:100%;margin-top:18px}
+.reveal.in .meter__bar{width:var(--w)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,196,0,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
+.step p{color:var(--muted);font-size:.98rem}
+.nogo .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(29,58,44,.6),rgba(10,22,16,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,196,0,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,233,216,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Sawtooth Dumpster Co., how long they've been hauling in the Valley, and why they got sick of watching neighbors get quote-gamed. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:700;font-size:1.04rem;color:var(--ink-bright)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,196,0,.4);color:var(--accent);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, var(--hair-accent), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(29,58,44,.7), transparent 60%),
+    linear-gradient(160deg,var(--panel),var(--ground-2));
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--accent-2);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(8,19,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px}
+.field em{color:var(--accent-2);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,12,9,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,12,9,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD34D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(255,196,0,.06);border-style:dashed;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:var(--err);box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+/* date input: keep the picker icon visible on dark bg */
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--accent);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--accent-2)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:var(--err-ink)}
+.book__msg.ok{color:var(--accent-2)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(29,58,44,.55),rgba(10,22,16,.6));
+  border:1px solid rgba(255,196,0,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,196,0,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-dim);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--accent-2)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-dim);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--accent-2)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,19,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.7)}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+/* plumbing/sections.css — rules for this niche's own sections.
+   4 rule(s) were identical to base.css and dropped; 160 kept.
+   Inlined after base.css, so anything here overrides shared chrome. */
+body{background:var(--ground-deep);color:var(--ink);font-family:'Public Sans',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 .mono{font-family:'IBM Plex Mono',monospace}
-a{color:inherit;text-decoration:none}
 h1,h2,h3{font-family:'Chivo',sans-serif;font-weight:800;letter-spacing:-.01em}
-:focus-visible{outline:2px solid var(--cobalt-bright);outline-offset:2px;border-radius:4px}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;border-radius:4px}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
-.reveal.in{opacity:1;transform:none}
 .reveal[data-delay="1"]{transition-delay:.08s}
 .reveal[data-delay="2"]{transition-delay:.16s}
 .reveal[data-delay="3"]{transition-delay:.24s}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
 section{padding:70px 0}
-.eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt-bright);display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.eyebrow::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--cobalt-bright),var(--copper))}
+.eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.eyebrow::before{content:"";width:26px;height:2px;background:linear-gradient(90deg,var(--accent-2),var(--accent-alt))}
 h2{font-size:clamp(26px,4vw,38px);line-height:1.08;margin-bottom:14px}
 .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
 
@@ -72,15 +499,15 @@ nav{position:sticky;top:0;z-index:60;background:rgba(8,11,18,.7);backdrop-filter
 nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 .nav-in{max-width:var(--maxw);margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:center;gap:10px}
-.brand .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--cobalt-bright),var(--cobalt-deep));display:grid;place-items:center;flex:none;box-shadow:0 6px 18px rgba(46,111,242,.4)}
-.brand .mark svg{width:18px;height:18px;fill:#fff}
+.brand .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));display:grid;place-items:center;flex:none;box-shadow:0 6px 18px rgba(46,111,242,.4)}
+.brand .mark svg{width:18px;height:18px;fill:var(--ink-max)}
 .brand__name{font-family:'Chivo';font-weight:800;font-size:16px;letter-spacing:-.01em}
 .brand__name span{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
 .nav-links{display:flex;align-items:center;gap:4px}
 .nav-links a.lnk{font-weight:600;font-size:13.5px;color:var(--muted);padding:9px 13px;border-radius:8px;transition:.15s}
-.nav-links a.lnk:hover{color:var(--ice);background:rgba(255,255,255,.05)}
-.nav-call{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;color:#04101f;background:var(--cobalt-bright);padding:10px 16px;border-radius:8px;white-space:nowrap;transition:.15s}
-.nav-call:hover{background:#fff}
+.nav-links a.lnk:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.nav-call{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;color:var(--accent-ink);background:var(--accent-2);padding:10px 16px;border-radius:8px;white-space:nowrap;transition:.15s}
+.nav-call:hover{background:var(--ink-max)}
 @media(max-width:760px){.nav-links a.lnk{display:none}}
 
 /* ---------- hero ---------- */
@@ -88,36 +515,36 @@ nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 .hero::before{content:"";position:absolute;inset:0;background:
   radial-gradient(700px 420px at 85% 0%,rgba(46,111,242,.22),transparent 65%),
   radial-gradient(600px 500px at 5% 100%,rgba(201,122,74,.12),transparent 60%),
-  linear-gradient(180deg,var(--slate-deep),var(--slate));
+  linear-gradient(180deg,var(--ground-deep),var(--ground));
   pointer-events:none}
 .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;width:100%}
 .hero h1{font-size:clamp(38px,6vw,60px);line-height:.98;letter-spacing:-.03em}
-.hero h1 .l1{display:block;background:linear-gradient(180deg,#fff 0%,#c9d8f5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero h1 .l2{display:block;color:var(--cobalt-bright)}
+.hero h1 .l1{display:block;background:linear-gradient(180deg,var(--ink-max) 0%,var(--sheen-lo) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .l2{display:block;color:var(--accent-2)}
 .hero p.sub{margin-top:22px;font-size:clamp(16px,2vw,18.5px);color:var(--muted);max-width:52ch}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
 .btn{font-family:'Chivo';font-weight:700;font-size:15px;padding:15px 26px;border-radius:10px;border:none;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:8px}
-.btn-pri{background:linear-gradient(135deg,var(--cobalt-bright),var(--cobalt));color:#fff;box-shadow:0 14px 34px -10px rgba(46,111,242,.55)}
+.btn-pri{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:var(--ink-max);box-shadow:0 14px 34px -10px rgba(46,111,242,.55)}
 .btn-pri:hover{transform:translateY(-2px);box-shadow:0 18px 40px -8px rgba(46,111,242,.65)}
-.btn-ghost{background:transparent;border:1px solid var(--hair);color:var(--ice)}
-.btn-ghost:hover{border-color:var(--cobalt-bright);color:var(--cobalt-bright)}
+.btn-ghost{background:transparent;border:1px solid var(--hair);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--accent-2);color:var(--accent-2)}
 .hero-stats{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap}
-.hstat b{display:block;font-family:'Chivo';font-weight:900;font-size:26px;color:#fff}
+.hstat b{display:block;font-family:'Chivo';font-weight:900;font-size:26px;color:var(--ink-max)}
 .hstat span{display:block;font-family:'IBM Plex Mono';font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
-.hero-badge{position:relative;justify-self:center;width:min(320px,80vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--cobalt-bright),var(--cobalt-deep) 70%);display:grid;place-items:center;box-shadow:0 0 0 1px var(--hair),0 40px 80px -20px rgba(46,111,242,.5)}
+.hero-badge{position:relative;justify-self:center;width:min(320px,80vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--accent-2),var(--accent-deep) 70%);display:grid;place-items:center;box-shadow:0 0 0 1px var(--hair),0 40px 80px -20px rgba(46,111,242,.5)}
 .hero-badge::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(92,147,255,.3);animation:pulse 3.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.06);opacity:.15}}
-.hero-badge svg{width:46%;height:46%;fill:#fff;opacity:.95}
+.hero-badge svg{width:46%;height:46%;fill:var(--ink-max);opacity:.95}
 @media(prefers-reduced-motion:reduce){.hero-badge::before{animation:none}}
-.droplet{position:absolute;bottom:-10%;border-radius:50% 50% 50% 0;background:linear-gradient(180deg,var(--cobalt-bright),transparent);opacity:.5;transform:rotate(45deg);pointer-events:none;animation:fall linear infinite}
+.droplet{position:absolute;bottom:-10%;border-radius:50% 50% 50% 0;background:linear-gradient(180deg,var(--accent-2),transparent);opacity:.5;transform:rotate(45deg);pointer-events:none;animation:fall linear infinite}
 @keyframes fall{to{transform:translateY(-115vh) rotate(45deg)}}
 @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-badge{width:180px;order:-1}}
 
 /* ---------- trust strip ---------- */
-.trust{background:var(--slate);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.trust{background:var(--ground);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
 .trust-in{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .titem{display:flex;align-items:center;gap:11px;font-family:'IBM Plex Mono';font-size:12.5px;color:var(--muted)}
-.titem svg{width:20px;height:20px;flex:none;stroke:var(--cobalt-bright);fill:none;stroke-width:1.8}
+.titem svg{width:20px;height:20px;flex:none;stroke:var(--accent-2);fill:none;stroke-width:1.8}
 @media(max-width:820px){.trust-in{grid-template-columns:repeat(2,1fr)}}
 
 /* feTurbulence fractalNoise grain over the hero for atmospheric depth — north-star: dj-site-blue grain filter */
@@ -126,7 +553,7 @@ nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 .fct-svg{width:100%;height:100%;display:block;overflow:visible}
 .hero-faucet{width:52%;height:52%;filter:drop-shadow(0 10px 22px rgba(0,0,0,.5))}
 /* ---------- drip calculator (signature) ---------- */
-.drip{background:linear-gradient(180deg,var(--slate),var(--slate-2))}
+.drip{background:linear-gradient(180deg,var(--ground),var(--panel))}
 .drip-panel{margin-top:32px;background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:36px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
 .drip-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 @media(max-width:860px){.drip-grid{grid-template-columns:1fr}}
@@ -135,18 +562,18 @@ nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 .faucet svg{width:100%;height:100%;display:block;overflow:visible}
 .drop-well{width:72px;height:108px;position:relative;overflow:visible;margin-top:-4px}
 #dropCanvas{display:block;width:100%;height:100%}
-.dcalc-drop{position:absolute;left:50%;top:0;width:8px;height:11px;background:var(--cobalt-bright);border-radius:50% 50% 50% 0;transform:translateX(-50%) rotate(45deg);opacity:0;animation:dcalcfall linear infinite}
+.dcalc-drop{position:absolute;left:50%;top:0;width:8px;height:11px;background:var(--accent-2);border-radius:50% 50% 50% 0;transform:translateX(-50%) rotate(45deg);opacity:0;animation:dcalcfall linear infinite}
 @keyframes dcalcfall{0%{opacity:0;top:0}10%{opacity:1}90%{opacity:1}100%{opacity:0;top:80px}}
 @media(prefers-reduced-motion:reduce){.dcalc-drop{animation:none;display:none}}
 .drip-readout{text-align:center}
-.drip-readout .amt{font-family:'Chivo';font-weight:900;font-size:44px;color:var(--copper-bright)}
+.drip-readout .amt{font-family:'Chivo';font-weight:900;font-size:44px;color:var(--accent-alt-2)}
 .drip-readout .lbl{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 .drip-controls label{display:block;font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-.drip-controls input[type=range]{width:100%;accent-color:var(--cobalt-bright);height:6px}
+.drip-controls input[type=range]{width:100%;accent-color:var(--accent-2);height:6px}
 .drip-scale{display:flex;justify-content:space-between;font-family:'IBM Plex Mono';font-size:11px;color:var(--muted);margin-top:8px}
 .drip-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
-.dstat{background:var(--slate-2);border:1px solid var(--hair);border-radius:11px;padding:14px 16px}
-.dstat b{display:block;font-family:'Chivo';font-weight:800;font-size:20px;color:#fff}
+.dstat{background:var(--panel);border:1px solid var(--hair);border-radius:11px;padding:14px 16px}
+.dstat b{display:block;font-family:'Chivo';font-weight:800;font-size:20px;color:var(--ink-max)}
 .dstat span{display:block;font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted);text-transform:uppercase;margin-top:3px}
 .drip-note{font-size:12.5px;color:var(--muted);margin-top:18px;line-height:1.5}
 .drip-cta{margin-top:20px}
@@ -157,27 +584,27 @@ nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 @media(max-width:600px){.svc-grid{grid-template-columns:1fr}}
 .scard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:24px;backdrop-filter:blur(8px)}
 .scard .ic{width:38px;height:38px;border-radius:10px;background:rgba(46,111,242,.14);display:grid;place-items:center;margin-bottom:14px}
-.scard .ic svg{width:20px;height:20px;stroke:var(--cobalt-bright);fill:none;stroke-width:1.8}
+.scard .ic svg{width:20px;height:20px;stroke:var(--accent-2);fill:none;stroke-width:1.8}
 .scard h3{font-size:16.5px;margin-bottom:8px}
 .scard p{font-size:14px;color:var(--muted);line-height:1.55}
 
 /* ---------- pricing ---------- */
-.pricing{background:var(--slate)}
+.pricing{background:var(--ground)}
 .p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
 @media(max-width:900px){.p-grid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}}
 .pcard{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:28px;position:relative}
-.pcard.feat{border-color:var(--cobalt-bright);box-shadow:0 0 0 1px var(--cobalt-bright),0 20px 50px -18px rgba(46,111,242,.5)}
-.pcard.feat .pill{position:absolute;top:-12px;left:24px;background:var(--cobalt-bright);color:#04101f;font-family:'IBM Plex Mono';font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:5px 11px;border-radius:20px}
+.pcard.feat{border-color:var(--accent-2);box-shadow:0 0 0 1px var(--accent-2),0 20px 50px -18px rgba(46,111,242,.5)}
+.pcard.feat .pill{position:absolute;top:-12px;left:24px;background:var(--accent-2);color:var(--accent-ink);font-family:'IBM Plex Mono';font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:5px 11px;border-radius:20px}
 .pcard .lbl{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.pcard .price{font-family:'Chivo';font-weight:900;font-size:32px;margin:10px 0 2px;color:#fff}
+.pcard .price{font-family:'Chivo';font-weight:900;font-size:32px;margin:10px 0 2px;color:var(--ink-max)}
 .pcard .per{font-size:13px;color:var(--muted);margin-bottom:18px;display:block}
 .pcard ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.pcard li{display:flex;gap:9px;font-size:13.5px;color:var(--ice-soft)}
-.pcard li svg{width:16px;height:16px;flex:none;stroke:var(--green);fill:none;stroke-width:2.4;margin-top:2px}
+.pcard li{display:flex;gap:9px;font-size:13.5px;color:var(--ink-bright)}
+.pcard li svg{width:16px;height:16px;flex:none;stroke:var(--ok);fill:none;stroke-width:2.4;margin-top:2px}
 
 /* ---------- service area ---------- */
 .area-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
-.achip{font-family:'IBM Plex Mono';font-size:13px;color:var(--ice-soft);background:var(--card);border:1px solid var(--card-brd);padding:9px 16px;border-radius:20px}
+.achip{font-family:'IBM Plex Mono';font-size:13px;color:var(--ink-bright);background:var(--card);border:1px solid var(--card-brd);padding:9px 16px;border-radius:20px}
 
 /* ---------- owner ---------- */
 .owner-wrap{display:grid;grid-template-columns:180px 1fr;gap:32px;align-items:start;margin-top:28px}
@@ -189,7 +616,7 @@ nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 /* ---------- testimonials ---------- */
 .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
 @media(max-width:860px){.t-grid{grid-template-columns:1fr}}
-.tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px;font-size:14.5px;color:var(--ice-soft);min-height:120px;display:flex;flex-direction:column;justify-content:space-between}
+.tcard{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;padding:22px;font-size:14.5px;color:var(--ink-bright);min-height:120px;display:flex;flex-direction:column;justify-content:space-between}
 .tcard q{quotes:none;font-style:italic;color:var(--muted)}
 .tcard .tname{margin-top:14px;font-family:'IBM Plex Mono';font-size:12px;color:var(--muted)}
 
@@ -198,52 +625,52 @@ nav.solid{background:rgba(8,11,18,.94);border-color:var(--hair)}
 .qa{border-bottom:1px solid var(--hair)}
 .qa summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 2px;font-family:'Chivo';font-weight:700;font-size:16px}
 .qa summary::-webkit-details-marker{display:none}
-.qa summary .pm{font-family:'IBM Plex Mono';color:var(--cobalt-bright);font-size:20px;flex:none;transition:transform .2s}
+.qa summary .pm{font-family:'IBM Plex Mono';color:var(--accent-2);font-size:20px;flex:none;transition:transform .2s}
 .qa[open] summary .pm{transform:rotate(45deg)}
 .qa .ans{padding:0 2px 20px;color:var(--muted);font-size:14.5px;max-width:68ch}
 
 /* ---------- quote form ---------- */
-.quote{background:linear-gradient(180deg,var(--slate-2),var(--slate-deep))}
+.quote{background:linear-gradient(180deg,var(--panel),var(--ground-deep))}
 .qform{max-width:640px;margin:32px auto 0;background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:32px;backdrop-filter:blur(10px)}
-.mode-toggle{display:flex;gap:8px;margin-bottom:22px;background:var(--slate-2);border:1px solid var(--hair);border-radius:10px;padding:4px}
+.mode-toggle{display:flex;gap:8px;margin-bottom:22px;background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:4px}
 .mode-toggle button{flex:1;font:inherit;font-family:'Chivo';font-weight:700;font-size:13.5px;padding:10px;border:none;border-radius:7px;background:transparent;color:var(--muted);cursor:pointer;transition:.15s}
-.mode-toggle button.active{background:var(--cobalt-bright);color:#04101f}
+.mode-toggle button.active{background:var(--accent-2);color:var(--accent-ink)}
 .mode-note{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
-.mode-note.emergency{color:var(--copper-bright)}
+.mode-note.emergency{color:var(--accent-alt-2)}
 .f-row{margin-bottom:16px}
 .f-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
-.f-row input,.f-row select,.f-row textarea{width:100%;background:var(--slate-2);border:1px solid var(--hair);color:var(--ice);border-radius:9px;padding:12px 14px;font:inherit;font-size:14.5px}
-.f-row input:focus,.f-row select:focus,.f-row textarea:focus{outline:none;border-color:var(--cobalt-bright)}
+.f-row input,.f-row select,.f-row textarea{width:100%;background:var(--panel);border:1px solid var(--hair);color:var(--ink);border-radius:9px;padding:12px 14px;font:inherit;font-size:14.5px}
+.f-row input:focus,.f-row select:focus,.f-row textarea:focus{outline:none;border-color:var(--accent-2)}
 .f-row textarea{resize:vertical;min-height:80px}
-.f-row.invalid input,.f-row.invalid textarea{border-color:#e4574f}
+.f-row.invalid input,.f-row.invalid textarea{border-color:var(--err)}
 .f-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:520px){.f-2col{grid-template-columns:1fr}}
 .hp{position:absolute;left:-9999px;opacity:0}
 .qf-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
 .qf-status{width:100%;font-size:13px;color:var(--muted)}
-.qf-status.err{color:#ff8a75}
-.qf-sms{font-family:'IBM Plex Mono';font-size:13px;color:var(--cobalt-bright)}
+.qf-status.err{color:var(--err-ink)}
+.qf-sms{font-family:'IBM Plex Mono';font-size:13px;color:var(--accent-2)}
 .qf-success{display:none;text-align:center;padding:20px 6px}
-.qf-success .ck{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(47,190,122,.16);color:var(--green);font-weight:800;margin-bottom:10px}
+.qf-success .ck{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(47,190,122,.16);color:var(--ok);font-weight:800;margin-bottom:10px}
 .qf-success h3{margin-bottom:6px}
 .qf-success p{color:var(--muted);font-size:14px}
 
 /* ---------- footer ---------- */
-footer{background:var(--slate-deep);border-top:1px solid var(--hair);padding:36px 0 120px}
+footer{background:var(--ground-deep);border-top:1px solid var(--hair);padding:36px 0 120px}
 .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:13px;color:var(--muted)}
-.foot-brand{font-family:'Chivo';font-weight:800;color:#fff;margin-bottom:4px}
+.foot-brand{font-family:'Chivo';font-weight:800;color:var(--ink-max);margin-bottom:4px}
 .foot-credit{opacity:.6;font-size:12px;margin-top:6px;display:block}
 
 /* ---------- mobile call/text bar ---------- */
 .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(8,11,18,.96);backdrop-filter:blur(10px);border-top:1px solid var(--hair)}
 .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Chivo';font-weight:700;font-size:14px;padding:13px;border-radius:10px}
-.mobile-cta .call{color:#04101f;background:linear-gradient(135deg,var(--cobalt-bright),var(--cobalt-deep))}
-.mobile-cta .text{color:var(--ice);background:rgba(46,111,242,.12);border:1px solid rgba(46,111,242,.35)}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep))}
+.mobile-cta .text{color:var(--ink);background:rgba(46,111,242,.12);border:1px solid rgba(46,111,242,.35)}
 .mobile-cta svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:130px}}
 
 /* ---------- toast ---------- */
-#phoneToast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--slate-2);border:1px solid var(--hair);color:var(--ice);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;transition:.25s;pointer-events:none;z-index:90}
+#phoneToast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--panel);border:1px solid var(--hair);color:var(--ink);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;transition:.25s;pointer-events:none;z-index:90}
 #phoneToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
@@ -261,6 +688,14 @@ footer{background:var(--slate-deep);border-top:1px solid var(--hair);padding:36p
 #svDemoBanner a:hover{text-decoration:underline}
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
+
+<!-- plumbing/scene.svg — this site keeps its illustrations inline in
+     sections.html rather than in a shared <defs> block. Placeholder so the
+     build slot resolves; see brief.md. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+<!-- plumbing/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
 <!-- Shared SVG defs: feTurbulence brushed-metal texture + layered 4-6 stop metal/water gradients — north-star: dj-site-blue -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
   <filter id="fctMetalTex" x="-20%" y="-20%" width="140%" height="140%">
@@ -323,8 +758,8 @@ footer{background:var(--slate-deep);border-top:1px solid var(--hair);padding:36p
         <ellipse cx="19.5" cy="7.5" rx="4.5" ry="2.4" fill="url(#gWarm)"/>
         <rect x="17.8" y="8" width="3.4" height="9" rx="1.7" fill="url(#gWarm)"/>
         <circle cx="19.5" cy="19" r="5.4" fill="url(#gWarm)"/>
-        <path d="M20 24 C19.6 13 41 10.5 45 18.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
-        <rect x="16.4" y="23" width="1.8" height="25" rx="1" fill="#fff" opacity=".5"/>
+        <path d="M20 24 C19.6 13 41 10.5 45 18.6" fill="none" stroke="var(--ink-max)" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+        <rect x="16.4" y="23" width="1.8" height="25" rx="1" fill="var(--ink-max)" opacity=".5"/>
         <!-- forming drop at the spout tip -->
         <ellipse cx="46" cy="44" rx="2.6" ry="3.4" fill="url(#gDrop)"/>
       </svg>
@@ -360,9 +795,9 @@ footer{background:var(--slate-deep);border-top:1px solid var(--hair);padding:36p
             <ellipse cx="19.5" cy="7.5" rx="4.5" ry="2.4" fill="url(#gWarm)"/>
             <rect x="17.8" y="8" width="3.4" height="9" rx="1.7" fill="url(#gWarm)"/>
             <circle cx="19.5" cy="19" r="5.4" fill="url(#gWarm)"/>
-            <path d="M20 24 C19.6 13 41 10.5 45 18.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
-            <rect x="16.4" y="23" width="1.8" height="25" rx="1" fill="#fff" opacity=".5"/>
-            <circle cx="17.6" cy="17.4" r="1.4" fill="#fff" opacity=".55"/>
+            <path d="M20 24 C19.6 13 41 10.5 45 18.6" fill="none" stroke="var(--ink-max)" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+            <rect x="16.4" y="23" width="1.8" height="25" rx="1" fill="var(--ink-max)" opacity=".5"/>
+            <circle cx="17.6" cy="17.4" r="1.4" fill="var(--ink-max)" opacity=".55"/>
           </svg></div>
           <div class="drop-well" id="dropWell"><canvas id="dropCanvas" width="72" height="108" aria-hidden="true"></canvas></div>
           <div class="drip-readout">
@@ -465,6 +900,12 @@ footer{background:var(--slate-deep);border-top:1px solid var(--hair);padding:36p
         </div>
         <div class="f-row"><label for="qMsg">What's going on?</label><textarea id="qMsg" name="message" required placeholder="Leaking under the kitchen sink, started this morning..."></textarea></div>
         <div class="qf-actions">
+<label class="consent">
+  <input type="checkbox" id="b-consent" required />
+  <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.
+    See our <a href="/legal/privacy.html">privacy policy</a>.</span>
+</label>
+
           <button type="submit" class="btn btn-pri" id="qSubmit">Send it →</button>
           <a href="sms:+12085550195" class="qf-sms" id="qSms">or text us instead</a>
           <div class="qf-status" id="qStatus" role="status" aria-live="polite"></div>
@@ -500,8 +941,188 @@ footer{background:var(--slate-deep);border-top:1px solid var(--hair);padding:36p
 <div id="phoneToast"></div>
 
 <script>
-(function(){
-"use strict";
+/* Inlined from niches/plumbing/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {
+  "brand": {
+    "name": "Cascade & Copper Plumbing",
+    "tagline": "Fast, honest plumbing — Kuna to Boise.",
+    "phone": "(208) 555-0195",
+    "email": "hello@cascadecopperplumbing.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Kuna, ID"
+  },
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Kuna",
+      "Boise",
+      "Meridian",
+      "Nampa",
+      "Eagle",
+      "Star"
+    ]
+  },
+  "owner": {
+    "name": "Nate Colby",
+    "bio": "Nate Colby apprenticed under a Boise plumbing outfit before going out on his own with a van and a pager. Cascade & Copper is still small on purpose — Nate runs most calls himself, quotes the job before touching a wrench, and answers the emergency line personally more nights than not. No dispatch fee games, no upsell script, just the actual fix and the actual price."
+  },
+  "pricing": [
+    {
+      "label": "Service Call",
+      "blurb": "$89",
+      "per": "trip fee — waived if you book the repair",
+      "features": [
+        "Diagnosis & written quote",
+        "Same-day scheduling, most weeks",
+        "No obligation to book"
+      ],
+      "highlight": false
+    },
+    {
+      "label": "Standard Repair",
+      "blurb": "$150–$450",
+      "per": "most single-fixture repairs",
+      "features": [
+        "Leak fixes, fixture swaps, drain clears",
+        "Parts + labor, quoted before we start",
+        "90-day workmanship warranty"
+      ],
+      "highlight": true
+    },
+    {
+      "label": "Major Project",
+      "blurb": "$800+",
+      "per": "repiping, water heaters, sewer lines",
+      "features": [
+        "Full written scope before work begins",
+        "Permit handling where required",
+        "Milestone updates, no surprise invoices"
+      ],
+      "highlight": false
+    }
+  ],
+  "stats": [
+    {
+      "num": "Local",
+      "label": "Fixing Treasure Valley pipes"
+    },
+    {
+      "num": "24/7",
+      "label": "Emergency line"
+    },
+    {
+      "num": "$89",
+      "label": "Service call, waived on repair"
+    }
+  ],
+  "services": [
+    {
+      "icon": "leak",
+      "title": "Leak Repair & Drip Fixes",
+      "desc": "Dripping faucets, running toilets, and the leaks you can hear but can't find. Diagnosed and fixed in one visit, most of the time."
+    },
+    {
+      "icon": "heater",
+      "title": "Water Heater Install & Repair",
+      "desc": "Tank and tankless, gas and electric. Same-day install on most stock units when yours finally gives out."
+    },
+    {
+      "icon": "repipe",
+      "title": "Repiping",
+      "desc": "Old galvanized or failing polybutylene swapped for copper or PEX, room by room or whole-house."
+    },
+    {
+      "icon": "drain",
+      "title": "Drain & Sewer Cleaning",
+      "desc": "Camera inspection before we quote anything — so you know what's actually down there before we touch it."
+    },
+    {
+      "icon": "fixture",
+      "title": "Fixture Installs",
+      "desc": "Faucets, toilets, garbage disposals, tub and shower valves. Bring your own fixture or we'll spec one."
+    },
+    {
+      "icon": "emergency",
+      "title": "Emergency Calls",
+      "desc": "Burst pipe at 2am doesn't wait for business hours. Neither do we — see the emergency line below."
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "How fast can you get here for an emergency?",
+      "a": "Most Treasure Valley addresses inside an hour, day or night. Call the emergency line directly — it rings to a phone, not a call center."
+    },
+    {
+      "q": "Do you charge extra for after-hours calls?",
+      "a": "A modest after-hours trip fee applies outside 7am–7pm, quoted before you commit. No mystery surcharge on the invoice."
+    },
+    {
+      "q": "Are repairs warrantied?",
+      "a": "Yes — 90 days on workmanship for standard repairs, longer on major installs. Parts carry the manufacturer's own warranty."
+    },
+    {
+      "q": "Do you offer free estimates?",
+      "a": "The service call fee ($89) covers diagnosis and a written quote, and it's waived entirely if you book the repair on the spot."
+    }
+  ],
+  "social": [],
+  "niche": {
+    "dripCalc": {
+      "mlPerDrop": 0.25,
+      "costPerGallon": 0.009,
+      "minRate": 10,
+      "maxRate": 120,
+      "defaultRate": 40,
+      "note": "Estimate only, based on average U.S. residential water and sewer rates combined. Your actual cost depends on your utility's pricing."
+    }
+  },
+  "seo": {
+    "title": "Cascade & Copper Plumbing — Fast, Honest Plumbing | Kuna, ID",
+    "description": "Leak repair, water heaters, repiping, drain cleaning and emergency plumbing across the Treasure Valley. Flat service call, written quotes before we start, and a live calculator for what that drip is actually costing you.",
+    "ogTitle": "Cascade & Copper Plumbing — Kuna, ID",
+    "ogDescription": "Fast, honest plumbing across the Treasure Valley. See what your drip is costing you, then book a fix.",
+    "priceRange": "$",
+    "schemaType": "Plumber",
+    "canonical": "https://systemsbyvega.com/sites/plumbing/",
+    "themeColor": "#0D121C",
+    "favicon": "",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/plumbing/og.png"
+  }
+};
+</script>
+
+<script>
+/* plumbing/niche.js — this niche's renderer and interactive logic.
+   Shared utilities come from _template/base.js via SL; the aliases below keep
+   every extracted call site unchanged. base.js owns the reduced-motion flag,
+   the reveal observer, the content fetch/merge lifecycle, and calling
+   window.renderContent(). val/setErr/showDone are NOT aliased — this niche
+   defines its own with different signatures. */
+(function () {
+  'use strict';
+
+  var SL = window.SL;
+  var esc = SL.esc, num = SL.num, telHref = SL.telHref;
+  var reduce = SL.reduce;
+  var CONTENT = window.DEFAULT_CONTENT;
+
 var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* =====================================================
@@ -511,65 +1132,6 @@ var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
    /admin/) is fetched at runtime and merged over it.
    Keep content.json's shape in sync with this const.
    ===================================================== */
-var DEFAULT_CONTENT = {
-  brand: {
-    name: "Cascade & Copper Plumbing",
-    tagline: "Fast, honest plumbing — Kuna to Boise.",
-    phone: "(208) 555-0195",
-    email: "hello@cascadecopperplumbing.com",
-    leadEmail: "info@kingdom-creatives.com",
-    city: "Kuna, ID"
-  },
-  stats: [
-    { num: "Local", label: "Fixing Treasure Valley pipes" },
-    { num: "24/7", label: "Emergency line" },
-    { num: "$89", label: "Service call, waived on repair" }
-  ],
-  dripCalc: {
-    mlPerDrop: 0.25,
-    costPerGallon: 0.009,
-    minRate: 10,
-    maxRate: 120,
-    defaultRate: 40,
-    note: "Estimate only, based on average U.S. residential water and sewer rates combined. Your actual cost depends on your utility's pricing."
-  },
-  services: [
-    { icon: "leak", title: "Leak Repair & Drip Fixes", desc: "Dripping faucets, running toilets, and the leaks you can hear but can't find. Diagnosed and fixed in one visit, most of the time." },
-    { icon: "heater", title: "Water Heater Install & Repair", desc: "Tank and tankless, gas and electric. Same-day install on most stock units when yours finally gives out." },
-    { icon: "repipe", title: "Repiping", desc: "Old galvanized or failing polybutylene swapped for copper or PEX, room by room or whole-house." },
-    { icon: "drain", title: "Drain & Sewer Cleaning", desc: "Camera inspection before we quote anything — so you know what's actually down there before we touch it." },
-    { icon: "fixture", title: "Fixture Installs", desc: "Faucets, toilets, garbage disposals, tub and shower valves. Bring your own fixture or we'll spec one." },
-    { icon: "emergency", title: "Emergency Calls", desc: "Burst pipe at 2am doesn't wait for business hours. Neither do we — see the emergency line below." }
-  ],
-  pricing: [
-    { label: "Service Call", price: "$89", per: "trip fee — waived if you book the repair", featured: false,
-      features: "Diagnosis & written quote\nSame-day scheduling, most weeks\nNo obligation to book" },
-    { label: "Standard Repair", price: "$150–$450", per: "most single-fixture repairs", featured: true,
-      features: "Leak fixes, fixture swaps, drain clears\nParts + labor, quoted before we start\n90-day workmanship warranty" },
-    { label: "Major Project", price: "$800+", per: "repiping, water heaters, sewer lines", featured: false,
-      features: "Full written scope before work begins\nPermit handling where required\nMilestone updates, no surprise invoices" }
-  ],
-  serviceArea: { region: "Treasure Valley, Idaho", short: "Treasure Valley", cities: ["Kuna", "Boise", "Meridian", "Nampa", "Eagle", "Star"] },
-  owner: {
-    name: "Nate Colby",
-    bio: "Nate Colby apprenticed under a Boise plumbing outfit before going out on his own with a van and a pager. Cascade & Copper is still small on purpose — Nate runs most calls himself, quotes the job before touching a wrench, and answers the emergency line personally more nights than not. No dispatch fee games, no upsell script, just the actual fix and the actual price."
-  },
-  testimonials: [
-    { quote: "", name: "" },
-    { quote: "", name: "" },
-    { quote: "", name: "" }
-  ],
-  faq: [
-    { q: "How fast can you get here for an emergency?", a: "Most Treasure Valley addresses inside an hour, day or night. Call the emergency line directly — it rings to a phone, not a call center." },
-    { q: "Do you charge extra for after-hours calls?", a: "A modest after-hours trip fee applies outside 7am–7pm, quoted before you commit. No mystery surcharge on the invoice." },
-    { q: "Are repairs warrantied?", a: "Yes — 90 days on workmanship for standard repairs, longer on major installs. Parts carry the manufacturer's own warranty." },
-    { q: "Do you offer free estimates?", a: "The service call fee ($89) covers diagnosis and a written quote, and it's waived entirely if you book the repair on the spot." }
-  ],
-  social: []
-};
-
-var CONTENT = DEFAULT_CONTENT;
-
 /* Lead delivery — no backend. FormSubmit needs no account, but the FIRST real
    submission emails an activation link to LEAD.email; click it once and
    every quote request after that lands in that inbox, formatted as a table. */
@@ -584,8 +1146,6 @@ var SVC_ICONS = {
   emergency: '<path d="M13 2 4 14h6l-1 8 9-12h-6z"/>'
 };
 
-function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-function telHref(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); }
 
 function applyRuntime(c){
   LEAD.email = (c.brand||{}).leadEmail || LEAD.email;
@@ -664,17 +1224,7 @@ function renderContent(c){
   revealScan(document);
 }
 
-renderContent(CONTENT);
-fetch('content.json', {cache:'no-store'})
-  .then(function(r){ return r.ok ? r.json() : null; })
-  .then(function(d){
-    if(d){
-      CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
-      applyRuntime(CONTENT);
-      renderContent(CONTENT);
-    }
-  })
-  .catch(function(){});
+/* boot handed to base.js */
 
 // ---------- year ----------
 var yr = document.getElementById('yr');
@@ -752,43 +1302,9 @@ if(dripSlider){
   updateDrip();
 }
 
-// ---------- gravity-accelerated drop physics (drip calculator) — north-star: dj-site-blue requestAnimationFrame physics ----------
-(function(){
-  var cv = document.getElementById('dropCanvas');
-  if(!cv || reduce) return;                        // reduced-motion: static faucet only, no drops
-  var ctx = cv.getContext('2d');
-  var W = cv.width, H = cv.height;
-  var GRAV = 0.17;                                 // gravity acceleration (px/frame^2)
-  var drops = [], ripples = [], acc = 0;
-  var spoutX = W*0.5, spoutY = 3, poolY = H - 8;
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    var pg = ctx.createLinearGradient(0,poolY-5,0,H);
-    pg.addColorStop(0,'rgba(46,111,242,0)'); pg.addColorStop(1,'rgba(46,111,242,.30)');
-    ctx.fillStyle = pg; ctx.fillRect(0,poolY,W,H-poolY);
-    var rate = window.__dripRate || 40;
-    acc += rate/3600;                              // drops/min -> drops/frame at ~60fps
-    while(acc >= 1){ drops.push({x:spoutX+(Math.random()-.5)*1.6, y:spoutY, vy:0.4, r:2.3+Math.random()*0.8}); acc -= 1; }
-    for(var i=drops.length-1;i>=0;i--){
-      var d = drops[i];
-      d.vy += GRAV; d.y += d.vy;                    // gravity: real acceleration + momentum
-      if(d.y >= poolY){ ripples.push({x:d.x,y:poolY,r:1,a:.5}); drops.splice(i,1); continue; }
-      var stretch = Math.min(1.9, 1 + d.vy*0.06);  // drop elongates with speed
-      var g = ctx.createRadialGradient(d.x-0.8, d.y-d.r, 0.4, d.x, d.y, d.r*1.5);
-      g.addColorStop(0,'rgba(234,244,255,.95)'); g.addColorStop(.4,'rgba(127,176,255,.85)'); g.addColorStop(1,'rgba(27,63,143,.9)');
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.ellipse(d.x, d.y, d.r, d.r*stretch, 0, 0, Math.PI*2); ctx.fill();
-    }
-    for(var j=ripples.length-1;j>=0;j--){
-      var rp = ripples[j]; rp.r += 0.7; rp.a -= 0.03;
-      if(rp.a <= 0){ ripples.splice(j,1); continue; }
-      ctx.strokeStyle = 'rgba(127,176,255,'+rp.a.toFixed(3)+')'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.ellipse(rp.x, rp.y, rp.r, rp.r*0.4, 0, 0, Math.PI*2); ctx.stroke();
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
+
+  /* signature animation extracted to scene.js */
+
 
 // ---------- emergency / scheduled mode toggle ----------
 (function(){
@@ -885,7 +1401,163 @@ if(dripSlider){
   });
 })();
 
+  window.renderContent = renderContent;
 })();
 </script>
+
+<script>
+/* plumbing/scene.js — the signature animation, extracted verbatim from the
+   original's main script. base.js calls window.initScene(reduce) after first
+   render; the block below closes over that parameter exactly as it closed over
+   the outer-scope `reduce` before, so the reduced-motion path is unchanged. */
+window.initScene = function (reduce) {
+// ---------- gravity-accelerated drop physics (drip calculator) — north-star: dj-site-blue requestAnimationFrame physics ----------
+(function(){
+  var cv = document.getElementById('dropCanvas');
+  if(!cv || reduce) return;                        // reduced-motion: static faucet only, no drops
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var GRAV = 0.17;                                 // gravity acceleration (px/frame^2)
+  var drops = [], ripples = [], acc = 0;
+  var spoutX = W*0.5, spoutY = 3, poolY = H - 8;
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    var pg = ctx.createLinearGradient(0,poolY-5,0,H);
+    pg.addColorStop(0,'rgba(46,111,242,0)'); pg.addColorStop(1,'rgba(46,111,242,.30)');
+    ctx.fillStyle = pg; ctx.fillRect(0,poolY,W,H-poolY);
+    var rate = window.__dripRate || 40;
+    acc += rate/3600;                              // drops/min -> drops/frame at ~60fps
+    while(acc >= 1){ drops.push({x:spoutX+(Math.random()-.5)*1.6, y:spoutY, vy:0.4, r:2.3+Math.random()*0.8}); acc -= 1; }
+    for(var i=drops.length-1;i>=0;i--){
+      var d = drops[i];
+      d.vy += GRAV; d.y += d.vy;                    // gravity: real acceleration + momentum
+      if(d.y >= poolY){ ripples.push({x:d.x,y:poolY,r:1,a:.5}); drops.splice(i,1); continue; }
+      var stretch = Math.min(1.9, 1 + d.vy*0.06);  // drop elongates with speed
+      var g = ctx.createRadialGradient(d.x-0.8, d.y-d.r, 0.4, d.x, d.y, d.r*1.5);
+      g.addColorStop(0,'rgba(234,244,255,.95)'); g.addColorStop(.4,'rgba(127,176,255,.85)'); g.addColorStop(1,'rgba(27,63,143,.9)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.ellipse(d.x, d.y, d.r, d.r*stretch, 0, 0, Math.PI*2); ctx.fill();
+    }
+    for(var j=ripples.length-1;j>=0;j--){
+      var rp = ripples[j]; rp.r += 0.7; rp.a -= 0.03;
+      if(rp.a <= 0){ ripples.splice(j,1); continue; }
+      ctx.strokeStyle = 'rgba(127,176,255,'+rp.a.toFixed(3)+')'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.ellipse(rp.x, rp.y, rp.r, rp.r*0.4, 0, 0, Math.PI*2); ctx.stroke();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+};
+</script>
+
+<script>
+/* _template/base.js — utilities and the content lifecycle.
+   Shared by every niche. Niche-specific rendering lives in niches/<slug>/niche.js,
+   which must define window.renderContent(CONTENT). */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+  function telDigits(p) { return String(p || '').replace(/[^0-9+]/g, ''); }
+  function telHref(p) { return 'tel:' + telDigits(p); }
+  function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
+  function initReveal() {
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!els.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Form POST. Returns a promise; the niche decides what to render on success. */
+  function postForm(endpoint, payload) {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+  }
+
+  /* Consent gate (§9.3).
+     Runs in the CAPTURE phase, ahead of the niche's own submit handler, so a
+     checkbox the BUILD injected is enforced even though that niche's JS knows
+     nothing about it.
+
+     It does NOT stopPropagation: the niche handler still runs and sets its own
+     message if it has one. We only supply wording when nobody else did, checked
+     on the next tick — so the 8 sites that already gate keep their own copy and
+     the injected sites get a sensible default. Enforcement is uniform; wording
+     is not overridden. */
+  function consentGate(e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var box = form.querySelector('input[type="checkbox"][id$="consent"]');
+    if (!box || box.checked) return;
+
+    e.preventDefault();
+    box.focus();
+
+    var msg = form.querySelector('[id$="Msg"]');
+    var before = msg ? msg.textContent : null;
+    setTimeout(function () {
+      if (!msg || msg.textContent !== before) return;   // the niche spoke first
+      msg.textContent = 'Please tick the consent box so we can reply to you.';
+      if (msg.className.indexOf('err') < 0) msg.className += ' err';
+    }, 0);
+  }
+  document.addEventListener('submit', consentGate, true);
+
+  /* The content lifecycle.
+     DEFAULT_CONTENT is inlined by the build from content.json, so the two can
+     never disagree. The fetch exists so an operator edit goes live without a
+     rebuild; on failure the inlined copy already rendered. */
+  function boot() {
+    var CONTENT = window.DEFAULT_CONTENT || {};
+    window.CONTENT = CONTENT;
+    if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    initReveal();
+    if (typeof window.initScene === 'function') window.initScene(reduce);
+
+    fetch('content.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        CONTENT = Object.assign({}, window.DEFAULT_CONTENT, d);
+        window.CONTENT = CONTENT;
+        if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+      })
+      .catch(function () { /* offline or 404: the inlined defaults stand */ });
+  }
+
+  /* setErr and showDone are intentionally absent: every niche examined
+     defines its own with a different signature. Sharing them would be a
+     silent behaviour change, not a saving. */
+  window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>

@@ -1,0 +1,468 @@
+<!-- landscaping/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Larkspur & Ledge Landscape Co. home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="var(--accent-ink)"/>
+          <path d="M32 44 C30 32 34 24 30 12" stroke="var(--accent-ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="4.2" fill="var(--accent-ink)"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Larkspur &amp; Ledge Landscape Co.<span>Treasure Valley landscaping</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#season">Seasons</a>
+      <a class="link" href="#plans">Plans</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#book">Book</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550134">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0134</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Lawn &amp; yard care · Treasure Valley, Idaho</span></div>
+        <h1><span class="l1">Your Yard,</span><span class="l2">Every Season.</span></h1>
+        <p class="hero__sub">Spring cleanup isn't a fall cleanup, and a July mow isn't a January snow push. We plan around what your yard actually needs this month — pick your season below and see exactly what's next, with a real price attached.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#season">See this season</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550134">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Year-Round</b><span>Every season covered</span></div>
+          <div class="proof"><b>Weekly</b><span>Yards kept sharp</span></div>
+          <div class="proof"><b>Local</b><span>Owned &amp; operated</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <!-- terraced stone ledge with larkspur in bloom -->
+        <svg viewBox="0 0 520 380" fill="none" role="img" aria-label="Illustration: larkspur flowers growing from a terraced stone ledge">
+          <!-- sun / glow -->
+          <circle cx="418" cy="66" r="20" fill="#9C93FF" fill-opacity=".7"/>
+          <circle cx="418" cy="66" r="32" stroke="#9C93FF" stroke-opacity=".22" stroke-width="2"/>
+          <!-- terraces (stone ledges), back to front -->
+          <path d="M40 150 H480 L462 202 H58 Z" fill="#3A4A3C" fill-opacity=".5"/>
+          <path d="M64 202 H456 L436 258 H84 Z" fill="#465A48" fill-opacity=".6"/>
+          <path d="M92 258 H428 L406 320 H114 Z" fill="#55694F" fill-opacity=".72"/>
+          <!-- ledge cap lines -->
+          <rect x="40" y="146" width="440" height="8" rx="3" fill="#26332B"/>
+          <rect x="64" y="198" width="392" height="8" rx="3" fill="#26332B"/>
+          <rect x="92" y="254" width="336" height="8" rx="3" fill="#26332B"/>
+          <!-- larkspur stalks on the top tier -->
+          <path d="M140 146 C 136 116 146 96 140 66" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="140" cy="66" r="5.5" fill="#F2F0E6"/><circle cx="132" cy="78" r="4.4" fill="#F2F0E6"/><circle cx="148" cy="82" r="4.2" fill="#F2F0E6"/><circle cx="136" cy="94" r="4" fill="#F2F0E6"/>
+          <path d="M200 146 C 196 122 204 104 198 78" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="198" cy="78" r="5" fill="#F2F0E6"/><circle cx="190" cy="90" r="4" fill="#F2F0E6"/><circle cx="206" cy="94" r="3.8" fill="#F2F0E6"/>
+          <path d="M356 146 C 352 118 360 100 354 70" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="354" cy="70" r="5.5" fill="#F2F0E6"/><circle cx="346" cy="82" r="4.4" fill="#F2F0E6"/><circle cx="362" cy="86" r="4.2" fill="#F2F0E6"/>
+          <!-- shrub on the middle tier -->
+          <circle cx="270" cy="196" r="26" fill="#4C6350"/><circle cx="248" cy="202" r="18" fill="#4C6350"/><circle cx="294" cy="202" r="18" fill="#4C6350"/>
+          <!-- ground -->
+          <path d="M20 358 H500" stroke="#F2F0E6" stroke-opacity=".2" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,46 C120,20 240,20 360,42 C480,58 600,58 720,34 C840,14 960,14 1080,36 C1200,54 1320,54 1440,30 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Same crew, every visit</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text before we show up</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/><path d="M3 21h18"/></svg>Locally owned &amp; operated</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.2-9.5-9.3C.8 8.4 2.2 4.8 5.8 4.1c2-.4 3.9.6 4.9 2.2 1-1.6 2.9-2.6 4.9-2.2 3.6.7 5 4.3 3.3 7.6C19 15.8 12 21 12 21z" opacity="0"/><path d="M4 20 L4 12 M4 12 L14 6 M4 12 L20 12" stroke-opacity="0"/><circle cx="12" cy="9" r="3"/><path d="M12 12v9"/></svg>Serving the Treasure Valley</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: SEASON WHEEL ============ -->
+<section class="section" id="season">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Pick your season</span>
+      <h2 class="section-title" id="seasonTitle">One yard. Four very different jobs.</h2>
+      <p class="lead" style="margin:0 auto" id="seasonLead">Tap a season to see what it actually takes to keep a Treasure Valley yard looking right — and what each job costs.</p>
+    </div>
+
+    <div class="wheel reveal" id="wheel">
+      <div class="wheel__in">
+        <div class="wheel__tabs" id="wheelTabs" role="tablist" aria-label="Choose a season"></div>
+        <div class="wheel__body" id="wheelBody">
+          <div class="wheel__art">
+            <img class="wheel__photo" id="wheelPhoto" alt="" hidden />
+            <!-- Static base scene (renders with JS off); JS only re-tints per season. feTurbulence textures + layered atmospheric gradients — north-star: dj-site-blue -->
+            <svg class="yard-scene" id="yardScene" data-season="summer" viewBox="0 0 400 500" fill="none" role="img" aria-label="Illustration of the yard through the seasons" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <!-- 5-stop atmospheric sky (horizon glow follows the season via --sky) -->
+                <linearGradient id="yd-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#0b1830"/><stop offset="34%" stop-color="#243050"/>
+                  <stop offset="62%" stop-color="#4f5486"/><stop offset="84%" stop-color="var(--sky,#9c93ff)"/>
+                  <stop offset="100%" stop-color="#ece7ff"/>
+                </linearGradient>
+                <radialGradient id="yd-sun" cx=".5" cy=".5" r=".5">
+                  <stop offset="0" stop-color="var(--ink-max)7e0" stop-opacity=".9"/>
+                  <stop offset="45%" stop-color="#ffe9b8" stop-opacity=".45"/>
+                  <stop offset="100%" stop-color="#ffe9b8" stop-opacity="0"/>
+                </radialGradient>
+                <!-- 4-stop ground relief overlay -->
+                <linearGradient id="yd-relief" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="var(--ink-max)fff" stop-opacity=".18"/><stop offset="28%" stop-color="var(--ink-max)fff" stop-opacity="0"/>
+                  <stop offset="72%" stop-color="#000000" stop-opacity=".12"/><stop offset="100%" stop-color="#000000" stop-opacity=".4"/>
+                </linearGradient>
+                <!-- 4-stop bark (cylindrical light-to-dark) -->
+                <linearGradient id="yd-bark" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#6d4c31"/><stop offset="38%" stop-color="#49331f"/>
+                  <stop offset="72%" stop-color="#352518"/><stop offset="100%" stop-color="#22170e"/>
+                </linearGradient>
+                <!-- neutral canopy light/shadow depth, layered over the season-tinted foliage -->
+                <radialGradient id="yd-canopy" cx=".36" cy=".3" r=".8">
+                  <stop offset="0" stop-color="var(--ink-max)fff" stop-opacity=".36"/><stop offset="46%" stop-color="var(--ink-max)fff" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#04140b" stop-opacity=".52"/>
+                </radialGradient>
+                <!-- feTurbulence fractalNoise grass texture — north-star: dj-site-blue grain -->
+                <filter id="yd-grass" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.11" numOctaves="3" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/></filter>
+                <!-- feTurbulence + feDisplacementMap foliage texture -->
+                <filter id="yd-leaf" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="0.15" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/></filter>
+                <!-- fine atmospheric grain -->
+                <filter id="yd-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .05 0"/></filter>
+                <!-- feTurbulence snow-crust texture -->
+                <filter id="yd-snowtex" x="-6%" y="-6%" width="112%" height="112%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.13" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6"/></filter>
+              </defs>
+              <rect x="0" y="0" width="400" height="500" fill="url(#yd-sky)"/>
+              <circle cx="300" cy="96" r="120" fill="url(#yd-sun)"/>
+              <!-- distant hills (receding branching silhouettes) -->
+              <path d="M0 330 Q80 292 170 312 T330 300 T400 316 V500 H0 Z" fill="#28304c" opacity=".5"/>
+              <path d="M0 356 Q100 322 210 342 T400 336 V500 H0 Z" fill="#1b2540" opacity=".68"/>
+              <!-- ground: season base (--ground) + relief gradient + grass texture -->
+              <path class="yard-ground" d="M0 372 Q130 356 230 368 T400 360 V500 H0 Z"/>
+              <path d="M0 372 Q130 356 230 368 T400 360 V500 H0 Z" fill="url(#yd-relief)"/>
+              <rect x="0" y="366" width="400" height="134" fill="#0e2216" filter="url(#yd-grass)" opacity=".5"/>
+              <!-- tree: branching trunk + limbs (bark gradient) -->
+              <path d="M198 452 C 195 400 188 360 192 316 C 194 292 184 276 168 264 M192 316 C 190 292 204 278 226 272 M193 338 C 198 322 218 316 240 322 M196 388 C 190 368 174 360 154 364" stroke="url(#yd-bark)" stroke-width="11" stroke-linecap="round" fill="none"/>
+              <path d="M198 452 C 195 400 188 360 192 316" stroke="#1d130b" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".5"/>
+              <!-- canopy: season-tinted foliage (yard-tree=--foliage) + turbulence texture + light/shadow depth -->
+              <g>
+                <path class="yard-tree" d="M150 238 Q108 196 150 154 Q182 118 226 138 Q272 116 292 160 Q322 190 292 232 Q276 276 224 266 Q176 286 150 238 Z"/>
+                <path d="M150 238 Q108 196 150 154 Q182 118 226 138 Q272 116 292 160 Q322 190 292 232 Q276 276 224 266 Q176 286 150 238 Z" fill="#0a1f12" filter="url(#yd-leaf)" opacity=".5"/>
+                <path d="M150 238 Q108 196 150 154 Q182 118 226 138 Q272 116 292 160 Q322 190 292 232 Q276 276 224 266 Q176 286 150 238 Z" fill="url(#yd-canopy)"/>
+              </g>
+              <!-- season overlays (toggled by data-season) -->
+              <g class="yard-blossom">
+                <circle cx="160" cy="176" r="5" fill="#f4dcea"/><circle cx="200" cy="150" r="4.4" fill="#f4dcea"/>
+                <circle cx="244" cy="164" r="5.2" fill="#f4dcea"/><circle cx="210" cy="196" r="4.2" fill="#f7e6f0"/>
+                <circle cx="180" cy="214" r="4.6" fill="#f7e6f0"/><circle cx="268" cy="196" r="4" fill="#f4dcea"/>
+              </g>
+              <g class="yard-leaffall">
+                <path d="M120 392 q6 -4 10 2 q-5 5 -10 -2 Z" fill="#C4622E"/><path d="M270 402 q6 -4 10 2 q-5 5 -10 -2 Z" fill="#D98A52"/>
+                <path d="M196 420 q6 -4 10 2 q-5 5 -10 -2 Z" fill="#E0A25E"/><path d="M150 410 q5 -3 9 2 q-4 4 -9 -2 Z" fill="#C4622E"/>
+              </g>
+              <g class="yard-snow">
+                <path d="M150 232 Q200 208 292 226 Q276 248 224 244 Q182 258 150 232 Z" fill="#f2f0e6" fill-opacity=".9" filter="url(#yd-snowtex)"/>
+                <rect x="0" y="360" width="400" height="22" fill="#f2f0e6" fill-opacity=".82" filter="url(#yd-snowtex)"/>
+              </g>
+              <g class="yard-fx" aria-hidden="true"></g>
+              <!-- atmospheric grain overlay -->
+              <rect x="0" y="0" width="400" height="500" filter="url(#yd-grain)" opacity=".55" style="mix-blend-mode:soft-light"/>
+            </svg>
+            <span class="wheel__caption" id="wheelCaption"></span>
+          </div>
+          <div class="wheel__info" id="wheelInfo"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOOD TO KNOW / OUT OF SCOPE ============ -->
+<section class="section scope" id="scope">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">What's outside a standard visit</h2>
+      <p class="lead" style="margin:0 auto">Our flat-rate plans and seasonal jobs cover the vast majority of yards. Here's the short list of things that need their own quote.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Tree removal &amp; stump grinding</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Irrigation repair</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Sod installation</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Hardscape &amp; pavers</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Fence repair</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Large excavation</span>
+    </div>
+    <p class="scope__alt reveal" id="scopeNote">None of that is off the table — just outside our flat-rate plans. <b>Text us a photo and we'll quote it separately.</b></p>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="section" id="benefits">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Why Larkspur &amp; Ledge</span>
+      <h2 class="section-title">Built around your yard's calendar</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit reveal" data-delay="1">
+        <div class="benefit__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></div>
+        <h3>Built around your season</h3>
+        <p>We don't run one static service list all year. What we do in March isn't what we do in November — the site changes with the season, and so does your yard.</p>
+      </div>
+      <div class="benefit reveal" data-delay="2">
+        <div class="benefit__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>No surprise invoices</h3>
+        <p>Plans are flat monthly pricing. One-time jobs are quoted up front — before we touch a shovel, not after.</p>
+      </div>
+      <div class="benefit reveal" data-delay="3">
+        <div class="benefit__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></div>
+        <h3>Same crew, every time</h3>
+        <p>You get to know the people mowing your lawn — not a rotating cast of subcontractors you've never met.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANS (pricing) ============ -->
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Maintenance plans</span>
+      <h2 class="section-title">Pick a plan. It's flat, every month.</h2>
+      <p class="lead" style="margin:0 auto">Ongoing care, not a one-off job. Every plan includes text alerts before each visit and a photo update after anything bigger than a mow.</p>
+    </div>
+    <div class="plans-grid" id="plansGrid"></div>
+    <p class="plans-note reveal" id="plansNote">Corner lot, acreage, or something in between? <b>Text us your square footage and we'll quote it exact.</b></p>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. Zero guesswork.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Tell us about your yard</h3>
+        <p>A season, a plan, or a one-time job — pick above or just send us a few lines. Two minutes, no site visit required to get a starting number.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We quote it before we touch anything</h3>
+        <p>Flat price, confirmed before the crew shows up. No "we'll see once we get there" invoices.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>You get a text, then a photo</h3>
+        <p>A heads-up before every visit, and a photo update after anything bigger than a routine mow — so you know it's done without walking outside.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner kneeling beside a garden bed at a stone ledge">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <circle cx="316" cy="108" r="58" stroke="#F2F0E6" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="316" cy="108" r="84" stroke="#F2F0E6" stroke-opacity=".06" stroke-width="1.5"/>
+          <circle cx="316" cy="108" r="110" stroke="#F2F0E6" stroke-opacity=".045" stroke-width="1.5"/>
+          <circle cx="300" cy="76" r="16" fill="#9C93FF" fill-opacity=".8"/>
+          <circle cx="300" cy="76" r="27" stroke="#9C93FF" stroke-opacity=".22" stroke-width="2"/>
+          <!-- terraced ledge -->
+          <path d="M40 300 H360 L346 344 H54 Z" fill="#3A4A3C" fill-opacity=".6"/>
+          <rect x="40" y="296" width="320" height="10" rx="3" fill="#26332B"/>
+          <!-- larkspur stalks -->
+          <path d="M110 300 C 106 274 114 258 108 236" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="108" cy="236" r="4.6" fill="#F2F0E6"/><circle cx="100" cy="248" r="3.8" fill="#F2F0E6"/><circle cx="116" cy="252" r="3.6" fill="#F2F0E6"/>
+          <path d="M296 300 C 292 270 300 252 294 226" stroke="#9C93FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="294" cy="226" r="5" fill="#F2F0E6"/><circle cx="286" cy="238" r="4" fill="#F2F0E6"/><circle cx="302" cy="242" r="3.8" fill="#F2F0E6"/>
+          <!-- kneeling figure, simple line art -->
+          <circle cx="196" cy="252" r="18" fill="#26332B"/>
+          <path d="M178 270 C 168 286 168 306 176 330 L 224 330 C 232 306 232 286 214 270 Z" fill="#26332B"/>
+          <path d="M176 330 L168 352 M224 330 L236 350" stroke="#26332B" stroke-width="10" stroke-linecap="round"/>
+          <path d="M182 296 L156 314" stroke="#26332B" stroke-width="9" stroke-linecap="round"/>
+          <!-- ground -->
+          <path d="M16 372 H384" stroke="#F2F0E6" stroke-opacity=".2" stroke-width="2"/>
+          <!-- caption -->
+          <text x="200" y="418" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" letter-spacing="4" fill="#B9C2B4" opacity=".85">TRUSTED GROUNDS CREW</text>
+          <text id="ownerCaption" x="200" y="440" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#8B948A" opacity=".7">ON SITE MOST WEEKS</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The person who quotes the job</h2>
+        <div class="owner__desc" id="ownerDesc">Mara Quist grew up two blocks from a nursery and spent every summer of high school working the register, then the greenhouses, then the crews. Now she's running her own — Larkspur &amp; Ledge started as one truck and a trailer, and it still runs on the same rule: show up when you say you will, and leave the yard looking better than the photo you were quoted from. She's still out on jobs most weeks, not just behind a desk.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Do I need to be home for a visit?<span class="plus">+</span></summary><div class="faq__body">No. Gate code or a note on where things are is all we need — most of our regulars never see us show up. We text before and after, so you always know it's done.</div></details>
+      <details class="faq reveal"><summary>What happens if it rains — or snows — on my scheduled day?<span class="plus">+</span></summary><div class="faq__body">We reschedule to the next clear day, usually within 24-48 hours, and text you the new time. No visit gets skipped without a replacement — you're never charged for one we didn't do.</div></details>
+      <details class="faq reveal"><summary>Do you bring your own equipment?<span class="plus">+</span></summary><div class="faq__body">Yes — mowers, edgers, blowers, aerators, the works. You never need to own or store anything for us to do the job.</div></details>
+      <details class="faq reveal"><summary>Can I switch plans, or skip a visit?<span class="plus">+</span></summary><div class="faq__body">Anytime. Text us before your next scheduled visit and we'll adjust the plan or push the date — no cancellation fee, no long-term contract holding you in.</div></details>
+      <details class="faq reveal"><summary>What's <em>not</em> included in a plan?<span class="plus">+</span></summary><div class="faq__body">Bigger jobs like irrigation repair, tree removal, sod or hardscape work aren't part of a standard plan — see the "What's outside a standard visit" list above. Text us a photo and we'll quote those separately.</div></details>
+      <details class="faq reveal"><summary id="faqDeliverQ">Where do you service?<span class="plus">+</span></summary><div class="faq__body" id="faqDeliver">Meridian, Boise, Eagle, Star, Kuna, Middleton and everything in between — the whole Treasure Valley. Outside that ring? Text us your address anyway; if a route works we'll make it work.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">From the yard</span>
+      <h2 class="section-title">What the neighbors say</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review reveal" data-delay="1">
+        <div class="review__quote"></div>
+        <div class="review__who">— Add a real review here</div>
+      </div>
+      <div class="review reveal" data-delay="2">
+        <div class="review__quote"></div>
+        <div class="review__who">— Add a real review here</div>
+      </div>
+      <div class="review reveal" data-delay="3">
+        <div class="review__quote"></div>
+        <div class="review__who">— Add a real review here</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Get a quote</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Get your quote in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Tell us about your yard and we'll text you back within the hour (during business hours) with a real price — not a callback promise.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550134" data-phone>(208) 555-0134</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Property address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Larkspur Ln" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Meridian" required />
+        </div>
+        <div class="field">
+          <label for="b-service">What do you need? <em>*</em></label>
+          <select id="b-service" name="service" required></select>
+        </div>
+        <div class="field">
+          <label for="b-date">Preferred start date <em>*</em></label>
+          <input id="b-date" name="start_date" type="date" required />
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Gate code, dog in the yard, that one stubborn corner, whatever's useful…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your selection (auto-filled from the season wheel or a plan above)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Use a season or plan above, or leave blank and we'll confirm by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Get my quote</button>
+        <a class="book__alt" href="sms:+12085550134?body=Hi%20Larkspur%20%26%20Ledge!%20I'd%20like%20a%20quote.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>You're on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your quote.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M6 44 L58 44 L52 55 L12 55 Z" fill="var(--accent-ink)"/>
+          <path d="M32 44 C30 32 34 24 30 12" stroke="var(--accent-ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="30" cy="12" r="4.2" fill="var(--accent-ink)"/>
+        </svg>
+      </span>
+      <div><b data-brand>Larkspur &amp; Ledge Landscape Co.</b><span data-tagline>Every season, handled right.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550134" data-phone>(208) 555-0134</a> · <a href="mailto:hello@larkspurledge.com" id="footEmail">hello@larkspurledge.com</a><br />
+      <span id="footServe">Serving Meridian · Boise · Eagle · Star · Kuna · Middleton</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Larkspur &amp; Ledge Landscape Co.</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550134"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550134?body=Hi%20Larkspur%20%26%20Ledge!%20I'd%20like%20a%20quote."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>

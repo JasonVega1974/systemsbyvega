@@ -1,0 +1,415 @@
+<!-- car-detailing/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Kestrel Detail Co. home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z" fill="#0E131A"/>
+          <circle cx="26" cy="45" r="4" fill="#0E131A"/><circle cx="47" cy="45" r="4" fill="#0E131A"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Kestrel Detail Co.<span>Mobile detailing · Boise</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#detail">What we detail</a>
+      <a class="link" href="#packages">Packages</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#results">Results</a>
+      <a class="link" href="#book">Book</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550166">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0166</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Mobile car detailing · Boise &amp; the Treasure Valley</span></div>
+        <h1><span class="l1">Showroom Shine.</span><span class="l2">Curbside.</span></h1>
+        <p class="hero__sub">We bring the water, the power and the polish straight to your driveway. Pick a package, see a flat price, and get back into a car that looks like the day you drove it home — usually in a couple of hours, without leaving home.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#packages">See packages &amp; prices</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550166">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Mobile</b><span>We come to you</span></div>
+          <div class="proof"><b>Flat</b><span>Pricing, no games</span></div>
+          <div class="proof"><b>Local</b><span>Owned &amp; operated</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <!-- a car catching a wax-shine sweep -->
+        <svg viewBox="0 0 560 320" fill="none" role="img" aria-label="Illustration: a freshly detailed car catching the light">
+          <ellipse cx="280" cy="270" rx="222" ry="20" fill="#000" opacity=".38"/>
+          <!-- body -->
+          <path d="M64 214 Q64 176 116 170 L196 118 Q216 104 252 104 L372 104 Q414 106 438 134 L498 172 Q532 178 532 212 L532 216 Q532 230 518 230 L78 230 Q64 230 64 214 Z"
+                fill="url(#body)" stroke="#2DD4CE" stroke-width="2.4"/>
+          <defs>
+            <linearGradient id="body" x1="0" y1="104" x2="0" y2="230" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#243444"/><stop offset="1" stop-color="#0e151d"/>
+            </linearGradient>
+            <linearGradient id="glass" x1="0" y1="112" x2="0" y2="168" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5CE8E2" stop-opacity=".5"/><stop offset="1" stop-color="#2DD4CE" stop-opacity=".14"/>
+            </linearGradient>
+          </defs>
+          <!-- greenhouse / windows -->
+          <path d="M206 126 Q220 114 250 114 L300 114 L300 166 L196 166 Q196 150 206 126 Z" fill="url(#glass)"/>
+          <path d="M316 114 L366 114 Q398 116 414 138 L426 166 L316 166 Z" fill="url(#glass)"/>
+          <rect x="303" y="114" width="10" height="52" rx="2" fill="#0e151d"/>
+          <!-- wax-shine streak across the hood -->
+          <path d="M300 138 L470 150" stroke="#EDF3F7" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+          <path d="M120 196 L250 196" stroke="#5CE8E2" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>
+          <!-- door line + handles -->
+          <path d="M250 176 L250 224 M330 176 L330 224" stroke="#0a1016" stroke-width="3" stroke-opacity=".6"/>
+          <rect x="262" y="182" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <rect x="342" y="182" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <!-- wheels -->
+          <circle cx="170" cy="230" r="42" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="170" cy="230" r="20" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+          <circle cx="410" cy="230" r="42" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="410" cy="230" r="20" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+          <!-- sparkle -->
+          <path d="M486 96 l3 8 8 3 -8 3 -3 8 -3-8 -8-3 8-3 z" fill="#5CE8E2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,32 C240,64 480,64 720,40 C960,16 1200,16 1440,40 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h13v5H3z"/><path d="M16 8h3l2 3v4h-5z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>We come to you</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>We bring water &amp; power</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.3a2.6 2.6 0 0 0-2.5-1.3c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.7.8 2.7 2.1-1.2 2-2.7 2a2.8 2.8 0 0 1-2.7-1.4"/><path d="M12 6.5v11"/></svg>Flat, up-front pricing</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l4 4L20 4"/></svg>We don't leave 'til it's right</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: CAR HOTSPOT DIAGRAM ============ -->
+<section class="section detail" id="detail">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What we detail</span>
+      <h2 class="section-title">Every inch, handled</h2>
+      <p class="lead" style="margin:0 auto">Tap a part of the car to see exactly what we do to it. The whole thing gets this treatment — not just the parts you see from the driver's seat.</p>
+    </div>
+
+    <div class="diagram reveal" id="detailDiagram" data-active="paint">
+      <div class="diagram__stage">
+        <!-- car (decorative); the hotspot buttons below carry the interaction -->
+        <svg class="car" viewBox="0 0 560 300" fill="none" aria-hidden="true">
+          <ellipse cx="280" cy="256" rx="214" ry="18" fill="#000" opacity=".35"/>
+          <!-- highlights (revealed per active zone) -->
+          <ellipse class="hl hl-paint"    cx="300" cy="150" rx="150" ry="46" fill="#5CE8E2" fill-opacity=".16"/>
+          <ellipse class="hl hl-glass"    cx="292" cy="128" rx="120" ry="30" fill="#5CE8E2" fill-opacity=".22"/>
+          <circle  class="hl hl-wheels"   cx="164" cy="222" r="52" fill="#5CE8E2" fill-opacity=".18"/>
+          <ellipse class="hl hl-interior" cx="300" cy="146" rx="86"  ry="30" fill="#5CE8E2" fill-opacity=".2"/>
+          <rect    class="hl hl-trim"     x="96" y="196" width="368" height="26" rx="10" fill="#5CE8E2" fill-opacity=".2"/>
+          <!-- body -->
+          <path d="M60 206 Q60 170 110 164 L190 114 Q210 100 246 100 L366 100 Q408 102 432 130 L490 166 Q524 172 524 204 L524 208 Q524 222 510 222 L74 222 Q60 222 60 206 Z"
+                fill="url(#body2)" stroke="#2DD4CE" stroke-width="2.4"/>
+          <defs>
+            <linearGradient id="body2" x1="0" y1="100" x2="0" y2="222" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#243444"/><stop offset="1" stop-color="#0e151d"/>
+            </linearGradient>
+            <linearGradient id="glass2" x1="0" y1="108" x2="0" y2="160" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5CE8E2" stop-opacity=".45"/><stop offset="1" stop-color="#2DD4CE" stop-opacity=".12"/>
+            </linearGradient>
+          </defs>
+          <path d="M200 122 Q214 110 244 110 L294 110 L294 160 L190 160 Q190 144 200 122 Z" fill="url(#glass2)"/>
+          <path d="M310 110 L360 110 Q392 112 408 134 L420 160 L310 160 Z" fill="url(#glass2)"/>
+          <rect x="297" y="110" width="10" height="50" rx="2" fill="#0e151d"/>
+          <path d="M244 170 L244 216 M324 170 L324 216" stroke="#0a1016" stroke-width="3" stroke-opacity=".6"/>
+          <rect x="256" y="176" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <rect x="336" y="176" width="22" height="5" rx="2.5" fill="#2DD4CE" fill-opacity=".8"/>
+          <circle cx="164" cy="222" r="40" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="164" cy="222" r="19" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+          <circle cx="404" cy="222" r="40" fill="#070A0E" stroke="#1E2A38" stroke-width="6"/>
+          <circle cx="404" cy="222" r="19" fill="#0E131A" stroke="#2DD4CE" stroke-width="3"/>
+        </svg>
+
+        <!-- hotspot markers (percentages sit over the car above) -->
+        <button class="hot" type="button" data-zone="glass"    aria-pressed="false" style="left:44%;top:41%" title="Glass &amp; mirrors"><span class="hp">Glass &amp; mirrors</span></button>
+        <button class="hot" type="button" data-zone="interior" aria-pressed="false" style="left:55%;top:47%" title="Interior &amp; seats"><span class="hp">Interior &amp; seats</span></button>
+        <button class="hot" type="button" data-zone="paint"    aria-pressed="true"  style="left:70%;top:53%" title="Paint &amp; body"><span class="hp">Paint &amp; body</span></button>
+        <button class="hot" type="button" data-zone="wheels"   aria-pressed="false" style="left:29%;top:74%" title="Wheels &amp; tires"><span class="hp">Wheels &amp; tires</span></button>
+        <button class="hot" type="button" data-zone="trim"     aria-pressed="false" style="left:47%;top:72%" title="Trim &amp; details"><span class="hp">Trim &amp; details</span></button>
+      </div>
+
+      <div class="diagram__panel" aria-live="polite">
+        <span class="diagram__eyebrow">Zone</span>
+        <div class="diagram__zone" id="zoneLabel">Paint &amp; body</div>
+        <p class="diagram__blurb" id="zoneBlurb">Loading…</p>
+        <div class="zone-chips" id="zoneChips" role="group" aria-label="Choose a part of the car"></div>
+        <p class="diagram__hint">Tap the glowing dots on the car</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PACKAGES ============ -->
+<section class="section" id="packages">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Packages &amp; pricing</span>
+      <h2 class="section-title">One flat price. No quote games.</h2>
+      <p class="lead" style="margin:0 auto" id="packagesLead">Three levels, from a quick reset to a full showroom detail. Every price is the price you pay — mobile service to your driveway is included, not an upsell.</p>
+    </div>
+    <div class="pkg-grid" id="packageGrid"><!-- rendered from CONTENT.packages --></div>
+    <p class="pkg__note reveal" id="pkgNote"><!-- rendered from CONTENT.notes.pkgAddon --></p>
+  </div>
+</section>
+
+<!-- ============ ADD-ONS ============ -->
+<section class="section addons" id="addons">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Add-ons</span>
+      <h2 class="section-title">Bolt on the extras</h2>
+      <p class="lead" style="margin:0 auto">Stack any of these onto a package. Tell us when you book, or just point at it in the driveway.</p>
+    </div>
+    <div class="addon-grid" id="addonGrid"><!-- rendered from CONTENT.addons --></div>
+    <p class="addon__foot reveal" id="addonFoot"><!-- rendered from CONTENT.notes.addonFoot --></p>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. Zero phone tag.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Book online</h3>
+        <p>Pick a package, grab a day, tell us where the car lives. Two minutes, no "someone will call you back," no mystery quote.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We pull up &amp; plug in</h3>
+        <p>We arrive with our own water and power and set up right at your driveway or lot. You don't have to lift a finger — or even be home.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Drive off gleaming</h3>
+        <p>A couple of hours later the keys are back in your hand and the car looks the way it did on the lot. That's the whole job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="section" id="results">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Results</span>
+      <h2 class="section-title">Fresh out of the driveway</h2>
+      <p class="lead" style="margin:0 auto">Real cars, real turnarounds. Photos land here as jobs roll in.</p>
+    </div>
+    <div class="results-grid reveal" id="resultsGrid"><!-- rendered from CONTENT.results --></div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the detailing van and gear that come to your driveway">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <rect width="400" height="500" fill="none"/>
+          <!-- reflected-light streaks -->
+          <path d="M-20 120 L420 40" stroke="#D9E6EF" stroke-opacity=".06" stroke-width="30"/>
+          <path d="M-20 220 L420 150" stroke="#2DD4CE" stroke-opacity=".05" stroke-width="22"/>
+          <!-- van body -->
+          <path d="M60 300 L60 210 Q60 196 76 196 L250 196 L300 240 L340 240 Q356 240 356 258 L356 300 Z" fill="#1E2A38" stroke="#2DD4CE" stroke-width="2.5"/>
+          <rect x="80" y="212" width="150" height="48" rx="6" fill="#0E131A"/>
+          <path d="M250 210 L292 240 L250 240 Z" fill="#0E131A"/>
+          <!-- shine sweep on the panel -->
+          <path d="M96 300 L230 300" stroke="#5CE8E2" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/>
+          <!-- wheels -->
+          <circle cx="120" cy="312" r="26" fill="#070A0E" stroke="#1E2A38" stroke-width="5"/>
+          <circle cx="120" cy="312" r="11" fill="#0E131A" stroke="#2DD4CE" stroke-width="2.5"/>
+          <circle cx="300" cy="312" r="26" fill="#070A0E" stroke="#1E2A38" stroke-width="5"/>
+          <circle cx="300" cy="312" r="11" fill="#0E131A" stroke="#2DD4CE" stroke-width="2.5"/>
+          <!-- bucket + wand -->
+          <path d="M150 388 L162 440 L206 440 L218 388 Z" fill="#0E131A" stroke="#2DD4CE" stroke-width="2"/>
+          <ellipse cx="184" cy="388" rx="34" ry="8" fill="#12A39C" fill-opacity=".5"/>
+          <path d="M252 448 L252 392 Q252 384 260 384 L286 384" stroke="#2DD4CE" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <!-- captions -->
+          <text x="200" y="474" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" letter-spacing="4" fill="#9DB1C0" opacity=".85">VAN 01 · EST. 2019</text>
+          <text id="ownerCaption" x="200" y="494" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" letter-spacing="2.5" fill="#748799" opacity=".75">THEO RUNS EVERY JOB HIMSELF</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The guy in your driveway</h2>
+        <div class="owner__desc" id="ownerDesc">Loading…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">In their words</span>
+      <h2 class="section-title">What drivers say</h2>
+    </div>
+    <div class="quotes reveal" id="testimonialGrid"><!-- rendered from CONTENT.testimonials --></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Do I need to be home?<span class="plus">+</span></summary><div class="faq__body">Nope. As long as we can reach the car and you've left it unlocked (or dropped a key), you can be at work the whole time. We'll text you before and after. Most folks come out to a finished car.</div></details>
+      <details class="faq reveal"><summary>Do you bring your own water and power?<span class="plus">+</span></summary><div class="faq__body"><b>Yes — we're fully self-contained.</b> Our own water tank and power come with the van, so we can detail in a driveway, a parking lot, or a job site. If a spigot or outlet is handy we'll happily use it, but we never count on it.</div></details>
+      <details class="faq reveal"><summary>How long does it take?<span class="plus">+</span></summary><div class="faq__body" id="faqTime">Depends on the package and how the car's been living. An Express Refresh is about an hour; a Full Detail runs a few; a Showroom Detail is a half-day. We'll give you a real window when you book — not a vague "sometime today."</div></details>
+      <details class="faq reveal"><summary>What if the car's really rough?<span class="plus">+</span></summary><div class="faq__body">Send a couple of photos when you book — pet hair, spilled latte, constructions-site dust, we've seen it. If it needs an add-on or a bump to the next package, we'll tell you the number up front. <b>No surprise line items when we're done.</b></div></details>
+      <details class="faq reveal"><summary>How do I pay?<span class="plus">+</span></summary><div class="faq__body">Card, tap, or the usual apps — whatever's easy, paid when the work's done and you've looked the car over. The price you booked is the price you pay, plus any add-ons you okayed.</div></details>
+      <details class="faq reveal"><summary>Where do you go?<span class="plus">+</span></summary><div class="faq__body" id="faqDeliver">Boise, Meridian, Eagle, Nampa, Kuna, Star, Garden City and everything in between — <b>the whole Treasure Valley.</b> Just outside the ring? Text us your address; if the route works we'll make it work.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Book your detail</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Book it in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Pick a package and a day. We'll text you within the hour (during business hours) to lock in your window — that's the only "call" this whole thing takes.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550166" data-phone>(208) 555-0166</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Where's the car? (address) <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Ridgeline Rd" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Meridian" required />
+        </div>
+        <div class="field">
+          <label for="b-vehicle">Vehicle type <em>*</em></label>
+          <select id="b-vehicle" name="vehicle" required>
+            <option value="Car / sedan" selected>Car / sedan</option>
+            <option value="SUV / crossover">SUV / crossover</option>
+            <option value="Truck">Truck</option>
+            <option value="Minivan / van">Minivan / van</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-package">Package <em>*</em></label>
+          <select id="b-package" name="package" required><!-- options from CONTENT.packages --></select>
+        </div>
+        <div class="field">
+          <label for="b-date">Preferred date <em>*</em></label>
+          <input id="b-date" name="preferred_date" type="date" required />
+        </div>
+        <div class="field">
+          <label for="b-time">Time of day</label>
+          <select id="b-time" name="time_window">
+            <option value="Morning" selected>Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Either">Either works</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Anything we should know? (optional)</label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Lots of dog hair, coffee spill on the passenger seat, gate code #2411…"></textarea>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my window and price. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Book my detail</button>
+        <a class="book__alt" href="sms:+12085550166?body=Hi%20Kestrel%20Detail!%20I'd%20like%20to%20book%20a%20detail.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>You're on the schedule!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your window.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M10 40 q0-6 8-7 l9-8 q3-2 8-2 h13 q6 0 9 5 l7 5 q6 1 6 7 v2 h-6 a5 5 0 0 0-10 0 H31 a5 5 0 0 0-10 0 h-9 q-2 0-2-2 z" fill="#0E131A"/>
+          <circle cx="26" cy="45" r="4" fill="#0E131A"/><circle cx="47" cy="45" r="4" fill="#0E131A"/>
+        </svg>
+      </span>
+      <div><b data-brand>Kestrel Detail Co.</b><span data-tagline>Showroom shine, curbside.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550166" data-phone>(208) 555-0166</a> · <a href="mailto:hello@kestreldetail.com" id="footEmail">hello@kestreldetail.com</a><br />
+      <span id="footServe">Serving Boise · Meridian · Eagle · Nampa · Kuna · Star · Garden City</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Kestrel Detail Co.</span> · Mobile detailing, locally owned</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550166"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550166?body=Hi%20Kestrel%20Detail!%20I'd%20like%20to%20book%20a%20detail."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>

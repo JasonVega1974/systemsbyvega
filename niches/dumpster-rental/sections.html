@@ -1,0 +1,582 @@
+<!-- dumpster-rental/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche.
+     The shell, head, CSS, runtime and QA are shared. -->
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Sawtooth Dumpster Co. home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M8 33 L20 15 L28 26 L37 11 L56 33 Z" fill="var(--ground)"/>
+          <path d="M11 39 h42 l-4 15 h-34 Z" fill="var(--ground)"/>
+        </svg>
+      </span>
+      <span class="brand__name" id="brandName">Sawtooth Dumpster Co.<span>Treasure Valley roll-offs</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#price">Pricing</a>
+      <a class="link" href="#sizes">Sizes</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#book">Book</a>
+      <!-- (208) 555-01XX is a reserved fictional range — kept deliberately so demo visitors can't dial a real number -->
+      <a class="nav__call" href="tel:+12085550188">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+        <span data-phone>(208) 555-0188</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow" id="heroEyebrow">Roll-off dumpster rental · Treasure Valley, Idaho</span></div>
+        <h1><span class="l1">Priced Up Front.</span><span class="l2">Hauled Off Fast.</span></h1>
+        <p class="hero__sub">No quote requests. No waiting three days for a callback. No mystery fuel fee on the invoice. Pick a size, see your exact flat price, and a clean roll-off lands on driveway-safe boards — usually by tomorrow.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#price">See my price</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550188">Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Flat</b><span>Pricing, always</span></div>
+          <div class="proof"><b>Next-day</b><span>Delivery</span></div>
+          <div class="proof"><b>Local</b><span>Owned &amp; operated</span></div>
+        </div>
+      </div>
+      <div class="hero__art" aria-hidden="true">
+        <div class="halo"></div>
+        <!-- north-star (dj-site-blue): layered multi-stop gradients for atmospheric
+             depth + feTurbulence haze + a dimensional painted-steel roll-off with
+             specular sheen and grain. Replaces the former flat single-tone vector. -->
+        <svg viewBox="0 0 520 380" fill="none" role="img" aria-label="A dimensional roll-off dumpster below a serrated high-desert ridgeline at dawn">
+
+          <!-- ---- layered sky + sun ---- -->
+          <rect x="0" y="0" width="520" height="250" fill="url(#bin-sky)"/>
+          <circle cx="392" cy="150" r="70" fill="url(#bin-sun)"/>
+          <circle cx="392" cy="150" r="26" fill="#FFF6D8" opacity=".9"/>
+
+          <!-- ---- far serrated ridge (behind haze) ---- -->
+          <path d="M-4 168 L60 96 L104 140 L168 60 L214 118 L268 44 L330 112 L392 66 L452 128 L520 78 L520 250 L-4 250 Z"
+                fill="url(#bin-ridge-far)"/>
+          <!-- snow-caps on the tall far peaks -->
+          <path d="M168 60 L184 82 L168 90 L153 79 Z M268 44 L285 68 L266 76 L252 66 Z M392 66 L406 86 L391 92 L379 82 Z"
+                fill="url(#bin-snow)" opacity=".85"/>
+
+          <!-- ---- atmospheric haze band drifting across the mid-ridge ---- -->
+          <rect x="-20" y="120" width="560" height="86" fill="#000" filter="url(#bin-haze)" opacity=".5"/>
+
+          <!-- ---- near ridge (dark pine, in front of haze) ---- -->
+          <path d="M-4 214 L48 150 L108 200 L176 138 L246 196 L320 150 L392 204 L456 160 L520 210 L520 260 L-4 260 Z"
+                fill="url(#bin-ridge-near)"/>
+          <!-- pine texture ticks on the near ridge -->
+          <path d="M96 196 v10 M140 190 v10 M300 168 v12 M360 184 v10 M420 176 v12"
+                stroke="#0b1a12" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- ============ DIMENSIONAL ROLL-OFF (physics rig group) ============ -->
+          <g class="bin-rig">
+            <!-- soft contact shadow on the pad -->
+            <ellipse cx="262" cy="352" rx="182" ry="15" fill="#050b07" opacity=".55" filter="url(#bin-cast)"/>
+
+            <!-- shadowed right side face -->
+            <path d="M404 214 L432 190 L432 314 L404 338 Z" fill="url(#bin-steel-dk)" filter="url(#bin-grain)"/>
+            <!-- top rim (far edge) + open cavity -->
+            <path d="M96 214 L404 214 L432 190 L124 190 Z" fill="url(#bin-steel-dk)"/>
+            <path d="M112 212 L392 212 L416 193 L136 193 Z" fill="#100c02"/>
+            <!-- steel front face: 5-stop sheen gradient + feTurbulence grain -->
+            <path d="M96 214 L404 214 L404 338 L96 338 Z" fill="url(#bin-steel)" filter="url(#bin-grain)"/>
+
+            <!-- corrugated ribs: shadow trough + highlight ridge pairs -->
+            <g>
+              <path d="M150 220 V332" stroke="#8a6300" stroke-opacity=".55" stroke-width="6"/>
+              <path d="M154 220 V332" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="2.4"/>
+              <path d="M208 220 V332" stroke="#8a6300" stroke-opacity=".55" stroke-width="6"/>
+              <path d="M212 220 V332" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="2.4"/>
+              <path d="M266 220 V332" stroke="#8a6300" stroke-opacity=".55" stroke-width="6"/>
+              <path d="M270 220 V332" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="2.4"/>
+              <path d="M324 220 V332" stroke="#8a6300" stroke-opacity=".55" stroke-width="6"/>
+              <path d="M328 220 V332" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="2.4"/>
+              <path d="M382 220 V332" stroke="#8a6300" stroke-opacity=".55" stroke-width="6"/>
+              <path d="M386 220 V332" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="2.4"/>
+            </g>
+            <!-- top hook-rail along the front edge -->
+            <path d="M96 214 H404" stroke="url(#bin-rail)" stroke-width="10" stroke-linecap="round"/>
+            <path d="M110 340 H388 L378 348 H120 Z" fill="url(#bin-rail)"/>
+
+            <!-- specular sheen sweep across the upper-left face -->
+            <path d="M104 218 L150 218 L120 334 L104 334 Z" fill="url(#bin-sheen)"/>
+
+            <!-- hook bar at the truck end -->
+            <path d="M96 214 V182 H132" stroke="url(#bin-rail)" stroke-width="9" stroke-linecap="round"/>
+
+            <!-- skid rails + wheels -->
+            <rect x="120" y="348" width="120" height="12" rx="4" fill="#120d02"/>
+            <rect x="284" y="348" width="120" height="12" rx="4" fill="#120d02"/>
+            <circle cx="150" cy="366" r="11" fill="var(--accent-ink)"/><circle cx="224" cy="366" r="11" fill="var(--accent-ink)"/>
+            <circle cx="300" cy="366" r="11" fill="var(--accent-ink)"/><circle cx="374" cy="366" r="11" fill="var(--accent-ink)"/>
+          </g>
+
+          <!-- driveway boards under the rails -->
+          <rect x="104" y="372" width="356" height="7" rx="2.5" fill="#F2E9D8" fill-opacity=".28"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,40 L120,18 L240,44 L380,10 L520,42 L660,20 L800,46 L940,14 L1080,40 L1220,22 L1340,44 L1440,26 L1440,64 L0,64 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.3a2.6 2.6 0 0 0-2.5-1.3c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.7.8 2.7 2.1-1.2 2-2.7 2a2.8 2.8 0 0 1-2.7-1.4"/><path d="M12 6.5v11"/></svg>No hidden fees, ever</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9h14v-9"/><path d="M3 21h18"/></svg>Driveway-safe boards</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>Next-day delivery</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l4 4L20 4"/><path d="M4 18l4 4"/><path d="M12 18l4 4 6-8" opacity=".55"/></svg>We take almost everything</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: BUILD YOUR PRICE ============ -->
+<section class="section" id="price">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Build your price</span>
+      <h2 class="section-title">No quote games. The price is the price.</h2>
+      <p class="lead" style="margin:0 auto" id="priceLead">Three sizes, three rental lengths, one honest number. Every price includes delivery, pickup and 2 tons of disposal — what you see here is what shows up on your card.</p>
+    </div>
+
+    <div class="picker reveal" id="picker">
+      <div class="picker__in">
+
+        <!-- ----- STEP 1: size radio-cards ----- -->
+        <fieldset style="border:0;padding:0;min-width:0">
+          <legend class="picker__legend">1 · Pick your box</legend>
+          <div class="sizes-grid" id="sizesGrid">
+
+            <label class="size-card">
+              <input type="radio" name="size" value="10" />
+              <span class="size-card__in">
+                <span class="size-card__svg" aria-hidden="true">
+                  <!-- 10-yd painted-steel box, scaled 1ft=10u — steel sheen (#bin-steel) + grain (#bin-grain) -->
+                  <svg viewBox="0 0 240 112" fill="none">
+                    <ellipse cx="120" cy="103" rx="66" ry="5.5" fill="#050b07" opacity=".5" filter="url(#bin-cast)"/>
+                    <path d="M60 59 H180 L176 94 H64 Z" fill="url(#bin-steel)" filter="url(#bin-grain)"/>
+                    <path d="M60 59 H180" stroke="url(#bin-rail)" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M65 64 H175" stroke="#7a5600" stroke-opacity=".5" stroke-width="3"/>
+                    <path d="M90 66 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M92 66 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M120 66 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M122 66 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M150 66 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M152 66 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M63 62 L94 62 L74 90 L63 90 Z" fill="url(#bin-sheen)"/>
+                    <path d="M60 59 V50 H74" stroke="url(#bin-rail)" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="66" y="93" width="14" height="9" rx="2.5" fill="var(--accent-ink)"/><rect x="160" y="93" width="14" height="9" rx="2.5" fill="var(--accent-ink)"/>
+                    <path d="M6 106 H234" stroke="#F2E9D8" stroke-opacity=".18" stroke-width="2"/>
+                  </svg>
+                </span>
+                <span class="size-card__name">10 yard <small>from $299</small></span>
+                <span class="size-card__dims">12'L × 8'W × 3.5'H</span>
+                <span class="size-card__loads">Fits ≈ 4 pickup loads</span>
+                <span class="size-card__best">Best for bathroom remodels, garage cleanouts and small demo jobs.</span>
+              </span>
+            </label>
+
+            <label class="size-card">
+              <input type="radio" name="size" value="15" checked />
+              <span class="size-card__in">
+                <span class="size-card__svg" aria-hidden="true">
+                  <!-- 15-yd painted-steel box, same scale — steel sheen (#bin-steel) + grain (#bin-grain) -->
+                  <svg viewBox="0 0 240 112" fill="none">
+                    <ellipse cx="120" cy="103" rx="86" ry="5.5" fill="#050b07" opacity=".5" filter="url(#bin-cast)"/>
+                    <path d="M40 49 H200 L196 94 H44 Z" fill="url(#bin-steel)" filter="url(#bin-grain)"/>
+                    <path d="M40 49 H200" stroke="url(#bin-rail)" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M45 54 H195" stroke="#7a5600" stroke-opacity=".5" stroke-width="3"/>
+                    <path d="M72 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M74 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M104 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M106 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M136 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M138 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M168 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M170 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M43 52 L74 52 L54 90 L43 90 Z" fill="url(#bin-sheen)"/>
+                    <path d="M40 49 V40 H54" stroke="url(#bin-rail)" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="46" y="93" width="14" height="9" rx="2.5" fill="var(--accent-ink)"/><rect x="180" y="93" width="14" height="9" rx="2.5" fill="var(--accent-ink)"/>
+                    <path d="M6 106 H234" stroke="#F2E9D8" stroke-opacity=".18" stroke-width="2"/>
+                  </svg>
+                </span>
+                <span class="size-card__name">15 yard <small>from $349</small></span>
+                <span class="size-card__dims">16'L × 8'W × 4.5'H</span>
+                <span class="size-card__loads">Fits ≈ 6 pickup loads</span>
+                <span class="size-card__best">Best for roof tear-offs, kitchen remodels and whole-floor flooring.</span>
+              </span>
+            </label>
+
+            <label class="size-card">
+              <input type="radio" name="size" value="20" />
+              <span class="size-card__in">
+                <span class="size-card__svg" aria-hidden="true">
+                  <!-- 20-yd painted-steel box, same scale — steel sheen (#bin-steel) + grain (#bin-grain) -->
+                  <svg viewBox="0 0 240 112" fill="none">
+                    <ellipse cx="120" cy="103" rx="116" ry="5.5" fill="#050b07" opacity=".5" filter="url(#bin-cast)"/>
+                    <path d="M10 49 H230 L226 94 H14 Z" fill="url(#bin-steel)" filter="url(#bin-grain)"/>
+                    <path d="M10 49 H230" stroke="url(#bin-rail)" stroke-width="7" stroke-linecap="round"/>
+                    <path d="M15 54 H225" stroke="#7a5600" stroke-opacity=".5" stroke-width="3"/>
+                    <path d="M47 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M49 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M83 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M85 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M120 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M122 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M157 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M159 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M193 56 V91" stroke="#8a6300" stroke-opacity=".55" stroke-width="3"/><path d="M195 56 V91" stroke="#FFE9A6" stroke-opacity=".4" stroke-width="1.4"/>
+                    <path d="M13 52 L44 52 L24 90 L13 90 Z" fill="url(#bin-sheen)"/>
+                    <path d="M10 49 V40 H24" stroke="url(#bin-rail)" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="16" y="93" width="14" height="9" rx="2.5" fill="var(--accent-ink)"/><rect x="210" y="93" width="14" height="9" rx="2.5" fill="var(--accent-ink)"/>
+                    <path d="M2 106 H238" stroke="#F2E9D8" stroke-opacity=".18" stroke-width="2"/>
+                  </svg>
+                </span>
+                <span class="size-card__name">20 yard <small>from $399</small></span>
+                <span class="size-card__dims">22'L × 8'W × 4.5'H</span>
+                <span class="size-card__loads">Fits ≈ 8 pickup loads</span>
+                <span class="size-card__best">Best for whole-house cleanouts, big remodels and new construction.</span>
+              </span>
+            </label>
+
+          </div>
+        </fieldset>
+
+        <div class="picker__row">
+          <div>
+            <!-- ----- STEP 2: rental length pills ----- -->
+            <fieldset style="border:0;padding:0;min-width:0">
+              <legend class="picker__legend">2 · How long do you need it?</legend>
+              <div class="pills" role="radiogroup" aria-label="Rental length" id="daysPills">
+                <label class="pill"><input type="radio" name="days" value="3" checked /><span>3-day</span></label>
+                <label class="pill"><input type="radio" name="days" value="7" /><span>7-day <b>+$50</b></span></label>
+                <label class="pill"><input type="radio" name="days" value="14" /><span>14-day <b>+$110</b></span></label>
+              </div>
+            </fieldset>
+
+            <!-- ----- STEP 3: same-week rush toggle ----- -->
+            <label class="rush">
+              <input type="checkbox" id="rushToggle" />
+              <span class="rush__track" aria-hidden="true"></span>
+              <span class="rush__label"><b>Same-week delivery</b> (+$<span id="rushFeeLbl">45</span>)
+                <small>Standard delivery is next business day. Flip this if you need the box on your driveway within 48 hours — weekends included.</small>
+              </span>
+            </label>
+          </div>
+
+          <!-- ----- live price ----- -->
+          <div class="price-box" aria-live="polite">
+            <span class="price-box__eyebrow">Your flat total</span>
+            <div class="price-box__num" id="priceNum">$349</div>
+            <span class="price-box__flat">flat · taxes in · no surprises</span>
+            <p class="price-box__inc" id="priceInc">Delivery, pickup &amp; 2 tons of disposal included</p>
+            <p class="price-box__break" id="priceBreak">15-yd base $349</p>
+            <button class="btn" type="button" id="pickerBook">Book this dumpster</button>
+            <a class="price-box__alt" id="pickerSms" href="sms:+12085550188">or text us this quote</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="lead reveal" style="text-align:center;margin:26px auto 0;font-size:.95rem" id="overageLine">Going over 2 tons? Overage is a flat <b style="color:var(--ink)">$65 per ton</b>, billed only if the landfill scale ticket says so — and we send you the ticket.</p>
+  </div>
+</section>
+
+<!-- ============ WHAT FITS IN WHAT ============ -->
+<section class="section fits" id="sizes">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">What fits in what</span>
+      <h2 class="section-title">Pick the box that matches the mess</h2>
+      <p class="lead" style="margin:0 auto">The bars show roughly how full each project fills the box. When in doubt, size up — an empty corner is cheaper than a second haul.</p>
+    </div>
+    <div class="fits-grid" id="fitsGrid">
+
+      <div class="fit-card reveal" data-delay="1">
+        <div class="fit-card__size"><b>10</b> yard</div>
+        <div class="fit-card__tag">12'L × 8'W × 3.5'H · ≈ 4 pickup loads</div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Bathroom remodel</span><span class="meter__pct">~80%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:80%"></span></span>
+        </div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">One-car garage cleanout</span><span class="meter__pct">~70%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:70%"></span></span>
+        </div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Small deck tear-out</span><span class="meter__pct">~55%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:55%"></span></span>
+        </div>
+        <p class="fit-card__note">Low 3.5' walls — <b>easy to load by hand</b> over the side, and it fits where a car parks.</p>
+      </div>
+
+      <div class="fit-card reveal" data-delay="2">
+        <div class="fit-card__size"><b>15</b> yard</div>
+        <div class="fit-card__tag">16'L × 8'W × 4.5'H · ≈ 6 pickup loads</div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Roof tear-off (20 sq)</span><span class="meter__pct">~85%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:85%"></span></span>
+        </div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Kitchen remodel</span><span class="meter__pct">~70%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:70%"></span></span>
+        </div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Whole-house flooring</span><span class="meter__pct">~60%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:60%"></span></span>
+        </div>
+        <p class="fit-card__note">The <b>Goldilocks box</b> — our most-rented size, and the one we suggest when you're on the fence.</p>
+      </div>
+
+      <div class="fit-card reveal" data-delay="3">
+        <div class="fit-card__size"><b>20</b> yard</div>
+        <div class="fit-card__tag">22'L × 8'W × 4.5'H · ≈ 8 pickup loads</div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Whole-house cleanout</span><span class="meter__pct">~85%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:85%"></span></span>
+        </div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Major remodel debris</span><span class="meter__pct">~75%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:75%"></span></span>
+        </div>
+        <div class="meter">
+          <div class="meter__top"><span class="meter__label">Estate / hoard cleanup</span><span class="meter__pct">~65%</span></div>
+          <span class="meter__track"><span class="meter__bar" style="--w:65%"></span></span>
+        </div>
+        <p class="fit-card__note">22 feet long — <b>measure your driveway first</b>, or we'll happily eyeball it on a video call.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. Zero phone tag.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Pick &amp; book online</h3>
+        <p>Choose a size, see the flat price, grab a delivery day. Two minutes, no "someone will reach out," no invoice roulette.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>We drop it where you point</h3>
+        <p>Our driver lays down driveway-safe boards and sets the box exactly where you want it. You don't even have to be home.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Text us when it's full</h3>
+        <p>One text and it disappears — usually next business day. Need it swapped for an empty instead? Same text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT CAN'T GO IN ============ -->
+<section class="section nogo" id="nogo">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">The short no-list</span>
+      <h2 class="section-title">What can't go in</h2>
+      <p class="lead" style="margin:0 auto">The landfill sets these rules, not us. Here's the whole list — everything else is fair game.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Paint &amp; stains</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Solvents &amp; chemicals</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Tires</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Car batteries</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Fridges &amp; AC units (freon)</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Propane tanks</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Asbestos</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Medical waste</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Hot ash</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>Liquids of any kind</span>
+    </div>
+    <p class="nogo__alt reveal">Drywall, furniture, shingles, yard waste, concrete, appliances without freon — <b>all totally fine.</b> Stuck with something on the no-list? Text us a photo and we'll point you to the nearest drop-off. It's usually free.</p>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section" id="owner">
+  <div class="wrap">
+    <div class="owner__grid">
+      <!-- PHOTO: upload a real photo from the admin panel (Owner tab) — it replaces the illustration below. -->
+      <div class="owner__photo reveal" id="ownerPhoto" role="img" aria-label="Illustration: the owner's hook-lift truck carrying a roll-off below the ridgeline">
+        <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+          <!-- contour rings -->
+          <circle cx="330" cy="112" r="58" stroke="#F2E9D8" stroke-opacity=".08" stroke-width="1.5"/>
+          <circle cx="330" cy="112" r="84" stroke="#F2E9D8" stroke-opacity=".06" stroke-width="1.5"/>
+          <circle cx="330" cy="112" r="110" stroke="#F2E9D8" stroke-opacity=".045" stroke-width="1.5"/>
+          <!-- ridgeline + sun -->
+          <path d="M24 176 L86 96 L124 140 L178 64 L234 132 L288 82 L376 176"
+                stroke="#F2E9D8" stroke-opacity=".32" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="312" cy="78" r="15" fill="#FFC400" fill-opacity=".85"/>
+          <circle cx="312" cy="78" r="26" stroke="#FFC400" stroke-opacity=".22" stroke-width="2"/>
+          <!-- roll-off box on the bed -->
+          <path d="M120 262 L358 262 L348 342 L130 342 Z" fill="#FFC400"/>
+          <rect x="112" y="252" width="254" height="12" rx="4" fill="var(--accent-ink)"/>
+          <path d="M178 270 L174 334 M240 270 L238 334 M304 270 L302 334" stroke="var(--accent-ink)" stroke-opacity=".5" stroke-width="6"/>
+          <text x="240" y="312" text-anchor="middle" font-family="Anybody, sans-serif" font-weight="900" font-size="21" letter-spacing="3" fill="var(--accent-ink)" opacity=".8">SAWTOOTH</text>
+          <!-- truck frame + cab -->
+          <rect x="34" y="346" width="336" height="12" rx="4" fill="#F2E9D8" fill-opacity=".38"/>
+          <path d="M34 346 V296 H88 L112 324 V346 Z" fill="#F2E9D8" fill-opacity=".38"/>
+          <rect x="46" y="304" width="28" height="18" rx="3" fill="var(--ground)"/>
+          <!-- wheels -->
+          <circle cx="70" cy="374" r="16" fill="var(--accent-ink)" stroke="#F2E9D8" stroke-opacity=".4" stroke-width="3"/>
+          <circle cx="272" cy="374" r="16" fill="var(--accent-ink)" stroke="#F2E9D8" stroke-opacity=".4" stroke-width="3"/>
+          <circle cx="318" cy="374" r="16" fill="var(--accent-ink)" stroke="#F2E9D8" stroke-opacity=".4" stroke-width="3"/>
+          <!-- ground -->
+          <path d="M16 398 H384" stroke="#F2E9D8" stroke-opacity=".22" stroke-width="2"/>
+          <!-- caption -->
+          <text x="200" y="448" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="4" fill="#BFB39C" opacity=".85">TRUCK 01 · EST. 2021</text>
+          <text id="ownerCaption" x="200" y="470" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2.5" fill="#A79C86" opacity=".7">RUSTY DRIVES IT HIMSELF</text>
+        </svg>
+      </div>
+
+      <div class="owner__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <h2 class="section-title">The guy who answers the phone</h2>
+        <div class="owner__desc" id="ownerDesc">Rusty Calder drove roll-offs for one of the big national haulers — long enough to see exactly how the quote games get played. Eventually he bought his own hook-lift truck, painted the boxes safety yellow, and started Sawtooth Dumpster Co. with one rule: the price on the site is the price on the card. He still drives most routes himself, and yes — the number on this page rings in the truck.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>Will it wreck my driveway?<span class="plus">+</span></summary><div class="faq__body">No. Every delivery includes wood boards under the rails so the box never touches your concrete, and our drivers set it down easy — no dragging. We've placed hundreds of boxes on stamped and decorative driveways without a mark.</div></details>
+      <details class="faq reveal"><summary>How much weight is included?<span class="plus">+</span></summary><div class="faq__body" id="faqWeight"><b>2 tons (4,000 lbs)</b> is baked into every price. Most household projects never touch the limit. If you're tossing heavy stuff — concrete, dirt, tile — overage is a flat $65 per ton, billed only if the landfill scale ticket shows it. We forward you the ticket, so you never take our word for it.</div></details>
+      <details class="faq reveal"><summary id="faqExtendQ">What if I need it longer than 14 days?<span class="plus">+</span></summary><div class="faq__body" id="faqExtend">Easy — it's <b>$10 per extra day</b>, no re-booking, no re-delivery fee. Just text us before your pickup date and we'll push it out. Long remodels do this all the time.</div></details>
+      <details class="faq reveal"><summary>What if I fill it early?<span class="plus">+</span></summary><div class="faq__body">Text us and we'll grab it — usually next business day. <b>Early pickup never costs extra.</b> Need to keep going? We'll swap the full box for an empty one and only the second rental gets billed.</div></details>
+      <details class="faq reveal"><summary>Do I need a permit?<span class="plus">+</span></summary><div class="faq__body">On your own driveway or property — <b>no.</b> On the street, most Treasure Valley cities want a simple right-of-way permit (usually $25–$50 and same-day online). Tell us where it's going when you book and we'll point you at exactly the form your city wants.</div></details>
+      <details class="faq reveal"><summary>Where do you deliver?<span class="plus">+</span></summary><div class="faq__body" id="faqDeliver">Boise, Meridian, Nampa, Eagle, Caldwell, Star, Kuna and everything in between — <b>the whole Treasure Valley.</b> Outside that ring? Text us your address anyway; if a route works we'll make it work.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section cta" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Book your box</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Book it in two minutes</h2>
+      <p class="lead" style="margin:0 auto">Pick a size and a drop-off day. We'll text you within the hour (during business hours) to confirm your delivery window — that's the only "call" this whole process involves.</p>
+      <p class="cta__phone">Rather talk to a human? Call or text <a href="tel:+12085550188" data-phone>(208) 555-0188</a></p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Full name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" required />
+        </div>
+        <div class="field field--wide">
+          <label for="b-addr">Delivery address <em>*</em></label>
+          <input id="b-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Ridgeline Rd" required />
+        </div>
+        <div class="field">
+          <label for="b-city">City <em>*</em></label>
+          <input id="b-city" name="city" type="text" autocomplete="address-level2" placeholder="Meridian" required />
+        </div>
+        <div class="field">
+          <label for="b-size">Dumpster size <em>*</em></label>
+          <select id="b-size" name="size" required>
+            <option value="10">10 yard — from $299</option>
+            <option value="15" selected>15 yard — from $349</option>
+            <option value="20">20 yard — from $399</option>
+            <option value="unsure">Not sure — help me pick</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-date">Drop-off date <em>*</em></label>
+          <input id="b-date" name="dropoff_date" type="date" required />
+        </div>
+        <div class="field">
+          <label for="b-days">Rental length <em>*</em></label>
+          <select id="b-days" name="rental_length" required>
+            <option value="3" selected>3-day</option>
+            <option value="7">7-day (+$50)</option>
+            <option value="14">14-day (+$110)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="book__grid">
+        <div class="field field--wide">
+          <label for="b-notes">Placement notes (optional)</label>
+          <textarea id="b-notes" name="placement_notes" rows="2" placeholder="Left side of driveway, gate code #2411, watch the basketball hoop…"></textarea>
+        </div>
+        <div class="field field--wide">
+          <label for="b-summary">Your config (auto-filled from the price picker)</label>
+          <input id="b-summary" name="config_summary" type="text" readonly
+                 placeholder="Use the Build-Your-Price picker above, or leave blank and we'll confirm pricing by text." />
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>Text me to confirm my delivery window and price. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Reserve my dumpster</button>
+        <a class="book__alt" href="sms:+12085550188?body=Hi%20Sawtooth%20Dumpster!%20I'd%20like%20to%20book%20a%20roll-off.">or text us instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>Your box is on the board!</h3>
+      <p id="doneMsg">We'll text you shortly to confirm your delivery window.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M8 33 L20 15 L28 26 L37 11 L56 33 Z" fill="var(--ground)"/>
+          <path d="M11 39 h42 l-4 15 h-34 Z" fill="var(--ground)"/>
+        </svg>
+      </span>
+      <div><b data-brand>Sawtooth Dumpster Co.</b><span data-tagline>The price is the price.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550188" data-phone>(208) 555-0188</a> · <a href="mailto:hello@sawtoothdumpster.com" id="footEmail">hello@sawtoothdumpster.com</a><br />
+      <span id="footServe">Serving Boise · Meridian · Nampa · Eagle · Caldwell · Star · Kuna</span><br />
+      <span id="footSocial"></span>
+      <span style="opacity:.6">© <span id="yr"></span> <span data-brand>Sawtooth Dumpster Co.</span> · Locally owned &amp; operated</span>
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550188"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550188?body=Hi%20Sawtooth%20Dumpster!%20I'd%20like%20to%20book%20a%20roll-off."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>

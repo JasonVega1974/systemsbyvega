@@ -1,0 +1,37 @@
+/* dumpster-rental — tokens only. Structure lives in _template/base.css.
+   Names follow the SITELAB_TEMPLATE.md §5 contract; the original Sawtooth
+   identity names (--pine, --sand, --safety, --kraft) are recorded beside each. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #08130e;   /* was --pine-deep */
+  --ground:       #0e1f18;   /* was --pine */
+  --panel:        #132a20;   /* was --pine-2 */
+  --accent:       #FFC400;   /* was --safety */
+  --accent-2:     #FFD34D;   /* was --safety-bright */
+  --accent-deep:  #D89B00;   /* was --amber-deep */
+  --ink:          #F2E9D8;   /* was --sand */
+  --ink-bright:   #FBF6EA;   /* was --sand-soft */
+  --ink-dim:      #BFB39C;   /* was --kraft */
+  --muted:        #A79C86;
+  --hair-accent:  rgba(255,196,0,.14);   /* was --line */
+  --hair:         rgba(242,233,216,.12);
+  --card:         rgba(19,42,32,.55);
+  --card-brd:     rgba(242,233,216,.13);
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.72);
+  --maxw:         1140px;
+
+  /* Tokens the shared CSS needs that the reference hardcoded inline. */
+  --accent-ink:   #161105;
+  --ink-max:      #fff;
+  --ground-2:     #0a1812;
+  --sheen-hi:     #fffdf6;
+  --sheen-lo:     #d8c9a4;
+  --sheen-accent: #fff6dd;
+  --placeholder:  #6f6a58;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+
+  --display: 'Anybody', system-ui, sans-serif;
+  --body:    'Inter', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
