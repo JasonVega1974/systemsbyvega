@@ -286,8 +286,56 @@ const rafCount = s => (s.match(/requestAnimationFrame/g) || []).length;
 /* Two or more calls means it re-schedules itself, i.e. it loops. A single call
    is a deferred style write — a toast fade — not a signature animation. */
 const LOOPS = 2;
+
+/* D-S: the animation may equally be CSS. Collect every @keyframes whose name is
+   used in an animation shorthand carrying `infinite`, minus chrome. */
+const sectionsCss = read(path.join(SRC, 'sections.css')) || '';
+const CHROME = /toast|spinner|loader|skeleton|shimmer|pulse-dot/i;
+function cssLoops(cssRaw) {
+  /* Strip comments FIRST. The block-matching below treats whatever precedes a
+     { as the selector, so a comment sitting above a rule is read as part of it —
+     child-care reported its animation as living on
+     "/* ambient motion — add ...". Same failure the credential sweep hit: a
+     check that scans a whole file eventually matches its own documentation. */
+  const css = cssRaw.replace(/\/\*[\s\S]*?\*\//g, ' ');
+  const declared = new Set([...css.matchAll(/@keyframes\s+([A-Za-z0-9_-]+)/g)].map(m => m[1]));
+  const loops = [];
+  for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const sel = m[1].trim(), body = m[2];
+    const a = /animation:\s*([^;}]+)/.exec(body);
+    if (!a || !/\binfinite\b/.test(a[1])) continue;
+    const name = a[1].trim().split(/\s+/).find(tok => declared.has(tok));
+    if (!name || CHROME.test(sel)) continue;
+    loops.push(name + ' on ' + sel);
+  }
+  return loops;
+}
+
+/* A loop only counts as this niche's SIGNATURE when it is this niche's own.
+   Four sites carry an identical pulse-on-.hero__art-.halo inherited from the
+   reference; that is chrome with a different name. Compare against every other
+   converted niche and keep the pairs that appear here and nowhere else. */
+function loopsElsewhere(mySlug) {
+  const base = path.join(REPO, 'niches');
+  const seen = new Set();
+  let dirs = [];
+  try { dirs = fs.readdirSync(base); } catch (e) { return seen; }
+  for (const d of dirs) {
+    if (d === mySlug) continue;
+    let css = '';
+    try { css = fs.readFileSync(path.join(base, d, 'sections.css'), 'utf8'); } catch (e) { continue; }
+    for (const l of cssLoops(css)) seen.add(l);
+  }
+  return seen;
+}
+const allCssLoops = cssLoops(sectionsCss);
+const shared = loopsElsewhere(slug);
+const uniqueLoops = allCssLoops.filter(l => !shared.has(l));
+const borrowed = allCssLoops.filter(l => shared.has(l));
+
 const animHome = rafCount(sceneCode) >= LOOPS ? 'scene.js'
-               : rafCount(nicheCode) >= LOOPS ? 'niche.js' : null;
+               : rafCount(nicheCode) >= LOOPS ? 'niche.js'
+               : uniqueLoops.length            ? 'sections.css' : null;
 const oneShot = !animHome && (rafCount(sceneCode) + rafCount(nicheCode)) > 0;
 const isStub = !animHome;
 
@@ -296,16 +344,26 @@ if (isStub) {
   // animations (Phase 1 decision D-B). It is reported every run until Phase 3.
   warn('PHASE 3 GAP: no signature animation (§7, §9.3)',
        oneShot ? 'only a one-shot rAF (a toast fade), no loop'
-               : 'no requestAnimationFrame in scene.js or niche.js');
+       : borrowed.length ? 'only inherited boilerplate, nothing of its own: ' + borrowed.join('; ')
+       : 'no rAF loop and no infinite @keyframes on a scene element');
+} else if (animHome === 'sections.css') {
+  ok('signature animation loops in CSS (§7.1, D-S)', uniqueLoops.join('; '));
 } else {
   ok('signature animation uses rAF (§7.1)', 'in ' + animHome);
 }
 /* Any conditional consulting `reduce` counts: an early return, a branch to a
    static reveal, or a guard inside the loop. Requiring `if (reduce) return`
    verbatim failed a scene whose reduced-motion path is richer than that. */
-const animCode = animHome === 'niche.js' ? nicheCode : sceneCode;
-const gatesOnReduce = /if\s*\([^)]*\breduce\b/.test(animCode) ||
-                      /prefers-reduced-motion/.test(animCode);
+/* A CSS animation cannot gate on a JS `reduce` flag — its override is a
+   prefers-reduced-motion block that turns the animation off. Check the file the
+   animation is actually in, and for CSS require the block to NEUTRALISE it
+   rather than merely mention the media query. */
+const animCode = animHome === 'sections.css' ? sectionsCss
+               : animHome === 'niche.js'     ? nicheCode : sceneCode;
+const gatesOnReduce = animHome === 'sections.css'
+  ? /@media[^{]*prefers-reduced-motion[\s\S]*?animation:\s*none/i.test(sectionsCss)
+  : /if\s*\([^)]*\breduce\b/.test(animCode) ||
+    /prefers-reduced-motion/.test(animCode);
 gatesOnReduce
   ? ok('scene gates on reduced motion (§7.1)')
   : bad('scene gates on reduced motion (§7.1)', 'no conditional consults reduce');

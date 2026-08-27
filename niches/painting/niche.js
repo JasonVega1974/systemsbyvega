@@ -322,5 +322,7 @@ var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     });
   }
 
-  window.renderContent = renderContent;
+  /* This niche names its renderer renderAll(), not renderContent(). base.js
+     calls window.renderContent, so the export bridges the two. */
+  window.renderContent = renderAll;
 })();

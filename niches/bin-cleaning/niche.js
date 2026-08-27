@@ -59,20 +59,22 @@ var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }).join('');
 
     // plans
-    document.getElementById('priceGrid').innerHTML = c.plans.map(function(p){
-      var feats = (p.features || '').split('\n').filter(Boolean).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');
-      return '<div class="pcard' + (p.best ? ' best' : '') + '">' +
-        (p.best ? '<span class="pnote">' + esc(p.note || 'Most popular') + '</span>' : '') +
-        '<h3>' + esc(p.name) + '</h3>' +
-        '<div class="pnum">' + esc(p.price) + '<span> ' + esc(p.per) + '</span></div>' +
+    document.getElementById('priceGrid').innerHTML = c.pricing.map(function(p){
+      /* Canonical shape (§4.2): pricing[], features is an ARRAY, highlight is the
+         flag, label is the name, and this niche carries its price in blurb. */
+      var feats = (p.features || []).map(function(f){ return '<li>' + esc(f) + '</li>'; }).join('');
+      return '<div class="pcard' + (p.highlight ? ' best' : '') + '">' +
+        (p.highlight ? '<span class="pnote">' + esc(p.note || 'Most popular') + '</span>' : '') +
+        '<h3>' + esc(p.label) + '</h3>' +
+        '<div class="pnum">' + esc(p.blurb) + '<span> ' + esc(p.per) + '</span></div>' +
         '<ul>' + feats + '</ul></div>';
     }).join('');
     document.getElementById('pricingNote').textContent = c.pricingNote || '';
 
     // plan select in signup form
     var planSel = document.getElementById('qPlan');
-    planSel.innerHTML = c.plans.map(function(p){
-      return '<option value="' + esc(p.name) + '">' + esc(p.name) + ' (' + esc(p.price) + esc(p.per) + ')</option>';
+    planSel.innerHTML = c.pricing.map(function(p){
+      return '<option value="' + esc(p.label) + '">' + esc(p.label) + ' (' + esc(p.blurb) + esc(p.per) + ')</option>';
     }).join('') + '<option value="Not sure yet">Not sure yet</option>';
 
     // route finder

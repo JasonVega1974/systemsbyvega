@@ -50,16 +50,24 @@
 var DEFAULT_CONTENT = {{DEFAULT_CONTENT}};
 </script>
 
+<!-- SCRIPT ORDER IS LOAD-BEARING. base.js FIRST.
+     Every niche.js opens with `var SL = window.SL;`, and base.js assigns
+     window.SL at the end of its IIFE. With base.js emitted last, SL was
+     undefined when niche.js ran: every renderer threw on its first line,
+     window.renderContent was never defined, and base.js then skipped it via its
+     own typeof guard — silently, on all 14 converted sites.
+     base.js defers boot() to DOMContentLoaded, so renderContent and initScene
+     are both defined by the time it fires. Do not reorder these. -->
+<script>
+{{BASE_JS}}
+</script>
+
 <script>
 {{NICHE_JS}}
 </script>
 
 <script>
 {{SCENE_JS}}
-</script>
-
-<script>
-{{BASE_JS}}
 </script>
 
 </body>

@@ -229,7 +229,11 @@ var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function step(now){
       var dt = Math.min(2.5, (now - last) / 16.67); last = now;
       v = (v + (target - r) * k) * damp; r += v * dt;
-      el.setAttribute('r', r.toFixed(2));
+      /* The spring can overshoot below zero on the first frames (r starts at 3
+         and v is unbounded), and <circle r="-0.16"> is an SVG error the browser
+         logs and then ignores. Clamp the ATTRIBUTE, not r itself — the spring
+         must keep its real value or the damping stops converging. */
+      el.setAttribute('r', Math.max(0, r).toFixed(2));
       if(Math.abs(target - r) > 0.4 || Math.abs(v) > 0.25){ el._raf = requestAnimationFrame(step); }
       else { el.setAttribute('r', target); }
     }

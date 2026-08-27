@@ -76,8 +76,28 @@
      DEFAULT_CONTENT is inlined by the build from content.json, so the two can
      never disagree. The fetch exists so an operator edit goes live without a
      rebuild; on failure the inlined copy already rendered. */
+  /* content.json namespaces per-niche data under `niche` (SITELAB_TEMPLATE.md
+     §4.3) so the canonical schema stays clean. But every niche renderer reads
+     those keys FLAT — c.walkServices, c.systemMap, c.rundown — because they were
+     written against the pre-consolidation shape. Nothing ever unpacked the
+     namespace, so after the very first conversion every renderer that touched
+     niche data threw on undefined. Hand the renderer a flattened view; the
+     authored file keeps its namespace. Verified collision-free across all 17
+     sites, and re-checked by qa-site.js on every run. */
+  function SLflat(c) { return c && c.niche ? Object.assign({}, c, c.niche) : (c || {}); }
+
+  /* Flatten the GLOBAL, once, before niche.js parses. Passing a flattened copy
+     to renderContent(c) is not enough: every niche.js opens with
+     `var CONTENT = window.DEFAULT_CONTENT;` and its interactive handlers — drip
+     calculators, quoters, week builders — read that alias directly rather than
+     the render parameter. Those paths would still see the nested shape.
+     This is why base.js must be emitted BEFORE niche.js (see _template/index.html).
+     content.json on disk keeps its namespace; only the runtime view is flat, so
+     DEFAULT_CONTENT still matches the authored file byte for byte. */
+  window.DEFAULT_CONTENT = SLflat(window.DEFAULT_CONTENT);
+
   function boot() {
-    var CONTENT = window.DEFAULT_CONTENT || {};
+    var CONTENT = SLflat(window.DEFAULT_CONTENT);
     window.CONTENT = CONTENT;
     if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
     initReveal();
@@ -87,7 +107,7 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) {
         if (!d) return;
-        CONTENT = Object.assign({}, window.DEFAULT_CONTENT, d);
+        CONTENT = SLflat(Object.assign({}, window.DEFAULT_CONTENT, d));
         window.CONTENT = CONTENT;
         if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
       })
