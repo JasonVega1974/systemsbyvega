@@ -156,6 +156,10 @@ base.css       shared chrome   →  reset, layout, type scale, .btn, forms, reve
 sections.css   this niche only →  its own sections; may override the above
 ```
 
+A site's signature animation may live in this layer as well as in JavaScript —
+`@keyframes` are niche-specific, so they belong in `sections.css`, and the site
+then ships a documented no-op `scene.js`. See §7.0 (D-S).
+
 **A rule belongs in `base.css` when its class/id hooks appear in the markup of
 two or more deployed sites, or when it targets elements only.** A rule used by
 exactly one niche belongs in that niche's `sections.css`. Order matters: because
@@ -254,16 +258,16 @@ in the audit and are **retired**.
 
 ```jsonc
 {
-  "services":     [{ "title": "s", "desc": "s", "icon": "s?" }],
+  "services":     [{ "title": "s", "desc": "s", "icon": "s?", "from": "s?" }],
   "pricing":      [{ "label": "s", "price": 299, "priceHigh": 900, "per": "s?",
                      "blurb": "s?", "note": "s?", "features": ["s"],
                      "highlight": false }],
-  "faq":          [{ "q": "s", "a": "s" }],
+  "faq":          [{ "q": "s", "a": "s", "tags": "s?" }],
   "owner":        { "name": "s", "bio": "s", "photo": "s" },
   "testimonials": [{ "quote": "s", "name": "s" }],
   "stats":        [{ "num": "s", "label": "s" }],
   "gallery":      [{ "title": "s", "tag": "s", "image": "s" }],
-  "social":       [{ "label": "s", "url": "s" }]
+  "social":       [{ "label": "s", "url": "s", "icon": "s?" }]
 }
 ```
 
@@ -276,6 +280,10 @@ in the audit and are **retired**.
 | `pricing[].blurb` | `best` (as a *string*), `freq` | A one-line tier description. Carried as `best` on dumpster's `sizes[]`, `best` on car-detailing's `packages[]`, `freq` on landscaping's `plans[]` |
 | `pricing[].priceHigh` | `priceHigh` | Optional. When present the tier is a RANGE and both ends must render; when absent it is a fixed price. Canonical for the same reason as `note`: showing "$450" for something that costs $450–$900 misstates the price, and a high end kept anywhere else is decoration the renderer can drop. Distinct from `seo.priceRange`, which is the site-wide JSON-LD summary string |
 | `pricing[].note` | `note` | The tier's **fine print** — a caveat that qualifies the price (`"past 600 ft² is billed at $0.18/ft²"`). Distinct from `blurb`: a short descriptor and a 100-character qualifier are not the same field. Canonical on **compliance grounds, not frequency** — only pressure-washing carries one today, but a price qualifier must stay structurally attached to the price it limits. Put it in `niche.*` and a later template change can render `$149 flat` with its "up to 600 sq ft" silently detached |
+| `pricing[].per` | `period` | A fourth drift on one field. personal-trainer wrote `period`; everything else writes `per` |
+| `services[].from` | — | **Optional.** A per-service starting price (`"from $16/hr"`). Canonical on the same compliance grounds as `note`: a price qualifier stays structurally attached to what it prices. Move it to `niche.*` and a later template change renders a service with no indication of what it costs |
+| `faq[].tags` | — | **Optional.** Comma-separated filter keys (`"all,strength"`), read to filter FAQs by the visitor's selected goal. Canonical rather than niche-local because the alternative is duplicating every question into `niche` just to carry its tag |
+| `social[].icon` | `platform` | **Optional.** Selects the glyph, exactly as `services[].icon` does |
 | `testimonials[].name` | `author` | `name` |
 | `stats[].label` | `lab` | `label` |
 | `gallery[].tag` | `cat` | `tag` |
@@ -285,16 +293,32 @@ as often as a figure. See §9.2.
 
 ### 4.3 Niche-specific data
 
-Some niches carry data that genuinely does not generalise — dumpster `sizes`/
-`durations`/`terms`, landscaping `seasons`, BBQ `menu`/`schedule`, delivery
-`routeZones`. Do **not** force these into a shared shape. Put them under `niche`:
+Some niches carry data that genuinely does not generalise — delivery's quoter
+zones and sizes, landscaping `seasons`, BBQ `menu`/`schedule`, auto-repair's
+`soundResults`. Do **not** force these into a shared shape. Put them under
+`niche`:
 
 ```jsonc
-{ "niche": { "sizes": [...], "durations": [...], "terms": {...} } }
+{ "niche": { "quoterZones": [...], "quoterSizes": [...], "quoterSettings": {...} } }
 ```
 
-Document the shape in that niche's `brief.md`. The template renders `niche.*` only
-through a per-niche `scene.js` hook; `base.js` never reads it.
+Document the shape in that niche's `brief.md`.
+
+**One documented exception (D-T).** `dumpster-rental` keeps `sizes`, `durations`
+and `terms` at the TOP level with no `niche` key at all. It was wave 0, converted
+before this convention settled, and it is the only site out of step. The rule
+above is what every later conversion follows; the reference site is not being
+re-converted to match it, so do not read it as a counter-example.
+
+**`base.js` DOES read `niche.*`** — an earlier version of this section claimed it
+never did, and that claim cost fourteen sites their renderers. Niche renderers
+were written against the pre-consolidation shape and read these keys flat
+(`c.walkServices`, not `c.niche.walkServices`), so `base.js` flattens the
+namespace onto the runtime object before anything renders — and flattens the
+GLOBAL, because every `niche.js` aliases `window.DEFAULT_CONTENT` directly for
+its interactive handlers. The authored `content.json` keeps its namespace; only
+the runtime view is flat. Key collisions between `niche.*` and the top level are
+therefore forbidden, and `qa-site.js` checks for them.
 
 ### 4.4 Rules
 
@@ -473,6 +497,25 @@ So a `scene.js` stub is legitimate when the animation is inseparable from the
 renderer — its comment must name the file that holds it. The reduced-motion
 gate (§7.1) is then checked in that same file.
 
+**And it may not be JavaScript at all (D-S).** child-care's hero scene twinkles,
+glows and steams on four infinite `@keyframes`; hvac's system-map hotspot ring
+pulses on one. Both honour reduced motion. Neither uses a line of JS. Grading by
+`requestAnimationFrame` alone reported those as missing, which would have sent
+someone to build an animation that already existed.
+
+So: **a signature animation is a LOOP, wherever it lives.**
+
+| Home | Bar |
+|---|---|
+| `scene.js` / `niche.js` | ≥ 2 `requestAnimationFrame` — it re-schedules itself. One call is a deferred style write (a toast fade), not an animation |
+| `sections.css` | an `@keyframes` used with `infinite` on a non-chrome selector, switched off by a `prefers-reduced-motion` block |
+
+With one further condition on the CSS half: **at least one keyframe+selector pair
+must be unique to that niche.** Four sites carry an identical
+`pulse on .hero__art .halo` inherited from the reference build, and three share
+`float on .hero__art svg`. Inherited boilerplate is not a signature — counting it
+would mark sites done and quietly delete real Phase 3 work from the backlog.
+
 This is the correction §6.1 already made for illustration defs: grade the thing,
 not its address.
 
@@ -640,6 +683,14 @@ render string. **Check render strings specifically** — `summit-stone` and
 
 ### 9.3 Feature parity with the reference
 
+- [ ] **The page actually runs.** `node tools/runtime-check.js <builtDir>` loads
+      the built page in headless Chrome and asserts zero console errors **and**
+      that `renderContent` really ran. This is a required gate step, not an
+      optional extra: every other check in this document reads TEXT, and the
+      content values they look for sit in the inlined `DEFAULT_CONTENT` whether
+      or not a line of JS executes. Fourteen sites passed the entire checklist
+      with renderers that threw on their first line. The check FAILS when it
+      cannot launch a browser — an unverified result is not a pass
 - [ ] Signature animation present, and all three reduced-motion layers (§7.3)
 - [ ] Interactive pricing — a control the visitor changes that updates a displayed
       figure. **Only 3 of 23 have this today** (delivery, moving, landscaping);

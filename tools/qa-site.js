@@ -126,7 +126,8 @@ if (content) {
   const flat = JSON.stringify(canonicalOnly);
   const found = [];
   for (const [k, m] of [['"plans"', 'plans[] -> pricing[]'], ['"packages"', 'packages[] -> pricing[]'],
-                        ['"author"', 'author -> name'], ['"lab"', 'lab -> label'], ['"cat"', 'cat -> tag']]) {
+                        ['"author"', 'author -> name'], ['"lab"', 'lab -> label'], ['"cat"', 'cat -> tag'],
+                        ['"period"', 'period -> per'], ['"platform"', 'platform -> icon']]) {
     if (flat.includes(k)) found.push(m);
   }
   /* The highlight flag has been written three ways: best, featured, popular.
@@ -158,6 +159,17 @@ if (content) {
       if (p.highlight != null && typeof p.highlight !== 'boolean') errs.push(`pricing[${i}].highlight is not boolean`);
     });
     errs.length ? bad('pricing[] shape (§4.2)', errs.join('; ')) : ok('pricing[] shape (§4.2)');
+  }
+
+  /* niche.* is flattened onto the runtime object by base.js, so a key that
+     exists at BOTH levels would be silently overridden — the site would render
+     the wrong data and nothing would throw. Forbidden by §4.3. */
+  if (content.niche && typeof content.niche === 'object') {
+    const clash = Object.keys(content.niche).filter(k => k !== 'niche' && k in content);
+    clash.length
+      ? bad('niche.* does not collide with the top level (§4.3)', clash.join(', '))
+      : ok('niche.* does not collide with the top level (§4.3)',
+           Object.keys(content.niche).length + ' keys checked');
   }
 
   // no nulls
@@ -235,6 +247,7 @@ const ALLOW = [
      being BOUGHT is a tier the buyer picks, not a track record. A track-record
      claim attaches N+ to years, jobs, clients, projects or reviews — none of
      which are here, and years/yrs has its own NUMS branch anyway. */
+  /for the next \d+\s*years?/i,                     // forward-looking, not a record
   /^\s*(\/\/|\/\*|\*)/                               // developer comments
 ];
 

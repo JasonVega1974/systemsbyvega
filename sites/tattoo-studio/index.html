@@ -1374,7 +1374,7 @@ var DEFAULT_CONTENT = {
   ],
   "social": [
     {
-      "platform": "Instagram",
+      "icon": "Instagram",
       "label": "@staticrosetattoo",
       "url": "https://systemsbyvega.com"
     }
@@ -1907,7 +1907,7 @@ var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var renderSocial = function(list, brand){
     var pillsHtml = (list || []).map(function(s){
       return '<a class="social" href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">'
-        + socSvg(s.platform) + esc(s.label || s.platform) + '</a>';
+        + socSvg(s.icon) + esc(s.label || s.icon) + '</a>';
     });
     pillsHtml.push('<a class="social" href="mailto:' + esc(brand.email) + '">'
       + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>'
