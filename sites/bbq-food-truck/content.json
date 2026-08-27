@@ -1,217 +1,231 @@
 {
   "brand": {
     "name": "Cinder Hog BBQ",
+    "tagline": "Smoked All Night. Parked Near You.",
     "phone": "(208) 555-0163",
     "email": "eat@cinderhogbbq.com",
-    "formEmail": "info@kingdom-creatives.com",
+    "leadEmail": "info@kingdom-creatives.com",
     "city": "Nampa & Boise, Idaho",
     "instagram": "@cinderhogbbq"
   },
-  "announcement": {
-    "text": "",
-    "link": ""
-  },
-  "about": {
-    "bio": "Ray Calder grew up tending his grandfather's cinder-block pit outside Amarillo before hauling the family rub book north to the Treasure Valley. He welded the offset smoker himself, splits his own oak, and still refuses to bolt on a gas assist. One truck, one fire, one rule: if it wouldn't pass at the family table, it doesn't go out the window."
-  },
-  "social": [],
-  "schedule": [
+  "pricing": [
     {
-      "day": "Monday",
-      "off": true,
-      "note": "Smoker's resting. Prepping meat for the week."
+      "label": "Backyard · up to ~25",
+      "blurb": "$21",
+      "per": "per person · starting",
+      "features": [
+        "Two smoked meats + two sides",
+        "Buns, pickles, sauces & plates",
+        "Drop-off or truck-on-site"
+      ],
+      "highlight": false
     },
     {
-      "day": "Tuesday",
-      "spot": "Canal Street Commons",
-      "address": "Canal St & 12th Ave S, Nampa",
-      "hours": "11 AM – 2 PM",
-      "mapUrl": "https://maps.google.com/?q=Canal+St+and+12th+Ave+S,+Nampa,+ID"
+      "label": "Company · up to ~75",
+      "blurb": "$18",
+      "per": "per person · starting",
+      "features": [
+        "Three meats + three sides",
+        "Staffed serving line, 90 minutes",
+        "Sweet tea & lemonade included"
+      ],
+      "highlight": true
     },
     {
-      "day": "Wednesday",
-      "spot": "Sawtooth Alley Brewing",
-      "address": "Pine Ave & E 2nd St, Meridian",
-      "hours": "4 PM – 8 PM",
-      "mapUrl": "https://maps.google.com/?q=Pine+Ave+and+E+2nd+St,+Meridian,+ID"
-    },
-    {
-      "day": "Thursday",
-      "spot": "Ninth & Grove Lunch Pod",
-      "address": "9th St & Grove St, Boise",
-      "hours": "11 AM – 2 PM",
-      "mapUrl": "https://maps.google.com/?q=9th+St+and+Grove+St,+Boise,+ID"
-    },
-    {
-      "day": "Friday",
-      "spot": "Bench Line Taproom",
-      "address": "Vista Ave & Targee St, Boise",
-      "hours": "11 AM – 7 PM",
-      "mapUrl": "https://maps.google.com/?q=Vista+Ave+and+Targee+St,+Boise,+ID"
-    },
-    {
-      "day": "Saturday",
-      "spot": "Canyon Bend Growers Market",
-      "address": "Front St & 13th Ave S, Nampa",
-      "hours": "9 AM – 1 PM",
-      "mapUrl": "https://maps.google.com/?q=Front+St+and+13th+Ave+S,+Nampa,+ID"
-    },
-    {
-      "day": "Sunday",
-      "off": true,
-      "note": "Church, family, football. See you Tuesday."
+      "label": "Wedding · 150+",
+      "blurb": "$16",
+      "per": "per person · starting",
+      "features": [
+        "Full spread, carved on site",
+        "Tastings for the two of you first",
+        "We handle setup & cleanup"
+      ],
+      "highlight": false
     }
   ],
-  "menu": {
-    "plates": [
+  "social": [],
+  "niche": {
+    "announcement": {
+      "text": "",
+      "link": ""
+    },
+    "about": {
+      "bio": "Ray Calder grew up tending his grandfather's cinder-block pit outside Amarillo before hauling the family rub book north to the Treasure Valley. He welded the offset smoker himself, splits his own oak, and still refuses to bolt on a gas assist. One truck, one fire, one rule: if it wouldn't pass at the family table, it doesn't go out the window."
+    },
+    "schedule": [
       {
-        "name": "Brisket Plate",
-        "desc": "Half pound of 14-hour oak-smoked brisket, sliced to order. Two sides, Texas toast.",
-        "price": "$18"
+        "day": "Monday",
+        "off": true,
+        "note": "Smoker's resting. Prepping meat for the week."
       },
       {
-        "name": "Pulled Pork Plate",
-        "desc": "Hand-pulled shoulder with a vinegar kiss. Two sides, Texas toast.",
-        "price": "$15"
+        "day": "Tuesday",
+        "spot": "Canal Street Commons",
+        "address": "Canal St & 12th Ave S, Nampa",
+        "hours": "11 AM – 2 PM",
+        "mapUrl": "https://maps.google.com/?q=Canal+St+and+12th+Ave+S,+Nampa,+ID"
       },
       {
-        "name": "St. Louis Ribs — Half Rack",
-        "desc": "Dry-rubbed, smoked till they tug clean off the bone. Two sides.",
-        "price": "$17"
+        "day": "Wednesday",
+        "spot": "Sawtooth Alley Brewing",
+        "address": "Pine Ave & E 2nd St, Meridian",
+        "hours": "4 PM – 8 PM",
+        "mapUrl": "https://maps.google.com/?q=Pine+Ave+and+E+2nd+St,+Meridian,+ID"
       },
       {
-        "name": "Smoked Turkey Plate",
-        "desc": "Brined breast, smoked gentle, sliced thick. Two sides, Texas toast.",
-        "price": "$16"
+        "day": "Thursday",
+        "spot": "Ninth & Grove Lunch Pod",
+        "address": "9th St & Grove St, Boise",
+        "hours": "11 AM – 2 PM",
+        "mapUrl": "https://maps.google.com/?q=9th+St+and+Grove+St,+Boise,+ID"
       },
       {
-        "name": "The Cinder Hog Sampler",
-        "desc": "Brisket, pulled pork and two ribs on one tray. For the undecided.",
-        "price": "$24"
+        "day": "Friday",
+        "spot": "Bench Line Taproom",
+        "address": "Vista Ave & Targee St, Boise",
+        "hours": "11 AM – 7 PM",
+        "mapUrl": "https://maps.google.com/?q=Vista+Ave+and+Targee+St,+Boise,+ID"
       },
       {
-        "name": "Burnt Ends (when we have 'em)",
-        "desc": "Double-smoked brisket point cubes, glazed. First to sell out, every time.",
-        "price": "$19"
+        "day": "Saturday",
+        "spot": "Canyon Bend Growers Market",
+        "address": "Front St & 13th Ave S, Nampa",
+        "hours": "9 AM – 1 PM",
+        "mapUrl": "https://maps.google.com/?q=Front+St+and+13th+Ave+S,+Nampa,+ID"
+      },
+      {
+        "day": "Sunday",
+        "off": true,
+        "note": "Church, family, football. See you Tuesday."
       }
     ],
-    "sandwiches": [
-      {
-        "name": "The Cinder Hog",
-        "desc": "Pulled pork piled on a brioche bun with mustard slaw and house pickles.",
-        "price": "$12"
-      },
-      {
-        "name": "Brisket Sandwich",
-        "desc": "Sliced or chopped, your call. Pickles, onion, sauce on the side.",
-        "price": "$14"
-      },
-      {
-        "name": "Hot Link Sandwich",
-        "desc": "House-smoked spicy link, split and seared, mustard and pickled jalapeño.",
-        "price": "$11"
-      },
-      {
-        "name": "Smoked Turkey Stack",
-        "desc": "Smoked turkey, bacon, mustard slaw and mayo on toasted sourdough.",
-        "price": "$12"
-      },
-      {
-        "name": "The Squealer",
-        "desc": "Pulled pork AND hot link on one bun. Bring napkins. Bring a friend.",
-        "price": "$14"
-      }
-    ],
-    "sides": [
-      {
-        "name": "Smoked Mac & Cheese",
-        "desc": "Three cheeses, finished in the smoker under a crust of crumbs.",
-        "price": "$5"
-      },
-      {
-        "name": "Cowboy Beans",
-        "desc": "Slow beans loaded with chopped brisket ends. Practically a meal.",
-        "price": "$4"
-      },
-      {
-        "name": "Mustard Slaw",
-        "desc": "Sharp, crunchy, zero mayo. Cuts the richness just right.",
-        "price": "$4"
-      },
-      {
-        "name": "Skillet Cornbread",
-        "desc": "Cast-iron baked, served warm with honey butter.",
-        "price": "$3"
-      },
-      {
-        "name": "Loaded Potato Salad",
-        "desc": "Red potatoes, bacon, scallion — the picnic classic done right.",
-        "price": "$5"
-      }
-    ],
-    "drinks": [
-      {
-        "name": "Sweet Tea",
-        "desc": "Brewed strong every morning. The only correct pairing.",
-        "price": "$3"
-      },
-      {
-        "name": "Fresh-Squeezed Lemonade",
-        "desc": "Squeezed at the truck. Ask for it half-and-half with tea.",
-        "price": "$3"
-      },
-      {
-        "name": "Mexican Coke",
-        "desc": "Glass bottle, real sugar.",
-        "price": "$3"
-      },
-      {
-        "name": "Root Beer",
-        "desc": "Bottled, ice-cold, made for ribs.",
-        "price": "$3"
-      },
-      {
-        "name": "Bottled Water",
-        "desc": "Cold and free with any kids' plate.",
-        "price": "$1"
-      }
-    ]
+    "menu": {
+      "plates": [
+        {
+          "name": "Brisket Plate",
+          "desc": "Half pound of 14-hour oak-smoked brisket, sliced to order. Two sides, Texas toast.",
+          "price": "$18"
+        },
+        {
+          "name": "Pulled Pork Plate",
+          "desc": "Hand-pulled shoulder with a vinegar kiss. Two sides, Texas toast.",
+          "price": "$15"
+        },
+        {
+          "name": "St. Louis Ribs — Half Rack",
+          "desc": "Dry-rubbed, smoked till they tug clean off the bone. Two sides.",
+          "price": "$17"
+        },
+        {
+          "name": "Smoked Turkey Plate",
+          "desc": "Brined breast, smoked gentle, sliced thick. Two sides, Texas toast.",
+          "price": "$16"
+        },
+        {
+          "name": "The Cinder Hog Sampler",
+          "desc": "Brisket, pulled pork and two ribs on one tray. For the undecided.",
+          "price": "$24"
+        },
+        {
+          "name": "Burnt Ends (when we have 'em)",
+          "desc": "Double-smoked brisket point cubes, glazed. First to sell out, every time.",
+          "price": "$19"
+        }
+      ],
+      "sandwiches": [
+        {
+          "name": "The Cinder Hog",
+          "desc": "Pulled pork piled on a brioche bun with mustard slaw and house pickles.",
+          "price": "$12"
+        },
+        {
+          "name": "Brisket Sandwich",
+          "desc": "Sliced or chopped, your call. Pickles, onion, sauce on the side.",
+          "price": "$14"
+        },
+        {
+          "name": "Hot Link Sandwich",
+          "desc": "House-smoked spicy link, split and seared, mustard and pickled jalapeño.",
+          "price": "$11"
+        },
+        {
+          "name": "Smoked Turkey Stack",
+          "desc": "Smoked turkey, bacon, mustard slaw and mayo on toasted sourdough.",
+          "price": "$12"
+        },
+        {
+          "name": "The Squealer",
+          "desc": "Pulled pork AND hot link on one bun. Bring napkins. Bring a friend.",
+          "price": "$14"
+        }
+      ],
+      "sides": [
+        {
+          "name": "Smoked Mac & Cheese",
+          "desc": "Three cheeses, finished in the smoker under a crust of crumbs.",
+          "price": "$5"
+        },
+        {
+          "name": "Cowboy Beans",
+          "desc": "Slow beans loaded with chopped brisket ends. Practically a meal.",
+          "price": "$4"
+        },
+        {
+          "name": "Mustard Slaw",
+          "desc": "Sharp, crunchy, zero mayo. Cuts the richness just right.",
+          "price": "$4"
+        },
+        {
+          "name": "Skillet Cornbread",
+          "desc": "Cast-iron baked, served warm with honey butter.",
+          "price": "$3"
+        },
+        {
+          "name": "Loaded Potato Salad",
+          "desc": "Red potatoes, bacon, scallion — the picnic classic done right.",
+          "price": "$5"
+        }
+      ],
+      "drinks": [
+        {
+          "name": "Sweet Tea",
+          "desc": "Brewed strong every morning. The only correct pairing.",
+          "price": "$3"
+        },
+        {
+          "name": "Fresh-Squeezed Lemonade",
+          "desc": "Squeezed at the truck. Ask for it half-and-half with tea.",
+          "price": "$3"
+        },
+        {
+          "name": "Mexican Coke",
+          "desc": "Glass bottle, real sugar.",
+          "price": "$3"
+        },
+        {
+          "name": "Root Beer",
+          "desc": "Bottled, ice-cold, made for ribs.",
+          "price": "$3"
+        },
+        {
+          "name": "Bottled Water",
+          "desc": "Cold and free with any kids' plate.",
+          "price": "$1"
+        }
+      ]
+    }
   },
-  "catering": {
-    "packages": [
-      {
-        "label": "Backyard · up to ~25",
-        "price": "$21",
-        "per": "per person · starting",
-        "best": false,
-        "features": [
-          "Two smoked meats + two sides",
-          "Buns, pickles, sauces & plates",
-          "Drop-off or truck-on-site"
-        ]
-      },
-      {
-        "label": "Company · up to ~75",
-        "price": "$18",
-        "per": "per person · starting",
-        "best": true,
-        "features": [
-          "Three meats + three sides",
-          "Staffed serving line, 90 minutes",
-          "Sweet tea & lemonade included"
-        ]
-      },
-      {
-        "label": "Wedding · 150+",
-        "price": "$16",
-        "per": "per person · starting",
-        "best": false,
-        "features": [
-          "Full spread, carved on site",
-          "Tastings for the two of you first",
-          "We handle setup & cleanup"
-        ]
-      }
-    ]
+  "seo": {
+    "title": "Cinder Hog BBQ — Smoked All Night. Parked Near You. | Nampa & Boise, ID",
+    "description": "Cinder Hog BBQ is a wood-fired barbecue food truck roaming Nampa & Boise, Idaho. Brisket, pulled pork and ribs smoked 14 hours over real oak — till we sell out. Find the truck this week or book catering. (208) 555-0163.",
+    "ogTitle": "Cinder Hog BBQ — Smoked All Night. Parked Near You.",
+    "ogDescription": "Wood-fired BBQ truck roaming Nampa & Boise. Oak-smoked brisket, pork & ribs till we sell out. Find the truck this week or book catering — (208) 555-0163.",
+    "priceRange": "$$",
+    "schemaType": "FoodEstablishment",
+    "canonical": "https://systemsbyvega.com/sites/bbq-food-truck/",
+    "themeColor": "#0C0A08",
+    "favicon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%230C0A08'/%3E%3Cpath d='M32 6c3 7-6 9-4 16 1 4 5 5 5 5s-1-6 4-8c-1 6 7 8 7 15 0 8-5 13-12 13s-12-5-12-13c0-6 4-9 5-14 3 3 3 6 3 6s5-5 4-20z' fill='%23E8590C'/%3E%3Cellipse cx='32' cy='40' rx='9' ry='7' fill='%23F6EBD9'/%3E%3Cellipse cx='28.5' cy='40' rx='1.7' ry='2.6' fill='%230C0A08'/%3E%3Cellipse cx='35.5' cy='40' rx='1.7' ry='2.6' fill='%230C0A08'/%3E%3C/svg%3E",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/bbq-food-truck/og.png"
   }
 }

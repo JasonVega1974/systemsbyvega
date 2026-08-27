@@ -216,10 +216,15 @@ Types: `s` string, `n` number, `b` boolean, `[]` array. **R** required, **O** op
     "city":      "Nampa",                   // R  s
     "license":   ""                         // O  s   blank unless the operator holds one
   },
+  // OPTIONAL as a block (D-N). A mobile business — a food truck, a courier —
+  // parks at named stops on a schedule and serves no area. Where it is absent
+  // every consumer falls back to brand.city: JSON-LD areaServed, the share
+  // card's eyebrow, the footer. Deriving cities[] from address strings would
+  // put inferred towns into the operator's structured data.
   "serviceArea": {
-    "region": "Treasure Valley, Idaho",     // R  s
-    "short":  "Treasure Valley",            // R  s
-    "cities": ["Boise", "Meridian"]         // R  []s
+    "region": "Treasure Valley, Idaho",     // R within the block  s
+    "short":  "Treasure Valley",            // R within the block  s
+    "cities": ["Boise", "Meridian"]         // R within the block  []s
   },
   "seo": {
     "title":       "Sawtooth Dumpster Co. — Flat-Rate Roll-Off Dumpsters",  // R s

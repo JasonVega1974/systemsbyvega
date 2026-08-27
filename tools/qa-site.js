@@ -81,7 +81,7 @@ if (raw) {
 if (content) {
   // required fields
   const req = [['brand.name'], ['brand.tagline'], ['brand.phone'], ['brand.email'], ['brand.leadEmail'],
-               ['brand.city'], ['serviceArea.region'], ['serviceArea.short'], ['serviceArea.cities'],
+               ['brand.city'],
                ['seo.title'], ['seo.description'], ['seo.ogTitle'], ['seo.ogDescription'],
                ['seo.priceRange'], ['seo.schemaType'], ['seo.canonical'], ['seo.themeColor']];
   const get = p => p.split('.').reduce((o, k) => (o == null ? o : o[k]), content);
@@ -91,6 +91,13 @@ if (content) {
   });
   missing.length ? bad('required fields (§4.1)', 'missing: ' + missing.join(', '))
                  : ok('required fields (§4.1)', req.length + ' present');
+
+  /* serviceArea is optional (§4.1, D-N): a mobile business has stops, not an
+     area. Absent is legitimate; note it so it reads as a decision. */
+  if (!content.serviceArea || !content.serviceArea.region) {
+    warn('no serviceArea — falling back to brand.city',
+         JSON.stringify((content.brand || {}).city || ''));
+  }
 
   // leadEmail is fixed
   (content.brand || {}).leadEmail === 'info@kingdom-creatives.com'
