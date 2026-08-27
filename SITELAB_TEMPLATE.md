@@ -209,7 +209,7 @@ Types: `s` string, `n` number, `b` boolean, `[]` array. **R** required, **O** op
 {
   "brand": {
     "name":      "Sawtooth Dumpster Co.",   // R  s
-    "tagline":   "No quote games.",         // R  s
+    "tagline":   "No quote games.",         // O  s   see D-Q below
     "phone":     "(208) 555-0188",          // R  s   reserved 555-01XX range on demos
     "email":     "hello@example.com",       // R  s   the operator's public address
     "leadEmail": "info@kingdom-creatives.com", // R s  form delivery; never rendered
@@ -236,6 +236,12 @@ Types: `s` string, `n` number, `b` boolean, `[]` array. **R** required, **O** op
   }
 }
 ```
+
+**`brand.tagline` is optional (D-Q).** Not every source has one. tattoo-studio's
+`og:title` is a title, its meta description is a description, and its hero
+subhead is a sentence — cropping any into a tagline is writing marketing copy on
+the operator's behalf. Where it is absent the share card omits the line and
+JSON-LD omits `slogan`.
 
 `seo` is **new**. It exists because Item 1 found fabricated claims in
 `<meta name="description">`, `og:description` and JSON-LD on sites whose admin
@@ -448,6 +454,27 @@ Slots in `_template/index.html`:
 ## 7. Animation slots and reduced motion
 
 Every site ships **one** signature animation. Not three, not zero.
+
+### 7.0 Where the animation lives (D-P)
+
+**The animation is graded wherever it lives — `scene.js` or `niche.js`.**
+
+`scene.js` is the preferred home and is right when the scene stands alone:
+dumpster-rental's spring drop, pressure-washing's wand canvas and plumbing's
+drip physics all have zero `CONTENT` references and lift cleanly.
+
+But some animations are **helpers the renderer calls**, not scenes.
+bin-cleaning's `springPulse(el, cx, cy)` is invoked from `activateZone()`,
+which reads `CONTENT.routeZones`; roofing's `stepGlow` is driven by its
+self-check quiz state. Extracting those would split a function from its callers
+to satisfy a filing convention, and risks breaking a working animation.
+
+So a `scene.js` stub is legitimate when the animation is inseparable from the
+renderer — its comment must name the file that holds it. The reduced-motion
+gate (§7.1) is then checked in that same file.
+
+This is the correction §6.1 already made for illustration defs: grade the thing,
+not its address.
 
 ### 7.1 The contract
 

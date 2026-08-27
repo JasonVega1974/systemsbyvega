@@ -80,10 +80,14 @@ if (raw) {
 
 if (content) {
   // required fields
-  const req = [['brand.name'], ['brand.tagline'], ['brand.phone'], ['brand.email'], ['brand.leadEmail'],
+  // brand.tagline is OPTIONAL (D-Q): not every source has one, and cropping a
+  // title or a hero sentence into a tagline is writing copy for the operator.
+  const req = [['brand.name'], ['brand.phone'], ['brand.email'], ['brand.leadEmail'],
                ['brand.city'],
                ['seo.title'], ['seo.description'], ['seo.ogTitle'], ['seo.ogDescription'],
-               ['seo.priceRange'], ['seo.schemaType'], ['seo.canonical'], ['seo.themeColor']];
+               ['seo.schemaType'], ['seo.canonical'], ['seo.themeColor']];
+  // seo.priceRange is deliberately absent: 13 of 23 originals have none, and
+  // inventing one puts a number we made up into the operator's structured data.
   const get = p => p.split('.').reduce((o, k) => (o == null ? o : o[k]), content);
   const missing = req.map(([p]) => p).filter(p => {
     const v = get(p);
@@ -98,6 +102,10 @@ if (content) {
     warn('no serviceArea — falling back to brand.city',
          JSON.stringify((content.brand || {}).city || ''));
   }
+  if (!(content.brand || {}).tagline) {
+    warn('no brand.tagline — share card and JSON-LD slogan omit it',
+         'absent in the source; not invented (D-Q)');
+  }
 
   // leadEmail is fixed
   (content.brand || {}).leadEmail === 'info@kingdom-creatives.com'
@@ -108,7 +116,14 @@ if (content) {
   // highlight FLAG on a pricing tier — a niche may legitimately have a `best`
   // string elsewhere (dumpster's sizes[].best is "Best for bathroom remodels…"),
   // so those two are checked against tier arrays only, not the whole document.
-  const flat = JSON.stringify(content);
+  /* Canonical names govern CANONICAL sections. `niche` is the niche-local
+     escape hatch (§4), so a key retired from the canonical schema may live
+     there legitimately — tattoo-studio's niche.galleryCats[].cat is the join key
+     its gallery filter reads. Same reasoning as `best` just below.
+     The credential sweep still reads niche in full; only NAMING is scoped. */
+  const canonicalOnly = { ...content };
+  delete canonicalOnly.niche;
+  const flat = JSON.stringify(canonicalOnly);
   const found = [];
   for (const [k, m] of [['"plans"', 'plans[] -> pricing[]'], ['"packages"', 'packages[] -> pricing[]'],
                         ['"author"', 'author -> name'], ['"lab"', 'lab -> label'], ['"cat"', 'cat -> tag']]) {
@@ -173,7 +188,16 @@ if (nicheCss) {
       const fam = m[1].split(',')[0].replace(/['"]/g, '').trim();
       if (fam) named.push([role, fam]);
     }
-    const unloaded = named.filter(([, fam]) => !href.includes(fam));
+    /* A token whose first family is generic or preinstalled loads nothing by
+       design. This check exists to catch a SILENT fallback — a webfont named but
+       never requested. An explicit system stack is the opposite of silent. */
+    const SYSTEM = new Set(['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
+      'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded', 'math', 'emoji',
+      '-apple-system', 'blinkmacsystemfont', 'segoe ui', 'helvetica', 'helvetica neue', 'arial',
+      'georgia', 'times', 'times new roman', 'courier', 'courier new', 'consolas', 'menlo',
+      'monaco', 'tahoma', 'verdana', 'impact', 'trebuchet ms']);
+    const unloaded = named.filter(([, fam]) =>
+      !SYSTEM.has(fam.toLowerCase()) && !href.includes(fam));
     unloaded.length
       ? bad('font tokens are actually loaded (§5.1)',
             unloaded.map(([r, f]) => r + ' = "' + f + '" not in fontsHref').join('; '))
@@ -205,22 +229,41 @@ const ALLOW = [
   /stroke-width|viewBox|%\d\+|d="M/,                 // SVG/CSS numerics
   /\$[\d,]+\+/,                                     // open-ended price: "$800+"
   /\d\+\s*['"]/,                                    // JS concat: Math.random()*100+'%'
+  /<option[^>]*>[^<]*\d\+/,                          // form option: "4+ bins"
+  /\b\d+\+\s*(?:days?|hours?|bins?|dogs?|pets?|visits?|rooms?|windows?|vehicles?|loads?|bags?|stops?)\b/i,
+  /* plan-tier label: "3+ days", "4+ bins". N+ attached to a unit of what is
+     being BOUGHT is a tier the buyer picks, not a track record. A track-record
+     claim attaches N+ to years, jobs, clients, projects or reviews — none of
+     which are here, and years/yrs has its own NUMS branch anyway. */
   /^\s*(\/\/|\/\*|\*)/                               // developer comments
 ];
 
-function sweep(label, text) {
+/* Blank a comment's INTERIOR, keeping every newline so sweep's reported line
+   numbers stay true. Distinct from the `strip` helper further down, which
+   deletes and is used only for counting — this one must preserve line numbers.
+   No line-comment handling, on purpose (D-R): a naive stripper eats the "//" in
+   a URL and would blank a real claim later on that line. The ALLOW line-prefix
+   rule already covers whole-line comments. */
+function blankComments(text, kind) {
+  const hollow = m => m.replace(/[^\n]/g, ' ');
+  if (kind === 'html') return text.replace(/<!--[\s\S]*?-->/g, hollow);
+  if (kind === 'js')   return text.replace(/\/\*[\s\S]*?\*\//g, hollow);
+  return text;                      // json: there are no comments to blank
+}
+
+function sweep(label, text, kind) {
   if (!text) return;
   const hits = [];
-  text.split('\n').forEach((ln, i) => {
+  blankComments(text, kind).split('\n').forEach((ln, i) => {
     if (ALLOW.some(re => re.test(ln))) return;
     const w = ln.match(WORDS), n = ln.match(NUMS);
     if (w || n) hits.push(`${label}:${i + 1} [${[...new Set([...(w || []), ...(n || [])])].join(',')}]`);
   });
   hits.length ? bad('clean: ' + label, hits.slice(0, 6).join('  ')) : ok('clean: ' + label);
 }
-sweep('content.json', raw);
-sweep('sections.html', read(path.join(SRC, 'sections.html')));
-sweep('niche.js', read(path.join(SRC, 'niche.js')));
+sweep('content.json', raw, 'json');
+sweep('sections.html', read(path.join(SRC, 'sections.html')), 'html');
+sweep('niche.js', read(path.join(SRC, 'niche.js')), 'js');
 
 /* ═══ §9.3 Feature parity ══════════════════════════════════════════════ */
 section('§9.3 feature parity');
@@ -233,22 +276,36 @@ const nicheJs = read(path.join(SRC, 'niche.js')) || '';
 // Signature animation. Strip comments first — a check that greps the whole file
 // passes on prose that merely NAMES requestAnimationFrame, which is how a
 // deliberate no-op scored a green tick on its first run.
-const sceneCode = sceneJs.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-const isStub = /TODO/.test(sceneJs) || !/requestAnimationFrame/.test(sceneCode);
+const strip = s => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+const sceneCode = strip(sceneJs);
+const nicheCode = strip(nicheJs);
+
+/* D-P: the animation may live in scene.js (self-contained scene) or in niche.js
+   (a spring helper the renderer calls). Grade the animation, not its address. */
+const rafCount = s => (s.match(/requestAnimationFrame/g) || []).length;
+/* Two or more calls means it re-schedules itself, i.e. it loops. A single call
+   is a deferred style write — a toast fade — not a signature animation. */
+const LOOPS = 2;
+const animHome = rafCount(sceneCode) >= LOOPS ? 'scene.js'
+               : rafCount(nicheCode) >= LOOPS ? 'niche.js' : null;
+const oneShot = !animHome && (rafCount(sceneCode) + rafCount(nicheCode)) > 0;
+const isStub = !animHome;
 
 if (isStub) {
   // Not a build-blocking failure: consolidation deliberately does not build
   // animations (Phase 1 decision D-B). It is reported every run until Phase 3.
   warn('PHASE 3 GAP: no signature animation (§7, §9.3)',
-       'scene.js is a documented stub — this site arrived without one');
+       oneShot ? 'only a one-shot rAF (a toast fade), no loop'
+               : 'no requestAnimationFrame in scene.js or niche.js');
 } else {
-  ok('signature animation uses rAF (§7.1)');
+  ok('signature animation uses rAF (§7.1)', 'in ' + animHome);
 }
 /* Any conditional consulting `reduce` counts: an early return, a branch to a
    static reveal, or a guard inside the loop. Requiring `if (reduce) return`
    verbatim failed a scene whose reduced-motion path is richer than that. */
-const gatesOnReduce = /if\s*\([^)]*\breduce\b/.test(sceneCode) ||
-                      /prefers-reduced-motion/.test(sceneCode);
+const animCode = animHome === 'niche.js' ? nicheCode : sceneCode;
+const gatesOnReduce = /if\s*\([^)]*\breduce\b/.test(animCode) ||
+                      /prefers-reduced-motion/.test(animCode);
 gatesOnReduce
   ? ok('scene gates on reduced motion (§7.1)')
   : bad('scene gates on reduced motion (§7.1)', 'no conditional consults reduce');
@@ -278,7 +335,12 @@ else if (unprefixed.length) warn('illustration def ids should be slug-prefixed (
 else ok('illustration def ids are prefixed (§6.2)', svgIds.length + ' checked');
 
 // sections
-const need = { 'FAQ': /id="faq"/i, 'owner': /id="owner"|id="about"/i, 'form': /<form/i };
+/* The owner section goes by several ids across the estate — #owner, #about,
+   #team, #meet. Accept any of them: the requirement is that the operator is on
+   the page, not that one id was chosen. */
+const need = { 'FAQ': /id="faq"/i,
+               'owner': /id="(owner|about|team|meet|who)"/i,
+               'form': /<form/i };
 for (const [k, re] of Object.entries(need)) re.test(sections_) ? ok('section: ' + k) : bad('section: ' + k);
 
 /* Consent (§9.3). Check the BUILT page, not sections.html: the control is
