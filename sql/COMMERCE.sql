@@ -455,9 +455,9 @@ $$;
 -- is 4. NULL means "do not render a number", not "zero".
 --
 -- Use THIS for any rendered "N territories claimed". Do NOT count the rows of
--- sbv_public_claimed_cities to produce a number — that view exists so a taken
--- city cannot be sold twice, and length() on it would leak a 1 or a 2 straight
--- past the floor.
+-- sbv_public_claimed_cities() to produce a number — that function exists so a
+-- taken city cannot be sold twice, and length() on its result would leak a 1 or
+-- a 2 straight past the floor.
 create or replace function public.sbv_claim_counts()
 returns table (niche_slug text, claimed bigint, show_count boolean)
 language sql stable security definer set search_path = ''
@@ -540,11 +540,36 @@ create policy sbv_client_users_own_read on public.sbv_client_users
 
 
 -- ============================================================================
--- 9. PUBLIC VIEWS
---    security_invoker = false: the view runs with definer rights and bypasses
---    base-table RLS. THE COLUMN LIST IS THE SECURITY BOUNDARY. Anything omitted
+-- 9. PUBLIC READ SURFACE — set-returning functions, NOT views
+--
+--    THE RETURNS-TABLE COLUMN LIST IS THE SECURITY BOUNDARY. Anything omitted
 --    is invisible to the internet. Omissions below are deliberate.
+--
+--    WHY FUNCTIONS AND NOT VIEWS. The first draft of this file used
+--    `create view ... with (security_invoker = false)`, which does the same job
+--    — definer rights, base-table RLS bypassed. Supabase's linter raises a hard
+--    ERROR for that ("Security Definer View"), and SETUP.sql:191 has already
+--    settled the question for this project:
+--
+--      "It was an ERROR when the same job was done with views: the RLS bypass
+--       was implicit in view ownership rather than stated. As functions the
+--       privilege boundary is one line, and search_path is pinned so nothing
+--       earlier on the path can be substituted underneath."
+--
+--    So these match sbv_demand_counts() instead. Same output, same boundary,
+--    and the linter drops to the WARN that the aggregate functions already
+--    carry — which is the designed public surface, not a finding.
+--
+--    PostgREST still filters these: both are STABLE, so they are reachable by
+--    GET at /rest/v1/rpc/<name> and `?niche_slug=eq.<slug>` works as it did
+--    against the view.
 -- ============================================================================
+
+-- The views this file shipped in its first version. Dropped explicitly: a view
+-- and a function can coexist under one name in Postgres, so without this the
+-- old definer view would linger and keep serving the data it was retired for.
+drop view if exists public.sbv_public_claimed_cities;
+drop view if exists public.sbv_public_tenants;
 
 -- Which territories are gone. Needed at checkout so a claimed city cannot be
 -- offered for sale a second time.
@@ -554,11 +579,14 @@ create policy sbv_client_users_own_read on public.sbv_client_users
 -- invites inference about how fast the catalog is really moving), city_norm
 -- (an internal key; publishing it invites a client-side normaliser that
 -- disagrees with the trigger).
-create or replace view public.sbv_public_claimed_cities
-  with (security_invoker = false) as
-  select niche_slug, city_label, state_code
-  from public.sbv_city_claims
-  where status in ('claimed','reserved');
+create or replace function public.sbv_public_claimed_cities()
+returns table (niche_slug text, city_label text, state_code text)
+language sql stable security definer set search_path = ''
+as $$
+  select cc.niche_slug, cc.city_label, cc.state_code
+  from public.sbv_city_claims cc
+  where cc.status in ('claimed','reserved');
+$$;
 
 -- Live storefronts, for tenant resolution by hostname and for any "see a real
 -- one" link in the catalog.
@@ -567,11 +595,14 @@ create or replace view public.sbv_public_claimed_cities
 -- details belong on the storefront the operator controls, not in a public
 -- table anyone can enumerate), tier and billing (what someone paid), and
 -- timestamps.
-create or replace view public.sbv_public_tenants
-  with (security_invoker = false) as
-  select client_id, niche_slug, business_name
-  from public.sbv_tenants
-  where is_active;
+create or replace function public.sbv_public_tenants()
+returns table (client_id text, niche_slug text, business_name text)
+language sql stable security definer set search_path = ''
+as $$
+  select t.client_id, t.niche_slug, t.business_name
+  from public.sbv_tenants t
+  where t.is_active;
+$$;
 
 
 -- ============================================================================
@@ -604,9 +635,14 @@ grant select on public.sbv_client_users to authenticated;
 grant update (business_name, operator_name, operator_email, operator_phone)
   on public.sbv_tenants to authenticated;
 
--- The public surface: two views and two functions. Nothing else.
-grant select on public.sbv_public_claimed_cities to anon, authenticated;
-grant select on public.sbv_public_tenants        to anon, authenticated;
+-- The public surface: four functions. No table, no view, nothing else.
+revoke all    on function public.sbv_public_claimed_cities()
+  from public, anon, authenticated;
+grant execute on function public.sbv_public_claimed_cities()
+  to anon, authenticated;
+
+revoke all    on function public.sbv_public_tenants() from public, anon, authenticated;
+grant execute on function public.sbv_public_tenants() to anon, authenticated;
 
 revoke all    on function public.sbv_city_available(text,text,text)
   from public, anon, authenticated;
@@ -650,9 +686,9 @@ where schemaname = 'public'
   and tablename in ('sbv_tenants','sbv_city_claims','sbv_client_users','sbv_billing')
   and 'anon' = any (roles);
 
--- 3. anon's entire footprint on the commerce layer. Expect exactly TWO rows,
---    both SELECT, both on the sbv_public_* views — nothing on a base table.
---    (sbv_niches SELECT and sbv_demand INSERT are SETUP.sql's and are excluded.)
+-- 3. anon's TABLE footprint on the commerce layer. Expect ZERO rows: the public
+--    surface is four functions, so anon holds no table or view privilege at all
+--    here. (sbv_niches SELECT and sbv_demand INSERT are SETUP.sql's, excluded.)
 select table_name, privilege_type
 from information_schema.role_table_grants
 where table_schema = 'public'
@@ -661,13 +697,18 @@ where table_schema = 'public'
   and table_name not in ('sbv_niches','sbv_demand')
 order by table_name, privilege_type;
 
--- 4. THE RUN-ORDER CHECK. If SETUP.sql was re-run after this file, its
---    schema-wide revoke stripped the grants above and query 3 returns nothing
---    for the views. Expect 2; anything less means re-run COMMERCE.sql.
-select count(*) as public_view_grants_expect_2
-from information_schema.role_table_grants
-where table_schema = 'public' and grantee = 'anon'
-  and table_name in ('sbv_public_claimed_cities','sbv_public_tenants');
+-- 4. THE RUN-ORDER CHECK. Expect exactly FOUR rows — the whole public surface.
+--    SETUP.sql ends with `revoke all on all functions in schema public from
+--    anon`, which strips every one of these, so a short count here is the
+--    signature of SETUP.sql having been re-run after this file. Fix: re-run
+--    COMMERCE.sql.
+select routine_name, privilege_type
+from information_schema.role_routine_grants
+where routine_schema = 'public'
+  and grantee = 'anon'
+  and routine_name in ('sbv_public_claimed_cities','sbv_public_tenants',
+                       'sbv_city_available','sbv_claim_counts')
+order by routine_name;
 
 -- 5. Every foreign key is indexed. Expect ZERO rows.
 select conrelid::regclass as tbl, a.attname as fk_column
@@ -890,13 +931,13 @@ with r(section, check_name, got, expected) as (
     'ALLOWED'),
 
   -- ---- the public surface works, and leaks nothing -------------------------
-  ('PUBLIC','anon reads the claimed-cities view',
+  ('PUBLIC','anon reads the claimed-cities function',
     pg_temp.sbv_probe('anon',null,
-      $q$select string_agg(city_label||' '||state_code, ', ' order by city_label) from public.sbv_public_claimed_cities$q$),
+      $q$select string_agg(city_label||' '||state_code, ', ' order by city_label) from public.sbv_public_claimed_cities()$q$),
     'Boise ID, Nampa ID'),
-  ('PUBLIC','operator_email is not a column of the tenant view',
+  ('PUBLIC','operator_email is not a column of the tenant fn',
     pg_temp.sbv_attempt('anon',null,
-      $q$select operator_email from public.sbv_public_tenants$q$),
+      $q$select operator_email from public.sbv_public_tenants()$q$),
     'DENIED (42703)'),
   ('PUBLIC','claimed city reads unavailable',
     pg_temp.sbv_probe('anon',null,
