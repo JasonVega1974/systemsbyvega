@@ -100,14 +100,49 @@ The build must:
    chrome), then `sections.css` (this niche, may override) — plus `scene.svg`
    into the illustration slot and `scene.js` into the animation slot.
 2. Inline `content.json` verbatim as `var DEFAULT_CONTENT = {…}`.
-3. Render every `data-slot` in the markup from `content.json`, so the shipped file
-   is correct with JS disabled.
+3. Copy `sections.html` through **verbatim**. It is authored markup, not a
+   template — see D-U below for what this costs and what should replace it.
 4. Render `<head>` — title, description, OG, JSON-LD — from `content.json.seo`.
 5. Copy `content.json` next to the built page so the runtime fetch still works.
 6. **Fail** on any check in §9.1 or §9.2.
 
 Runtime behaviour is unchanged: the page still fetches `content.json` and re-renders,
 so an operator edit goes live without a rebuild.
+
+#### D-U (tracked, not yet built): generate the static markup too
+
+The build fixes two of §2's three places — `DEFAULT_CONTENT` is generated from
+`content.json`, so those two cannot drift. The third, the static markup, is
+copied verbatim and remains authored by hand.
+
+The renderer replaces those nodes wholesale (`svcGrid.innerHTML = …`), so the
+static copy is dead the moment JS runs. It matters in exactly two situations: JS
+fails, and a crawler that does not execute JS. Edit `content.json` and the static
+copy goes stale — invisible on screen, visible to those crawlers.
+
+An earlier version of step 3 above claimed the build already rendered this from
+`data-slot` markers. It never did: `data-slot` appears in no build script and no
+niche's `sections.html`. The values agree today by authorship, not by
+construction.
+
+Measured duplication left in place, per site (values also hard-coded in markup):
+
+| site | duplicated | of |
+|---|---|---|
+| **contracting** | **47** | **91** |
+| dumpster-rental | 20 | 66 |
+| car-detailing | 13 | 93 |
+| roofing | 13 | 94 |
+| delivery | 5 | 103 |
+| auto-repair | 5 | 189 |
+
+**`contracting` is the highest-priority site to revisit when this lands** — over
+half its content is written twice, the largest duplicated surface in the estate.
+
+Deliberately not done during consolidation: it is a build change affecting all 23
+sites, and stalling the conversion on it would be the wrong trade. Stripping the
+static copies instead is NOT the answer — it removes the no-JS fallback, which is
+the reason the markup carries content at all.
 
 > **Note for the consolidation pass:** no deployed `content.json` is machine-formatted.
 > All 22 fail a `JSON.stringify(obj, null, 2)` round-trip — `summit-stone`'s, for
@@ -259,14 +294,14 @@ in the audit and are **retired**.
 ```jsonc
 {
   "services":     [{ "title": "s", "desc": "s", "icon": "s?", "from": "s?" }],
-  "pricing":      [{ "label": "s", "price": 299, "priceHigh": 900, "per": "s?",
+  "pricing":      [{ "label": "s", "price": 299, "priceHigh": 900, "per": "s?", "cta": "s?",
                      "blurb": "s?", "note": "s?", "features": ["s"],
                      "highlight": false }],
   "faq":          [{ "q": "s", "a": "s", "tags": "s?" }],
   "owner":        { "name": "s", "bio": "s", "photo": "s" },
   "testimonials": [{ "quote": "s", "name": "s" }],
   "stats":        [{ "num": "s", "label": "s" }],
-  "gallery":      [{ "title": "s", "tag": "s", "image": "s" }],
+  "gallery":      [{ "title": "s", "tag": "s", "image": "s", "style": "s?" }],
   "social":       [{ "label": "s", "url": "s", "icon": "s?" }]
 }
 ```
@@ -284,9 +319,12 @@ in the audit and are **retired**.
 | `services[].from` | — | **Optional.** A per-service starting price (`"from $16/hr"`). Canonical on the same compliance grounds as `note`: a price qualifier stays structurally attached to what it prices. Move it to `niche.*` and a later template change renders a service with no indication of what it costs |
 | `faq[].tags` | — | **Optional.** Comma-separated filter keys (`"all,strength"`), read to filter FAQs by the visitor's selected goal. Canonical rather than niche-local because the alternative is duplicating every question into `niche` just to carry its tag |
 | `social[].icon` | `platform` | **Optional.** Selects the glyph, exactly as `services[].icon` does |
+| `pricing[].cta` | — | **Optional.** The tier's own button label (`"Start a refresh"`). A per-tier display attribute, attached to the tier for the same reason `note` is: the renderer falls back to a generic label when absent, and holding it anywhere else means a later change silently swaps copy the operator wrote |
 | `testimonials[].name` | `author` | `name` |
 | `stats[].label` | `lab` | `label` |
-| `gallery[].tag` | `cat` | `tag` |
+| `gallery[].tag` | `cat`, `meta` | `tag` |
+| `serviceArea.region` | `brand.serviceArea` (a string nested in `brand`) | The canonical shape is a TOP-LEVEL object. `short` and `cities` stay absent when the source has none — inferring a territory from where past jobs happened to be is fabrication, and D-N already makes an absent `serviceArea` fall back to `brand.city` |
+| `gallery[].style` | — | **Optional.** Selects a pre-built tile treatment used INSTEAD of `image` (`"patio"`, `"deck"`). Deliberately NOT named `icon` like `services[]` and `social[]`: those select a glyph, this selects the artwork itself, and a field called `icon` sitting beside `image` would be misread. Where every `image` is empty — as on contracting — this field IS the gallery |
 
 `stats[].num` stays a **string**, deliberately — it holds `"Seasoned"` and `"Custom"`
 as often as a figure. See §9.2.

@@ -127,7 +127,8 @@ if (content) {
   const found = [];
   for (const [k, m] of [['"plans"', 'plans[] -> pricing[]'], ['"packages"', 'packages[] -> pricing[]'],
                         ['"author"', 'author -> name'], ['"lab"', 'lab -> label'], ['"cat"', 'cat -> tag'],
-                        ['"period"', 'period -> per'], ['"platform"', 'platform -> icon']]) {
+                        ['"period"', 'period -> per'], ['"platform"', 'platform -> icon'],
+                        ['"meta"', 'meta -> tag']]) {
     if (flat.includes(k)) found.push(m);
   }
   /* The highlight flag has been written three ways: best, featured, popular.
