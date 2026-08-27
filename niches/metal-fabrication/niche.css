@@ -1,0 +1,42 @@
+/* metal-fabrication — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground-deep:  #0c0f12;   /* was --coal */
+  --ground:       #14181d;   /* was --gun */
+  --ground-2:     #1a2027;   /* was --gun-2 */
+  --panel:        #222a33;   /* was --steel */
+  --ink:          #EDF1F5;   /* was --white */
+  --muted:        #96A3B1;
+  --accent:       #FF6B1A;   /* was --melt */
+  --accent-deep:  #C2470A;   /* was --forge */
+  --accent-alt:   #FFC53D;   /* was --spark */
+  --hair:         rgba(150,172,194,.14);   /* was --line */
+  --card:         rgba(24,30,37,.78);
+  --card-brd:     rgba(150,172,194,.16);
+  --accent-glow:  rgba(255,107,26,.45);   /* was --glow */
+  --shadow:       0 28px 60px -24px rgba(0,0,0,.8);
+  --maxw:         1160px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ink-max:      #ffffff;
+  --accent-ink:   #160b04;
+  --ink-bright:   #D6DEE6;
+  --ink-dim:      #C6D0DA;
+  --ground-3:     var(--panel);
+  --panel-2:      var(--ground-2);
+  --accent-2:     var(--accent-alt);
+  --accent-soft:  var(--accent-glow);
+  --hair-accent:  var(--card-brd);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-lo:     var(--ink-dim);
+  --sheen-accent: var(--accent-alt);
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ok:           var(--accent-alt);
+
+  --display: 'Saira Condensed', sans-serif;
+  --body:    'Inter', system-ui, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
