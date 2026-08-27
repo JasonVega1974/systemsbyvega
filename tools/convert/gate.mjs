@@ -85,13 +85,24 @@ if (theme) {
     LIT = Object.assign({}, LIT, themed);
   }
 }
+const NORM_SENTINEL = '\u0000';
 const normTok = s => {
   let t = s;
-  // var(--k) and var(--k, — boundary-matched so a replacement is never re-read
-  for (const k of Object.keys(MAP).sort((x, y) => y.length - x.length)) {
-    t = t.split('var(' + k + ')').join('var(' + MAP[k] + ')')
-         .split('var(' + k + ',').join('var(' + MAP[k] + ',');
+  /* Two phases with a sentinel — the SAME defect convert.mjs's rename() had.
+     Boundary matching stops a substring collision (--ink vs --ink-2); it does
+     NOT stop a chain. When one token's target is another's source, a single
+     pass rewrites its own output and the gate normalises the original into the
+     corrupted value — so it agreed with a broken build and reported PASS.
+     This function must stay in step with rename(); if one is changed the other
+     has to be, or the gate stops testing anything. */
+  const mk = Object.keys(MAP).sort((x, y) => y.length - x.length);
+  for (let i = 0; i < mk.length; i++) {
+    const ph = NORM_SENTINEL + i + NORM_SENTINEL;
+    t = t.split('var(' + mk[i] + ')').join('var(' + ph + ')')
+         .split('var(' + mk[i] + ',').join('var(' + ph + ',');
   }
+  for (let i = 0; i < mk.length; i++)
+    t = t.split(NORM_SENTINEL + i + NORM_SENTINEL).join(MAP[mk[i]]);
   for (const k of Object.keys(LIT).sort((x, y) => y.length - x.length)) t = t.split(k).join('var(' + LIT[k] + ')');
   return t;
 };

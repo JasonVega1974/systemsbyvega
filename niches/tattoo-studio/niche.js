@@ -308,6 +308,8 @@ var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     renderBooking(c.settings);
   };
   /* boot handed to base.js */
+  // live override: content.json is what /admin/ edits. 404/offline = defaults stand.
+
 
   // deep-link support: ?flash=Thorned%20Heart pre-claims on load
   try{

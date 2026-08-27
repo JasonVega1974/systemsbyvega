@@ -63,9 +63,26 @@ const MAP = CFG.tokenMap;
 const KEYS = Object.keys(MAP).sort((a, b) => b.length - a.length);
 const LITS = Object.entries(CFG.literals).sort((a, b) => b[0].length - a[0].length);
 
+/* Two phases with a sentinel, NOT a single sequential pass.
+   A single pass reassigns s on every key, so a replacement CAN be re-read:
+   whenever one token's target is also another token's source, the second key
+   rewrites the first key's own output. tattoo-studio's --bone -> --ink and
+   --ink -> --ground collapsed two roles into one that way, leaving body text
+   the colour of the background — invisible, and silent, because the gate
+   compares normalised tokens and both sides normalise identically.
+   Role-based inversions make such chains normal, so order can't be the fix.
+   Phase 1 rewrites every source to an index placeholder; phase 2 resolves
+   placeholders to targets. A placeholder can never match a source and a target
+   can never contain the sentinel, so nothing is ever re-read. */
+const SENTINEL = '\u0000';
 const rename = s => {
-  for (const k of KEYS) s = s.split('var(' + k + ')').join('var(' + MAP[k] + ')')
-                             .split('var(' + k + ',').join('var(' + MAP[k] + ',');
+  for (let i = 0; i < KEYS.length; i++) {
+    const ph = SENTINEL + i + SENTINEL;
+    s = s.split('var(' + KEYS[i] + ')').join('var(' + ph + ')')
+         .split('var(' + KEYS[i] + ',').join('var(' + ph + ',');
+  }
+  for (let i = 0; i < KEYS.length; i++)
+    s = s.split(SENTINEL + i + SENTINEL).join(MAP[KEYS[i]]);
   return s;
 };
 const tokenise = s => { for (const [lit, tok] of LITS) s = s.split(lit).join('var(' + tok + ')'); return s; };
