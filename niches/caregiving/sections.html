@@ -1,0 +1,239 @@
+<!-- caregiving/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg></span><span>Hearth &amp; Home</span><small>Companion Care</small></div>
+    <div class="nav-links">
+      <a href="#plan" class="tab">Care Plans</a>
+      <a href="#pricing" class="tab">Pricing</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#quote" class="cta">Free Consultation</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Non-medical companion care · Treasure Valley</div>
+      <h1 class="reveal">Someone dependable, <span class="hl">right at home.</span></h1>
+      <p class="reveal">Companionship, meals, light housekeeping, transportation and overnight support — from a small, steady team of caregivers you get to know, not a call center and a rotating cast of strangers.</p>
+      <div class="hero-cta reveal">
+        <a href="#quote" class="btn-pri">Schedule a free consultation</a>
+        <a href="#plan" class="btn-sec">Build a sample care plan ↓</a>
+      </div>
+    </div>
+    <!-- HERO ILLUSTRATION: golden-hour living-room corner. Inline SVG (static, renders JS-off).
+         Techniques (north-star: dj-site-blue): 5-stop golden-hour window gradient, 4-stop wall/
+         floor/chair/lamp gradients, feTurbulence grain (+feColorMatrix tint), feDisplacementMap
+         light-shaft warp, feGaussianBlur contact shadow, branching path work (chair/plant/blanket),
+         additive breathing glow + drifting motes. -->
+    <div class="hero-illo reveal" data-delay="1">
+      <svg viewBox="0 0 480 440" role="img" aria-label="A warm, softly lit living-room corner at golden hour — an armchair by a sunlit window.">
+        <defs>
+          <linearGradient id="hh-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E6CC"/><stop offset=".45" stop-color="#EAD7B6"/><stop offset=".8" stop-color="#DFC79E"/><stop offset="1" stop-color="#D3BA88"/></linearGradient>
+          <linearGradient id="hh-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BE8D52"/><stop offset=".4" stop-color="#A9793F"/><stop offset="1" stop-color="#8B5F30"/></linearGradient>
+          <linearGradient id="hh-win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8E6"/><stop offset=".3" stop-color="#FFE7B0"/><stop offset=".55" stop-color="#F8CA7B"/><stop offset=".8" stop-color="#E9AA5C"/><stop offset="1" stop-color="#CF8C48"/></linearGradient>
+          <radialGradient id="hh-lamp" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FFF4D2" stop-opacity=".95"/><stop offset=".4" stop-color="#FBDA8C" stop-opacity=".68"/><stop offset=".75" stop-color="#EAB35F" stop-opacity=".24"/><stop offset="1" stop-color="#EAB35F" stop-opacity="0"/></radialGradient>
+          <linearGradient id="hh-chair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8EA584"/><stop offset=".5" stop-color="#78916D"/><stop offset="1" stop-color="#607759"/></linearGradient>
+          <linearGradient id="hh-shaft" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEBB2" stop-opacity=".6"/><stop offset="1" stop-color="#FFEBB2" stop-opacity="0"/></linearGradient>
+          <radialGradient id="hh-vig" cx=".5" cy=".42" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3A2A12" stop-opacity=".2"/></radialGradient>
+          <!-- feTurbulence fractalNoise + feColorMatrix warm-tinted grain -->
+          <filter id="hh-grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.20  0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0.55 0"/></filter>
+          <filter id="hh-soft"><feGaussianBlur stdDeviation="6"/></filter>
+          <!-- feDisplacementMap warp for an organic light-shaft edge -->
+          <filter id="hh-warp"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="10"/></filter>
+        </defs>
+        <!-- wall, floor, baseboard -->
+        <rect width="480" height="300" fill="url(#hh-wall)"/>
+        <rect y="300" width="480" height="140" fill="url(#hh-floor)"/>
+        <rect y="297" width="480" height="5" fill="#7A5528" opacity=".5"/>
+        <rect width="480" height="300" filter="url(#hh-grain)" opacity=".1"/>
+        <!-- window frame + golden-hour glass (breathing glow) -->
+        <g class="glow">
+          <rect x="300" y="46" width="150" height="182" rx="6" fill="#EFE0C4"/>
+          <rect x="308" y="54" width="134" height="166" rx="3" fill="url(#hh-win)"/>
+          <rect x="372" y="54" width="6" height="166" fill="#EFE0C4"/>
+          <rect x="308" y="129" width="134" height="6" fill="#EFE0C4"/>
+          <rect x="300" y="228" width="150" height="10" rx="3" fill="#E4D3B2"/>
+        </g>
+        <!-- warm light shaft, displacement-warped soft edge -->
+        <polygon points="316,60 440,72 360,440 150,440" fill="url(#hh-shaft)" filter="url(#hh-warp)" opacity=".7"/>
+        <!-- framed landscape on the wall -->
+        <g>
+          <rect x="70" y="72" width="86" height="104" rx="4" fill="#C9A86A"/>
+          <rect x="78" y="80" width="70" height="88" rx="2" fill="#ECDDC1"/>
+          <path d="M78 150 L104 120 L120 138 L140 108 L148 120 L148 168 L78 168 Z" fill="#9CAF88" opacity=".85"/>
+          <circle cx="128" cy="100" r="8" fill="#F3C871"/>
+        </g>
+        <!-- contact shadow under the chair -->
+        <ellipse cx="210" cy="406" rx="122" ry="20" fill="#3A2A12" opacity=".22" filter="url(#hh-soft)"/>
+        <!-- armchair (wingback) — branching path silhouette, cushion, arm rolls, folds, legs -->
+        <g>
+          <path d="M120 252 q-8 -96 40 -104 q60 -10 120 0 q52 8 44 104 l-6 122 q-100 14 -196 0 Z" fill="url(#hh-chair)"/>
+          <path d="M126 322 q80 22 172 0 l-8 54 q-78 16 -156 0 Z" fill="#84997B"/>
+          <path d="M120 302 q-18 4 -18 40 l4 44 q22 8 40 4 l0 -84 Z" fill="#6F8867"/>
+          <path d="M324 302 q18 4 18 40 l-4 44 q-22 8 -40 4 l0 -84 Z" fill="#6F8867"/>
+          <path d="M170 262 q60 -8 120 0" stroke="#9EB495" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>
+          <path d="M150 382 q104 18 200 0" stroke="#566B4E" stroke-width="2" fill="none" opacity=".5"/>
+          <rect x="150" y="390" width="12" height="20" rx="3" fill="#6B4A24"/>
+          <rect x="300" y="390" width="12" height="20" rx="3" fill="#6B4A24"/>
+          <!-- draped throw blanket, branching folds -->
+          <path d="M104 318 q40 -10 72 -2 q-4 40 -16 70 q-30 8 -58 2 q6 -36 2 -70 Z" fill="#D4A24C"/>
+          <path d="M118 324 q26 -4 48 0 M112 352 q30 6 58 2" stroke="#B4822F" stroke-width="2.5" fill="none" opacity=".55" stroke-linecap="round"/>
+        </g>
+        <!-- side table + lamp with warm radial glow -->
+        <g>
+          <ellipse class="glow" cx="392" cy="356" rx="48" ry="32" fill="url(#hh-lamp)"/>
+          <rect x="372" y="352" width="44" height="62" rx="4" fill="#7A5528"/>
+          <rect x="368" y="346" width="52" height="10" rx="3" fill="#8A6230"/>
+          <rect x="390" y="296" width="6" height="52" fill="#5C4326"/>
+          <path d="M372 296 h44 l-8 -34 h-28 Z" fill="#F7E3B0"/>
+          <path d="M372 296 h44 l-3 -12 h-38 Z" fill="#FBEFC8"/>
+        </g>
+        <!-- potted plant, branching fronds -->
+        <g>
+          <path d="M40 360 q4 -70 -6 -110 M40 360 q0 -60 22 -96 M40 360 q-2 -54 -26 -84 M40 360 q6 -50 40 -70 M40 360 q-6 -48 -40 -64" stroke="#6E8A5E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M28 252 q-14 -6 -20 -22 M34 226 q-12 -10 -12 -28 M48 238 q10 -12 8 -30 M60 266 q16 -8 20 -26 M16 278 q-16 -4 -22 -20" stroke="#7FA06B" stroke-width="6" fill="none" stroke-linecap="round" opacity=".9"/>
+          <path d="M18 360 h44 l-6 46 q-16 6 -32 0 Z" fill="#B06A3A"/>
+          <path d="M18 360 h44 l-2 14 q-20 6 -40 0 Z" fill="#C98150"/>
+        </g>
+        <!-- dust motes in the shaft (drift up; additive, reduced-motion disables) -->
+        <g fill="#FFF3CE">
+          <circle class="dust" cx="300" cy="384" r="2.4" style="animation-duration:9s;animation-delay:0s"/>
+          <circle class="dust" cx="332" cy="412" r="1.8" style="animation-duration:11s;animation-delay:2s"/>
+          <circle class="dust" cx="268" cy="402" r="2" style="animation-duration:10s;animation-delay:4s"/>
+          <circle class="dust" cx="352" cy="360" r="1.6" style="animation-duration:12s;animation-delay:1s"/>
+          <circle class="dust" cx="312" cy="432" r="2.2" style="animation-duration:9.5s;animation-delay:3s"/>
+        </g>
+        <!-- global grain + vignette for photographic depth -->
+        <rect width="480" height="440" filter="url(#hh-grain)" opacity=".07"/>
+        <rect width="480" height="440" fill="url(#hh-vig)"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <div class="builder-head reveal">
+      <div class="eyebrow">Build a sample week</div>
+      <h2>What kind of support does your family need?</h2>
+      <p class="stxt">Check the boxes that fit — a sample weekly visit schedule builds itself below. Every plan is adjusted after a real conversation; this is just a starting picture.</p>
+    </div>
+    <div class="cn-grid reveal" id="cnGrid"></div>
+    <div class="plan-panel reveal" id="planPanel">
+      <h3>Your sample week</h3>
+      <div id="planBody"><p class="plan-empty">Check a need above to see a sample weekly visit schedule.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Pricing</div>
+      <h2>Clear rates, no surprise minimums.</h2>
+      <p class="stxt">Every family's plan looks a little different — these are the shapes it usually takes.</p>
+    </div>
+    <div class="price-grid reveal" id="priceGrid"></div>
+    <p class="pricing-note" id="pricingNote"></p>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Serving families across the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Hearth &amp; Home Companion Care</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">What families say</div>
+    <h2>In their words, not ours.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--ground-2);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything families ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="quote" id="quote">
+  <div class="wrap reveal">
+    <div class="eyebrow">Get started</div>
+    <h2>Let's talk about what your family needs.</h2>
+    <p>A free, no-obligation in-home consultation — we'll listen first, then put a plan together.</p>
+    <form class="qform" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-row">
+        <label for="qName">Your name</label>
+        <input type="text" id="qName" name="name" required />
+      </div>
+      <div class="qf-row">
+        <label for="qPhone">Phone</label>
+        <input type="tel" id="qPhone" name="phone" required />
+      </div>
+      <div class="qf-row">
+        <label for="qCity">City</label>
+        <input type="text" id="qCity" name="city" placeholder="Middleton, ID" />
+      </div>
+      <div class="qf-row">
+        <label>What are you looking for help with? (check any)</label>
+        <div class="qf-needs" id="qfNeeds"></div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Tell us a little about your family's situation</label>
+        <textarea id="qNotes" name="notes" rows="4" placeholder="Whatever's helpful — we'll ask more when we talk."></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request a free consultation</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550198" data-phone-link>Call or text (208) 555-0198</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Got it — we'll call you within one business day to set up your free consultation.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Hearth &amp; Home Companion Care</b><br />
+      Non-medical companion care · <span data-city>Middleton, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550198" data-phone>(208) 555-0198</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550198"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550198?body=Hi%20Hearth%20%26%20Home%2C%20I%27d%20like%20to%20ask%20about%20care%20for%20my%20family."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>

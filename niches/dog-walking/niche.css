@@ -1,0 +1,52 @@
+/* dog-walking — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: light;
+  --ground:       #F7FAFD;   /* was --sky */
+  --ground-2:     #FDFEFF;   /* was --sky-soft */
+  --panel:        rgba(255,255,255,.86);
+  --accent:       #3B9AE1;   /* was --blue */
+  --accent-deep:  #1F6FB4;   /* was --blue-deep */
+  --accent-2:     #5FB2EF;   /* was --blue-bright */
+  --accent-soft:  rgba(59,154,225,.14);   /* was --blue-soft */
+  --accent-alt:   #D9A05B;   /* was --tan */
+  --accent-alt-deep:#A9762F;   /* was --tan-deep */
+  --accent-alt-soft:rgba(217,160,91,.20);   /* was --tan-soft */
+  --ok:           #6FBF4F;   /* was --grass */
+  --ok-soft:      rgba(111,191,79,.16);   /* was --grass-soft */
+  --ink:          #22364A;
+  --muted:        #5A6B7B;
+  --hair:         rgba(34,54,74,.13);
+  --card:         rgba(255,255,255,.9);
+  --card-brd:     rgba(34,54,74,.10);
+  --shadow:       0 22px 52px -24px rgba(31,111,180,.22);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ok-deep:      #3d6e2a;
+  --accent-alt-ink:#3a2a12;
+  --err-tint:     #FFD9C6;
+  --tint-1:       #F3F9FE;
+  --tint-2:       #E7F1FB;
+  --tint-3:       #79BEEF;
+  --tint-4:       #F6E6CB;
+  --tint-5:       #EACFA0;
+  --panel-solid:  #FFFFFF;
+  --ground-deep:  var(--ground-2);
+  --ink-max:      var(--panel-solid);
+  --ink-bright:   var(--ink);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--panel-solid);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--panel-solid);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          #B4453A;
+  --err-ink:      #B4453A;
+  --panel-2:      var(--tint-1);
+
+  --display: 'Baloo 2', system-ui, sans-serif;
+  --body:    'Varela Round', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

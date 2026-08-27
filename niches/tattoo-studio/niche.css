@@ -1,0 +1,44 @@
+/* tattoo-studio — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground:       #0a0a0d;   /* was --ink */
+  --panel:        #101014;   /* was --ink-2 */
+  --panel-2:      #16151b;   /* was --ink-3 */
+  --accent:       #c42b3d;   /* was --crimson */
+  --accent-2:     #e0475a;   /* was --crimson-bright */
+  --accent-deep:  #6e1622;   /* was --crimson-deep */
+  --accent-alt:   #c9a86a;   /* was --gold */
+  --ink:          #ede4d3;   /* was --bone */
+  --muted:        #a89d8d;
+  --hair:         rgba(237,228,211,.12);
+  --card:         rgba(22,20,26,.55);
+  --card-brd:     rgba(237,228,211,.13);
+  --shadow:       0 30px 70px -30px rgba(0,0,0,.85);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ground-2:     #0c0b10;
+  --sheen-hi:     #fdf8ef;
+  --ground-3:     #0b0a0e;
+  --ink-bright:   #fbf6ec;
+  --sheen-lo:     #f6efe1;
+  --panel-3:      #17141a;
+  --panel-4:      #18151c;
+  --panel-5:      #121016;
+  --ink-warm:     #f8f2e5;
+  --placeholder:  #6f6759;
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ink-max:      #fff;
+  --ground-deep:  var(--ground-3);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--ink-max);
+  --hair-accent:  var(--hair);
+  --sheen-accent: var(--accent-2);
+  --ok:           var(--accent-alt);
+
+  --display: 'Cormorant Unicase', Georgia, serif;
+  --body:    'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --mono:    ui-monospace, Consolas, monospace;
+}

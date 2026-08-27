@@ -1,0 +1,379 @@
+<!-- delivery/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h11"/><path d="M10 6l8 6-8 6"/></svg></span><span>Swiftwater</span><small>Courier Co.</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">What we move</a>
+      <a href="#quote" class="tab">Price a run</a>
+      <a href="#business" class="tab">For business</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a pickup</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Same-day courier · Treasure Valley</div>
+      <h1 class="reveal">Send it across the valley. <span class="hl">Today.</span></h1>
+      <p class="reveal">Documents, parcels and small freight, moved between any two corners of the valley — scheduled routes for the regulars, same-day and rush when the clock is loud. You get a text at pickup and a photo at the door.</p>
+      <div class="hero-cta reveal">
+        <a href="#quote" class="btn-pri">Price my run ↓</a>
+        <a href="#book" class="btn-sec">Book a pickup</a>
+      </div>
+      <div class="hero-dash reveal" aria-hidden="true">
+        <svg viewBox="0 0 420 60" fill="none">
+          <path class="dashline" d="M6,44 C80,10 150,56 224,26 S360,40 414,18" stroke="rgba(200,243,29,.5)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="6" cy="44" r="5" fill="#C8F31D"/>
+          <circle cx="414" cy="18" r="5" fill="none" stroke="#C8F31D" stroke-width="2.5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ticket reveal" data-delay="1">
+      <span class="tk-badge">Live run · #1408</span>
+      <p class="tk-route">Zone 5 pickup <span class="arrow">⟶</span> Zone 1 drop</p>
+      <div class="tk-log">
+        <div><b>12:04</b> — run booked, window confirmed</div>
+        <div><b>12:31</b> — <span class="ok">picked up</span>, on the road</div>
+        <div><b>13:12</b> — <span class="ok">delivered</span> · photo sent · signed at the desk</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we move</div>
+      <h2>If it fits in the van, it's already late.</h2>
+      <p class="stxt">Four kinds of runs, one promise: it rides with one driver from your hands to theirs — nothing sits in a warehouse overnight.</p>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="quote" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Price a run</div>
+      <h2>Zone to zone. Math you can see.</h2>
+      <p class="stxt">Pick your two zones, the size and the speed — the quote builds itself, line by line. The number it shows is the number on the invoice.</p>
+    </div>
+
+    <!-- SIGNATURE map: geometry is STATIC inline SVG (renders JS-off); zone names/aria bind from content.json.quoterZones.
+         Techniques mirror north-star (dj-site-blue): feTurbulence terrain + feDisplacementMap river, layered 5-stop
+         relief gradients, branching route lines, and an rAF physics-eased route draw wired in JS. -->
+    <div class="map-stage reveal">
+      <div class="map-head">
+        <div class="map-mode" id="mapMode">Tap a region to set your <b>pickup</b> zone</div>
+        <div class="map-legend" aria-hidden="true">
+          <span><i class="lg-p"></i>Pickup</span>
+          <span><i class="lg-d"></i>Drop-off</span>
+        </div>
+      </div>
+      <div class="zone-map" id="zoneMap">
+        <svg viewBox="0 0 680 440" role="group" aria-label="Service-area zone map. Choose a pickup region, then a drop-off region.">
+          <defs>
+            <!-- feTurbulence fractalNoise terrain grain, tinted + clipped to land — north-star: dj-site-blue -->
+            <filter id="mpTerrain" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="4" seed="11" result="n"/>
+              <!-- feColorMatrix tints the noise hi-vis chartreuse and sets its alpha -->
+              <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.78  0 0 0 0 0.95  0 0 0 0 0.11  0 0 0 0.30 0"/>
+              <feComposite in2="SourceGraphic" operator="in"/>
+            </filter>
+            <!-- feTurbulence + feDisplacementMap = naturally wavy river edge — north-star: dj-site-blue -->
+            <filter id="mpRiver" x="-8%" y="-60%" width="116%" height="220%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" seed="4" result="rn"/>
+              <feDisplacementMap in="SourceGraphic" in2="rn" scale="11" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <!-- soft relief drop-shadow under the land mass -->
+            <filter id="mpRelief" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b"/>
+              <feOffset in="b" dy="5" result="o"/>
+              <feComponentTransfer in="o" result="s"><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+              <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <!-- layered 5-stop asphalt relief gradient (lit ridge -> shadowed valley) -->
+            <linearGradient id="mpLand" x1="0" y1="0" x2="0.3" y2="1">
+              <stop offset="0" stop-color="#212B3D"/><stop offset="0.32" stop-color="#1A2130"/>
+              <stop offset="0.6" stop-color="#141A27"/><stop offset="0.82" stop-color="#10151F"/>
+              <stop offset="1" stop-color="#0B0F17"/>
+            </linearGradient>
+            <!-- 4-stop water-depth gradient -->
+            <linearGradient id="mpWater" x1="0" y1="0" x2="1" y2="0.2">
+              <stop offset="0" stop-color="#3A6B7A"/><stop offset="0.4" stop-color="#2C5866"/>
+              <stop offset="0.72" stop-color="#20434F"/><stop offset="1" stop-color="#183640"/>
+            </linearGradient>
+            <radialGradient id="mpAtm" cx="0.5" cy="0.06" r="1">
+              <stop offset="0" stop-color="#C8F31D" stop-opacity="0.14"/>
+              <stop offset="0.42" stop-color="#C8F31D" stop-opacity="0.04"/>
+              <stop offset="1" stop-color="#0B0E14" stop-opacity="0.5"/>
+            </radialGradient>
+            <!-- endpoint highlight glow (rAF physics-pulsed) -->
+            <radialGradient id="mpZoneGlow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#C8F31D" stop-opacity="0.78"/>
+              <stop offset="0.55" stop-color="#C8F31D" stop-opacity="0.28"/>
+              <stop offset="1" stop-color="#C8F31D" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="mpDropGlow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="var(--accent-alt)" stop-opacity="0.7"/>
+              <stop offset="0.55" stop-color="var(--accent-alt)" stop-opacity="0.26"/>
+              <stop offset="1" stop-color="var(--accent-alt)" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="mpRouteGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#C8F31D"/><stop offset="1" stop-color="var(--accent-alt)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- land mass: layered relief gradient + soft drop shadow -->
+          <path d="M40,60 Q30,30 70,26 Q200,18 340,24 Q500,18 620,30 Q655,34 650,80 Q656,220 648,360 Q644,408 600,410 Q340,418 90,410 Q40,412 34,366 Q28,220 34,90 Q36,68 40,60 Z" fill="url(#mpLand)" filter="url(#mpRelief)"/>
+          <!-- feTurbulence terrain grain, clipped to the land shape -->
+          <path d="M40,60 Q30,30 70,26 Q200,18 340,24 Q500,18 620,30 Q655,34 650,80 Q656,220 648,360 Q644,408 600,410 Q340,418 90,410 Q40,412 34,366 Q28,220 34,90 Q36,68 40,60 Z" fill="#C8F31D" filter="url(#mpTerrain)" opacity="0.5" pointer-events="none"/>
+          <path d="M40,60 Q30,30 70,26 Q200,18 340,24 Q500,18 620,30 Q655,34 650,80 Q656,220 648,360 Q644,408 600,410 Q340,418 90,410 Q40,412 34,366 Q28,220 34,90 Q36,68 40,60 Z" fill="url(#mpAtm)" pointer-events="none"/>
+
+          <!-- contour detail lines -->
+          <g fill="none" stroke="rgba(154,167,184,.12)" stroke-width="1.1" stroke-dasharray="2 7" pointer-events="none">
+            <path d="M40,150 Q220,132 360,150 T640,144"/>
+            <path d="M40,300 Q220,282 380,300 T648,296"/>
+          </g>
+
+          <!-- Boise River: displacement-map wavy edge + water-depth gradient -->
+          <path d="M2,205 C120,182 235,232 360,210 C485,188 575,214 690,200" fill="none" stroke="url(#mpWater)" stroke-width="12" stroke-linecap="round" filter="url(#mpRiver)" opacity="0.9" pointer-events="none"/>
+          <path d="M2,203 C120,180 235,230 360,208 C485,186 575,212 690,198" fill="none" stroke="rgba(200,243,29,.18)" stroke-width="2" stroke-linecap="round" filter="url(#mpRiver)" pointer-events="none"/>
+
+          <!-- branching route network (highways + spurs), reflective gray -->
+          <g fill="none" stroke="rgba(154,167,184,.5)" stroke-linecap="round" pointer-events="none">
+            <path d="M108,222 Q220,236 274,232 Q360,226 470,178 Q548,150 632,168" stroke-width="3.2"/>
+            <path d="M215,118 Q245,178 272,230" stroke-width="2.2"/>
+            <path d="M356,146 Q410,164 468,176" stroke-width="2.2"/>
+            <path d="M356,344 Q312,300 274,244" stroke-width="2.2"/>
+            <path d="M470,186 Q520,258 552,318" stroke-width="2.2"/>
+          </g>
+          <g fill="none" stroke="rgba(200,243,29,.28)" stroke-width="1" stroke-dasharray="3 7" pointer-events="none">
+            <path d="M108,222 Q220,236 274,232 Q360,226 470,178 Q548,150 632,168"/>
+          </g>
+
+          <!-- rAF damped-spring endpoint glows (positioned + scaled by drawRoute) -->
+          <circle id="mpPulseA" cx="0" cy="0" r="1" fill="url(#mpZoneGlow)" opacity="0" pointer-events="none"/>
+          <circle id="mpPulseB" cx="0" cy="0" r="1" fill="url(#mpDropGlow)" opacity="0" pointer-events="none"/>
+
+          <!-- clickable zones: geometry STATIC (renders JS-off); labels/aria bind from content.json.quoterZones -->
+          <g class="mp-zones">
+            <path class="mp-zn" data-mapzone="0" tabindex="0" role="button" aria-pressed="false" aria-label="Boise Core zone" d="M408,175 C408,140 434,114 470,113 C509,113 533,142 532,177 C531,213 506,238 468,236 C433,234 409,210 408,175 Z"/>
+            <path class="mp-zn" data-mapzone="1" tabindex="0" role="button" aria-pressed="false" aria-label="West Boise and Garden City zone" d="M295,140 C295,106 320,82 356,80 C394,80 417,108 416,142 C415,176 392,200 354,198 C320,196 296,174 295,140 Z"/>
+            <path class="mp-zn" data-mapzone="2" tabindex="0" role="button" aria-pressed="false" aria-label="Meridian zone" d="M210,235 C210,201 235,177 271,176 C309,176 332,205 331,238 C330,272 306,296 268,294 C235,292 211,269 210,235 Z"/>
+            <path class="mp-zn" data-mapzone="3" tabindex="0" role="button" aria-pressed="false" aria-label="Eagle and Star zone" d="M157,110 C157,78 180,52 215,50 C252,50 275,80 274,112 C273,146 250,170 214,168 C182,166 158,144 157,110 Z"/>
+            <path class="mp-zn" data-mapzone="4" tabindex="0" role="button" aria-pressed="false" aria-label="Nampa and Caldwell zone" d="M62,215 C62,182 86,158 121,157 C158,157 180,185 179,217 C178,250 155,273 119,271 C87,269 63,248 62,215 Z"/>
+            <path class="mp-zn" data-mapzone="5" tabindex="0" role="button" aria-pressed="false" aria-label="Kuna and South Valley zone" d="M295,350 C295,317 320,293 356,292 C394,292 417,320 416,353 C415,386 392,409 354,407 C320,405 296,383 295,350 Z"/>
+            <path class="mp-zn" data-mapzone="6" tabindex="0" role="button" aria-pressed="false" aria-label="Outlying valley edge zone" d="M497,325 C497,292 521,268 556,267 C593,267 615,295 614,327 C613,360 590,383 554,381 C522,379 498,358 497,325 Z"/>
+            <g pointer-events="none">
+              <text class="mp-zn-name" data-zn="0" x="470" y="171" text-anchor="middle">Boise Core</text>
+              <text class="mp-zn-sub" data-zs="0" x="470" y="186" text-anchor="middle">ZONE 1</text>
+              <text class="mp-zn-name" data-zn="1" x="356" y="136" text-anchor="middle">West Boise</text>
+              <text class="mp-zn-sub" data-zs="1" x="356" y="151" text-anchor="middle">ZONE 2</text>
+              <text class="mp-zn-name" data-zn="2" x="271" y="231" text-anchor="middle">Meridian</text>
+              <text class="mp-zn-sub" data-zs="2" x="271" y="246" text-anchor="middle">ZONE 3</text>
+              <text class="mp-zn-name" data-zn="3" x="215" y="106" text-anchor="middle">Eagle &amp; Star</text>
+              <text class="mp-zn-sub" data-zs="3" x="215" y="121" text-anchor="middle">ZONE 4</text>
+              <text class="mp-zn-name" data-zn="4" x="120" y="211" text-anchor="middle">Nampa</text>
+              <text class="mp-zn-sub" data-zs="4" x="120" y="226" text-anchor="middle">ZONE 5</text>
+              <text class="mp-zn-name" data-zn="5" x="356" y="346" text-anchor="middle">Kuna</text>
+              <text class="mp-zn-sub" data-zs="5" x="356" y="361" text-anchor="middle">ZONE 6</text>
+              <text class="mp-zn-name" data-zn="6" x="555" y="321" text-anchor="middle">Outlying</text>
+              <text class="mp-zn-sub" data-zs="6" x="555" y="336" text-anchor="middle">ZONE 7</text>
+            </g>
+          </g>
+
+          <!-- animated route line (rAF eased dash-draw between pickup -> drop) + travelling marker -->
+          <path id="mpRoute" d="" fill="none" stroke="url(#mpRouteGrad)" stroke-width="3.4" stroke-linecap="round" opacity="0" pointer-events="none"/>
+          <circle id="mpVeh" r="5" fill="#F2F5F9" opacity="0" pointer-events="none"/>
+
+          <!-- compass rose (detail) -->
+          <g transform="translate(56,372)" pointer-events="none" opacity="0.8">
+            <circle r="15" fill="none" stroke="rgba(154,167,184,.35)" stroke-width="1.2"/>
+            <path d="M0,-13 L4,0 L0,4 L-4,0 Z" fill="#C8F31D"/>
+            <path d="M0,13 L4,0 L0,-4 L-4,0 Z" fill="rgba(154,167,184,.4)"/>
+            <text x="0" y="-17" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" font-weight="700" fill="#C8F31D">N</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="quote-wrap reveal">
+      <div class="q-steps">
+        <div class="q-step">
+          <div class="q-label">1 · Pickup zone</div>
+          <div class="pills" id="pickupPills" role="group" aria-label="Pickup zone"></div>
+        </div>
+        <div class="q-step">
+          <div class="q-label">2 · Drop-off zone</div>
+          <div class="pills" id="dropPills" role="group" aria-label="Drop-off zone"></div>
+        </div>
+        <div class="q-step">
+          <div class="q-label">3 · What is it?</div>
+          <div class="pills" id="sizePills" role="group" aria-label="Parcel size"></div>
+        </div>
+        <div class="q-step">
+          <div class="q-label">4 · How fast?</div>
+          <div class="pills" id="speedPills" role="group" aria-label="Speed"></div>
+        </div>
+        <p class="quote-note" id="quoteNote"></p>
+      </div>
+      <div class="quote-panel" aria-live="polite">
+        <p class="qp-title">Your quote</p>
+        <div class="qp-lines" id="qBreakdown"></div>
+        <div class="qp-total"><span class="lbl">Total, out the door</span><span class="amt" id="qTotal">$—</span></div>
+        <p class="qp-min" id="qMin"></p>
+        <div class="qp-cta">
+          <button type="button" class="btn-pri" id="quoteBook">Book this run</button>
+          <p class="qp-sms"><a id="quoteSms" href="sms:+12085550329">or text us this quote</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dispatch">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How dispatch works</div>
+      <h2>Four steps, and you can watch all of them.</h2>
+    </div>
+    <div class="how-grid reveal" id="dispatchGrid"></div>
+  </div>
+</section>
+
+<section id="business" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">For business</div>
+      <h2>Your delivery desk, without the desk.</h2>
+      <p class="stxt">Recurring accounts get a standing route, a consistent driver and one simple monthly invoice — and a human who answers when plans change at 4:55.</p>
+    </div>
+    <div class="biz-grid reveal" id="bizGrid"></div>
+    <div class="biz-cta reveal"><a href="#book" class="btn-sec">Set up a recurring route →</a></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Where we run</div>
+    <h2>Every run stays inside the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder &amp; dispatcher, Swiftwater Courier Co.</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">From the accounts</div>
+    <h2>What the regulars say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--ground-2);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask before the first run.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow" style="justify-content:center">Book a pickup</div>
+    <h2>Tell us the two addresses. We handle the miles.</h2>
+    <p>Book below and we'll text you a confirmed pickup window in a few minutes — usually faster.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qBiz">Business (optional)</label>
+        <input type="text" id="qBiz" name="business" placeholder="If this is a company run" />
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qPickup">Pickup address</label>
+          <input type="text" id="qPickup" name="pickup" placeholder="Street & city" />
+        </div>
+        <div class="qf-row">
+          <label for="qDrop">Drop-off address</label>
+          <input type="text" id="qDrop" name="dropoff" placeholder="Street & city" />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qWhen">When?</label>
+        <select id="qWhen" name="when">
+          <option>Today — same-day</option>
+          <option>Today — rush, direct drive</option>
+          <option>Scheduled — pick a day</option>
+          <option>Recurring route — let's talk</option>
+        </select>
+      </div>
+      <div class="qf-row">
+        <label for="qSummary">Run summary (auto-filled from the quoter)</label>
+        <input type="text" id="qSummary" name="summary" placeholder="Use the quoter above, or leave blank and we'll price it by text." />
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Fragile, heavy, gate codes, ask for Dana at the desk…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Book my pickup</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Rather just text a human? <a href="tel:+12085550329" data-phone-link>Call or text (208) 555-0329</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Booked. We'll text you a confirmed pickup window in a few minutes — keep your phone handy.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Swiftwater Courier Co.</b><br />
+      Same-day &amp; scheduled courier · <span data-city>Treasure Valley, ID</span>
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550329" data-phone>(208) 555-0329</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550329"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550329?body=Hi%20Swiftwater%2C%20I%20need%20a%20pickup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>

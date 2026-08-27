@@ -1,0 +1,49 @@
+/* caregiving — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: light;
+  --ground:       #FAF3E7;   /* was --cream */
+  --ground-2:     #FEFBF5;   /* was --cream-soft */
+  --panel:        rgba(255,255,255,.72);
+  --accent:       #7C9473;   /* was --sage */
+  --accent-2:     #96AC8B;   /* was --sage-bright */
+  --accent-deep:  #5C7355;   /* was --sage-deep */
+  --accent-alt:   #D4A24C;   /* was --gold */
+  --accent-alt-deep:#B4822F;   /* was --gold-deep */
+  --ink:          #3A342C;
+  --muted:        #8A8071;
+  --hair:         rgba(58,52,44,.13);
+  --card:         rgba(255,255,255,.78);
+  --card-brd:     rgba(58,52,44,.10);
+  --shadow:       0 20px 50px -22px rgba(58,52,44,.22);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ink-max:      #FFFDF9;
+  --tint-1:       #FFFEFA;
+  --tint-2:       #FCF6EA;
+  --tint-3:       #FBF4E7;
+  --tint-4:       #F5EBD6;
+  --tint-5:       #F3E8D2;
+  --tint-6:       #F3E7D2;
+  --tint-7:       #FAF3E6;
+  --err-tint:     #FFD9C6;
+  --panel-solid:  #fff;
+  --ground-deep:  var(--ground-2);
+  --ink-bright:   var(--ink);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--panel-solid);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--panel-solid);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          #B4453A;
+  --err-ink:      #B4453A;
+  --panel-2:      var(--tint-2);
+  --ok:           var(--accent-deep);
+
+  --display: 'Lora', Georgia, serif;
+  --body:    'Nunito Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

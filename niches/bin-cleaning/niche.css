@@ -1,0 +1,42 @@
+/* bin-cleaning — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: light;
+  --ground:       #F3F8F5;   /* was --mint */
+  --ground-2:     #FBFDFC;   /* was --mint-soft */
+  --panel:        rgba(255,255,255,.82);
+  --accent:       #0F8A6C;   /* was --spruce */
+  --accent-2:     #27A585;   /* was --spruce-bright */
+  --accent-deep:  #0B6B54;   /* was --spruce-deep */
+  --accent-alt:   #A8C823;   /* was --lime */
+  --accent-alt-soft:rgba(168,200,35,.18);   /* was --lime-soft */
+  --ink:          #1F3229;
+  --muted:        #57685E;
+  --hair:         rgba(31,50,41,.13);
+  --card:         rgba(255,255,255,.85);
+  --card-brd:     rgba(31,50,41,.10);
+  --shadow:       0 22px 52px -24px rgba(15,70,55,.24);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --err-tint:     #FFD9C6;
+  --panel-solid:  #fff;
+  --ground-deep:  var(--ground-2);
+  --ink-max:      var(--panel-solid);
+  --ink-bright:   var(--ink);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--panel-solid);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--panel-solid);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          #B4453A;
+  --err-ink:      #B4453A;
+  --panel-2:      var(--ground-2);
+  --ok:           var(--accent-deep);
+
+  --display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --body:    'Figtree', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

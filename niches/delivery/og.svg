@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Swiftwater Courier Co. — Same day. Same valley.">
+  <title>Swiftwater Courier Co.</title>
+  <defs>
+    <linearGradient id="delivery-og-ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10151E"/>
+      <stop offset="0.55" stop-color="#0B0E14"/>
+      <stop offset="1" stop-color="#10151E"/>
+    </linearGradient>
+    <radialGradient id="delivery-og-glow" cx="0.86" cy="-0.08" r="0.75">
+      <stop offset="0" stop-color="#C8F31D" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#C8F31D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="delivery-og-glow2" cx="0.04" cy="1.05" r="0.6">
+      <stop offset="0" stop-color="#C8F31D" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#C8F31D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#delivery-og-ground)"/>
+  <rect width="1200" height="630" fill="url(#delivery-og-glow)"/>
+  <rect width="1200" height="630" fill="url(#delivery-og-glow2)"/>
+
+  <!-- accent spine, left edge -->
+  <rect x="0" y="0" width="10" height="630" fill="#C8F31D"/>
+
+  <!-- eyebrow: where they work -->
+  <text x="90" y="140" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="21"
+        letter-spacing="4.6" fill="#93A0B1">TREASURE VALLEY, IDAHO</text>
+
+  <!-- headline: the business -->
+  <text x="90" y="330" font-family="Syne, Georgia, serif" font-size="96" font-weight="800" fill="#F2F5F9">Swiftwater Courier Co.</text>
+
+  <!-- accent rule -->
+  <rect x="90" y="374" width="132" height="7" fill="#C8F31D"/>
+
+  <!-- tagline -->
+  <text x="90" y="446" font-family="Inter Tight, system-ui, sans-serif" font-size="34" fill="#9AA7B8">Same day. Same valley.</text>
+
+  <!-- footer rule -->
+  <rect x="90" y="536" width="1020" height="1" fill="#F2F5F9" opacity="0.16"/>
+
+  <!-- wordmark -->
+  <circle cx="97" cy="577" r="7" fill="#C8F31D"/>
+  <text x="116" y="584" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="20"
+        letter-spacing="3.4" fill="#93A0B1">SYSTEMS BY VEGA</text>
+
+  
+</svg>

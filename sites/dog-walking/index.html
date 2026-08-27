@@ -2,68 +2,518 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex">
 <title>Bluebird &amp; Biscuit Pet Care — Dog Walking &amp; Pet Sitting | Eagle, ID</title>
 <meta name="description" content="Dog walking, drop-in visits and overnight pet sitting in Eagle and the Treasure Valley. Solo walks and small matched pack walks, a free meet & greet first, and a photo report after every visit. Build your dog's week in twenty seconds." />
+<meta name="theme-color" content="#F7FAFD" />
+
+<link rel="canonical" href="https://systemsbyvega.com/sites/dog-walking/" />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://systemsbyvega.com/sites/dog-walking/" />
 <meta property="og:title" content="Bluebird &amp; Biscuit Pet Care — Happy dogs, easy weeks." />
 <meta property="og:description" content="Solo walks, pack walks, drop-ins and overnight sitting around Eagle, ID. Pick your days, we handle the wiggles." />
+<meta property="og:image" content="https://systemsbyvega.com/sites/dog-walking/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://systemsbyvega.com/sites/dog-walking/og.png" />
+
+<link rel="icon" href="" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Varela+Round&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%233B9AE1'/%3E%3Cpath d='M18 38c2-9 9-14 17-14 5 0 8 2 10 5l7-3-4 7c1 8-5 15-14 15-4 0-7-1-9-3l-9 3 4-8c-1-1-2-1-2-2z' fill='%23FFFFFF'/%3E%3Ccircle cx='40' cy='30' r='2' fill='%2322364A'/%3E%3Ccircle cx='50' cy='49' r='4.5' fill='%23D9A05B'/%3E%3Ccircle cx='43' cy='53' r='2.6' fill='%23D9A05B'/%3E%3C/svg%3E" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Bluebird & Biscuit Pet Care",
-  "description": "Dog walking, drop-in visits and overnight pet sitting for Eagle and the Treasure Valley.",
+  "description": "Dog walking, drop-in visits and overnight pet sitting in Eagle and the Treasure Valley. Solo walks and small matched pack walks, a free meet & greet first, and a photo report after every visit. Build your dog's week in twenty seconds.",
   "telephone": "+12085550312",
   "email": "hello@bluebirdbiscuit.com",
-  "address": { "@type": "PostalAddress", "addressLocality": "Eagle", "addressRegion": "ID", "addressCountry": "US" },
-  "areaServed": "Treasure Valley, Idaho"
+  "areaServed": "Treasure Valley, Idaho",
+  "slogan": "Happy dogs, easy weeks."
 }
 </script>
+
 <style>
-  :root{
-    --sky:#F7FAFD; --sky-soft:#FDFEFF; --panel:rgba(255,255,255,.86);
-    --blue:#3B9AE1; --blue-deep:#1F6FB4; --blue-bright:#5FB2EF; --blue-soft:rgba(59,154,225,.14);
-    --tan:#D9A05B; --tan-deep:#A9762F; --tan-soft:rgba(217,160,91,.20);
-    --grass:#6FBF4F; --grass-soft:rgba(111,191,79,.16);
-    --ink:#22364A; --muted:#5A6B7B; --hair:rgba(34,54,74,.13);
-    --card:rgba(255,255,255,.9); --card-brd:rgba(34,54,74,.10);
-    --shadow:0 22px 52px -24px rgba(31,111,180,.22);
-    --maxw:1120px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--sky);color:var(--ink);font-family:'Varela Round',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+/* dog-walking — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: light;
+  --ground:       #F7FAFD;   /* was --sky */
+  --ground-2:     #FDFEFF;   /* was --sky-soft */
+  --panel:        rgba(255,255,255,.86);
+  --accent:       #3B9AE1;   /* was --blue */
+  --accent-deep:  #1F6FB4;   /* was --blue-deep */
+  --accent-2:     #5FB2EF;   /* was --blue-bright */
+  --accent-soft:  rgba(59,154,225,.14);   /* was --blue-soft */
+  --accent-alt:   #D9A05B;   /* was --tan */
+  --accent-alt-deep:#A9762F;   /* was --tan-deep */
+  --accent-alt-soft:rgba(217,160,91,.20);   /* was --tan-soft */
+  --ok:           #6FBF4F;   /* was --grass */
+  --ok-soft:      rgba(111,191,79,.16);   /* was --grass-soft */
+  --ink:          #22364A;
+  --muted:        #5A6B7B;
+  --hair:         rgba(34,54,74,.13);
+  --card:         rgba(255,255,255,.9);
+  --card-brd:     rgba(34,54,74,.10);
+  --shadow:       0 22px 52px -24px rgba(31,111,180,.22);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ok-deep:      #3d6e2a;
+  --accent-alt-ink:#3a2a12;
+  --err-tint:     #FFD9C6;
+  --tint-1:       #F3F9FE;
+  --tint-2:       #E7F1FB;
+  --tint-3:       #79BEEF;
+  --tint-4:       #F6E6CB;
+  --tint-5:       #EACFA0;
+  --panel-solid:  #FFFFFF;
+  --ground-deep:  var(--ground-2);
+  --ink-max:      var(--panel-solid);
+  --ink-bright:   var(--ink);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--panel-solid);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--panel-solid);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          #B4453A;
+  --err-ink:      #B4453A;
+  --panel-2:      var(--tint-1);
+
+  --display: 'Baloo 2', system-ui, sans-serif;
+  --body:    'Varela Round', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+/* ── shared structural CSS ────────────────────────────────────────────── */
+/* _template/base.css — structural CSS shared by every SiteLab niche.
+   A rule lives here when its class/id hooks appear in the markup of two or more
+   deployed sites, or when it targets elements only. A rule used by exactly one
+   niche belongs in that niche's sections.css instead (SITELAB_TEMPLATE.md §3).
+   Colour and type come from niches/<slug>/niche.css. Never put a literal colour
+   in this file: reference a token from the §5 contract. */
+/* =========================================================
+   SAWTOOTH DUMPSTER CO. — tokens
+   High-desert identity: deep pine green base, safety-yellow
+   primary (amber-deep gradient end), warm sand/kraft type.
+   ========================================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* warm high-desert backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 82% -10%, rgba(216,155,0,.16), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(29,58,44,.55), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(255,196,0,.07), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, var(--ground) 45%, var(--ground-deep) 100%);
+}
+/* faint topographic contour rings */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 52px, rgba(242,233,216,.035) 52px 53px),
+    repeating-radial-gradient(circle at 84% 68%, transparent 0 68px, rgba(255,196,0,.03) 68px 69px),
+    repeating-radial-gradient(circle at 55% -10%, transparent 0 84px, rgba(242,233,216,.022) 84px 85px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+.section-title{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:active{transform:translateY(0)}
+/* headlight shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(255,196,0,.07);color:var(--ink-bright);
+  border:1px solid rgba(255,196,0,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:var(--hair-accent);box-shadow:0 10px 26px -14px rgba(255,196,0,.5)}
+.btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--accent-2);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(8,19,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.6)}
+.brand__mark svg{width:30px;height:30px}
+.brand__name{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--accent-2)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Anybody',sans-serif;font-stretch:62.5%;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.45);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(242,233,216,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--accent);display:block;
+  text-shadow:0 4px 30px rgba(255,196,0,.38);
+}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:48ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* hero art: roll-off box under a mountain ridge, drawn inline */
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,196,0,.22), rgba(255,196,0,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+.hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting high-desert dust motes */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* ridge divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--panel);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--panel),rgba(19,42,32,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.08em;
+  font-size:.84rem;color:var(--ink);padding:.6rem 1.15rem;border-radius:10px;text-transform:uppercase;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5);transition:.15s;user-select:none;white-space:nowrap}
+.pill:hover span{border-color:rgba(255,196,0,.5)}
+.pill input:checked + span{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -10px rgba(255,196,0,.7)}
+.pill input:focus-visible + span{outline:3px solid var(--accent-2);outline-offset:2px}
+.price-box .btn{width:100%;margin-top:18px}
+.reveal.in .meter__bar{width:var(--w)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,196,0,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
+.step p{color:var(--muted);font-size:.98rem}
+.nogo .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(29,58,44,.6),rgba(10,22,16,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,196,0,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,233,216,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Sawtooth Dumpster Co., how long they've been hauling in the Valley, and why they got sick of watching neighbors get quote-gamed. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:700;font-size:1.04rem;color:var(--ink-bright)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,196,0,.4);color:var(--accent);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, var(--hair-accent), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(29,58,44,.7), transparent 60%),
+    linear-gradient(160deg,var(--panel),var(--ground-2));
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--accent-2);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(8,19,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px}
+.field em{color:var(--accent-2);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,12,9,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,12,9,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD34D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(255,196,0,.06);border-style:dashed;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:var(--err);box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+/* date input: keep the picker icon visible on dark bg */
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--accent);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--accent-2)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:var(--err-ink)}
+.book__msg.ok{color:var(--accent-2)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(29,58,44,.55),rgba(10,22,16,.6));
+  border:1px solid rgba(255,196,0,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,196,0,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-dim);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--accent-2)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-dim);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--accent-2)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,19,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.7)}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+/* dog-walking/sections.css — rules for this niche's own sections.
+   4 rule(s) were identical to base.css and dropped; 172 kept.
+   Inlined after base.css, so anything here overrides shared chrome. */
+body{background:var(--ground);color:var(--ink);font-family:'Varela Round',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .mono{font-family:'IBM Plex Mono',monospace}
   a{color:inherit}
-  img{max-width:100%;display:block}
-  :focus-visible{outline:2px solid var(--blue-deep);outline-offset:3px;border-radius:6px}
+  :focus-visible{outline:2px solid var(--accent-deep);outline-offset:3px;border-radius:6px}
   section{padding:76px 0}
   h1,h2,h3{font-family:'Baloo 2',sans-serif;font-weight:700;letter-spacing:-.01em}
   h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
   .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
-  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-deep);display:flex;align-items:center;gap:10px}
-  .eyebrow::before{content:"";width:24px;height:2px;background:var(--tan);border-radius:2px}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--accent-alt);border-radius:2px}
 
   /* ---------- nav ---------- */
   .nav{position:sticky;top:0;z-index:50;background:rgba(247,250,253,.9);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
   .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(34,54,74,.04)}
   .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .logo{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800;font-size:17px;color:var(--ink)}
-  .logo .mark{width:32px;height:32px;border-radius:12px;background:linear-gradient(150deg,var(--blue-bright),var(--blue-deep));display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark{width:32px;height:32px;border-radius:12px;background:linear-gradient(150deg,var(--accent-2),var(--accent-deep));display:grid;place-items:center;color:var(--panel-solid);flex:none}
   .logo .mark svg{width:17px;height:17px}
   .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
   .nav-links{display:flex;align-items:center;gap:4px}
   .nav a.tab{font-weight:700;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:999px;transition:.15s;white-space:nowrap}
-  .nav a.tab:hover{background:var(--blue-soft);color:var(--blue-deep)}
-  .nav a.cta{font-family:'Baloo 2';font-weight:700;font-size:13.5px;text-decoration:none;color:#fff;background:var(--blue-deep);padding:10px 19px;border-radius:999px;transition:.18s;white-space:nowrap;margin-left:6px}
-  .nav a.cta:hover{background:var(--blue);transform:translateY(-1px)}
+  .nav a.tab:hover{background:var(--accent-soft);color:var(--accent-deep)}
+  .nav a.cta{font-family:'Baloo 2';font-weight:700;font-size:13.5px;text-decoration:none;color:var(--panel-solid);background:var(--accent-deep);padding:10px 19px;border-radius:999px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--accent);transform:translateY(-1px)}
   @media(max-width:760px){
     .nav-links a.tab{display:none}
     .nav-in{padding:12px 20px}
@@ -82,37 +532,37 @@
   }
   .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
   .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.06;letter-spacing:-.015em;max-width:14ch;margin-top:20px}
-  .hero h1 .hl{color:var(--blue-deep)}
+  .hero h1 .hl{color:var(--accent-deep)}
   .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
   .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
-  .btn-pri{font-family:'Baloo 2';font-weight:700;font-size:15px;text-decoration:none;color:#fff;background:var(--blue-deep);padding:14px 27px;border-radius:999px;transition:.18s;border:none;cursor:pointer;display:inline-block}
-  .btn-pri:hover{background:var(--blue);transform:translateY(-2px)}
-  .btn-sec{font-family:'Baloo 2';font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--sky-soft);padding:14px 27px;border-radius:999px;transition:.18s}
-  .btn-sec:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+  .btn-pri{font-family:'Baloo 2';font-weight:700;font-size:15px;text-decoration:none;color:var(--panel-solid);background:var(--accent-deep);padding:14px 27px;border-radius:999px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--accent);transform:translateY(-2px)}
+  .btn-sec{font-family:'Baloo 2';font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--ground-2);padding:14px 27px;border-radius:999px;transition:.18s}
+  .btn-sec:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
   .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:22px;padding:26px;box-shadow:var(--shadow);position:relative}
-  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tan-deep);background:var(--tan-soft);border:1px solid rgba(217,160,91,.45);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-alt-deep);background:var(--accent-alt-soft);border:1px solid rgba(217,160,91,.45);border-radius:20px;padding:4px 11px;margin-bottom:14px}
   .hero-card .hc-line{font-family:'Baloo 2';font-weight:700;font-size:20px;line-height:1.42;color:var(--ink)}
   .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
-  .hero-card .hc-bird{position:absolute;top:-20px;right:22px;width:44px;height:44px;border-radius:14px;background:linear-gradient(150deg,var(--blue-bright),var(--blue-deep));display:grid;place-items:center;color:#fff;box-shadow:0 10px 22px -8px rgba(31,111,180,.5)}
+  .hero-card .hc-bird{position:absolute;top:-20px;right:22px;width:44px;height:44px;border-radius:14px;background:linear-gradient(150deg,var(--accent-2),var(--accent-deep));display:grid;place-items:center;color:var(--panel-solid);box-shadow:0 10px 22px -8px rgba(31,111,180,.5)}
   .hero-card .hc-bird svg{width:24px;height:24px}
   @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1;margin-top:14px}}
 
   /* ---------- trust strip ---------- */
-  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--sky-soft)}
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--ground-2)}
   .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
   .tstat{text-align:center}
-  .tstat b{display:block;font-family:'Baloo 2';font-weight:800;font-size:27px;color:var(--blue-deep)}
+  .tstat b{display:block;font-family:'Baloo 2';font-weight:800;font-size:27px;color:var(--accent-deep)}
   .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
   @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
 
   /* ---------- services ---------- */
   .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
   .scard{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:24px;display:flex;flex-direction:column}
-  .scard .s-ico{width:44px;height:44px;border-radius:14px;background:var(--blue-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--blue-deep)}
+  .scard .s-ico{width:44px;height:44px;border-radius:14px;background:var(--accent-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--accent-deep)}
   .scard .s-ico svg{width:22px;height:22px}
   .scard h3{font-size:17px}
   .scard p{font-size:13.5px;color:var(--muted);margin-top:8px;flex:1}
-  .scard .s-price{margin-top:14px;font-family:'IBM Plex Mono';font-size:12px;font-weight:600;color:var(--tan-deep)}
+  .scard .s-price{margin-top:14px;font-family:'IBM Plex Mono';font-size:12px;font-weight:600;color:var(--accent-alt-deep)}
   .scard .s-price:empty{display:none}
   @media(max-width:980px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
@@ -121,39 +571,39 @@
   .builder-wrap{display:grid;grid-template-columns:1.3fr .7fr;gap:28px;margin-top:32px;align-items:start}
   .b-panel{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
   .b-step{font-family:'IBM Plex Mono';font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-  .b-step b{color:var(--blue-deep)}
+  .b-step b{color:var(--accent-deep)}
   .b-opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-  .b-opt{font-family:'Varela Round';font-size:13.5px;color:var(--ink);background:var(--sky-soft);border:1.5px solid var(--hair);border-radius:999px;padding:9px 15px;cursor:pointer;transition:.15s}
-  .b-opt:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
-  .b-opt[aria-pressed="true"]{background:var(--blue-deep);border-color:var(--blue-deep);color:#fff}
+  .b-opt{font-family:'Varela Round';font-size:13.5px;color:var(--ink);background:var(--ground-2);border:1.5px solid var(--hair);border-radius:999px;padding:9px 15px;cursor:pointer;transition:.15s}
+  .b-opt:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+  .b-opt[aria-pressed="true"]{background:var(--accent-deep);border-color:var(--accent-deep);color:var(--panel-solid)}
   .b-opt small{display:block;font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.02em;opacity:.75}
   .week-scroll{overflow-x:auto;padding-bottom:6px}
   .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;min-width:540px}
   .wday{display:flex;flex-direction:column;gap:6px}
-  .wday-t{font-family:'Baloo 2';font-weight:700;font-size:13px;color:var(--ink);background:var(--sky-soft);border:1.5px solid var(--hair);border-radius:12px;padding:12px 4px 10px;cursor:pointer;transition:.15s;text-align:center}
+  .wday-t{font-family:'Baloo 2';font-weight:700;font-size:13px;color:var(--ink);background:var(--ground-2);border:1.5px solid var(--hair);border-radius:12px;padding:12px 4px 10px;cursor:pointer;transition:.15s;text-align:center}
   .wday-t small{display:block;font-family:'IBM Plex Mono';font-weight:400;font-size:9.5px;color:var(--muted);letter-spacing:.04em;margin-top:3px}
-  .wday-t:hover{border-color:var(--blue-deep)}
-  .wday-t[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-deep);color:var(--blue-deep)}
-  .wday-t[aria-pressed="true"] small{color:var(--blue-deep)}
-  .wday-time{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;color:var(--tan-deep);background:var(--tan-soft);border:1px solid rgba(217,160,91,.45);border-radius:9px;padding:6px 2px;cursor:pointer;transition:.12s;text-align:center}
+  .wday-t:hover{border-color:var(--accent-deep)}
+  .wday-t[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent-deep);color:var(--accent-deep)}
+  .wday-t[aria-pressed="true"] small{color:var(--accent-deep)}
+  .wday-time{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;color:var(--accent-alt-deep);background:var(--accent-alt-soft);border:1px solid rgba(217,160,91,.45);border-radius:9px;padding:6px 2px;cursor:pointer;transition:.12s;text-align:center}
   .wday-time:hover{filter:brightness(.96)}
   .wday-time[hidden]{display:none}
   .b-price{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
   .b-price .bp-label{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .b-price .bp-num{font-family:'Baloo 2';font-weight:800;font-size:44px;color:var(--blue-deep);line-height:1.05;margin-top:10px}
+  .b-price .bp-num{font-family:'Baloo 2';font-weight:800;font-size:44px;color:var(--accent-deep);line-height:1.05;margin-top:10px}
   .b-price .bp-num span{font-size:17px;color:var(--muted);font-weight:700}
   .b-price .bp-meta{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.6}
-  .b-price .bp-disc{display:inline-block;font-family:'IBM Plex Mono';font-size:11px;font-weight:600;color:#3d6e2a;background:var(--grass-soft);border:1px solid rgba(111,191,79,.4);border-radius:20px;padding:4px 11px;margin-top:12px}
+  .b-price .bp-disc{display:inline-block;font-family:'IBM Plex Mono';font-size:11px;font-weight:600;color:var(--ok-deep);background:var(--ok-soft);border:1px solid rgba(111,191,79,.4);border-radius:20px;padding:4px 11px;margin-top:12px}
   .b-price .bp-disc:empty{display:none}
   .b-price .bp-empty{font-size:14.5px;color:var(--muted)}
   .b-price .bp-cta{margin-top:20px}
-  .b-note{margin-top:16px;font-size:13px;color:var(--muted);background:var(--tan-soft);border:1px solid rgba(217,160,91,.4);border-radius:12px;padding:11px 14px}
+  .b-note{margin-top:16px;font-size:13px;color:var(--muted);background:var(--accent-alt-soft);border:1px solid rgba(217,160,91,.4);border-radius:12px;padding:11px 14px}
   @media(max-width:900px){.builder-wrap{grid-template-columns:1fr}.b-price{position:static}}
 
   /* ---------- how it works ---------- */
   .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:step}
   .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:24px;counter-increment:step;position:relative}
-  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Baloo 2';font-weight:800;font-size:38px;color:transparent;-webkit-text-stroke:1.6px var(--blue);display:block;margin-bottom:10px;opacity:.85}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Baloo 2';font-weight:800;font-size:38px;color:transparent;-webkit-text-stroke:1.6px var(--accent);display:block;margin-bottom:10px;opacity:.85}
   .how-card h3{font-size:17px}
   .how-card p{font-size:14px;color:var(--muted);margin-top:8px}
   @media(max-width:820px){.how-grid{grid-template-columns:1fr}}
@@ -163,7 +613,7 @@
   .owner-photo{aspect-ratio:1/1;border-radius:22px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
   .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
   .owner-bio h3{font-size:20px}
-  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--blue-deep);margin-top:2px;letter-spacing:.02em}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--accent-deep);margin-top:2px;letter-spacing:.02em}
   .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
   @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
 
@@ -178,65 +628,64 @@
 
   /* ---------- service area ---------- */
   .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
-  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--blue-deep);background:var(--blue-soft);border:1px solid rgba(59,154,225,.3);padding:7px 13px;border-radius:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);border:1px solid rgba(59,154,225,.3);padding:7px 13px;border-radius:20px}
 
   /* ---------- FAQ ---------- */
   .faq-list{margin-top:28px}
   .qa{border-bottom:1px solid var(--hair)}
   .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Baloo 2';font-weight:700;font-size:16px}
   .qa summary::-webkit-details-marker{display:none}
-  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--blue-deep);font-size:20px;flex:none;transition:transform .2s}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--accent-deep);font-size:20px;flex:none;transition:transform .2s}
   .qa[open] summary .pm{transform:rotate(45deg)}
   .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
 
   /* ---------- booking form ---------- */
-  .book{background:var(--blue-deep);color:#fff;text-align:center}
+  .book{background:var(--accent-deep);color:var(--panel-solid);text-align:center}
   .book .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
-  .book .eyebrow::before{background:var(--tan)}
-  .book h2{color:#fff;max-width:24ch;margin:12px auto 14px}
+  .book .eyebrow::before{background:var(--accent-alt)}
+  .book h2{color:var(--panel-solid);max-width:24ch;margin:12px auto 14px}
   .book > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
   .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:28px}
   .qf-row{margin-bottom:15px}
   .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
-  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:11px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:11px;padding:12px 13px;font:inherit;font-size:14.5px;color:var(--panel-solid)}
   .qf-row select option{color:var(--ink)}
   .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
-  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.16)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:var(--panel-solid);background:rgba(255,255,255,.16)}
   .qf-row textarea{resize:vertical;line-height:1.5}
   .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
   .hp{position:absolute;left:-9999px;opacity:0}
-  .qf-submit{width:100%;background:var(--tan);color:#3a2a12;font-family:'Baloo 2';font-weight:700;font-size:15px;border:none;padding:15px;border-radius:999px;cursor:pointer;margin-top:6px}
+  .qf-submit{width:100%;background:var(--accent-alt);color:var(--accent-alt-ink);font-family:'Baloo 2';font-weight:700;font-size:15px;border:none;padding:15px;border-radius:999px;cursor:pointer;margin-top:6px}
   .qf-submit:hover{filter:brightness(1.06)}
   .qf-submit:disabled{opacity:.6;cursor:default}
   .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
-  .qf-status.err{color:#FFD9C6;font-weight:700}
-  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--ink);border-radius:20px;padding:32px;font-family:'Baloo 2';font-weight:700;font-size:17px;text-align:center}
+  .qf-status.err{color:var(--err-tint);font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:var(--panel-solid);color:var(--ink);border-radius:20px;padding:32px;font-family:'Baloo 2';font-weight:700;font-size:17px;text-align:center}
   .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
-  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+  .qf-alt a{color:var(--panel-solid);font-weight:700;text-decoration:underline}
 
   /* ---------- footer ---------- */
-  footer{background:var(--sky-soft);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  footer{background:var(--ground-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
   .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
   .foot-in b{font-family:'Baloo 2';color:var(--ink)}
   .footer__credit{opacity:.75}
-  .footer__credit a{color:var(--blue-deep);text-decoration:none;font-weight:700}
+  .footer__credit a{color:var(--accent-deep);text-decoration:none;font-weight:700}
 
   /* ---------- mobile call/text bar ---------- */
-  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--sky-soft);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(34,54,74,.1)}
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--ground-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(34,54,74,.1)}
   .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:999px;font-family:'Baloo 2';font-weight:700;font-size:14px;text-decoration:none}
-  .mobile-cta .call{color:#fff;background:var(--blue-deep)}
-  .mobile-cta .text{color:var(--blue-deep);background:var(--blue-soft);border:1px solid rgba(59,154,225,.35)}
+  .mobile-cta .call{color:var(--panel-solid);background:var(--accent-deep)}
+  .mobile-cta .text{color:var(--accent-deep);background:var(--accent-soft);border:1px solid rgba(59,154,225,.35)}
   .mobile-cta svg{width:18px;height:18px}
   @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
 
   /* ---------- toast ---------- */
-  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--panel-solid);padding:11px 18px;border-radius:12px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
-  .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
 
   /* ---------- walk-week builder: illustrated day cards (premium pass) ---------- */
@@ -251,17 +700,17 @@
     /* faint paw watermark + layered light gradient for depth */
     background:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%233B9AE1' fill-opacity='.16'%3E%3Cellipse cx='16' cy='22' rx='7.5' ry='6'/%3E%3Cellipse cx='7' cy='13' rx='3' ry='3.6'/%3E%3Cellipse cx='15' cy='9' rx='3.2' ry='3.8'/%3E%3Cellipse cx='24' cy='12' rx='3' ry='3.6'/%3E%3C/svg%3E") no-repeat right 5px bottom 4px / 26px,
-      linear-gradient(168deg,#FFFFFF 0%,#F3F9FE 46%,#E7F1FB 100%);
+      linear-gradient(168deg,var(--panel-solid) 0%,var(--tint-1) 46%,var(--tint-2) 100%);
     border:1.5px solid var(--card-brd);
     box-shadow:0 10px 18px -14px rgba(31,111,180,.55),inset 0 1px 0 rgba(255,255,255,.9);
   }
   .wday-t small{transition:color .2s}
   .wday-t[aria-pressed="true"]{
-    color:#fff;border-color:var(--blue-deep);
+    color:var(--panel-solid);border-color:var(--accent-deep);
     /* layered blue gradient fill + white paw watermark */
     background:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%23FFFFFF' fill-opacity='.28'%3E%3Cellipse cx='16' cy='22' rx='7.5' ry='6'/%3E%3Cellipse cx='7' cy='13' rx='3' ry='3.6'/%3E%3Cellipse cx='15' cy='9' rx='3.2' ry='3.8'/%3E%3Cellipse cx='24' cy='12' rx='3' ry='3.6'/%3E%3C/svg%3E") no-repeat right 5px bottom 4px / 26px,
-      linear-gradient(168deg,#79BEEF 0%,#3B9AE1 52%,#1F6FB4 100%);
+      linear-gradient(168deg,var(--tint-3) 0%,#3B9AE1 52%,#1F6FB4 100%);
     box-shadow:0 16px 24px -14px rgba(31,111,180,.7),inset 0 1px 0 rgba(255,255,255,.35);
     /* physics-eased fill: bottom-up clip reveal + spring overshoot — north-star: dj-site-blue easing */
     animation:wkDayFill .55s cubic-bezier(.34,1.56,.64,1) both;
@@ -273,7 +722,7 @@
     100%{clip-path:inset(0 0 0 0 round 14px);transform:none}
   }
   .wday-time{
-    background:linear-gradient(160deg,#F6E6CB,#EACFA0);
+    background:linear-gradient(160deg,var(--tint-4),var(--tint-5));
     border:1px solid rgba(217,160,91,.55);
     box-shadow:0 6px 12px -9px rgba(169,118,47,.85),inset 0 1px 0 rgba(255,255,255,.6);
   }
@@ -297,6 +746,13 @@
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
 
+<!-- dog-walking/scene.svg — this site keeps its illustrations inline in
+     sections.html rather than in a shared <defs> block. Placeholder so the
+     build slot resolves; see brief.md. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+<!-- dog-walking/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h.01"/><path d="M3.4 18L12 9a5 5 0 0 1 8 4v1h2l-3 3H9l-2 2H3.4z"/><path d="M20 7l2-1-2-1-1-2-1 2 1 2z" transform="scale(.6) translate(12 2)"/></svg></span><span>Bluebird &amp; Biscuit</span><small>Pet Care</small></div>
@@ -326,7 +782,7 @@
         <stop offset="0" stop-color="#7FC0EA"/>
         <stop offset="28%" stop-color="#A6D6F1"/>
         <stop offset="55%" stop-color="#D6EDFB"/>
-        <stop offset="78%" stop-color="#F3F9FE"/>
+        <stop offset="78%" stop-color="var(--tint-1)"/>
         <stop offset="100%" stop-color="#FBF1DE"/>
       </linearGradient>
       <!-- 4-stop sun glow -->
@@ -368,7 +824,7 @@
         <stop offset="74%" stop-color="#D3A45E"/><stop offset="100%" stop-color="#B9843F"/>
       </linearGradient>
       <linearGradient id="scene-cloud" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#FFFFFF"/><stop offset="55%" stop-color="#F4FAFF"/>
+        <stop offset="0" stop-color="var(--panel-solid)"/><stop offset="55%" stop-color="#F4FAFF"/>
         <stop offset="100%" stop-color="#E1EEF9"/>
       </linearGradient>
       <radialGradient id="scene-ball" cx="38%" cy="34%" r="75%">
@@ -542,7 +998,7 @@
   </div>
 </section>
 
-<section id="builder" style="background:var(--sky-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="builder" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">The week builder</div>
@@ -589,7 +1045,7 @@
   </div>
 </section>
 
-<section id="team" style="background:var(--sky-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap reveal">
     <div class="eyebrow" id="ownerEyebrow"></div>
     <div class="owner-wrap">
@@ -611,7 +1067,7 @@
   </div>
 </section>
 
-<section id="area" style="background:var(--sky-soft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="area" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap reveal">
     <div class="eyebrow">Service area</div>
     <h2>Trotting all over the <span id="areaShort"></span>.</h2>
@@ -660,6 +1116,12 @@
         <label for="qNotes">Anything we should know?</label>
         <textarea id="qNotes" name="notes" rows="3" placeholder="Gate codes, quirks, the squirrel situation…"></textarea>
       </div>
+<label class="consent">
+  <input type="checkbox" id="b-consent" required />
+  <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.
+    See our <a href="/legal/privacy.html">privacy policy</a>.</span>
+</label>
+
       <button type="submit" class="qf-submit" id="qfSubmit">Request my meet &amp; greet</button>
       <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
       <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550312" data-phone-link>Call or text (208) 555-0312</a>.</p>
@@ -689,9 +1151,187 @@
 <div id="toast"></div>
 
 <script>
-(function(){
-  "use strict";
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Inlined from niches/dog-walking/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {
+  "brand": {
+    "name": "Bluebird & Biscuit Pet Care",
+    "tagline": "Happy dogs, easy weeks.",
+    "phone": "(208) 555-0312",
+    "email": "hello@bluebirdbiscuit.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Eagle, ID"
+  },
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Eagle",
+      "Star",
+      "Meridian",
+      "Garden City",
+      "West Boise"
+    ]
+  },
+  "owner": {
+    "name": "Callie Munro",
+    "heading": "The human behind the leash",
+    "bio": "Callie Munro was the kid who kept a mental map of every dog on the block. After too many desk jobs and lunch breaks spent at the dog park, she finally did the obvious thing and made the dogs the job. Bluebird & Biscuit runs on routine — same walker, same route, same happy dance at the door — because dogs don't actually want variety. They want their person, their trail, and a treat at the end.",
+    "photo": ""
+  },
+  "stats": [
+    {
+      "num": "4 max",
+      "label": "Dogs per pack walk — small groups, matched by vibe"
+    },
+    {
+      "num": "AM–PM",
+      "label": "Morning, midday and afternoon slots, seven days a week"
+    },
+    {
+      "num": "Free",
+      "label": "Meet & greet before any first walk — always"
+    }
+  ],
+  "services": [
+    {
+      "title": "Solo walks",
+      "desc": "One dog (or one household), one walker, zero distractions. For shy pups, seniors, and dogs who like the trail to themselves.",
+      "price": "from $18 / walk"
+    },
+    {
+      "title": "Pack walks",
+      "desc": "Small matched groups of up to four. Your dog gets friends; you get a tired dog.",
+      "price": "from $14 / walk"
+    },
+    {
+      "title": "Drop-in visits",
+      "desc": "A potty break, fresh water, dinner served, and fifteen minutes of undivided attention while you're stuck at work.",
+      "price": "from $16 / visit"
+    },
+    {
+      "title": "Overnight sitting",
+      "desc": "We stay at your place so the routine stays theirs — same bed, same bowl, same 6 a.m. staring contest.",
+      "price": "from $85 / night"
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do you walk in bad weather?",
+      "a": "Rain, shine or Idaho sideways-snow — yes. In extreme heat or ice we shorten the route and swap in indoor play, and the visit note always says exactly what we did."
+    },
+    {
+      "q": "How do you get into my house?",
+      "a": "Whatever you're comfortable with — a lockbox, a garage code or a smart lock. Access details live in your dog's file and nowhere else."
+    },
+    {
+      "q": "What about vaccinations?",
+      "a": "You know your dog's health best. For pack walks we ask that dogs stay current on whatever their vet recommends, and that you flag anything contagious before a visit. Solo walks and drop-ins are more flexible — let's talk at the meet & greet."
+    },
+    {
+      "q": "How do you match pack walks?",
+      "a": "Slowly and on purpose. Size, energy and walking style all matter, and every new dog starts with a solo walk or two so we know who they'll love trotting next to. Max four dogs, always the same crew."
+    },
+    {
+      "q": "Can I change my days?",
+      "a": "Yep — a text is enough. Pause for vacation, add a Friday, drop to twice a week. Plans bend around real life; that's the point of the week builder."
+    },
+    {
+      "q": "Will I know how it went?",
+      "a": "Every visit ends with a photo and a quick note — where we went, what they did, anything worth flagging. You'll probably know about the squirrel before you're home."
+    }
+  ],
+  "social": [],
+  "niche": {
+    "walkServices": [
+      {
+        "label": "Solo walk",
+        "desc": "Just your dog + their walker",
+        "rate20": "18",
+        "rate30": "22",
+        "rate45": "28"
+      },
+      {
+        "label": "Pack walk",
+        "desc": "A small, matched group — max four",
+        "rate20": "14",
+        "rate30": "17",
+        "rate45": "22"
+      },
+      {
+        "label": "Drop-in visit",
+        "desc": "Food, water, play, potty break",
+        "rate20": "16",
+        "rate30": "20",
+        "rate45": "26"
+      }
+    ],
+    "walkSettings": {
+      "threeDayPct": "5",
+      "fiveDayPct": "10",
+      "note": "Demo pricing — set your real rates in the admin. Every plan starts with a free meet & greet, and you can pause or change days with a text."
+    },
+    "howItWorks": [
+      {
+        "title": "Meet & greet",
+        "desc": "We come to you. Your dog checks us out, you tell us the quirks — gate codes, leash rules, the squirrel situation. Free, no strings."
+      },
+      {
+        "title": "Trial walk",
+        "desc": "One walk, full report: a photo, a note, and how they did — so you're never guessing how it's going."
+      },
+      {
+        "title": "Your routine",
+        "desc": "Pick your days in the week builder and we show up like clockwork. Change or pause anytime with a text."
+      }
+    ]
+  },
+  "seo": {
+    "title": "Bluebird &amp; Biscuit Pet Care — Dog Walking &amp; Pet Sitting | Eagle, ID",
+    "description": "Dog walking, drop-in visits and overnight pet sitting in Eagle and the Treasure Valley. Solo walks and small matched pack walks, a free meet & greet first, and a photo report after every visit. Build your dog's week in twenty seconds.",
+    "ogTitle": "Bluebird &amp; Biscuit Pet Care — Happy dogs, easy weeks.",
+    "ogDescription": "Solo walks, pack walks, drop-ins and overnight sitting around Eagle, ID. Pick your days, we handle the wiggles.",
+    "priceRange": "",
+    "schemaType": "LocalBusiness",
+    "canonical": "https://systemsbyvega.com/sites/dog-walking/",
+    "themeColor": "#F7FAFD",
+    "favicon": "",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Varela+Round&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/dog-walking/og.png"
+  }
+};
+</script>
+
+<script>
+/* dog-walking/niche.js — this niche's renderer and interactive logic.
+   Shared utilities come from _template/base.js via SL; the aliases below keep
+   every extracted call site unchanged. base.js owns the reduced-motion flag,
+   the reveal observer, the content fetch/merge lifecycle, and calling
+   window.renderContent(). val/setErr/showDone are NOT aliased — this niche
+   defines its own with different signatures. */
+(function () {
+  'use strict';
+
+  var SL = window.SL;
+  var esc = SL.esc, num = SL.num, telHref = SL.telHref;
+  var reduce = SL.reduce;
+  var CONTENT = window.DEFAULT_CONTENT;
+
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* =====================================================
      OWNER-EDITABLE CONTENT
@@ -705,73 +1345,7 @@
      ("18") so they round-trip through the admin's text
      inputs; the page Number()s them before doing math.
      ===================================================== */
-  var DEFAULT_CONTENT = {
-    "brand": {
-      "name": "Bluebird & Biscuit Pet Care",
-      "tagline": "Happy dogs, easy weeks.",
-      "phone": "(208) 555-0312",
-      "email": "hello@bluebirdbiscuit.com",
-      "leadEmail": "info@kingdom-creatives.com",
-      "city": "Eagle, ID"
-    },
-    "stats": [
-      { "num": "4 max", "label": "Dogs per pack walk — small groups, matched by vibe" },
-      { "num": "AM–PM", "label": "Morning, midday and afternoon slots, seven days a week" },
-      { "num": "Free", "label": "Meet & greet before any first walk — always" }
-    ],
-    "services": [
-      { "title": "Solo walks", "desc": "One dog (or one household), one walker, zero distractions. For shy pups, seniors, and dogs who like the trail to themselves.", "price": "from $18 / walk" },
-      { "title": "Pack walks", "desc": "Small matched groups of up to four. Your dog gets friends; you get a tired dog.", "price": "from $14 / walk" },
-      { "title": "Drop-in visits", "desc": "A potty break, fresh water, dinner served, and fifteen minutes of undivided attention while you're stuck at work.", "price": "from $16 / visit" },
-      { "title": "Overnight sitting", "desc": "We stay at your place so the routine stays theirs — same bed, same bowl, same 6 a.m. staring contest.", "price": "from $85 / night" }
-    ],
-    "walkServices": [
-      { "label": "Solo walk", "desc": "Just your dog + their walker", "rate20": "18", "rate30": "22", "rate45": "28" },
-      { "label": "Pack walk", "desc": "A small, matched group — max four", "rate20": "14", "rate30": "17", "rate45": "22" },
-      { "label": "Drop-in visit", "desc": "Food, water, play, potty break", "rate20": "16", "rate30": "20", "rate45": "26" }
-    ],
-    "walkSettings": {
-      "threeDayPct": "5",
-      "fiveDayPct": "10",
-      "note": "Demo pricing — set your real rates in the admin. Every plan starts with a free meet & greet, and you can pause or change days with a text."
-    },
-    "howItWorks": [
-      { "title": "Meet & greet", "desc": "We come to you. Your dog checks us out, you tell us the quirks — gate codes, leash rules, the squirrel situation. Free, no strings." },
-      { "title": "Trial walk", "desc": "One walk, full report: a photo, a note, and how they did — so you're never guessing how it's going." },
-      { "title": "Your routine", "desc": "Pick your days in the week builder and we show up like clockwork. Change or pause anytime with a text." }
-    ],
-    "serviceArea": {
-      "region": "Treasure Valley, Idaho",
-      "short": "Treasure Valley",
-      "cities": ["Eagle", "Star", "Meridian", "Garden City", "West Boise"]
-    },
-    "owner": {
-      "name": "Callie Munro",
-      "heading": "The human behind the leash",
-      "bio": "Callie Munro was the kid who kept a mental map of every dog on the block. After too many desk jobs and lunch breaks spent at the dog park, she finally did the obvious thing and made the dogs the job. Bluebird & Biscuit runs on routine — same walker, same route, same happy dance at the door — because dogs don't actually want variety. They want their person, their trail, and a treat at the end.",
-      "photo": ""
-    },
-    "testimonials": [
-      { "quote": "", "name": "" },
-      { "quote": "", "name": "" },
-      { "quote": "", "name": "" }
-    ],
-    "faq": [
-      { "q": "Do you walk in bad weather?", "a": "Rain, shine or Idaho sideways-snow — yes. In extreme heat or ice we shorten the route and swap in indoor play, and the visit note always says exactly what we did." },
-      { "q": "How do you get into my house?", "a": "Whatever you're comfortable with — a lockbox, a garage code or a smart lock. Access details live in your dog's file and nowhere else." },
-      { "q": "What about vaccinations?", "a": "You know your dog's health best. For pack walks we ask that dogs stay current on whatever their vet recommends, and that you flag anything contagious before a visit. Solo walks and drop-ins are more flexible — let's talk at the meet & greet." },
-      { "q": "How do you match pack walks?", "a": "Slowly and on purpose. Size, energy and walking style all matter, and every new dog starts with a solo walk or two so we know who they'll love trotting next to. Max four dogs, always the same crew." },
-      { "q": "Can I change my days?", "a": "Yep — a text is enough. Pause for vacation, add a Friday, drop to twice a week. Plans bend around real life; that's the point of the week builder." },
-      { "q": "Will I know how it went?", "a": "Every visit ends with a photo and a quick note — where we went, what they did, anything worth flagging. You'll probably know about the squirrel before you're home." }
-    ],
-    "social": []
-  };
-
-  var CONTENT = DEFAULT_CONTENT;
-  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
-  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
-
-  var DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+var DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
   var DAY_FULL = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
   var TIMES = ["Morning","Midday","Afternoon"];
   var LENGTHS = ["20","30","45"];
@@ -1037,21 +1611,18 @@
   });
 
   /* ---------- boot ---------- */
-  renderContent(CONTENT);
-  fetch('content.json', { cache: 'no-store' })
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){
-      if(d){
-        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
-        applyRuntime(CONTENT);
-        renderContent(CONTENT);
-      }
-    })
-    .catch(function(){});
+  /* boot handed to base.js */
+
+  window.renderContent = renderContent;
 })();
 </script>
 
 <script>
+/* dog-walking/scene.js — the signature animation, extracted verbatim from the
+   original's main script. base.js calls window.initScene(reduce) after first
+   render; the block below closes over that parameter exactly as it closed over
+   the outer-scope `reduce` before, so the reduced-motion path is unchanged. */
+window.initScene = function (reduce) {
 /* Hero ambient scene — additive motion only; the SVG scene is fully static without this.
    north-star: dj-site-blue — a requestAnimationFrame loop with genuine physics decay curves
    (gravity + restitution on the ball, an energy-decaying spring burst on the tail). */
@@ -1096,6 +1667,116 @@
   }
   raf=requestAnimationFrame(frame);
 })();
+};
 </script>
+
+<script>
+/* _template/base.js — utilities and the content lifecycle.
+   Shared by every niche. Niche-specific rendering lives in niches/<slug>/niche.js,
+   which must define window.renderContent(CONTENT). */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+  function telDigits(p) { return String(p || '').replace(/[^0-9+]/g, ''); }
+  function telHref(p) { return 'tel:' + telDigits(p); }
+  function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
+  function initReveal() {
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!els.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Form POST. Returns a promise; the niche decides what to render on success. */
+  function postForm(endpoint, payload) {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+  }
+
+  /* Consent gate (§9.3).
+     Runs in the CAPTURE phase, ahead of the niche's own submit handler, so a
+     checkbox the BUILD injected is enforced even though that niche's JS knows
+     nothing about it.
+
+     It does NOT stopPropagation: the niche handler still runs and sets its own
+     message if it has one. We only supply wording when nobody else did, checked
+     on the next tick — so the 8 sites that already gate keep their own copy and
+     the injected sites get a sensible default. Enforcement is uniform; wording
+     is not overridden. */
+  function consentGate(e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var box = form.querySelector('input[type="checkbox"][id$="consent"]');
+    if (!box || box.checked) return;
+
+    e.preventDefault();
+    box.focus();
+
+    var msg = form.querySelector('[id$="Msg"]');
+    var before = msg ? msg.textContent : null;
+    setTimeout(function () {
+      if (!msg || msg.textContent !== before) return;   // the niche spoke first
+      msg.textContent = 'Please tick the consent box so we can reply to you.';
+      if (msg.className.indexOf('err') < 0) msg.className += ' err';
+    }, 0);
+  }
+  document.addEventListener('submit', consentGate, true);
+
+  /* The content lifecycle.
+     DEFAULT_CONTENT is inlined by the build from content.json, so the two can
+     never disagree. The fetch exists so an operator edit goes live without a
+     rebuild; on failure the inlined copy already rendered. */
+  function boot() {
+    var CONTENT = window.DEFAULT_CONTENT || {};
+    window.CONTENT = CONTENT;
+    if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    initReveal();
+    if (typeof window.initScene === 'function') window.initScene(reduce);
+
+    fetch('content.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        CONTENT = Object.assign({}, window.DEFAULT_CONTENT, d);
+        window.CONTENT = CONTENT;
+        if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+      })
+      .catch(function () { /* offline or 404: the inlined defaults stand */ });
+  }
+
+  /* setErr and showDone are intentionally absent: every niche examined
+     defines its own with a different signature. Sharing them would be a
+     silent behaviour change, not a saving. */
+  window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>

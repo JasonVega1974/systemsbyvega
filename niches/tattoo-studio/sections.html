@@ -1,0 +1,315 @@
+<!-- tattoo-studio/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Static Rose Tattoo — home">
+      <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 12c-9.5 0-16 6.2-16 13.6C16 34 23.4 38 32 38s16-4 16-12.4C48 18.2 41.5 12 32 12zm0 5.6c5.6 0 10 3.4 10 8 0 4.4-4.4 6.8-10 6.8s-10-2.4-10-6.8c0-4.6 4.4-8 10-8zm0 4.4c-3.3 0-5.6 1.6-5.6 3.6S28.7 29.2 32 29.2s5.6-1.6 5.6-3.6S35.3 22 32 22z" fill="#c42b3d"/>
+        <path d="M32 38v14M32 45l-6.5 4M32 41.5l6.5 4.5" stroke="#c42b3d" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="brand__name">Static Rose<span>Rae Costa · Tattoo</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#work">Work</a>
+      <a class="link" href="#flash">Flash</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#book">Book</a>
+      <a class="nav__book" href="#book">Book now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow">Private studio · <span data-edit="city">Boise, Idaho</span></span></div>
+        <h1 class="display"><span class="l1">Static Rose</span><span class="l2">Tattoo by Rae Costa</span></h1>
+        <p class="hero__sub">Blackwork &amp; fine-line tattoos, by appointment only. One client at a time, one drawing at a time — no walk-ins, no rush.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#book">Request a booking</a>
+          <a class="btn btn--ghost btn--lg" href="#work">See the work</a>
+        </div>
+        <!-- rendered from CONTENT.stats -->
+        <div class="hero__proof" id="proofRow"></div>
+      </div>
+      <div class="hero__portrait">
+        <!-- Rebrand note: drop <img src="assets/portrait.jpg" alt="…" /> inside .portrait
+             (before the corner spans) and the ink-wash mark treatment disappears automatically -->
+        <div class="portrait" role="img" aria-label="Static Rose mark — rose and thorn, ink on black">
+          <span class="portrait__wash" aria-hidden="true"></span>
+          <span class="portrait__corner portrait__corner--tl" aria-hidden="true"></span>
+          <span class="portrait__corner portrait__corner--br" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__rule" aria-hidden="true"></div>
+</header>
+
+<!-- ============ SIGNATURE: GALLERY ============ -->
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Selected work</span>
+      <h2 class="section-title">The Portfolio</h2>
+      <p class="lead" style="margin:0 auto">A rotating selection from the last few years, shown here as ink studies. Filter by style — every piece started as a conversation and a sketch.</p>
+    </div>
+
+    <div class="filters reveal" role="group" aria-label="Filter portfolio by style">
+      <button class="pill" data-filter="all" aria-pressed="true">All</button>
+      <button class="pill" data-filter="blackwork" aria-pressed="false">Blackwork</button>
+      <button class="pill" data-filter="fineline" aria-pressed="false">Fine Line</button>
+      <button class="pill" data-filter="color" aria-pressed="false">Color</button>
+      <button class="pill" data-filter="flash" aria-pressed="false">Flash</button>
+    </div>
+
+    <!-- Rendered from CONTENT.gallery (edit at /admin/). Each piece is either a
+         pure-CSS ink study (art class) or an uploaded photo; the lightbox reads
+         data-title / data-tag / data-img off each tile automatically. -->
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- lightbox (zero-dependency dialog overlay) -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Portfolio piece viewer" hidden>
+  <div class="lb__backdrop" id="lbBackdrop"></div>
+  <figure class="lb__panel">
+    <div class="lb__stage art" id="lbStage" aria-hidden="true"></div>
+    <figcaption class="lb__cap">
+      <b id="lbTitle"></b>
+      <span class="tag" id="lbTag"></span>
+      <span class="count" id="lbCount" aria-live="polite"></span>
+    </figcaption>
+  </figure>
+  <button class="lb__btn lb__close" id="lbClose" aria-label="Close viewer">&times;</button>
+  <button class="lb__btn lb__prev" id="lbPrev" aria-label="Previous piece">&lsaquo;</button>
+  <button class="lb__btn lb__next" id="lbNext" aria-label="Next piece">&rsaquo;</button>
+</div>
+
+<!-- ============ FLASH AVAILABLE ============ -->
+<section class="section flash" id="flash">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Flash available</span>
+      <h2 class="section-title">Ready-to-Wear Designs</h2>
+      <p class="lead" style="margin:0 auto">Pre-drawn pieces at a set price, tattooed once and then retired. Claim one and it's yours alone — the design comes off the sheet forever.</p>
+    </div>
+    <!-- Rendered from CONTENT.flash (edit at /admin/) -->
+    <div class="flash__grid" id="flashGrid"></div>
+    <p class="flash__note reveal">Flash prices are <b>all-in</b> — deposit applies toward the total, no drawing fee, one round of size adjustment included.</p>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="about__grid">
+      <!-- Rebrand note: drop <img src="assets/studio.jpg" alt="…" /> inside
+           .about__photo and the lamp-and-chair composition disappears automatically -->
+      <div class="about__photo reveal" role="img" aria-label="The Static Rose studio — lamp over the chair, ink on black"></div>
+      <div class="about__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the artist</span>
+        <h2 class="section-title">Rae Costa</h2>
+        <!-- Rendered from CONTENT.bio / CONTENT.chips (edit at /admin/). If the
+             bio is left empty, a placeholder prompt renders instead. -->
+        <div class="bio" id="bioText"></div>
+        <div class="about__chips" id="chipRow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW BOOKING WORKS ============ -->
+<section class="section process" id="process">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How booking works</span>
+      <h2 class="section-title">Three Steps to the Chair</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Send the request</h3>
+        <p>Use the form below — idea, placement, size, budget. Rae reads every request herself and replies within 48 hours, even if the answer is "not my style, but here's who to ask."</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>Deposit &amp; drawing</h3>
+        <p>A $100 deposit locks your date and goes toward the final price. Rae drafts the piece and you'll see it before session day — one revision round is always included.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Session day</h3>
+        <p>Private studio, just the two of you. Bring your ID, eat a real meal first, wear something that exposes the placement. You leave with aftercare in writing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Before you ask</span>
+      <h2 class="section-title">Questions, Answered</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq reveal"><summary>How does the deposit work?<span class="plus">+</span></summary><div class="faq__body">$100 to lock your date, and it comes off your final total — it's not an extra fee. It's non-refundable if you no-show or cancel within 72 hours, because that time was held for you. Reschedule once with 72+ hours notice and the deposit moves with you.</div></details>
+      <details class="faq reveal"><summary>How much is it going to hurt?<span class="plus">+</span></summary><div class="faq__body">Honestly? Some. Fine-line work is gentler than packing black, and forearms and calves are easy; ribs, sternum and feet bite harder. It's very survivable — people fall asleep in the chair more often than they tap out. We take breaks whenever you need one.</div></details>
+      <details class="faq reveal"><summary>Are touch-ups included?<span class="plus">+</span></summary><div class="faq__body">Yes. One free touch-up within six months, as long as you followed the aftercare. Sun damage, picking at it, or ocean swims during the first two weeks void that — skin tells on you.</div></details>
+      <details class="faq reveal"><summary>What's the aftercare?<span class="plus">+</span></summary><div class="faq__body">You'll leave with printed instructions, but the short version: keep the second-skin wrap on 3–5 days, then fragrance-free wash and a thin layer of lotion twice a day. No pools, no sun, no gym friction on it for two weeks. Boring aftercare makes beautiful heals.</div></details>
+      <details class="faq reveal"><summary>Do you do cover-ups?<span class="plus">+</span></summary><div class="faq__body">Case by case. Blackwork covers a lot of sins, but not everything — some pieces need a laser session or two first before a cover will look intentional instead of crowded. Send a clear photo of the existing tattoo with your request and you'll get a straight answer.</div></details>
+      <details class="faq reveal"><summary>Minimum age? Do I need ID?<span class="plus">+</span></summary><div class="faq__body">18+, no exceptions, no parental-consent workarounds — Idaho allows them, this studio doesn't. Bring a valid government photo ID to every session; you'll be asked even if you've been in before.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section book-sec" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:640px;margin:0 auto 34px">
+      <span class="eyebrow">Book with Rae</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Request a Booking</h2>
+      <p class="lead" style="margin:0 auto">Tell me about the piece. The more specific you are about placement and size, the faster I can quote it. I reply to everything within 48 hours.</p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required />
+        </div>
+        <div class="field">
+          <label for="b-email">Email <em>*</em></label>
+          <input id="b-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone <span style="color:var(--muted);text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" />
+        </div>
+        <div class="field">
+          <label for="b-placement">Placement <em>*</em></label>
+          <input id="b-placement" name="placement" type="text" placeholder="Inner left forearm" required />
+        </div>
+        <div class="field">
+          <label for="b-size">Size</label>
+          <select id="b-size" name="size">
+            <option value="Small — up to 3 inches">Small — up to 3&Prime;</option>
+            <option value="Medium — palm-sized" selected>Medium — palm-sized</option>
+            <option value="Large — half sleeve / thigh">Large — half sleeve / thigh</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-style">Style</label>
+          <select id="b-style" name="style">
+            <option value="Blackwork" selected>Blackwork</option>
+            <option value="Fine line">Fine line</option>
+            <option value="Color">Color</option>
+            <option value="Flash">Flash (claiming a design)</option>
+            <option value="Cover-up">Cover-up</option>
+            <option value="Not sure">Not sure — help me decide</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="b-budget">Budget</label>
+          <select id="b-budget" name="budget">
+            <option value="Flash price (as listed)">Flash price — as listed</option>
+            <option value="$150–$300">$150–$300</option>
+            <option value="$300–$600" selected>$300–$600</option>
+            <option value="$600–$1,000">$600–$1,000</option>
+            <option value="$1,000+ / multi-session">$1,000+ / multi-session</option>
+          </select>
+        </div>
+        <!-- auto-filled when a flash design is claimed; hidden otherwise -->
+        <div class="field flash-claim" id="flashClaim">
+          <label for="b-flash">Claiming flash</label>
+          <input id="b-flash" name="flash" type="text" readonly />
+          <button class="flash-claim__x" id="flashClear" type="button" aria-label="Remove claimed flash design">&times;</button>
+        </div>
+        <div class="field field--wide">
+          <label for="b-idea">The idea <em>*</em></label>
+          <textarea id="b-idea" name="idea" placeholder="What are we making? Reference images help — mention if you have some and I'll ask for them in my reply." required></textarea>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>I'm 18 or older, I'll bring photo ID, and I understand a $100 deposit is required to lock in a date.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Send the request</button>
+        <!-- Demo note: the handle is fictional, so this routes to the studio inbox instead of a dead IG profile -->
+        <a class="book__alt" id="bookAlt" href="mailto:books@staticrosetattoo.com">or email books@staticrosetattoo.com</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- books-closed card: shown instead of the form when settings.booksOpen is off -->
+    <div class="book-done" id="bookClosed" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h3>Books are closed.</h3>
+      <p id="closedMsg"></p>
+      <a class="btn btn--ghost" href="#work">See the work</a>
+    </div>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>Request received.</h3>
+      <p id="doneMsg">Rae reads every request personally — expect an email within 48 hours.</p>
+      <a class="btn btn--ghost" href="#work">Back to the work</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIALS ============ -->
+<section class="socials" aria-label="Social links">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="justify-content:center">Elsewhere</span>
+    <!-- Rendered from CONTENT.social + CONTENT.brand.email (edit at /admin/).
+         Demo note: @staticrosetattoo is fictional; its link routes to the studio
+         behind this concept build so it never 404s. -->
+    <div class="socials__row" id="socialRow"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 12c-9.5 0-16 6.2-16 13.6C16 34 23.4 38 32 38s16-4 16-12.4C48 18.2 41.5 12 32 12zm0 5.6c5.6 0 10 3.4 10 8 0 4.4-4.4 6.8-10 6.8s-10-2.4-10-6.8c0-4.6 4.4-8 10-8zm0 4.4c-3.3 0-5.6 1.6-5.6 3.6S28.7 29.2 32 29.2s5.6-1.6 5.6-3.6S35.3 22 32 22z" fill="#c42b3d"/>
+        <path d="M32 38v14M32 45l-6.5 4M32 41.5l6.5 4.5" stroke="#c42b3d" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div><b>Static Rose Tattoo</b><span>Rae Costa · Boise, ID</span></div>
+    </div>
+    <div class="footer__meta">
+      Text <a id="footPhone" href="tel:+12085550177">(208) 555-0177</a> · <a id="footEmail" href="mailto:books@staticrosetattoo.com">books@staticrosetattoo.com</a><br />
+      Private studio, <span data-edit="city-short">Boise</span> — address shared once your booking is confirmed<br />
+      <span style="opacity:.6">© <span id="yr"></span> Static Rose Tattoo · 18+ only</span><br />
+      <!-- SWAP:DISCLOSURE --><span style="opacity:.55;font-size:.78rem">Demonstration website for a fictional studio · </span><!-- /SWAP:DISCLOSURE --><span style="opacity:.55;font-size:.78rem">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE BAR ============ -->
+<div class="mobile-bar">
+  <a class="book-cta" href="#book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Book</a>
+  <!-- Demo note: fictional handle — routes to Systems by Vega so it never 404s.
+       The href follows the first CONTENT.social link. -->
+  <a class="dm-cta" id="dmLink" href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>DM</a>
+</div>

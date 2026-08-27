@@ -1,0 +1,339 @@
+<!-- roofing/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<div id="svToast" role="status" style="display:none"></div>
+
+<nav class="nav" id="nav">
+  <div class="wrap nav-in">
+    <div class="brand">
+      <span class="sq">S</span>
+      <div><b data-brand>Storm Ridge Roofing</b><small data-tagline>Built for the next storm.</small></div>
+    </div>
+    <div class="nav-links">
+      <a href="#selfcheck" class="tab">Self-Check</a>
+      <a href="#services" class="tab">Services</a>
+      <a href="#pricing" class="tab">Pricing</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="tel:+12085550209" class="callbtn" data-tel><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg><span data-phone>(208) 555-0209</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <h1>Roofs that<br>outlast the<br><span class="l2">next storm.</span></h1>
+      <p data-heroSub>Repair, replacement, and storm-damage inspections across the Treasure Valley — walked in person before we ever quote a number.</p>
+      <div class="hero-cta">
+        <a href="#selfcheck" class="btn btn-pri">Take the free self-check ↓</a>
+        <a href="#quote" class="btn btn-sec">Request an inspection</a>
+      </div>
+      <div class="hero-stats" id="heroStats"></div>
+    </div>
+    <div class="reveal" data-delay="1">
+      <div class="hero-badge">
+        <div class="roof-art" role="img" aria-label="Illustration of a pitched shingle roof under a dark, overcast evening sky">
+          <!-- Premium hero scene: feTurbulence cloud texture + feTurbulence shingle grain + layered atmospheric gradients + rAF lightning decay — north-star: dj-site-blue -->
+          <svg viewBox="0 0 440 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <!-- 5-stop atmospheric sky gradient (depth + copper horizon light) — north-star: dj-site-blue -->
+              <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#05090d"/>
+                <stop offset=".32" stop-color="#0c1621"/>
+                <stop offset=".6" stop-color="#182633"/>
+                <stop offset=".82" stop-color="#3a2a1e"/>
+                <stop offset="1" stop-color="#5a3820"/>
+              </linearGradient>
+              <!-- 4-stop roof-face gradient: light near peak, shadow at eave -->
+              <linearGradient id="roof-face" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#33454f"/>
+                <stop offset=".35" stop-color="#22323d"/>
+                <stop offset=".7" stop-color="#17232c"/>
+                <stop offset="1" stop-color="#0d151b"/>
+              </linearGradient>
+              <radialGradient id="roof-sheen" cx=".72" cy="0" r="1">
+                <stop offset="0" stop-color="#B5541F" stop-opacity=".5"/>
+                <stop offset=".4" stop-color="#B5541F" stop-opacity=".12"/>
+                <stop offset="1" stop-color="#B5541F" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="sky-glow" cx=".78" cy="1" r=".95">
+                <stop offset="0" stop-color="#B5541F" stop-opacity=".55"/>
+                <stop offset=".5" stop-color="#7A3712" stop-opacity=".18"/>
+                <stop offset="1" stop-color="#7A3712" stop-opacity="0"/>
+              </radialGradient>
+              <!-- feTurbulence fractalNoise clouds (+feDisplacementMap roughen, +feColorMatrix steel tint) — north-star: dj-site-blue -->
+              <filter id="sky-clouds" x="-30%" y="-30%" width="160%" height="160%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.011 0.02" numOctaves="4" seed="11" result="n"/>
+                <feDisplacementMap in="n" in2="n" scale="10" result="d"/>
+                <feColorMatrix in="d" type="matrix"
+                  values="0 0 0 0 0.17  0 0 0 0 0.23  0 0 0 0 0.30  0.7 0.6 0.5 0 -0.55"/>
+              </filter>
+              <!-- feTurbulence fractalNoise asphalt-shingle grain — north-star: dj-site-blue -->
+              <filter id="roof-grain" x="0" y="0" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="g"/>
+                <feColorMatrix in="g" type="matrix"
+                  values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 -0.52"/>
+              </filter>
+              <filter id="sky-boltglow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="2.4"/>
+              </filter>
+              <clipPath id="roof-clip"><polygon points="120,150 320,150 400,292 40,292"/></clipPath>
+              <!-- staggered shingle-tab pattern (branching detail density) -->
+              <pattern id="roof-tabs" patternUnits="userSpaceOnUse" width="34" height="32" patternTransform="translate(0 150)">
+                <line x1="0" y1="16" x2="34" y2="16" stroke="#05090d" stroke-opacity=".5" stroke-width="1.3"/>
+                <line x1="0" y1="32" x2="34" y2="32" stroke="#05090d" stroke-opacity=".5" stroke-width="1.3"/>
+                <line x1="0" y1="17" x2="34" y2="17" stroke="var(--ink-max)fff" stroke-opacity=".05" stroke-width="1"/>
+                <line x1="0" y1="1"  x2="34" y2="1"  stroke="var(--ink-max)fff" stroke-opacity=".05" stroke-width="1"/>
+                <line x1="0" y1="0" x2="0" y2="16" stroke="#05090d" stroke-opacity=".42" stroke-width="1"/>
+                <line x1="17" y1="0" x2="17" y2="16" stroke="#05090d" stroke-opacity=".42" stroke-width="1"/>
+                <line x1="8.5" y1="16" x2="8.5" y2="32" stroke="#05090d" stroke-opacity=".42" stroke-width="1"/>
+                <line x1="25.5" y1="16" x2="25.5" y2="32" stroke="#05090d" stroke-opacity=".42" stroke-width="1"/>
+              </pattern>
+            </defs>
+
+            <!-- sky -->
+            <rect x="0" y="0" width="440" height="300" fill="url(#sky-grad)"/>
+            <g class="sky-clouds-move"><rect x="-60" y="-20" width="560" height="235" fill="none" filter="url(#sky-clouds)" opacity=".82"/></g>
+            <rect x="0" y="0" width="440" height="300" fill="url(#sky-glow)"/>
+
+            <!-- lightning flash + bolt (driven by rAF decay; invisible in static base) -->
+            <rect id="sky-flash" x="0" y="0" width="440" height="300" fill="#EDF2F6" opacity="0"/>
+            <g id="sky-bolt" opacity="0" filter="url(#sky-boltglow)">
+              <path d="M300 18 L286 78 L303 82 L279 150 L299 96 L286 92 Z" fill="#EDF2F6"/>
+              <path d="M303 82 L322 108 L309 110" fill="none" stroke="#EDF2F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+
+            <!-- roof plane: gradient depth + shingle-tab pattern + grain texture, all clipped to the pitch -->
+            <g clip-path="url(#roof-clip)">
+              <rect x="0" y="148" width="440" height="160" fill="url(#roof-face)"/>
+              <rect x="0" y="200" width="440" height="18" fill="#05090d" opacity=".14"/>
+              <rect x="0" y="252" width="440" height="18" fill="#05090d" opacity=".16"/>
+              <rect x="0" y="148" width="440" height="160" fill="url(#roof-tabs)"/>
+              <rect x="0" y="148" width="440" height="160" fill="url(#roof-sheen)"/>
+              <rect x="0" y="148" width="440" height="160" fill="#000" filter="url(#roof-grain)" opacity=".5"/>
+            </g>
+
+            <!-- peak cap -->
+            <polygon points="120,150 320,150 320,157 120,157" fill="#0b1319"/>
+            <path d="M118 150 L322 150" stroke="#3a4a55" stroke-width="1.5" opacity=".7"/>
+            <!-- eave / gutter line -->
+            <path d="M40 292 L400 292" stroke="#7A3712" stroke-width="4"/>
+            <path d="M40 289 L400 289" stroke="#B5541F" stroke-width="2" opacity=".85"/>
+
+            <!-- rain (additive; halted under reduced-motion) -->
+            <g class="rain-fall" stroke="#8CA0B3" stroke-width="1" opacity=".16">
+              <line x1="70" y1="-20" x2="67" y2="-8"/><line x1="150" y1="-20" x2="147" y2="-8"/>
+              <line x1="250" y1="-20" x2="247" y2="-8"/><line x1="360" y1="-20" x2="357" y2="-8"/>
+              <line x1="110" y1="4" x2="107" y2="16"/><line x1="210" y1="4" x2="207" y2="16"/>
+              <line x1="310" y1="4" x2="307" y2="16"/><line x1="410" y1="4" x2="407" y2="16"/>
+              <line x1="60" y1="28" x2="57" y2="40"/><line x1="180" y1="28" x2="177" y2="40"/>
+              <line x1="280" y1="28" x2="277" y2="40"/><line x1="380" y1="28" x2="377" y2="40"/>
+              <line x1="130" y1="52" x2="127" y2="64"/><line x1="230" y1="52" x2="227" y2="64"/>
+              <line x1="330" y1="52" x2="327" y2="64"/><line x1="90" y1="76" x2="87" y2="88"/>
+            </g>
+          </svg>
+        </div>
+        <div class="capt">Not sure what shape your roof is in? <b>Take the 2-minute self-check</b> below.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in">
+    <div class="titem"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>Free storm-damage inspections</div>
+    <div class="titem"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18.5 22 12 17l-6.5 5 2-8.5L2 9h7z"/></svg>Written scope before work starts</div>
+    <div class="titem"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>Every roof walked in person, not estimated from the street</div>
+  </div>
+</section>
+
+<section class="selfcheck" id="selfcheck">
+  <div class="wrap reveal">
+    <div class="step">Free Storm-Damage Self-Check</div>
+    <h2>Four questions.<br>A straight answer.</h2>
+    <p class="stxt" id="scIntro">Four quick questions. Answer honestly — there's no wrong answer, just a clearer picture of where your roof actually stands.</p>
+    <div class="sc-panel">
+      <div class="chk-diagram" role="img" aria-label="Roof diagram that highlights the area being inspected as you answer">
+        <!-- Self-check roof diagram: feTurbulence shingle grain + gradient depth + rAF physics-eased highlight — north-star: dj-site-blue -->
+        <svg viewBox="0 0 420 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="chk-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="var(--ground-2)"/>
+              <stop offset=".55" stop-color="#132029"/>
+              <stop offset="1" stop-color="#26313b"/>
+            </linearGradient>
+            <!-- 4-stop roof-face gradient for depth/light -->
+            <linearGradient id="chk-face" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#334550"/>
+              <stop offset=".4" stop-color="#22323d"/>
+              <stop offset=".75" stop-color="#17232c"/>
+              <stop offset="1" stop-color="#0d151b"/>
+            </linearGradient>
+            <radialGradient id="chk-glow" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#D97539" stop-opacity=".85"/>
+              <stop offset=".45" stop-color="#B5541F" stop-opacity=".32"/>
+              <stop offset="1" stop-color="#B5541F" stop-opacity="0"/>
+            </radialGradient>
+            <!-- feTurbulence fractalNoise shingle grain — north-star: dj-site-blue -->
+            <filter id="chk-grain" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="g"/>
+              <feColorMatrix in="g" type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 -0.52"/>
+            </filter>
+            <clipPath id="chk-clip"><polygon points="110,58 310,58 376,150 44,150"/></clipPath>
+            <pattern id="chk-tabs" patternUnits="userSpaceOnUse" width="30" height="28" patternTransform="translate(0 58)">
+              <line x1="0" y1="14" x2="30" y2="14" stroke="#05090d" stroke-opacity=".5" stroke-width="1.2"/>
+              <line x1="0" y1="28" x2="30" y2="28" stroke="#05090d" stroke-opacity=".5" stroke-width="1.2"/>
+              <line x1="0" y1="0" x2="0" y2="14" stroke="#05090d" stroke-opacity=".4" stroke-width="1"/>
+              <line x1="15" y1="0" x2="15" y2="14" stroke="#05090d" stroke-opacity=".4" stroke-width="1"/>
+              <line x1="7.5" y1="14" x2="7.5" y2="28" stroke="#05090d" stroke-opacity=".4" stroke-width="1"/>
+              <line x1="22.5" y1="14" x2="22.5" y2="28" stroke="#05090d" stroke-opacity=".4" stroke-width="1"/>
+            </pattern>
+          </defs>
+
+          <rect x="0" y="0" width="420" height="210" fill="url(#chk-sky)"/>
+          <!-- impact zone: hail specks in the sky -->
+          <g fill="#8CA0B3" opacity=".5">
+            <circle cx="290" cy="24" r="2.4"/><circle cx="312" cy="34" r="1.8"/>
+            <circle cx="332" cy="20" r="2"/><circle cx="352" cy="40" r="1.6"/>
+            <circle cx="300" cy="46" r="1.5"/>
+          </g>
+
+          <!-- moving highlight, eased to the active zone by rAF spring -->
+          <g id="chkGlow" transform="translate(210 104)">
+            <circle r="46" fill="url(#chk-glow)"/>
+            <circle r="30" fill="none" stroke="#D97539" stroke-width="2" opacity=".9"/>
+            <circle r="30" fill="none" stroke="#D97539" stroke-width="6" opacity=".16"/>
+          </g>
+
+          <!-- roof plane -->
+          <g clip-path="url(#chk-clip)">
+            <rect x="0" y="56" width="420" height="100" fill="url(#chk-face)"/>
+            <rect x="0" y="56" width="420" height="100" fill="url(#chk-tabs)"/>
+            <rect x="0" y="56" width="420" height="100" fill="#000" filter="url(#chk-grain)" opacity=".5"/>
+          </g>
+          <!-- peak cap + attic daylight gap -->
+          <polygon points="110,58 310,58 310,63 110,63" fill="#0b1319"/>
+          <line x1="150" y1="58" x2="270" y2="58" stroke="#D97539" stroke-width="2" opacity=".35"/>
+          <!-- eave / gutter -->
+          <path d="M44 150 L376 150" stroke="#7A3712" stroke-width="3.5"/>
+          <path d="M44 147 L376 147" stroke="#B5541F" stroke-width="1.6" opacity=".8"/>
+
+          <!-- zone labels (active one brightens) -->
+          <text class="chk-zonelbl" data-z="2" x="210" y="48" text-anchor="middle">Peak / Attic</text>
+          <text class="chk-zonelbl" data-z="3" x="320" y="14" text-anchor="middle">Impact</text>
+          <text class="chk-zonelbl" data-z="0" x="150" y="112" text-anchor="middle">Shingles</text>
+          <text class="chk-zonelbl" data-z="1" x="210" y="170" text-anchor="middle">Gutters</text>
+        </svg>
+      </div>
+      <div class="sc-progress" id="scProgress"></div>
+      <div id="scQuestion"></div>
+      <div class="sc-result" id="scResult">
+        <span class="badge" id="scBadge"></span>
+        <h3 id="scHeadline"></h3>
+        <p id="scBody"></p>
+        <button type="button" class="btn btn-pri" id="scCta">Get my free inspection →</button>
+        <div><button type="button" class="sc-restart" id="scRestart">Start over</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap reveal">
+    <div class="step">What we do</div>
+    <h2>Four services. One crew.</h2>
+    <div class="svc-grid" id="svcGrid"></div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="wrap reveal">
+    <div class="step">Pricing</div>
+    <h2>Real ranges, not a guess over the phone.</h2>
+    <p class="stxt">Every roof is different — these are typical ranges for the Treasure Valley. The exact number comes after a free, in-person inspection.</p>
+    <div class="price-grid" id="priceGrid"></div>
+    <p class="pricing-note">Storm damage that's covered by insurance is scoped separately — see the Storm &amp; Insurance Claim tier above.</p>
+  </div>
+</section>
+
+<section class="servicearea">
+  <div class="wrap sa-in reveal">
+    <div>
+      <div class="step" style="margin-bottom:8px">Service area</div>
+      <div class="stxt" style="max-width:40ch" id="saRegion">Roofing the Treasure Valley, Idaho.</div>
+    </div>
+    <div class="sa-cities" id="saCities"></div>
+  </div>
+</section>
+
+<section class="owner" id="owner">
+  <div class="wrap reveal">
+    <div class="step">Who's on your roof</div>
+    <div class="owner-grid">
+      <div class="owner-photo" id="ownerPhoto">Photo coming soon</div>
+      <div>
+        <div class="owner-name" id="ownerName">Marcus Teague</div>
+        <p class="owner-bio" id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="wrap reveal">
+    <div class="step">What homeowners say</div>
+    <h2>Real reviews, as they come in.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap reveal">
+    <div class="step">FAQ</div>
+    <h2>Questions homeowners actually ask.</h2>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<section class="quote" id="quote">
+  <div class="wrap reveal">
+    <div class="step">Get a free inspection</div>
+    <h2>Tell us what's going on. We'll take it from there.</h2>
+    <p class="stxt">A few lines is plenty — we'll follow up to schedule a time to walk the roof, usually within one business day.</p>
+    <form class="qform" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="qrow"><label for="qName">Name</label><input type="text" id="qName" name="name" required></div>
+      <div class="qrow"><label for="qPhone">Phone</label><input type="tel" id="qPhone" name="phone" required></div>
+      <div class="qrow"><label for="qAddress">Address / city</label><input type="text" id="qAddress" name="address" placeholder="123 Main St, Middleton"></div>
+      <div class="qrow"><label for="qDetails">What's going on?</label><textarea id="qDetails" name="details" placeholder="Leak, missing shingles, storm damage, or just want an inspection"></textarea></div>
+      <button type="submit" class="btn btn-pri qsubmit" id="qSubmit">Request my free inspection →</button>
+      <p class="qmsg" id="qMsg" role="status" aria-live="polite"></p>
+    </form>
+    <div class="qsuccess" id="qSuccess">
+      <span class="ck">✓</span>
+      <h3 style="font-family:'Anton';font-weight:400;text-transform:none;font-size:20px;color:var(--ink-max);margin-bottom:8px">Got it — we'll be in touch soon.</h3>
+      <p style="color:var(--ink-dim);font-size:14.5px">We usually reply within one business day to schedule your inspection.</p>
+    </div>
+    <p class="quote-alt">Prefer to talk now? <a href="tel:+12085550209" data-tel>Call</a> or <a href="sms:+12085550209" data-sms>text us</a> instead.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <div class="foot-brand">Storm Ridge Roofing</div>
+      <div class="foot-meta">
+        <span data-tagline2>Built for the next storm.</span><br>
+        <a href="tel:+12085550209" data-tel2>(208) 555-0209</a> · <a href="mailto:hello@stormridgeroofing.com" data-email>hello@stormridgeroofing.com</a><br>
+        <span id="footServe"></span><br>
+        <span class="foot-credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+      </div>
+    </div>
+    <div class="foot-meta">© <span id="yr"></span> <span data-brand2>Storm Ridge Roofing</span> · Locally owned &amp; operated</div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550209" data-tel><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550209?body=Hi%20Storm%20Ridge!%20I%27d%20like%20a%20free%20roof%20inspection." data-sms><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>

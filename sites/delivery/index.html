@@ -2,65 +2,506 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex">
 <title>Swiftwater Courier Co. — Same-Day Delivery | Treasure Valley, ID</title>
 <meta name="description" content="Same-day and scheduled courier service across the Treasure Valley — documents, parcels and small freight. Zone-to-zone pricing you can see up front, a text at pickup and a photo at the door." />
+<meta name="theme-color" content="#0B0E14" />
+
+<link rel="canonical" href="https://systemsbyvega.com/sites/delivery/" />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://systemsbyvega.com/sites/delivery/" />
 <meta property="og:title" content="Swiftwater Courier Co. — Same day. Same valley." />
 <meta property="og:description" content="Price a run in ten seconds with the zone-to-zone quoter. Documents, parcels and small freight, moved across the valley today." />
+<meta property="og:image" content="https://systemsbyvega.com/sites/delivery/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://systemsbyvega.com/sites/delivery/og.png" />
+
+<link rel="icon" href="" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B0E14'/%3E%3Cpath d='M12 34h22l-6-10h8l12 14-12 14h-8l6-10H12z' fill='%23C8F31D'/%3E%3C/svg%3E" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Swiftwater Courier Co.",
-  "description": "Same-day and scheduled courier service — documents, parcels and small freight.",
+  "description": "Same-day and scheduled courier service across the Treasure Valley — documents, parcels and small freight. Zone-to-zone pricing you can see up front, a text at pickup and a photo at the door.",
   "telephone": "+12085550329",
   "email": "hello@swiftwatercourier.com",
-  "areaServed": "Treasure Valley, Idaho"
+  "areaServed": "Treasure Valley, Idaho",
+  "slogan": "Same day. Same valley."
 }
 </script>
+
 <style>
-  :root{
-    --bg:#0B0E14; --bg-2:#10151E; --panel:#131926;
-    --viz:#C8F31D; --viz-deep:#A6CC2B; --viz-soft:rgba(200,243,29,.12);
-    --steel:#9AA7B8; --ink:#F2F5F9; --muted:#93A0B1; --hair:rgba(242,245,249,.11);
-    --card:rgba(255,255,255,.035); --card-brd:rgba(242,245,249,.10);
-    --shadow:0 26px 60px -30px rgba(0,0,0,.65);
-    --maxw:1120px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+/* delivery — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground:       #0B0E14;   /* was --bg */
+  --ground-2:     #10151E;   /* was --bg-2 */
+  --panel:        #131926;
+  --accent:       #C8F31D;   /* was --viz */
+  --accent-deep:  #A6CC2B;   /* was --viz-deep */
+  --accent-soft:  rgba(200,243,29,.12);   /* was --viz-soft */
+  --ink-dim:      #9AA7B8;   /* was --steel */
+  --ink:          #F2F5F9;
+  --muted:        #93A0B1;
+  --hair:         rgba(242,245,249,.11);
+  --card:         rgba(255,255,255,.035);
+  --card-brd:     rgba(242,245,249,.10);
+  --shadow:       0 26px 60px -30px rgba(0,0,0,.65);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --accent-ink:   #10140A;
+  --accent-alt:   #6FE3FF;
+  --err-ink:      #FFB4A3;
+  --ink-max:      #fff;
+  --ground-deep:  var(--ground-2);
+  --ink-bright:   var(--ink-max);
+  --accent-2:     var(--accent);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-lo:     var(--ink-dim);
+  --sheen-accent: var(--accent);
+  --err:          var(--err-ink);
+  --panel-2:      var(--ground-2);
+  --ok:           var(--accent);
+
+  --display: 'Syne', system-ui, sans-serif;
+  --body:    'Inter Tight', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+/* ── shared structural CSS ────────────────────────────────────────────── */
+/* _template/base.css — structural CSS shared by every SiteLab niche.
+   A rule lives here when its class/id hooks appear in the markup of two or more
+   deployed sites, or when it targets elements only. A rule used by exactly one
+   niche belongs in that niche's sections.css instead (SITELAB_TEMPLATE.md §3).
+   Colour and type come from niches/<slug>/niche.css. Never put a literal colour
+   in this file: reference a token from the §5 contract. */
+/* =========================================================
+   SAWTOOTH DUMPSTER CO. — tokens
+   High-desert identity: deep pine green base, safety-yellow
+   primary (amber-deep gradient end), warm sand/kraft type.
+   ========================================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* warm high-desert backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 82% -10%, rgba(216,155,0,.16), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(29,58,44,.55), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(255,196,0,.07), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, var(--ground) 45%, var(--ground-deep) 100%);
+}
+/* faint topographic contour rings */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 52px, rgba(242,233,216,.035) 52px 53px),
+    repeating-radial-gradient(circle at 84% 68%, transparent 0 68px, rgba(255,196,0,.03) 68px 69px),
+    repeating-radial-gradient(circle at 55% -10%, transparent 0 84px, rgba(242,233,216,.022) 84px 85px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+.section-title{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:active{transform:translateY(0)}
+/* headlight shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(255,196,0,.07);color:var(--ink-bright);
+  border:1px solid rgba(255,196,0,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:var(--hair-accent);box-shadow:0 10px 26px -14px rgba(255,196,0,.5)}
+.btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--accent-2);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(8,19,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.6)}
+.brand__mark svg{width:30px;height:30px}
+.brand__name{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--accent-2)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Anybody',sans-serif;font-stretch:62.5%;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.45);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(242,233,216,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--accent);display:block;
+  text-shadow:0 4px 30px rgba(255,196,0,.38);
+}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:48ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* hero art: roll-off box under a mountain ridge, drawn inline */
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,196,0,.22), rgba(255,196,0,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+.hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting high-desert dust motes */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* ridge divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--panel);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--panel),rgba(19,42,32,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.08em;
+  font-size:.84rem;color:var(--ink);padding:.6rem 1.15rem;border-radius:10px;text-transform:uppercase;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5);transition:.15s;user-select:none;white-space:nowrap}
+.pill:hover span{border-color:rgba(255,196,0,.5)}
+.pill input:checked + span{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -10px rgba(255,196,0,.7)}
+.pill input:focus-visible + span{outline:3px solid var(--accent-2);outline-offset:2px}
+.price-box .btn{width:100%;margin-top:18px}
+.reveal.in .meter__bar{width:var(--w)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,196,0,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
+.step p{color:var(--muted);font-size:.98rem}
+.nogo .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(29,58,44,.6),rgba(10,22,16,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,196,0,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,233,216,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Sawtooth Dumpster Co., how long they've been hauling in the Valley, and why they got sick of watching neighbors get quote-gamed. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:700;font-size:1.04rem;color:var(--ink-bright)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,196,0,.4);color:var(--accent);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, var(--hair-accent), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(29,58,44,.7), transparent 60%),
+    linear-gradient(160deg,var(--panel),var(--ground-2));
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--accent-2);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(8,19,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px}
+.field em{color:var(--accent-2);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,12,9,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,12,9,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD34D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(255,196,0,.06);border-style:dashed;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:var(--err);box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+/* date input: keep the picker icon visible on dark bg */
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--accent);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--accent-2)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:var(--err-ink)}
+.book__msg.ok{color:var(--accent-2)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(29,58,44,.55),rgba(10,22,16,.6));
+  border:1px solid rgba(255,196,0,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,196,0,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-dim);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--accent-2)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-dim);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--accent-2)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,19,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.7)}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+/* delivery/sections.css — rules for this niche's own sections.
+   5 rule(s) were identical to base.css and dropped; 178 kept.
+   Inlined after base.css, so anything here overrides shared chrome. */
+body{background:var(--ground);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .mono{font-family:'IBM Plex Mono',monospace}
   a{color:inherit}
-  img{max-width:100%;display:block}
-  :focus-visible{outline:2px solid var(--viz);outline-offset:3px;border-radius:4px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
   section{padding:78px 0}
   h1,h2,h3{font-family:'Syne',sans-serif;font-weight:700;letter-spacing:-.01em}
   h2{font-size:clamp(26px,4vw,38px);line-height:1.08;margin:10px 0 16px}
   .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
-  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--viz);display:flex;align-items:center;gap:10px}
-  .eyebrow::before{content:"";width:24px;height:2px;background:var(--viz)}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
 
   /* ---------- nav ---------- */
   .nav{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.86);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
   .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(0,0,0,.4)}
   .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .logo{display:flex;align-items:center;gap:10px;font-family:'Syne';font-weight:800;font-size:17px;color:var(--ink)}
-  .logo .mark{width:31px;height:31px;border-radius:9px;background:var(--viz);display:grid;place-items:center;color:#10140A;flex:none}
+  .logo .mark{width:31px;height:31px;border-radius:9px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);flex:none}
   .logo .mark svg{width:17px;height:17px}
   .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
   .nav-links{display:flex;align-items:center;gap:4px}
   .nav a.tab{font-weight:600;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
-  .nav a.tab:hover{background:rgba(200,243,29,.10);color:var(--viz)}
-  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#10140A;background:var(--viz);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
-  .nav a.cta:hover{background:var(--viz-deep);transform:translateY(-1px)}
+  .nav a.tab:hover{background:rgba(200,243,29,.10);color:var(--accent)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:var(--accent-ink);background:var(--accent);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--accent-deep);transform:translateY(-1px)}
   @media(max-width:760px){
     .nav-links a.tab{display:none}
     .nav-in{padding:12px 20px}
@@ -82,39 +523,39 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")}
   .hero-in{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
   .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.03;letter-spacing:-.02em;max-width:15ch;margin-top:20px}
-  .hero h1 .hl{color:var(--viz)}
+  .hero h1 .hl{color:var(--accent)}
   .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:50ch;margin-top:20px}
   .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
-  .btn-pri{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:#10140A;background:var(--viz);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
-  .btn-pri:hover{background:var(--viz-deep);transform:translateY(-2px)}
-  .btn-sec{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--bg-2);padding:15px 26px;border-radius:12px;transition:.18s}
-  .btn-sec:hover{border-color:var(--viz);color:var(--viz)}
+  .btn-pri{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--accent-ink);background:var(--accent);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--accent-deep);transform:translateY(-2px)}
+  .btn-sec{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--ground-2);padding:15px 26px;border-radius:12px;transition:.18s}
+  .btn-sec:hover{border-color:var(--accent);color:var(--accent)}
   .hero-dash{margin-top:34px;max-width:420px}
   .hero-dash svg{width:100%;height:auto;display:block}
   .hero-dash .dashline{stroke-dasharray:7 11;animation:dashmove 5.5s linear infinite}
   @keyframes dashmove{to{stroke-dashoffset:-180}}
   @media(prefers-reduced-motion:reduce){.hero-dash .dashline{animation:none}}
   .ticket{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
-  .ticket .tk-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#10140A;background:var(--viz);border-radius:20px;padding:4px 11px;margin-bottom:16px}
+  .ticket .tk-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent);border-radius:20px;padding:4px 11px;margin-bottom:16px}
   .ticket .tk-route{font-family:'Syne';font-weight:700;font-size:19px;line-height:1.4}
-  .ticket .tk-route .arrow{color:var(--viz)}
+  .ticket .tk-route .arrow{color:var(--accent)}
   .ticket .tk-log{margin-top:16px;font-family:'IBM Plex Mono';font-size:12px;color:var(--muted);line-height:2}
   .ticket .tk-log b{color:var(--ink);font-weight:600}
-  .ticket .tk-log .ok{color:var(--viz)}
+  .ticket .tk-log .ok{color:var(--accent)}
   @media(max-width:900px){.hero-in{grid-template-columns:1fr}.ticket{order:-1}}
 
   /* ---------- trust strip ---------- */
-  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--bg-2)}
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--ground-2)}
   .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
   .tstat{text-align:center}
-  .tstat b{display:block;font-family:'Syne';font-weight:800;font-size:27px;color:var(--viz)}
+  .tstat b{display:block;font-family:'Syne';font-weight:800;font-size:27px;color:var(--accent)}
   .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
   @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
 
   /* ---------- services ---------- */
   .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
   .svc{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px}
-  .svc .s-ico{width:42px;height:42px;border-radius:12px;background:var(--viz-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--viz)}
+  .svc .s-ico{width:42px;height:42px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--accent)}
   .svc .s-ico svg{width:21px;height:21px}
   .svc h3{font-size:16.5px}
   .svc p{font-size:13.5px;color:var(--muted);margin-top:8px}
@@ -124,53 +565,52 @@
   /* ---------- quoter ---------- */
   .quote-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;margin-top:32px;align-items:start}
   .q-steps{display:flex;flex-direction:column;gap:22px}
-  .q-step .q-label{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:10px}
-  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .q-step .q-label{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:10px}
   .pill{font-family:'Inter Tight';font-size:13.5px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--card-brd);border-radius:11px;padding:10px 15px;cursor:pointer;transition:.15s;text-align:left}
   .pill small{display:block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:500;color:var(--muted);margin-top:2px}
-  .pill:hover{border-color:var(--viz)}
-  .pill.on{background:var(--viz);border-color:var(--viz);color:#10140A}
+  .pill:hover{border-color:var(--accent)}
+  .pill.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
   .pill.on small{color:rgba(16,20,10,.65)}
   .quote-panel{background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:26px;box-shadow:var(--shadow);position:sticky;top:90px}
-  .quote-panel .qp-title{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+  .quote-panel .qp-title{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
   .qp-lines{margin-top:16px;display:flex;flex-direction:column;gap:9px}
   .qp-line{display:flex;justify-content:space-between;gap:14px;font-size:13.5px;color:var(--muted);border-bottom:1px dashed var(--hair);padding-bottom:9px}
   .qp-line b{color:var(--ink);font-weight:600;font-family:'IBM Plex Mono';font-size:12.5px;white-space:nowrap}
   .qp-total{margin-top:16px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-  .qp-total .amt{font-family:'Syne';font-weight:800;font-size:44px;color:var(--viz);line-height:1}
+  .qp-total .amt{font-family:'Syne';font-weight:800;font-size:44px;color:var(--accent);line-height:1}
   .qp-total .lbl{font-size:13px;color:var(--muted)}
   .qp-min{margin-top:10px;font-size:12px;color:var(--muted)}
   .qp-cta{margin-top:18px;display:flex;flex-direction:column;gap:10px}
   .qp-cta .btn-pri{text-align:center}
   .qp-sms{font-size:13px;color:var(--muted);text-align:center}
-  .qp-sms a{color:var(--viz);font-weight:700}
-  .quote-note{margin-top:16px;font-size:13.5px;color:var(--muted);background:var(--viz-soft);border:1px solid rgba(200,243,29,.3);border-radius:10px;padding:11px 14px}
+  .qp-sms a{color:var(--accent);font-weight:700}
+  .quote-note{margin-top:16px;font-size:13.5px;color:var(--muted);background:var(--accent-soft);border:1px solid rgba(200,243,29,.3);border-radius:10px;padding:11px 14px}
   @media(max-width:900px){.quote-wrap{grid-template-columns:1fr}.quote-panel{position:static}}
 
   /* ---------- signature zone map (north-star: dj-site-blue grain/gradients/physics + sage-suds inline-SVG map) ---------- */
   .map-stage{margin-top:32px;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:18px 18px 14px;box-shadow:var(--shadow)}
   .map-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-  .map-mode{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
-  .map-mode b{color:var(--viz)}
+  .map-mode{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)}
+  .map-mode b{color:var(--accent)}
   .map-legend{display:flex;gap:16px;font-family:'IBM Plex Mono';font-size:11px;color:var(--muted)}
   .map-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
-  .lg-p{background:var(--viz)} .lg-d{background:#6FE3FF}
+  .lg-p{background:var(--accent)} .lg-d{background:var(--accent-alt)}
   .zone-map svg{width:100%;height:auto;display:block;border-radius:12px}
   /* organic map regions — spring-eased fill (overshoot cubic-bezier), north-star decay feel */
   .mp-zn{cursor:pointer;fill:rgba(255,255,255,.03);stroke:rgba(154,167,184,.35);stroke-width:1.4;transition:fill .25s cubic-bezier(.34,1.56,.64,1),stroke .2s}
-  .mp-zn:hover{fill:rgba(200,243,29,.12);stroke:var(--viz)}
-  .mp-zn.pickup{fill:rgba(200,243,29,.26);stroke:var(--viz);stroke-width:2.4}
-  .mp-zn.drop{fill:rgba(111,227,255,.20);stroke:#6FE3FF;stroke-width:2.4}
-  .mp-zn:focus-visible{outline:none;stroke:var(--viz);stroke-width:2.8}
+  .mp-zn:hover{fill:rgba(200,243,29,.12);stroke:var(--accent)}
+  .mp-zn.pickup{fill:rgba(200,243,29,.26);stroke:var(--accent);stroke-width:2.4}
+  .mp-zn.drop{fill:rgba(111,227,255,.20);stroke:var(--accent-alt);stroke-width:2.4}
+  .mp-zn:focus-visible{outline:none;stroke:var(--accent);stroke-width:2.8}
   .mp-zn-name{font-family:'Inter Tight',sans-serif;font-size:11.5px;font-weight:700;fill:var(--ink);pointer-events:none;paint-order:stroke;stroke:rgba(11,14,20,.85);stroke-width:3.2px;stroke-linejoin:round}
-  .mp-zn-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:.06em;fill:var(--steel);pointer-events:none;paint-order:stroke;stroke:rgba(11,14,20,.8);stroke-width:2.6px;stroke-linejoin:round}
+  .mp-zn-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:.06em;fill:var(--ink-dim);pointer-events:none;paint-order:stroke;stroke:rgba(11,14,20,.8);stroke-width:2.6px;stroke-linejoin:round}
   @media(prefers-reduced-motion:reduce){.mp-zn{transition-duration:.01ms}}
   @media(max-width:560px){.mp-zn-name{font-size:10.5px}.mp-zn-sub{display:none}.map-legend{display:none}}
 
   /* ---------- dispatch ---------- */
   .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;counter-reset:step}
   .how-card{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;counter-increment:step}
-  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Syne';font-weight:800;font-size:36px;color:transparent;-webkit-text-stroke:1.5px var(--viz);display:block;margin-bottom:10px;opacity:.9}
+  .how-card::before{content:counter(step,decimal-leading-zero);font-family:'Syne';font-weight:800;font-size:36px;color:transparent;-webkit-text-stroke:1.5px var(--accent);display:block;margin-bottom:10px;opacity:.9}
   .how-card h3{font-size:16.5px}
   .how-card p{font-size:13.5px;color:var(--muted);margin-top:8px}
   @media(max-width:980px){.how-grid{grid-template-columns:repeat(2,1fr)}}
@@ -178,7 +618,7 @@
 
   /* ---------- business ---------- */
   .biz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
-  .biz{background:var(--card);border:1px solid var(--card-brd);border-left:3px solid var(--viz);border-radius:14px;padding:22px}
+  .biz{background:var(--card);border:1px solid var(--card-brd);border-left:3px solid var(--accent);border-radius:14px;padding:22px}
   .biz h3{font-size:15.5px}
   .biz p{font-size:13.5px;color:var(--muted);margin-top:8px}
   .biz-cta{margin-top:26px}
@@ -187,14 +627,14 @@
 
   /* ---------- service area ---------- */
   .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
-  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--viz);background:var(--viz-soft);border:1px solid rgba(200,243,29,.28);padding:7px 13px;border-radius:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(200,243,29,.28);padding:7px 13px;border-radius:20px}
 
   /* ---------- owner ---------- */
   .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
   .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
   .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
   .owner-bio h3{font-size:20px}
-  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--viz);margin-top:2px;letter-spacing:.02em}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--accent);margin-top:2px;letter-spacing:.02em}
   .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
   @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
 
@@ -212,56 +652,55 @@
   .qa{border-bottom:1px solid var(--hair)}
   .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Syne';font-weight:700;font-size:16px}
   .qa summary::-webkit-details-marker{display:none}
-  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--viz);font-size:20px;flex:none;transition:transform .2s}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--accent);font-size:20px;flex:none;transition:transform .2s}
   .qa[open] summary .pm{transform:rotate(45deg)}
   .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
 
   /* ---------- booking form ---------- */
-  .book{background:var(--bg-2);border-top:1px solid var(--hair);text-align:center}
+  .book{background:var(--ground-2);border-top:1px solid var(--hair);text-align:center}
   .book h2{max-width:26ch;margin:12px auto 14px}
   .book > .wrap > .reveal > p{color:var(--muted);max-width:56ch;margin:0 auto;font-size:16.5px}
   .qform{max-width:600px;margin:34px auto 0;text-align:left;background:var(--card);border:1px solid var(--card-brd);border-radius:18px;padding:28px}
   .qf-row{margin-bottom:15px}
-  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--steel);margin-bottom:7px;letter-spacing:.03em}
+  .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--ink-dim);margin-bottom:7px;letter-spacing:.03em}
   .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--card-brd);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:var(--ink)}
-  .qf-row select option{color:#10140A}
+  .qf-row select option{color:var(--accent-ink)}
   .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(242,245,249,.35)}
-  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:var(--viz);background:rgba(200,243,29,.05)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:var(--accent);background:rgba(200,243,29,.05)}
   .qf-row textarea{resize:vertical;line-height:1.5}
   .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
   .hp{position:absolute;left:-9999px;opacity:0}
-  .qf-submit{width:100%;background:var(--viz);color:#10140A;font-family:'Inter Tight';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
-  .qf-submit:hover{background:var(--viz-deep)}
+  .qf-submit{width:100%;background:var(--accent);color:var(--accent-ink);font-family:'Inter Tight';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit:hover{background:var(--accent-deep)}
   .qf-submit:disabled{opacity:.6;cursor:default}
   .qf-status{margin-top:12px;font-size:13px;color:var(--muted)}
-  .qf-status.err{color:#FFB4A3;font-weight:700}
-  .qf-success{max-width:600px;margin:34px auto 0;background:var(--viz);color:#10140A;border-radius:18px;padding:32px;font-family:'Syne';font-weight:700;font-size:17px;text-align:center}
+  .qf-status.err{color:var(--err-ink);font-weight:700}
+  .qf-success{max-width:600px;margin:34px auto 0;background:var(--accent);color:var(--accent-ink);border-radius:18px;padding:32px;font-family:'Syne';font-weight:700;font-size:17px;text-align:center}
   .qf-alt{margin-top:16px;font-size:13.5px;color:var(--muted)}
-  .qf-alt a{color:var(--viz);font-weight:700;text-decoration:underline}
+  .qf-alt a{color:var(--accent);font-weight:700;text-decoration:underline}
 
   /* ---------- footer ---------- */
-  footer{background:var(--bg-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  footer{background:var(--ground-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
   .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
   .foot-in b{font-family:'Syne';color:var(--ink)}
   .footer__credit{opacity:.8}
-  .footer__credit a{color:var(--viz);text-decoration:none;font-weight:700}
+  .footer__credit a{color:var(--accent);text-decoration:none;font-weight:700}
 
   /* ---------- mobile call/text bar ---------- */
-  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(0,0,0,.45)}
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--ground-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(0,0,0,.45)}
   .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Inter Tight';font-weight:800;font-size:14px;text-decoration:none}
-  .mobile-cta .call{color:#10140A;background:var(--viz)}
-  .mobile-cta .text{color:var(--viz);background:var(--viz-soft);border:1px solid rgba(200,243,29,.3)}
+  .mobile-cta .call{color:var(--accent-ink);background:var(--accent)}
+  .mobile-cta .text{color:var(--accent);background:var(--accent-soft);border:1px solid rgba(200,243,29,.3)}
   .mobile-cta svg{width:18px;height:18px}
   @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
 
   /* ---------- toast ---------- */
-  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--viz);color:#10140A;padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--accent);color:var(--accent-ink);padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
-  .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
@@ -280,6 +719,13 @@
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
 
+<!-- delivery/scene.svg — this site keeps its illustrations inline in
+     sections.html rather than in a shared <defs> block. Placeholder so the
+     build slot resolves; see brief.md. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+<!-- delivery/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h11"/><path d="M10 6l8 6-8 6"/></svg></span><span>Swiftwater</span><small>Courier Co.</small></div>
@@ -339,7 +785,7 @@
   </div>
 </section>
 
-<section id="quote" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="quote" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">Price a run</div>
@@ -403,12 +849,12 @@
               <stop offset="1" stop-color="#C8F31D" stop-opacity="0"/>
             </radialGradient>
             <radialGradient id="mpDropGlow" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#6FE3FF" stop-opacity="0.7"/>
-              <stop offset="0.55" stop-color="#6FE3FF" stop-opacity="0.26"/>
-              <stop offset="1" stop-color="#6FE3FF" stop-opacity="0"/>
+              <stop offset="0" stop-color="var(--accent-alt)" stop-opacity="0.7"/>
+              <stop offset="0.55" stop-color="var(--accent-alt)" stop-opacity="0.26"/>
+              <stop offset="1" stop-color="var(--accent-alt)" stop-opacity="0"/>
             </radialGradient>
             <linearGradient id="mpRouteGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#C8F31D"/><stop offset="1" stop-color="#6FE3FF"/>
+              <stop offset="0" stop-color="#C8F31D"/><stop offset="1" stop-color="var(--accent-alt)"/>
             </linearGradient>
           </defs>
 
@@ -530,7 +976,7 @@
   </div>
 </section>
 
-<section id="business" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="business" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">For business</div>
@@ -550,7 +996,7 @@
   </div>
 </section>
 
-<section id="team" style="background:var(--bg-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap reveal">
     <div class="eyebrow" id="ownerEyebrow"></div>
     <div class="owner-wrap">
@@ -572,7 +1018,7 @@
   </div>
 </section>
 
-<section id="faq" style="background:var(--bg-2);border-top:1px solid var(--hair)">
+<section id="faq" style="background:var(--ground-2);border-top:1px solid var(--hair)">
   <div class="wrap reveal">
     <div class="eyebrow">Questions</div>
     <h2>Everything people ask before the first run.</h2>
@@ -630,6 +1076,12 @@
         <label for="qNotes">Anything we should know?</label>
         <textarea id="qNotes" name="notes" rows="3" placeholder="Fragile, heavy, gate codes, ask for Dana at the desk…"></textarea>
       </div>
+<label class="consent">
+  <input type="checkbox" id="b-consent" required />
+  <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.
+    See our <a href="/legal/privacy.html">privacy policy</a>.</span>
+</label>
+
       <button type="submit" class="qf-submit" id="qfSubmit">Book my pickup</button>
       <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
       <p class="qf-alt">Rather just text a human? <a href="tel:+12085550329" data-phone-link>Call or text (208) 555-0329</a>.</p>
@@ -659,9 +1111,240 @@
 <div id="toast"></div>
 
 <script>
-(function(){
-  "use strict";
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Inlined from niches/delivery/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {
+  "brand": {
+    "name": "Swiftwater Courier Co.",
+    "tagline": "Same day. Same valley.",
+    "phone": "(208) 555-0329",
+    "email": "hello@swiftwatercourier.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Treasure Valley, ID"
+  },
+  "serviceArea": {
+    "region": "Treasure Valley, Idaho",
+    "short": "Treasure Valley",
+    "cities": [
+      "Boise",
+      "Garden City",
+      "Meridian",
+      "Eagle",
+      "Star",
+      "Nampa",
+      "Caldwell",
+      "Kuna"
+    ]
+  },
+  "owner": {
+    "name": "Marisol Trask",
+    "heading": "Started at a front desk, not behind a wheel",
+    "bio": "Marisol Trask ran the counter at a print shop and kept a private tally of every courier who promised noon and showed up at four. When the tally hit a hundred she quit, bought a hatchback, and started driving the runs herself — with the two texts she always wished she'd gotten: one when the package is in hand, one with a photo at the door. Swiftwater still runs on that tally. The goal is simple: never be the reason somebody else starts one.",
+    "photo": ""
+  },
+  "stats": [
+    {
+      "num": "< 4 hrs",
+      "label": "Same-day window, anywhere in the valley"
+    },
+    {
+      "num": "7 zones",
+      "label": "One flat zone map — no mileage math"
+    },
+    {
+      "num": "2 texts",
+      "label": "One at pickup, one with the drop-off photo"
+    }
+  ],
+  "services": [
+    {
+      "title": "Documents & filings",
+      "desc": "Contracts, closings, court runs and signature chases — sealed, tracked and walked to the right desk, not left in a lobby."
+    },
+    {
+      "title": "Parcels & packages",
+      "desc": "Anything you'd trust to a careful driver with a hand truck: samples, equipment, forgotten laptops, last-minute everything."
+    },
+    {
+      "title": "Scheduled routes",
+      "desc": "A standing loop on your schedule — daily bank runs, morning transfers between locations, Friday pickups. Set it once, forget it."
+    },
+    {
+      "title": "Small freight",
+      "desc": "Skids and totes under 300 lb. Loads a strong back and a ramp can handle — priced on the same zone map as everything else."
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "How fast is same-day, really?",
+      "a": "Booked before 1 pm, delivered inside four hours — usually faster. Rush runs go direct: the driver picks up your item and drives straight to the drop, no other stops."
+    },
+    {
+      "q": "What won't you carry?",
+      "a": "Nothing hazardous, nothing alive, nothing illegal, and nothing that belongs in an armored truck. If you're not sure, text us a photo — we'll give you a straight answer in minutes."
+    },
+    {
+      "q": "Do I get proof of delivery?",
+      "a": "Every run ends with a photo of where it landed and the name of who took it, texted to you as it happens. If nobody's there, we call you before we do anything else."
+    },
+    {
+      "q": "How does the zone pricing work?",
+      "a": "The valley is split into seven zones. Your base price is set by how many zones apart the pickup and drop-off are, then adjusted for size and speed. The quoter above shows the whole math — the number it gives is the number on the invoice."
+    },
+    {
+      "q": "Do you go outside the valley?",
+      "a": "The edge zone covers the towns just past the usual map. Further than that is by arrangement — text the address and we'll quote it straight."
+    },
+    {
+      "q": "How do recurring routes work?",
+      "a": "Pick the days and windows, we assign a consistent driver, and you get one simple invoice at the end of the month. Skip a day with a text — no penalty, no drama."
+    }
+  ],
+  "social": [],
+  "niche": {
+    "quoterZones": [
+      {
+        "label": "Boise Core"
+      },
+      {
+        "label": "West Boise & Garden City"
+      },
+      {
+        "label": "Meridian"
+      },
+      {
+        "label": "Eagle & Star"
+      },
+      {
+        "label": "Nampa & Caldwell"
+      },
+      {
+        "label": "Kuna & South Valley"
+      },
+      {
+        "label": "Outlying / valley edge"
+      }
+    ],
+    "quoterSizes": [
+      {
+        "label": "Envelope / small pack",
+        "mult": "1"
+      },
+      {
+        "label": "Box — under 30 lb",
+        "mult": "1.15"
+      },
+      {
+        "label": "Large box / tote — under 60 lb",
+        "mult": "1.35"
+      },
+      {
+        "label": "Pallet-lite — skid under 300 lb",
+        "mult": "2.2"
+      }
+    ],
+    "quoterSpeeds": [
+      {
+        "label": "Scheduled — next route through",
+        "mult": "1"
+      },
+      {
+        "label": "Same-day — under 4 hours",
+        "mult": "1.4"
+      },
+      {
+        "label": "Rush — direct drive",
+        "mult": "2"
+      }
+    ],
+    "quoterSettings": {
+      "bands": "14, 19, 24, 29, 34",
+      "minimum": "12",
+      "note": "Zone base uses how many zones apart pickup and drop-off sit — same zone is the first number, each zone further is the next. Every quote is the real price: no fuel surprises, no weekend markup."
+    },
+    "dispatch": [
+      {
+        "title": "Book the run",
+        "desc": "Text us or use the form — pickup, drop-off, what it is. You'll get a confirmed pickup window in minutes."
+      },
+      {
+        "title": "A driver is assigned",
+        "desc": "One driver owns your run start to finish. No depots, no hand-offs, nothing sits in a warehouse overnight."
+      },
+      {
+        "title": "Live updates",
+        "desc": "A text when it's picked up, a heads-up if anything changes, and an ETA that means something."
+      },
+      {
+        "title": "Proof at the door",
+        "desc": "Photo of where it landed and who signed, texted the moment it's delivered. Done means proven."
+      }
+    ],
+    "business": [
+      {
+        "title": "Law & title offices",
+        "desc": "Filings, closings and originals that absolutely cannot wait for tomorrow's mail."
+      },
+      {
+        "title": "Clinics & pharmacies",
+        "desc": "Scheduled transfers between locations, handled by one consistent driver who knows the route."
+      },
+      {
+        "title": "Print & sign shops",
+        "desc": "Finished jobs delivered to the client while the ink's barely dry — you look fast because you are."
+      },
+      {
+        "title": "Parts counters",
+        "desc": "The gasket that's holding up a lift bay gets a direct drive, not a spot in tomorrow's loop."
+      }
+    ]
+  },
+  "seo": {
+    "title": "Swiftwater Courier Co. — Same-Day Delivery | Treasure Valley, ID",
+    "description": "Same-day and scheduled courier service across the Treasure Valley — documents, parcels and small freight. Zone-to-zone pricing you can see up front, a text at pickup and a photo at the door.",
+    "ogTitle": "Swiftwater Courier Co. — Same day. Same valley.",
+    "ogDescription": "Price a run in ten seconds with the zone-to-zone quoter. Documents, parcels and small freight, moved across the valley today.",
+    "priceRange": "",
+    "schemaType": "LocalBusiness",
+    "canonical": "https://systemsbyvega.com/sites/delivery/",
+    "themeColor": "#0B0E14",
+    "favicon": "",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/delivery/og.png"
+  }
+};
+</script>
+
+<script>
+/* delivery/niche.js — this niche's renderer and interactive logic.
+   Shared utilities come from _template/base.js via SL; the aliases below keep
+   every extracted call site unchanged. base.js owns the reduced-motion flag,
+   the reveal observer, the content fetch/merge lifecycle, and calling
+   window.renderContent(). val/setErr/showDone are NOT aliased — this niche
+   defines its own with different signatures. */
+(function () {
+  'use strict';
+
+  var SL = window.SL;
+  var esc = SL.esc, num = SL.num, telHref = SL.telHref;
+  var reduce = SL.reduce;
+  var CONTENT = window.DEFAULT_CONTENT;
+
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* =====================================================
      OWNER-EDITABLE CONTENT
@@ -672,96 +1355,7 @@
      Written as strict JSON so tooling can verify the two
      stay byte-consistent.
      ===================================================== */
-  var DEFAULT_CONTENT = {
-    "brand": {
-      "name": "Swiftwater Courier Co.",
-      "tagline": "Same day. Same valley.",
-      "phone": "(208) 555-0329",
-      "email": "hello@swiftwatercourier.com",
-      "leadEmail": "info@kingdom-creatives.com",
-      "city": "Treasure Valley, ID"
-    },
-    "stats": [
-      { "num": "< 4 hrs", "label": "Same-day window, anywhere in the valley" },
-      { "num": "7 zones", "label": "One flat zone map — no mileage math" },
-      { "num": "2 texts", "label": "One at pickup, one with the drop-off photo" }
-    ],
-    "services": [
-      { "title": "Documents & filings", "desc": "Contracts, closings, court runs and signature chases — sealed, tracked and walked to the right desk, not left in a lobby." },
-      { "title": "Parcels & packages", "desc": "Anything you'd trust to a careful driver with a hand truck: samples, equipment, forgotten laptops, last-minute everything." },
-      { "title": "Scheduled routes", "desc": "A standing loop on your schedule — daily bank runs, morning transfers between locations, Friday pickups. Set it once, forget it." },
-      { "title": "Small freight", "desc": "Skids and totes under 300 lb. Loads a strong back and a ramp can handle — priced on the same zone map as everything else." }
-    ],
-    "quoterZones": [
-      { "label": "Boise Core" },
-      { "label": "West Boise & Garden City" },
-      { "label": "Meridian" },
-      { "label": "Eagle & Star" },
-      { "label": "Nampa & Caldwell" },
-      { "label": "Kuna & South Valley" },
-      { "label": "Outlying / valley edge" }
-    ],
-    "quoterSizes": [
-      { "label": "Envelope / small pack", "mult": "1" },
-      { "label": "Box — under 30 lb", "mult": "1.15" },
-      { "label": "Large box / tote — under 60 lb", "mult": "1.35" },
-      { "label": "Pallet-lite — skid under 300 lb", "mult": "2.2" }
-    ],
-    "quoterSpeeds": [
-      { "label": "Scheduled — next route through", "mult": "1" },
-      { "label": "Same-day — under 4 hours", "mult": "1.4" },
-      { "label": "Rush — direct drive", "mult": "2" }
-    ],
-    "quoterSettings": {
-      "bands": "14, 19, 24, 29, 34",
-      "minimum": "12",
-      "note": "Zone base uses how many zones apart pickup and drop-off sit — same zone is the first number, each zone further is the next. Every quote is the real price: no fuel surprises, no weekend markup."
-    },
-    "dispatch": [
-      { "title": "Book the run", "desc": "Text us or use the form — pickup, drop-off, what it is. You'll get a confirmed pickup window in minutes." },
-      { "title": "A driver is assigned", "desc": "One driver owns your run start to finish. No depots, no hand-offs, nothing sits in a warehouse overnight." },
-      { "title": "Live updates", "desc": "A text when it's picked up, a heads-up if anything changes, and an ETA that means something." },
-      { "title": "Proof at the door", "desc": "Photo of where it landed and who signed, texted the moment it's delivered. Done means proven." }
-    ],
-    "business": [
-      { "title": "Law & title offices", "desc": "Filings, closings and originals that absolutely cannot wait for tomorrow's mail." },
-      { "title": "Clinics & pharmacies", "desc": "Scheduled transfers between locations, handled by one consistent driver who knows the route." },
-      { "title": "Print & sign shops", "desc": "Finished jobs delivered to the client while the ink's barely dry — you look fast because you are." },
-      { "title": "Parts counters", "desc": "The gasket that's holding up a lift bay gets a direct drive, not a spot in tomorrow's loop." }
-    ],
-    "serviceArea": {
-      "region": "Treasure Valley, Idaho",
-      "short": "Treasure Valley",
-      "cities": ["Boise", "Garden City", "Meridian", "Eagle", "Star", "Nampa", "Caldwell", "Kuna"]
-    },
-    "owner": {
-      "name": "Marisol Trask",
-      "heading": "Started at a front desk, not behind a wheel",
-      "bio": "Marisol Trask ran the counter at a print shop and kept a private tally of every courier who promised noon and showed up at four. When the tally hit a hundred she quit, bought a hatchback, and started driving the runs herself — with the two texts she always wished she'd gotten: one when the package is in hand, one with a photo at the door. Swiftwater still runs on that tally. The goal is simple: never be the reason somebody else starts one.",
-      "photo": ""
-    },
-    "testimonials": [
-      { "quote": "", "name": "" },
-      { "quote": "", "name": "" },
-      { "quote": "", "name": "" }
-    ],
-    "faq": [
-      { "q": "How fast is same-day, really?", "a": "Booked before 1 pm, delivered inside four hours — usually faster. Rush runs go direct: the driver picks up your item and drives straight to the drop, no other stops." },
-      { "q": "What won't you carry?", "a": "Nothing hazardous, nothing alive, nothing illegal, and nothing that belongs in an armored truck. If you're not sure, text us a photo — we'll give you a straight answer in minutes." },
-      { "q": "Do I get proof of delivery?", "a": "Every run ends with a photo of where it landed and the name of who took it, texted to you as it happens. If nobody's there, we call you before we do anything else." },
-      { "q": "How does the zone pricing work?", "a": "The valley is split into seven zones. Your base price is set by how many zones apart the pickup and drop-off are, then adjusted for size and speed. The quoter above shows the whole math — the number it gives is the number on the invoice." },
-      { "q": "Do you go outside the valley?", "a": "The edge zone covers the towns just past the usual map. Further than that is by arrangement — text the address and we'll quote it straight." },
-      { "q": "How do recurring routes work?", "a": "Pick the days and windows, we assign a consistent driver, and you get one simple invoice at the end of the month. Skip a day with a text — no penalty, no drama." }
-    ],
-    "social": []
-  };
-
-  var CONTENT = DEFAULT_CONTENT;
-  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
-  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
-  var num = function(s, fb){ var n = parseFloat(String(s).replace(/[^0-9.]/g,'')); return isFinite(n) ? n : fb; };
-
-  /* ---------- render ---------- */
+/* ---------- render ---------- */
   function renderContent(c){
     document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
     document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
@@ -1154,18 +1748,128 @@
   });
 
   /* ---------- boot ---------- */
-  renderContent(CONTENT);
-  fetch('content.json', { cache: 'no-store' })
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){
-      if(d){
-        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
-        applyRuntime(CONTENT);
-        renderContent(CONTENT);
-      }
-    })
-    .catch(function(){});
+  /* boot handed to base.js */
+
+  window.renderContent = renderContent;
 })();
 </script>
+
+<script>
+/* delivery/scene.js — the animation lives in niche.js.
+   springPulse + drawRoute — damped-spring pulse markers on the live zone map
+   It is a helper the RENDERER calls, not a standalone scene, so extracting it
+   would split a function from its callers (SITELAB_TEMPLATE.md 7.0, D-P).
+   qa-site.js grades the animation wherever it lives. */
+window.initScene = function (reduce) { /* see niche.js */ };
+</script>
+
+<script>
+/* _template/base.js — utilities and the content lifecycle.
+   Shared by every niche. Niche-specific rendering lives in niches/<slug>/niche.js,
+   which must define window.renderContent(CONTENT). */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+  function telDigits(p) { return String(p || '').replace(/[^0-9+]/g, ''); }
+  function telHref(p) { return 'tel:' + telDigits(p); }
+  function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
+  function initReveal() {
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!els.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Form POST. Returns a promise; the niche decides what to render on success. */
+  function postForm(endpoint, payload) {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+  }
+
+  /* Consent gate (§9.3).
+     Runs in the CAPTURE phase, ahead of the niche's own submit handler, so a
+     checkbox the BUILD injected is enforced even though that niche's JS knows
+     nothing about it.
+
+     It does NOT stopPropagation: the niche handler still runs and sets its own
+     message if it has one. We only supply wording when nobody else did, checked
+     on the next tick — so the 8 sites that already gate keep their own copy and
+     the injected sites get a sensible default. Enforcement is uniform; wording
+     is not overridden. */
+  function consentGate(e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var box = form.querySelector('input[type="checkbox"][id$="consent"]');
+    if (!box || box.checked) return;
+
+    e.preventDefault();
+    box.focus();
+
+    var msg = form.querySelector('[id$="Msg"]');
+    var before = msg ? msg.textContent : null;
+    setTimeout(function () {
+      if (!msg || msg.textContent !== before) return;   // the niche spoke first
+      msg.textContent = 'Please tick the consent box so we can reply to you.';
+      if (msg.className.indexOf('err') < 0) msg.className += ' err';
+    }, 0);
+  }
+  document.addEventListener('submit', consentGate, true);
+
+  /* The content lifecycle.
+     DEFAULT_CONTENT is inlined by the build from content.json, so the two can
+     never disagree. The fetch exists so an operator edit goes live without a
+     rebuild; on failure the inlined copy already rendered. */
+  function boot() {
+    var CONTENT = window.DEFAULT_CONTENT || {};
+    window.CONTENT = CONTENT;
+    if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    initReveal();
+    if (typeof window.initScene === 'function') window.initScene(reduce);
+
+    fetch('content.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        CONTENT = Object.assign({}, window.DEFAULT_CONTENT, d);
+        window.CONTENT = CONTENT;
+        if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+      })
+      .catch(function () { /* offline or 404: the inlined defaults stand */ });
+  }
+
+  /* setErr and showDone are intentionally absent: every niche examined
+     defines its own with a different signature. Sharing them would be a
+     silent behaviour change, not a saving. */
+  window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>

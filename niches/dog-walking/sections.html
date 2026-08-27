@@ -1,0 +1,392 @@
+<!-- dog-walking/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h.01"/><path d="M3.4 18L12 9a5 5 0 0 1 8 4v1h2l-3 3H9l-2 2H3.4z"/><path d="M20 7l2-1-2-1-1-2-1 2 1 2z" transform="scale(.6) translate(12 2)"/></svg></span><span>Bluebird &amp; Biscuit</span><small>Pet Care</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#builder" class="tab">Build a Week</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a walk</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <!-- ============================================================
+       HERO park / dog-walk vignette — inline SVG, zero raster.
+       Techniques (north-star: dj-site-blue):
+         · layered 4+ stop gradients for atmospheric depth & light
+         · feTurbulence fractalNoise grain (+feColorMatrix) for organic texture
+         · feTurbulence + feDisplacementMap to roughen foliage edges
+         · branching path work on the tree; detail density in grass/flowers
+       Base pose is fully static; the ambient script only nudges transforms.
+       ============================================================ -->
+  <svg class="hero-scene" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- 5-stop sky: sky-blue zenith down to a warm horizon haze -->
+      <linearGradient id="scene-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7FC0EA"/>
+        <stop offset="28%" stop-color="#A6D6F1"/>
+        <stop offset="55%" stop-color="#D6EDFB"/>
+        <stop offset="78%" stop-color="var(--tint-1)"/>
+        <stop offset="100%" stop-color="#FBF1DE"/>
+      </linearGradient>
+      <!-- 4-stop sun glow -->
+      <radialGradient id="scene-sun" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#FFFBEE"/>
+        <stop offset="34%" stop-color="#FCEBBE"/>
+        <stop offset="70%" stop-color="rgba(244,205,128,.42)"/>
+        <stop offset="100%" stop-color="rgba(244,205,128,0)"/>
+      </radialGradient>
+      <!-- 4-stop layered hills for aerial perspective -->
+      <linearGradient id="scene-hill-far" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#C4E6A6"/><stop offset="40%" stop-color="#ACDA8F"/>
+        <stop offset="72%" stop-color="#96D078"/><stop offset="100%" stop-color="#88C96C"/>
+      </linearGradient>
+      <linearGradient id="scene-hill-mid" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8ECF71"/><stop offset="42%" stop-color="#6FBF4F"/>
+        <stop offset="74%" stop-color="#5EB145"/><stop offset="100%" stop-color="#52A03B"/>
+      </linearGradient>
+      <linearGradient id="scene-ground" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6FBF4F"/><stop offset="45%" stop-color="#5AA83E"/>
+        <stop offset="78%" stop-color="#4C9634"/><stop offset="100%" stop-color="#41862C"/>
+      </linearGradient>
+      <!-- 4-stop path -->
+      <linearGradient id="scene-path" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#F1DEB9"/><stop offset="40%" stop-color="#E6C68F"/>
+        <stop offset="74%" stop-color="#D9A05B"/><stop offset="100%" stop-color="#C88E48"/>
+      </linearGradient>
+      <!-- 4-stop foliage -->
+      <radialGradient id="scene-foliage" cx="42%" cy="34%" r="72%">
+        <stop offset="0" stop-color="#B7E39A"/><stop offset="42%" stop-color="#77C255"/>
+        <stop offset="74%" stop-color="#519A38"/><stop offset="100%" stop-color="#3C7C2B"/>
+      </radialGradient>
+      <linearGradient id="scene-trunk" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#B47F45"/><stop offset="55%" stop-color="#8E6030"/><stop offset="100%" stop-color="#6E4A24"/>
+      </linearGradient>
+      <!-- 4-stop dog coat -->
+      <linearGradient id="scene-dog" x1="0" y1="0" x2="0.3" y2="1">
+        <stop offset="0" stop-color="#F5DFB7"/><stop offset="42%" stop-color="#E7C68B"/>
+        <stop offset="74%" stop-color="#D3A45E"/><stop offset="100%" stop-color="#B9843F"/>
+      </linearGradient>
+      <linearGradient id="scene-cloud" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="var(--panel-solid)"/><stop offset="55%" stop-color="#F4FAFF"/>
+        <stop offset="100%" stop-color="#E1EEF9"/>
+      </linearGradient>
+      <radialGradient id="scene-ball" cx="38%" cy="34%" r="75%">
+        <stop offset="0" stop-color="#EAF7C9"/><stop offset="50%" stop-color="#A6D96A"/>
+        <stop offset="100%" stop-color="#6FA83B"/>
+      </radialGradient>
+      <radialGradient id="scene-vign" cx="50%" cy="46%" r="72%">
+        <stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="72%" stop-color="rgba(0,0,0,0)"/>
+        <stop offset="100%" stop-color="rgba(31,73,120,.14)"/>
+      </radialGradient>
+      <!-- feTurbulence fractalNoise grain — north-star: dj-site-blue -->
+      <filter id="scene-grain" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0"/>
+      </filter>
+      <!-- feTurbulence + feDisplacementMap: roughen foliage edges into organic canopy -->
+      <filter id="scene-rough" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022 0.04" numOctaves="2" seed="7" result="t"/>
+        <feDisplacementMap in="SourceGraphic" in2="t" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="scene-soft" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="7"/>
+      </filter>
+    </defs>
+
+    <!-- sky -->
+    <rect x="0" y="0" width="1200" height="700" fill="url(#scene-sky)"/>
+
+    <!-- sun: glow + disc + slow-turning rays -->
+    <circle cx="860" cy="150" r="240" fill="url(#scene-sun)"/>
+    <g id="scene-sunrays">
+      <g stroke="#FCE7B0" stroke-width="7" stroke-linecap="round" opacity=".7">
+        <line x1="860" y1="72" x2="860" y2="34"/><line x1="860" y1="228" x2="860" y2="266"/>
+        <line x1="782" y1="150" x2="744" y2="150"/><line x1="938" y1="150" x2="976" y2="150"/>
+        <line x1="805" y1="95" x2="778" y2="68"/><line x1="915" y1="205" x2="942" y2="232"/>
+        <line x1="915" y1="95" x2="942" y2="68"/><line x1="805" y1="205" x2="778" y2="232"/>
+      </g>
+    </g>
+    <circle cx="860" cy="150" r="52" fill="#FFF4D2"/>
+    <circle cx="860" cy="150" r="52" fill="url(#scene-sun)"/>
+
+    <!-- drifting clouds -->
+    <g id="scene-cloud-a" fill="url(#scene-cloud)" filter="url(#scene-soft)">
+      <ellipse cx="250" cy="130" rx="70" ry="30"/><ellipse cx="300" cy="112" rx="52" ry="34"/>
+      <ellipse cx="205" cy="118" rx="44" ry="26"/><ellipse cx="330" cy="138" rx="46" ry="22"/>
+    </g>
+    <g id="scene-cloud-b" fill="url(#scene-cloud)" filter="url(#scene-soft)" opacity=".92">
+      <ellipse cx="640" cy="92" rx="58" ry="24"/><ellipse cx="686" cy="80" rx="40" ry="26"/>
+      <ellipse cx="602" cy="82" rx="34" ry="20"/>
+    </g>
+
+    <!-- a small songbird overhead (neutral naming) -->
+    <g id="pet-bird-1" fill="none" stroke="#2E7FBF" stroke-width="5" stroke-linecap="round" opacity=".8">
+      <path d="M452,182 C462,172 476,172 486,182"/>
+      <path d="M486,182 C496,172 510,172 520,182"/>
+    </g>
+
+    <!-- far + mid hills (aerial perspective) -->
+    <path d="M0,468 Q300,406 600,452 T1200,438 L1200,700 L0,700 Z" fill="url(#scene-hill-far)"/>
+    <path d="M0,540 Q360,478 720,520 T1200,508 L1200,700 L0,700 Z" fill="url(#scene-hill-mid)"/>
+
+    <!-- background trees (detail density) -->
+    <g opacity=".9">
+      <rect x="146" y="430" width="9" height="46" rx="4" fill="url(#scene-trunk)"/>
+      <circle cx="150" cy="418" r="30" fill="url(#scene-foliage)"/>
+      <circle cx="132" cy="428" r="20" fill="url(#scene-foliage)"/><circle cx="170" cy="426" r="22" fill="url(#scene-foliage)"/>
+      <rect x="322" y="446" width="8" height="40" rx="4" fill="url(#scene-trunk)"/>
+      <circle cx="326" cy="436" r="24" fill="url(#scene-foliage)"/>
+    </g>
+
+    <!-- foreground ground -->
+    <path d="M0,582 Q400,556 800,584 T1200,578 L1200,700 L0,700 Z" fill="url(#scene-ground)"/>
+
+    <!-- the walking path -->
+    <path d="M528,700 C544,636 586,600 602,556 L616,556 C634,600 704,652 756,700 Z" fill="url(#scene-path)"/>
+    <path d="M566,700 C578,650 604,616 610,570" fill="none" stroke="#F3E4C4" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+
+    <!-- large hero tree: BRANCHING trunk + displacement-roughened canopy -->
+    <g>
+      <path d="M1040,472 C1036,438 1046,428 1044,404
+               M1044,430 C1056,420 1072,418 1082,404
+               M1044,446 C1030,440 1016,444 1006,432
+               M1044,414 C1052,406 1064,406 1070,396"
+            fill="none" stroke="url(#scene-trunk)" stroke-width="9" stroke-linecap="round"/>
+      <g filter="url(#scene-rough)">
+        <circle cx="1044" cy="392" r="46" fill="url(#scene-foliage)"/>
+        <circle cx="1006" cy="404" r="32" fill="url(#scene-foliage)"/>
+        <circle cx="1082" cy="400" r="34" fill="url(#scene-foliage)"/>
+        <circle cx="1050" cy="366" r="30" fill="url(#scene-foliage)"/>
+      </g>
+    </g>
+
+    <!-- contact shadows -->
+    <ellipse cx="632" cy="648" rx="74" ry="13" fill="#1F4A78" opacity=".2" filter="url(#scene-soft)"/>
+    <ellipse cx="720" cy="650" rx="22" ry="7" fill="#1F4A78" opacity=".18" filter="url(#scene-soft)"/>
+
+    <!-- happy dog trotting the path (neutral ids) -->
+    <g>
+      <path d="M654,584 C660,548 700,44 720,44" fill="none" stroke="#3B9AE1" stroke-width="3.5" stroke-linecap="round" opacity=".55" transform="translate(0 0)"/>
+      <g id="scene-dog-tail">
+        <path d="M580,580 C560,562 555,540 566,522" fill="none" stroke="url(#scene-dog)" stroke-width="13" stroke-linecap="round"/>
+      </g>
+      <!-- legs -->
+      <g stroke="url(#scene-dog)" stroke-width="12" stroke-linecap="round">
+        <line x1="600" y1="606" x2="596" y2="642"/><line x1="628" y1="608" x2="632" y2="644"/>
+        <line x1="662" y1="606" x2="658" y2="642"/><line x1="686" y1="606" x2="692" y2="644"/>
+      </g>
+      <ellipse cx="628" cy="590" rx="54" ry="31" fill="url(#scene-dog)"/>
+      <circle cx="672" cy="592" r="25" fill="url(#scene-dog)"/>
+      <circle cx="690" cy="560" r="26" fill="url(#scene-dog)"/>
+      <ellipse cx="714" cy="566" rx="15" ry="11" fill="#E7C68B"/>
+      <path d="M678,540 C666,540 660,556 666,572 C674,566 682,552 678,540 Z" fill="#B9843F"/>
+      <circle cx="722" cy="563" r="4" fill="#22364A"/>
+      <circle cx="692" cy="552" r="3.4" fill="#22364A"/>
+      <path d="M660,578 Q672,586 686,578" fill="none" stroke="#3B9AE1" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <!-- bouncing ball (physics-driven in the ambient script) -->
+    <g id="scene-ball">
+      <circle cx="720" cy="632" r="16" fill="url(#scene-ball)"/>
+      <path d="M706,626 Q720,636 734,626" fill="none" stroke="#5C8F30" stroke-width="2" opacity=".7"/>
+    </g>
+
+    <!-- foreground grass tufts + wildflowers (detail density; gentle sway) -->
+    <g id="scene-grass-1" stroke="#4C9634" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M120,700 C116,672 108,660 102,644"/><path d="M132,700 C132,674 138,660 146,646"/>
+      <path d="M108,700 C104,678 96,668 88,656"/>
+    </g>
+    <g id="scene-grass-2" stroke="#4C9634" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M1085,700 C1082,672 1074,660 1068,646"/><path d="M1098,700 C1098,676 1104,662 1112,650"/>
+      <path d="M1072,700 C1068,678 1060,668 1052,656"/>
+    </g>
+    <g fill="#3B9AE1"><circle cx="150" cy="648" r="4"/><circle cx="1064" cy="652" r="4"/></g>
+    <g fill="#D9A05B"><circle cx="96" cy="660" r="4"/><circle cx="1112" cy="654" r="4"/></g>
+
+    <!-- vignette + feTurbulence grain overlay -->
+    <rect x="0" y="0" width="1200" height="700" fill="url(#scene-vign)"/>
+    <rect x="0" y="0" width="1200" height="700" filter="url(#scene-grain)" opacity=".42" style="mix-blend-mode:soft-light"/>
+  </svg>
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Dog walking &amp; pet sitting · Treasure Valley</div>
+      <h1 class="reveal">Happy dogs. <span class="hl">Easy weeks.</span></h1>
+      <p class="reveal">Midday walks, drop-in visits and overnight sitting — built around your dog's routine, not ours. Pick your days in the week builder below; we handle the wiggles, the weather and the squirrel diplomacy.</p>
+      <div class="hero-cta reveal">
+        <a href="#builder" class="btn-pri">Build your walk week</a>
+        <a href="#book" class="btn-sec">Book a meet &amp; greet</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-bird" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c2-6 7-9 12-7l4-2-2 4c1 5-3 9-8 9-2 0-3.5-.5-4.5-1.5L2 19z"/><circle cx="14.5" cy="9.5" r=".5" fill="currentColor"/></svg></span>
+      <span class="hc-badge">After every visit</span>
+      <p class="hc-line">4 tails wagged. 3 squirrels supervised. 0 puddles judged.</p>
+      <p class="hc-by">An actual afternoon report · photo + note, every time</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Services</div>
+      <h2>Four ways to a tired, happy dog.</h2>
+      <p class="stxt">Every service starts with a free meet &amp; greet, and every visit ends with a photo and a quick note about how it went.</p>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="builder" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The week builder</div>
+      <h2>Build your dog's week in twenty seconds.</h2>
+      <p class="stxt">Pick a service, a walk length and your days — the price does its own math. Tap a day's time chip to set morning, midday or afternoon.</p>
+    </div>
+    <div class="builder-wrap reveal">
+      <div class="b-panel">
+        <p class="b-step"><b>1.</b> Pick a service</p>
+        <div class="b-opts" id="svcOpts" role="group" aria-label="Service type"></div>
+        <p class="b-step"><b>2.</b> Walk length</p>
+        <div class="b-opts" id="lenOpts" role="group" aria-label="Walk length"></div>
+        <p class="b-step"><b>3.</b> Your days — tap to toggle, tap the time to change it</p>
+        <div class="week-scroll">
+          <div class="week-grid" id="weekGrid" role="group" aria-label="Days of the week"></div>
+        </div>
+        <p class="b-note" id="builderNote"></p>
+        <!-- decorative leash + paw-print motif (static SVG, no JS) -->
+        <svg class="b-decor" viewBox="0 0 200 160" aria-hidden="true" fill="none">
+          <path d="M14,150 C40,120 30,86 70,78 C110,70 96,34 140,30 C170,27 182,44 190,58" stroke="#3B9AE1" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+          <circle cx="190" cy="60" r="6" fill="#3B9AE1" opacity=".55"/>
+          <g fill="#D9A05B" opacity=".7">
+            <ellipse cx="60" cy="132" rx="6" ry="5"/><ellipse cx="54" cy="123" rx="2.4" ry="3"/><ellipse cx="62" cy="121" rx="2.4" ry="3"/><ellipse cx="70" cy="124" rx="2.4" ry="3"/>
+            <ellipse cx="104" cy="150" rx="6" ry="5"/><ellipse cx="98" cy="141" rx="2.4" ry="3"/><ellipse cx="106" cy="139" rx="2.4" ry="3"/><ellipse cx="114" cy="142" rx="2.4" ry="3"/>
+          </g>
+        </svg>
+      </div>
+      <div class="b-price" aria-live="polite">
+        <p class="bp-label">Your plan</p>
+        <div id="priceOut"><p class="bp-empty">Pick at least one day to see your plan.</p></div>
+        <p class="bp-cta"><a class="btn-pri" href="#book" id="builderCta">Book this plan</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Three steps. Zero awkwardness.</h2>
+    </div>
+    <div class="how-grid reveal" id="howGrid"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Bluebird &amp; Biscuit Pet Care</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">From the pack</div>
+    <h2>Tail-wag reviews.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="area" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Trotting all over the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Get started</div>
+    <h2>Let's meet your dog.</h2>
+    <p>Tell us who's wagging — we'll text you to set up your free meet &amp; greet.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qDog">Your dog (name &amp; breed)</label>
+          <input type="text" id="qDog" name="dog" placeholder="Maple, mini goldendoodle" />
+        </div>
+        <div class="qf-row">
+          <label for="qSvc">What do you need?</label>
+          <select id="qSvc" name="service"></select>
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Gate codes, quirks, the squirrel situation…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request my meet &amp; greet</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550312" data-phone-link>Call or text (208) 555-0312</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>You're in! We'll text you to set up your free meet &amp; greet — bring the wiggles.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Bluebird &amp; Biscuit Pet Care</b><br />
+      Dog walking &amp; pet sitting · <span data-city>Eagle, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550312" data-phone>(208) 555-0312</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550312"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550312?body=Hi%20Bluebird%20%26%20Biscuit%2C%20can%20you%20walk%20my%20dog%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>
