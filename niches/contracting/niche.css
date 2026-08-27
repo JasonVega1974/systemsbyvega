@@ -1,0 +1,43 @@
+/* contracting — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground:       #151109;   /* was --coal */
+  --ground-2:     #1c160d;   /* was --asphalt */
+  --panel:        #241c10;   /* was --asphalt-2 */
+  --accent:       #f5a623;   /* was --amber */
+  --accent-2:     #ffbe45;   /* was --amber-bright */
+  --accent-deep:  #b46f0d;   /* was --amber-deep */
+  --ink-dim:      #b9bec2;   /* was --concrete */
+  --ink-bright:   #dde1e4;   /* was --concrete-soft */
+  --ink:          #f5efe3;   /* was --cream */
+  --muted:        #a2977f;
+  --accent-ink:   #1a1408;   /* was --ink */
+  --hair:         rgba(245,166,35,.14);   /* was --line */
+  --card:         rgba(36,28,16,.58);
+  --card-brd:     rgba(245,166,35,.16);
+  --accent-glow:  rgba(245,166,35,.5);   /* was --glow */
+  --shadow:       0 24px 60px -20px rgba(0,0,0,.75);
+  --maxw:         1180px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --ink-max:      #ffffff;
+  --panel-2:      #231d13;
+  --ink-warm:     #ecd8ab;
+  --ground-deep:  var(--ground);
+  --ground-3:     var(--panel);
+  --accent-soft:  var(--accent-glow);
+  --accent-alt:   var(--ink-warm);
+  --hair-accent:  var(--card-brd);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-lo:     var(--ink-dim);
+  --sheen-accent: var(--accent-2);
+  --err:          #e0616b;
+  --err-ink:      #ff9aa2;
+  --ok:           var(--accent-2);
+
+  --display: 'Big Shoulders Display', sans-serif;
+  --body:    'Barlow', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

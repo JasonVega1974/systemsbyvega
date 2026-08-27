@@ -1,0 +1,169 @@
+{
+  "brand": {
+    "name": "Summit & Stone Contracting",
+    "phone": "(208) 555-0142",
+    "email": "summitstone@example.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Nampa",
+    "license": ""
+  },
+  "owner": {
+    "heading": "The guy who answers the phone",
+    "bio": "",
+    "photo": ""
+  },
+  "serviceArea": {
+    "region": "Nampa & the Treasure Valley"
+  },
+  "services": [
+    {
+      "icon": "concrete",
+      "title": "Concrete & Driveways",
+      "desc": "Tear-outs, new pours, stamped patios, walkways and garage slabs. Proper base prep and control joints — so it doesn't crack like the last one did."
+    },
+    {
+      "icon": "landscape",
+      "title": "Landscaping & Hardscape",
+      "desc": "Paver patios, retaining walls, planting beds, sod and gravel work. Yards that look intentional — and drain the right direction."
+    },
+    {
+      "icon": "remodel",
+      "title": "Kitchen & Bath Remodels",
+      "desc": "Cabinets, counters, tile, fixtures and flooring — from a weekend refresh to a studs-out rebuild. One crew, one schedule, no mystery subs."
+    },
+    {
+      "icon": "deck",
+      "title": "Decks & Fences",
+      "desc": "Cedar, vinyl and composite. New builds, tear-out replacements and post repairs — set in concrete, square to the property line, built to shrug off Idaho winters."
+    },
+    {
+      "icon": "wash",
+      "title": "Pressure Washing & Exterior Cleaning",
+      "desc": "Driveways, siding, fences, patios and gutters. The fastest, cheapest way to make a house look five years newer before you spend a dime on anything else."
+    },
+    {
+      "icon": "punchlist",
+      "title": "Handyman Punch-List",
+      "desc": "That list on your fridge: sticking doors, drywall patches, leaning gates, caulk lines gone black. Send us the whole thing — we knock it out in one visit."
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "pricing": [
+    {
+      "label": "Refresh",
+      "blurb": "$500–$2.5K",
+      "per": "Days, not weeks",
+      "cta": "Start a refresh",
+      "features": [
+        "Pressure washing packages",
+        "Fence & gate repairs",
+        "Full handyman punch-lists",
+        "Concrete patch & seal work"
+      ],
+      "highlight": false
+    },
+    {
+      "label": "Rebuild",
+      "blurb": "$2.5K–$15K",
+      "per": "One to three weeks",
+      "cta": "Plan a rebuild",
+      "features": [
+        "New driveways & stamped patios",
+        "Decks & full fence runs",
+        "Paver hardscape & retaining walls",
+        "Bath refreshes & tile work"
+      ],
+      "highlight": true
+    },
+    {
+      "label": "Remodel",
+      "blurb": "$15K+",
+      "per": "Scoped & scheduled up front",
+      "cta": "Talk remodel",
+      "features": [
+        "Full kitchen remodels",
+        "Studs-out bathroom rebuilds",
+        "Whole-exterior overhauls",
+        "Milestone schedule in writing"
+      ],
+      "highlight": false
+    }
+  ],
+  "gallery": [
+    {
+      "title": "Stamped concrete patio",
+      "tag": "Nampa · Rebuild",
+      "image": "",
+      "style": "patio"
+    },
+    {
+      "title": "Cedar privacy fence, 180 ft",
+      "tag": "Caldwell · Rebuild",
+      "image": "",
+      "style": "fence"
+    },
+    {
+      "title": "Paver walkway & planting beds",
+      "tag": "Meridian · Rebuild",
+      "image": "",
+      "style": "pavers"
+    },
+    {
+      "title": "Kitchen remodel, cabinets & tile",
+      "tag": "Nampa · Remodel",
+      "image": "",
+      "style": "kitchen"
+    },
+    {
+      "title": "Composite deck & rail",
+      "tag": "Kuna · Rebuild",
+      "image": "",
+      "style": "deck"
+    },
+    {
+      "title": "Full driveway replacement",
+      "tag": "Middleton · Rebuild",
+      "image": "",
+      "style": "driveway"
+    }
+  ],
+  "niche": {
+    "projects": [
+      {
+        "title": "Driveway replacement",
+        "location": "Nampa",
+        "beforeTag": "Cracked & stained",
+        "afterTag": "New stamped concrete",
+        "beforeImg": "",
+        "afterImg": "",
+        "note": "Tear-out to broom-finish in under a week on most driveways — old slab hauled off, new one cured, edges backfilled."
+      }
+    ]
+  },
+  "seo": {
+    "title": "Summit &amp; Stone Contracting — Built Once. Built Right. | Nampa & Treasure Valley, ID",
+    "description": "Summit & Stone Contracting handles concrete, landscaping, decks, fences, remodels and punch-lists across Nampa and the Treasure Valley. Free on-site estimates — your price in writing before work starts. Call or text (208) 555-0142.",
+    "ogTitle": "Summit &amp; Stone Contracting — Built Once. Built Right.",
+    "ogDescription": "Concrete, decks, fences, remodels & more in Nampa and the Treasure Valley. Free on-site estimates, price in writing before work starts. (208) 555-0142.",
+    "priceRange": "$500 - $15000+",
+    "schemaType": "GeneralContractor",
+    "canonical": "https://systemsbyvega.com/sites/contracting/",
+    "themeColor": "#151109",
+    "favicon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23F5A623'/%3E%3Cpath d='M8 46 L24 26 L34 38 L46 20 L56 46 Z' fill='%23151109' opacity='.92'/%3E%3Ctext x='32' y='17' font-family='Arial,sans-serif' font-size='13' font-weight='900' text-anchor='middle' fill='%23151109'%3ES%26amp;S%3C/text%3E%3C/svg%3E",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/contracting/og.png"
+  }
+}

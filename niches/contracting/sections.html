@@ -1,0 +1,471 @@
+<!-- contracting/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Summit &amp; Stone Contracting home">
+      <span class="brand-mark" role="img" aria-label="Summit &amp; Stone ridge-line monogram">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 24 L11 13 L16 19 L22 9 L29 24 Z" fill="currentColor"/><path d="M3 27h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand__name">Summit &amp; Stone<span>General Contracting · Nampa ID</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#transform">Results</a>
+      <a class="link" href="#services">Services</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#work">Our Work</a>
+      <a class="link" href="#estimate">Estimate</a>
+      <!-- SWAP: real business phone everywhere this number appears (now editable via admin — brand.phone in content.json) -->
+      <a class="nav__call" href="tel:+12085550142" data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg><span data-phone-text>(208) 555-0142</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="sparks" id="sparks" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow">General contracting · Nampa &amp; the Treasure Valley</span></div>
+        <h1><span class="l1">Built Once.</span><span class="l2">Built Right.</span></h1>
+        <p class="hero__sub">Cracked driveway, tired kitchen, fence that leans a little more every winter — one local crew handles all of it. Free on-site estimate, your price in writing before we lift a tool, and a job site left cleaner than we found it.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#estimate">Get my free estimate</a>
+          <a class="btn btn--ghost btn--lg" href="tel:+12085550142" data-tel>Call or text</a>
+        </div>
+        <div class="hero__proof">
+          <div class="proof"><b>Free</b><span>On-site estimates</span></div>
+          <div class="proof"><b>Written</b><span>Price before work starts</span></div>
+          <div class="proof"><b>Local</b><span>Treasure Valley crew</span></div>
+        </div>
+      </div>
+      <div class="hero__badge">
+        <div class="halo" aria-hidden="true"></div>
+        <svg class="hero-emblem" viewBox="0 0 200 200" role="img" aria-label="Summit &amp; Stone Contracting emblem — mountain ridge over a foundation line">
+          <defs>
+            <linearGradient id="emAmber" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffbe45"/><stop offset="1" stop-color="#b46f0d"/>
+            </linearGradient>
+            <linearGradient id="emStone" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#dde1e4"/><stop offset="1" stop-color="#8d939a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="92" fill="rgba(36,28,16,.7)" stroke="rgba(245,166,35,.4)" stroke-width="2"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(245,166,35,.18)" stroke-width="1" stroke-dasharray="4 6"/>
+          <path d="M30 128 L72 72 L92 96 L118 56 L170 128 Z" fill="url(#emStone)" opacity=".9"/>
+          <path d="M46 128 L84 128 L65 103 Z" fill="url(#emAmber)"/>
+          <path d="M118 56 L134 78 L124 78 L112 64 Z" fill="var(--ink-max)" opacity=".8"/>
+          <rect x="34" y="134" width="132" height="7" rx="3.5" fill="url(#emAmber)"/>
+          <rect x="48" y="147" width="104" height="4" rx="2" fill="rgba(245,166,35,.35)"/>
+          <text x="100" y="171" text-anchor="middle" font-family="'Big Shoulders Display','Arial Black',sans-serif" font-weight="800" font-size="15" letter-spacing="4" fill="#f5efe3">SUMMIT &amp; STONE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,46 L360,18 L720,44 L1080,10 L1440,38 L1440,70 L0,70 Z"/>
+  </svg>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="trust" aria-label="Highlights">
+  <div class="wrap trust__in">
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Price in writing, up front</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>Free written estimates</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Local crew, no call centers</div>
+    <div class="trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Cleanup included, every job</div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE: BEFORE / AFTER DRIVEWAY ============ -->
+<section class="section transform" id="transform">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">The proof</span>
+      <h2 class="section-title">Drag to see the difference</h2>
+      <p class="lead" style="margin:0 auto">Twenty-year-old cracked, oil-stained slab on the left. New stamped concrete on the right. Grab the handle and slide — this is what a driveway week with our crew looks like.</p>
+    </div>
+
+    <div class="ba__labels reveal" aria-hidden="true">
+      <span class="ba__label ba__label--b">Before</span>
+      <span class="ba__label ba__label--a">After</span>
+    </div>
+
+    <div class="ba reveal" id="ba" role="slider" tabindex="0"
+         aria-label="Before and after comparison — drag or use arrow keys to reveal the old cracked driveway versus the new stamped concrete"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <div class="ba__panel ba__after"></div>
+      <div class="ba__panel ba__before"></div>
+      <svg class="ba__chips" viewBox="0 0 120 80" aria-hidden="true">
+        <g fill="rgba(255,214,138,.9)">
+          <circle cx="10" cy="40" r="2"/><circle cx="34" cy="24" r="1.6"/><circle cx="30" cy="56" r="1.8"/>
+          <circle cx="58" cy="18" r="1.4"/><circle cx="62" cy="62" r="1.6"/><circle cx="52" cy="40" r="2"/>
+          <circle cx="86" cy="30" r="1.3"/><circle cx="90" cy="52" r="1.5"/><circle cx="108" cy="40" r="1.2"/>
+        </g>
+      </svg>
+      <span class="ba__tag ba__tag--b" id="baTagB">Cracked &amp; stained</span>
+      <span class="ba__tag ba__tag--a" id="baTagA">New stamped concrete</span>
+      <div class="ba__handle" aria-hidden="true"></div>
+      <div class="ba__grip" id="grip" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-5 6 5 6"/><path d="M15 6l5 6-5 6"/></svg>
+      </div>
+      <div class="ba__hint">◄ Drag ►</div>
+    </div>
+    <div class="ba-switch" id="baSwitch" role="group" aria-label="Choose a before/after project"></div>
+    <p class="price-note reveal" style="margin-top:22px" id="baNote">Tear-out to broom-finish in under a week on most driveways — old slab hauled off, new one cured, edges backfilled.</p>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section services" id="services">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">What we build</span>
+      <h2 class="section-title">Six trades. One crew. One number.</h2>
+      <p class="lead">Stop juggling five different contractors who never call back. If it's on your property and it's broken, ugly or unfinished, it's our department.</p>
+    </div>
+    <div class="svc-grid" id="svcGrid">
+      <div class="svc reveal" data-delay="1">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="8" rx="1"/><path d="M3 14h18"/><path d="M9 10v8M15 10v8"/><path d="M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg></div>
+        <h3>Concrete &amp; Driveways</h3>
+        <p>Tear-outs, new pours, stamped patios, walkways and garage slabs. Proper base prep and control joints — so it doesn't crack like the last one did.</p>
+      </div>
+      <div class="svc reveal" data-delay="2">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M12 15c-4 0-6-2.5-6-6 3.5 0 6 2 6 6z"/><path d="M12 13c0-4.5 2.5-7 7-7 0 4.5-2.5 7-7 7z"/><path d="M5 22h14"/></svg></div>
+        <h3>Landscaping &amp; Hardscape</h3>
+        <p>Paver patios, retaining walls, planting beds, sod and gravel work. Yards that look intentional — and drain the right direction.</p>
+      </div>
+      <div class="svc reveal" data-delay="3">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"/><path d="M4 12h16"/><path d="M9 21v-5h6v5"/><path d="M9 8h.01M15 8h.01"/></svg></div>
+        <h3>Kitchen &amp; Bath Remodels</h3>
+        <p>Cabinets, counters, tile, fixtures and flooring — from a weekend refresh to a studs-out rebuild. One crew, one schedule, no mystery subs.</p>
+      </div>
+      <div class="svc reveal" data-delay="1">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l2-3 2 3v12"/><path d="M10 21V9l2-3 2 3v12"/><path d="M16 21V9l2-3 2 3v12"/><path d="M2 13h20M2 18h20"/></svg></div>
+        <h3>Decks &amp; Fences</h3>
+        <p>Cedar, vinyl and composite. New builds, tear-out replacements and post repairs — set in concrete, square to the property line, built to shrug off Idaho winters.</p>
+      </div>
+      <div class="svc reveal" data-delay="2">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4"/><path d="M3 5h4"/><path d="M8 8l9 9"/><path d="M14 4l6 6-8 8-6-6z"/><path d="M19 15l2 2-3 3-2-2"/></svg></div>
+        <h3>Pressure Washing &amp; Exterior Cleaning</h3>
+        <p>Driveways, siding, fences, patios and gutters. The fastest, cheapest way to make a house look five years newer before you spend a dime on anything else.</p>
+      </div>
+      <div class="svc reveal" data-delay="3">
+        <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></div>
+        <h3>Handyman Punch-List</h3>
+        <p>That list on your fridge: sticking doors, drywall patches, leaning gates, caulk lines gone black. Send us the whole thing — we knock it out in one visit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING RANGES ============ -->
+<section class="section pricing" id="pricing">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Honest numbers</span>
+      <h2 class="section-title">How most projects run</h2>
+      <p class="lead" style="margin:0 auto">No two projects price the same, so we won't pretend they do. But you deserve a ballpark before anyone shows up at your door — here's where jobs like yours usually land.</p>
+    </div>
+    <div class="price-grid" id="priceGrid">
+      <!-- SWAP: adjust the ranges below to the real book of business (now editable via admin — pricing in content.json) -->
+      <div class="tier reveal" data-delay="1">
+        <span class="tier__label">Refresh</span>
+        <div class="tier__price">$500&ndash;$2.5K</div>
+        <div class="tier__per">Days, not weeks</div>
+        <ul class="tier__features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Pressure washing packages</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Fence &amp; gate repairs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Full handyman punch-lists</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Concrete patch &amp; seal work</li>
+        </ul>
+        <a class="btn" href="#estimate">Start a refresh</a>
+      </div>
+
+      <div class="tier tier--best reveal" data-delay="2">
+        <span class="tier__label">Rebuild</span>
+        <div class="tier__price">$2.5K&ndash;$15K</div>
+        <div class="tier__per">One to three weeks</div>
+        <ul class="tier__features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>New driveways &amp; stamped patios</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Decks &amp; full fence runs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Paver hardscape &amp; retaining walls</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Bath refreshes &amp; tile work</li>
+        </ul>
+        <a class="btn" href="#estimate">Plan a rebuild</a>
+      </div>
+
+      <div class="tier reveal" data-delay="3">
+        <span class="tier__label">Remodel</span>
+        <div class="tier__price">$15K+</div>
+        <div class="tier__per">Scoped &amp; scheduled up front</div>
+        <ul class="tier__features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Full kitchen remodels</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Studs-out bathroom rebuilds</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Whole-exterior overhauls</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Milestone schedule in writing</li>
+        </ul>
+        <a class="btn" href="#estimate">Talk remodel</a>
+      </div>
+    </div>
+
+    <div class="promise reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+      <div>
+        <b>The written-price promise</b>
+        <p>Every project starts with a free on-site walk-through. You get your price in writing before we lift a tool — and it doesn't change unless the scope does. No surprise invoices, ever.</p>
+      </div>
+    </div>
+    <p class="price-note reveal">Not sure which bucket you're in? <b>Text a photo to <span data-phone-text>(208) 555-0142</span></b> and we'll tell you straight — even if the honest answer is "that's a $200 fix, don't let anyone charge you more."</p>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="section process" id="process">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. No runaround.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Tell us about the project</h3>
+        <p>Use the form below or text a couple photos. Two sentences is plenty — "driveway's cracked, want stamped concrete" tells us everything we need to schedule a look.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>Free walk-through, price in writing</h3>
+        <p>We come out, measure, talk through options at a couple price points, and hand you a written quote. No pressure, no "this price expires today" games. Sit on it as long as you like.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>We build it — and clean up after</h3>
+        <p>Our crew shows up when we said we would, works the plan, and hauls off every scrap of debris. The only evidence we were there is the work itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECENT WORK GALLERY ============ -->
+<!-- SWAP: each tile below is a CSS-gradient placeholder. To show a real
+     project photo, drop the image in assets/ and add an <img> inside the
+     <figure>, e.g. <img src="assets/work-patio.jpg" alt="Stamped concrete
+     patio in Nampa" loading="lazy" /> — the placeholder art hides itself
+     automatically as soon as an image exists. Update the captions to match. -->
+<section class="section work" id="work">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Recent work</span>
+      <h2 class="section-title">Jobs we'd put our name on twice</h2>
+      <p class="lead" style="margin:0 auto">A sampling from around the valley. Every one came with a written price up front — and a clean site at the end.</p>
+    </div>
+    <div class="work-grid" id="workGrid">
+      <figure class="tile tile--patio reveal" data-delay="1">
+        <figcaption>Stamped concrete patio<span>Nampa · Rebuild</span></figcaption>
+      </figure>
+      <figure class="tile tile--fence reveal" data-delay="2">
+        <figcaption>Cedar privacy fence, 180 ft<span>Caldwell · Rebuild</span></figcaption>
+      </figure>
+      <figure class="tile tile--pavers reveal" data-delay="3">
+        <figcaption>Paver walkway &amp; planting beds<span>Meridian · Rebuild</span></figcaption>
+      </figure>
+      <figure class="tile tile--kitchen reveal" data-delay="1">
+        <figcaption>Kitchen remodel, cabinets &amp; tile<span>Nampa · Remodel</span></figcaption>
+      </figure>
+      <figure class="tile tile--deck reveal" data-delay="2">
+        <figcaption>Composite deck &amp; rail<span>Kuna · Rebuild</span></figcaption>
+      </figure>
+      <figure class="tile tile--driveway reveal" data-delay="3">
+        <figcaption>Full driveway replacement<span>Middleton · Rebuild</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEET THE OWNER ============ -->
+<section class="section meet" id="meet">
+  <div class="wrap">
+    <div class="meet__grid">
+      <!-- SWAP: replace the empty div's content with an <img> when the owner's
+           photo is ready. Example:
+           <img src="assets/owner.jpg" alt="Cole, owner of Summit & Stone Contracting" /> -->
+      <div class="meet__photo reveal" id="meetPhoto" role="img" aria-label="Photo of the owner — coming soon">
+      </div>
+
+      <div class="meet__body reveal" data-delay="1">
+        <span class="eyebrow">Meet the owner</span>
+        <!-- SWAP: owner heading, bio and photo are editable via admin — owner in content.json -->
+        <h2 class="section-title" id="meetHeading">The guy who answers the phone</h2>
+        <div class="meet__desc" id="meetDesc"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Good to know</span>
+      <h2 class="section-title">Questions, answered straight</h2>
+    </div>
+    <div class="faq-list">
+      
+      <details class="faq reveal"><summary>Do you subcontract the work out?<span class="plus">+</span></summary><div class="faq__body">Almost never. Our own crew does concrete, carpentry, hardscape and finish work. The exceptions are licensed-trade tasks like electrical and plumbing rough-in on remodels — and if we bring in a licensed sub for those, we tell you up front and we manage them, not you.</div></details>
+      <details class="faq reveal"><summary>How do estimates work?<span class="plus">+</span></summary><div class="faq__body">Free, on-site, and in writing. We walk the project with you, take measurements, and usually have a written quote to you within 48 hours. The price on that paper is the price — it only changes if you change the scope, and we re-quote in writing before continuing.</div></details>
+      <details class="faq reveal"><summary>How long will my project take?<span class="plus">+</span></summary><div class="faq__body">Punch-lists and pressure washing: usually one visit. Driveways, decks and fences: one to three weeks including cure time. Kitchen and bath remodels: we build a milestone schedule into your quote so you know what happens each week. We'd rather quote you a real timeline than a flattering one.</div></details>
+      <details class="faq reveal"><summary>Do you take small jobs?<span class="plus">+</span></summary><div class="faq__body">Yes — gladly. Punch-lists are a service line, not a favor. Small jobs are how most of our long-term customers found us, and they get the same written quote and the same cleanup as a full remodel.</div></details>
+      <details class="faq reveal"><summary>What area do you serve?<span class="plus">+</span></summary><div class="faq__body">Nampa is home base, and we work the whole Treasure Valley: Caldwell, Meridian, Kuna, Middleton, Star and Boise's west side. Outside that ring? Text your address — if it's a bigger project we'll often still make the drive.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<!-- Fill in each testimonial by putting the quote inside <p class="testimonial__body">…</p>
+     and the customer's name inside <span class="testimonial__name">— First L., Nampa</span>.
+     Empty ones show "Real review coming soon." as a placeholder. -->
+<section class="section testimonials" id="testimonials">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Word around the valley</span>
+      <h2 class="section-title">What neighbors say</h2>
+    </div>
+    <div class="testimonials__grid" id="tGrid">
+      <div class="testimonial reveal" data-delay="1">
+        <span class="testimonial__mark" aria-hidden="true">&ldquo;</span>
+        <p class="testimonial__body"></p>
+        <span class="testimonial__name"></span>
+      </div>
+      <div class="testimonial reveal" data-delay="2">
+        <span class="testimonial__mark" aria-hidden="true">&ldquo;</span>
+        <p class="testimonial__body"></p>
+        <span class="testimonial__name"></span>
+      </div>
+      <div class="testimonial reveal" data-delay="3">
+        <span class="testimonial__mark" aria-hidden="true">&ldquo;</span>
+        <p class="testimonial__body"></p>
+        <span class="testimonial__name"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE REQUEST ============ -->
+<section class="section cta" id="estimate">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:660px;margin:0 auto 34px">
+      <span class="eyebrow">Free estimate</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Tell us what needs building</h2>
+      <p class="lead" style="margin:0 auto">Takes about a minute. We'll text you to set up a free walk-through — and you'll have your price in writing before any work starts.</p>
+      <p class="cta__phone">Rather talk? Call or text <a href="tel:+12085550142" data-tel data-phone-text>(208) 555-0142</a></p>
+    </div>
+
+    <form class="estimate reveal" id="quoteForm" novalidate>
+      <div class="estimate__grid">
+        <div class="field">
+          <label for="q-name">Full name <em>*</em></label>
+          <input id="q-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith" required />
+        </div>
+        <div class="field">
+          <label for="q-phone">Phone (for text confirmation) <em>*</em></label>
+          <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0199" required />
+        </div>
+        <div class="field field--wide">
+          <label for="q-addr">Street address <em>*</em></label>
+          <input id="q-addr" name="address" type="text" autocomplete="street-address" placeholder="123 Main St" required />
+        </div>
+        <div class="field">
+          <label for="q-city">City <em>*</em></label>
+          <input id="q-city" name="city" type="text" autocomplete="address-level2" placeholder="Nampa" required />
+        </div>
+        <div class="field">
+          <label for="q-service">What kind of project? <em>*</em></label>
+          <select id="q-service" name="service" required>
+            <option value="" selected disabled>Pick the closest fit…</option>
+            <option value="Concrete & Driveways">Concrete &amp; Driveways</option>
+            <option value="Landscaping & Hardscape">Landscaping &amp; Hardscape</option>
+            <option value="Kitchen & Bath Remodel">Kitchen &amp; Bath Remodel</option>
+            <option value="Decks & Fences">Decks &amp; Fences</option>
+            <option value="Pressure Washing & Exterior Cleaning">Pressure Washing &amp; Exterior Cleaning</option>
+            <option value="Handyman Punch-List">Handyman Punch-List</option>
+            <option value="Something else / not sure">Something else / not sure</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="q-desc">Describe the project (a sentence or two is plenty)</label>
+          <textarea id="q-desc" name="description" rows="4" placeholder="e.g. Driveway is cracked and sinking near the garage — roughly 20 × 30 ft. Thinking stamped concrete. Also have a gate that won't latch."></textarea>
+        </div>
+      </div>
+
+      <fieldset class="field field--days">
+        <legend>Best days for a walk-through? <em>*</em></legend>
+        <div class="days" id="days" role="group" aria-label="Best days for an on-site estimate">
+          <label class="day"><input type="checkbox" name="days" value="Mon" /><span>Mon</span></label>
+          <label class="day"><input type="checkbox" name="days" value="Tue" /><span>Tue</span></label>
+          <label class="day"><input type="checkbox" name="days" value="Wed" /><span>Wed</span></label>
+          <label class="day"><input type="checkbox" name="days" value="Thu" /><span>Thu</span></label>
+          <label class="day"><input type="checkbox" name="days" value="Fri" /><span>Fri</span></label>
+          <label class="day"><input type="checkbox" name="days" value="Sat" /><span>Sat</span></label>
+          <label class="day day--any"><input type="checkbox" name="days" value="Any day" /><span>Any day works</span></label>
+        </div>
+      </fieldset>
+
+      <label class="consent">
+        <input type="checkbox" id="q-consent" required />
+        <span>Text me to schedule my free estimate. Message &amp; data rates may apply.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="estimate__actions">
+        <button class="btn btn--lg" type="submit" id="quoteSubmit">Request my free estimate</button>
+        <a class="estimate__alt" href="sms:+12085550142?body=Hi%20Summit%20%26%20Stone!%20I'd%20like%20a%20free%20estimate%20on%20a%20project." data-sms>or text us instead</a>
+      </div>
+      <p class="estimate__msg" id="quoteMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- success card -->
+    <div class="estimate-done" id="quoteDone" hidden>
+      <div class="estimate-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>Got it — we're on it</h3>
+      <p id="doneMsg">We'll text you shortly to set up your free walk-through.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="brand-mark" role="img" aria-label="Summit &amp; Stone Contracting">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 24 L11 13 L16 19 L22 9 L29 24 Z" fill="currentColor"/><path d="M3 27h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <div><b>Summit &amp; Stone Contracting</b><span>Built once. Built right.</span></div>
+    </div>
+    <div class="footer__meta">
+      Call or text <a href="tel:+12085550142" data-tel data-phone-text>(208) 555-0142</a><br />
+      <!-- SWAP: real service area / license number line (editable via admin — brand in content.json) -->
+      <span id="areaLine">Serving Nampa &amp; the Treasure Valley</span><br />
+      <span style="opacity:.6">© <span id="yr"></span> Summit &amp; Stone Contracting</span><br />
+      <span class="credit">Concept build by Systems by Vega</span>
+    </div>
+  </div>
+  <!-- SWAP:DISCLOSURE -->
+  <div class="wrap" style="margin-top:26px">
+    <p class="disclosure">Summit &amp; Stone Contracting is a fictional business created to demonstrate this website design.
+    The phone number, email, projects, pricing and reviews shown are placeholders — no real contracting services are offered here.</p>
+  </div>
+  <!-- /SWAP:DISCLOSURE -->
+</footer>
+
+<!-- ============ STICKY MOBILE CTA ============ -->
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550142" data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550142?body=Hi%20Summit%20%26%20Stone!%20I'd%20like%20a%20free%20estimate%20on%20a%20project." data-sms><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
