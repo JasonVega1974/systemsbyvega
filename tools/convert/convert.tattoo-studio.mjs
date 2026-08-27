@@ -81,6 +81,14 @@ export default {
      gallery[] carries BOTH tag and cat — the last of the three naming drifts.
      cat is the filter key the gallery UI joins on, so it is preserved in niche.
      bio is a top-level string here, not owner.bio. */
+  jsReplace: [
+  /* Paired with the social platform -> icon rename in transform(). Without
+     these the renderer reads s.platform, which transform() no longer emits,
+     and every social pill renders with no icon and no label. */
+    ["socSvg(s.platform) + esc(s.label || s.platform)",
+     "socSvg(s.icon) + esc(s.label || s.icon)"],
+  ],
+
   transform(src, out) {
     const b = src.brand || {};
     out.brand = {
@@ -94,7 +102,13 @@ export default {
       title: g.title, tag: g.tag, image: g.image
     }));
     if (src.stats) out.stats = src.stats;
-    if (src.social) out.social = src.social;
+    /* 723ddd3 retired the source's `platform` key in favour of the canonical
+       `icon`. That was applied by hand to niches/ and sites/ but never folded
+       back here, so a re-conversion silently reverted it — the same gap class
+       as the five configs fixed in 3b34b97. The paired jsReplace below keeps
+       the renderer in step. */
+    if (src.social) out.social = src.social.map(
+      ({ platform, ...rest }) => (platform === undefined ? rest : { icon: platform, ...rest }));
     out.niche = {
       galleryCats: (src.gallery || []).map(g => ({ title: g.title, cat: g.cat, art: g.art })),
       flash: src.flash || [],
