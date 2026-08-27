@@ -576,8 +576,40 @@ if (builtHtml) {
     try {
       const o = JSON.parse(ld[1]);
       const body = builtHtml.replace(/<script[^>]*ld\+json[^>]*>[\s\S]*?<\/script>/g, '');
+      /* priceRange is a SUMMARY, not a quotation. build-site.js derives it from
+         the numeric pricing[] tiers, so "$89-$249" is the min and max of prices
+         the visitor can see — the concatenated string itself never appears in
+         the body, and never would. Testing for it literally flagged two sites
+         whose claims are fully supported.
+         Test the requirement instead: both endpoints must be on the page. A
+         range whose numbers appear nowhere still fails, which is the case this
+         check exists for. */
+      /* The tier prices are RENDERED by the niche's JS — the static body carries
+         "price": 89, with no currency symbol — so looking for "$89" in the
+         markup can never succeed. Compare against the data the page renders
+         from: the range is backed when its endpoints are the min and max of
+         pricing[].price. */
+      const tiers = ((content && content.pricing) || [])
+        .map(p => p.price).filter(n => typeof n === 'number');
+      /* EITHER route backs the claim, and both are needed:
+           - the string is in the body — landscaping and painting print their
+             range in visible copy, and their numeric tiers are a different set;
+           - or its endpoints ARE the tier min and max — hvac and personal-trainer
+             render tiers individually and never print the range.
+         Checking only the second regressed the first pair, which is how this
+         was caught. */
+      const backed = c => {
+        const s = String(c);
+        if (body.includes(s)) return true;
+        const ends = s.match(/\d[\d,]*/g);
+        if (/^\s*\$?[\d,]+\s*[–—-]\s*\$?[\d,]+\s*$/.test(s) && ends && ends.length === 2 && tiers.length) {
+          const lo = Number(ends[0].replace(/,/g, '')), hi = Number(ends[1].replace(/,/g, ''));
+          return lo === Math.min(...tiers) && hi === Math.max(...tiers);
+        }
+        return false;
+      };
       const claims = [o.name, o.priceRange].filter(Boolean);
-      const unbacked = claims.filter(c => !body.includes(String(c)));
+      const unbacked = claims.filter(c => !backed(c));
       unbacked.length ? warn('JSON-LD claims appear on the page (§8)', 'not found in body: ' + unbacked.join(', '))
                       : ok('JSON-LD claims appear on the page (§8)');
     } catch {}
