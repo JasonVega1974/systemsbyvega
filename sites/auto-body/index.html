@@ -2,73 +2,515 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex">
 <title>Ironwood Collision Co. — Auto Body & Collision Repair | Emmett, ID</title>
 <meta name="description" content="Collision repair, dent and panel work, and factory paint matching in Emmett, Idaho — serving the whole Treasure Valley. Blueprinted repairs, plain-language estimates, insurance claims without the fog. Call or text (208) 555-0291." />
+<meta name="theme-color" content="#16121A" />
+
+<link rel="canonical" href="https://systemsbyvega.com/sites/auto-body/" />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://systemsbyvega.com/sites/auto-body/" />
 <meta property="og:title" content="Ironwood Collision Co. — Like it never happened." />
 <meta property="og:description" content="Auto body repair in Emmett, ID. Every repair blueprinted, every step approved by you, paint matched until the fix is invisible." />
+<meta property="og:image" content="https://systemsbyvega.com/sites/auto-body/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://systemsbyvega.com/sites/auto-body/og.png" />
+
+<link rel="icon" href="" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2316121A'/%3E%3Cpath d='M12 38q2-9 9-10l6-1q5-6 13-6h6q7 1 10 7l2 4q2 1 2 4v4q0 3-3 3h-2a6 6 0 0 0-12 0H26a6 6 0 0 0-12 0h-1q-2 0-1-5z' fill='%23C9D1D9'/%3E%3Ccircle cx='20' cy='47' r='4' fill='%23B02E58'/%3E%3Ccircle cx='44' cy='47' r='4' fill='%23B02E58'/%3E%3C/svg%3E" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "AutoBodyShop",
   "name": "Ironwood Collision Co.",
-  "description": "Collision repair, dent and panel work, and factory paint matching in Emmett, Idaho — serving the Treasure Valley.",
+  "description": "Collision repair, dent and panel work, and factory paint matching in Emmett, Idaho — serving the whole Treasure Valley. Blueprinted repairs, plain-language estimates, insurance claims without the fog. Call or text (208) 555-0291.",
   "telephone": "+12085550291",
   "email": "hello@ironwoodcollision.com",
-  "address": { "@type": "PostalAddress", "addressLocality": "Emmett", "addressRegion": "ID", "addressCountry": "US" },
-  "areaServed": "Gem County and the Treasure Valley, Idaho"
+  "areaServed": "Gem County & the Treasure Valley",
+  "slogan": "Like it never happened."
 }
 </script>
+
 <style>
-  :root{
-    --coal:#16121A; --coal-2:#1C1622; --panel:rgba(255,255,255,.045);
-    --wine:#B02E58; --wine-bright:#D14975; --wine-deep:#8A2344;
-    --silver:#C9D1D9; --pearl:#EDE6F2;
-    --ink:#F2EDF6; --muted:#A79FB0; --hair:rgba(237,230,242,.13);
-    --card:rgba(255,255,255,.05); --card-brd:rgba(237,230,242,.11);
-    --shadow:0 26px 60px -28px rgba(0,0,0,.7);
-    --maxw:1120px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--coal);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* ── niche tokens ─────────────────────────────────────────────────────── */
+/* auto-body — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground:       #16121A;   /* was --coal */
+  --ground-2:     #1C1622;   /* was --coal-2 */
+  --panel:        rgba(255,255,255,.045);
+  --accent:       #B02E58;   /* was --wine */
+  --accent-2:     #D14975;   /* was --wine-bright */
+  --accent-deep:  #8A2344;   /* was --wine-deep */
+  --ink-dim:      #C9D1D9;   /* was --silver */
+  --ink-bright:   #EDE6F2;   /* was --pearl */
+  --ink:          #F2EDF6;
+  --muted:        #A79FB0;
+  --hair:         rgba(237,230,242,.13);
+  --card:         rgba(255,255,255,.05);
+  --card-brd:     rgba(237,230,242,.11);
+  --shadow:       0 26px 60px -28px rgba(0,0,0,.7);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --panel-2:      #171219;
+  --ground-deep:  #16121A;
+  --ground-3:     #141018;
+  --panel-3:      #211A29;
+  --accent-shade: #4A1226;
+  --accent-shade-deep:#2A0C17;
+  --err-ink:      #FFD3C2;
+  --ink-max:      #fff;
+  --accent-ink:   var(--ink-max);
+  --accent-soft:  var(--accent-shade);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-lo:     var(--ink-dim);
+  --sheen-accent: var(--accent-2);
+  --err:          var(--err-ink);
+  --ok:           var(--accent-2);
+
+  --display: 'Sora', sans-serif;
+  --body:    'Inter Tight', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+/* ── shared structural CSS ────────────────────────────────────────────── */
+/* _template/base.css — structural CSS shared by every SiteLab niche.
+   A rule lives here when its class/id hooks appear in the markup of two or more
+   deployed sites, or when it targets elements only. A rule used by exactly one
+   niche belongs in that niche's sections.css instead (SITELAB_TEMPLATE.md §3).
+   Colour and type come from niches/<slug>/niche.css. Never put a literal colour
+   in this file: reference a token from the §5 contract. */
+/* =========================================================
+   SAWTOOTH DUMPSTER CO. — tokens
+   High-desert identity: deep pine green base, safety-yellow
+   primary (amber-deep gradient end), warm sand/kraft type.
+   ========================================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--ground);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* warm high-desert backdrop for the whole page */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(1100px 640px at 82% -10%, rgba(216,155,0,.16), transparent 60%),
+    radial-gradient(900px 700px at 6% 14%, rgba(29,58,44,.55), transparent 62%),
+    radial-gradient(760px 520px at 50% 108%, rgba(255,196,0,.07), transparent 60%),
+    linear-gradient(180deg,var(--ground-2) 0%, var(--ground) 45%, var(--ground-deep) 100%);
+}
+/* faint topographic contour rings */
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 52px, rgba(242,233,216,.035) 52px 53px),
+    repeating-radial-gradient(circle at 84% 68%, transparent 0 68px, rgba(255,196,0,.03) 68px 69px),
+    repeating-radial-gradient(circle at 55% -10%, transparent 0 84px, rgba(242,233,216,.022) 84px 85px);
+  opacity:.9;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---------- shared type ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:.74rem;color:var(--accent);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;flex:none;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+.section-title{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.9rem,5vw,3.3rem);line-height:1.02;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 55%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{color:var(--muted);font-size:1.08rem;max-width:58ch}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  font-size:1rem;padding:1rem 1.7rem;border-radius:12px;border:0;cursor:pointer;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
+  overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:active{transform:translateY(0)}
+/* headlight shine sweep */
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;
+}
+.btn:hover::after{left:130%}
+.btn--ghost{
+  background:rgba(255,196,0,.07);color:var(--ink-bright);
+  border:1px solid rgba(255,196,0,.35);
+  box-shadow:none;backdrop-filter:blur(6px);
+}
+.btn--ghost:hover{background:var(--hair-accent);box-shadow:0 10px 26px -14px rgba(255,196,0,.5)}
+.btn--lg{font-size:1.12rem;padding:1.15rem 2.2rem}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--accent-2);outline-offset:3px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  padding:16px 0;
+}
+.nav.solid{
+  background:rgba(8,19,14,.86);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--hair), 0 18px 40px -30px #000;
+  padding:10px 0;
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:44px;height:44px;flex:none;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.6)}
+.brand__mark svg{width:30px;height:30px}
+.brand__name{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.92rem;line-height:1;color:var(--ink-bright)}
+.brand__name span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:.58rem;
+  letter-spacing:.22em;margin-top:4px;color:var(--muted)}
+.nav__links{display:flex;align-items:center;gap:28px}
+.nav__links a.link{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.76rem;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+.nav__links a.link:hover{opacity:1;color:var(--accent-2)}
+.nav__call{display:inline-flex;align-items:center;gap:.5rem;font-family:'Anybody',sans-serif;font-stretch:62.5%;
+  font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;
+  padding:.6rem 1.05rem;border-radius:10px;color:var(--accent-ink);white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 10px 24px -12px rgba(255,196,0,.7), inset 0 1px 0 rgba(255,255,255,.45);}
+.nav__call svg{width:16px;height:16px}
+@media(max-width:900px){.nav__links a.link{display:none}}
+@media(max-width:520px){.nav__call{font-size:.74rem;padding:.5rem .8rem;gap:.35rem;letter-spacing:.03em}}
+@media(max-width:380px){.nav__call{font-size:.68rem;padding:.45rem .65rem;gap:.3rem}}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:safe center;
+  padding:clamp(120px,15vh,180px) 0 clamp(70px,9vh,96px);overflow:hidden}
+.hero > .wrap{width:100%;position:relative;z-index:2}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,56px);align-items:center;width:100%}
+@media(max-height:780px){.hero{align-items:flex-start}}
+@media(max-width:900px){.hero__grid{grid-template-columns:1fr;text-align:center;gap:30px}}
+
+.hero__tag{margin-bottom:20px}
+.hero h1{
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,6.8vw,4.7rem);line-height:.94;letter-spacing:.005em;margin-bottom:8px;
+}
+.hero h1 .l1{
+  background:linear-gradient(180deg,var(--sheen-hi) 0%,var(--ink) 50%,var(--sheen-lo) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(242,233,216,.14));display:block;
+}
+.hero h1 .l2{
+  color:var(--accent);display:block;
+  text-shadow:0 4px 30px rgba(255,196,0,.38);
+}
+.hero__sub{font-size:1.16rem;color:var(--ink-dim);max-width:48ch;margin:18px 0 30px}
+@media(max-width:900px){.hero__sub{margin-inline:auto}}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero__cta{justify-content:center}}
+.hero__proof{display:flex;gap:26px;margin-top:32px;flex-wrap:wrap}
+@media(max-width:900px){.hero__proof{justify-content:center}}
+.proof{display:flex;flex-direction:column;line-height:1.1}
+.proof b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;font-size:1.6rem;color:var(--ink-max);letter-spacing:.02em}
+.proof span{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.proof + .proof{padding-left:26px;border-left:1px solid var(--hair)}
+@media(max-width:900px){.proof + .proof{border-left:0;padding-left:0}}
+
+/* hero art: roll-off box under a mountain ridge, drawn inline */
+.hero__art{position:relative;display:flex;justify-content:center}
+.hero__art .halo{
+  position:absolute;inset:-4% -8% 6%;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,196,0,.22), rgba(255,196,0,.06) 55%, transparent 72%);
+  filter:blur(8px);animation:pulse 6s ease-in-out infinite;z-index:0;
+}
+.hero__art svg{position:relative;z-index:1;width:min(520px,94%);height:auto;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+
+/* drifting high-desert dust motes */
+.motes{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+@keyframes mote{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:.75}
+  55%{transform:translate3d(26px,-55vh,0)}
+  88%{opacity:.4}
+  100%{transform:translate3d(-14px,-108vh,0);opacity:0}
+}
+
+/* ridge divider under hero */
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;line-height:0;color:var(--panel);z-index:0;pointer-events:none}
+
+/* =========================================================
+   TRUST STRIP
+   ========================================================= */
+.trust{background:linear-gradient(180deg,var(--panel),rgba(19,42,32,.4));border-block:1px solid var(--hair)}
+.trust__in{display:flex;flex-wrap:wrap;gap:14px 34px;justify-content:center;align-items:center;padding:20px 22px}
+.trust__item{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;color:var(--ink)}
+.trust__item svg{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* =========================================================
+   SECTION base
+   ========================================================= */
+.section{padding:92px 0}
+.section__head{max-width:660px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__head .section-title{margin:14px 0 16px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:block;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.08em;
+  font-size:.84rem;color:var(--ink);padding:.6rem 1.15rem;border-radius:10px;text-transform:uppercase;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5);transition:.15s;user-select:none;white-space:nowrap}
+.pill:hover span{border-color:rgba(255,196,0,.5)}
+.pill input:checked + span{color:var(--accent-ink);border-color:transparent;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -10px rgba(255,196,0,.7)}
+.pill input:focus-visible + span{outline:3px solid var(--accent-2);outline-offset:2px}
+.price-box .btn{width:100%;margin-top:18px}
+.reveal.in .meter__bar{width:var(--w)}
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:step}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:30px 26px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:18px;backdrop-filter:blur(8px)}
+.step__n{counter-increment:step;font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;
+  font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,196,0,.65);
+  display:block;margin-bottom:12px}
+.step__n::before{content:"0" counter(step)}
+.step h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;text-transform:uppercase;
+  letter-spacing:.03em;font-size:1.15rem;margin-bottom:8px;color:var(--ink-max)}
+.step p{color:var(--muted);font-size:.98rem}
+.nogo .section__head{margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);padding:.5rem 1rem;border-radius:20px;
+  border:1px solid var(--card-brd);background:rgba(8,19,14,.5)}
+.chip svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* =========================================================
+   MEET THE OWNER
+   ========================================================= */
+.owner__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:center;max-width:1000px;margin:0 auto}
+@media(max-width:820px){.owner__grid{grid-template-columns:1fr;gap:32px;max-width:520px}}
+.owner__photo{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(29,58,44,.6),rgba(10,22,16,.6));
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.owner__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.owner__photo > svg{width:100%;height:100%;display:block}
+.owner__photo:not(:has(img,svg))::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(closest-side, rgba(255,196,0,.1), transparent 70%),
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(242,233,216,.04) 14px 15px);
+}
+.owner__photo:not(:has(img,svg))::after{
+  content:"Add the owner's photo here";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;
+  color:var(--ink-dim);opacity:.6;padding:20px;text-align:center;pointer-events:none}
+.owner__body .section-title{margin:14px 0 22px}
+.owner__desc{color:var(--ink);font-size:1.02rem;line-height:1.7;padding:26px;border-radius:16px;
+  background:var(--card);border:1px solid var(--card-brd);backdrop-filter:blur(8px);min-height:170px;position:relative}
+.owner__desc:empty::before{
+  content:"Short bio goes here — who runs Sawtooth Dumpster Co., how long they've been hauling in the Valley, and why they got sick of watching neighbors get quote-gamed. Replace this placeholder with the real thing.";
+  color:var(--muted);opacity:.7;font-style:italic;display:block}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq{background:var(--card);border:1px solid var(--card-brd);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:700;font-size:1.04rem;color:var(--ink-bright)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,196,0,.4);color:var(--accent);transition:transform .25s ease;font-family:'Inter',sans-serif;font-weight:400}
+.faq[open] summary .plus{transform:rotate(45deg)}
+.faq__body{padding:0 22px 20px;color:var(--muted);font-size:1rem}
+.faq__body b{color:var(--ink)}
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+.cta{position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 340px at 18% 0%, var(--hair-accent), transparent 60%),
+    radial-gradient(600px 340px at 92% 100%, rgba(29,58,44,.7), transparent 60%),
+    linear-gradient(160deg,var(--panel),var(--ground-2));
+  border-block:1px solid var(--hair)}
+.cta__phone{color:var(--muted);font-size:.95rem;margin-top:14px}
+.cta__phone a{color:var(--accent-2);font-weight:600}
+
+.book{max-width:760px;margin:0 auto;background:rgba(8,19,14,.62);
+  border:1px solid var(--card-brd);border-radius:22px;padding:clamp(22px,3vw,34px);
+  backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.book__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book__grid + .book__grid,.book__grid + .field,.field + .book__grid{margin-top:16px}
+@media(max-width:640px){.book__grid{grid-template-columns:1fr}}
+.field{min-width:0}
+.field--wide{grid-column:1 / -1}
+.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px}
+.field em{color:var(--accent-2);font-style:normal;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border-radius:11px;
+  background:rgba(5,12,9,.7);border:1px solid var(--card-brd);color:var(--ink-bright);
+  font-family:'Inter',sans-serif;font-size:1rem}
+.field textarea{resize:vertical;min-height:74px}
+.field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:rgba(5,12,9,.9)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD34D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.6rem}
+.field input[readonly]{background:rgba(255,196,0,.06);border-style:dashed;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.86rem}
+.field.invalid input,.field.invalid select,.field.invalid textarea{
+  border-color:var(--err);box-shadow:0 0 0 2px rgba(224,97,107,.22)}
+/* date input: keep the picker icon visible on dark bg */
+.field input[type="date"]{color-scheme:dark}
+
+.consent{display:flex;gap:.65rem;align-items:flex-start;margin-top:20px;
+  color:var(--muted);font-size:.92rem;line-height:1.5;cursor:pointer}
+.consent input{margin-top:.15rem;width:18px;height:18px;flex:none;accent-color:var(--accent);cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.book__actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px}
+.book__actions .btn[disabled]{opacity:.7;cursor:progress}
+.book__alt{font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--ink);opacity:.85;
+  text-transform:uppercase;font-size:.76rem;text-decoration:underline;text-underline-offset:3px}
+.book__alt:hover{opacity:1;color:var(--accent-2)}
+.book__msg{margin-top:14px;font-size:.94rem;min-height:1.1em}
+.book__msg.err{color:var(--err-ink)}
+.book__msg.ok{color:var(--accent-2)}
+
+.book-done{max-width:600px;margin:0 auto;text-align:center;
+  background:linear-gradient(180deg,rgba(29,58,44,.55),rgba(10,22,16,.6));
+  border:1px solid rgba(255,196,0,.4);border-radius:22px;padding:clamp(32px,5vw,52px) 32px;
+  box-shadow:0 0 0 1px rgba(255,196,0,.2),var(--shadow);backdrop-filter:blur(10px)}
+.book-done__ic{width:66px;height:66px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;
+  color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 12px 30px -10px rgba(255,196,0,.8)}
+.book-done__ic svg{width:34px;height:34px}
+.book-done h3{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:900;text-transform:uppercase;
+  font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.02;margin-bottom:12px;
+  background:linear-gradient(180deg,var(--sheen-hi),var(--ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.book-done p{color:var(--ink-dim);font-size:1.05rem;margin-bottom:22px}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{padding:52px 0 40px;border-top:1px solid var(--hair)}
+.footer__grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:center}
+.footer__brand{display:flex;align-items:center;gap:14px}
+.footer__brand .brand__mark{width:52px;height:52px}
+.footer__brand b{font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-max);font-size:1rem;display:block}
+.footer__brand span{color:var(--muted);font-size:.8rem;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.footer__meta{color:var(--muted);font-size:.86rem;text-align:right}
+.footer__meta a{color:var(--accent-2)}
+.footer__credit{display:block;margin-top:10px;font-size:.76rem;opacity:.55;letter-spacing:.02em}
+.footer__credit a{color:var(--ink-dim);text-decoration:underline;text-underline-offset:2px}
+.footer__credit a:hover{color:var(--accent-2)}
+@media(max-width:640px){.footer__meta{text-align:left}}
+
+/* =========================================================
+   STICKY MOBILE CTA
+   ========================================================= */
+.mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(8,19,14,.94);backdrop-filter:blur(14px);border-top:1px solid var(--hair)}
+.mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:'Anybody',sans-serif;font-stretch:62.5%;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;font-size:.95rem;padding:.95rem;border-radius:12px}
+.mobile-cta .call{color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2),var(--accent-deep));
+  box-shadow:0 8px 20px -8px rgba(255,196,0,.7)}
+.mobile-cta .text{color:var(--ink-bright);background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.35)}
+.mobile-cta svg{width:20px;height:20px}
+@media(max-width:820px){.mobile-cta{display:flex}.footer{padding-bottom:120px}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.08s}
+[data-delay="2"]{transition-delay:.16s}
+[data-delay="3"]{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}}
+/* ── this niche's own section rules (may override the above) ─────────── */
+/* auto-body/sections.css — rules for this niche's own sections.
+   4 rule(s) were identical to base.css and dropped; 156 kept.
+   Inlined after base.css, so anything here overrides shared chrome. */
+body{background:var(--ground);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     background:
       radial-gradient(760px 420px at 12% -6%,rgba(176,46,88,.16),transparent 66%),
       radial-gradient(640px 380px at 96% 12%,rgba(201,209,217,.07),transparent 62%),
       radial-gradient(900px 520px at 50% 110%,rgba(138,35,68,.10),transparent 70%),
-      linear-gradient(180deg,#171219 0%,#16121A 55%,#141018 100%)}
+      linear-gradient(180deg,var(--panel-2) 0%,var(--ground-deep) 55%,var(--ground-3) 100%)}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .mono{font-family:'IBM Plex Mono',monospace}
   a{color:inherit}
-  img{max-width:100%;display:block}
-  :focus-visible{outline:2px solid var(--wine-bright);outline-offset:3px;border-radius:4px}
+  :focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;border-radius:4px}
   section{padding:78px 0}
   h1,h2,h3{font-family:'Sora',sans-serif;font-weight:700;letter-spacing:-.015em}
   h2{font-size:clamp(26px,4vw,38px);line-height:1.12;margin:10px 0 16px}
   .stxt{font-size:16.5px;color:var(--muted);max-width:60ch}
-  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--wine-bright);display:flex;align-items:center;gap:10px}
-  .eyebrow::before{content:"";width:24px;height:2px;background:var(--silver)}
+  .eyebrow{font-family:'IBM Plex Mono';font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--ink-dim)}
 
   /* ---------- nav ---------- */
   .nav{position:sticky;top:0;z-index:50;background:rgba(22,18,26,.88);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.2s}
   .nav.solid{border-bottom-color:var(--hair);box-shadow:0 1px 0 rgba(0,0,0,.3)}
   .nav-in{max-width:var(--maxw);margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .logo{display:flex;align-items:center;gap:10px;font-family:'Sora';font-weight:800;font-size:17px;color:var(--ink)}
-  .logo .mark{width:31px;height:31px;border-radius:10px;background:linear-gradient(150deg,var(--wine-bright),var(--wine-deep));display:grid;place-items:center;color:#fff;flex:none}
+  .logo .mark{width:31px;height:31px;border-radius:10px;background:linear-gradient(150deg,var(--accent-2),var(--accent-deep));display:grid;place-items:center;color:var(--ink-max);flex:none}
   .logo .mark svg{width:17px;height:17px}
   .logo small{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.04em}
   .nav-links{display:flex;align-items:center;gap:4px}
   .nav a.tab{font-weight:600;font-size:13.5px;text-decoration:none;color:var(--ink);padding:9px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
-  .nav a.tab:hover{background:rgba(209,73,117,.12);color:var(--wine-bright)}
-  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:#fff;background:var(--wine);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
-  .nav a.cta:hover{background:var(--wine-bright);transform:translateY(-1px)}
+  .nav a.tab:hover{background:rgba(209,73,117,.12);color:var(--accent-2)}
+  .nav a.cta{font-weight:800;font-size:13.5px;text-decoration:none;color:var(--ink-max);background:var(--accent);padding:10px 18px;border-radius:10px;transition:.18s;white-space:nowrap;margin-left:6px}
+  .nav a.cta:hover{background:var(--accent-2);transform:translateY(-1px)}
   @media(max-width:760px){
     .nav-links a.tab{display:none}
     .nav-in{padding:12px 20px}
@@ -78,25 +520,25 @@
   .hero{padding:84px 0 90px;position:relative;overflow:hidden}
   .hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
   .hero h1{font-size:clamp(34px,5.2vw,54px);font-weight:800;line-height:1.05;letter-spacing:-.02em;max-width:15ch;margin-top:20px;
-    background:linear-gradient(180deg,#fff 0%,var(--pearl) 70%,var(--silver) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero h1 .hl{background:linear-gradient(180deg,var(--wine-bright),var(--wine));-webkit-background-clip:text;background-clip:text;color:transparent}
+    background:linear-gradient(180deg,var(--ink-max) 0%,var(--ink-bright) 70%,var(--ink-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero h1 .hl{background:linear-gradient(180deg,var(--accent-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p{font-size:clamp(16px,1.8vw,18.5px);color:var(--muted);max-width:52ch;margin-top:20px}
   .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
-  .btn-pri{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:#fff;background:var(--wine);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
-  .btn-pri:hover{background:var(--wine-bright);transform:translateY(-2px)}
+  .btn-pri{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink-max);background:var(--accent);padding:15px 26px;border-radius:12px;transition:.18s;border:none;cursor:pointer;display:inline-block}
+  .btn-pri:hover{background:var(--accent-2);transform:translateY(-2px)}
   .btn-sec{font-family:'Inter Tight';font-weight:800;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--hair);background:var(--panel);padding:15px 26px;border-radius:12px;transition:.18s}
-  .btn-sec:hover{border-color:var(--wine-bright);color:var(--wine-bright)}
+  .btn-sec:hover{border-color:var(--accent-2);color:var(--accent-2)}
   .hero-card{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:26px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
   .hero-card .hc-line{font-family:'Sora';font-weight:700;font-size:19px;line-height:1.45;color:var(--ink)}
   .hero-card .hc-by{margin-top:14px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);letter-spacing:.02em}
-  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pearl);background:rgba(176,46,88,.18);border:1px solid rgba(209,73,117,.4);border-radius:20px;padding:4px 11px;margin-bottom:14px}
+  .hero-card .hc-badge{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-bright);background:rgba(176,46,88,.18);border:1px solid rgba(209,73,117,.4);border-radius:20px;padding:4px 11px;margin-bottom:14px}
   @media(max-width:900px){.hero-in{grid-template-columns:1fr}.hero-card{order:-1}}
 
   /* ---------- trust strip ---------- */
-  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--coal-2)}
+  .trust{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:var(--ground-2)}
   .trust-in{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0}
   .tstat{text-align:center}
-  .tstat b{display:block;font-family:'Sora';font-weight:800;font-size:27px;color:var(--wine-bright)}
+  .tstat b{display:block;font-family:'Sora';font-weight:800;font-size:27px;color:var(--accent-2)}
   .tstat span{display:block;font-size:13px;color:var(--muted);margin-top:4px}
   @media(max-width:640px){.trust-in{grid-template-columns:1fr;gap:14px}}
 
@@ -107,27 +549,27 @@
   .ba-labels{display:flex;justify-content:space-between;align-items:center;max-width:860px;margin:30px auto 14px;padding:0 4px;gap:16px}
   .ba-label{font-family:'IBM Plex Mono';font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:11px;padding:.42rem .9rem;border-radius:20px;display:inline-flex;align-items:center;gap:.5rem}
   .ba-label::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.75}
-  .ba-label--b{background:rgba(0,0,0,.4);color:var(--silver);border:1px solid rgba(201,209,217,.35)}
-  .ba-label--a{background:rgba(176,46,88,.16);color:var(--wine-bright);border:1px solid rgba(209,73,117,.5)}
+  .ba-label--b{background:rgba(0,0,0,.4);color:var(--ink-dim);border:1px solid rgba(201,209,217,.35)}
+  .ba-label--a{background:rgba(176,46,88,.16);color:var(--accent-2);border:1px solid rgba(209,73,117,.5)}
   @media(max-width:520px){.ba-label{font-size:9.5px;letter-spacing:.09em;padding:.34rem .6rem}}
   .ba{position:relative;max-width:860px;margin:0 auto;aspect-ratio:16/9;border-radius:20px;overflow:hidden;user-select:none;touch-action:pan-y;
-    border:1px solid rgba(209,73,117,.28);box-shadow:var(--shadow);background:#211A29;cursor:ew-resize}
+    border:1px solid rgba(209,73,117,.28);box-shadow:var(--shadow);background:var(--panel-3);cursor:ew-resize}
   .ba__panel{position:absolute;inset:0}
   .ba__panel svg{width:100%;height:100%;display:block}
   .ba__before{z-index:2;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
   .ba__handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;
-    background:linear-gradient(180deg,transparent,var(--silver),var(--wine-bright),var(--silver),transparent);
+    background:linear-gradient(180deg,transparent,var(--ink-dim),var(--accent-2),var(--ink-dim),transparent);
     transform:translateX(-1px);z-index:5;box-shadow:0 0 18px rgba(209,73,117,.8)}
   .ba__grip{position:absolute;top:50%;left:var(--pos,50%);transform:translate(-50%,-50%);z-index:6;
     width:50px;height:50px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle at 35% 30%,var(--wine-bright),var(--wine) 60%,var(--wine-deep));
+    background:radial-gradient(circle at 35% 30%,var(--accent-2),var(--accent) 60%,var(--accent-deep));
     border:2px solid rgba(255,255,255,.85);
     box-shadow:0 8px 24px -6px rgba(0,0,0,.8),0 0 22px rgba(176,46,88,.7);
-    display:grid;place-items:center;color:#fff}
+    display:grid;place-items:center;color:var(--ink-max)}
   .ba__grip svg{width:22px;height:22px}
   .ba__hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;
     font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--pearl);background:rgba(22,18,26,.7);padding:.34rem .75rem;border-radius:20px;
+    color:var(--ink-bright);background:rgba(22,18,26,.7);padding:.34rem .75rem;border-radius:20px;
     border:1px solid var(--hair);transition:opacity .4s;pointer-events:none}
   .ba.touched .ba__hint{opacity:0}
   /* stage strip under the slider */
@@ -135,9 +577,9 @@
   .stage{font-family:'IBM Plex Mono';font-size:11.5px;font-weight:600;letter-spacing:.05em;color:var(--muted);
     background:var(--panel);border:1px solid var(--hair);border-radius:20px;padding:8px 14px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:7px}
   .stage .n{font-size:10px;opacity:.7}
-  .stage:hover{border-color:var(--wine-bright);color:var(--wine-bright)}
-  .stage.on{background:var(--wine);border-color:var(--wine);color:#fff}
-  .stage.done{color:var(--pearl);border-color:rgba(209,73,117,.4)}
+  .stage:hover{border-color:var(--accent-2);color:var(--accent-2)}
+  .stage.on{background:var(--accent);border-color:var(--accent);color:var(--ink-max)}
+  .stage.done{color:var(--ink-bright);border-color:rgba(209,73,117,.4)}
   .stage-blurb{max-width:66ch;margin:18px auto 0;text-align:center;font-size:15px;color:var(--muted);line-height:1.65;min-height:3.3em}
   .reveal-note{max-width:860px;margin:18px auto 0;font-size:13.5px;color:var(--muted);background:rgba(176,46,88,.10);border:1px solid rgba(209,73,117,.3);border-radius:10px;padding:11px 14px;text-align:center}
 
@@ -145,7 +587,7 @@
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
   .svc{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:24px;transition:transform .2s,border-color .2s;backdrop-filter:blur(6px)}
   .svc:hover{transform:translateY(-4px);border-color:rgba(209,73,117,.45)}
-  .svc .s-ico{width:44px;height:44px;border-radius:12px;background:rgba(176,46,88,.16);border:1px solid rgba(209,73,117,.3);display:grid;place-items:center;margin-bottom:14px;color:var(--wine-bright)}
+  .svc .s-ico{width:44px;height:44px;border-radius:12px;background:rgba(176,46,88,.16);border:1px solid rgba(209,73,117,.3);display:grid;place-items:center;margin-bottom:14px;color:var(--accent-2)}
   .svc .s-ico svg{width:22px;height:22px}
   .svc h3{font-size:16.5px}
   .svc p{font-size:14px;color:var(--muted);margin-top:8px}
@@ -153,10 +595,10 @@
   @media(max-width:640px){.svc-grid{grid-template-columns:1fr}}
 
   /* ---------- claims ---------- */
-  .claims{background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .claims{background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
   .claims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;counter-reset:cstep}
   .ccard{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;padding:22px;counter-increment:cstep;position:relative}
-  .ccard::before{content:counter(cstep,decimal-leading-zero);font-family:'Sora';font-weight:800;font-size:32px;color:transparent;-webkit-text-stroke:1.5px var(--wine-bright);display:block;margin-bottom:10px;opacity:.9}
+  .ccard::before{content:counter(cstep,decimal-leading-zero);font-family:'Sora';font-weight:800;font-size:32px;color:transparent;-webkit-text-stroke:1.5px var(--accent-2);display:block;margin-bottom:10px;opacity:.9}
   .ccard h3{font-size:15.5px}
   .ccard p{font-size:13.5px;color:var(--muted);margin-top:8px}
   .claims-note{margin-top:20px;font-size:13.5px;color:var(--muted);text-align:center;background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:11px 14px;max-width:760px;margin-left:auto;margin-right:auto}
@@ -167,21 +609,21 @@
   .proc-list{margin-top:32px;display:flex;flex-direction:column;gap:0;max-width:760px}
   .pstep{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair);position:relative}
   .pstep:last-child{border-bottom:none}
-  .pstep .pn{width:44px;height:44px;border-radius:50%;background:rgba(176,46,88,.14);border:1.5px solid rgba(209,73,117,.4);display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:16px;color:var(--wine-bright)}
+  .pstep .pn{width:44px;height:44px;border-radius:50%;background:rgba(176,46,88,.14);border:1.5px solid rgba(209,73,117,.4);display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:16px;color:var(--accent-2)}
   .pstep h3{font-size:17px}
   .pstep p{font-size:14.5px;color:var(--muted);margin-top:6px;max-width:58ch}
 
   /* ---------- service area ---------- */
   .area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
-  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--pearl);background:rgba(201,209,217,.08);border:1px solid rgba(201,209,217,.22);padding:7px 13px;border-radius:20px}
+  .achip{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--ink-bright);background:rgba(201,209,217,.08);border:1px solid rgba(201,209,217,.22);padding:7px 13px;border-radius:20px}
 
   /* ---------- owner ---------- */
-  .owner-sec{background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .owner-sec{background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
   .owner-wrap{display:grid;grid-template-columns:.9fr 1.4fr;gap:36px;align-items:center;margin-top:30px}
   .owner-photo{aspect-ratio:1/1;border-radius:18px;background:var(--card);border:1.5px dashed var(--card-brd);display:grid;place-items:center;color:var(--muted);font-family:'IBM Plex Mono';font-size:12px;text-align:center;padding:20px}
   .owner-photo:not(:has(img))::after{content:"Photo coming soon"}
   .owner-bio h3{font-size:20px}
-  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--wine-bright);margin-top:2px;letter-spacing:.02em}
+  .owner-bio .oname{font-family:'IBM Plex Mono';font-size:12px;color:var(--accent-2);margin-top:2px;letter-spacing:.02em}
   .owner-bio p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.68}
   @media(max-width:820px){.owner-wrap{grid-template-columns:1fr}.owner-photo{max-width:220px;margin:0 auto}}
 
@@ -199,58 +641,57 @@
   .qa{border-bottom:1px solid var(--hair)}
   .qa summary{list-style:none;cursor:pointer;padding:19px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'Sora';font-weight:700;font-size:16px}
   .qa summary::-webkit-details-marker{display:none}
-  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--wine-bright);font-size:20px;flex:none;transition:transform .2s}
+  .qa summary .pm{font-family:'IBM Plex Mono';color:var(--accent-2);font-size:20px;flex:none;transition:transform .2s}
   .qa[open] summary .pm{transform:rotate(45deg)}
   .qa .ans{padding:0 4px 20px;color:var(--muted);font-size:15px;max-width:68ch;line-height:1.6}
 
   /* ---------- estimate form ---------- */
-  .estimate{background:linear-gradient(160deg,var(--wine-deep),#4A1226 60%,#2A0C17);color:#fff;text-align:center;border-top:1px solid var(--hair)}
+  .estimate{background:linear-gradient(160deg,var(--accent-deep),var(--accent-shade) 60%,var(--accent-shade-deep));color:var(--ink-max);text-align:center;border-top:1px solid var(--hair)}
   .estimate .eyebrow{color:rgba(255,255,255,.85);justify-content:center}
-  .estimate .eyebrow::before{background:var(--silver)}
-  .estimate h2{color:#fff;max-width:26ch;margin:12px auto 14px}
+  .estimate .eyebrow::before{background:var(--ink-dim)}
+  .estimate h2{color:var(--ink-max);max-width:26ch;margin:12px auto 14px}
   .estimate > .wrap > .reveal > p{color:rgba(255,255,255,.85);max-width:56ch;margin:0 auto;font-size:16.5px}
   .qform{max-width:560px;margin:34px auto 0;text-align:left;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px}
   .qf-row{margin-bottom:15px}
   .qf-row label{display:block;font-family:'IBM Plex Mono';font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:7px;letter-spacing:.03em}
-  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:#fff}
-  .qf-row select option{color:var(--coal)}
+  .qf-row input,.qf-row textarea,.qf-row select{width:100%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:12px 13px;font:inherit;font-size:14.5px;color:var(--ink-max)}
+  .qf-row select option{color:var(--ground)}
   .qf-row input::placeholder,.qf-row textarea::placeholder{color:rgba(255,255,255,.5)}
-  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.15)}
+  .qf-row input:focus,.qf-row textarea:focus,.qf-row select:focus{outline:none;border-color:var(--ink-max);background:rgba(255,255,255,.15)}
   .qf-row textarea{resize:vertical;line-height:1.5}
   .qf-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:560px){.qf-two{grid-template-columns:1fr}}
   .hp{position:absolute;left:-9999px;opacity:0}
-  .qf-submit{width:100%;background:#fff;color:var(--wine-deep);font-family:'Inter Tight';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+  .qf-submit{width:100%;background:var(--ink-max);color:var(--accent-deep);font-family:'Inter Tight';font-weight:800;font-size:15px;border:none;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
   .qf-submit:hover{filter:brightness(.94)}
   .qf-submit:disabled{opacity:.6;cursor:default}
   .qf-status{margin-top:12px;font-size:13px;color:rgba(255,255,255,.8)}
-  .qf-status.err{color:#FFD3C2;font-weight:700}
-  .qf-success{max-width:560px;margin:34px auto 0;background:#fff;color:var(--coal);border-radius:18px;padding:32px;font-family:'Sora';font-weight:700;font-size:17px;text-align:center}
+  .qf-status.err{color:var(--err-ink);font-weight:700}
+  .qf-success{max-width:560px;margin:34px auto 0;background:var(--ink-max);color:var(--ground);border-radius:18px;padding:32px;font-family:'Sora';font-weight:700;font-size:17px;text-align:center}
   .qf-alt{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.8)}
-  .qf-alt a{color:#fff;font-weight:700;text-decoration:underline}
+  .qf-alt a{color:var(--ink-max);font-weight:700;text-decoration:underline}
 
   /* ---------- footer ---------- */
-  footer{background:var(--coal-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
+  footer{background:var(--ground-2);border-top:1px solid var(--hair);padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px))}
   .foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:13px;color:var(--muted)}
   .foot-in b{font-family:'Sora';color:var(--ink)}
   .footer__credit{opacity:.75}
-  .footer__credit a{color:var(--wine-bright);text-decoration:none;font-weight:700}
+  .footer__credit a{color:var(--accent-2);text-decoration:none;font-weight:700}
 
   /* ---------- mobile call/text bar ---------- */
-  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--coal-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+  .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--ground-2);border-top:1px solid var(--hair);box-shadow:0 -8px 24px rgba(0,0,0,.4)}
   .mobile-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:13px;border-radius:11px;font-family:'Inter Tight';font-weight:800;font-size:14px;text-decoration:none}
-  .mobile-cta .call{color:#fff;background:var(--wine)}
-  .mobile-cta .text{color:var(--wine-bright);background:rgba(176,46,88,.14);border:1px solid rgba(209,73,117,.4)}
+  .mobile-cta .call{color:var(--ink-max);background:var(--accent)}
+  .mobile-cta .text{color:var(--accent-2);background:rgba(176,46,88,.14);border:1px solid rgba(209,73,117,.4)}
   .mobile-cta svg{width:18px;height:18px}
   @media(max-width:820px){.mobile-cta{display:flex}footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
 
   /* ---------- toast ---------- */
-  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--pearl);color:var(--coal);padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
+  #toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink-bright);color:var(--ground);padding:11px 18px;border-radius:10px;font-size:13.5px;font-weight:700;transition:.25s;pointer-events:none;z-index:90;max-width:88vw}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
-  .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
 </style>
 <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
@@ -269,6 +710,13 @@
 @media(max-width:820px){#svDemoBanner{bottom:78px;font-size:11.5px;padding:8px 14px}}
 </style>
 
+<!-- auto-body/scene.svg — this site keeps its illustrations inline in
+     sections.html rather than in a shared <defs> block. Placeholder so the
+     build slot resolves; see brief.md. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+<!-- auto-body/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
 <nav class="nav" id="nav">
   <div class="nav-in">
     <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15q1-4 4-4.5l2.5-.5q2-2.5 5-2.5h2q2.5.5 3.5 3l.5 1.5q1.5.5 1.5 2v1.5q0 1.5-1.5 1.5"/><circle cx="8" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M10 17h5"/></svg></span><span>Ironwood</span><small>Collision Co.</small></div>
@@ -329,7 +777,7 @@
               <stop offset="0" stop-color="#3A3147"/><stop offset="1" stop-color="#241D2E"/>
             </linearGradient>
           </defs>
-          <rect width="800" height="460" fill="#211A29"/>
+          <rect width="800" height="460" fill="var(--panel-3)"/>
           <rect y="392" width="800" height="68" fill="#191322"/>
           <ellipse cx="400" cy="400" rx="330" ry="18" fill="rgba(0,0,0,.45)"/>
           <path d="M62,332 Q62,300 78,284 Q100,262 150,252 L240,240 Q310,178 395,174 L470,174 Q555,178 612,240 L695,252 Q732,260 740,290 L744,330 Q744,352 720,352 L683,352 A68,68 0 0 0 547,352 L273,352 A68,68 0 0 0 137,352 L86,352 Q62,352 62,332 Z" fill="url(#bodyClean)"/>
@@ -366,7 +814,7 @@
               <stop offset="0" stop-color="rgba(20,15,26,.72)"/><stop offset=".7" stop-color="rgba(20,15,26,.4)"/><stop offset="1" stop-color="rgba(20,15,26,0)"/>
             </radialGradient>
           </defs>
-          <rect width="800" height="460" fill="#211A29"/>
+          <rect width="800" height="460" fill="var(--panel-3)"/>
           <rect y="392" width="800" height="68" fill="#191322"/>
           <ellipse cx="400" cy="400" rx="330" ry="18" fill="rgba(0,0,0,.45)"/>
           <path d="M62,332 Q62,300 78,284 Q100,262 150,252 L240,240 Q310,178 395,174 L470,174 Q555,178 612,240 L695,252 Q732,260 740,290 L744,330 Q744,352 720,352 L683,352 A68,68 0 0 0 547,352 L273,352 A68,68 0 0 0 137,352 L86,352 Q62,352 62,332 Z" fill="url(#bodyDam)"/>
@@ -408,7 +856,7 @@
   </div>
 </section>
 
-<section id="services" style="background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="services" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">Services</div>
@@ -430,7 +878,7 @@
   </div>
 </section>
 
-<section id="process" style="background:var(--coal-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+<section id="process" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
   <div class="wrap">
     <div class="reveal">
       <div class="eyebrow">How a repair runs</div>
@@ -470,7 +918,7 @@
   </div>
 </section>
 
-<section id="faq" style="background:var(--coal-2);border-top:1px solid var(--hair)">
+<section id="faq" style="background:var(--ground-2);border-top:1px solid var(--hair)">
   <div class="wrap reveal">
     <div class="eyebrow">Questions</div>
     <h2>Everything people ask us first.</h2>
@@ -513,6 +961,12 @@
           <option selected>Not sure yet</option>
         </select>
       </div>
+<label class="consent">
+  <input type="checkbox" id="b-consent" required />
+  <span>Text me to confirm my quote and schedule. Message &amp; data rates may apply.
+    See our <a href="/legal/privacy.html">privacy policy</a>.</span>
+</label>
+
       <button type="submit" class="qf-submit" id="qfSubmit">Get my estimate</button>
       <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
       <p class="qf-alt">Rather just talk to a human? <a href="tel:+12085550291" data-phone-link>Call or text (208) 555-0291</a>.</p>
@@ -542,42 +996,113 @@
 <div id="toast"></div>
 
 <script>
-(function(){
-  "use strict";
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* =====================================================
-     OWNER-EDITABLE CONTENT
-     DEFAULT_CONTENT ships with the page and renders
-     immediately. content.json (repo root, edited from
-     /admin/) is fetched at runtime and merged over it.
-     Keep content.json's shape in sync with this const.
-     Written as strict JSON so tooling can verify the two
-     stay byte-consistent.
-     ===================================================== */
-  var DEFAULT_CONTENT = {
-    "brand": {
-      "name": "Ironwood Collision Co.",
-      "tagline": "Like it never happened.",
-      "phone": "(208) 555-0291",
-      "email": "hello@ironwoodcollision.com",
-      "leadEmail": "info@kingdom-creatives.com",
-      "city": "Emmett, ID"
+/* Inlined from niches/auto-body/content.json by tools/build-site.js.
+   DO NOT EDIT — edit content.json. These two cannot drift: one generates the other. */
+var DEFAULT_CONTENT = {
+  "brand": {
+    "name": "Ironwood Collision Co.",
+    "tagline": "Like it never happened.",
+    "phone": "(208) 555-0291",
+    "email": "hello@ironwoodcollision.com",
+    "leadEmail": "info@kingdom-creatives.com",
+    "city": "Emmett, ID"
+  },
+  "serviceArea": {
+    "region": "Gem County & the Treasure Valley",
+    "short": "Treasure Valley",
+    "cities": [
+      "Emmett",
+      "Eagle",
+      "Star",
+      "Meridian",
+      "Boise",
+      "Horseshoe Bend"
+    ]
+  },
+  "owner": {
+    "name": "Wade Ferris",
+    "heading": "The shop behind the booth",
+    "bio": "Wade Ferris straightened his first fender at fourteen, on a hay truck that had lost an argument with a gatepost. The tools are better now and the paint is fancier, but the job hasn't changed: put the car back the way the factory meant it, tell the owner the truth about what that takes, and don't hand back the keys until the repair is invisible. Ironwood is a small shop on purpose — every car gets the same two sets of eyes, and one of them is Wade's.",
+    "photo": ""
+  },
+  "stats": [
+    {
+      "num": "Straight",
+      "label": "Panels brought back to factory shape"
     },
-    "stats": [
-      {
-        "num": "Straight",
-        "label": "Panels brought back to factory shape"
-      },
-      {
-        "num": "Zero",
-        "label": "Surprise charges — you approve every step first"
-      },
-      {
-        "num": "Emmett",
-        "label": "Born here, serving the whole Treasure Valley"
-      }
-    ],
+    {
+      "num": "Zero",
+      "label": "Surprise charges — you approve every step first"
+    },
+    {
+      "num": "Emmett",
+      "label": "Born here, serving the whole Treasure Valley"
+    }
+  ],
+  "services": [
+    {
+      "title": "Collision repair",
+      "desc": "From fender benders to the crunch you'd rather not describe out loud. Structural measurement, panel repair or replacement, and reassembly that respects how the factory put it together."
+    },
+    {
+      "title": "Dent & panel work",
+      "desc": "Door dings, hail divots, grocery-cart craters. Small dents come out with finesse work; bigger ones get filler, block-sanding and refinish — whichever puts the panel right."
+    },
+    {
+      "title": "Paint & refinish",
+      "desc": "Factory color-code matching, blend work into neighboring panels, full resprays for sun-tired paint. Booth-sprayed and baked, never rattle-canned."
+    },
+    {
+      "title": "Bumper repair",
+      "desc": "Plastic repair and refinishing for scuffed, cracked or torn covers — and straight talk about when a new cover is genuinely the cheaper path."
+    },
+    {
+      "title": "Glass coordination",
+      "desc": "Cracked windshield in the same bad day? We coordinate the glass work alongside the body repair, so you make one phone call and one trip."
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    },
+    {
+      "quote": "",
+      "name": ""
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do you work with insurance claims?",
+      "a": "Yes, all the time. Bring us your claim number and we'll handle the estimate, the photos and the adjuster paperwork. And plenty of our repairs have no claim at all — out-of-pocket work gets the exact same process."
+    },
+    {
+      "q": "How long will my repair take?",
+      "a": "Honest answer: it depends on parts. The blueprint we build at drop-off comes with a real completion date, and if a part delay moves it, you hear it from us the day we know — not when you call to ask."
+    },
+    {
+      "q": "Will the paint actually match?",
+      "a": "Yes. We pull your factory color code, tint it against your car's actual paint (paint fades — the code alone isn't enough), and blend into the neighboring panels so there's no hard edge where new meets old."
+    },
+    {
+      "q": "Can you fix just a small scratch or ding?",
+      "a": "Absolutely. Small jobs are welcome — a door ding or a scuffed bumper doesn't need an appointment weeks out. Send a photo and we'll tell you what it takes."
+    },
+    {
+      "q": "Do I need an appointment for an estimate?",
+      "a": "Nope. Swing by during shop hours, or text us photos of the damage to start — we'll follow up with numbers and next steps, usually the same day."
+    },
+    {
+      "q": "Do you stand behind the work?",
+      "a": "Every repair leaves with our written workmanship promise — ask for the current terms at drop-off. We'd rather you read them than take our word for it."
+    }
+  ],
+  "social": [],
+  "niche": {
     "repairStages": [
       {
         "name": "Estimate",
@@ -601,28 +1126,6 @@
       }
     ],
     "revealNote": "Drag the divider — every repair moves through the same five gates, and you approve each one before we move to the next.",
-    "services": [
-      {
-        "title": "Collision repair",
-        "desc": "From fender benders to the crunch you'd rather not describe out loud. Structural measurement, panel repair or replacement, and reassembly that respects how the factory put it together."
-      },
-      {
-        "title": "Dent & panel work",
-        "desc": "Door dings, hail divots, grocery-cart craters. Small dents come out with finesse work; bigger ones get filler, block-sanding and refinish — whichever puts the panel right."
-      },
-      {
-        "title": "Paint & refinish",
-        "desc": "Factory color-code matching, blend work into neighboring panels, full resprays for sun-tired paint. Booth-sprayed and baked, never rattle-canned."
-      },
-      {
-        "title": "Bumper repair",
-        "desc": "Plastic repair and refinishing for scuffed, cracked or torn covers — and straight talk about when a new cover is genuinely the cheaper path."
-      },
-      {
-        "title": "Glass coordination",
-        "desc": "Cracked windshield in the same bad day? We coordinate the glass work alongside the body repair, so you make one phone call and one trip."
-      }
-    ],
     "claims": [
       {
         "title": "Start your claim",
@@ -659,73 +1162,187 @@
         "title": "Walkaround & keys",
         "desc": "We walk the car together, panel by panel, in daylight. You take the keys when it looks like nothing ever happened — that's the standard."
       }
-    ],
-    "serviceArea": {
-      "region": "Gem County & the Treasure Valley",
-      "short": "Treasure Valley",
-      "cities": [
-        "Emmett",
-        "Eagle",
-        "Star",
-        "Meridian",
-        "Boise",
-        "Horseshoe Bend"
-      ]
-    },
-    "owner": {
-      "name": "Wade Ferris",
-      "heading": "The shop behind the booth",
-      "bio": "Wade Ferris straightened his first fender at fourteen, on a hay truck that had lost an argument with a gatepost. The tools are better now and the paint is fancier, but the job hasn't changed: put the car back the way the factory meant it, tell the owner the truth about what that takes, and don't hand back the keys until the repair is invisible. Ironwood is a small shop on purpose — every car gets the same two sets of eyes, and one of them is Wade's.",
-      "photo": ""
-    },
-    "testimonials": [
-      {
-        "quote": "",
-        "name": ""
-      },
-      {
-        "quote": "",
-        "name": ""
-      },
-      {
-        "quote": "",
-        "name": ""
-      }
-    ],
-    "faq": [
-      {
-        "q": "Do you work with insurance claims?",
-        "a": "Yes, all the time. Bring us your claim number and we'll handle the estimate, the photos and the adjuster paperwork. And plenty of our repairs have no claim at all — out-of-pocket work gets the exact same process."
-      },
-      {
-        "q": "How long will my repair take?",
-        "a": "Honest answer: it depends on parts. The blueprint we build at drop-off comes with a real completion date, and if a part delay moves it, you hear it from us the day we know — not when you call to ask."
-      },
-      {
-        "q": "Will the paint actually match?",
-        "a": "Yes. We pull your factory color code, tint it against your car's actual paint (paint fades — the code alone isn't enough), and blend into the neighboring panels so there's no hard edge where new meets old."
-      },
-      {
-        "q": "Can you fix just a small scratch or ding?",
-        "a": "Absolutely. Small jobs are welcome — a door ding or a scuffed bumper doesn't need an appointment weeks out. Send a photo and we'll tell you what it takes."
-      },
-      {
-        "q": "Do I need an appointment for an estimate?",
-        "a": "Nope. Swing by during shop hours, or text us photos of the damage to start — we'll follow up with numbers and next steps, usually the same day."
-      },
-      {
-        "q": "Do you stand behind the work?",
-        "a": "Every repair leaves with our written workmanship promise — ask for the current terms at drop-off. We'd rather you read them than take our word for it."
-      }
-    ],
-    "social": []
-  };
+    ]
+  },
+  "seo": {
+    "title": "Ironwood Collision Co. — Auto Body & Collision Repair | Emmett, ID",
+    "description": "Collision repair, dent and panel work, and factory paint matching in Emmett, Idaho — serving the whole Treasure Valley. Blueprinted repairs, plain-language estimates, insurance claims without the fog. Call or text (208) 555-0291.",
+    "ogTitle": "Ironwood Collision Co. — Like it never happened.",
+    "ogDescription": "Auto body repair in Emmett, ID. Every repair blueprinted, every step approved by you, paint matched until the fix is invisible.",
+    "priceRange": "",
+    "schemaType": "AutoBodyShop",
+    "canonical": "https://systemsbyvega.com/sites/auto-body/",
+    "themeColor": "#16121A",
+    "favicon": "",
+    "fontsHref": "https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+    "ogImage": "https://systemsbyvega.com/sites/auto-body/og.png"
+  }
+};
+</script>
 
-  var CONTENT = DEFAULT_CONTENT;
-  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
-  var telHref = function(p){ var d = String(p||'').replace(/\D/g,''); return '+' + (d.length === 10 ? '1' + d : d); };
+<!-- SCRIPT ORDER IS LOAD-BEARING. base.js FIRST.
+     Every niche.js opens with `var SL = window.SL;`, and base.js assigns
+     window.SL at the end of its IIFE. With base.js emitted last, SL was
+     undefined when niche.js ran: every renderer threw on its first line,
+     window.renderContent was never defined, and base.js then skipped it via its
+     own typeof guard — silently, on all 14 converted sites.
+     base.js defers boot() to DOMContentLoaded, so renderContent and initScene
+     are both defined by the time it fires. Do not reorder these. -->
+<script>
+/* _template/base.js — utilities and the content lifecycle.
+   Shared by every niche. Niche-specific rendering lives in niches/<slug>/niche.js,
+   which must define window.renderContent(CONTENT). */
+(function () {
+  'use strict';
 
-  /* ---------- render ---------- */
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; }
+  function telDigits(p) { return String(p || '').replace(/[^0-9+]/g, ''); }
+  function telHref(p) { return 'tel:' + telDigits(p); }
+  function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
+  function initReveal() {
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    if (!els.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Form POST. Returns a promise; the niche decides what to render on success. */
+  function postForm(endpoint, payload) {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
+  }
+
+  /* Consent gate (§9.3).
+     Runs in the CAPTURE phase, ahead of the niche's own submit handler, so a
+     checkbox the BUILD injected is enforced even though that niche's JS knows
+     nothing about it.
+
+     It does NOT stopPropagation: the niche handler still runs and sets its own
+     message if it has one. We only supply wording when nobody else did, checked
+     on the next tick — so the 8 sites that already gate keep their own copy and
+     the injected sites get a sensible default. Enforcement is uniform; wording
+     is not overridden. */
+  function consentGate(e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var box = form.querySelector('input[type="checkbox"][id$="consent"]');
+    if (!box || box.checked) return;
+
+    e.preventDefault();
+    box.focus();
+
+    var msg = form.querySelector('[id$="Msg"]');
+    var before = msg ? msg.textContent : null;
+    setTimeout(function () {
+      if (!msg || msg.textContent !== before) return;   // the niche spoke first
+      msg.textContent = 'Please tick the consent box so we can reply to you.';
+      if (msg.className.indexOf('err') < 0) msg.className += ' err';
+    }, 0);
+  }
+  document.addEventListener('submit', consentGate, true);
+
+  /* The content lifecycle.
+     DEFAULT_CONTENT is inlined by the build from content.json, so the two can
+     never disagree. The fetch exists so an operator edit goes live without a
+     rebuild; on failure the inlined copy already rendered. */
+  /* content.json namespaces per-niche data under `niche` (SITELAB_TEMPLATE.md
+     §4.3) so the canonical schema stays clean. But every niche renderer reads
+     those keys FLAT — c.walkServices, c.systemMap, c.rundown — because they were
+     written against the pre-consolidation shape. Nothing ever unpacked the
+     namespace, so after the very first conversion every renderer that touched
+     niche data threw on undefined. Hand the renderer a flattened view; the
+     authored file keeps its namespace. Verified collision-free across all 17
+     sites, and re-checked by qa-site.js on every run. */
+  function SLflat(c) { return c && c.niche ? Object.assign({}, c, c.niche) : (c || {}); }
+
+  /* Flatten the GLOBAL, once, before niche.js parses. Passing a flattened copy
+     to renderContent(c) is not enough: every niche.js opens with
+     `var CONTENT = window.DEFAULT_CONTENT;` and its interactive handlers — drip
+     calculators, quoters, week builders — read that alias directly rather than
+     the render parameter. Those paths would still see the nested shape.
+     This is why base.js must be emitted BEFORE niche.js (see _template/index.html).
+     content.json on disk keeps its namespace; only the runtime view is flat, so
+     DEFAULT_CONTENT still matches the authored file byte for byte. */
+  window.DEFAULT_CONTENT = SLflat(window.DEFAULT_CONTENT);
+
+  function boot() {
+    var CONTENT = SLflat(window.DEFAULT_CONTENT);
+    window.CONTENT = CONTENT;
+    if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    initReveal();
+    if (typeof window.initScene === 'function') window.initScene(reduce);
+
+    fetch('content.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        CONTENT = SLflat(Object.assign({}, window.DEFAULT_CONTENT, d));
+        window.CONTENT = CONTENT;
+        if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+      })
+      .catch(function () { /* offline or 404: the inlined defaults stand */ });
+  }
+
+  /* setErr and showDone are intentionally absent: every niche examined
+     defines its own with a different signature. Sharing them would be a
+     silent behaviour change, not a saving. */
+  window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
+<script>
+/* auto-body/niche.js — this niche's renderer and interactive logic.
+   Shared utilities come from _template/base.js via SL; the aliases below keep
+   every extracted call site unchanged. base.js owns the reduced-motion flag,
+   the reveal observer, the content fetch/merge lifecycle, and calling
+   window.renderContent(). val/setErr/showDone are NOT aliased — this niche
+   defines its own with different signatures. */
+(function () {
+  'use strict';
+
+  var SL = window.SL;
+  var esc = SL.esc, num = SL.num, telHref = SL.telHref;
+  var reduce = SL.reduce;
+  var CONTENT = window.DEFAULT_CONTENT;
+
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =====================================================
+     OWNER-EDITABLE CONTENT
+     DEFAULT_CONTENT ships with the page and renders
+     immediately. content.json (repo root, edited from
+     /admin/) is fetched at runtime and merged over it.
+     Keep content.json's shape in sync with this const.
+     Written as strict JSON so tooling can verify the two
+     stay byte-consistent.
+     ===================================================== */
+/* ---------- render ---------- */
   function renderContent(c){
     document.querySelectorAll('[data-brand]').forEach(function(el){ el.textContent = c.brand.name; });
     document.querySelectorAll('[data-city]').forEach(function(el){ el.textContent = c.brand.city; });
@@ -979,18 +1596,24 @@
   });
 
   /* ---------- boot ---------- */
-  renderContent(CONTENT);
-  fetch('content.json', { cache: 'no-store' })
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){
-      if(d){
-        CONTENT = Object.assign({}, DEFAULT_CONTENT, d);
-        applyRuntime(CONTENT);
-        renderContent(CONTENT);
-      }
-    })
-    .catch(function(){});
+  /* boot handed to base.js */
+
+  window.renderContent = renderContent;
 })();
 </script>
+
+<script>
+/* auto-body/scene.js — NO SIGNATURE ANIMATION.
+   This site arrived without one: its only requestAnimationFrame is a toast
+   fade. Per SITELAB_TEMPLATE.md §9.3 that is a Phase 3 gap, deliberately not
+   filled during consolidation so the conversion diff stays reviewable.
+   qa-site.js reports it every run until it is built.
+   Contract when it is: check reduce FIRST, rAF, self-terminate, clear transform. */
+window.initScene = function (reduce) {
+  if (reduce) return;
+  /* TODO (Phase 3): the before/after reveal wiping itself once on entry, then settling */
+};
+</script>
+
 </body>
 </html>

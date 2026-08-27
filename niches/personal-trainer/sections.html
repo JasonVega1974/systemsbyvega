@@ -1,0 +1,450 @@
+<!-- personal-trainer/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<!-- ============ PREMIUM VISUAL PASS — shared SVG filters & gradients ============
+     Techniques (north-star: dj-site-blue): feTurbulence fractalNoise grain,
+     feDisplacementMap organic edges, feColorMatrix tint, layered 5-stop gradients
+     for depth/sheen/lighting. Referenced by the hero illustration and goal emblems.
+     Hidden defs — paints nothing on its own. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <!-- feTurbulence fractalNoise grit grain (feColorMatrix tints it ember) — north-star: dj-site-blue -->
+    <filter id="cvGrain" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 0.55  0 0 0 0 0.32  0 0 0 0.6 0"/>
+    </filter>
+    <!-- feTurbulence + feDisplacementMap: warps the energy arcs so they read organic, not CAD -->
+    <filter id="cvDisplace" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="4" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="16" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- soft bloom glow -->
+    <filter id="cvGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- 5-stop luminous core: white-hot -> ember -> deep -> void -->
+    <radialGradient id="cvCore" cx="50%" cy="46%" r="60%">
+      <stop offset="0%" stop-color="var(--ink-max)3ea"/>
+      <stop offset="18%" stop-color="#FF7A47"/>
+      <stop offset="44%" stop-color="#FF5A2E"/>
+      <stop offset="72%" stop-color="#8A2A10"/>
+      <stop offset="100%" stop-color="var(--ground-3)" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 4-stop ember->teal energy-arc stroke -->
+    <linearGradient id="cvArc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8A2A10"/>
+      <stop offset="38%" stop-color="#FF5A2E"/>
+      <stop offset="70%" stop-color="#FF7A47"/>
+      <stop offset="100%" stop-color="#4FD8C4"/>
+    </linearGradient>
+    <!-- graphite floor light (3-stop) -->
+    <radialGradient id="cvFloor" cx="50%" cy="104%" r="80%">
+      <stop offset="0%" stop-color="#222a31"/>
+      <stop offset="42%" stop-color="#171c21"/>
+      <stop offset="100%" stop-color="#0c0f12"/>
+    </radialGradient>
+    <!-- figure rim-light body (3-stop) -->
+    <linearGradient id="cvFigure" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b333b"/>
+      <stop offset="55%" stop-color="#161b20"/>
+      <stop offset="100%" stop-color="#0b0e11"/>
+    </linearGradient>
+    <!-- 5-stop brushed-steel sheen (strength emblem + bar) -->
+    <linearGradient id="cvSteel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2f5"/>
+      <stop offset="28%" stop-color="#aeb8c2"/>
+      <stop offset="52%" stop-color="#6b7580"/>
+      <stop offset="74%" stop-color="#aeb8c2"/>
+      <stop offset="100%" stop-color="#3a424b"/>
+    </linearGradient>
+    <!-- teal run gradient (4-stop) -->
+    <linearGradient id="cvRun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a9fff2"/>
+      <stop offset="40%" stop-color="#4FD8C4"/>
+      <stop offset="78%" stop-color="#268b7e"/>
+      <stop offset="100%" stop-color="#123f39"/>
+    </linearGradient>
+    <!-- postpartum sunrise/bloom (4-stop radial) -->
+    <radialGradient id="cvBloom" cx="50%" cy="72%" r="72%">
+      <stop offset="0%" stop-color="#ffe0cd"/>
+      <stop offset="40%" stop-color="#FF7A47"/>
+      <stop offset="76%" stop-color="#c9506f"/>
+      <stop offset="100%" stop-color="#3a1c2a"/>
+    </radialGradient>
+    <!-- over-50 peak/endurance (4-stop) -->
+    <linearGradient id="cvPeak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dcefe9"/>
+      <stop offset="40%" stop-color="#7fae9f"/>
+      <stop offset="74%" stop-color="#3f6f6a"/>
+      <stop offset="100%" stop-color="#182726"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="Cora Vale Fitness — home">
+      <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="8" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="47" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="16" y="29" width="32" height="6" rx="2" fill="#FF5A2E"/>
+      </svg>
+      <span class="brand__name">Cora Vale<span>Personal Training · Eagle, ID</span></span>
+    </a>
+    <div class="nav__links">
+      <a class="link" href="#goals">Goal Path</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="nav__book" href="#book">Book a consult</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="motes" id="motes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__tag"><span class="eyebrow">Personal training · <span data-edit="city">Eagle, Idaho</span></span></div>
+        <h1 class="display"><span class="l1">Cora Vale</span><span class="l2">Training built around your goal, not a template.</span></h1>
+        <p class="hero__sub">1:1 and small-group personal training, in-person or online. Pick your goal below — strength, your first 5K, postpartum return, or training after 50 — and the plan changes to fit it.</p>
+        <div class="hero__cta">
+          <a class="btn btn--lg" href="#goals">Find your goal path</a>
+          <a class="btn btn--ghost btn--lg" href="#book">Book a consult</a>
+        </div>
+        <!-- rendered from CONTENT.stats -->
+        <div class="hero__proof" id="proofRow"></div>
+      </div>
+      <div class="hero__portrait">
+        <!-- Rebrand note: drop <img src="assets/portrait.jpg" alt="…" /> inside .portrait
+             (before the corner spans) and the dumbbell-mark treatment disappears automatically -->
+        <div class="portrait" role="img" aria-label="Cora Vale Fitness — an athlete mid-lift inside a burst of ember and teal light">
+          <!-- PREMIUM VISUAL PASS: kinetic hero illustration. Layered 5-stop gradients (cvCore/cvFloor)
+               for depth & glow, feDisplacementMap-warped energy arcs, rim-lit athlete silhouette,
+               feTurbulence grain overlay, and a RAF gravity-spark fountain. north-star: dj-site-blue.
+               Base (core/arcs/figure/grain) is static SVG — renders fully with JS off; sparks additive. -->
+          <svg class="portrait__illo" viewBox="0 0 340 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="340" height="420" fill="url(#cvFloor)"/>
+            <ellipse cx="170" cy="248" rx="158" ry="158" fill="url(#cvCore)" opacity=".92"/>
+            <!-- radiating light shafts -->
+            <g opacity=".45" filter="url(#cvGlow)">
+              <path d="M170 248 L118 12 L150 10 Z" fill="url(#cvArc)" opacity=".22"/>
+              <path d="M170 248 L242 26 L210 20 Z" fill="url(#cvArc)" opacity=".18"/>
+            </g>
+            <!-- kinetic energy arcs (feDisplacementMap organic edges) -->
+            <g fill="none" stroke="url(#cvArc)" filter="url(#cvDisplace)" stroke-linecap="round">
+              <path d="M34 318 C112 148 228 148 306 300" stroke-width="7" opacity=".9"/>
+              <path d="M58 350 C120 224 236 224 288 332" stroke-width="4" opacity=".55"/>
+            </g>
+            <!-- athlete mid overhead-press (rim-lit silhouette) -->
+            <g class="portrait__figure">
+              <path d="M150 168 L118 126 M190 168 L222 126" stroke="url(#cvFigure)" stroke-width="12" stroke-linecap="round"/>
+              <rect x="100" y="116" width="140" height="9" rx="4.5" fill="url(#cvSteel)"/>
+              <circle cx="170" cy="126" r="17" fill="url(#cvFigure)" stroke="#FF5A2E" stroke-width="1.3" stroke-opacity=".5"/>
+              <path d="M170 145 C155 147 148 158 149 173 L154 220 L130 312 L145 316 L171 232 L197 316 L212 312 L188 220 L193 173 C194 158 187 147 170 145 Z"
+                    fill="url(#cvFigure)" stroke="#FF5A2E" stroke-width="1.3" stroke-opacity=".5"/>
+            </g>
+            <!-- feTurbulence grain overlay -->
+            <rect width="340" height="420" filter="url(#cvGrain)" opacity=".5" style="mix-blend-mode:overlay" pointer-events="none"/>
+            <g class="portrait__sparks"></g>
+          </svg>
+          <span class="portrait__corner portrait__corner--tl" aria-hidden="true"></span>
+          <span class="portrait__corner portrait__corner--br" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__rule" aria-hidden="true"></div>
+</header>
+
+<!-- ============ SIGNATURE: GOAL-PATH PICKER ============ -->
+<section class="section goals" id="goals">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Pick your goal</span>
+      <h2 class="section-title">Find Your Path</h2>
+      <p class="lead" style="margin:0 auto">Every client starts somewhere different. Choose the goal closest to yours and the program, the numbers below it, and the FAQ all change to match.</p>
+    </div>
+
+    <!-- PREMIUM VISUAL PASS: illustrated goal emblems. Each is a layered-gradient + feTurbulence-grain
+         + glow illustration that swaps as the goal changes. The strength emblem is marked active in
+         static HTML so the base artwork renders with JS off; JS only toggles which one is active. -->
+    <div class="goal-emblem reveal" id="goalEmblem" aria-hidden="true">
+      <svg viewBox="0 0 200 200" width="200" height="200">
+        <g data-emblem="strength" class="emblem is-active">
+          <circle cx="100" cy="100" r="82" fill="url(#cvCore)" opacity=".16"/>
+          <g filter="url(#cvGlow)">
+            <rect x="52" y="93" width="96" height="14" rx="7" fill="url(#cvSteel)"/>
+            <rect x="40" y="78" width="14" height="44" rx="5" fill="url(#cvSteel)"/>
+            <rect x="24" y="86" width="12" height="28" rx="4" fill="url(#cvSteel)"/>
+            <rect x="146" y="78" width="14" height="44" rx="5" fill="url(#cvSteel)"/>
+            <rect x="164" y="86" width="12" height="28" rx="4" fill="url(#cvSteel)"/>
+          </g>
+        </g>
+        <g data-emblem="first5k" class="emblem">
+          <circle cx="100" cy="100" r="82" fill="url(#cvRun)" opacity=".14"/>
+          <path d="M28 142 Q100 108 172 142" fill="none" stroke="url(#cvRun)" stroke-width="7" stroke-linecap="round" opacity=".8" filter="url(#cvGlow)"/>
+          <g fill="url(#cvRun)" filter="url(#cvGlow)">
+            <circle cx="104" cy="62" r="9"/>
+            <path d="M104 72 l-7 24 l-17 10 l4 8 l19 -10 l6 -14 l10 17 l-4 21 l8 2 l7 -25 l-11 -19 l15 -8 l-4 -8 l-21 10 z"/>
+          </g>
+          <g stroke="#a9fff2" stroke-width="3" stroke-linecap="round" opacity=".55">
+            <path d="M38 84 h20"/><path d="M32 99 h28"/><path d="M40 114 h18"/>
+          </g>
+        </g>
+        <g data-emblem="postpartum" class="emblem">
+          <circle cx="100" cy="112" r="82" fill="url(#cvBloom)" opacity=".2"/>
+          <circle cx="100" cy="118" r="34" fill="url(#cvBloom)" filter="url(#cvGlow)"/>
+          <g stroke="url(#cvBloom)" stroke-width="5" stroke-linecap="round" opacity=".85">
+            <path d="M100 60 v-14"/><path d="M138 74 l10 -10"/><path d="M62 74 l-10 -10"/>
+            <path d="M150 112 h16"/><path d="M34 112 h16"/>
+          </g>
+          <path d="M30 150 h140" stroke="#ffe0cd" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+        </g>
+        <g data-emblem="over50" class="emblem">
+          <circle cx="100" cy="100" r="82" fill="url(#cvPeak)" opacity=".16"/>
+          <g filter="url(#cvGlow)">
+            <path d="M28 152 L84 64 L118 118 L140 88 L174 152 Z" fill="url(#cvPeak)"/>
+            <path d="M84 64 L100 90 L92 96 L76 82 Z" fill="#eaf3f0" opacity=".7"/>
+          </g>
+          <circle cx="142" cy="70" r="15" fill="#dcefe9" opacity=".85" filter="url(#cvGlow)"/>
+        </g>
+        <!-- feTurbulence grain over the emblem stage -->
+        <rect width="200" height="200" filter="url(#cvGrain)" opacity=".24" style="mix-blend-mode:overlay" pointer-events="none"/>
+      </svg>
+    </div>
+
+    <div class="goal-pills reveal" id="goalPills" role="group" aria-label="Choose your training goal"></div>
+
+    <div class="goal-panel">
+      <p class="goal-tagline" id="goalTagline"></p>
+      <p class="goal-blurb" id="goalBlurb"></p>
+      <!-- rendered from the selected item in CONTENT.goals -->
+      <div class="program-grid" id="programGrid"></div>
+      <div class="goal-proof" id="goalProof"></div>
+      <div class="goal-cta">
+        <a class="btn" href="#book" id="goalBookCta">Book training for this goal</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Packages</span>
+      <h2 class="section-title">Flat, Posted Pricing</h2>
+      <p class="lead" style="margin:0 auto">No quote required. Pick a format below — the price is the price.</p>
+    </div>
+    <!-- Rendered from CONTENT.packages (edit at /admin/) -->
+    <div class="pricing-grid" id="pricingGrid"></div>
+    <p class="pricing-note reveal" id="pricingNote"></p>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="about__grid">
+      <!-- Rebrand note: drop <img src="assets/studio.jpg" alt="…" /> inside
+           .about__photo and the rack-and-chalk composition disappears automatically -->
+      <div class="about__photo reveal" role="img" aria-label="The Cora Vale Fitness studio — rack and chalk, graphite on ember"></div>
+      <div class="about__body reveal" data-delay="1">
+        <span class="eyebrow">Meet your coach</span>
+        <h2 class="section-title">Cora Vale</h2>
+        <!-- Rendered from CONTENT.bio / CONTENT.chips (edit at /admin/). If the
+             bio is left empty, a placeholder prompt renders instead. -->
+        <div class="bio" id="bioText"></div>
+        <div class="about__chips" id="chipRow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY (supporting — empty-state until real photos exist) ============ -->
+<section class="section" id="gallery">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">In the gym</span>
+      <h2 class="section-title">Sessions in Progress</h2>
+      <p class="lead" style="margin:0 auto">Real sessions, real sets — added as they happen.</p>
+    </div>
+    <!-- Rendered from CONTENT.gallery (edit at /admin/); each tile shows an
+         uploaded photo or a "Photo coming soon" placeholder. -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section process" id="process">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three Steps to Start</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal" data-delay="1">
+        <span class="step__n"></span>
+        <h3>Book a consult</h3>
+        <p>A short call or in-person meeting to talk through your goal, your schedule, and anything that's held you back before.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__n"></span>
+        <h3>Get your plan</h3>
+        <p>Cora writes your program by hand, built around your goal path, your equipment, and how many days a week actually work for you.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__n"></span>
+        <h3>Train &amp; adjust</h3>
+        <p>Sessions in person or online, with the plan adjusted as you go — nothing stays generic past week one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Client notes</span>
+      <h2 class="section-title">In Their Words</h2>
+    </div>
+    <!-- Rendered from CONTENT.testimonials (edit at /admin/). Empty quotes
+         render "Real review coming soon." — never fabricated. -->
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head center reveal">
+      <span class="eyebrow">Before you book</span>
+      <h2 class="section-title">Questions, Answered</h2>
+      <p class="lead" style="margin:0 auto">Answers tagged for your selected goal move to the top.</p>
+    </div>
+    <!-- Rendered from CONTENT.faq; re-sorts when the goal path changes. -->
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="section book-sec" id="book">
+  <div class="wrap">
+    <div class="section__head center reveal" style="max-width:640px;margin:0 auto 34px">
+      <span class="eyebrow">Book with Cora</span>
+      <h2 class="section-title" style="margin:14px 0 14px">Book a Consult</h2>
+      <p class="lead" style="margin:0 auto">Tell me about your goal and your schedule. I reply to everything within one business day.</p>
+    </div>
+
+    <form class="book reveal" id="bookForm" novalidate>
+      <div class="book__grid">
+        <div class="field">
+          <label for="b-name">Name <em>*</em></label>
+          <input id="b-name" name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required />
+        </div>
+        <div class="field">
+          <label for="b-email">Email <em>*</em></label>
+          <input id="b-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone <span style="color:var(--muted);text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(208) 555-0123" />
+        </div>
+        <div class="field">
+          <label for="b-goal">Goal</label>
+          <select id="b-goal" name="goal"></select>
+        </div>
+        <div class="field field--wide">
+          <label for="b-format">Format</label>
+          <select id="b-format" name="format">
+            <option value="In-person — Eagle, ID" selected>In-person — Eagle, ID</option>
+            <option value="Online coaching">Online coaching</option>
+            <option value="Either works">Either works</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="b-msg">Anything else?</label>
+          <textarea id="b-msg" name="message" placeholder="Schedule, injuries or limitations, what's held you back before — whatever's useful."></textarea>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="b-consent" required />
+        <span>I'm okay being contacted by phone, text or email about scheduling a consult.</span>
+      </label>
+
+      <!-- spam honeypot: real people leave this empty -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
+
+      <div class="book__actions">
+        <button class="btn btn--lg" type="submit" id="bookSubmit">Send it</button>
+        <a class="book__alt" id="bookAlt" href="sms:+12085550172">or text Cora instead</a>
+      </div>
+      <p class="book__msg" id="bookMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <!-- waitlist card: shown instead of the form when settings.acceptingClients is off -->
+    <div class="book-done" id="bookClosed" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Client list is full.</h3>
+      <p id="closedMsg"></p>
+      <a class="btn btn--ghost" href="#goals">See the goal paths</a>
+    </div>
+
+    <!-- success card -->
+    <div class="book-done" id="bookDone" hidden>
+      <div class="book-done__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>Got it.</h3>
+      <p id="doneMsg">Cora reads every request personally — expect a reply within one business day.</p>
+      <a class="btn btn--ghost" href="#goals">Back to goal paths</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIALS ============ -->
+<section class="socials" aria-label="Social links">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="justify-content:center">Elsewhere</span>
+    <!-- Rendered from CONTENT.social + CONTENT.brand.email (edit at /admin/).
+         Demo note: @coravalefitness is fictional; its link routes behind this
+         concept build so it never 404s. -->
+    <div class="socials__row" id="socialRow"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="var(--ground-3)"/>
+        <rect x="8" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="47" y="24" width="9" height="16" rx="2.5" fill="#FF5A2E"/>
+        <rect x="16" y="29" width="32" height="6" rx="2" fill="#FF5A2E"/>
+      </svg>
+      <div><b>Cora Vale Fitness</b><span>Cora Vale · Eagle, ID</span></div>
+    </div>
+    <div class="footer__meta">
+      Text <a id="footPhone" href="tel:+12085550172">(208) 555-0172</a> · <a id="footEmail" href="mailto:hello@coravalefitness.com">hello@coravalefitness.com</a><br />
+      In-person in <span data-edit="city-short">Eagle</span>, or online anywhere<br />
+      <span style="opacity:.6">© <span id="yr"></span> Cora Vale Fitness</span><br />
+      <!-- SWAP:DISCLOSURE --><span style="opacity:.55;font-size:.78rem">Demonstration website for a fictional trainer · </span><!-- /SWAP:DISCLOSURE --><span style="opacity:.55;font-size:.78rem">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE BAR ============ -->
+<div class="mobile-bar">
+  <a class="book-cta" href="#book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Book</a>
+  <!-- Demo note: prefilled sms body names the trainer — clone.mjs rewrites it -->
+  <a class="text-cta" id="textLink" href="sms:+12085550172?&body=Hi%20Cora%2C%20I%27d%20like%20to%20book%20a%20consult."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>

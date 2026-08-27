@@ -1,0 +1,43 @@
+/* auto-body — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground:       #16121A;   /* was --coal */
+  --ground-2:     #1C1622;   /* was --coal-2 */
+  --panel:        rgba(255,255,255,.045);
+  --accent:       #B02E58;   /* was --wine */
+  --accent-2:     #D14975;   /* was --wine-bright */
+  --accent-deep:  #8A2344;   /* was --wine-deep */
+  --ink-dim:      #C9D1D9;   /* was --silver */
+  --ink-bright:   #EDE6F2;   /* was --pearl */
+  --ink:          #F2EDF6;
+  --muted:        #A79FB0;
+  --hair:         rgba(237,230,242,.13);
+  --card:         rgba(255,255,255,.05);
+  --card-brd:     rgba(237,230,242,.11);
+  --shadow:       0 26px 60px -28px rgba(0,0,0,.7);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --panel-2:      #171219;
+  --ground-deep:  #16121A;
+  --ground-3:     #141018;
+  --panel-3:      #211A29;
+  --accent-shade: #4A1226;
+  --accent-shade-deep:#2A0C17;
+  --err-ink:      #FFD3C2;
+  --ink-max:      #fff;
+  --accent-ink:   var(--ink-max);
+  --accent-soft:  var(--accent-shade);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--ink-max);
+  --sheen-lo:     var(--ink-dim);
+  --sheen-accent: var(--accent-2);
+  --err:          var(--err-ink);
+  --ok:           var(--accent-2);
+
+  --display: 'Sora', sans-serif;
+  --body:    'Inter Tight', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

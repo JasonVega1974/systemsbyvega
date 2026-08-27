@@ -1,0 +1,53 @@
+/* personal-trainer — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: dark;
+  --ground:       #14181c;   /* was --char */
+  --ground-2:     #1a1f24;   /* was --char-2 */
+  --panel:        #20262c;   /* was --char-3 */
+  --accent:       #FF5A2E;   /* was --ember */
+  --accent-2:     #FF7A47;   /* was --ember-bright */
+  --accent-deep:  #8A2A10;   /* was --ember-deep */
+  --accent-alt:   #4FD8C4;   /* was --chalk */
+  --ink:          #EDEDE6;   /* was --bone */
+  --muted:        #9B9B92;
+  --hair:         rgba(237,237,230,.12);
+  --card:         rgba(32,38,44,.55);
+  --card-brd:     rgba(237,237,230,.13);
+  --shadow:       0 30px 70px -30px rgba(0,0,0,.85);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --sheen-hi:     #fff8f2;
+  --invert-1:     #fbf9f4;
+  --invert-2:     #f6f2e9;
+  --invert-3:     #f8f4ea;
+  --invert-4:     #f3ede1;
+  --invert-5:     #fffaf5;
+  --ground-deep:  #101316;
+  --ground-3:     #14181c;
+  --ground-4:     #16191d;
+  --panel-2:      #181c21;
+  --panel-3:      #1c2127;
+  --invert-ink:   #c9b9a6;
+  --invert-ink-2: #cbb89a;
+  --invert-muted: #6b6a63;
+  --accent-tint:  #ff8a6b;
+  --accent-tint-2:#ffab8f;
+  --ink-max:      #fff;
+  --ink-bright:   var(--ink-max);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--ink-max);
+  --accent-soft:  var(--accent-tint);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          var(--accent-tint-2);
+  --err-ink:      var(--accent-tint-2);
+  --ok:           var(--accent-alt);
+
+  --display: 'Bebas Neue', sans-serif;
+  --body:    'Inter', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
