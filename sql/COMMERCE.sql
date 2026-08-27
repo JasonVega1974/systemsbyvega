@@ -432,10 +432,17 @@ as $$
       then jsonb_build_object('available', false, 'reason', 'unrecognised_city')
     when upper(btrim(p_state_code)) !~ '^[A-Z]{2}$'
       then jsonb_build_object('available', false, 'reason', 'bad_state')
+    /* `status = 'open'` was WRONG here and is corrected in COMMERCE-2.sql §A1.
+       In this catalog `open` means "we do NOT sell this, go to the sibling
+       platform" — those rows carry an off-site open_url. The for-sale flag is
+       website_offer. Fixed in BOTH files deliberately: the run-order note tells
+       you to re-run COMMERCE.sql after any SETUP.sql re-run, and if only this
+       copy were wrong that would quietly put EstateSaleBiz's and
+       GarageSaleBiz's territories back on sale here. */
     when not exists (
       select 1 from public.sbv_niches n
-      where n.slug = p_niche_slug and n.status = 'open' and n.is_listed
-    ) then jsonb_build_object('available', false, 'reason', 'niche_not_open')
+      where n.slug = p_niche_slug and n.website_offer and n.is_listed
+    ) then jsonb_build_object('available', false, 'reason', 'niche_not_for_sale')
     when exists (
       select 1 from public.sbv_city_claims cc
       where cc.niche_slug = p_niche_slug
@@ -839,20 +846,20 @@ insert into auth.users (id, email) values
 
 insert into public.sbv_tenants (client_id, niche_slug, business_name, operator_email, is_active)
 select 'op-alpha', slug, 'Alpha', 'info@kingdom-creatives.com', true
-from public.sbv_niches where status = 'open' limit 1;
+from public.sbv_niches where website_offer and is_listed limit 1;
 insert into public.sbv_tenants (client_id, niche_slug, business_name, operator_email, is_active)
 select 'op-beta',  slug, 'Beta',  'info@kingdom-creatives.com', true
-from public.sbv_niches where status = 'open' limit 1;
+from public.sbv_niches where website_offer and is_listed limit 1;
 
 insert into public.sbv_client_users (user_id, client_id) values
   ('11111111-1111-1111-1111-111111111111','op-alpha'),
   ('22222222-2222-2222-2222-222222222222','op-beta');
 
 select public.sbv_claim_city(
-  (select slug from public.sbv_niches where status='open' limit 1),
+  (select slug from public.sbv_niches where website_offer and is_listed limit 1),
   'Boise','ID','op-alpha');
 select public.sbv_claim_city(
-  (select slug from public.sbv_niches where status='open' limit 1),
+  (select slug from public.sbv_niches where website_offer and is_listed limit 1),
   'Nampa','ID','op-beta');
 
 insert into public.sbv_billing (client_id, stripe_session_id, amount_cents, tier)
@@ -941,18 +948,18 @@ with r(section, check_name, got, expected) as (
     'DENIED (42703)'),
   ('PUBLIC','claimed city reads unavailable',
     pg_temp.sbv_probe('anon',null,
-      $q$select (public.sbv_city_available((select slug from public.sbv_niches where status='open' limit 1),'Boise','ID')->>'available')$q$),
+      $q$select (public.sbv_city_available((select slug from public.sbv_niches where website_offer and is_listed limit 1),'Boise','ID')->>'available')$q$),
     'false'),
   ('PUBLIC','free city reads available',
     pg_temp.sbv_probe('anon',null,
-      $q$select (public.sbv_city_available((select slug from public.sbv_niches where status='open' limit 1),'Twin Falls','ID')->>'available')$q$),
+      $q$select (public.sbv_city_available((select slug from public.sbv_niches where website_offer and is_listed limit 1),'Twin Falls','ID')->>'available')$q$),
     'true'),
 
   -- ---- the compliance floor ------------------------------------------------
   -- Two claims is below the floor of 3, so the count must render as nothing.
   ('COMPLIANCE','count below floor is NULL, not 2',
     pg_temp.sbv_probe('anon',null,
-      $q$select coalesce(claimed::text,'(none)') from public.sbv_claim_counts() where niche_slug = (select slug from public.sbv_niches where status='open' limit 1)$q$),
+      $q$select coalesce(claimed::text,'(none)') from public.sbv_claim_counts() where niche_slug = (select slug from public.sbv_niches where website_offer and is_listed limit 1)$q$),
     '(none)')
 )
 select section, check_name, got, expected, (got = expected) as pass from r
