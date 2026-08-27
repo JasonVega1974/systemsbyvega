@@ -12,20 +12,42 @@ each niche records the intent; these record the mechanics.
 
 | | |
 |---|---|
+| `analyse.mjs` | Where every conversion starts: segment boundaries, `:root` tokens, literal colours, SVG defs, rAF/keyframes, JS functions, `content.json` shape, canonical-schema gaps. |
+| `batch-analyse.mjs` | The same, one row per site, for sizing a batch. |
 | `convert.mjs` | Reads a per-site config, writes `niches/<slug>/*`. **Never touches `sites/`.** |
 | `gate.mjs` | Proves a rebuilt page reproduces its original. Ten checks, ending with a real browser load. |
+| `make-og-wrappers.mjs` | One exact-size HTML wrapper per niche so headless Chrome rasterises the share card with the niche's real webfonts. |
+| `serve.mjs` | Throwaway static server for the above — `file:` is blocked in the automation context. |
 | `convert.<slug>.mjs` | One per converted site. The config, and the record. |
 
 `REPO` is derived from this directory's location, so the tools work in any clone.
+`make-og-wrappers.mjs` and `serve.mjs` take their directories as arguments —
+they used to hardcode a scratchpad path.
 
 ## The loop
 
 ```bash
+node tools/convert/analyse.mjs <slug>                 # read it before you touch it
+# author tools/convert/convert.<slug>.mjs
 node tools/convert/convert.mjs <slug>                 # -> niches/<slug>/
 node tools/build-site.js <slug> --demo --out /tmp/x   # -> a built page
 node tools/convert/gate.mjs <slug> /tmp/x             # does it match the original?
 node tools/qa-site.js <slug> --built /tmp/x           # does it meet §9?
 ```
+
+Share card, once `content.json` is settled:
+
+```bash
+node tools/build-og.js <slug>                         # -> niches/<slug>/og.svg
+node tools/convert/make-og-wrappers.mjs [outDir]      # default: <tmp>/sitelab-og
+node tools/convert/serve.mjs <outDir> [port]          # then screenshot at 1200x630, scale=css
+```
+
+SVG is the *source* for a share card; the committed artifact is the PNG —
+Facebook, X and LinkedIn will not render an SVG `og:image`.
+
+`analyse.mjs` reads `sites/<slug>/`, so run it **before** the site is
+overwritten; afterwards it describes the converted page, not the original.
 
 Only write `sites/<slug>/` once the gate passes. The gate compares against
 `sites/<slug>/` by default, so **gate before you write** — afterwards you are
