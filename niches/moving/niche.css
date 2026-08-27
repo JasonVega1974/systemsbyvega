@@ -1,0 +1,48 @@
+/* moving — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: light;
+  --ground:       #F0E7D8;   /* was --kraft */
+  --ground-2:     #F8F3E9;   /* was --kraft-soft */
+  --panel:        rgba(255,255,255,.84);
+  --accent:       #2F6B4F;   /* was --forest */
+  --accent-2:     #3F8A67;   /* was --forest-bright */
+  --accent-deep:  #25543E;   /* was --forest-deep */
+  --accent-alt:   #C89B6A;   /* was --tape */
+  --accent-alt-soft:rgba(200,155,106,.22);   /* was --tape-soft */
+  --ink:          #2E2A24;
+  --muted:        #6B6353;
+  --hair:         rgba(46,42,36,.15);
+  --card:         rgba(255,255,255,.88);
+  --card-brd:     rgba(46,42,36,.11);
+  --shadow:       0 22px 52px -26px rgba(64,52,32,.30);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --tint-1:       #f7f0e4;
+  --tint-2:       #f1e8da;
+  --tint-3:       #ece1cf;
+  --tint-4:       #e6dbc5;
+  --tint-5:       #e0d3bb;
+  --err-tint:     #FFD9C6;
+  --panel-solid:  #fff;
+  --ground-deep:  var(--ground-2);
+  --ink-max:      var(--panel-solid);
+  --ink-bright:   var(--ink);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--panel-solid);
+  --accent-alt-deep:var(--accent-alt);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--panel-solid);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          #B4453A;
+  --err-ink:      #B4453A;
+  --panel-2:      var(--tint-1);
+  --ok:           var(--accent);
+
+  --display: 'Bevan', serif;
+  --body:    'Mulish', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}

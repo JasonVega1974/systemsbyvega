@@ -1,0 +1,299 @@
+<!-- moving/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="12" height="9" rx="1.5"/><path d="M14 11h4l4 4v2h-8z"/><circle cx="7" cy="19" r="1.6"/><circle cx="18" cy="19" r="1.6"/></svg></span><span>Osprey</span><small>Local Moving</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#load" class="tab">Load Builder</a>
+      <a href="#rates" class="tab">Rates</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#quote" class="cta">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Local moving crews · Treasure Valley</div>
+      <h1 class="reveal">Local moves, <span class="hl">zero chaos.</span></h1>
+      <p class="reveal">A crew that shows up on time, pads the doorways before the first box moves, loads the truck like a puzzle they've already solved, and rebuilds your bed on the other end. Flat hourly crews. No surprise line items.</p>
+      <div class="hero-cta reveal">
+        <a href="#load" class="btn-pri">Build your load ↓</a>
+        <a href="#quote" class="btn-sec">Get a quote</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">The move-day promise</span>
+      <p class="hc-line">Loaded like it's ours. Set down like it's your grandmother's.</p>
+      <p class="hc-by">Padded · strapped · labeled · level</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we do</div>
+      <h2>Four ways to use a good crew.</h2>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="load" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The Load Builder</div>
+      <h2>Tap your rooms. Watch the truck fill.</h2>
+      <p class="stxt">Add what's moving and we'll size the truck, the crew and the hours — with an honest ballpark, not a teaser number.</p>
+    </div>
+    <div class="load-wrap reveal">
+      <div id="loadTiles"></div>
+      <div>
+        <div class="load-out" aria-live="polite" id="loadOutWrap">
+          <div class="lo-truck">
+            <!-- Dimensional box truck: layered gradients (sheen/shadow), feTurbulence brushed-metal grain,
+                 and a crate PATTERN that fills the cargo as the load grows — north-star: dj-site-blue -->
+            <svg viewBox="0 0 260 130" role="img" aria-label="Truck fill gauge">
+              <defs>
+                <linearGradient id="tk-box" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="var(--panel-solid)fff"/><stop offset=".14" stop-color="#f6efe4"/><stop offset=".5" stop-color="#e7dcc9"/><stop offset=".82" stop-color="#d3c5aa"/><stop offset="1" stop-color="#bfae8f"/>
+                </linearGradient>
+                <linearGradient id="tk-cab" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#4a9c76"/><stop offset=".45" stop-color="#2f6b4f"/><stop offset="1" stop-color="#214d38"/>
+                </linearGradient>
+                <linearGradient id="tk-hollow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#463c30"/><stop offset="1" stop-color="#2a2620"/>
+                </linearGradient>
+                <linearGradient id="tk-crate" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ecca97"/><stop offset=".5" stop-color="#cfa268"/><stop offset="1" stop-color="#a67a45"/>
+                </linearGradient>
+                <linearGradient id="tk-glass" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#d3e8df"/><stop offset=".55" stop-color="#8fb7ab"/><stop offset="1" stop-color="#5c8175"/>
+                </linearGradient>
+                <radialGradient id="tk-tire" cx=".4" cy=".36" r=".72">
+                  <stop offset="0" stop-color="#4c4c4c"/><stop offset=".6" stop-color="#232323"/><stop offset="1" stop-color="#0e0e0e"/>
+                </radialGradient>
+                <radialGradient id="tk-hub" cx=".4" cy=".36" r=".8">
+                  <stop offset="0" stop-color="#f4ecdd"/><stop offset=".65" stop-color="#c89b6a"/><stop offset="1" stop-color="#7f5e37"/>
+                </radialGradient>
+                <radialGradient id="tk-ground" cx=".5" cy=".5" r=".5">
+                  <stop offset="0" stop-color="#2e2a24" stop-opacity=".34"/><stop offset="1" stop-color="#2e2a24" stop-opacity="0"/>
+                </radialGradient>
+                <!-- feTurbulence brushed-metal grain on the cargo box — north-star: dj-site-blue grain filter -->
+                <filter id="tk-metal-grain" x="0" y="0" width="100%" height="100%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.9 0.16" numOctaves="2" seed="7" result="n"/>
+                  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0"/>
+                </filter>
+                <clipPath id="tk-interior"><rect x="13" y="29" width="150" height="60" rx="3"/></clipPath>
+                <pattern id="tk-crate-pattern" patternUnits="userSpaceOnUse" width="33" height="60" x="13" y="29">
+                  <g stroke="#7a552b" stroke-width=".7">
+                    <rect x="1.5" y="40" width="14" height="18" rx="1" fill="url(#tk-crate)"/>
+                    <rect x="17" y="42" width="14.5" height="16" rx="1" fill="url(#tk-crate)"/>
+                    <rect x="3.5" y="22" width="26" height="17" rx="1" fill="url(#tk-crate)"/>
+                    <rect x="1.5" y="5" width="13" height="15" rx="1" fill="url(#tk-crate)"/>
+                    <rect x="16.5" y="7" width="15" height="13" rx="1" fill="url(#tk-crate)"/>
+                  </g>
+                  <g stroke="rgba(120,84,44,.6)" stroke-width="2.4">
+                    <line x1="1.5" y1="49" x2="15.5" y2="49"/><line x1="17" y1="50" x2="31.5" y2="50"/>
+                    <line x1="3.5" y1="30.5" x2="29.5" y2="30.5"/><line x1="1.5" y1="12.5" x2="14.5" y2="12.5"/><line x1="16.5" y1="13.5" x2="31.5" y2="13.5"/>
+                  </g>
+                  <g stroke="rgba(255,246,228,.45)" stroke-width=".8">
+                    <line x1="2" y1="41" x2="15" y2="41"/><line x1="17.5" y1="43" x2="31" y2="43"/><line x1="4" y1="23" x2="29" y2="23"/><line x1="2" y1="6" x2="14" y2="6"/><line x1="17" y1="8" x2="31" y2="8"/>
+                  </g>
+                </pattern>
+              </defs>
+
+              <ellipse cx="120" cy="119" rx="118" ry="6" fill="url(#tk-ground)"/>
+
+              <!-- cargo box body: gradient + brushed-metal grain + panel seams + top sheen -->
+              <rect x="10" y="26" width="156" height="66" rx="6" fill="url(#tk-box)"/>
+              <rect x="10" y="26" width="156" height="66" rx="6" fill="#2e2a24" filter="url(#tk-metal-grain)" opacity=".09"/>
+              <g stroke="rgba(80,66,44,.28)" stroke-width="1"><line x1="52" y1="27" x2="52" y2="91"/><line x1="94" y1="27" x2="94" y2="91"/><line x1="136" y1="27" x2="136" y2="91"/></g>
+              <rect x="13" y="28.5" width="150" height="4" rx="2" fill="rgba(255,255,255,.5)"/>
+
+              <!-- hollow interior + crate fill (grows with load) + containing frame + rear-door edge -->
+              <rect x="13" y="29" width="150" height="60" rx="3" fill="url(#tk-hollow)"/>
+              <rect id="truckFill" class="truck-fill" x="13" y="29" width="0" height="60" fill="url(#tk-crate-pattern)" clip-path="url(#tk-interior)"/>
+              <rect x="10" y="26" width="156" height="66" rx="6" fill="none" stroke="#2E2A24" stroke-width="2.5"/>
+              <line x1="15" y1="30" x2="15" y2="88" stroke="rgba(255,255,255,.35)" stroke-width="1.4"/>
+              <text id="truckX2" x="88" y="63" text-anchor="middle" font-family="Bevan,serif" font-size="24" fill="#F8F3E9" style="display:none">×2</text>
+
+              <!-- cab: gradient body + windshield glass + reflection + headlight + bumper -->
+              <path d="M166 46 h32 a6 6 0 0 1 4.6 2.2 l11.4 13.8 a6 6 0 0 1 1.4 3.8 V86 a6 6 0 0 1 -6 6 h-43.4 z" fill="url(#tk-cab)" stroke="#1c4230" stroke-width="2.2"/>
+              <path d="M172 52 h22 l8.5 10.5 h-30.5 z" fill="url(#tk-glass)" stroke="#1c4230" stroke-width="1.4"/>
+              <path d="M174 53.5 l6 8.5 M181 53.5 l6 8.5" stroke="rgba(255,255,255,.45)" stroke-width="1.1"/>
+              <rect x="205" y="80" width="6" height="7" rx="1.5" fill="#ffd98a" stroke="#1c4230" stroke-width="1"/>
+              <rect x="167" y="90" width="46" height="4" rx="2" fill="#22503b"/>
+
+              <!-- wheels: radial tire + hub + spokes + spec highlight -->
+              <g>
+                <circle cx="58" cy="105" r="13" fill="url(#tk-tire)" stroke="#0e0e0e" stroke-width="1"/>
+                <circle cx="58" cy="105" r="5.4" fill="url(#tk-hub)"/>
+                <g stroke="rgba(60,42,22,.6)" stroke-width="1"><line x1="58" y1="100" x2="58" y2="110"/><line x1="53" y1="105" x2="63" y2="105"/></g>
+                <path d="M50 99 a11 11 0 0 1 7-3" stroke="rgba(255,255,255,.35)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              </g>
+              <g>
+                <circle cx="196" cy="105" r="13" fill="url(#tk-tire)" stroke="#0e0e0e" stroke-width="1"/>
+                <circle cx="196" cy="105" r="5.4" fill="url(#tk-hub)"/>
+                <g stroke="rgba(60,42,22,.6)" stroke-width="1"><line x1="196" y1="100" x2="196" y2="110"/><line x1="191" y1="105" x2="201" y2="105"/></g>
+                <path d="M188 99 a11 11 0 0 1 7-3" stroke="rgba(255,255,255,.35)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              </g>
+            </svg>
+          </div>
+          <div id="loadOut">
+            <p class="lo-empty">Tap the rooms and big pieces that are moving — the truck, crew and ballpark show up here.</p>
+          </div>
+        </div>
+        <p class="load-note" id="loadNote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Moving day</div>
+      <h2>The same four beats, every move.</h2>
+    </div>
+    <div class="proc-grid reveal" id="procGrid"></div>
+  </div>
+</section>
+
+<section id="rates" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Rates</div>
+      <h2>Hourly, visible, done.</h2>
+      <p class="stxt">One rate per crew size. The Load Builder above and this table read from the same numbers.</p>
+    </div>
+    <div class="rate-rows reveal" id="rateRows"></div>
+    <div class="rate-notes reveal">
+      <div class="rnote" id="billableNote"></div>
+      <div class="rnote" id="pricingNote"></div>
+    </div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Anywhere in the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Osprey Moving Co.</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">After the truck left</div>
+    <h2>What people say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--ground-2);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="quote" id="quote">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Get your quote</div>
+    <h2>Tell us about the move.</h2>
+    <p>We'll call to set up the fifteen-minute walkthrough — usually the same day you send this.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qFrom">Moving from</label>
+          <input type="text" id="qFrom" name="from" placeholder="Street or neighborhood, city" />
+        </div>
+        <div class="qf-row">
+          <label for="qTo">Moving to</label>
+          <input type="text" id="qTo" name="to" placeholder="City is fine if that's all you know" />
+        </div>
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qSize">Size of the move</label>
+          <select id="qSize" name="size">
+            <option>Studio</option>
+            <option>1 bedroom</option>
+            <option selected>2 bedrooms</option>
+            <option>3 bedrooms</option>
+            <option>4+ bedrooms</option>
+            <option>Just a few items</option>
+          </select>
+        </div>
+        <div class="qf-row">
+          <label for="qDate">Target date</label>
+          <input type="text" id="qDate" name="date" placeholder="A date, a weekend, or 'flexible'" />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Stairs, a piano, a tight driveway, an elevator to book…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request my quote</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk it through? <a href="tel:+12085550341" data-phone-link>Call or text (208) 555-0341</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Request received! We'll call you to set up the walkthrough — usually the same day.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Osprey Moving Co.</b><br />
+      Local moving crews · <span data-city>Garden City, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550341" data-phone>(208) 555-0341</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550341"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550341?body=Hi%20Osprey%2C%20can%20you%20help%20with%20my%20move%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>

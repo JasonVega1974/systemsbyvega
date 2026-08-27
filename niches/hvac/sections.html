@@ -1,0 +1,213 @@
+<!-- hvac/sections.html — this niche's body markup.
+     Sections differ by product (SITELAB_TEMPLATE.md §3.1), so this is per-niche. -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <div class="logo"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M6 7l6 4 6-4"/><path d="M6 17l6-4 6 4"/></svg></span><span>Whitecloud</span><small>Heating &amp; Air</small></div>
+    <div class="nav-links">
+      <a href="#services" class="tab">Services</a>
+      <a href="#plans" class="tab">Tune-Up Plans</a>
+      <a href="#sysmap" class="tab">System Map</a>
+      <a href="#faq" class="tab">FAQ</a>
+      <a href="#book" class="cta">Book a Visit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow reveal">Heating &amp; cooling · Treasure Valley</div>
+      <h1 class="reveal"><span class="warm">Warm in January.</span> <span class="cool">Cool in July.</span></h1>
+      <p class="reveal">One crew for both seasons. Whitecloud keeps Treasure Valley homes comfortable year-round — honest diagnostics, flat tune-up pricing, and a straight answer before anyone touches a wrench.</p>
+      <div class="hero-cta reveal">
+        <a href="#book" class="btn-pri">Book a visit</a>
+        <a href="#sysmap" class="btn-sec">What's acting up? ↓</a>
+      </div>
+    </div>
+    <div class="hero-card reveal" data-delay="1">
+      <span class="hc-badge">The goal, all year</span>
+      <div class="hc-row warm">
+        <span class="hc-season">January</span>
+        <span class="hc-out">14° outside</span>
+        <span class="hc-in">70° inside</span>
+      </div>
+      <div class="hc-row cool">
+        <span class="hc-season">July</span>
+        <span class="hc-out">104° outside</span>
+        <span class="hc-in">70° inside</span>
+      </div>
+      <p class="hc-by">Tune-ups · repairs · installs · both seasons, one number</p>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="wrap trust-in reveal" id="trustStats"></div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we do</div>
+      <h2>Everything between the thermostat and the weather.</h2>
+    </div>
+    <div class="svc-grid reveal" id="svcGrid"></div>
+  </div>
+</section>
+
+<section id="plans" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Tune-up plans</div>
+      <h2>Flat prices. Zero upsell script.</h2>
+      <p class="stxt">A tune-up is maintenance, not a sales visit. Pick the rhythm that fits your house — repairs are always quoted flat and approved by you first.</p>
+    </div>
+    <div class="price-grid reveal" id="priceGrid"></div>
+    <p class="pricing-note" id="pricingNote"></p>
+  </div>
+</section>
+
+<section id="sysmap">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The system map</div>
+      <h2>Point at the problem.</h2>
+      <p class="stxt">Tap a numbered spot on the house — see the symptoms it causes, what a visit covers, and the ballpark before we ever ring your doorbell.</p>
+    </div>
+    <div class="sys-wrap reveal">
+      <div>
+        <div class="sys-map" id="sysMapBox"></div>
+        <div class="sys-chips" id="sysChips" role="group" aria-label="System components"></div>
+        <p class="sys-note" id="sysNote"></p>
+      </div>
+      <div class="sys-detail" id="sysDetail" aria-live="polite">
+        <p class="sd-empty">Tap a spot on the house to see symptoms, what we check, and the ballpark.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="seasonal" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Timing matters</div>
+      <h2>Beat the rush. Book the shoulder season.</h2>
+      <p class="stxt">The worst time to find a problem is the first 100° week — or the first hard freeze. A shoulder-season tune-up finds it while it's still cheap and the schedule is still open.</p>
+    </div>
+    <div class="season-grid reveal" id="seasonGrid"></div>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap reveal">
+    <div class="eyebrow">Service area</div>
+    <h2>Rolling out of Caldwell, across the <span id="areaShort"></span>.</h2>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+</section>
+
+<section id="team" style="background:var(--ground-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow" id="ownerEyebrow"></div>
+    <div class="owner-wrap">
+      <div class="owner-photo" id="ownerPhotoWrap"></div>
+      <div class="owner-bio">
+        <h3 id="ownerName"></h3>
+        <div class="oname">Founder, Whitecloud Heating &amp; Air</div>
+        <p id="ownerBio"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap reveal">
+    <div class="eyebrow">Word of mouth</div>
+    <h2>What the neighbors say.</h2>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--ground-2);border-top:1px solid var(--hair)">
+  <div class="wrap reveal">
+    <div class="eyebrow">Questions</div>
+    <h2>Everything people ask us first.</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="reveal">
+    <div class="eyebrow">Book a visit</div>
+    <h2>Tell us what the house is doing.</h2>
+    <p>We'll call you back to confirm a time — usually the same day. No dispatch fee surprises; you'll know the number before we start.</p>
+    </div>
+    <form class="qform reveal" id="quoteForm" novalidate>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qName">Your name</label>
+          <input type="text" id="qName" name="name" required />
+        </div>
+        <div class="qf-row">
+          <label for="qPhone">Phone</label>
+          <input type="tel" id="qPhone" name="phone" required />
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qAddress">Street address &amp; city</label>
+        <input type="text" id="qAddress" name="address" placeholder="123 Elm St, Caldwell" />
+      </div>
+      <div class="qf-two">
+        <div class="qf-row">
+          <label for="qNeed">What do you need?</label>
+          <select id="qNeed" name="need">
+            <option>Repair — no heat</option>
+            <option>Repair — no cool / weak cooling</option>
+            <option selected>Tune-up or plan</option>
+            <option>New system quote</option>
+            <option>Air quality / ducts / filters</option>
+            <option>Not sure — something's off</option>
+          </select>
+        </div>
+        <div class="qf-row">
+          <label for="qWhen">How soon?</label>
+          <select id="qWhen" name="timing">
+            <option>This week</option>
+            <option selected>Next couple of weeks</option>
+            <option>Planning ahead</option>
+          </select>
+        </div>
+      </div>
+      <div class="qf-row">
+        <label for="qNotes">Anything we should know?</label>
+        <textarea id="qNotes" name="notes" rows="3" placeholder="Noises, smells, which rooms, how old the system is — anything helps…"></textarea>
+      </div>
+      <button type="submit" class="qf-submit" id="qfSubmit">Request a visit</button>
+      <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+      <p class="qf-alt">Prefer to talk first? <a href="tel:+12085550263" data-phone-link>Call or text (208) 555-0263</a>.</p>
+    </form>
+    <div class="qf-success" id="qfSuccess" hidden>Got it — we'll call to confirm a time, usually the same day.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <b data-brand>Whitecloud Heating &amp; Air</b><br />
+      Heating &amp; cooling · <span data-city>Caldwell, ID</span> &amp; the Treasure Valley
+    </div>
+    <div>
+      Call or text <a href="tel:+12085550263" data-phone>(208) 555-0263</a><br />
+      <span class="footer__credit">Concept build by <a href="https://systemsbyvega.com" target="_blank" rel="noopener noreferrer">Systems by Vega</a><!-- SWAP:DISCLOSURE --> · Demonstration website for a fictional business.<!-- /SWAP:DISCLOSURE --></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+12085550263"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>Call</a>
+  <a class="text" href="sms:+12085550263?body=Hi%20Whitecloud%2C%20my%20house%20needs%20a%20look."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</div>
+
+<div id="toast"></div>

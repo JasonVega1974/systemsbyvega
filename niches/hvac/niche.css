@@ -1,0 +1,44 @@
+/* hvac — tokens only. Structure lives in _template/base.css.
+   Original identity names are recorded beside each mapped token. */
+:root{
+  --scheme: light;
+  --ground:       #F2F7FB;   /* was --ice */
+  --ground-2:     #FBFDFE;   /* was --ice-soft */
+  --panel:        rgba(255,255,255,.86);
+  --accent:       #1E6FB0;   /* was --steel */
+  --accent-2:     #2E86D1;   /* was --steel-bright */
+  --accent-deep:  #175A91;   /* was --steel-deep */
+  --accent-alt:   #E4572E;   /* was --coral */
+  --accent-alt-deep:#B84523;   /* was --coral-deep */
+  --accent-alt-soft:rgba(228,87,46,.12);   /* was --coral-soft */
+  --accent-soft:  rgba(30,111,176,.11);   /* was --steel-soft */
+  --ink:          #152435;
+  --muted:        #4E6072;
+  --hair:         rgba(21,36,53,.13);
+  --card:         rgba(255,255,255,.9);
+  --card-brd:     rgba(21,36,53,.10);
+  --shadow:       0 22px 52px -24px rgba(23,90,145,.22);
+  --maxw:         1120px;
+
+  /* Tokens the shared CSS needs that this site hardcoded inline. */
+  --err-tint:     #FFD9C6;
+  --panel-solid:  #fff;
+  --ground-deep:  var(--ground-2);
+  --ink-max:      var(--panel-solid);
+  --ink-bright:   var(--ink);
+  --ink-dim:      var(--muted);
+  --accent-ink:   var(--panel-solid);
+  --hair-accent:  var(--hair);
+  --placeholder:  var(--muted);
+  --sheen-hi:     var(--panel-solid);
+  --sheen-lo:     var(--ground-2);
+  --sheen-accent: var(--accent-2);
+  --err:          #B4453A;
+  --err-ink:      #B4453A;
+  --panel-2:      var(--ground-2);
+  --ok:           var(--accent);
+
+  --display: 'Kanit', sans-serif;
+  --body:    'Albert Sans', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
