@@ -846,21 +846,21 @@ insert into auth.users (id, email) values
 
 insert into public.sbv_tenants (client_id, niche_slug, business_name, operator_email, is_active)
 select 'op-alpha', slug, 'Alpha', 'info@kingdom-creatives.com', true
-from public.sbv_niches where website_offer and is_listed limit 1;
+from public.sbv_niches where website_offer and is_listed order by slug limit 1;
 insert into public.sbv_tenants (client_id, niche_slug, business_name, operator_email, is_active)
 select 'op-beta',  slug, 'Beta',  'info@kingdom-creatives.com', true
-from public.sbv_niches where website_offer and is_listed limit 1;
+from public.sbv_niches where website_offer and is_listed order by slug limit 1;
 
 insert into public.sbv_client_users (user_id, client_id) values
   ('11111111-1111-1111-1111-111111111111','op-alpha'),
   ('22222222-2222-2222-2222-222222222222','op-beta');
 
 select public.sbv_claim_city(
-  (select slug from public.sbv_niches where website_offer and is_listed limit 1),
-  'Boise','ID','op-alpha');
+  (select slug from public.sbv_niches where website_offer and is_listed order by slug limit 1),
+  'Zzz Alpha City','ZZ','op-alpha');
 select public.sbv_claim_city(
-  (select slug from public.sbv_niches where website_offer and is_listed limit 1),
-  'Nampa','ID','op-beta');
+  (select slug from public.sbv_niches where website_offer and is_listed order by slug limit 1),
+  'Zzz Beta City','ZZ','op-beta');
 
 insert into public.sbv_billing (client_id, stripe_session_id, amount_cents, tier)
 values ('op-alpha','cs_verify_alpha',29900,'launch');
@@ -875,7 +875,7 @@ with r(section, check_name, got, expected) as (
   ('ISOLATION','alpha sees only own claim',
     pg_temp.sbv_probe('authenticated','11111111-1111-1111-1111-111111111111',
       $q$select string_agg(city_label, ',' order by city_label) from public.sbv_city_claims$q$),
-    'Boise'),
+    'Zzz Alpha City'),
   ('ISOLATION','alpha sees only own mapping',
     pg_temp.sbv_probe('authenticated','11111111-1111-1111-1111-111111111111',
       $q$select string_agg(client_id, ',') from public.sbv_client_users$q$),
@@ -938,29 +938,43 @@ with r(section, check_name, got, expected) as (
     'ALLOWED'),
 
   -- ---- the public surface works, and leaks nothing -------------------------
+  /* CONTAINS, not EQUALS. This function returns every live claim in the
+     database, so asserting the whole string made the check fail the moment a
+     real operator bought anything — a red line in the security suite caused by
+     a sale, not by a regression. Scoped to the fixture's own ZZ territory. */
   ('PUBLIC','anon reads the claimed-cities function',
     pg_temp.sbv_probe('anon',null,
-      $q$select string_agg(city_label||' '||state_code, ', ' order by city_label) from public.sbv_public_claimed_cities()$q$),
-    'Boise ID, Nampa ID'),
+      $q$select string_agg(city_label||' '||state_code, ', ' order by city_label)
+         from public.sbv_public_claimed_cities() where state_code = 'ZZ'$q$),
+    'Zzz Alpha City ZZ, Zzz Beta City ZZ'),
   ('PUBLIC','operator_email is not a column of the tenant fn',
     pg_temp.sbv_attempt('anon',null,
       $q$select operator_email from public.sbv_public_tenants()$q$),
     'DENIED (42703)'),
   ('PUBLIC','claimed city reads unavailable',
     pg_temp.sbv_probe('anon',null,
-      $q$select (public.sbv_city_available((select slug from public.sbv_niches where website_offer and is_listed limit 1),'Boise','ID')->>'available')$q$),
+      $q$select (public.sbv_city_available((select slug from public.sbv_niches where website_offer and is_listed order by slug limit 1),'Zzz Alpha City','ZZ')->>'available')$q$),
     'false'),
   ('PUBLIC','free city reads available',
     pg_temp.sbv_probe('anon',null,
-      $q$select (public.sbv_city_available((select slug from public.sbv_niches where website_offer and is_listed limit 1),'Twin Falls','ID')->>'available')$q$),
+      $q$select (public.sbv_city_available((select slug from public.sbv_niches where website_offer and is_listed order by slug limit 1),'Zzz Never Sold','ZZ')->>'available')$q$),
     'true'),
 
   -- ---- the compliance floor ------------------------------------------------
   -- Two claims is below the floor of 3, so the count must render as nothing.
-  ('COMPLIANCE','count below floor is NULL, not 2',
+  /* The floor RULE, not a fixed number. The old form asserted '(none)' on the
+     assumption that this niche had only the two fixture claims — true on an
+     empty database, false the moment four real operators buy in. Expected is
+     computed from the live count so the rule is what is tested: strictly more
+     than 3 renders, 3 or fewer renders nothing. */
+  ('COMPLIANCE','the >3 floor governs what is rendered',
     pg_temp.sbv_probe('anon',null,
-      $q$select coalesce(claimed::text,'(none)') from public.sbv_claim_counts() where niche_slug = (select slug from public.sbv_niches where website_offer and is_listed limit 1)$q$),
-    '(none)')
+      $q$select coalesce(claimed::text,'(none)') from public.sbv_claim_counts() where niche_slug = (select slug from public.sbv_niches where website_offer and is_listed order by slug limit 1)$q$),
+    (select case when count(*) > 3 then count(*)::text else '(none)' end
+     from public.sbv_city_claims cc
+     where cc.niche_slug = (select slug from public.sbv_niches
+                            where website_offer and is_listed order by slug limit 1)
+       and cc.status in ('claimed','reserved')))
 )
 select section, check_name, got, expected, (got = expected) as pass from r
 union all
