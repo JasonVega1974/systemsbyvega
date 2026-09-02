@@ -153,6 +153,97 @@
   .fb{font-family:'Archivo';font-weight:800;color:#fff;margin-bottom:4px}
   .foot-link{color:var(--con-muted);text-decoration:none;font-weight:600}
   .foot-link:hover{color:var(--con-amber)}
+
+  /* ===== territory claim modal (claim/claim.js) ===== */
+  /* claim modal — styled on sites/index.html's OWN tokens (it does not load
+     sbv.css): --paper --panel --ink --ink-soft --hair --amber --amber-deep
+     --green --shadow. Kept here rather than in a separate stylesheet: this page loads no external
+     CSS, and one more request on a purchase path is not worth the tidiness. */
+  .cm-back{position:fixed;inset:0;z-index:200;background:rgba(20,24,33,.62);
+    backdrop-filter:blur(3px);display:flex;align-items:flex-start;justify-content:center;
+    padding:5vh 16px;overflow-y:auto}
+  .cm-back[hidden]{display:none}
+  .cm{position:relative;background:var(--panel);border-radius:16px;box-shadow:var(--shadow);
+    width:100%;max-width:520px;padding:30px 28px 26px}
+  @media(max-width:560px){.cm{padding:24px 18px 20px;border-radius:12px}}
+
+  .cm-x{position:absolute;top:10px;right:12px;background:none;border:0;cursor:pointer;
+    font-size:26px;line-height:1;color:var(--ink-soft);padding:6px 10px;border-radius:8px}
+  .cm-x:hover{background:var(--paper);color:var(--ink)}
+  .cm-x:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  .cm-step{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amber-deep);margin:0 0 6px}
+  .cm-title{font-family:'Archivo',sans-serif;font-weight:800;font-size:23px;
+    letter-spacing:-.01em;line-height:1.15;margin:0 0 14px;color:var(--ink)}
+  .cm-lead{font-size:14.5px;color:var(--ink-soft);margin:0 0 18px;line-height:1.6}
+
+  .cm-row{display:flex;gap:12px;align-items:flex-end}
+  .cm-f{display:block;flex:1;margin:0 0 14px}
+  .cm-f-sm{flex:0 0 96px}
+  .cm-f>span{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 5px}
+  .cm-f input,.cm-f select{width:100%;padding:10px 12px;font:inherit;font-size:15px;
+    border:1px solid var(--hair);border-radius:9px;background:#fff;color:var(--ink)}
+  .cm-f input:focus-visible,.cm-f select:focus-visible{outline:2px solid var(--amber);
+    outline-offset:1px;border-color:var(--amber)}
+
+  .cm-sub{display:flex;align-items:center;gap:6px}
+  .cm-sub input{flex:1}
+  .cm-sub em{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    color:var(--ink-soft);white-space:nowrap}
+
+  .cm-msg{font-size:14px;line-height:1.55;margin:0 0 14px;min-height:1.2em;color:var(--ink-soft)}
+  .cm-msg.bad{color:#B3261E}
+  .cm-norm{color:var(--ink-soft);font-size:13px}
+  .cm-ok{font-size:15.5px;line-height:1.6;margin:0 0 18px;padding:12px 14px;
+    background:rgba(31,157,99,.08);border-left:3px solid var(--green);border-radius:0 8px 8px 0}
+
+  .cm-go{width:100%;padding:13px 18px;font:inherit;font-weight:700;font-size:15px;
+    color:#fff;background:var(--amber-deep);border:0;border-radius:10px;cursor:pointer}
+  .cm-go:hover:not([disabled]){background:var(--amber)}
+  .cm-go[disabled]{opacity:.5;cursor:not-allowed}
+  .cm-go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .cm-tabs{display:flex;gap:6px;margin:0 0 16px;background:var(--paper);
+    padding:4px;border-radius:10px}
+  .cm-tab{flex:1;padding:8px 10px;font:inherit;font-size:13.5px;font-weight:600;
+    border:0;background:none;border-radius:7px;cursor:pointer;color:var(--ink-soft)}
+  .cm-tab.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(20,28,40,.1)}
+  .cm-tab:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+
+  .cm-tiers{border:1px solid var(--hair);border-radius:10px;padding:12px 14px;margin:0 0 16px}
+  .cm-tiers legend{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);padding:0 6px}
+  .cm-tiers label{display:flex;align-items:center;gap:9px;font-size:14.5px;padding:5px 0;cursor:pointer}
+  .cm-tiers b{font-weight:700}
+
+  /* Scrollable so long terms cannot push the button off screen — and focusable,
+     so a keyboard user can actually read them before the checkbox. */
+  .cm-terms{max-height:132px;overflow-y:auto;border:1px solid var(--hair);border-radius:9px;
+    padding:12px 14px;font-size:13.5px;line-height:1.62;color:var(--ink-soft);
+    background:var(--paper);margin:0 0 12px}
+  .cm-terms:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+
+  .cm-accept{display:flex;gap:10px;align-items:flex-start;font-size:14px;
+    line-height:1.5;margin:0 0 16px;cursor:pointer}
+  .cm-accept input{margin-top:3px;width:18px;height:18px;flex:0 0 18px;accent-color:var(--amber-deep)}
+  .cm-fine{font-size:12.5px;color:var(--ink-soft);text-align:center;margin:12px 0 0;line-height:1.5}
+
+  /* the per-card claimed badge */
+  .sc-claimed{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+    letter-spacing:.06em;color:var(--amber-deep);margin:8px 0 0}
+  .sc-claimed[hidden]{display:none}
+
+  /* nav auth slot */
+  .nav-auth{display:flex;align-items:center;gap:10px;font-size:13px}
+  .nav-auth[hidden]{display:none}
+  .nav-email{color:var(--con-muted);font-family:'IBM Plex Mono',monospace;font-size:12px;
+    max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nav-signout{background:none;border:1px solid var(--con-hair);color:var(--con-text);
+    font:inherit;font-size:12px;padding:5px 10px;border-radius:7px;cursor:pointer}
+  .nav-signout:hover{border-color:var(--con-amber);color:var(--con-amber)}
+
 </style>
 </head>
 <body>
@@ -167,6 +258,10 @@
       <a href="/pricing/" class="nav-tab">Pricing</a>
       <a href="/portfolio/" class="nav-tab">Portfolio</a>
       <a href="#contact" class="cta">Hire me</a>
+      <span class="nav-auth" id="navAuth" hidden>
+        <span class="nav-email" id="navEmail"></span>
+        <button type="button" class="nav-signout" id="navSignOut">Sign out</button>
+      </span>
     </div>
   </div>
 </nav>
@@ -237,9 +332,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/landscaping/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Landscaping" data-slug="landscaping">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="landscaping" data-name="Landscaping">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/landscaping/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Landscaping" data-slug="landscaping">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="landscaping" hidden></p>
         </div>
       </div>
 
@@ -277,9 +374,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/pressure-washing/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Pressure washing" data-slug="pressure-washing">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="pressure-washing" data-name="Pressure washing">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/pressure-washing/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Pressure washing" data-slug="pressure-washing">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="pressure-washing" hidden></p>
         </div>
       </div>
 
@@ -317,9 +416,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/car-detailing/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Car detailing" data-slug="car-detailing">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="car-detailing" data-name="Car detailing">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/car-detailing/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Car detailing" data-slug="car-detailing">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="car-detailing" hidden></p>
         </div>
       </div>
 
@@ -357,9 +458,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/personal-trainer/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Personal trainer" data-slug="personal-trainer">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="personal-trainer" data-name="Personal trainer">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/personal-trainer/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Personal trainer" data-slug="personal-trainer">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="personal-trainer" hidden></p>
         </div>
       </div>
 
@@ -397,9 +500,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/bbq-food-truck/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="BBQ food truck" data-slug="bbq-food-truck">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="bbq-food-truck" data-name="BBQ food truck">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/bbq-food-truck/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="BBQ food truck" data-slug="bbq-food-truck">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="bbq-food-truck" hidden></p>
         </div>
       </div>
 
@@ -437,9 +542,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/dumpster-rental/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Dumpster rental" data-slug="dumpster-rental">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="dumpster-rental" data-name="Dumpster rental">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/dumpster-rental/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Dumpster rental" data-slug="dumpster-rental">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="dumpster-rental" hidden></p>
         </div>
       </div>
 
@@ -477,9 +584,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/tattoo-studio/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Tattoo studio" data-slug="tattoo-studio">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="tattoo-studio" data-name="Tattoo studio">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/tattoo-studio/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Tattoo studio" data-slug="tattoo-studio">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="tattoo-studio" hidden></p>
         </div>
       </div>
 
@@ -517,9 +626,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/metal-fabrication/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Metal fabrication" data-slug="metal-fabrication">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="metal-fabrication" data-name="Metal fabrication">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/metal-fabrication/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Metal fabrication" data-slug="metal-fabrication">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="metal-fabrication" hidden></p>
         </div>
       </div>
 
@@ -557,9 +668,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/contracting/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Contracting" data-slug="contracting">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="contracting" data-name="Contracting">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/contracting/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Contracting" data-slug="contracting">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="contracting" hidden></p>
         </div>
       </div>
 
@@ -597,9 +710,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/painting/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Painting" data-slug="painting">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="painting" data-name="Painting">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/painting/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Painting" data-slug="painting">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="painting" hidden></p>
         </div>
       </div>
 
@@ -637,9 +752,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/plumbing/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Plumbing" data-slug="plumbing">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="plumbing" data-name="Plumbing">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/plumbing/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Plumbing" data-slug="plumbing">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="plumbing" hidden></p>
         </div>
       </div>
 
@@ -677,9 +794,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/electrician/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Electrician" data-slug="electrician">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="electrician" data-name="Electrician">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/electrician/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Electrician" data-slug="electrician">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="electrician" hidden></p>
         </div>
       </div>
 
@@ -717,9 +836,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/caregiving/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Companion care" data-slug="caregiving">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="caregiving" data-name="Companion care">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/caregiving/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Companion care" data-slug="caregiving">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="caregiving" hidden></p>
         </div>
       </div>
 
@@ -757,9 +878,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/roofing/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Roofing" data-slug="roofing">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="roofing" data-name="Roofing">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/roofing/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Roofing" data-slug="roofing">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="roofing" hidden></p>
         </div>
       </div>
 
@@ -797,9 +920,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/bin-cleaning/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Bin Cleaning" data-slug="bin-cleaning">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="bin-cleaning" data-name="Bin Cleaning">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/bin-cleaning/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Bin Cleaning" data-slug="bin-cleaning">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="bin-cleaning" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -836,9 +961,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/hvac/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="HVAC" data-slug="hvac">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="hvac" data-name="HVAC">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/hvac/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="HVAC" data-slug="hvac">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="hvac" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -875,9 +1002,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/auto-repair/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Auto Repair" data-slug="auto-repair">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="auto-repair" data-name="Auto Repair">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/auto-repair/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Auto Repair" data-slug="auto-repair">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="auto-repair" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -914,9 +1043,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/auto-body/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Auto Body" data-slug="auto-body">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="auto-body" data-name="Auto Body">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/auto-body/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Auto Body" data-slug="auto-body">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="auto-body" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -953,9 +1084,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/dog-walking/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Dog Walking" data-slug="dog-walking">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="dog-walking" data-name="Dog Walking">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/dog-walking/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Dog Walking" data-slug="dog-walking">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="dog-walking" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -992,9 +1125,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/child-care/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Child Care" data-slug="child-care">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="child-care" data-name="Child Care">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/child-care/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Child Care" data-slug="child-care">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="child-care" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -1031,9 +1166,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/delivery/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Delivery" data-slug="delivery">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="delivery" data-name="Delivery">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/delivery/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Delivery" data-slug="delivery">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="delivery" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -1070,9 +1207,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/moving/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="Moving" data-slug="moving">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="moving" data-name="Moving">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/moving/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="Moving" data-slug="moving">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="moving" hidden></p>
         </div>
       </div>
       <div class="sitecard">
@@ -1110,9 +1249,11 @@
             </details>
           </div>
           <div class="sc-actions">
-            <a class="sc-btn pri" href="/sites/dj/" target="_blank" rel="noopener">View Full Site →</a>
-            <button type="button" class="sc-btn sec want-btn" data-site="DJ Site Kit" data-slug="dj">Want this site?</button>
+            <button type="button" class="sc-btn pri claim-btn" data-slug="dj" data-name="DJ Site Kit">Claim this territory</button>
+            <a class="sc-btn sec" href="/sites/dj/" target="_blank" rel="noopener">View Full Site →</a>
+            <button type="button" class="sc-btn sec want-btn" data-site="DJ Site Kit" data-slug="dj">I&rsquo;m interested</button>
           </div>
+          <p class="sc-claimed" data-claimed="dj" hidden></p>
         </div>
       </div>
     </div>
@@ -1238,6 +1379,35 @@
       });
     });
   })();
+</script>
+
+<script>
+/* One source per value, exposed under both names. claim.js reads
+   supabaseUrl/supabaseAnonKey or url/key; index.html and
+   claim/thank-you.html already ship the short pair. Aliasing rather than
+   repeating the literals means the two shapes cannot drift apart here.
+
+   sb_publishable_ is the CURRENT Supabase key format, not a legacy anon
+   JWT. Verified against supabase-js 2.114.0: createClient accepts it, and
+   signInWithPassword reaches credential checking — which only happens
+   after the key validates. Public by design; RLS is the boundary. */
+window.SBV_CONFIG = (function () {
+  var url = 'https://newjbexmvltvtmxollca.supabase.co';
+  var key = 'sb_publishable_ZNgmFmfr7AHbZSEibo7jqQ_z8-Oazhy';
+  return { supabaseUrl: url, supabaseAnonKey: key, url: url, key: key };
+})();
+</script>
+<!-- Vendored, not a CDN: no third party on the path to a purchase, and the
+     version is pinned absolutely. 53KB gzipped. Auth only — every other
+     call in claim.js is plain fetch. -->
+<script src="/assets/vendor/supabase-2.114.0.js" defer></script>
+<!-- The modal markup is injected by claim.js; it is not in this file. -->
+<script src="/claim/claim.js" defer></script>
+<script>
+  /* DOMContentLoaded, not a bare call: deferred scripts run before that
+     event but AFTER this inline block parses, so initClaim would not yet
+     exist. */
+  document.addEventListener('DOMContentLoaded', function () { window.initClaim(); });
 </script>
 </body>
 </html>
