@@ -116,6 +116,13 @@ export const RESERVED_SLUGS = new Set([
    no earnings representation anywhere, in any medium. */
 export const CURRENT_ACCEPTANCE_VERSION = 'v1-2026-08-27';
 
+/* ⚠ BUMP THE VERSION KEY WHENEVER YOU EDIT THE TEXT.
+   The hash stored on sbv_intake.acceptance_hash is computed SERVER-SIDE from
+   whatever string sits under the version the client sent, and the client sends
+   only the version — never the text, never a hash. So editing the wording in
+   place leaves buyers agreeing to what they read while the database records a
+   hash of something else, with nothing to detect the difference.
+   A new key is free. Editing an existing one silently rewrites history. */
 export const ACCEPTANCE_TEXTS = {
   'v1-2026-08-27':
     'I am buying a website and a business kit for one city. Systems by Vega ' +
