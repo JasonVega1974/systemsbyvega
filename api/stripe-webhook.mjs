@@ -439,19 +439,39 @@ async function provision(session) {
      By the time these fire the money has moved and the database is correct.
      A Brevo outage must not become a 500 that makes Stripe retry work that is
      already done. */
-  await sendWelcome(intake, clientId);
-  await ownerAlert('New operator provisioned', [
-    'tenant:   ' + clientId,
-    'business: ' + intake.business_name,
-    'niche:    ' + intake.niche_slug,
-    'city:     ' + intake.city_label + ', ' + intake.state_code,
-    'tier:     ' + intake.tier,
-    'buyer:    ' + intake.operator_email,
-    'session:  ' + sessionId,
-    'charge:   ' + (charge && charge.id ? charge.id : '(unknown)'),
+  /* The catalog name, not the slug: "dj" and "bbq food truck" are what the
+     slug degrades to, and this is the first line of the first email a buyer
+     reads after paying. Best-effort — mail is not worth failing a provision
+     over, so a miss falls back to the slug. */
+  let nicheName = null;
+  try {
+    const n = await pgSelectOne('sbv_niches',
+      'slug=eq.' + q(intake.niche_slug) + '&select=name');
+    nicheName = n && n.name;
+  } catch (e) {
+    console.warn('could not read niche name for the welcome email:', e.message);
+  }
+  await sendWelcome(intake, clientId, nicheName);
+  /* Subject carries category and territory so the inbox list alone says what
+     sold, without opening anything. */
+  await ownerAlert(
+    'New operator — ' + intake.niche_slug + ', ' + intake.city_label + ' ' + intake.state_code, [
+    'TERRITORY SOLD' + ' '.repeat(35) +
+      '$' + (Number(paidSession.amount_total || 0) / 100).toFixed(2),
     '',
-    'NEXT: build their site from the ' + intake.niche_slug + ' template and',
-    'point ' + clientId + '.' + APEX + ' at it.',
+    'business   ' + intake.business_name,
+    'operator   ' + intake.operator_email,
+    'category   ' + intake.niche_slug,
+    'territory  ' + intake.city_label + ', ' + intake.state_code,
+    'tier       ' + intake.tier,
+    'subdomain  ' + clientId + '.' + APEX,
+    '',
+    'stripe     ' + sessionId,
+    'charge     ' + (charge && charge.id ? charge.id : '(unknown)'),
+    'tenant     ' + clientId + '  (active)',
+    '',
+    'NEXT: build the ' + intake.niche_slug + ' template for ' + clientId + ', then point',
+    '      the subdomain at it and send the "your site is live" email.',
   ]);
 
   console.log('provisioned', clientId, 'for', intake.operator_email);
@@ -534,34 +554,96 @@ async function freeClientId(desired) {
 /* The buyer's confirmation. States what was bought and what happens next, and
    nothing else — no earnings language, no projection, no promise of outcome,
    and no link to a dashboard that does not exist yet. */
-function sendWelcome(intake, clientId) {
+function sendWelcome(intake, clientId, nicheName) {
   const city = intake.city_label + ', ' + intake.state_code;
+  const niche = nicheName || (intake.niche_slug || '').replace(/-/g, ' ');
+  const web = clientId + '.' + APEX;
+  const who = intake.operator_name || intake.business_name;
+
+  /* THREE BEATS, AND EVERY ONE OF THEM IS TRUE TODAY.
+     The obvious welcome — bookmark your live site, follow the admin link,
+     watch for setup instructions — describes a product that does not exist
+     yet: no middleware routes the subdomain, there is no /admin/ page, and
+     there is no second email, because buyers create their account BEFORE
+     paying and already have a password. Promising any of it would hand a
+     buyer three dead ends thirty seconds after they spent $299.
+     Swap to the linked version once both destinations return 200. */
   const lines = [
-    'Your territory is claimed: ' + city + '.',
+    'Hi ' + who + ',',
     '',
-    'Business:    ' + intake.business_name,
-    'Category:    ' + intake.niche_slug,
-    'Web address: ' + clientId + '.' + APEX,
-    'Package:     ' + (intake.tier === 'custom' ? 'Custom build' : 'Launch-ready'),
+    'You now hold ' + niche + ' — ' + city + '. That category is yours in that',
+    'city for as long as your account is active. Nobody else can claim it.',
     '',
-    'That city is now yours in this category for as long as your account is',
-    'active. Nobody else can claim it.',
+    'WHAT HAPPENS NEXT',
     '',
-    'What happens next: we build your site and email you the moment it is',
-    'live, along with how to sign in and edit it. Nothing is needed from you',
-    'right now.',
+    '1. We build your site. Your web address is reserved:',
+    '   ' + web,
+    '   It is not live yet — we will email you the moment it is.',
     '',
-    'Questions, or something wrong above? Reply to this email.',
+    '2. Then you can sign in and edit it. Use the account you created at',
+    '   checkout. That link comes with the same email.',
+    '',
+    '3. Nothing is needed from you right now. If anything above is wrong —',
+    '   the city, your business name — reply today and we will fix it',
+    '   before we build.',
+    '',
+    'Your payment receipt comes from Stripe separately.',
+    '',
+    'Questions? Just reply.',
     SUPPORT_EMAIL,
   ];
 
+  /* Inline styles only: Gmail strips a <style> block and Outlook ignores web
+     fonts. 600px is the widest that survives a phone without horizontal
+     scroll. Palette from assets/sbv.css — amber-text #A94E06 rather than
+     --amber, because #E8791B lands at 4.4:1 on white and fails AA at body
+     size. */
+  const P = { ink: '#161B22', soft: '#48515F', amber: '#A94E06',
+              hair: '#DCE2EA', paper: '#F1F4F8' };
+  const base = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+  const step = (n, title, body) =>
+    '<tr><td style="padding:0 0 18px;vertical-align:top;width:26px;' + base +
+      ';font-size:15px;font-weight:700;color:' + P.amber + '">' + n + '.</td>' +
+    '<td style="padding:0 0 18px;' + base + ';font-size:15px;line-height:1.6;color:' + P.ink + '">' +
+      '<strong>' + escHtml(title) + '</strong><br>' +
+      '<span style="color:' + P.soft + '">' + body + '</span></td></tr>';
+
+  const html =
+  '<div style="' + base + ';max-width:600px;margin:0 auto;padding:8px 4px;color:' + P.ink + '">' +
+    '<p style="font-size:15px;line-height:1.6;margin:0 0 18px">Hi ' + escHtml(who) + ',</p>' +
+    '<p style="font-size:15px;line-height:1.6;margin:0 0 6px">You now hold ' +
+      '<strong style="color:' + P.amber + '">' + escHtml(niche) + ' — ' + escHtml(city) + '</strong>.</p>' +
+    '<p style="font-size:15px;line-height:1.6;margin:0 0 24px;color:' + P.soft + '">' +
+      'That category is yours in that city for as long as your account is active. ' +
+      'Nobody else can claim it.</p>' +
+    '<div style="background:' + P.paper + ';border:1px solid ' + P.hair +
+      ';border-radius:8px;padding:20px 18px 4px;margin:0 0 24px">' +
+      '<p style="margin:0 0 16px;' + base + ';font-size:11px;font-weight:700;' +
+        'letter-spacing:.09em;text-transform:uppercase;color:' + P.soft + '">What happens next</p>' +
+      '<table cellpadding="0" cellspacing="0" border="0" style="width:100%">' +
+        step(1, 'We build your site.',
+          'Your web address is reserved: <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;' +
+          'font-size:13px;color:' + P.ink + '">' + escHtml(web) + '</span> — it is not live yet, ' +
+          'and we will email you the moment it is.') +
+        step(2, 'Then you can sign in and edit it.',
+          'Use the account you created at checkout. That link comes with the same email.') +
+        step(3, 'Nothing is needed from you right now.',
+          'If anything above is wrong — the city, your business name — reply today ' +
+          'and we will fix it before we build.') +
+      '</table>' +
+    '</div>' +
+    '<p style="font-size:14px;line-height:1.6;margin:0 0 18px;color:' + P.soft + '">' +
+      'Your payment receipt comes from Stripe separately.</p>' +
+    '<hr style="border:0;border-top:1px solid ' + P.hair + ';margin:22px 0 16px">' +
+    '<p style="font-size:14px;line-height:1.6;margin:0;color:' + P.soft + '">Questions? Just reply.<br>' +
+      '<a href="mailto:' + SUPPORT_EMAIL + '" style="color:' + P.amber + '">' + SUPPORT_EMAIL + '</a></p>' +
+  '</div>';
+
   return sendBrevo({
     to: intake.operator_email,
-    toName: intake.operator_name || intake.business_name,
+    toName: who,
     subject: 'Your territory is claimed — ' + city,
     text: lines.join('\n'),
-    html: '<div style="font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;color:#1a1a1a">'
-        + lines.map((l) => (l === '' ? '<br>' : '<div>' + escHtml(l) + '</div>')).join('')
-        + '</div>',
+    html,
   });
 }
