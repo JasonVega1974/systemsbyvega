@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim a territory — Systems by Vega</title>
+<meta name="description" content="Every Systems by Vega business is sold one city at a time. Pick a business from the catalog and check whether your city is open.">
+<!-- Indexable, unlike thank-you.html: this is a real page about the product,
+     not a receipt for one buyer. -->
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/sbv.css">
+<style>
+  /* Tokens, fonts and base layout come from sbv.css; only this page's rules
+     live here — same split as legal/privacy.html and claim/thank-you.html. */
+  .cl-head{border-bottom:1px solid var(--hair);padding:26px 0 20px}
+  .cl-title{font-family:var(--display);font-size:clamp(26px,5vw,36px);font-weight:800;line-height:1.08;margin:14px 0 6px}
+  .cl-sub{font-size:15.5px;color:var(--ink-soft);margin:0;max-width:60ch}
+  .cl-body{padding:30px 0 44px;min-height:34vh}
+
+  .cl-panel{background:var(--paper);border:1px solid var(--hair);border-radius:12px;padding:22px 20px;margin:0 0 26px}
+  /* The cancellation notice only exists for the return trip from Stripe. */
+  .cl-cancel{display:none;border-left:3px solid var(--amber)}
+  .cl-cancel.on{display:block}
+
+  .cl-p{font-size:15.5px;line-height:1.65;max-width:62ch;margin:0 0 14px}
+  .cl-note{font-size:14px;color:var(--ink-soft);max-width:62ch}
+  .cl-label{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px}
+  .cl-cta{margin:26px 0 0}
+  .cl-nav{border-top:1px solid var(--hair);padding:22px 0 40px;font-family:var(--mono);font-size:12px}
+</style>
+</head>
+<body>
+
+<header class="cl-head">
+  <div class="wrap-narrow">
+    <a class="link" href="/">&larr; Systems by Vega</a>
+    <h1 class="cl-title">Your territory is waiting</h1>
+    <p class="cl-sub">One business, one city, one operator.</p>
+  </div>
+</header>
+
+<main class="wrap-narrow cl-body">
+
+  <!-- Shown only on the return trip from a cancelled Stripe checkout. The
+       heading above stays the same either way: someone who backed out has not
+       stopped being a prospect, and switching the whole page to an apology
+       would read as though something went wrong. -->
+  <div class="cl-panel cl-cancel" id="cl-cancel">
+    <p style="margin:0 0 8px"><b>Checkout cancelled.</b></p>
+    <p class="cl-note" style="margin:0">Nothing was charged and no territory was
+      claimed. The city you were looking at is still available.</p>
+  </div>
+
+  <p class="cl-label">How this works</p>
+  <p class="cl-p">Every business in the catalog is sold one city at a time. When
+    a city is claimed for a category, it is off the market for that category
+    &mdash; nobody else can take it, for as long as that operator&rsquo;s account
+    is active.</p>
+  <p class="cl-p">You get the website, the business kit, and the city. What you
+    do with it is your business, run under your own name.</p>
+
+  <p class="cl-label" style="margin-top:26px">Claiming a city</p>
+  <p class="cl-p">The claim flow lives in the catalog while we finish building it
+    here. Pick a business, tell us the city you want, and we will check it against
+    the register before anything is charged.</p>
+
+  <p class="cl-cta">
+    <a class="btn btn-pri" href="/#catalog">Browse the catalog</a>
+  </p>
+
+  <p class="cl-note" style="margin-top:30px">Questions before you buy, or want a
+    city that is already taken?
+    <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
+
+</main>
+
+<nav class="cl-nav">
+  <div class="wrap-narrow">
+    <a class="link" href="/legal/terms.html">Terms</a> &middot;
+    <a class="link" href="/legal/privacy.html">Privacy</a> &middot;
+    <a class="link" href="/legal/refund.html">Refund</a>
+  </div>
+</nav>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Systems by Vega</b> &middot; A Kingdom Creatives LLC company &middot; Nampa, Idaho &middot;
+      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
+    <p class="foot-legal" data-i18n-skip>
+      Systems by Vega provides software, documents, and training. It does not provide clients,
+      leads, or locations, and makes no representation about income, revenue, profit, or results.
+      Operators are independent businesses, not franchisees, employees, or agents of Kingdom
+      Creatives LLC. Nothing on this site is legal, tax, or insurance advice.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  /* api/create-checkout.mjs sets cancel_url to /claim/?cancelled=1. This page
+     is a real destination in its own right, so there is no redirect — the flag
+     only reveals the notice above. 3c replaces the body with the live claim UI
+     and this notice keeps its job. */
+  if (new URLSearchParams(location.search).get('cancelled') === '1') {
+    document.getElementById('cl-cancel').classList.add('on');
+  }
+})();
+</script>
+
+</body>
+</html>
