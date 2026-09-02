@@ -9,3 +9,8 @@ DIGEST-SETUP.md
 DNS-MIGRATION.md
 .gitignore
 .claude/
+
+# Local diagnostic, run by hand from a terminal. tools/ is otherwise uploaded
+# because the build command runs from it, so this one file is named explicitly
+# rather than excluding the directory.
+tools/brevo-diag.mjs

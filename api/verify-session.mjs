@@ -152,12 +152,27 @@ async function handler(request) {
     }
 
     if (tenant && tenant.is_active) {
+      /* The catalog name alongside the slug. A page that only has the slug can
+         do nothing better than print "dj" or "bbq food truck", and this is the
+         first screen a buyer sees after paying. Sent as a separate field rather
+         than replacing niche_slug, which is still the stable key. Best-effort:
+         a lookup failure costs a nicer label, not the confirmation. */
+      let nicheName = null;
+      try {
+        const n = await pgSelectOne('sbv_niches',
+          'slug=eq.' + q(tenant.niche_slug) + '&select=name');
+        nicheName = n && n.name;
+      } catch (e) {
+        console.warn('verify-session: niche name lookup failed:', e.message);
+      }
+
       return json({
         ok: true,
         status: 'ready',
         client_id: tenant.client_id,
         business_name: tenant.business_name,
         niche_slug: tenant.niche_slug,
+        niche_name: nicheName,
         city: intake ? intake.city_label : null,
         state: intake ? intake.state_code : null,
         tier: intake ? intake.tier : null,
