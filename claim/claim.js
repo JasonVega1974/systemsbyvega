@@ -304,7 +304,19 @@
 
     var p = authMode === 'in'
       ? c.auth.signInWithPassword({ email: email, password: pass })
-      : c.auth.signUp({ email: email, password: pass });
+      : c.auth.signUp({
+          email: email,
+          password: pass,
+          /* PER-CALL, not the project Site URL. Changing that global would send
+             password resets and every future auth email here too.
+             MUST be allowlisted under Authentication -> URL Configuration ->
+             Redirect URLs (with a ** suffix, or the query string will not
+             match), otherwise Supabase silently falls back to the Site URL and
+             this line does nothing at all.
+             location.origin so preview and production each return to
+             themselves rather than one hardcoded host. */
+          options: { emailRedirectTo: location.origin + '/sites/?confirmed=1' }
+        });
 
     p.then(function (res) {
       btn.disabled = false;
@@ -513,6 +525,49 @@
     });
   }
 
+  /* ------------------------------------------------------- confirmed banner */
+
+  /* Shown once, when the email-confirmation link lands back here. The buyer has
+     just been bounced out to their inbox and back, and without this the page is
+     identical to the one they left — nothing marks that anything happened.
+
+     It does NOT restore what they were claiming: they still pick the niche and
+     retype the city. The banner makes that read as a fresh start rather than a
+     lost one. Carrying the intent through the redirect is the better fix and is
+     deliberately not done here.
+
+     The query string is stripped with replaceState so a refresh, a back
+     button, or a shared link cannot replay it. */
+  function confirmedBanner() {
+    var params = new URLSearchParams(location.search);
+    if (params.get('confirmed') !== '1') return;
+
+    var el = document.createElement('div');
+    el.className = 'cb';
+    /* status, not alert: this is a confirmation, and alert interrupts a screen
+       reader mid-sentence for something that is only good news. */
+    el.setAttribute('role', 'status');
+    el.innerHTML =
+      '<span class="cb-tick" aria-hidden="true">&#10003;</span>' +
+      '<span class="cb-text"><b>Email confirmed</b> &mdash; you can now claim a territory.</span>' +
+      '<button type="button" class="cb-x" aria-label="Dismiss">&times;</button>';
+    document.body.appendChild(el);
+
+    var gone = false;
+    function dismiss() {
+      if (gone) return;
+      gone = true;
+      el.classList.add('out');
+      setTimeout(function () { el.remove(); }, 260);
+    }
+    on(el, 'click', dismiss);
+    setTimeout(dismiss, 5000);
+
+    params.delete('confirmed');
+    var qs = params.toString();
+    history.replaceState({}, '', location.pathname + (qs ? '?' + qs : ''));
+  }
+
   /* ---------------------------------------------------------------- counts */
 
   /* Optimistic and silent (D-17): paint whatever arrives, and if the call is
@@ -563,6 +618,7 @@
       });
     }
     initNav();
+    confirmedBanner();
     loadCounts();
   }
 
