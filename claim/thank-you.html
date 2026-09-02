@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your order — Systems by Vega</title>
+<meta name="description" content="Confirmation of your Systems by Vega territory purchase.">
+<!-- Nobody should reach this page from a search result: it is meaningless
+     without a session_id, and it describes one buyer's order. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/sbv.css">
+<style>
+  /* Tokens, fonts and base layout come from sbv.css; only this page's rules
+     live here — same split as legal/privacy.html. */
+  .ty-head{border-bottom:1px solid var(--hair);padding:26px 0 20px}
+  .ty-title{font-family:var(--display);font-size:clamp(26px,5vw,36px);font-weight:800;line-height:1.08;margin:14px 0 6px}
+  .ty-sub{font-size:15.5px;color:var(--ink-soft);margin:0;max-width:60ch}
+  .ty-body{padding:30px 0 12px;min-height:38vh}
+
+  /* One block per state. Only one is ever un-hidden. */
+  [data-state]{display:none}
+  [data-state].on{display:block}
+
+  /* Skeleton, not a spinner: the shapes match what replaces them, so nothing
+     jumps when the answer arrives. */
+  .sk{background:linear-gradient(90deg,#E7ECF2 25%,#F3F6FA 37%,#E7ECF2 63%);
+      background-size:400% 100%;animation:sk 1.4s ease infinite;border-radius:6px}
+  @keyframes sk{0%{background-position:100% 50%}100%{background-position:0 50%}}
+  .sk-line{height:14px;margin:0 0 12px}
+  @media(prefers-reduced-motion:reduce){.sk{animation:none}}
+
+  .ty-panel{background:var(--paper);border:1px solid var(--hair);border-radius:12px;padding:22px 20px;margin:22px 0}
+  .ty-terr{font-family:var(--display);font-size:22px;font-weight:800;color:var(--amber-text);margin:0 0 4px}
+  .ty-mono{font-family:var(--mono);font-size:13.5px;color:var(--ink)}
+  .ty-label{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px}
+
+  .ty-steps{list-style:none;padding:0;margin:16px 0 0;counter-reset:s}
+  .ty-steps li{counter-increment:s;position:relative;padding:0 0 16px 30px;font-size:15px;line-height:1.6;max-width:62ch}
+  .ty-steps li::before{content:counter(s) ".";position:absolute;left:0;top:0;font-weight:700;color:var(--amber-text)}
+  .ty-steps b{font-weight:600}
+
+  .ty-note{font-size:14px;color:var(--ink-soft);max-width:62ch}
+  .ty-warn{border-left:3px solid var(--amber);padding-left:14px}
+  /* Hidden until polling gives up. Not a [data-state] block — those switch
+     whole screens, and this is a section inside the processing screen. */
+  .ty-giveup{display:none}
+  .ty-giveup.on{display:block}
+
+  /* Sign-in. Deliberately minimal — 3c owns the real auth surface, and two
+     competing modals would be worse than one plain form. */
+  .ty-form{max-width:340px;margin:18px 0 0}
+  .ty-form label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 5px}
+  .ty-form input{width:100%;padding:10px 12px;font:inherit;font-size:15px;border:1px solid var(--hair);border-radius:8px;background:#fff;margin:0 0 14px}
+  .ty-form input:focus-visible{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
+  .ty-err{font-size:14px;color:#B3261E;margin:0 0 12px;min-height:1.2em}
+  .ty-nav{border-top:1px solid var(--hair);padding:22px 0 40px;font-family:var(--mono);font-size:12px}
+</style>
+</head>
+<body>
+
+<header class="ty-head">
+  <div class="wrap-narrow">
+    <a class="link" href="/">&larr; Systems by Vega</a>
+    <h1 class="ty-title" id="ty-title">Checking your order&hellip;</h1>
+    <p class="ty-sub" id="ty-sub">One moment.</p>
+  </div>
+</header>
+
+<main class="wrap-narrow ty-body">
+
+  <!-- No JS: this page is entirely a status read, so there is nothing to
+       degrade to. Say so plainly and give them the one thing that still
+       works — the confirmation email and a reply address. -->
+  <noscript>
+    <div class="ty-panel">
+      <p style="margin:0 0 10px"><b>Your payment went through.</b></p>
+      <p class="ty-note" style="margin:0">This page needs JavaScript to look your
+        order up. Your confirmation email has the same details — or reply to it,
+        or write to
+        <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>
+        and we will confirm by hand.</p>
+    </div>
+  </noscript>
+
+  <!-- loading -->
+  <div data-state="loading" class="on">
+    <div class="ty-panel" aria-hidden="true">
+      <div class="sk sk-line" style="width:38%;height:20px;margin-bottom:16px"></div>
+      <div class="sk sk-line" style="width:72%"></div>
+      <div class="sk sk-line" style="width:56%"></div>
+      <div class="sk sk-line" style="width:64%"></div>
+    </div>
+    <p class="ty-note" role="status">Looking up your order&hellip;</p>
+  </div>
+
+  <!-- ready -->
+  <div data-state="ready">
+    <div class="ty-panel">
+      <p class="ty-label">Your territory</p>
+      <p class="ty-terr" id="r-terr"></p>
+      <p class="ty-note" style="margin:0 0 14px" id="r-biz"></p>
+      <p class="ty-label" style="margin:0 0 4px">Web address reserved</p>
+      <p class="ty-mono" id="r-web"></p>
+    </div>
+    <p class="ty-label">What happens next</p>
+    <ol class="ty-steps">
+      <li><b>We build your site.</b> The address above is reserved for you. It is
+        not live yet &mdash; we will email you the moment it is.</li>
+      <li><b>Then you can sign in and edit it.</b> Use the account you created at
+        checkout. That link comes with the same email.</li>
+      <li><b>Nothing is needed from you right now.</b> If anything above is wrong
+        &mdash; the city, your business name &mdash; reply to your confirmation
+        email today and we will fix it before we build.</li>
+    </ol>
+    <p class="ty-note">Your payment receipt comes from Stripe separately.</p>
+  </div>
+
+  <!-- processing -->
+  <div data-state="processing">
+    <div class="ty-panel">
+      <p style="margin:0 0 8px"><b>Payment received.</b></p>
+      <p class="ty-note" style="margin:0">We are setting up your territory now.
+        This page updates on its own.</p>
+    </div>
+    <p class="ty-note" id="p-note" role="status">Usually a second or two&hellip;</p>
+    <div class="ty-giveup" id="p-give-up">
+      <p class="ty-note"><b>This is taking longer than expected.</b> Your payment
+        is recorded and your confirmation email is on its way &mdash; nothing is
+        lost.</p>
+      <p style="margin:14px 0 0"><a class="btn btn-sec" id="p-refresh" href="">Check again</a></p>
+      <p class="ty-note" style="margin-top:16px">Still nothing after an hour? Email
+        <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>.</p>
+    </div>
+  </div>
+
+  <!-- blocked -->
+  <div data-state="blocked">
+    <div class="ty-panel ty-warn">
+      <p style="margin:0 0 8px"><b>Your payment went through.</b></p>
+      <p class="ty-note" style="margin:0" id="b-msg"></p>
+    </div>
+    <p class="ty-note">Nothing is lost, and you do not need to do anything right
+      now. We have been alerted and will email you today to sort out a refund or
+      another city. If you would rather reach us first,
+      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>.</p>
+  </div>
+
+  <!-- refunded -->
+  <div data-state="refunded">
+    <div class="ty-panel">
+      <p style="margin:0 0 8px"><b>This purchase has been refunded.</b></p>
+      <p class="ty-note" style="margin:0">The territory has been released and is
+        available again. Nothing further is owed.</p>
+    </div>
+    <p class="ty-note">Questions about the refund?
+      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
+  </div>
+
+  <!-- signed out -->
+  <div data-state="signin">
+    <div class="ty-panel">
+      <p style="margin:0 0 8px"><b>Sign in to view your order.</b></p>
+      <p class="ty-note" style="margin:0">Use the account you created at checkout.
+        Your purchase is safe either way &mdash; this page only reads it.</p>
+    </div>
+    <form class="ty-form" id="si-form" novalidate>
+      <label for="si-email">Email</label>
+      <input id="si-email" type="email" autocomplete="email" required>
+      <label for="si-pass">Password</label>
+      <input id="si-pass" type="password" autocomplete="current-password" required>
+      <p class="ty-err" id="si-err" role="alert"></p>
+      <button class="btn btn-pri btn-block" type="submit" id="si-go">Sign in</button>
+    </form>
+    <p class="ty-note" style="margin-top:16px">Trouble signing in? Email
+      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>
+      with your payment receipt and we will confirm your order by hand.</p>
+  </div>
+
+  <!-- not found / error -->
+  <div data-state="error">
+    <div class="ty-panel">
+      <p style="margin:0 0 8px"><b id="e-head">We could not find that order.</b></p>
+      <p class="ty-note" style="margin:0" id="e-msg"></p>
+    </div>
+    <p class="ty-note">If you have just paid, your confirmation email has the
+      details &mdash; or write to
+      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>
+      and we will look it up.</p>
+    <p style="margin-top:18px"><a class="btn btn-sec" href="/#catalog">Back to the catalog</a></p>
+  </div>
+
+</main>
+
+<nav class="ty-nav">
+  <div class="wrap-narrow">
+    <a class="link" href="/legal/terms.html">Terms</a> &middot;
+    <a class="link" href="/legal/privacy.html">Privacy</a> &middot;
+    <a class="link" href="/legal/refund.html">Refund</a>
+  </div>
+</nav>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><b>Systems by Vega</b> &middot; A Kingdom Creatives LLC company &middot; Nampa, Idaho &middot;
+      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
+    <p class="foot-legal" data-i18n-skip>
+      Systems by Vega provides software, documents, and training. It does not provide clients,
+      leads, or locations, and makes no representation about income, revenue, profit, or results.
+      Operators are independent businesses, not franchisees, employees, or agents of Kingdom
+      Creatives LLC. Nothing on this site is legal, tax, or insurance advice.
+    </p>
+  </div>
+</footer>
+
+<script>
+window.SBV_CONFIG = {
+  url: 'https://newjbexmvltvtmxollca.supabase.co',
+  key: 'sb_publishable_ZNgmFmfr7AHbZSEibo7jqQ_z8-Oazhy'
+};
+</script>
+<script>
+(function () {
+  'use strict';
+
+  /* NO supabase-js, on purpose. assets/sbv.js:5 already records the reasoning
+     for this codebase: pulling the SDK in to make a couple of HTTP calls would
+     outweigh every other byte on the page. Sign-in is one POST to
+     /auth/v1/token and the session is a JSON blob in localStorage.
+
+     The storage key and shape deliberately match what supabase-js writes, so
+     when 3c adds the real auth surface — with or without the SDK — a session
+     created here is already valid to it. */
+  var CFG = window.SBV_CONFIG;
+  /* Derived from the hostname rather than a regex on the whole URL. The regex
+     form only matched https://<ref>.supabase.co and fell back to '' for
+     anything else, which silently produced the key 'sb--auth-token' — a
+     session that appears to save and is never found again. */
+  var REF = '';
+  try { REF = new URL(CFG.url).hostname.split('.')[0]; } catch (e) {}
+  var STORE = 'sb-' + (REF || 'sbv') + '-auth-token';
+
+  var $ = function (s) { return document.querySelector(s); };
+  var title = $('#ty-title');
+  var sub = $('#ty-sub');
+
+  function show(name, headline, subline) {
+    var all = document.querySelectorAll('[data-state]');
+    for (var i = 0; i < all.length; i++) all[i].classList.remove('on');
+    var el = document.querySelector('[data-state="' + name + '"]');
+    if (el) el.classList.add('on');
+    if (headline) title.textContent = headline;
+    if (subline !== undefined) sub.textContent = subline;
+  }
+
+  function session() {
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      /* expires_at is seconds since epoch. A stale token would 401 anyway;
+         checking here just shows the sign-in form without a wasted round trip. */
+      if (s && s.expires_at && (s.expires_at * 1000) < Date.now()) return null;
+      return s && s.access_token ? s : null;
+    } catch (e) { return null; }
+  }
+
+  /* session_id comes from Stripe's redirect. Shape-checked before use so a
+     mangled URL produces our own message rather than a confusing 400. */
+  var sid = new URLSearchParams(location.search).get('session_id') || '';
+  var VALID_SID = /^cs_[A-Za-z0-9_]{8,120}$/.test(sid);
+
+  var polls = 0;
+  /* 3s x 12 = 36s. Long enough for a Stripe webhook retry to land, short
+     enough that nobody watches a spinner past the point of usefulness. */
+  var MAX_POLLS = 12;
+  var POLL_MS = 3000;
+
+  function verify() {
+    var s = session();
+    if (!s) {
+      show('signin', 'Sign in to view your order', 'Your purchase is safe — this page only reads it.');
+      return;
+    }
+    fetch('/api/verify-session?session_id=' + encodeURIComponent(sid), {
+      headers: { Authorization: 'Bearer ' + s.access_token },
+      cache: 'no-store'
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; })
+        .then(function (b) { return { status: r.status, body: b }; });
+    }).then(render).catch(function () {
+      show('error', 'Something went wrong', '');
+      $('#e-head').textContent = 'We could not reach our server.';
+      $('#e-msg').textContent = 'Your payment is unaffected. Try reloading in a moment.';
+    });
+  }
+
+  function render(res) {
+    var b = res.body || {};
+
+    if (res.status === 401) {
+      /* The token was rejected — expired, or from another project. Clear it so
+         the form is not fighting a stale value. */
+      try { localStorage.removeItem(STORE); } catch (e) {}
+      show('signin', 'Sign in to view your order', 'Your purchase is safe — this page only reads it.');
+      return;
+    }
+
+    if (res.status === 404 || res.status === 400) {
+      show('error', 'We could not find that order', '');
+      $('#e-head').textContent = res.status === 400
+        ? 'That link looks incomplete.'
+        : 'We could not find that order.';
+      $('#e-msg').textContent = res.status === 400
+        ? 'The address is missing the reference Stripe adds after payment.'
+        : 'It may belong to a different account, or the link may have been altered.';
+      return;
+    }
+
+    if (!b.ok) {
+      show('error', 'Something went wrong', '');
+      $('#e-head').textContent = 'We could not look that up just now.';
+      $('#e-msg').textContent = 'Your payment is unaffected. Try again in a moment.';
+      return;
+    }
+
+    if (b.status === 'ready') {
+      /* niche_name is the catalog label; the slug is the fallback. */
+      var terr = b.niche_name || (b.niche_slug || '').replace(/-/g, ' ');
+      if (b.city) terr += ' — ' + b.city + (b.state ? ', ' + b.state : '');
+      $('#r-terr').textContent = terr;
+      $('#r-biz').textContent = b.business_name || '';
+      $('#r-web').textContent = b.web_address || '';
+      show('ready', 'Your territory is claimed',
+        'That category is yours in that city for as long as your account is active.');
+      return;
+    }
+
+    if (b.status === 'blocked') {
+      $('#b-msg').textContent = b.message || '';
+      show('blocked', 'We need to sort something out', '');
+      return;
+    }
+
+    if (b.status === 'refunded') {
+      show('refunded', 'This purchase was refunded', '');
+      return;
+    }
+
+    /* processing — the webhook has not landed yet. Poll, but not forever:
+       an endless spinner is worse than an honest "check your email". */
+    show('processing', 'Payment received',
+      'We are setting up your territory now.');
+    polls++;
+    if (polls < MAX_POLLS) {
+      setTimeout(verify, POLL_MS);
+    } else {
+      /* Stop and hand control back. A manual refresh is the honest ending: it
+         says the PAGE has given up, not the payment. */
+      $('#p-note').textContent = '';
+      $('#p-give-up').classList.add('on');
+    }
+  }
+
+  /* ---- sign-in ---------------------------------------------------------- */
+  var form = $('#si-form');
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var btn = $('#si-go');
+    var err = $('#si-err');
+    err.textContent = '';
+    btn.disabled = true;
+    btn.textContent = 'Signing in…';
+
+    fetch(CFG.url + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: { apikey: CFG.key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: $('#si-email').value.trim(), password: $('#si-pass').value })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; })
+        .then(function (b) { return { ok: r.ok, body: b }; });
+    }).then(function (out) {
+      btn.disabled = false;
+      btn.textContent = 'Sign in';
+      if (!out.ok || !out.body.access_token) {
+        /* Deliberately not "no account with that email" — that would confirm
+           which addresses exist to anyone who asks. */
+        err.textContent = 'That email and password did not match. Try again.';
+        return;
+      }
+      try {
+        localStorage.setItem(STORE, JSON.stringify(out.body));
+      } catch (e) { /* private mode — the token below still works this once */ }
+      /* One clean state: verify immediately with the token we just got, rather
+         than reloading and re-reading storage. */
+      polls = 0;
+      show('loading', 'Checking your order…', 'One moment.');
+      verify();
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Sign in';
+      err.textContent = 'We could not reach the sign-in server. Try again in a moment.';
+    });
+  });
+
+  /* ---- boot ------------------------------------------------------------- */
+  /* location.href, not "#". A bare hash drops session_id, so the reload would
+     land on "that link looks incomplete" — turning a slow webhook into what
+     looks to the buyer like a broken purchase. */
+  $('#p-refresh').setAttribute('href', location.href);
+
+  if (!VALID_SID) {
+    show('error', 'We could not find that order', '');
+    $('#e-head').textContent = 'That link looks incomplete.';
+    $('#e-msg').textContent =
+      'This page needs the reference Stripe adds to the address after payment. '
+      + 'Opening it directly will not work.';
+  } else {
+    verify();
+  }
+})();
+</script>
+
+</body>
+</html>
