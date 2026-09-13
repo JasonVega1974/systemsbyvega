@@ -389,11 +389,29 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .cert-score, .cert-date { font-size: .76rem; color: #7a6c4a; }
 .cert-seal { font-size: 2rem; margin-top: .5rem; }
 .cert-print-btn { background: #2a2418; color: #f4ecd8; border: none; border-radius: 8px; padding: .5rem 1rem; font-weight: 700; cursor: pointer; font-size: .78rem; }
+/* CERTIFICATE PRINTING.
+   Scoped to body.printing-cert. The v1 rule was unscoped, so pressing Ctrl+P
+   ANYWHERE in the app — a procedure page, the roster, the dashboard — hid the
+   whole document and printed a blank sheet, because no .certificate element
+   existed to reveal. printCertificate() adds the class, prints, and drops it
+   again on afterprint. Everything below lives inside @media print, so a class
+   left behind by a browser that never fires afterprint has no on-screen effect.
+   Unscoped Ctrl+P now prints the page normally, which is what Phase 5 wants
+   for the procedure pocket cards. */
 @media print {
-  body * { visibility: hidden; }
-  .certificate, .certificate * { visibility: visible; }
-  .certificate { position: fixed; inset: 0; margin: auto; height: fit-content; }
+  body.printing-cert * { visibility: hidden; }
+  body.printing-cert .certificate,
+  body.printing-cert .certificate * { visibility: visible; }
+  body.printing-cert .certificate {
+    position: fixed; inset: 0; margin: auto; height: fit-content;
+    max-width: 6.5in; box-shadow: none;
+  }
 }
+@page { margin: .5in; }
+/* Without this Chrome drops every background in print by default and the
+   certificate comes out as plain white paper — the gold border survives
+   (borders are not backgrounds) but the cream field and seal do not. */
+.certificate { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
 /* ── MISC ── */
 .stats-row { display: flex; gap: .6rem; flex-wrap: wrap; }
@@ -1496,7 +1514,11 @@ function openCourse(id) {
   switchTab('lessons');
   document.getElementById('courseModal').classList.add('open');
 }
-function closeCourseModal() { document.getElementById('courseModal').classList.remove('open'); curCourse = null; renderCourses(); refreshDash(); }
+function closeCourseModal() {
+  document.body.classList.remove('printing-cert');
+  document.getElementById('courseModal').classList.remove('open');
+  curCourse = null; renderCourses(); refreshDash();
+}
 function switchTab(tab) {
   ['lessons','quiz','cert'].forEach(t => {
     document.getElementById('mtab-' + t).classList.toggle('active', t === tab);
@@ -1603,9 +1625,17 @@ function renderCert() {
     </div>
     <div style="margin-top:.75rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
       <input type="text" placeholder="Name on certificate" value="${esc(cs.certName || S.trainee || '')}" style="padding:.4rem .8rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);width:200px;" oninput="updateCertName(this.value)">
-      <button class="cert-print-btn" onclick="window.print()">🖨️ Print Certificate</button>
+      <button class="cert-print-btn" onclick="printCertificate()">🖨️ Print Certificate</button>
     </div>
   </div>`;
+}
+function printCertificate() {
+  document.body.classList.add('printing-cert');
+  window.addEventListener('afterprint', function off() {
+    document.body.classList.remove('printing-cert');
+    window.removeEventListener('afterprint', off);
+  });
+  window.print();
 }
 function updateCertName(v) {
   const cs = getCS(curCourse.id);
