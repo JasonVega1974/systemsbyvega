@@ -527,7 +527,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
       <div class="stats-row" style="margin-bottom:1rem;">
         <div class="stat-pill">👤 Trainee: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong> <span style="color:var(--bl);cursor:pointer;margin-left:.3rem;" onclick="setTrainee()">change</span></div>
-        <div class="stat-pill" style="border-color:rgba(34,197,94,.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/6</div>
+        <div class="stat-pill" style="border-color:rgba(34,197,94,.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/<span id="certTotal">6</span></div>
       </div>
       <div class="course-grid" id="courseGrid"></div>
     </section>
@@ -1493,6 +1493,21 @@ function toggleOnboard(i) {
 // ACADEMY — courses, lessons, quiz, certificate
 // ════════════════════════════════════════════════════════════════
 let curCourse = null, quizAnswers = {}, quizSubmitted = false;
+
+/* v1 hardcoded "5 questions, pass at 4" in six separate places. Every module
+   happens to have five questions today, so it was correct — and would have gone
+   on being correct right up until someone added a sixth question to one module,
+   at which point the pass mark silently becomes 67% with nothing to notice it.
+   The threshold is the policy (80%); the question count is data. */
+const PASS_THRESHOLD = 0.8;
+function quizTotal(course) { return course.quiz.length; }
+function passMark(course) { return Math.ceil(quizTotal(course) * PASS_THRESHOLD); }
+/* Historical records keep the total they were scored against, so a stored
+   result stays readable even if the module's question count later changes. */
+function scorePct(cs, course) {
+  const total = cs.quizTotal || quizTotal(course);
+  return total ? Math.round((cs.quizScore / total) * 100) : 0;
+}
 function renderCourses() {
   let certs = 0;
   document.getElementById('courseGrid').innerHTML = COURSES.map(c => {
@@ -1505,10 +1520,11 @@ function renderCourses() {
       <div class="cc-title">${c.title}</div>
       <div class="cc-meta">${c.meta}</div>
       <div class="cc-bar"><div class="cc-fill" style="width:${pct}%;"></div></div>
-      <div style="font-size:.66rem;color:var(--tx3);margin-top:.3rem;">${cs.quizPassed ? '✅ Certified — ' + cs.quizScore * 20 + '%' : cs.doneLessons.length + '/' + c.lessons.length + ' lessons'}</div>
+      <div style="font-size:.66rem;color:var(--tx3);margin-top:.3rem;">${cs.quizPassed ? '✅ Certified — ' + scorePct(cs, c) + '%' : cs.doneLessons.length + '/' + c.lessons.length + ' lessons'}</div>
     </div>`;
   }).join('');
   document.getElementById('certCount').textContent = certs;
+  document.getElementById('certTotal').textContent = COURSES.length;
   document.getElementById('hs-modules').textContent = certs;
   document.getElementById('academyPct').textContent = Math.round((certs / COURSES.length) * 100) + '%';
   document.getElementById('traineeName').textContent = S.trainee || 'not set';
@@ -1568,14 +1584,14 @@ function renderQuiz() {
   const el = document.getElementById('quizContent');
   const cs = getCS(curCourse.id);
   if (cs.quizPassed) {
-    el.innerHTML = `<div class="quiz-result"><div class="quiz-score-big pass">🏆</div><div style="font-size:1rem;font-weight:800;color:var(--gr);margin:.4rem 0;">Already Certified!</div><div style="font-size:.8rem;color:var(--tx2);">You passed with ${cs.quizScore * 20}%. Your certificate is available.</div></div>`;
+    el.innerHTML = `<div class="quiz-result"><div class="quiz-score-big pass">🏆</div><div style="font-size:1rem;font-weight:800;color:var(--gr);margin:.4rem 0;">Already Certified!</div><div style="font-size:.8rem;color:var(--tx2);">You passed with ${scorePct(cs, curCourse)}%. Your certificate is available.</div></div>`;
     return;
   }
   if (cs.doneLessons.length < curCourse.lessons.length) {
     el.innerHTML = `<div class="quiz-result"><div style="font-size:2rem;">📖</div><div style="font-size:.9rem;font-weight:700;margin:.5rem 0;">Complete All Lessons First</div><div style="font-size:.78rem;color:var(--tx2);">Finish all ${curCourse.lessons.length} lessons before the quiz. You've done ${cs.doneLessons.length} so far.</div></div>`;
     return;
   }
-  let html = `<div style="font-size:.8rem;color:var(--tx2);margin-bottom:1rem;">Answer all ${curCourse.quiz.length} questions. Score <strong style="color:var(--c);">80% or higher</strong> (4/5) to earn your certificate.</div>`;
+  let html = `<div style="font-size:.8rem;color:var(--tx2);margin-bottom:1rem;">Answer all ${quizTotal(curCourse)} questions. Score <strong style="color:var(--c);">${Math.round(PASS_THRESHOLD * 100)}% or higher</strong> (${passMark(curCourse)}/${quizTotal(curCourse)}) to earn your certificate.</div>`;
   curCourse.quiz.forEach((q, qi) => {
     html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1} of ${curCourse.quiz.length}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
     q.opts.forEach((opt, oi) => { html += `<button class="quiz-opt ${quizAnswers[qi] === oi ? 'selected' : ''}" onclick="selectAnswer(${qi},${oi})">${opt}</button>`; });
@@ -1590,9 +1606,11 @@ function submitQuiz() {
   quizSubmitted = true;
   let correct = 0;
   curCourse.quiz.forEach((q, qi) => { if (quizAnswers[qi] === q.ans) correct++; });
-  const passed = correct >= 4;
+  const total = quizTotal(curCourse);
+  const passed = correct >= passMark(curCourse);
+  const pct = Math.round((correct / total) * 100);
   const cs = getCS(curCourse.id);
-  cs.quizScore = correct; cs.quizPassed = passed;
+  cs.quizScore = correct; cs.quizTotal = total; cs.quizPassed = passed;
   if (passed && !cs.certName) cs.certName = S.trainee;
   save();
   let html = '';
@@ -1605,19 +1623,19 @@ function submitQuiz() {
     });
     html += '</div></div>';
   });
-  html += `<div class="quiz-result"><div class="quiz-score-big ${passed ? 'pass' : 'fail'}">${correct}/5</div>
+  html += `<div class="quiz-result"><div class="quiz-score-big ${passed ? 'pass' : 'fail'}">${correct}/${total}</div>
     <div style="font-size:.9rem;font-weight:800;color:${passed ? 'var(--gr)' : 'var(--cr)'};margin:.4rem 0;">${passed ? '🎉 Passed! Certificate Earned!' : '❌ Not Passed — Try Again'}</div>
-    <div style="font-size:.78rem;color:var(--tx2);">${passed ? 'Your certificate is now available.' : 'You scored ' + correct * 20 + '%. You need 80% (4/5). Review the lessons and retry.'}</div>
+    <div style="font-size:.78rem;color:var(--tx2);">${passed ? 'Your certificate is now available.' : 'You scored ' + pct + '%. You need ' + Math.round(PASS_THRESHOLD * 100) + '% (' + passMark(curCourse) + '/' + total + '). Review the lessons and retry.'}</div>
     ${passed ? `<button class="btn btn-success" style="margin-top:.75rem;" onclick="renderCert();switchTab('cert')">🏆 View Certificate</button>` : `<button class="btn btn-primary" style="margin-top:.75rem;" onclick="retryQuiz()">Retry Quiz</button>`}
   </div>`;
   document.getElementById('quizContent').innerHTML = html;
   if (passed) { document.getElementById('footerCertBtn').style.display = ''; document.getElementById('footerQuizBtn').style.display = 'none'; renderCert(); addActivity('🏆 CERTIFIED: ' + curCourse.title); }
-  else addActivity('Quiz attempt (' + correct * 20 + '%): ' + curCourse.title);
+  else addActivity('Quiz attempt (' + pct + '%): ' + curCourse.title);
 }
 function retryQuiz() {
   quizAnswers = {}; quizSubmitted = false;
   const cs = getCS(curCourse.id);
-  cs.quizScore = null; cs.quizPassed = false;
+  cs.quizScore = null; cs.quizTotal = null; cs.quizPassed = false;
   save(); renderQuiz();
 }
 function renderCert() {
@@ -1635,7 +1653,7 @@ function renderCert() {
       <div class="cert-course-name">${curCourse.title}</div>
       <div class="cert-name-line">This certifies that</div><br>
       <div class="cert-recipient">${esc(cs.certName || S.trainee || 'Team Member')}</div>
-      <div class="cert-score">Score: ${cs.quizScore * 20}% · ${cs.quizScore}/5 correct</div>
+      <div class="cert-score">Score: ${scorePct(cs, curCourse)}% · ${cs.quizScore}/${cs.quizTotal || quizTotal(curCourse)} correct</div>
       <div class="cert-date">Issued: ${date} · Nampa, Idaho</div>
       <div class="cert-seal">🏆</div>
     </div>
