@@ -845,7 +845,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   <div class="pin-gate-box">
     <div class="pin-gate-icon">🔐</div>
     <div class="pin-gate-title">ADMIN ACCESS</div>
-    <div class="pin-gate-sub">Enter the 4-digit admin PIN. Default is <strong style="color:var(--c);">2121</strong> — change it after first use.</div>
+    <div class="pin-gate-sub" id="pinGateSub">Enter the 4-digit admin PIN.</div>
     <div class="pin-dots"><div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div><div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div></div>
     <div class="pin-keypad">
       <button class="pin-key" onclick="pinKey('1')">1</button><button class="pin-key" onclick="pinKey('2')">2</button><button class="pin-key" onclick="pinKey('3')">3</button>
@@ -1218,7 +1218,8 @@ function toggleAdmin() {
     }
     return;
   }
-  pinBuf = ''; updateDots(); document.getElementById('pinError').textContent = '';
+  pinBuf = ''; updateDots(); updatePinHint();
+  document.getElementById('pinError').textContent = '';
   document.getElementById('adminGate').classList.add('open');
 }
 function pinKey(k) {
@@ -1236,11 +1237,21 @@ function pinKey(k) {
     }
   }
 }
+/* The default-PIN hint is a bootstrap aid, not a permanent label. v1 printed
+   "Default is 2121" to every visitor forever, including long after the PIN had
+   been changed — handing out a credential hint that was no longer even true. */
+function updatePinHint() {
+  const el = document.getElementById('pinGateSub');
+  if (!el) return;
+  el.innerHTML = S.pin === '2121'
+    ? 'Enter the 4-digit admin PIN. Default is <strong style="color:var(--c);">2121</strong> — <strong style="color:var(--c);">change it after first use.</strong>'
+    : 'Enter the 4-digit admin PIN.';
+}
 function updateDots() { for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.toggle('filled', i < pinBuf.length); }
 function closeAdminGate() { document.getElementById('adminGate').classList.remove('open'); }
 function changePin() {
   const np = prompt('Enter a new 4-digit admin PIN:');
-  if (np && /^\d{4}$/.test(np)) { S.pin = np; save(); alert('Admin PIN updated.'); addActivity('Admin PIN changed'); }
+  if (np && /^\d{4}$/.test(np)) { S.pin = np; save(); updatePinHint(); alert('Admin PIN updated.'); addActivity('Admin PIN changed'); }
   else if (np !== null) alert('PIN must be exactly 4 digits.');
 }
 function applyAdmin() {
