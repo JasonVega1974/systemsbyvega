@@ -52,7 +52,35 @@ renders a clearly labelled placeholder and the item is tracked here.
 - [ ] **Annual recertification cadence.** The app now supports self-retake, per-person admin reset, and an all-team annual reset. How often should certification expire?
 - [ ] **Single-file vs. build step.** Still single-file. Revisit at Phase 2, when file upload and IndexedDB land.
 - [ ] **Drill schedule.** Fire drills and Code Adam walkthroughs are recurring. How often? Phase 3 adds the drill log.
-- [ ] **The five FEMA annexes.** FEMA's houses-of-worship guide mandates five functional annexes — **Evacuation, Lockdown, Shelter-in-Place, Recovery, Security**. The app currently has Evacuation. Lockdown and Shelter-in-Place are named inside other procedures but are not standalone, and Recovery and Security do not exist. Decide whether to build them out.
+- [ ] **The five FEMA annexes.** FEMA's houses-of-worship guide mandates five functional annexes — **Evacuation, Lockdown, Shelter-in-Place, Recovery, Security**. The app currently has Evacuation. Lockdown and Shelter-in-Place are approved and in progress. Recovery and Security are deferred until after the team meeting.
+
+### RULING — emergency action terminology (decided)
+
+**FEMA annex structure, SRP operational wording.** The functional annexes keep
+FEMA's names, because that is the framework the rest of the plan is built on.
+What anyone actually *says out loud* is the **Standard Response Protocol**,
+verbatim, **BIZ edition** — the one whose own text names faith-based
+institutions as its audience.
+
+  Hold · Secure · Lockdown · Evacuate · Shelter
+
+*Why both:* FEMA is a planning structure; SRP is an operational vocabulary
+shared with law enforcement and schools. They are complementary, not competing.
+**Hold** and **Secure** are carried even though FEMA has no annex for either,
+because they cover the two situations a church meets most often — keep the halls
+clear, and police activity in the neighbourhood.
+
+⚠️ **"Lockout" is retired and must never appear in a live procedure.** The I Love
+U Guys Foundation replaced it with **Secure** in SRP v4.0 (2020-01-17), stating:
+*"Lockout vs. Lockdown was confusing, Secure vs. Lockdown is clear."*
+
+⚠️ **Licensing constraint.** SRP is free for any public or private organisation,
+with no signed licence required — but the Terms of Use forbid modifying the core
+actions and directives. Only three changes are permitted: localising evacuation
+locations, localising shelter strategies, and adding an organisation logo. The
+directive lines in this app are therefore quoted exactly and must not be
+reworded, including by a future editor who thinks they read awkwardly. BIZ and
+K12 wording differ; **this app uses BIZ throughout** and must not mix editions.
 
 ## 5. Content verification — CLOSED
 
