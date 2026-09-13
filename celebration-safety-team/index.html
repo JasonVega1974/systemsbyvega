@@ -148,10 +148,29 @@ body {
   transition: background .15s;
   white-space: nowrap;
 }
+/* Interactive controls are real buttons now. v1 built the entire navigation,
+   every accordion and every course card out of <div onclick>, which meant a
+   keyboard user could reach exactly one control on the page (the Admin chip)
+   and could never change sections at all. */
+.nav-item {
+  width: 100%;
+  font-family: var(--fb);
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;   /* reserved so .active does not shift layout */
+}
 .nav-item:hover { background: rgba(255,255,255,.05); }
 .nav-item.active {
   background: linear-gradient(135deg, rgba(232,160,32,.14), rgba(232,160,32,.05));
-  border: 1px solid rgba(232,160,32,.25);
+  border-color: rgba(232,160,32,.25);
+}
+/* One visible focus ring for everything, including the role=button elements
+   that cannot be real buttons because they contain block content. */
+:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--c);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 .nav-item.active .nav-text { color: var(--c); }
 .nav-icon { font-size: 1rem; }
@@ -254,7 +273,10 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .proc-card.amber { border-left-color: var(--c); }
 .proc-card.blue { border-left-color: var(--bl); }
 .proc-card.green { border-left-color: var(--gr); }
-.proc-head { display: flex; align-items: center; gap: .7rem; padding: .8rem 1rem; cursor: pointer; }
+.proc-head {
+  display: flex; align-items: center; gap: .7rem; padding: .8rem 1rem; cursor: pointer;
+  width: 100%; background: none; border: none; color: inherit; font: inherit; text-align: left;
+}
 .proc-head:hover { background: rgba(255,255,255,.02); }
 .proc-icon { font-size: 1.25rem; }
 .proc-title { font-weight: 800; font-size: .92rem; flex: 1; }
@@ -363,7 +385,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .li-body li { margin-bottom: .3rem; }
 .li-body strong { color: var(--tx); }
 .li-body a { color: var(--bl); }
-.mark-done-btn { display: inline-block; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.3); color: var(--gr); border-radius: 8px; padding: .35rem .8rem; font-size: .74rem; font-weight: 800; cursor: pointer; margin-top: .5rem; }
+.mark-done-btn { display: inline-block; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.3); color: var(--gr); border-radius: 8px; padding: .35rem .8rem; font-size: .74rem; font-weight: 800; cursor: pointer; margin-top: .5rem; font-family: var(--fb); }
 .quiz-q { background: var(--s2); border: 1px solid var(--bd); border-radius: 11px; padding: .85rem; margin-bottom: .65rem; }
 .quiz-q-num { font-size: .64rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tx3); margin-bottom: .3rem; }
 .quiz-q-text { font-weight: 700; font-size: .89rem; margin-bottom: .6rem; }
@@ -427,6 +449,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .res-icon { font-size: 1.15rem; }
 .res-name { font-weight: 800; font-size: .85rem; color: var(--bl); }
 .res-desc { font-size: .74rem; color: var(--tx2); line-height: 1.55; margin-top: .1rem; }
+.linkish { background: none; border: none; padding: 0; color: var(--bl); font: inherit; cursor: pointer; text-decoration: underline; }
+.linkish:hover { color: var(--c2); }
 .res-org { font-size: .64rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); margin-top: .2rem; }
 .admin-bar { display: flex; align-items: center; gap: .7rem; background: rgba(204,51,51,.07); border: 1px solid rgba(204,51,51,.2); border-radius: 12px; padding: .7rem 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
 .admin-status { font-size: .76rem; font-weight: 800; }
@@ -450,21 +474,21 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 </header>
 
 <div class="app">
-  <nav class="sidebar" id="appSidebar">
+  <nav class="sidebar" id="appSidebar" aria-label="Sections">
     <div class="sidebar-label">Overview</div>
-    <div class="nav-item active" onclick="showSection('overview',this)"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></div>
+    <button type="button" class="nav-item active" data-section="overview" onclick="showSection('overview')"><span class="nav-icon" aria-hidden="true">🏠</span><span class="nav-text">Dashboard</span></button>
     <div class="sidebar-label">Training</div>
-    <div class="nav-item" onclick="showSection('academy',this)"><span class="nav-icon">🎓</span><span class="nav-text">Academy</span></div>
-    <div class="nav-item" onclick="showSection('onboarding',this)"><span class="nav-icon">📋</span><span class="nav-text">Onboarding</span></div>
-    <div class="nav-item" onclick="showSection('resources',this)"><span class="nav-icon">📚</span><span class="nav-text">Training Resources</span></div>
+    <button type="button" class="nav-item" data-section="academy" onclick="showSection('academy')"><span class="nav-icon" aria-hidden="true">🎓</span><span class="nav-text">Academy</span></button>
+    <button type="button" class="nav-item" data-section="onboarding" onclick="showSection('onboarding')"><span class="nav-icon" aria-hidden="true">📋</span><span class="nav-text">Onboarding</span></button>
+    <button type="button" class="nav-item" data-section="resources" onclick="showSection('resources')"><span class="nav-icon" aria-hidden="true">📚</span><span class="nav-text">Training Resources</span></button>
     <div class="sidebar-label">Operations</div>
-    <div class="nav-item" onclick="showSection('procedures',this)"><span class="nav-icon">🚨</span><span class="nav-text">Emergency Procedures</span></div>
-    <div class="nav-item" onclick="showSection('maps',this)"><span class="nav-icon">🗺️</span><span class="nav-text">Facility Maps</span></div>
-    <div class="nav-item" onclick="showSection('scheduling',this)"><span class="nav-icon">📅</span><span class="nav-text">Scheduling</span></div>
+    <button type="button" class="nav-item" data-section="procedures" onclick="showSection('procedures')"><span class="nav-icon" aria-hidden="true">🚨</span><span class="nav-text">Emergency Procedures</span></button>
+    <button type="button" class="nav-item" data-section="maps" onclick="showSection('maps')"><span class="nav-icon" aria-hidden="true">🗺️</span><span class="nav-text">Facility Maps</span></button>
+    <button type="button" class="nav-item" data-section="scheduling" onclick="showSection('scheduling')"><span class="nav-icon" aria-hidden="true">📅</span><span class="nav-text">Scheduling</span></button>
     <div class="sidebar-label">People</div>
-    <div class="nav-item" onclick="showSection('team',this)"><span class="nav-icon">🛡️</span><span class="nav-text">Team</span></div>
-    <div class="nav-item" onclick="showSection('meetings',this)"><span class="nav-icon">🗣️</span><span class="nav-text">Team Meetings</span></div>
-    <div class="nav-item" onclick="showSection('leadership',this)"><span class="nav-icon">⛪</span><span class="nav-text">Leadership / Staff</span></div>
+    <button type="button" class="nav-item" data-section="team" onclick="showSection('team')"><span class="nav-icon" aria-hidden="true">🛡️</span><span class="nav-text">Team</span></button>
+    <button type="button" class="nav-item" data-section="meetings" onclick="showSection('meetings')"><span class="nav-icon" aria-hidden="true">🗣️</span><span class="nav-text">Team Meetings</span></button>
+    <button type="button" class="nav-item" data-section="leadership" onclick="showSection('leadership')"><span class="nav-icon" aria-hidden="true">⛪</span><span class="nav-text">Leadership / Staff</span></button>
   </nav>
 
   <main class="main">
@@ -559,8 +583,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
         <div class="card" style="margin-bottom:0;">
           <div class="card-title">⛪ WHO'S WHO — KNOW YOUR CHURCH</div>
-          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:.6rem;">Every team member must be able to recognize church leadership and staff on sight. Review the <span style="color:var(--bl);cursor:pointer;" onclick="navTo('leadership')">Leadership / Staff directory</span>, then walk the building with your Team Lead.</div>
-          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;">You must also know the facility: foyer, sanctuary, children's auditorium, children's check-in, exits, and the perimeter. See <span style="color:var(--bl);cursor:pointer;" onclick="navTo('maps')">Facility Maps</span>.</div>
+          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:.6rem;">Every team member must be able to recognize church leadership and staff on sight. Review the <button type="button" class="linkish" onclick="navTo('leadership')">Leadership / Staff directory</button>, then walk the building with your Team Lead.</div>
+          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;">You must also know the facility: foyer, sanctuary, children's auditorium, children's check-in, exits, and the perimeter. See <button type="button" class="linkish" onclick="navTo('maps')">Facility Maps</button>.</div>
         </div>
       </div>
     </section>
@@ -613,7 +637,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div class="alert-box">🚑 <strong>In any life-threatening emergency, call 911 first.</strong> Nampa Police non-emergency: <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Church office: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></div>
 
       <div class="proc-card green open">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🚑</span><span class="proc-title">Medical Emergency — Cardiac Arrest · AED · Seizure · Falls</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🚑</span><span class="proc-title">Medical Emergency — Cardiac Arrest · AED · Seizure · Falls</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>This is the emergency this team is most likely to face, and it is the one where minutes decide the outcome. <strong>Call 911 first, then send someone for the AED.</strong> Two people move: one calls, one fetches.</p>
 
@@ -665,7 +689,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🔫</span><span class="proc-title">Active Shooter — Run · Hide · Fight</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔫</span><span class="proc-title">Active Shooter — Run · Hide · Fight</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>Federal guidance (DHS/CISA/FBI) gives three <strong>options to consider</strong>, listed here in the order they are generally preferred. CISA deliberately frames these as options rather than a fixed 1-2-3 sequence: you take the one the situation actually allows, and that decision belongs to whoever is in the room.</p>
           <ol>
@@ -680,7 +704,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card amber">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🧒</span><span class="proc-title">Lost Child — Code Adam</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🧒</span><span class="proc-title">Lost Child — Code Adam</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>Code Adam is the National Center for Missing &amp; Exploited Children's free missing-child protocol. NCMEC reports it is in use in hundreds of thousands of locations nationwide. NCMEC's six steps, in order:</p>
           <ol>
@@ -697,7 +721,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🔥</span><span class="proc-title">Fire &amp; Evacuation</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔥</span><span class="proc-title">Fire &amp; Evacuation</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <ol>
             <li>On alarm or visible fire/smoke: <strong>activate the alarm</strong> (if not already), begin evacuation immediately, and <strong>call 911</strong>.</li>
@@ -711,7 +735,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card blue">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌪️</span><span class="proc-title">Severe Weather — Tornado / Inclement Weather</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌪️</span><span class="proc-title">Severe Weather — Tornado / Inclement Weather</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <ol>
             <li>Monitor NWS alerts (the Boise office covers Nampa). A <strong>Watch</strong> = conditions are possible, be ready; a <strong>Warning</strong> = it is happening or imminent, act now.</li>
@@ -725,7 +749,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card blue">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌍</span><span class="proc-title">Earthquake — Drop · Cover · Hold On</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌍</span><span class="proc-title">Earthquake — Drop · Cover · Hold On</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <ol>
             <li><strong>DROP</strong> to hands and knees, <strong>COVER</strong> head and neck (under sturdy furniture if possible), <strong>HOLD ON</strong> until shaking stops.</li>
@@ -737,7 +761,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card blue">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌊</span><span class="proc-title">Flooding</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌊</span><span class="proc-title">Flooding</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <ol>
             <li>Move people away from flooded areas and to higher floors/ground as needed; shut off electricity to affected areas if safe to do so.</li>
@@ -749,7 +773,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card green">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🕊️</span><span class="proc-title">De-escalation — Disruptive or Agitated Individuals</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🕊️</span><span class="proc-title">De-escalation — Disruptive or Agitated Individuals</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>Most incidents at churches are resolved with calm words, not force. Core principles taught by the Crisis Prevention Institute (CPI), Verbal Judo, and church-security trainers:</p>
           <ul>
@@ -765,7 +789,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card amber">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">📞</span><span class="proc-title">Bomb Threat &amp; Suspicious Package</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">📞</span><span class="proc-title">Bomb Threat &amp; Suspicious Package</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>Most bomb threats arrive by phone, and most prove to be false — but CISA's guidance is that they are <strong>serious until proven otherwise</strong>, and that houses of worship are among the most commonly targeted places.</p>
 
@@ -800,7 +824,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card amber">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌫️</span><span class="proc-title">Wildfire Smoke &amp; Air Quality</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌫️</span><span class="proc-title">Wildfire Smoke &amp; Air Quality</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>Smoke days are a normal part of a Treasure Valley summer, and they are far more likely here than most of the hazards on this page. The people it hurts first are the ones already in the building: older members, anyone with asthma, COPD or heart failure, pregnant women, and children.</p>
           <p>Check the AQI before a smoke-season Sunday at <a href="https://www.airnow.gov/" target="_blank" rel="noopener">AirNow.gov</a>. The categories:</p>
@@ -825,7 +849,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="proc-card amber">
-        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🏛️</span><span class="proc-title">Church Continuity of Operations</span><span class="proc-arrow">▶</span></div>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🏛️</span><span class="proc-title">Church Continuity of Operations</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
           <p>Continuity planning keeps ministry running after an emergency (fire, flood, violence, loss of facility). Following FEMA's continuity guidance, the church plan should identify:</p>
           <ul>
@@ -1417,20 +1441,20 @@ function importData(input) {
 // ════════════════════════════════════════════════════════════════
 // NAV
 // ════════════════════════════════════════════════════════════════
-function showSection(key, el) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+/* v1 matched nav items by reading their textContent, which always begins with
+   an emoji — so startsWith() never matched and everything fell through to a
+   substring test that lit up BOTH "Team" and "Team Meetings" for navTo('team').
+   Each item now declares the section it owns. */
+function showSection(key) {
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   document.getElementById('sec-' + key).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  if (el) el.classList.add('active');
-  else document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.toLowerCase().includes(key === 'academy' ? 'academy' : key)) n.classList.add('active'); });
+  document.querySelectorAll('.nav-item').forEach(n => {
+    const on = n.dataset.section === key;
+    n.classList.toggle('active', on);
+    if (on) n.setAttribute('aria-current', 'true'); else n.removeAttribute('aria-current');
+  });
 }
-function navTo(key) {
-  const items = Array.from(document.querySelectorAll('.nav-item'));
-  const map = { academy:'Academy', leadership:'Leadership', maps:'Facility Maps', team:'Team', scheduling:'Scheduling' };
-  const el = items.find(n => n.textContent.trim().startsWith(map[key] || '###'));
-  showSection(key, el || null);
-  window.scrollTo({ top: 0 });
-}
+function navTo(key) { showSection(key); window.scrollTo({ top: 0 }); }
 
 // ════════════════════════════════════════════════════════════════
 // ADMIN PIN
@@ -1445,7 +1469,7 @@ function toggleAdmin() {
   }
   pinBuf = ''; updateDots(); updatePinHint();
   document.getElementById('pinError').textContent = '';
-  document.getElementById('adminGate').classList.add('open');
+  openModalEl('adminGate');
 }
 function pinKey(k) {
   if (k === 'back') pinBuf = pinBuf.slice(0, -1);
@@ -1454,7 +1478,7 @@ function pinKey(k) {
   updateDots();
   if (pinBuf.length === 4) {
     if (pinBuf === S.pin) {
-      adminOn = true; document.getElementById('adminGate').classList.remove('open');
+      adminOn = true; closeModalEl('adminGate');
       applyAdmin(); addActivity('Admin unlocked');
     } else {
       document.getElementById('pinError').textContent = 'Incorrect PIN';
@@ -1473,7 +1497,7 @@ function updatePinHint() {
     : 'Enter the 4-digit admin PIN.';
 }
 function updateDots() { for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.toggle('filled', i < pinBuf.length); }
-function closeAdminGate() { document.getElementById('adminGate').classList.remove('open'); }
+function closeAdminGate() { closeModalEl('adminGate'); }
 function changePin() {
   const np = prompt('Enter a new 4-digit admin PIN:');
   if (np && /^\d{4}$/.test(np)) { S.pin = np; save(); updatePinHint(); alert('Admin PIN updated.'); addActivity('Admin PIN changed'); }
@@ -1511,7 +1535,7 @@ function openMemberModal(id) {
   document.getElementById('mPhone').value = m ? m.phone : '';
   document.getElementById('mSpec').value = m ? m.spec : 'General / Trained Volunteer';
   document.getElementById('mRole').value = m ? m.role : 'Team Member';
-  document.getElementById('memberModal').classList.add('open');
+  openModalEl('memberModal');
 }
 function saveMember() {
   const first = document.getElementById('mFirst').value.trim();
@@ -1561,7 +1585,7 @@ function openLeaderModal(id) {
   document.getElementById('lName').value = l ? l.name : '';
   document.getElementById('lTitle').value = l ? l.title : '';
   document.getElementById('lNotes').value = l ? (l.notes || '') : '';
-  document.getElementById('leaderModal').classList.add('open');
+  openModalEl('leaderModal');
 }
 function saveLeader() {
   const name = document.getElementById('lName').value.trim();
@@ -1597,7 +1621,7 @@ function renderLeaders() {
 function openMeetingModal() {
   document.getElementById('mtDate').value = ''; document.getElementById('mtTime').value = '';
   document.getElementById('mtTitle').value = ''; document.getElementById('mtNotes').value = '';
-  document.getElementById('meetingModal').classList.add('open');
+  openModalEl('meetingModal');
 }
 function saveMeeting() {
   const date = document.getElementById('mtDate').value, title = document.getElementById('mtTitle').value.trim();
@@ -1791,7 +1815,7 @@ function renderCourses() {
     const cs = getCS(c.id);
     const pct = Math.round((cs.doneLessons.length / c.lessons.length) * 100);
     if (cs.quizPassed) certs++;
-    return `<div class="course-card ${cs.quizPassed ? 'certified' : ''}" onclick="openCourse('${c.id}')">
+    return `<div class="course-card ${cs.quizPassed ? 'certified' : ''}" role="button" tabindex="0" onclick="openCourse('${c.id}')">
       ${cs.quizPassed ? '<div class="cc-badge">🏆</div>' : ''}
       <div class="cc-icon">${c.icon}</div>
       <div class="cc-title">${c.title}</div>
@@ -1809,7 +1833,7 @@ function renderCourses() {
 function openWhoModal() {
   renderWhoList();
   document.getElementById('whoGuest').value = S.activeId === 'guest' ? (getProgress('guest').name || '') : '';
-  document.getElementById('whoModal').classList.add('open');
+  openModalEl('whoModal');
 }
 function renderWhoList() {
   const el = document.getElementById('whoList');
@@ -1867,11 +1891,11 @@ function openCourse(id) {
   document.getElementById('footerResetBtn').style.display =
     adminOn && (cs.quizPassed || cs.doneLessons.length) ? '' : 'none';
   switchTab('lessons');
-  document.getElementById('courseModal').classList.add('open');
+  openModalEl('courseModal');
 }
 function closeCourseModal() {
   document.body.classList.remove('printing-cert');
-  document.getElementById('courseModal').classList.remove('open');
+  closeModalEl('courseModal');
   curCourse = null; renderCourses(); refreshDash();
 }
 function switchTab(tab) {
@@ -1885,13 +1909,13 @@ function renderLessons() {
   document.getElementById('lessonContent').innerHTML = curCourse.lessons.map((lesson, i) => {
     const done = cs.doneLessons.includes(i);
     return `<div class="lesson-item ${done ? 'done' : ''}" id="lesson-${i}">
-      <div class="li-header" onclick="document.getElementById('lesson-${i}').classList.toggle('expanded')">
+      <div class="li-header" role="button" tabindex="0" aria-expanded="${done ? 'true' : 'false'}" onclick="toggleLesson(${i})">
         <div class="li-num">${done ? '✓' : i + 1}</div>
         <div class="li-title">${lesson.title}</div>
         <div class="li-check">${done ? '✅' : '▶'}</div>
       </div>
       <div class="li-body">${lesson.content}
-        ${!done ? `<div class="mark-done-btn" onclick="event.stopPropagation();markDone(${i})">✅ Mark Complete</div>` : '<div style="font-size:.72rem;color:var(--gr);margin-top:.6rem;font-weight:700;">✓ Completed</div>'}
+        ${!done ? `<button type="button" class="mark-done-btn" onclick="event.stopPropagation();markDone(${i})">✅ Mark Complete</button>` : '<div style="font-size:.72rem;color:var(--gr);margin-top:.6rem;font-weight:700;">✓ Completed</div>'}
       </div>
     </div>`;
   }).join('');
@@ -2089,8 +2113,75 @@ function renderActivity() {
 // ════════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════════
-function closeModalEl(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay, .pin-gate-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
+function toggleProc(btn) {
+  const open = btn.parentElement.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function toggleLesson(i) {
+  const item = document.getElementById('lesson-' + i);
+  const open = item.classList.toggle('expanded');
+  item.querySelector('.li-header').setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+// ── Modal open/close with focus handling ──
+let lastFocused = null;
+function openModalEl(id) {
+  lastFocused = document.activeElement;
+  const box = document.getElementById(id);
+  box.classList.add('open');
+  const first = box.querySelector('input:not([type=file]), button, select, textarea, [tabindex]');
+  if (first) first.focus();
+}
+function closeModalEl(id) {
+  document.getElementById(id).classList.remove('open');
+  if (lastFocused && lastFocused.focus) lastFocused.focus();
+  lastFocused = null;
+}
+function openOverlay() {
+  return document.querySelector('.modal-overlay.open, .pin-gate-overlay.open');
+}
+function dismissOverlay(o) {
+  if (o.id === 'courseModal') closeCourseModal();
+  else closeModalEl(o.id);
+}
+document.querySelectorAll('.modal-overlay, .pin-gate-overlay').forEach(o =>
+  o.addEventListener('click', e => { if (e.target === o) dismissOverlay(o); }));
+
+document.addEventListener('keydown', e => {
+  const overlay = openOverlay();
+
+  /* The PIN pad was click-only. Typing 2121 on a desktop keyboard — the
+     obvious thing to do — did nothing at all and gave no feedback. */
+  if (overlay && overlay.id === 'adminGate') {
+    if (/^[0-9]$/.test(e.key)) { e.preventDefault(); pinKey(e.key); return; }
+    if (e.key === 'Backspace')  { e.preventDefault(); pinKey('back'); return; }
+  }
+
+  if (e.key === 'Escape' && overlay) { e.preventDefault(); dismissOverlay(overlay); return; }
+
+  /* Keep Tab inside an open dialog. v1 let it wander onto the schedule arrows
+     sitting behind the overlay. */
+  if (e.key === 'Tab' && overlay) {
+    const f = [...overlay.querySelectorAll('a[href], button, input:not([type=file]), select, textarea, [tabindex]:not([tabindex="-1"])')]
+      .filter(el => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    return;
+  }
+
+  /* Enter/Space on the elements that carry block content and so cannot be
+     real <button>s: course cards and lesson headers. */
+  if ((e.key === 'Enter' || e.key === ' ') && e.target instanceof Object) {
+    const el = e.target;
+    if (el.getAttribute && el.getAttribute('role') === 'button' && el.hasAttribute('tabindex')) {
+      e.preventDefault();
+      el.click();
+    }
+  }
+});
+document.querySelectorAll('.proc-card.open > .proc-head').forEach(h => h.setAttribute('aria-expanded', 'true'));
 renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard(); applyAdmin(); refreshDash();
 </script>
 </body>
