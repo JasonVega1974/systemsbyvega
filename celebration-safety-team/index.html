@@ -757,6 +757,17 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">&#11014;&#65039; Restore from Backup</button>
           <button class="btn btn-ghost" onclick="changePin()">&#128273; Change Admin PIN</button>
         </div>
+        <div style="border-top:1px solid var(--bd);margin-top:.9rem;padding-top:.8rem;">
+          <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:.5rem;">Recertification</div>
+          <div style="font-size:.78rem;color:var(--tx2);line-height:1.6;margin-bottom:.6rem;">
+            Clears certificates and lesson progress so a module has to be worked through again. Affects training records only &mdash;
+            the roster, schedule and meetings are untouched. <strong style="color:var(--c);">Export a backup first.</strong>
+          </div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <button class="btn btn-ghost" onclick="adminResetPerson()">Reset the selected person</button>
+            <button class="btn btn-danger" onclick="adminResetEveryone()">Annual reset &mdash; everyone</button>
+          </div>
+        </div>
         <input type="file" id="importFile" accept="application/json,.json" style="display:none;" onchange="importData(this)">
         <div id="backupStatus" style="font-size:.75rem;color:var(--tx3);margin-top:.6rem;"></div>
       </div>
@@ -968,6 +979,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeCourseModal()">Close</button>
+      <button class="btn btn-ghost" id="footerResetBtn" onclick="adminResetModule()" style="display:none;color:#f87171;">🔁 Reset for this person</button>
       <button class="btn btn-primary" id="footerQuizBtn" onclick="switchTab('quiz')" style="display:none;">Take the Quiz →</button>
       <button class="btn btn-success" id="footerCertBtn" onclick="switchTab('cert')" style="display:none;">🏆 View Certificate</button>
     </div>
@@ -1682,6 +1694,8 @@ function openCourse(id) {
   const cs = getCS(id);
   document.getElementById('footerQuizBtn').style.display = cs.doneLessons.length === curCourse.lessons.length && !cs.quizPassed ? '' : 'none';
   document.getElementById('footerCertBtn').style.display = cs.quizPassed ? '' : 'none';
+  document.getElementById('footerResetBtn').style.display =
+    adminOn && (cs.quizPassed || cs.doneLessons.length) ? '' : 'none';
   switchTab('lessons');
   document.getElementById('courseModal').classList.add('open');
 }
@@ -1723,7 +1737,16 @@ function renderQuiz() {
   const el = document.getElementById('quizContent');
   const cs = getCS(curCourse.id);
   if (cs.quizPassed) {
-    el.innerHTML = `<div class="quiz-result"><div class="quiz-score-big pass">🏆</div><div style="font-size:1rem;font-weight:800;color:var(--gr);margin:.4rem 0;">Already Certified!</div><div style="font-size:.8rem;color:var(--tx2);">You passed with ${scorePct(cs, curCourse)}%. Your certificate is available.</div></div>`;
+    el.innerHTML = `<div class="quiz-result"><div class="quiz-score-big pass">🏆</div>
+      <div style="font-size:1rem;font-weight:800;color:var(--gr);margin:.4rem 0;">Already Certified!</div>
+      <div style="font-size:.8rem;color:var(--tx2);">${esc(activeName() || 'You')} passed with ${scorePct(cs, curCourse)}%. The certificate is available.</div>
+      <div style="margin-top:1.1rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="retakeModule()">🔁 Retake this module</button>
+      </div>
+      <div style="font-size:.7rem;color:var(--tx3);margin-top:.6rem;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.5;">
+        Retaking clears this certificate until you pass again. Lesson progress is kept.
+        For annual recertification, a Team Lead can reset lessons too from Team → Admin Tools.
+      </div></div>`;
     return;
   }
   if (cs.doneLessons.length < curCourse.lessons.length) {
@@ -1770,6 +1793,55 @@ function submitQuiz() {
   document.getElementById('quizContent').innerHTML = html;
   if (passed) { document.getElementById('footerCertBtn').style.display = ''; document.getElementById('footerQuizBtn').style.display = 'none'; renderCert(); addActivity('🏆 CERTIFIED: ' + curCourse.title); }
   else addActivity('Quiz attempt (' + pct + '%): ' + curCourse.title);
+}
+/* v1 had no way out of a passed module: renderQuiz() returned "Already
+   Certified!" with no controls, and the footer quiz button was hidden. The only
+   way to redo a module was to wipe localStorage, which would have taken the
+   roster, schedule and meetings with it. Annual recertification is a normal
+   church-security requirement, so it needs a real door. */
+function retakeModule() {
+  if (!confirm('Retake "' + curCourse.title + '"?\n\nThe certificate for this module is cleared until you pass again. Lesson progress is kept.')) return;
+  retryQuiz();
+  renderCert();
+  document.getElementById('footerCertBtn').style.display = 'none';
+  document.getElementById('footerQuizBtn').style.display = '';
+  renderCourses(); refreshDash();
+  addActivity('Retake started: ' + curCourse.title);
+}
+/* The heavier action: clear lessons AS WELL, so the module has to be worked
+   through again rather than just re-answered. This is what recertification
+   actually means. */
+function adminResetModule() {
+  if (!adminOn) return;
+  const who = activeName() || 'this person';
+  if (!confirm('RESET "' + curCourse.title + '" for ' + who + '?\n\nClears the certificate AND all lesson progress. They will have to work through the whole module again.\n\nThis cannot be undone.')) return;
+  const cs = getCS(curCourse.id);
+  cs.doneLessons = []; cs.quizScore = null; cs.quizTotal = null; cs.quizPassed = false;
+  quizAnswers = {}; quizSubmitted = false;
+  save(); renderLessons(); renderQuiz(); renderCert();
+  document.getElementById('footerCertBtn').style.display = 'none';
+  document.getElementById('footerQuizBtn').style.display = 'none';
+  renderCourses(); refreshDash();
+  addActivity('Admin reset module "' + curCourse.title + '" for ' + who);
+}
+function adminResetPerson() {
+  const who = activeName();
+  if (!who) { backupStatus('Pick who you are in the Academy tab first.', '#f87171'); return; }
+  if (!confirm('Reset ALL six modules for ' + who + '?\n\nClears every certificate and all lesson progress for this one person.\n\nThis cannot be undone — export a backup first if you are unsure.')) return;
+  activeProgress().training = {};
+  save(); renderCourses(); refreshDash();
+  backupStatus('Reset all certifications for ' + who + '.', 'var(--c)');
+  addActivity('Admin reset all certifications for ' + who);
+}
+function adminResetEveryone() {
+  const n = Object.keys(S.progress).length;
+  if (!n) { backupStatus('No training records to reset.', '#f87171'); return; }
+  if (!confirm('ANNUAL RECERTIFICATION\n\nClear every certificate and all lesson progress for ALL ' + n + ' people with a training record?\n\nEveryone starts the Academy again from zero. The roster, schedule and meetings are NOT affected.\n\nThis cannot be undone. Export a backup first.')) return;
+  if (!confirm('Last check — this wipes training for ' + n + ' people. Continue?')) return;
+  Object.keys(S.progress).forEach(id => { S.progress[id].training = {}; });
+  save(); renderCourses(); refreshDash();
+  backupStatus('Annual recertification: cleared training for ' + n + ' people.', 'var(--c)');
+  addActivity('Admin started annual recertification (' + n + ' people reset)');
 }
 function retryQuiz() {
   quizAnswers = {}; quizSubmitted = false;
