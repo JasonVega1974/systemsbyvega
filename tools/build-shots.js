@@ -56,6 +56,12 @@ const ROTATOR_TARGETS = SEED.niches
 const HERO3_DIR = path.join(ROOT, '.sbv-hero3-build');
 const args = process.argv.slice(2);
 const only = (args.indexOf('--only') > -1) ? args[args.indexOf('--only') + 1] : null;
+/* --match narrows a group to the targets whose name contains a substring.
+   Without it, changing one niche photo means recapturing all 32 rotator
+   frames, and JPEG output varies just enough run to run that 31 unchanged
+   screenshots show up as a diff. Recapture what changed, not the set.
+     node tools/build-shots.js --only rotator --match landscaping  */
+const match = (args.indexOf('--match') > -1) ? args[args.indexOf('--match') + 1] : null;
 const qualityFlag = (args.indexOf('--quality') > -1) ? Number(args[args.indexOf('--quality') + 1]) : 78;
 
 const TYPES = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript',
@@ -204,7 +210,8 @@ const PREPARE = {
 };
 
 if (args.includes('--list')) {
-  TARGETS.forEach(t => console.log(`${t.group}/${t.name}  ${t.url || '(' + t.prep + ': built at run time)'}`));
+  TARGETS.filter(t => (!only || t.group === only) && (!match || t.name.indexOf(match) > -1))
+    .forEach(t => console.log(`${t.group}/${t.name}  ${t.url || '(' + t.prep + ': built at run time)'}`));
   process.exit(0);
 }
 
@@ -289,7 +296,13 @@ async function launchBrowser() {
     reducedMotion: 'no-preference',
   });
 
-  const list = only ? TARGETS.filter(t => t.group === only) : TARGETS;
+  let list = only ? TARGETS.filter(t => t.group === only) : TARGETS;
+  if (match) list = list.filter(t => t.name.indexOf(match) > -1);
+  if (!list.length) {
+    console.error('no targets matched' + (only ? ' --only ' + only : '') +
+                  (match ? ' --match ' + match : ''));
+    process.exit(1);
+  }
   let failed = 0;
   const failedNames = [];
   let builtHero3 = false;

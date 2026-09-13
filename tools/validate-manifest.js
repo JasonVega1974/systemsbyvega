@@ -85,7 +85,7 @@ function validate(m) {
   // heroDefault (Task 6 hero-filename-convention item) — optional, a
   // site-relative path string overriding build-site.js's stamped default of
   // /sites/<slug>/photos/hero.jpg for a niche whose real hero file has a
-  // different name (e.g. landscaping's photos/hero-garden-path.jpg).
+  // different name (e.g. landscaping's photos/hero-modern-home.jpg).
   // heroAlt (Phase B0 LCP fix) — optional; the descriptive alt text the
   // build stamps beside the static hero src. heroWired — optional boolean;
   // true once the niche's sections.html carries the hero-photo slot AND the

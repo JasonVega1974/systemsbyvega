@@ -133,7 +133,8 @@
    /sites/ (Task 10) reuses the same three rules too, and reuses the SAME ids
    index.html's catalog already uses for #how/#catalog/#line/#registry/#faq —
    a different file, so no collision, and the alternation stays proven. Its
-   rhythm: nav dark, hero dark (.plate), #how white, #catalog dark, #line
+   rhythm: nav dark, hero dark (.plate), #how white, #included paper,
+   #catalog dark, #line
    white, #registry paper, #contact dark (the final ask, same job #proof and
    #founder do on the homepage), #faq paper, footer dark.
 
@@ -188,7 +189,8 @@
   background:var(--bg);
   color:var(--tx);
 }
-#registry, #faq, #problem, #process, #esb, #csb, #story, #proof, #featured, #platforms{
+#registry, #faq, #problem, #process, #esb, #csb, #story, #proof, #featured, #platforms,
+#included{
   --bg:      var(--paper);
   --surface: var(--panel);
   --surface-2:var(--panel);
@@ -369,7 +371,7 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #featured, #platforms, #teaser, .gfoot{border-top:0}
+#offer, #featured, #platforms, #teaser, #included, .gfoot{border-top:0}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -626,6 +628,37 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 .proof-cell span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--tx-3);margin-top:9px}
 @media(max-width:640px){.proof-strip{grid-template-columns:repeat(2,1fr)}}
+
+
+/* -------------------------------------------------------- what's included --
+   The $299 deliverables, rendered by R.included() into a BUILD marker on both
+   `/` (inside #offer, under the two cards) and `/sites/` (its own paper band
+   above the catalog board). One function, two surfaces — so the list cannot
+   say different things in the two places a buyer reads it.
+
+   Icon plus ONE line each, deliberately. This is the part of the page someone
+   scans to answer "what do I actually get", and a paragraph per item is a
+   worse answer than seven lines they can take in at once. The bold lead is
+   the thing; the rest qualifies it.
+
+   Reads band tokens, so it inherits white inside #offer and paper inside
+   #included without either page carrying a colour. */
+.incl{margin-top:40px;padding-top:32px;border-top:1px solid var(--rule)}
+#included .incl{margin-top:0;padding-top:0;border-top:0}
+.incl-h{font-family:var(--display);font-weight:800;font-size:clamp(18px,2.4vw,24px);
+  letter-spacing:-.018em;color:var(--tx);margin:0 0 22px}
+.incl-list{list-style:none;margin:0;padding:0;display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 34px;max-width:980px}
+@media(max-width:760px){.incl-list{grid-template-columns:1fr;gap:16px}}
+.incl-item{display:flex;align-items:flex-start;gap:13px}
+/* The icon is decorative — every item's meaning is in its text, so the SVG is
+   aria-hidden and the row reads correctly with images off. */
+.incl-ico{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--rule-2);color:var(--acc-tx)}
+.incl-ico svg{width:19px;height:19px;display:block}
+.incl-txt{font-size:14.5px;line-height:1.5;color:var(--tx-2)}
+.incl-txt b{display:block;color:var(--tx);font-weight:700;font-size:15px;margin-bottom:2px}
+.incl-note{margin-top:24px;font-size:13px;color:var(--tx-3)}
 
 /* ------------------------------------------------------- platform cards ---
    The premier tier on `/`. These have to outweigh the four .entry cards in

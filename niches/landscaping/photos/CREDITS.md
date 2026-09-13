@@ -1,8 +1,8 @@
 # Photo credits — Pexels License (free commercial use, no attribution required)
 # https://www.pexels.com/license/
 
-hero-garden-path.jpg  "Serene garden pathway with lush greenery" — Candid Flaneur
-                      https://www.pexels.com/photo/serene-garden-pathway-with-lush-greenery-32416206/
+hero-modern-home.jpg  "Picturesque landscape against cloudy blue sky" — Max Vakhtbovych
+                      https://www.pexels.com/photo/picturesque-landscape-against-cloudy-blue-sky-7031598/
 work-pruning.jpg      "Gardener trimming bushes with pruning shears" — Magda Ehlers
                       https://www.pexels.com/photo/gardener-trimming-bushes-with-pruning-shears-38936344/
 work-mowing.jpg       "Red lawn mower on grass" — Kelly

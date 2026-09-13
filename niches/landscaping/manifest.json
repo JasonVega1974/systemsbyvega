@@ -44,7 +44,7 @@
     "reviews": "testimonials",
     "ownerShape": "owner"
   },
-  "heroDefault": "/sites/landscaping/photos/hero-garden-path.jpg",
-  "heroAlt": "A freshly kept garden path bordered by dense green hedges",
+  "heroDefault": "/sites/landscaping/photos/hero-modern-home.jpg",
+  "heroAlt": "A large contemporary house behind a wide, freshly striped lawn edged with stone paths",
   "heroWired": true
 }

@@ -237,6 +237,104 @@
       '</div>';
   }
 
+  /* WHAT'S INCLUDED — the $299 Launch-Ready deliverables, rendered into a
+     BUILD marker on BOTH `/` and `/sites/` so the two surfaces cannot drift.
+
+     EVERY LINE BELOW WAS CHECKED AGAINST SOMETHING THAT SHIPS. Nothing here
+     is aspirational, and the provenance is recorded so a future editor can
+     re-check it rather than trust it:
+
+       subdomain   legal/terms.html section 6 ("a web address of the form
+                   yourbusiness.systemsbyvega.com"); claim/thank-you.html
+                   ("It is live right now"); api/stripe-webhook.mjs, which
+                   sends "It opens with example content until you customise
+                   it" — load-bearing, so the buyer does not report the demo
+                   content as a bug.
+       admin       Terms section 6 lists the editable fields; admin/index.html
+                   carries them (#sec-business ... #sec-legal), including
+                   hours and social links. Before/after slots are gated on the
+                   niche manifest's merge.beforeAfter, hence "where the niche
+                   uses them" rather than a flat promise.
+       leads       api/submit-lead.mjs records every submission in sbv_leads
+                   for the admin list AND leaves the existing email delivery
+                   as the path of record. Both, which is why the line says
+                   both. Terms section 8: "Any enquiry your site receives is
+                   yours."
+       kit         api/marketing-kit.mjs renders a social PNG and a Letter
+                   flyer, each with a real QR to the operator's site; Terms
+                   section 8 names all three.
+       guide       sites/<niche>/guide.html — "How to run this business",
+                   built per niche and branded.
+       legal       _template/legal/{terms,privacy}.html carry BRAND_NAME,
+                   BRAND_CITY, BRAND_PHONE, BRAND_EMAIL and SERVICE_AREA
+                   tokens, filled at build into sites/<niche>/.
+       reset       admin/index.html #sec-danger, "Reset to defaults".
+
+     TWO THINGS ARE DELIBERATELY ABSENT.
+
+     HOSTING is not mentioned. It is real (Terms section 10) but it is not a
+     selling line, and naming it invites a support expectation this list is
+     not the place to set.
+
+     TERRITORY is not mentioned, and that is not an oversight. Terms section 4
+     says "A website purchase on its own does not include a territory" and the
+     /sites/ FAQ explains the website-only niches exist BECAUSE exclusivity
+     cannot be delivered for them — while the acceptance text every buyer ticks
+     (ACCEPTANCE_TEXTS in api/_shared.mjs) grants "Territory exclusivity ...
+     in this city only", and the webhook, claim flow and the partial unique
+     index behind sbv_claim_city() all enforce it. Those two customer-facing
+     documents contradict each other. Until that is resolved in the legal copy,
+     this list stays silent rather than taking a side on a page that sells. */
+  var INCLUDED = [
+    ['globe',   'Your site, on your own subdomain',
+     'Live at yourbusiness.systemsbyvega.com from the moment you claim — carrying the example content until your first save.'],
+    ['sliders', 'Your own operator admin',
+     'Business details, hours, service area, photos, pricing, reviews and social links — plus before/after shots where the niche uses them.'],
+    ['inbox',   'A leads inbox',
+     'Every enquiry your site receives lands in your admin as a running list, and in your email.'],
+    ['qr',      'A marketing kit',
+     'A social image and a printable flyer, both carrying a QR code that points at your site.'],
+    ['book',    'The owner guide',
+     'How to run this business, written for your niche and carrying your brand.'],
+    ['shield',  'Customer Terms and Privacy pages',
+     'Pre-filled with your business name, city, contact details and service area.'],
+    ['undo',    'Reset to defaults',
+     'Put the site back to its example content and start over, whenever you want.'],
+  ];
+
+  /* 20x20 stroke icons, currentColor, no icon font and no sprite file. */
+  var INCL_ICONS = {
+    globe:  '<circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c2 2.4 3 4.9 3 7.5s-1 5.1-3 7.5c-2-2.4-3-4.9-3-7.5s1-5.1 3-7.5z"/>',
+    sliders:'<path d="M2.5 6h15M2.5 14h15"/><circle cx="7" cy="6" r="2.2"/><circle cx="13" cy="14" r="2.2"/>',
+    inbox:  '<path d="M2.5 11.5 5 4h10l2.5 7.5v4a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z"/><path d="M2.5 11.5h4l1 2h5l1-2h4"/>',
+    qr:     '<rect x="2.5" y="2.5" width="6" height="6" rx="1"/><rect x="11.5" y="2.5" width="6" height="6" rx="1"/><rect x="2.5" y="11.5" width="6" height="6" rx="1"/><path d="M11.5 11.5h2.5v2.5M17.5 11.5v6h-6"/>',
+    book:   '<path d="M3 3.5h4.5A2.5 2.5 0 0 1 10 6v11a2 2 0 0 0-2-2H3z"/><path d="M17 3.5h-4.5A2.5 2.5 0 0 0 10 6v11a2 2 0 0 1 2-2h5z"/>',
+    shield: '<path d="M10 2.5 16.5 5v5c0 4-2.7 6.7-6.5 8-3.8-1.3-6.5-4-6.5-8V5z"/><path d="M7.3 10.2 9.2 12l3.5-3.6"/>',
+    undo:   '<path d="M3.5 5v5h5"/><path d="M4.4 12.2a6.8 6.8 0 1 0 .6-5.2"/>',
+  };
+
+  function included(opts) {
+    var o = opts || {};
+    return '' +
+      '<div class="incl">' +
+        '<h3 class="incl-h">' + esc(o.heading || "What's included with every site") + '</h3>' +
+        '<ul class="incl-list">' +
+          INCLUDED.map(function (row) {
+            return '<li class="incl-item">' +
+              '<span class="incl-ico" aria-hidden="true">' +
+                '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+                     'stroke-linecap="round" stroke-linejoin="round">' +
+                  INCL_ICONS[row[0]] +
+                '</svg></span>' +
+              '<span class="incl-txt"><b>' + esc(row[1]) + '</b> ' + esc(row[2]) + '</span>' +
+            '</li>';
+          }).join('') +
+        '</ul>' +
+        '<p class="incl-note">What each of these covers, in full, is in the ' +
+          '<a class="link" href="/legal/terms.html">Terms</a>.</p>' +
+      '</div>';
+  }
+
   function nicheSelect(niches) {
     var open = [], line = [];
     niches.forEach(function (n) {
@@ -289,6 +387,7 @@
     extras: extras,
     nicheSelect: nicheSelect,
     heroRotator: heroRotator,
+    included: included,
     figures: figures,
     numWord: numWord,
     thesisOpen: thesisOpen,

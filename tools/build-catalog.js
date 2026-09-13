@@ -54,10 +54,10 @@ const CHECK = process.argv.includes('--check');
 const TARGETS = [
   { file: path.join(ROOT, 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_OFFER', 'SITES_STEP', 'SITES_LINK',
-               'HERO_ROTATOR', 'SEED_SCRIPT'] },
+               'HERO_ROTATOR', 'SEED_SCRIPT', 'INCLUDED'] },
   { file: path.join(ROOT, 'sites', 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'THESIS_OPEN',
-              'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT'] },
+              'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT', 'INCLUDED'] },
   { file: path.join(ROOT, 'platforms', 'index.html'),
     markers: ['SEED_SCRIPT', 'PLAT_INLINE'] },
   /* Finding 3 of the final whole-branch review: three more pages hand-typed
@@ -215,6 +215,9 @@ function main() {
        niche given a demo_path in the seed joins the hero on the next build,
        the same way it joins the catalog. */
     HERO_ROTATOR: '\n' + R.heroRotator(seed.niches) + '\n',
+    /* The same list on `/` and `/sites/`, from one function, so the two
+       cannot drift apart the way two hand-kept copies would. */
+    INCLUDED:     '\n' + R.included() + '\n',
     CATALOG:      '\n' + R.catalog(seed.families, seed.niches, {}, extras) + '\n',
     NICHE_SELECT: '\n' + R.nicheSelect(seed.niches) + '\n',
     SEED_SCRIPT:  seedScript,

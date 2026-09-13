@@ -184,7 +184,7 @@ if (manifest) {
     if (def.name === 'hero-photo') {
       /* Optional per-niche override (Task 6): a niche whose real hero file
          does not follow the photos/hero.jpg convention (e.g. landscaping's
-         photos/hero-garden-path.jpg) names its actual file in the manifest
+         photos/hero-modern-home.jpg) names its actual file in the manifest
          rather than being forced to duplicate the binary under a second
          name. Absent falls back to the convention, unchanged. */
       const heroDefault = manifest.heroDefault || ('/sites/' + slug + '/photos/hero.jpg');
@@ -627,7 +627,7 @@ for (const extra of ['gallery-manifest.json']) {
 }
 
 /* Photography. niches/<slug>/photos/ is the SOURCE for real images the page
-   references relatively (photos/hero-garden-path.jpg); without this copy a
+   references relatively (photos/hero-modern-home.jpg); without this copy a
    rebuild ships an index.html whose hero 404s — the photos would exist only
    in the inputs. CREDITS.md rides along on purpose: the licence permits use
    without attribution, but the credit costs one file and answers "where did
