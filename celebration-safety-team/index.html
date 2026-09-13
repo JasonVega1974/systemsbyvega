@@ -341,6 +341,11 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .modal-panel.active { display: block; }
 .modal-footer { padding: .7rem 1.2rem; border-top: 1px solid var(--bd); display: flex; gap: .5rem; justify-content: flex-end; }
 .admin-modal-box { background: var(--s1); border: 1px solid var(--bd2); border-radius: 16px; padding: 1.3rem; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+/* Every other grid in this file collapses at 900px; these two were inline
+   styles that never did, so Add Member and New Meeting stayed two cramped
+   columns on a phone — and a phone is where a Team Lead actually adds someone. */
+.modal-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .2rem .75rem; }
+@media (max-width: 560px) { .modal-grid-2 { grid-template-columns: 1fr; } }
 .admin-modal-title { font-family: var(--fh); font-size: 1.1rem; letter-spacing: 2px; color: var(--c); margin-bottom: .9rem; }
 
 /* ── LESSONS / QUIZ / CERT ── */
@@ -862,7 +867,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 <div class="modal-overlay" id="memberModal">
   <div class="admin-modal-box">
     <div class="admin-modal-title" id="memberModalTitle">🛡️ ADD TEAM MEMBER</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.2rem .75rem;">
+    <div class="modal-grid-2">
       <div class="form-row"><label>First Name</label><input type="text" id="mFirst"></div>
       <div class="form-row"><label>Last Name</label><input type="text" id="mLast"></div>
       <div class="form-row"><label>Phone</label><input type="tel" id="mPhone" placeholder="208-xxx-xxxx"></div>
@@ -906,7 +911,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 <div class="modal-overlay" id="meetingModal">
   <div class="admin-modal-box">
     <div class="admin-modal-title">🗣️ NEW TEAM MEETING</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.2rem .75rem;">
+    <div class="modal-grid-2">
       <div class="form-row"><label>Date</label><input type="date" id="mtDate"></div>
       <div class="form-row"><label>Time</label><input type="time" id="mtTime"></div>
     </div>
