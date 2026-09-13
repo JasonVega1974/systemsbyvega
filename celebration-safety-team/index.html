@@ -54,6 +54,11 @@ body {
   padding: .75rem 1.2rem;
   display: flex;
   align-items: center;
+  /* flex-wrap is load-bearing, not cosmetic. Without it the logo + title +
+     counters + admin chip cannot fit 390px, the chip overflowed the viewport
+     by ~39px, and EVERY section scrolled horizontally. Un-hiding the mobile
+     counters is what pushed it over. */
+  flex-wrap: wrap;
   gap: 1rem;
   position: sticky;
   top: 0;
@@ -71,7 +76,8 @@ body {
   box-shadow: 0 4px 14px rgba(0,0,0,.5);
 }
 .logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.header-text { flex: 1; }
+.header-text { flex: 1 1 auto; min-width: 0; }
+.header-title { overflow-wrap: anywhere; }
 .header-title {
   font-family: var(--fh);
   font-size: 1.35rem;
@@ -121,8 +127,8 @@ body {
   flex-shrink: 0;
 }
 @media (max-width: 900px) {
-  /* The header wraps to two lines here, so the fixed 63px assumption below is
-     wrong and was adding dead scroll under the fold. Let content set height. */
+  /* The header can now wrap (see flex-wrap above), so its height is no longer
+     the fixed 63px the desktop calc assumes. Let content set the height. */
   .app { flex-direction: column; min-height: 0; }
   .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--bd); padding: .5rem; display: flex; overflow-x: auto; overflow-y: hidden; gap: .3rem; }
   .sidebar-label { display: none; }
@@ -2090,6 +2096,10 @@ function submitQuiz() {
   document.getElementById('quizContent').innerHTML = html;
   if (passed) { document.getElementById('footerCertBtn').style.display = ''; document.getElementById('footerQuizBtn').style.display = 'none'; renderCert(); addActivity('🏆 CERTIFIED: ' + curCourse.title); }
   else addActivity('Quiz attempt (' + pct + '%): ' + curCourse.title);
+  /* The header strip and dashboard are visible behind the overlay, so leaving
+     them stale until the modal closes shows a wrong count on screen. Same class
+     of bug as the onboarding counter. */
+  renderCourses(); refreshDash();
 }
 /* v1 had no way out of a passed module: renderQuiz() returned "Already
    Certified!" with no controls, and the footer quiz button was hidden. The only
