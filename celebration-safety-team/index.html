@@ -1178,6 +1178,14 @@ function migrate(raw) {
     delete d.training; delete d.onboard; delete d.trainee;
     d.schemaVersion = 2;
   }
+  /* Sweep out empty day records, including any v1 left behind by browsing. */
+  Object.keys(d.schedule || {}).forEach(k => {
+    const day = d.schedule[k];
+    if (!day || !day.s0 || !day.s1 || !day.s2) { delete d.schedule[k]; return; }
+    const empty = ['s0', 's1', 's2'].every(key =>
+      !day[key].lead && (day[key].members || []).every(x => !x));
+    if (empty) delete d.schedule[k];
+  });
   return d;
 }
 function load() {
@@ -1523,20 +1531,57 @@ function nextSunday(d) {
 }
 function iso(d) { return d.toISOString().slice(0, 10); }
 function shiftSunday(days) { curSunday = new Date(curSunday.getTime() + days * 864e5); renderSchedule(); }
-function getDay(dateIso) {
-  if (!S.schedule[dateIso]) S.schedule[dateIso] = { s0: { lead: '', members: ['','','',''] }, s1: { lead: '', members: ['','','',''] }, s2: { lead: '', members: ['','','',''] } };
+const MIN_SLOTS = 4;      // four member positions + the lead = the v1 shape
+const MAX_SLOTS = 11;     // lead + 11 = 12 people on a service, enough for Easter
+function blankSvc() { return { lead: '', members: new Array(MIN_SLOTS).fill('') }; }
+function blankDay() { return { s0: blankSvc(), s1: blankSvc(), s2: blankSvc() }; }
+
+/* READ-ONLY. v1's getDay() created and stored a full day object as a side
+   effect of being read, and it is read on every render and every dashboard
+   refresh. Browsing the calendar therefore wrote a permanent empty record for
+   every Sunday you looked at — measured at 29 empty days out of 31, making up
+   58% of the saved payload, flushed to localStorage by the next unrelated
+   save(). Reading a day you have never scheduled now costs nothing. */
+function getDay(dateIso) { return S.schedule[dateIso] || blankDay(); }
+function ensureDay(dateIso) {
+  if (!S.schedule[dateIso]) S.schedule[dateIso] = blankDay();
   return S.schedule[dateIso];
 }
+function dayIsEmpty(day) {
+  return SERVICES.every(sv => !day[sv.key].lead && day[sv.key].members.every(x => !x));
+}
+/* Clears days that hold nothing, including any left behind by v1. */
+function pruneSchedule() {
+  Object.keys(S.schedule).forEach(k => {
+    const d = S.schedule[k];
+    if (!d || !d.s0 || dayIsEmpty(d)) delete S.schedule[k];
+  });
+}
 function setAssign(dateIso, svcKey, slot, val) {
-  const day = getDay(dateIso);
+  const day = ensureDay(dateIso);
   if (slot === 'lead') day[svcKey].lead = val; else day[svcKey].members[slot] = val;
+  if (dayIsEmpty(day)) delete S.schedule[dateIso];
   save(); renderSchedule(); refreshDash();
+}
+/* Adding a position IS a deliberate admin action, so unlike getDay() it is
+   allowed to create the day record. The guarantee being protected is narrower
+   and more important: merely LOOKING at a Sunday must never write one. */
+function addSlot(dateIso, svcKey) {
+  const svc = ensureDay(dateIso)[svcKey];
+  if (svc.members.length >= MAX_SLOTS) return;
+  svc.members.push('');
+  save(); renderSchedule();
+}
+function memberName(id) {
+  const m = S.team.find(x => x.id === id);
+  return m ? (m.first + ' ' + m.last).trim() : '';
 }
 function svcStatus(svc) {
   const ids = [svc.lead, ...svc.members].filter(Boolean);
-  const unique = [...new Set(ids)];
+  const seen = new Set(), dupes = new Set();
+  ids.forEach(id => { if (seen.has(id)) dupes.add(id); else seen.add(id); });
   const hasLead = !!svc.lead;
-  return { count: unique.length, hasLead, ok: unique.length >= 3 && hasLead };
+  return { count: seen.size, hasLead, dupes: [...dupes], ok: seen.size >= 3 && hasLead };
 }
 function renderSchedule() {
   const dateIso = iso(curSunday);
@@ -1557,13 +1602,26 @@ function renderSchedule() {
         <select ${dis} onchange="setAssign('${dateIso}','${sv.key}','lead',this.value)">${opt(leads, svc.lead)}</select></div>
       ${svc.members.map((mid, i) => `<div class="svc-slot"><span style="font-size:.62rem;color:var(--tx3);font-weight:800;flex-shrink:0;width:38px;">#${i + 2}</span>
         <select ${dis} onchange="setAssign('${dateIso}','${sv.key}',${i},this.value)">${opt(all, mid)}</select></div>`).join('')}
+      ${adminOn && svc.members.length < MAX_SLOTS ? `<button class="btn btn-ghost" style="width:100%;padding:.3rem;font-size:.7rem;margin-top:.1rem;" onclick="addSlot('${dateIso}','${sv.key}')">+ another position</button>` : ''}
       <div class="svc-warn-box ${st.ok ? 'ok' : 'bad'}">${st.ok ? '✅ Coverage met (' + st.count + ' assigned)' : '⚠️ ' + st.count + '/3 assigned' + (st.hasLead ? '' : ' — no Team Lead')}</div>
+      ${st.dupes.length ? `<div class="svc-warn-box bad" style="margin-top:.35rem;">👤 ${esc(st.dupes.map(memberName).join(', '))} ${st.dupes.length > 1 ? 'are' : 'is'} in more than one slot for this service — that only counts as one person.</div>` : ''}
     </div>`;
   }).join('');
   if (!S.team.length) {
     document.getElementById('schedSummary').innerHTML = '<div class="empty-note">Add team members in the Team tab to begin scheduling.</div>';
   } else {
-    document.getElementById('schedSummary').innerHTML = SERVICES.map(sv => {
+    /* Nobody flagged Team Lead means the lead dropdown is empty on every
+       service and coverage can never be met, with nothing on screen saying so. */
+    const leadNote = leads.length ? '' :
+      '<div class="svc-warn-box bad" style="margin-bottom:.6rem;">⚠️ Nobody on the roster is marked <strong>Team Lead</strong>, so the LEAD slot has nothing to offer and no service can meet the coverage rule. Set at least one member\'s role to Team Lead on the Team tab.</div>';
+    /* Same three people on all three services is a four-hour unbroken shift.
+       Legal, sometimes necessary, but the scheduler should see it. */
+    const allDay = S.team.filter(m => SERVICES.every(sv => {
+      const svc = day[sv.key];
+      return svc.lead === m.id || svc.members.includes(m.id);
+    }));
+    const allDayNote = allDay.length ? `<div class="svc-warn-box" style="background:rgba(232,160,32,.1);color:var(--c);border:1px solid rgba(232,160,32,.25);margin-bottom:.6rem;">⏳ ${esc(allDay.map(m => m.first + ' ' + m.last).join(', '))} ${allDay.length > 1 ? 'are' : 'is'} on all three services — roughly a four-hour shift with no relief. Intentional, or does someone need a break?</div>` : '';
+    document.getElementById('schedSummary').innerHTML = leadNote + allDayNote + SERVICES.map(sv => {
       const svc = day[sv.key]; const st = svcStatus(svc);
       const names = [...new Set([svc.lead, ...svc.members].filter(Boolean))].map(id => { const m = S.team.find(x => x.id === id); return m ? (m.role === 'Team Lead' && id === svc.lead ? '★ ' : '') + m.first + ' ' + m.last : ''; }).filter(Boolean);
       return `<div style="margin-bottom:.4rem;"><strong style="color:${st.ok ? 'var(--gr)' : '#f87171'};">${sv.label}</strong> — ${names.length ? esc(names.join(', ')) : '<em>no one assigned</em>'}</div>`;
