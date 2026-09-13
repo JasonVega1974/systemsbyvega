@@ -526,7 +526,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
       </div>
       <div class="stats-row" style="margin-bottom:1rem;">
-        <div class="stat-pill">👤 Trainee: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong> <span style="color:var(--bl);cursor:pointer;margin-left:.3rem;" onclick="setTrainee()">change</span></div>
+        <div class="stat-pill">👤 Training as: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong> <button class="btn btn-ghost" style="padding:.1rem .5rem;font-size:.68rem;margin-left:.4rem;" onclick="openWhoModal()">change</button></div>
         <div class="stat-pill" style="border-color:rgba(34,197,94,.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/<span id="certTotal">6</span></div>
       </div>
       <div class="course-grid" id="courseGrid"></div>
@@ -554,6 +554,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div class="grid-2">
         <div class="card" style="margin-bottom:0;">
           <div class="card-title">✅ ONBOARDING CHECKLIST</div>
+          <div id="onboardWho" style="font-size:.75rem;color:var(--tx2);margin-bottom:.5rem;"></div>
           <div id="onboardChecklist"></div>
         </div>
         <div class="card" style="margin-bottom:0;">
@@ -865,6 +866,25 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   </div>
 </div>
 
+<!-- ══ WHO IS USING THIS DEVICE ══ -->
+<div class="modal-overlay" id="whoModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title">&#128100; WHO IS TRAINING?</div>
+    <div style="font-size:.8rem;color:var(--tx2);line-height:1.6;margin-bottom:.9rem;">
+      Certificates, quiz results and the onboarding checklist are kept <strong>per person</strong>. Pick your name so your
+      progress is saved to you, and so a Team Lead can see who is cleared to serve.
+      <span style="color:var(--tx3);">This is not a login &mdash; it only decides whose record this device is writing to.</span>
+    </div>
+    <div id="whoList"></div>
+    <div class="form-row" style="margin-top:.8rem;"><label>Not on the roster yet</label>
+      <input type="text" id="whoGuest" placeholder="Type your name"></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('whoModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGuestName()">Use this name</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MEMBER MODAL ══ -->
 <div class="modal-overlay" id="memberModal">
   <div class="admin-modal-box">
@@ -1058,19 +1078,24 @@ const COURSES = [
   }
 ];
 
+/* Each step carries a STABLE id. v1 stored completion as array indices, so
+   reordering or inserting a step silently re-mapped every volunteer's finished
+   work onto different steps — on a compliance checklist that gates whether
+   someone may serve. The ids below must never be reused or renamed; the text
+   beside them can change freely. */
 const ONBOARD_ITEMS = [
-  'Read the 25-page Safety & Security Onboarding Manual (placeholder until uploaded)',
-  'Meet the Team Lead(s) and receive your service assignment',
-  'Walk the full facility: foyer, sanctuary, children\u2019s auditorium, children\u2019s check-in, all exits, perimeter',
-  'Review Facility Maps & the site schematic (routes, assembly area, AED/extinguishers)',
-  'Review the Leadership/Staff directory — know who\u2019s who on sight',
-  'Complete Academy module SS-101: Team Fundamentals',
-  'Complete Academy module: De-escalation & Verbal Skills',
-  'Complete Academy modules: Active Shooter, Code Adam, Fire & Evacuation, Severe Weather',
-  'Review all Emergency Procedures incl. church continuity',
-  'Save key numbers: 911 · Nampa PD (208) 465-2257 · Church office (208) 466-5433',
-  'Shadow one full Sunday (all three services) with a Team Lead',
-  'Sign off with the Team Lead — cleared for the schedule'
+  { id: 'manual',     text: 'Read the 25-page Safety & Security Onboarding Manual (placeholder until uploaded)' },
+  { id: 'meet-lead',  text: 'Meet the Team Lead(s) and receive your service assignment' },
+  { id: 'walk-site',  text: 'Walk the full facility: foyer, sanctuary, children\u2019s auditorium, children\u2019s check-in, all exits, perimeter' },
+  { id: 'maps',       text: 'Review Facility Maps & the site schematic (routes, assembly area, AED/extinguishers)' },
+  { id: 'directory',  text: 'Review the Leadership/Staff directory — know who\u2019s who on sight' },
+  { id: 'mod-ss101',  text: 'Complete Academy module SS-101: Team Fundamentals' },
+  { id: 'mod-ss102',  text: 'Complete Academy module: De-escalation & Verbal Skills' },
+  { id: 'mod-rest',   text: 'Complete Academy modules: Active Shooter, Code Adam, Fire & Evacuation, Severe Weather' },
+  { id: 'procedures', text: 'Review all Emergency Procedures incl. church continuity' },
+  { id: 'numbers',    text: 'Save key numbers: 911 · Nampa PD (208) 465-2257 · Church office (208) 466-5433' },
+  { id: 'shadow',     text: 'Shadow one full Sunday (all three services) with a Team Lead' },
+  { id: 'signoff',    text: 'Sign off with the Team Lead — cleared for the schedule' }
 ];
 // ════════════════════════════════════════════════════════════════
 // STATE
@@ -1079,26 +1104,85 @@ const LS_KEY = 'ccssta_v1';
 /* Bumped whenever the shape of S changes. load() migrates forward; it never
    silently accepts a shape it does not understand, because a half-understood
    roster is worse than a visible failure. */
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 let S = load();
 function defaults() {
   return {
+    schemaVersion: SCHEMA_VERSION,
     pin: '2121',
-    trainee: '',
     team: [],
     leaders: [
-      { id: 'ld1', name: 'Roger Yadon', title: 'Senior Pastor', notes: 'Verify details at thecelebration.church/our-team' }
+      { id: 'ld1', name: 'Roger Yadon', title: 'Senior Pastor', notes: 'Verified from thecelebration.church/our-team' }
     ],
     meetings: [],
-    schedule: {},          // { '2026-09-20': { s0:{lead:'',members:[]}, s1:{...}, s2:{...} } }
-    training: {},          // { courseId: { doneLessons:[], quizScore:null, quizPassed:false, certName:'' } }
-    onboard: [],
+    schedule: {},   // { '2026-09-20': { s0:{lead:'',members:[]}, s1:{...}, s2:{...} } }
+    /* Training and onboarding are PER PERSON, keyed by roster member id.
+       'guest' holds anyone training before they have been added to the roster.
+       { '<memberId>': { name, training: { courseId: {...} }, onboard: [stepId] } } */
+    progress: {},
+    activeId: 'guest',     // who is using this browser. Not auth — see the PIN note.
     activity: []
   };
 }
+
+/* v1 kept ONE trainee name, ONE training record and ONE onboarding list for the
+   whole browser, while team/schedule/meetings were shared org data in the same
+   blob. Two volunteers on the church's foyer tablet overwrote each other's
+   certifications, and a Team Lead had no way to see who was actually cleared to
+   serve. This migration is what makes the Phase 3 completion matrix possible. */
+function migrate(raw) {
+  const from = raw.schemaVersion || 1;
+  const d = Object.assign(defaults(), raw);
+  d.schemaVersion = from;
+
+  if (d.schemaVersion < 2) {
+    d.progress = d.progress || {};
+    const oldTraining = d.training || {};
+    const oldOnboard = Array.isArray(d.onboard) ? d.onboard : [];
+    const oldName = (d.trainee || '').trim();
+
+    if (Object.keys(oldTraining).length || oldOnboard.length || oldName) {
+      /* Attach the orphaned record to the roster member whose name matches it.
+         Failing that it becomes the guest record, which stays visible and
+         reassignable rather than being dropped. */
+      const match = (d.team || []).find(m =>
+        (m.first + ' ' + m.last).trim().toLowerCase() === oldName.toLowerCase() && oldName);
+      const id = match ? match.id : 'guest';
+      const bucket = d.progress[id] || (d.progress[id] = { name: oldName, training: {}, onboard: [] });
+      if (!bucket.name) bucket.name = oldName;
+
+      Object.keys(oldTraining).forEach(cid => {
+        const rec = oldTraining[cid];
+        /* Every v1 module had exactly five questions, so that is what these
+           scores were measured against. Stamping it keeps an existing
+           certificate reading correctly now that ss202 has six. */
+        if (rec && rec.quizScore != null && !rec.quizTotal) rec.quizTotal = 5;
+        bucket.training[cid] = rec;
+      });
+      /* Indices -> stable ids, using the v1 order, which is unchanged. */
+      bucket.onboard = oldOnboard.map(i => ONBOARD_ITEMS[i] && ONBOARD_ITEMS[i].id).filter(Boolean);
+      d.activeId = id;
+    }
+    delete d.training; delete d.onboard; delete d.trainee;
+    d.schemaVersion = 2;
+  }
+  return d;
+}
 function load() {
-  try { const raw = localStorage.getItem(LS_KEY); if (raw) return Object.assign(defaults(), JSON.parse(raw)); } catch (e) {}
+  try { const raw = localStorage.getItem(LS_KEY); if (raw) return migrate(JSON.parse(raw)); } catch (e) {}
   return defaults();
+}
+
+// ── Who is using this browser ──
+function getProgress(id) {
+  if (!S.progress[id]) S.progress[id] = { name: '', training: {}, onboard: [] };
+  return S.progress[id];
+}
+function activeProgress() { return getProgress(S.activeId || 'guest'); }
+function activeName() {
+  const m = S.team.find(x => x.id === S.activeId);
+  if (m) return (m.first + ' ' + m.last).trim();
+  return (activeProgress().name || '').trim();
 }
 function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -1107,9 +1191,10 @@ function addActivity(msg) {
   S.activity = S.activity.slice(0, 12);
   save(); renderActivity();
 }
-function getCS(id) {
-  if (!S.training[id]) S.training[id] = { doneLessons: [], quizScore: null, quizPassed: false, certName: '' };
-  return S.training[id];
+function getCS(id, memberId) {
+  const t = getProgress(memberId || S.activeId || 'guest').training;
+  if (!t[id]) t[id] = { doneLessons: [], quizScore: null, quizTotal: null, quizPassed: false, certName: '' };
+  return t[id];
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -1172,7 +1257,7 @@ function importData(input) {
     if (missing.length) {
       backupStatus('❌ Backup is missing: ' + missing.join(', ') + '. Not restored.', '#f87171'); return;
     }
-    if (payload.schemaVersion > SCHEMA_VERSION) {
+    if ((payload.schemaVersion || 1) > SCHEMA_VERSION) {
       backupStatus('❌ That backup was made by a newer version of this app. Update first.', '#f87171'); return;
     }
 
@@ -1187,7 +1272,7 @@ function importData(input) {
       S.meetings.length + ' meetings.\n\nThis cannot be undone.'
     )) { backupStatus('Restore cancelled — nothing changed.'); return; }
 
-    S = Object.assign(defaults(), d);
+    S = migrate(d);
     save();
     renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard();
     renderCourses(); refreshDash(); applyAdmin();
@@ -1304,7 +1389,7 @@ function saveMember() {
   const data = { first, last, phone, spec: document.getElementById('mSpec').value, role: document.getElementById('mRole').value };
   if (editingMemberId) Object.assign(S.team.find(x => x.id === editingMemberId), data);
   else S.team.push(Object.assign({ id: 'tm' + Date.now() }, data));
-  save(); closeModalEl('memberModal'); renderTeam(); renderSchedule(); refreshDash();
+  save(); closeModalEl('memberModal'); renderTeam(); renderSchedule(); renderCourses(); refreshDash();
   addActivity((editingMemberId ? 'Updated' : 'Added') + ' team member: ' + first + ' ' + last);
   editingMemberId = null;
 }
@@ -1478,18 +1563,25 @@ function renderSchedule() {
 // ONBOARDING CHECKLIST
 // ════════════════════════════════════════════════════════════════
 function renderOnboard() {
-  document.getElementById('onboardChecklist').innerHTML = ONBOARD_ITEMS.map((item, i) => {
-    const done = S.onboard.includes(i);
+  const p = activeProgress();
+  const who = activeName();
+  document.getElementById('onboardWho').innerHTML = who
+    ? 'Checklist for <strong style="color:var(--tx);">' + esc(who) + '</strong>'
+    : '<strong style="color:var(--c);">No one selected.</strong> Pick who you are in the Academy tab so this checklist is saved to a person.';
+  document.getElementById('onboardChecklist').innerHTML = ONBOARD_ITEMS.map(item => {
+    const done = p.onboard.includes(item.id);
     return `<label style="display:flex;gap:.55rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.8rem;color:${done ? 'var(--gr)' : 'var(--tx2)'};">
-      <input type="checkbox" ${done ? 'checked' : ''} onchange="toggleOnboard(${i})" style="margin-top:.2rem;accent-color:var(--gr);">
-      <span style="${done ? 'text-decoration:line-through;opacity:.75;' : ''}">${item}</span>
+      <input type="checkbox" ${done ? 'checked' : ''} onchange="toggleOnboard('${item.id}')" style="margin-top:.2rem;accent-color:var(--gr);">
+      <span style="${done ? 'text-decoration:line-through;opacity:.75;' : ''}">${item.text}</span>
     </label>`;
-  }).join('') + `<div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">${S.onboard.length}/${ONBOARD_ITEMS.length} complete</div>`;
+  }).join('') + `<div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">${p.onboard.length}/${ONBOARD_ITEMS.length} complete</div>`;
 }
-function toggleOnboard(i) {
-  if (S.onboard.includes(i)) S.onboard = S.onboard.filter(x => x !== i);
-  else S.onboard.push(i);
+function toggleOnboard(stepId) {
+  const p = activeProgress();
+  if (p.onboard.includes(stepId)) p.onboard = p.onboard.filter(x => x !== stepId);
+  else p.onboard.push(stepId);
   save(); renderOnboard();
+  refreshDash();   // v1 never did this, so the dashboard counter sat stale until an unrelated action
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -1530,11 +1622,55 @@ function renderCourses() {
   document.getElementById('certTotal').textContent = COURSES.length;
   document.getElementById('hs-modules').textContent = certs;
   document.getElementById('academyPct').textContent = Math.round((certs / COURSES.length) * 100) + '%';
-  document.getElementById('traineeName').textContent = S.trainee || 'not set';
+  document.getElementById('traineeName').textContent = activeName() || 'not set — tap change';
 }
-function setTrainee() {
-  const n = prompt('Trainee name (appears on certificates):', S.trainee || '');
-  if (n !== null) { S.trainee = n.trim(); save(); renderCourses(); refreshDash(); }
+function openWhoModal() {
+  renderWhoList();
+  document.getElementById('whoGuest').value = S.activeId === 'guest' ? (getProgress('guest').name || '') : '';
+  document.getElementById('whoModal').classList.add('open');
+}
+function renderWhoList() {
+  const el = document.getElementById('whoList');
+  if (!S.team.length) {
+    el.innerHTML = '<div class="empty-note" style="padding:.9rem;">No roster yet. Type your name below — an admin can link your record to the roster once you are added.</div>';
+    return;
+  }
+  el.innerHTML = S.team.map(m => {
+    const p = S.progress[m.id];
+    const certs = p ? Object.values(p.training).filter(t => t.quizPassed).length : 0;
+    const on = S.activeId === m.id;
+    return `<button class="quiz-opt ${on ? 'selected' : ''}" style="width:100%;margin-bottom:.35rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem;" onclick="setActiveMember('${m.id}')">
+      <span>${esc(m.first + ' ' + m.last)}${m.role === 'Team Lead' ? ' <span class="lead-tag">★ LEAD</span>' : ''}</span>
+      <span style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${certs}/${COURSES.length} certified</span>
+    </button>`;
+  }).join('');
+}
+function setActiveMember(id) {
+  /* The realistic path is: a volunteer trains first, and gets added to the
+     roster afterwards. Offer to carry the guest record across rather than
+     stranding it, but never overwrite a record the member already has. */
+  const guest = S.progress.guest;
+  const guestHasWork = guest && (Object.keys(guest.training).length || guest.onboard.length);
+  const target = S.progress[id];
+  const targetHasWork = target && (Object.keys(target.training).length || target.onboard.length);
+  if (S.activeId === 'guest' && guestHasWork && !targetHasWork) {
+    const m = S.team.find(x => x.id === id);
+    if (confirm('Move the unassigned training record' + (guest.name ? ' for "' + guest.name + '"' : '') +
+                ' to ' + m.first + ' ' + m.last + '?\n\nOK = move it across. Cancel = leave it where it is and just switch.')) {
+      S.progress[id] = { name: '', training: guest.training, onboard: guest.onboard };
+      delete S.progress.guest;
+      addActivity('Linked training record to ' + m.first + ' ' + m.last);
+    }
+  }
+  S.activeId = id;
+  save(); closeModalEl('whoModal'); renderCourses(); renderOnboard(); refreshDash();
+}
+function saveGuestName() {
+  const n = document.getElementById('whoGuest').value.trim();
+  if (!n) { alert('Type a name, or pick someone from the roster above.'); return; }
+  S.activeId = 'guest';
+  getProgress('guest').name = n;
+  save(); closeModalEl('whoModal'); renderCourses(); renderOnboard(); refreshDash();
 }
 function openCourse(id) {
   curCourse = COURSES.find(c => c.id === id);
@@ -1614,7 +1750,7 @@ function submitQuiz() {
   const pct = Math.round((correct / total) * 100);
   const cs = getCS(curCourse.id);
   cs.quizScore = correct; cs.quizTotal = total; cs.quizPassed = passed;
-  if (passed && !cs.certName) cs.certName = S.trainee;
+  if (passed && !cs.certName) cs.certName = activeName();
   save();
   let html = '';
   curCourse.quiz.forEach((q, qi) => {
@@ -1655,13 +1791,13 @@ function renderCert() {
       <div class="cert-title-main">CERTIFICATE OF COMPLETION</div>
       <div class="cert-course-name">${curCourse.title}</div>
       <div class="cert-name-line">This certifies that</div><br>
-      <div class="cert-recipient">${esc(cs.certName || S.trainee || 'Team Member')}</div>
+      <div class="cert-recipient">${esc(cs.certName || activeName() || 'Team Member')}</div>
       <div class="cert-score">Score: ${scorePct(cs, curCourse)}% · ${cs.quizScore}/${cs.quizTotal || quizTotal(curCourse)} correct</div>
       <div class="cert-date">Issued: ${date} · Nampa, Idaho</div>
       <div class="cert-seal">🏆</div>
     </div>
     <div style="margin-top:.75rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
-      <input type="text" placeholder="Name on certificate" value="${esc(cs.certName || S.trainee || '')}" style="padding:.4rem .8rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);width:200px;" oninput="updateCertName(this.value)">
+      <input type="text" placeholder="Name on certificate" value="${esc(cs.certName || activeName() || '')}" style="padding:.4rem .8rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);width:200px;" oninput="updateCertName(this.value)">
       <button class="cert-print-btn" onclick="printCertificate()">🖨️ Print Certificate</button>
     </div>
   </div>`;
@@ -1686,9 +1822,9 @@ function updateCertName(v) {
 function refreshDash() {
   const certs = COURSES.filter(c => getCS(c.id).quizPassed).length;
   document.getElementById('dashTraining').innerHTML =
-    `<div>Trainee: <strong style="color:var(--tx);">${esc(S.trainee || 'not set')}</strong></div>
+    `<div>Training as: <strong style="color:var(--tx);">${esc(activeName() || 'not set')}</strong></div>
      <div>Certificates: <strong style="color:var(--gr);">${certs}/${COURSES.length}</strong></div>
-     <div>Onboarding: <strong style="color:var(--c);">${S.onboard.length}/${ONBOARD_ITEMS.length}</strong> steps</div>`;
+     <div>Onboarding: <strong style="color:var(--c);">${activeProgress().onboard.length}/${ONBOARD_ITEMS.length}</strong> steps</div>`;
   const dateIso = iso(nextSunday(new Date()));
   const day = getDay(dateIso);
   const cov = SERVICES.map(sv => {
