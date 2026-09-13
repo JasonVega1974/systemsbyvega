@@ -121,11 +121,27 @@ body {
   flex-shrink: 0;
 }
 @media (max-width: 900px) {
-  .app { flex-direction: column; }
+  /* The header wraps to two lines here, so the fixed 63px assumption below is
+     wrong and was adding dead scroll under the fold. Let content set height. */
+  .app { flex-direction: column; min-height: 0; }
   .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--bd); padding: .5rem; display: flex; overflow-x: auto; overflow-y: hidden; gap: .3rem; }
   .sidebar-label { display: none; }
-  .nav-item { flex-direction: column; min-width: 82px; text-align: center; padding: .5rem .4rem; }
-  .header-stats { display: none; }
+  /* 82px + nowrap meant 4 of 10 labels overflowed their box and visually ran
+     into the next item — "Emergency Procedures" spilled 21px into "Facility
+     Maps". Wider box, smaller text, and allowed to wrap to two lines. */
+  .nav-item { flex-direction: column; min-width: 98px; text-align: center; padding: .5rem .35rem; }
+  .nav-item .nav-text { white-space: normal; font-size: .68rem; line-height: 1.15; }
+  /* v1 hid the counters outright on the device volunteers actually use in the
+     foyer. Shrink them instead. */
+  .header-stats { gap: .3rem; }
+  .hstat { min-width: 44px; padding: .25rem .45rem; }
+  .hstat-val { font-size: .95rem; }
+  .hstat-lbl { font-size: .5rem; letter-spacing: .5px; }
+  .header-title { font-size: 1.05rem; letter-spacing: 1.5px; }
+}
+@media (max-width: 560px) {
+  /* "Services: 3" never changes, so it is the one that goes when space runs out. */
+  .header-stats .hstat:last-child { display: none; }
 }
 .sidebar-label {
   font-size: .6rem;
@@ -426,6 +442,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
    Unscoped Ctrl+P now prints the page normally, which is what Phase 5 wants
    for the procedure pocket cards. */
 @media print {
+  /* The app's dark background otherwise prints behind the certificate. */
+  body.printing-cert { background: #fff; }
   body.printing-cert * { visibility: hidden; }
   body.printing-cert .certificate,
   body.printing-cert .certificate * { visibility: visible; }
@@ -492,6 +510,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   </nav>
 
   <main class="main">
+
+    <div id="storageAlert" class="alert-box" style="display:none;margin-bottom:1rem;"></div>
 
     <!-- ══ DASHBOARD ══ -->
     <section id="sec-overview" class="section active">
@@ -1253,6 +1273,15 @@ const LS_KEY = 'ccssta_v1';
    silently accepts a shape it does not understand, because a half-understood
    roster is worse than a visible failure. */
 const SCHEMA_VERSION = 2;
+
+/* Declared BEFORE the load() call below, not beside their functions. `let` is
+   in a temporal dead zone until its declaration is evaluated, and load() runs
+   on the very first line of this script — so declaring these further down made
+   the corrupt-data path throw ReferenceError instead of reporting the problem,
+   which is the exact opposite of the point. */
+let storageLocked = false;   // existing data could not be read; refuse to overwrite it
+let loadWarning = null;      // shown once the DOM exists
+
 let S = load();
 function defaults() {
   return {
@@ -1325,8 +1354,22 @@ function migrate(raw) {
   return d;
 }
 function load() {
-  try { const raw = localStorage.getItem(LS_KEY); if (raw) return migrate(JSON.parse(raw)); } catch (e) {}
-  return defaults();
+  let raw = null;
+  try { raw = localStorage.getItem(LS_KEY); }
+  catch (e) {
+    loadWarning = '⚠️ <strong>This browser is blocking local storage.</strong> Nothing you enter will be saved. ' +
+      'You can still read every procedure and work through the Academy, but progress will not persist.';
+    return defaults();
+  }
+  if (!raw) return defaults();
+  try { return migrate(JSON.parse(raw)); }
+  catch (e) {
+    storageLocked = true;
+    loadWarning = '🛑 <strong>Saved data could not be read</strong> (' + (e.name || 'parse error') + '). It has <strong>not</strong> been overwritten. ' +
+      'Restore from a backup file in <strong>Team → Admin Tools</strong>, or ' +
+      '<button type="button" class="btn btn-danger" style="padding:.2rem .6rem;font-size:.72rem;" onclick="discardUnreadableData()">discard it and start fresh</button>.';
+    return defaults();
+  }
 }
 
 // ── Who is using this browser ──
@@ -1340,7 +1383,49 @@ function activeName() {
   if (m) return (m.first + ' ' + m.last).trim();
   return (activeProgress().name || '').trim();
 }
-function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
+/* v1 wrapped both save() and load() in `catch (e) {}`. If the quota filled, or
+   storage was blocked (private browsing, a locked-down kiosk), every write
+   failed silently: the UI went on showing the roster and the schedule exactly
+   as if they had been saved, and the whole lot vanished on reload with no
+   warning. For a team that keeps its only copy of the roster here, a loud
+   failure is the only honest option. */
+function flagStorage(html) {
+  const el = document.getElementById('storageAlert');
+  if (!el) return;
+  el.innerHTML = html;
+  el.style.display = '';
+}
+function clearStorageFlag() {
+  const el = document.getElementById('storageAlert');
+  if (el) { el.style.display = 'none'; el.innerHTML = ''; }
+}
+function save() {
+  /* Refuse to overwrite data we failed to parse. It may still be recoverable
+     by hand from devtools, and blowing it away would end that. */
+  if (storageLocked) {
+    flagStorage('🛑 <strong>Not saving.</strong> The data already in this browser could not be read, and overwriting it would destroy anything still recoverable from it. ' +
+      'Use <strong>Team → Admin Tools → Export Backup</strong> to save what is on screen, then <strong>Restore from Backup</strong>, or ' +
+      '<button type="button" class="btn btn-danger" style="padding:.2rem .6rem;font-size:.72rem;" onclick="discardUnreadableData()">discard the unreadable data and start fresh</button>.');
+    return false;
+  }
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); return true; }
+  catch (e) {
+    flagStorage('⚠️ <strong>Changes are NOT being saved.</strong> This browser refused to write to local storage (' + esc(e.name || 'error') + '). ' +
+      'Everything entered since you opened this page will be lost when you close it. ' +
+      'Use <strong>Team → Admin Tools → Export Backup</strong> now to save it to a file, and tell your Team Lead.');
+    return false;
+  }
+}
+function discardUnreadableData() {
+  if (!confirm('Discard the unreadable saved data and start from empty?\n\nIf you have not exported a backup, anything recoverable from it is gone for good.')) return;
+  storageLocked = false;
+  try { localStorage.removeItem(LS_KEY); } catch (e) {}
+  S = defaults();
+  clearStorageFlag();
+  save();
+  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard(); renderCourses(); applyAdmin(); refreshDash();
+  addActivity('Discarded unreadable data and started fresh');
+}
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function addActivity(msg) {
   S.activity.unshift({ t: new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }), msg });
@@ -1428,6 +1513,8 @@ function importData(input) {
       S.meetings.length + ' meetings.\n\nThis cannot be undone.'
     )) { backupStatus('Restore cancelled — nothing changed.'); return; }
 
+    storageLocked = false;
+    clearStorageFlag();
     S = migrate(d);
     save();
     renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard();
@@ -1532,7 +1619,7 @@ function openMemberModal(id) {
   const m = id ? S.team.find(x => x.id === id) : null;
   document.getElementById('mFirst').value = m ? m.first : '';
   document.getElementById('mLast').value = m ? m.last : '';
-  document.getElementById('mPhone').value = m ? m.phone : '';
+  document.getElementById('mPhone').value = m ? (m.phone || '') : '';
   document.getElementById('mSpec').value = m ? m.spec : 'General / Trained Volunteer';
   document.getElementById('mRole').value = m ? m.role : 'Team Member';
   openModalEl('memberModal');
@@ -1567,7 +1654,7 @@ function renderTeam() {
     <tr>
       <td style="font-weight:700;color:var(--tx);">${esc(m.first)}</td>
       <td style="font-weight:700;color:var(--tx);">${esc(m.last)}</td>
-      <td><a href="tel:${esc(m.phone.replace(/\D/g,''))}" style="color:var(--bl);">${esc(m.phone)}</a></td>
+      <td>${m.phone ? `<a href="tel:${esc(String(m.phone).replace(/\D/g,''))}" style="color:var(--bl);">${esc(m.phone)}</a>` : '<span style="color:var(--tx3);">—</span>'}</td>
       <td><span class="spec-tag ${SPEC_CLASS[m.spec] || 'spec-general'}">${esc(m.spec)}</span></td>
       <td>${m.role === 'Team Lead' ? '<span class="lead-tag">★ TEAM LEAD</span>' : '<span style="color:var(--tx2);">Team Member</span>'}</td>
       ${adminOn ? `<td><button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;" onclick="openMemberModal('${m.id}')">Edit</button> <button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:#f87171;" onclick="deleteMember('${m.id}')">✕</button></td>` : ''}
@@ -1647,7 +1734,7 @@ function renderMeetings() {
         </div>
         <div style="flex:1;">
           <div style="font-weight:800;font-size:.92rem;">${esc(m.title)}</div>
-          <div style="font-size:.7rem;color:var(--tx3);">${d.toLocaleDateString('en-US',{weekday:'long',year:'numeric'})}${m.time ? ' · ' + esc(m.time) : ''}</div>
+          <div style="font-size:.7rem;color:var(--tx3);">${d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})}${m.time ? ' · ' + esc(m.time) : ''}</div>
         </div>
         ${adminOn ? `<button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:#f87171;" onclick="deleteMeeting('${m.id}')">✕</button>` : ''}
       </div>
@@ -1787,6 +1874,10 @@ function toggleOnboard(stepId) {
   if (p.onboard.includes(stepId)) p.onboard = p.onboard.filter(x => x !== stepId);
   else p.onboard.push(stepId);
   save(); renderOnboard();
+  /* renderOnboard() rebuilds all twelve rows, so put focus back where it was. */
+  const boxes = document.querySelectorAll('#onboardChecklist input[type=checkbox]');
+  const idx = ONBOARD_ITEMS.findIndex(it => it.id === stepId);
+  if (boxes[idx]) boxes[idx].focus();
   refreshDash();   // v1 never did this, so the dashboard counter sat stale until an unrelated action
 }
 
@@ -1923,7 +2014,19 @@ function renderLessons() {
 function markDone(i) {
   const cs = getCS(curCourse.id);
   if (!cs.doneLessons.includes(i)) cs.doneLessons.push(i);
-  save(); renderLessons(); renderQuiz();
+  save();
+  /* renderLessons() rebuilds the whole list, which collapsed the lesson the
+     person was in the middle of reading and dumped them back to the top. */
+  const wasOpen = [...document.querySelectorAll('.lesson-item.expanded')].map(el => el.id);
+  renderLessons();
+  wasOpen.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('expanded');
+    const h = el.querySelector('.li-header');
+    if (h) h.setAttribute('aria-expanded', 'true');
+  });
+  renderQuiz();
   if (cs.doneLessons.length === curCourse.lessons.length && !cs.quizPassed) document.getElementById('footerQuizBtn').style.display = '';
   addActivity('Completed lesson: ' + curCourse.lessons[i].title);
 }
@@ -2181,6 +2284,7 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+if (loadWarning) flagStorage(loadWarning);
 document.querySelectorAll('.proc-card.open > .proc-head').forEach(h => h.setAttribute('aria-expanded', 'true'));
 renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard(); applyAdmin(); refreshDash();
 </script>
