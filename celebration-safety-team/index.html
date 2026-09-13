@@ -718,6 +718,22 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <tbody id="teamBody"></tbody>
       </table></div>
       <div class="empty-note" id="teamEmpty" style="margin-top:.8rem;">No team members yet. Unlock Admin and select "+ Add Member" to build the roster.</div>
+
+      <div class="card" id="adminToolsCard" style="margin-top:1rem;display:none;">
+        <div class="card-title">&#128295; ADMIN TOOLS</div>
+        <div style="font-size:.8rem;color:var(--tx2);line-height:1.6;margin-bottom:.7rem;">
+          All team data &mdash; roster, schedule, meetings, training records and onboarding progress &mdash; currently lives in
+          <strong>this browser only</strong>. Clearing browser data erases it. <strong style="color:var(--c);">Export a backup regularly</strong>,
+          and keep the file somewhere the team can find it.
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="exportData()">&#11015;&#65039; Export Backup (.json)</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">&#11014;&#65039; Restore from Backup</button>
+          <button class="btn btn-ghost" onclick="changePin()">&#128273; Change Admin PIN</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json,.json" style="display:none;" onchange="importData(this)">
+        <div id="backupStatus" style="font-size:.75rem;color:var(--tx3);margin-top:.6rem;"></div>
+      </div>
     </section>
 
     <!-- ══ SCHEDULING ══ -->
@@ -1034,6 +1050,10 @@ const ONBOARD_ITEMS = [
 // STATE
 // ════════════════════════════════════════════════════════════════
 const LS_KEY = 'ccssta_v1';
+/* Bumped whenever the shape of S changes. load() migrates forward; it never
+   silently accepts a shape it does not understand, because a half-understood
+   roster is worse than a visible failure. */
+const SCHEMA_VERSION = 1;
 let S = load();
 function defaults() {
   return {
@@ -1064,6 +1084,91 @@ function addActivity(msg) {
 function getCS(id) {
   if (!S.training[id]) S.training[id] = { doneLessons: [], quizScore: null, quizPassed: false, certName: '' };
   return S.training[id];
+}
+
+// ════════════════════════════════════════════════════════════════
+// BACKUP / RESTORE
+//
+// localStorage is per-browser and one "clear browsing data" away from losing
+// the entire roster, schedule and every training record. Until Phase 4 puts
+// this behind a real shared backend, an exported JSON file IS the backup
+// strategy, so it ships before anything else.
+// ════════════════════════════════════════════════════════════════
+function backupStatus(msg, color) {
+  const el = document.getElementById('backupStatus');
+  if (el) { el.textContent = msg; el.style.color = color || 'var(--tx3)'; }
+}
+function exportData() {
+  const payload = {
+    app: 'ccssta',
+    schemaVersion: SCHEMA_VERSION,
+    exportedAt: new Date().toISOString(),
+    church: 'Celebration Church — Safety & Security Team',
+    data: S
+  };
+  const stamp = new Date();
+  const name = 'celebration-safety-backup-' +
+    stamp.getFullYear() + '-' +
+    String(stamp.getMonth() + 1).padStart(2, '0') + '-' +
+    String(stamp.getDate()).padStart(2, '0') + '.json';
+  try {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    backupStatus('✅ Exported ' + name + ' — ' + S.team.length + ' team members, ' +
+      Object.keys(S.schedule).length + ' scheduled Sundays, ' + S.meetings.length + ' meetings.', 'var(--gr)');
+    addActivity('Exported data backup');
+  } catch (e) {
+    backupStatus('❌ Export failed: ' + e.message, '#f87171');
+  }
+}
+function importData(input) {
+  const file = input.files && input.files[0];
+  input.value = '';               // so re-picking the same file fires onchange again
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onerror = () => backupStatus('❌ Could not read that file.', '#f87171');
+  reader.onload = () => {
+    let payload;
+    try { payload = JSON.parse(reader.result); }
+    catch (e) { backupStatus('❌ That file is not valid JSON.', '#f87171'); return; }
+
+    /* Validate before touching anything. Restoring garbage over a live roster is
+       the one mistake this feature could make that is worse than not having it. */
+    if (!payload || payload.app !== 'ccssta' || !payload.data || typeof payload.data !== 'object') {
+      backupStatus('❌ Not a Celebration Safety Team backup file.', '#f87171'); return;
+    }
+    const d = payload.data;
+    const missing = ['team', 'leaders', 'meetings', 'schedule'].filter(k => !(k in d));
+    if (missing.length) {
+      backupStatus('❌ Backup is missing: ' + missing.join(', ') + '. Not restored.', '#f87171'); return;
+    }
+    if (payload.schemaVersion > SCHEMA_VERSION) {
+      backupStatus('❌ That backup was made by a newer version of this app. Update first.', '#f87171'); return;
+    }
+
+    const when = payload.exportedAt ? new Date(payload.exportedAt).toLocaleString('en-US') : 'an unknown date';
+    const summary = (d.team || []).length + ' team members, ' +
+      Object.keys(d.schedule || {}).length + ' scheduled Sundays, ' +
+      (d.meetings || []).length + ' meetings, ' + (d.leaders || []).length + ' staff entries';
+    if (!confirm(
+      'Restore this backup?\n\nFrom: ' + when + '\nContains: ' + summary +
+      '\n\nThis REPLACES everything currently in this browser:\n' +
+      S.team.length + ' team members, ' + Object.keys(S.schedule).length + ' scheduled Sundays, ' +
+      S.meetings.length + ' meetings.\n\nThis cannot be undone.'
+    )) { backupStatus('Restore cancelled — nothing changed.'); return; }
+
+    S = Object.assign(defaults(), d);
+    save();
+    renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard();
+    renderCourses(); refreshDash(); applyAdmin();
+    backupStatus('✅ Restored backup from ' + when + '.', 'var(--gr)');
+    addActivity('Restored data from backup (' + summary + ')');
+  };
+  reader.readAsText(file);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -1134,6 +1239,7 @@ function applyAdmin() {
   document.getElementById('meetAdminNote').style.display = adminOn ? 'none' : '';
   document.getElementById('leaderAdminNote').style.display = adminOn ? 'none' : '';
   document.getElementById('schedAdminNote').style.display = adminOn ? 'none' : '';
+  document.getElementById('adminToolsCard').style.display = adminOn ? '' : 'none';
   renderTeam(); renderLeaders(); renderMeetings(); renderSchedule();
 }
 
@@ -1188,11 +1294,6 @@ function renderTeam() {
       <td>${m.role === 'Team Lead' ? '<span class="lead-tag">★ TEAM LEAD</span>' : '<span style="color:var(--tx2);">Team Member</span>'}</td>
       ${adminOn ? `<td><button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;" onclick="openMemberModal('${m.id}')">Edit</button> <button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:#f87171;" onclick="deleteMember('${m.id}')">✕</button></td>` : ''}
     </tr>`).join('');
-  const changePinRow = adminOn ? '<div style="margin-top:.7rem;"><button class="btn btn-ghost" style="font-size:.7rem;" onclick="changePin()">🔑 Change Admin PIN</button></div>' : '';
-  document.getElementById('teamEmpty').insertAdjacentHTML('afterend', '');
-  let pinDiv = document.getElementById('pinChangeRow');
-  if (!pinDiv) { pinDiv = document.createElement('div'); pinDiv.id = 'pinChangeRow'; document.getElementById('sec-team').appendChild(pinDiv); }
-  pinDiv.innerHTML = changePinRow;
 }
 
 // ════════════════════════════════════════════════════════════════
