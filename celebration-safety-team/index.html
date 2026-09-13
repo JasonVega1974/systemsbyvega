@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!-- PRIVACY FENCE. This app holds a volunteer roster with personal phone numbers,
+     facility schematics, evacuation routes and team post positions. None of it may
+     be indexed. This meta tag is one of three layers; the others are a Disallow rule
+     in /robots.txt and an entry in .vercelignore that keeps the directory off the CDN
+     entirely until Phase 4 auth (or Vercel deployment protection) is in place. -->
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="description" content="Private training, onboarding and scheduling platform for the Celebration Church Safety &amp; Security Team.">
+<meta name="theme-color" content="#0a0e14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;7&#39; fill=&#39;%230a0e14&#39;/%3E%3Ctext x=&#39;16&#39; y=&#39;23&#39; font-family=&#39;sans-serif&#39; font-size=&#39;20&#39; font-weight=&#39;bold&#39; fill=&#39;%23e8a020&#39; text-anchor=&#39;middle&#39;%3EC%3C/text%3E%3C/svg%3E">
+<title>Celebration Church Safety &amp; Security Team Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #0a0e14;
+  --s1:    #111720;
+  --s2:    #182030;
+  --s3:    #1e2a3a;
+  --bd:    rgba(255,255,255,.08);
+  --bd2:   rgba(255,255,255,.13);
+  --tx:    #e8f0f8;
+  --tx2:   #8fa3bb;
+  --tx3:   #567090;
+  --c:     #e8a020;   /* accent gold */
+  --c2:    #f0b840;
+  --cr:    #cc3333;   /* alert red */
+  --gr:    #22c55e;
+  --bl:    #38bdf8;
+  --pu:    #8b5cf6;
+  --fh:    'Barlow Condensed', sans-serif;
+  --fb:    'Barlow', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--fb);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #0d0f14 0%, #12181f 100%);
+  border-bottom: 1px solid var(--bd2);
+  padding: .75rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,.5);
+}
+.logo-mark {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0c0c0c;
+  flex-shrink: 0;
+  border: 1px solid var(--bd2);
+  box-shadow: 0 4px 14px rgba(0,0,0,.5);
+}
+.logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.header-text { flex: 1; }
+.header-title {
+  font-family: var(--fh);
+  font-size: 1.35rem;
+  letter-spacing: 3px;
+  color: var(--tx);
+  line-height: 1;
+}
+.header-sub {
+  font-size: .68rem;
+  color: var(--c);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-stats { display: flex; gap: .5rem; align-items: center; }
+.hstat {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  padding: .3rem .65rem;
+  text-align: center;
+  min-width: 54px;
+}
+.hstat-val { font-family: var(--fh); font-size: 1.1rem; color: var(--c); line-height: 1; }
+.hstat-lbl { font-size: .58rem; color: var(--tx3); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.user-chip {
+  background: rgba(232,160,32,.1);
+  border: 1px solid rgba(232,160,32,.3);
+  border-radius: 8px;
+  padding: .35rem .7rem;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--c);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.user-chip:hover { background: rgba(232,160,32,.18); }
+
+/* ── LAYOUT ── */
+.app { display: flex; min-height: calc(100vh - 63px); }
+.sidebar {
+  width: 218px;
+  background: var(--s1);
+  border-right: 1px solid var(--bd);
+  padding: 1rem .6rem;
+  flex-shrink: 0;
+}
+@media (max-width: 900px) {
+  .app { flex-direction: column; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--bd); padding: .5rem; display: flex; overflow-x: auto; overflow-y: hidden; gap: .3rem; }
+  .sidebar-label { display: none; }
+  .nav-item { flex-direction: column; min-width: 82px; text-align: center; padding: .5rem .4rem; }
+  .header-stats { display: none; }
+}
+.sidebar-label {
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--tx3);
+  padding: .8rem .6rem .35rem;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .55rem .7rem;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--tx2);
+  transition: background .15s;
+  white-space: nowrap;
+}
+.nav-item:hover { background: rgba(255,255,255,.05); }
+.nav-item.active {
+  background: linear-gradient(135deg, rgba(232,160,32,.14), rgba(232,160,32,.05));
+  border: 1px solid rgba(232,160,32,.25);
+}
+.nav-item.active .nav-text { color: var(--c); }
+.nav-icon { font-size: 1rem; }
+
+.main { flex: 1; padding: 1.3rem 1.5rem 3rem; max-width: 1150px; }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .section.active { animation: none; } }
+
+.sec-header { display: flex; align-items: center; gap: .85rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+.sec-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem; flex-shrink: 0;
+}
+.sec-icon.amber { background: linear-gradient(135deg, rgba(232,160,32,.2), rgba(232,160,32,.08)); border: 1px solid rgba(232,160,32,.3); }
+.sec-icon.red   { background: linear-gradient(135deg, rgba(204,51,51,.2),  rgba(204,51,51,.08));  border: 1px solid rgba(204,51,51,.3); }
+.sec-icon.blue  { background: linear-gradient(135deg, rgba(56,189,248,.2), rgba(56,189,248,.08)); border: 1px solid rgba(56,189,248,.3); }
+.sec-icon.green { background: linear-gradient(135deg, rgba(34,197,94,.2),  rgba(34,197,94,.08));  border: 1px solid rgba(34,197,94,.3); }
+.sec-icon.purple{ background: linear-gradient(135deg, rgba(139,92,246,.2), rgba(139,92,246,.08)); border: 1px solid rgba(139,92,246,.3); }
+.sec-title { font-family: var(--fh); font-size: 1.5rem; letter-spacing: 2px; line-height: 1; }
+.sec-desc { font-size: .75rem; color: var(--tx2); margin-top: 2px; line-height: 1.5; }
+
+/* ── CARDS / GRID ── */
+.card {
+  background: var(--s2);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: .9rem;
+}
+.card-title { font-family: var(--fh); font-size: .82rem; letter-spacing: 2px; color: var(--c); margin-bottom: .6rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+@media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+.course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: .8rem; }
+.course-card {
+  background: var(--s2);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color .15s, transform .15s;
+  position: relative;
+}
+.course-card:hover { border-color: rgba(232,160,32,.4); transform: translateY(-2px); }
+.course-card.certified { border-color: rgba(34,197,94,.4); }
+.cc-icon { font-size: 1.6rem; margin-bottom: .45rem; }
+.cc-title { font-weight: 800; font-size: .92rem; line-height: 1.3; margin-bottom: .25rem; }
+.cc-meta { font-size: .7rem; color: var(--tx3); margin-bottom: .55rem; }
+.cc-bar { height: 5px; border-radius: 4px; background: rgba(255,255,255,.07); overflow: hidden; }
+.cc-fill { height: 100%; background: linear-gradient(90deg, var(--c), var(--c2)); border-radius: 4px; transition: width .3s; }
+.cc-badge { position: absolute; top: .7rem; right: .7rem; font-size: 1rem; }
+
+/* ── BUTTONS / FORMS ── */
+.btn {
+  border: none; border-radius: 9px; padding: .55rem 1.1rem;
+  font-family: var(--fb); font-weight: 700; font-size: .8rem;
+  cursor: pointer; transition: filter .15s;
+}
+.btn:hover { filter: brightness(1.12); }
+.btn-primary { background: linear-gradient(135deg, var(--c), #c8881a); color: #14100a; }
+.btn-success { background: linear-gradient(135deg, var(--gr), #15803d); color: #06130a; }
+.btn-danger  { background: linear-gradient(135deg, var(--cr), #991a1a); color: #fff; }
+.btn-ghost   { background: rgba(255,255,255,.06); border: 1px solid var(--bd2); color: var(--tx2); }
+.btn-ghost:hover { color: var(--tx); }
+.form-row { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .55rem; }
+.form-row label { font-size: .66rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); }
+.form-row input, .form-row select, .form-row textarea {
+  background: var(--s1); border: 1px solid var(--bd2); border-radius: 8px;
+  padding: .5rem .7rem; color: var(--tx); font-family: var(--fb); font-size: .85rem;
+}
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: 2px solid rgba(232,160,32,.4); }
+
+/* ── TABLES ── */
+table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.data-table th {
+  text-align: left; font-family: var(--fh); font-size: .72rem; letter-spacing: 1.5px;
+  color: var(--tx3); padding: .5rem .6rem; border-bottom: 1px solid var(--bd2);
+}
+.data-table td { padding: .55rem .6rem; border-bottom: 1px solid var(--bd); }
+.data-table tr:hover td { background: rgba(255,255,255,.02); }
+.table-scroll { overflow-x: auto; }
+
+.spec-tag {
+  display: inline-block; font-size: .64rem; font-weight: 800; letter-spacing: .5px;
+  padding: .15rem .5rem; border-radius: 6px; text-transform: uppercase;
+}
+.spec-police { background: rgba(56,189,248,.14); color: var(--bl); border: 1px solid rgba(56,189,248,.3); }
+.spec-fire { background: rgba(204,51,51,.14); color: #f87171; border: 1px solid rgba(204,51,51,.3); }
+.spec-medical { background: rgba(34,197,94,.14); color: var(--gr); border: 1px solid rgba(34,197,94,.3); }
+.spec-military { background: rgba(139,92,246,.14); color: #a78bfa; border: 1px solid rgba(139,92,246,.3); }
+.spec-general { background: rgba(255,255,255,.07); color: var(--tx2); border: 1px solid var(--bd2); }
+.lead-tag { background: rgba(232,160,32,.15); color: var(--c); border: 1px solid rgba(232,160,32,.35); font-size: .62rem; font-weight: 800; padding: .12rem .45rem; border-radius: 6px; }
+
+/* ── EMERGENCY / PROCEDURE CARDS ── */
+.proc-card { background: var(--s2); border: 1px solid var(--bd); border-left: 4px solid var(--cr); border-radius: 12px; margin-bottom: .7rem; overflow: hidden; }
+.proc-card.amber { border-left-color: var(--c); }
+.proc-card.blue { border-left-color: var(--bl); }
+.proc-card.green { border-left-color: var(--gr); }
+.proc-head { display: flex; align-items: center; gap: .7rem; padding: .8rem 1rem; cursor: pointer; }
+.proc-head:hover { background: rgba(255,255,255,.02); }
+.proc-icon { font-size: 1.25rem; }
+.proc-title { font-weight: 800; font-size: .92rem; flex: 1; }
+.proc-arrow { color: var(--tx3); font-size: .8rem; transition: transform .2s; }
+.proc-card.open .proc-arrow { transform: rotate(90deg); }
+.proc-body { display: none; padding: 0 1rem 1rem; font-size: .84rem; color: var(--tx2); line-height: 1.7; }
+.proc-card.open .proc-body { display: block; }
+.proc-body ol, .proc-body ul { margin: .5rem 0 .5rem 1.3rem; }
+.proc-body li { margin-bottom: .3rem; }
+.proc-body strong { color: var(--tx); }
+.proc-body a { color: var(--bl); }
+
+.tip-box { background: rgba(232,160,32,.08); border: 1px solid rgba(232,160,32,.22); border-radius: 9px; padding: .6rem .8rem; margin: .6rem 0; font-size: .8rem; line-height: 1.6; }
+.alert-box { background: rgba(204,51,51,.08); border: 1px solid rgba(204,51,51,.25); border-radius: 9px; padding: .6rem .8rem; margin: .6rem 0; font-size: .8rem; line-height: 1.6; }
+
+/* ── MAP PLACEHOLDERS ── */
+.map-slot {
+  border: 2px dashed rgba(232,160,32,.4);
+  border-radius: 12px;
+  min-height: 170px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .4rem; color: var(--tx3); text-align: center; padding: 1rem;
+  background: rgba(232,160,32,.02);
+}
+.map-slot.tall { min-height: 420px; }
+.map-slot .ms-icon { font-size: 2rem; opacity: .7; }
+.map-slot .ms-title { font-family: var(--fh); font-size: 1rem; letter-spacing: 2px; color: var(--tx2); }
+.map-slot .ms-note { font-size: .72rem; max-width: 420px; line-height: 1.5; }
+.aerial-frame { border: 1px solid var(--bd2); border-radius: 12px; overflow: hidden; }
+.aerial-frame iframe { display: block; width: 100%; height: 420px; border: 0; }
+
+/* ── SCHEDULING ── */
+.svc-col { background: var(--s2); border: 1px solid var(--bd); border-radius: 12px; padding: .85rem; }
+.svc-time { font-family: var(--fh); font-size: 1.25rem; letter-spacing: 1px; color: var(--c); }
+.svc-req { font-size: .66rem; color: var(--tx3); margin-bottom: .6rem; }
+.svc-slot { display: flex; align-items: center; gap: .5rem; margin-bottom: .4rem; }
+.svc-slot select { flex: 1; background: var(--s1); border: 1px solid var(--bd2); border-radius: 8px; padding: .4rem .5rem; color: var(--tx); font-size: .78rem; font-family: var(--fb); }
+.svc-ok { border: 1px solid rgba(34,197,94,.4) !important; }
+.svc-warn-box { font-size: .7rem; padding: .4rem .6rem; border-radius: 8px; margin-top: .5rem; }
+.svc-warn-box.ok { background: rgba(34,197,94,.1); color: var(--gr); border: 1px solid rgba(34,197,94,.25); }
+.svc-warn-box.bad { background: rgba(204,51,51,.1); color: #f87171; border: 1px solid rgba(204,51,51,.25); }
+
+/* ── PIN GATE / MODALS ── */
+.pin-gate-overlay, .modal-overlay {
+  position: fixed; inset: 0; background: rgba(5,8,12,.85); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center; z-index: 500; padding: 1rem;
+}
+.pin-gate-overlay.open, .modal-overlay.open { display: flex; }
+.pin-gate-box {
+  background: var(--s2); border: 1px solid var(--bd2); border-radius: 16px;
+  padding: 1.5rem; width: 100%; max-width: 340px; text-align: center;
+}
+.pin-gate-icon { font-size: 2rem; }
+.pin-gate-title { font-family: var(--fh); font-size: 1.2rem; letter-spacing: 2px; margin: .4rem 0 .2rem; }
+.pin-gate-sub { font-size: .74rem; color: var(--tx2); margin-bottom: 1rem; }
+.pin-dots { display: flex; gap: .6rem; justify-content: center; margin-bottom: 1rem; }
+.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--bd2); }
+.pin-dot.filled { background: var(--c); border-color: var(--c); }
+.pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: .45rem; }
+.pin-key {
+  background: var(--s1); border: 1px solid var(--bd2); border-radius: 10px;
+  padding: .7rem; font-size: 1.05rem; font-weight: 700; color: var(--tx);
+  cursor: pointer; font-family: var(--fb);
+}
+.pin-key:hover { background: var(--s3); }
+.pin-error { color: #f87171; font-size: .74rem; min-height: 1.1rem; margin-top: .5rem; }
+
+.modal-box {
+  background: var(--s1); border: 1px solid var(--bd2); border-radius: 16px;
+  width: 100%; max-width: 780px; max-height: 90vh; display: flex; flex-direction: column;
+}
+.modal-header { padding: 1rem 1.2rem .6rem; border-bottom: 1px solid var(--bd); }
+.modal-top { display: flex; align-items: center; gap: .8rem; }
+.modal-course-icon { font-size: 1.7rem; }
+.modal-title { font-family: var(--fh); font-size: 1.25rem; letter-spacing: 1.5px; line-height: 1.1; }
+.modal-meta { font-size: .7rem; color: var(--tx3); }
+.modal-close { margin-left: auto; background: none; border: 1px solid var(--bd2); color: var(--tx2); border-radius: 8px; padding: .35rem .7rem; cursor: pointer; font-size: .74rem; }
+.modal-close:hover { color: var(--tx); }
+.modal-tabs { display: flex; gap: .4rem; margin-top: .7rem; }
+.mtab { background: none; border: none; border-bottom: 2px solid transparent; color: var(--tx3); font-family: var(--fb); font-weight: 700; font-size: .78rem; padding: .4rem .6rem; cursor: pointer; }
+.mtab.active { color: var(--c); border-bottom-color: var(--c); }
+.modal-body { padding: 1rem 1.2rem; overflow-y: auto; flex: 1; }
+.modal-panel { display: none; }
+.modal-panel.active { display: block; }
+.modal-footer { padding: .7rem 1.2rem; border-top: 1px solid var(--bd); display: flex; gap: .5rem; justify-content: flex-end; }
+.admin-modal-box { background: var(--s1); border: 1px solid var(--bd2); border-radius: 16px; padding: 1.3rem; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+.admin-modal-title { font-family: var(--fh); font-size: 1.1rem; letter-spacing: 2px; color: var(--c); margin-bottom: .9rem; }
+
+/* ── LESSONS / QUIZ / CERT ── */
+.lesson-item { background: var(--s2); border: 1px solid var(--bd); border-radius: 11px; margin-bottom: .55rem; overflow: hidden; }
+.lesson-item.done { border-color: rgba(34,197,94,.3); }
+.li-header { display: flex; align-items: center; gap: .7rem; padding: .7rem .9rem; cursor: pointer; }
+.li-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(232,160,32,.14); color: var(--c); display: flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 800; flex-shrink: 0; }
+.lesson-item.done .li-num { background: rgba(34,197,94,.15); color: var(--gr); }
+.li-title { font-weight: 700; font-size: .87rem; flex: 1; }
+.li-check { color: var(--tx3); font-size: .75rem; }
+.li-body { display: none; padding: 0 .95rem .95rem; font-size: .84rem; color: var(--tx2); line-height: 1.7; }
+.lesson-item.expanded .li-body { display: block; }
+.li-body p { margin-bottom: .5rem; }
+.li-body ul, .li-body ol { margin: .4rem 0 .6rem 1.3rem; }
+.li-body li { margin-bottom: .3rem; }
+.li-body strong { color: var(--tx); }
+.li-body a { color: var(--bl); }
+.mark-done-btn { display: inline-block; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.3); color: var(--gr); border-radius: 8px; padding: .35rem .8rem; font-size: .74rem; font-weight: 800; cursor: pointer; margin-top: .5rem; }
+.quiz-q { background: var(--s2); border: 1px solid var(--bd); border-radius: 11px; padding: .85rem; margin-bottom: .65rem; }
+.quiz-q-num { font-size: .64rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tx3); margin-bottom: .3rem; }
+.quiz-q-text { font-weight: 700; font-size: .89rem; margin-bottom: .6rem; }
+.quiz-options { display: flex; flex-direction: column; gap: .4rem; }
+.quiz-opt { text-align: left; background: var(--s1); border: 1px solid var(--bd2); border-radius: 9px; padding: .5rem .75rem; color: var(--tx2); font-family: var(--fb); font-size: .82rem; cursor: pointer; }
+.quiz-opt:hover:not(:disabled) { border-color: rgba(232,160,32,.4); color: var(--tx); }
+.quiz-opt.selected { border-color: var(--c); background: rgba(232,160,32,.1); color: var(--tx); }
+.quiz-opt.correct { border-color: var(--gr); background: rgba(34,197,94,.12); color: var(--gr); }
+.quiz-opt.wrong { border-color: var(--cr); background: rgba(204,51,51,.1); color: #f87171; }
+.quiz-submit-row { text-align: center; margin-top: .8rem; }
+.quiz-result { text-align: center; padding: 1.4rem .8rem; }
+.quiz-score-big { font-family: var(--fh); font-size: 2.6rem; }
+.quiz-score-big.pass { color: var(--gr); }
+.quiz-score-big.fail { color: var(--cr); }
+.cert-locked { text-align: center; padding: 2rem 1rem; color: var(--tx2); font-size: .85rem; }
+.lock-icon { font-size: 2.2rem; margin-bottom: .6rem; }
+.cert-wrap { text-align: center; }
+.certificate {
+  background: linear-gradient(160deg, #fdfaf3, #f4ecd8);
+  color: #2a2418; border-radius: 12px; padding: 2rem 1.5rem;
+  border: 3px double #b9962f; position: relative; max-width: 560px; margin: 0 auto;
+}
+.cert-brand { font-family: var(--fh); font-size: .95rem; letter-spacing: 3px; color: #8a6d1d; }
+.cert-title-main { font-family: var(--fh); font-size: 1.7rem; letter-spacing: 3px; margin: .5rem 0 .2rem; }
+.cert-course-name { font-size: 1rem; font-weight: 800; color: #6b5310; margin-bottom: .8rem; }
+.cert-name-line { font-size: .74rem; color: #7a6c4a; }
+.cert-recipient { font-size: 1.5rem; font-weight: 800; border-bottom: 2px solid #b9962f; display: inline-block; padding: 0 1.5rem .2rem; margin: .3rem 0 .7rem; min-width: 200px; }
+.cert-score, .cert-date { font-size: .76rem; color: #7a6c4a; }
+.cert-seal { font-size: 2rem; margin-top: .5rem; }
+.cert-print-btn { background: #2a2418; color: #f4ecd8; border: none; border-radius: 8px; padding: .5rem 1rem; font-weight: 700; cursor: pointer; font-size: .78rem; }
+@media print {
+  body * { visibility: hidden; }
+  .certificate, .certificate * { visibility: visible; }
+  .certificate { position: fixed; inset: 0; margin: auto; height: fit-content; }
+}
+
+/* ── MISC ── */
+.stats-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+.stat-pill { background: var(--s2); border: 1px solid var(--bd); border-radius: 999px; padding: .35rem .85rem; font-size: .74rem; color: var(--tx2); font-weight: 700; }
+.empty-note { text-align: center; color: var(--tx3); font-size: .8rem; padding: 1.6rem 1rem; border: 1px dashed var(--bd2); border-radius: 12px; }
+.res-link { display: flex; gap: .7rem; align-items: flex-start; background: var(--s2); border: 1px solid var(--bd); border-radius: 11px; padding: .75rem .9rem; margin-bottom: .55rem; text-decoration: none; color: inherit; }
+.res-link:hover { border-color: rgba(56,189,248,.4); }
+.res-icon { font-size: 1.15rem; }
+.res-name { font-weight: 800; font-size: .85rem; color: var(--bl); }
+.res-desc { font-size: .74rem; color: var(--tx2); line-height: 1.55; margin-top: .1rem; }
+.res-org { font-size: .64rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); margin-top: .2rem; }
+.admin-bar { display: flex; align-items: center; gap: .7rem; background: rgba(204,51,51,.07); border: 1px solid rgba(204,51,51,.2); border-radius: 12px; padding: .7rem 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.admin-status { font-size: .76rem; font-weight: 800; }
+.verify-tag { font-size: .62rem; color: var(--tx3); }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAAEBCAYAAAAXeBv5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAADjOSURBVHhe7Z15mFXFmf+/dZa7dDc00I1sNhiIrCIaRzE6aoJLNI8aNUoS4xjckqiJmuCSUWfUmHlGdBxDBpMYRRwjGk2YGEeNCI4LPzcUFQXbZmlEaBEaaejlLufec+r3x623qD6c2/bt7Zxu6uNTdnO7zrlnqW+9VW+9VcUmTJjKUSIbN37o/0ij0ZSA4f9Ao9H0Plp4Gk0IaOFpNCGghafRhIAWnkYTAlp4Gk0IaOFpNCGghafRhIAWnkYTAqwrkSv19bX+jzQaTQloi6fRhIAWnkYTAlp4Gk0IaOFpNCGghafRhIAWnkYTAlp4Gk0IaOFpNCGghafRhIAWnkYTAlp4Gk0IaOFpNCGghafRhIAWnkYTAlp4Gk0IaOFFAM4LUyJN0wTnHIwxGIYBxhgYYzIP5xyGYcAwDJimCcaYzG/bNjjn8mcsFpPn1UQPLbwQIBFRos9c1wWEAEmEnufBNE3Ytg3LssAYg+u6UnCUOOcwTVOeI5/Pw7btdt+riQ5aeH2M3wqRcCoqKpBIJGDbNlzXheM4ME0TyWQStm3D8zzk83m4rovy8nLYti0FR+f1PA+u68KyLNi2jXw+3+67NNFBL/0QAn5rpTYpyaIZhtFOpJxzWJaFRCKBmpoaDBs2DNXV1aioqIBt28hms7AsC62trXjxxRexZ88eWJaFbDarfLMmKmjhhQAJTe3Hua4rBWeaJvL5PEaOHInJkyfjsMMOw/Tp0zF58mTU1NTANE3E43FYlgUAyGQyMAwD8Xgc69evx5w5c1BXVwcAcBzH9+2aKKCF1wuoTUAA0npx4Rwh60a/e56HKVOm4KCDDsKRRx6JadOmYfjw4aisrERVVRUGDx4M0zTl+agf53keGGPS0ZLJZFBfX4/zzjsPW7duRS6Xk9+liRZaeCUSVJDJsWEYBnK5HAAgFovBsiyk02lwzpFIJOB5nnSimKaJSZMm4bTTTsMxxxyDSZMmobq6GvF4vJ1Q1SYo/fQ8r9330+eO42Dz5s04++yz8cknnwABfUpNNNDC60HI+lBh9zxPCpAxhuHDh2PixImYOXMmTjnlFMyYMUOKlTyS+XwesVgMpmlKofrFFwQJ7+OPP8Y555yDTz75RDpcNNFDC68HoKYlYwyxWAz5fF42KznnmDlzJubMmYOZM2eiqqoKgwYNAmNM5ovFYu1ExUSfzy+4LxJeNpttJzwozVJNtNDDCSXCAryRTDhKSGixWAxjx47FmWeeiSVLlmDp0qWYPXs2xo4di8rKSulAicfjSCQSYIwhl8tJIebzedl09YuumPioaar+rpuZ0UVbvBIhT6IKjZnF43EcccQROP3003HyySdjwoQJMo/aZKTfSahu3oVlW3KwXBWMehz9LNZ8zGaz7fp4WnjRRVu8ACtC1oIxJoVGv9MANX3GRDPzuOOOwx/+8Ac8+OCD+OEPf4gDDzyw3TlV8ZA1k+e1C+cjIQYdB1/YmCpeugbC3zfURA8tvADPHxVoAMjlcu2akYZhwHEceJ6HsrIynHTSSfj1r3+N++67D6effjqGDh0qnSoaTTG08Hz9I/9nFO/IxZAAifDwww/HvHnz8Mgjj+CCCy7AiBEjkM/nwRhDPB6XY2xBSaPRwlMg8ZHFozE1z/OQSCSQzWZx0EEH4Ve/+hUeeughnHfeeYjFYkilUu3y0/CAX3BadBpCCy8AEp7jOHBdV1q6Cy+8EC+//DJ++tOfYvTo0XAcB0wEODMxjkYBytqNr+kILTwxDQeKx5L6c7FYDOXl5Tj++OPx4IMPYt68eUgkEnLmQHl5OQDAdfPwuIdYPAawwr9t2wLAeyVxeCgYT+UzDjBugnsM3GNgMMBgANBWNopo4YnhAKYMglMUyaBBg3Dddddh4cKFOP7442HbtvQi0k8IoRZ8MR4AD4bJAMZ7LfGCyoSmODg4wBnATXCXwXMBBrPwejnT4osgWnjCc2lZFizLgikmoc6aNQu//e1vcdVVV6G8vBxlZWVScNR/M1jB0aL7bppS2W+FR95JwzBg2zZisRhc18WIESPwwx/+EIsWLcIpp5wi57lBhF+pIuMoxEL6PaIazRexXwqPxEMWDMLqjR07FrfeeituueUWDBkyBACQSCQAMShtWVY7wRJadppS2S+FByXqhIlpNrNmzcKjjz6Ks88+WwrSEEMJlJ/mt1GiPLqpqSmVLgmPBpejkoKgfhjBhNNE9s9EXy2RSODKK6/E/PnzMWPGjHbxkqZYZMg0Tbnsgv+7OedAkWvob/jvS6feS10SXn/A3/dSrRQ5SuLxOG6++Wb88z//M6qrq5HL5ZBMJmXUiUbTWwx44XElmJj6ZZ7nYdSoUbj77rtx8cUXo7y8XFo1ykdjexpNbzBghaf2xaA0oxhjGD9+PObNm4fzzz9f9uNoRS4KiqYlHDSa3mDACk91epDoXNfF2LFjMX/+fJxxxhlobm6GJ9aiZIwhkUjI2eC6qanpTfq98Pzios/IQULNS9M0cfTRR2P+/Pk44ogjkM1mUVlZiUQigXg8DogmKC0aa1pmIRiks2mfwK7eS2AMYEwEj/FCcIqmX9El4anNuLBTEEysfWJZFjjnGDx4MIYPH457770XRx55pPy7K5ZCpyYoUyapcr5vgY9KEncJDhSEp3zaHfzPVqfeS10SXlRhihBTqZScpjN+/Hg8/PDDmDBhApLJpBQkF0MGGk1fM2CER306alomk0m0tbVh2rRpuOuuu/CVr3xFNiU9z5OeS1WsGk1fMWCER6IjIaXTaYwbOxY33XQTjjzySLlmJQ2iQ/Tp9Lw5TRgMGOFB6aMABWfLHfPm4cQTTwSERaQJrWp+9d8aTV/RL0sd9c8o0UrNplh9uaqqCvfddx++9rWvyS2u4vG4dKKo3s+Bgqd4deGrhDTRo18KT4WJIGeKsQSA888/H2eddRZisRiy2axcfGggWzcGEpoWW3+gX5bEoNp88ODBcBwH06ZNw89+9jM5jkdbEtMKYAMVeiaFIb6Be58DhX4pPCj9Mxp327NnDw4//HA89thjqKyshCl2U6XmJY3bDVT2VkZadP2BfiU8f9+MKXt/DxkyBDfeeCMOPPBAGSBNnkwqlAN5zI4ZgGG0t3hqn08TLSIrPHKcEH6xFaJLCj/z+Tz+/d//HUcffbS0bDSPrqysTIqwlILIsM8aQ8VTH//nicm53OVgnMGAAYDD5Tm4PA+OPAyTgXO3cIE9FNmi6TkiK7xiGIYByyps8EGrPJ9xxhk477zzYNs2crmcjFhR6Yq1o4bbFyYOMM76LFmGBQMGLNOCyUzAAxgD4gkb8YQlLsgDh6dFF1H6lfDUUC+ybOPGjcP1118PQ6zkTE3PgYzjOMjn83LBXYg1Y/L5vNzYkloDmmjSr96MIVYEsywL8XgcsVgMc+fOxZQpU9Da2iqdKKU0KaMMVTL+RIKiJnQ6nZbDKZxzxONxudeeJpr0K+E5jiMLXSqVwjnnnIMLLrgAjDFUVVUhl8vtswRff8cvOkrq313XRVNTEz777DM0NDQgl8uB7weWvz8T2Y0pqXCpThXq29FOqn/5y18wdepUlJeXI51Oo6ysDC0tLaisrBwQtb1fZERzczO2bduGdevWYf369Vi/fj0aGhqwfft2NDc347PPPoNpmshkMgOqEhpIdFt4QQWj2MsuJW/Q5+Q8KS8vxy9/+Uucf/75KC8vl1Ephm/WeRThvp1hCfLWQgRvk+fS8zw0NTWhvr4er7zyCl5//XVs3boVTU1NaGpqkhun+M/XFYKOD3oPKJK3GMXO0V2CriHou4LyoUjeYhQ7RxBB5/UfH1nhEcwXpWKaJk4//XT8/ve/R3l5OVpbW5FMJmEq22KhyHdFARKYGsJG/TNqKificexobMRbb72FZ599Fq+//jp27tyJXbt2yfvioq9H90tjl90h6Phi7ycobzGKnaO7BF1D0HcF5UORvMUodo4ggs7rPz6ywuPKrHBKtm1jyJAhmD9/Pk499VR4Yhk+Ep3qdIgq5IUkRwiJjRwiO3bswIsvvoi//OUvWLlyJVpaWmAYhjxuyJAhSKfTcokKCKcTL9IsLYWg4zt6P52l2Dm6S9A1BH1XUD4UyVuMYucIIui8/uP7lfA45zjzzDPxu9/9DuXl5eBix1bKqx4bVeg+stksIJrPALB582bceeedePvtt9HQ0IDdu3dL5wiJirZ3zuVystLx33t3CHpuxc4dlLcYxc7RXYKuIei7gvKhSN5iFDtHEEHn9R8fWa+mv7/meR4qKytx8cUXy8WJXNdt18fpD3DOpXfWtm18+OGHuP/++3Haaadh8eLFqK2tRVtbG0yxijVVOrFYDLlcDo7jAGJMk3Y30vQ/umTxNm780P9RlykmGqrNqYACwJVXXolf/OIXSCaTyOfzcq5dFAofXS9Bv7uuC8uy4DiOnKYUi8XQ0tKCp556CosWLcKaNWvkOKR6LP3u7wuSBST8390ZSs2v6Vkia/GocFGhGzNmDM477zw5t46aWlGECjW58xsbG2HbNrLZLFzXRV1dHS677DJcfvnl+OCDD5BOp+VxftHB5+UMijn1//uLKDW/pueJrPCoieV5HjKZDL7xjW9g4sSJsgkai8VkYYwCVJjVn1RJDB06FKlUCo7j4IknnsAPfvADPPPMM6ioqJDNSs3+RaSFR968WCyGOXPmgImtsky59mVh2YeoQBaLxEcrmpHl+9WvfoVrrrkG69evRzwex549e2Capuy3afYfIis8KsDxeBzf+c53MGXKFJimKT17ruvCjFAQsCo4+p2JHYk2bNiA7373u3jwwQfBhXPFcRy57Rf1YTX7D9EpuT4MsZlIWVkZ5syZA8/zkM1m5UCxaZpghhE5a0Hig7iHF154AVdccQVeffXVffpqmUwmUs1lTd/RJeFR/6snE2GI5RzIEhx33HE45JBDYBgGkslku2EGANIC9hWqsKB4ZcnKkfPD8zy88MIL+MUvfoHVq1fLioPyqvddbGci/zPyP6uu4j+fTn2fuiS8viKXy+GCCy6QMZqsBwpdd/FfA1msbDYLxhgcxwHnHEuXLsVFF12Ejz76SO5CRB5ajSayJcEwDEyZMgWHHHII4vF45PpBZOG4WMEsmUwil8vBtm2sWLEC1113HZqbm2GaJlzXRWtrq25WaiSRFR4AnH766RgxYgRYFwaIexO6FmpSMsbQ3NyMWCyGN998E9dffz0+/fRTGGI9GIquofwaTWSFV1VVhdmzZ8s+XJSEhwAvpmEYqK2txc9//nOsX7++XbOSgrijdg+a8IiM8JhvdsFxxx2HKVOmtIvmp3yEWvj7CtVqccWZ4jgO7rnnHqxfv146h8gDS95M6lhrNKELT3WxW5YlvZpTpkyRv5O1iEKhpWvIib3SKdxr0aJF+Nvf/ibvoVizsq8rCk00CV14UOamua4rl+c75phj5N8QoQLb1tYGCAF6nofBgwfjySefxH/8x3/IMcVMJhOZ69VEk0gIj5phpti7bubMmZg6dSpc1wUTS5JHxRVP4Wpk1RoaGvBf//VfcqWvdDotPZkaTTFCL820xRZjDNlsFrZt48QTT8SQIUPgeR5cr9CHikIzE2LialtbG2zbRiaTwaJFi/D222/LiiEWiyGfz0cqhlQTPUIXHjkgmIhrHDFiBM4880wZoUKWI6i/FAYUL+q6LlatWoX58+cjHo/DFfs0kOjy+bz/UI1G0iXhkTex1BQENTNpAdaRI0di9OjR4MJFT5aD+nphQxNwW1tbsWDBAphikaK82ByFiwH1YvifiU77Z+qS8HoaLtYT8TwPkydPjozIgqB4y+XLl2PZsmVobW3t83hRTf8ndOGpFi0Wi2HmzJn+LKHhr6W4mKa0detW3HHHHfDEUgyZTMZ/qEbTIaELD6KAU5zjlClTOmyq9RV+wVFijOHFF1/EmjVrwEXzOSqOH03/IXThua4rhxHi8TjGjh2LRCLhzxYZ2tra8Mwzz8ghBdd1IzPUoek/dKnEkPu/1ARfmBdTFqPlnOMf/uEfUF1dXXC4mAaYwQDGwBk6TIU94DqRGAfvZIJRuD7HcZAX61gahoGPPvoIr7zyCqCsiUn30xn8z0Sn/TN1SXg9CRMRIK7rYvLkybBtGxxcCE6Ibl8JyUSC6kwq5T8IQVmWBTsWg2VZyOVyWLRoEVKpFDzPk55MjaZUQhcelPUip0+fXrB2IlolTKg/Z4glKDzPwwcffIAlS5a0s3SxAbQfn6bvCF14ZFWqq6sxdepUWeDDRr0OGsR/4YUXpLWD8MhSAIBGUwqhC4+s3fjx43HAAQcUCnEEhMeMvfPnuJj2s2rVKpjKcnwUqRKFikLTvwhdeFxEqIwYMQLJZBIAItDQBBj2TkXinGP37t3YuHEjXLEkO3kyueIs0mg6S58Kz+/ZoT6U4zg44IADUFlZWSjQUVCeaGIyEUO6atUqbN26FUwsqkvOFehxPE0X6FPhBeGJtTPHjh0r/x0F5wrEcAHnHE7Wwfvvv4+WlhZ/Fo2mS4QuPAgnxahRo2TTzotA042cJrlcDhwcGzdu1APlmh4j9JJEESBVVVXI5/MiGiT8kDG1OdzW1ob6+np/Fo2my4QuPIoIqaqqkhYvCn0mugbDMPDpp5+irq5OzyrX9Bh9KjzV+8eVVbgSiQQqKipkU85gBgywgLRPMAqYP36sg8Q4Qyn/AYDjONi0aRMymYwct4PPImo0pdKnwguCmpoUKM1ECBkTwwpqAg/4DAjIWTwxEuAXJDdfWHLCMAxs2LAB6XRaDxtoeozQhWfbtlybMi/2kyv089x9EoVu9UVSx+nq6uq0Y0XTo4RemmizD8YYLMtqN2gdZqI1VBzHkeN3UZ4Zr+lfsAkTppbcfqqvr/V/1GUsy8LYsWNx55134sADDwQX23MFTYbty/4UF83KVCqF66+/Hm+99RYMsaSfRtNdQhceFxH+Bx54IFzXRTqdRiKRkGubqPSl8KDsedDY2AjLspBKpfxZND0MtXYGOl0S3saNH/o/6hTFhKNuwWWaJrLZbLcffrHji12DH2r6Un/PMAy5l3kQxb5PE0yx52hZ1j6z+osN4/TlMycHoP9agq4h6DM/oQuPiwWEstksYrGYjPwPWrkr6HgU+dwrsg5nUN6gz8ihw8W2z9QEDrLE6OTD1uwl6JmT6KgvTZuR0oJYfrr7zEtxmNFWa0z09bkyHOYn6DM/oQsPAOLxOBzHQTweB4RogvY2p6afnyCRFbv5oOOD8tIDVh8uF46XIIp9rgkm6D0w0cyMxWJyUxjTNAP7+z1BKe+M/A50jUxZbNlPZ84buvDoQdfU1BTWNxErMQflDfqsVILOUewzuraGhga5hF93HrZmL0HPHKKlY9u2jN2lmSB+ih1fCqWcw7IspNNpDB06FBs2bACERQ5670Gf+QldeAAwbtw43HPPPRg9enRhjRPbDrR4xQhqMhS7+aBrCPqMi3HF1tZWXHvttXj33XelGIMo9rkmmKBnDlHAp06dinvuuQfl5eVgyr6Jfii6qMuUcDgTe3vs3LkT1113Herq6vxZJJ0pC10SXle9muSOpwujhz9u3Dg89dRTmDBhQrs2vp/O3FBXCDovY0xut3X22WfjjTfekH0OTc+glgP1uZ544ol47LHHkEwmkc/nA8uDWo66SmffJX2XbdvYsGEDzjrrLGzatMmfrSSCq5I+hCv7iKNIfy0sDLF3w+jRo2GK7bk0PY8qQM45qqurZX++mGMFimC7moLw/029NurjUXej2Dk6Q5+WJL+1owv3/14M/4PrzcSVFcQOOeQQ6dXS9B5UsX35y1+GJZZT5MqMFTWR46U7yX9O//n9Px3Hkf/uLn0uPBW6Add14TiOfMj+fGFBL2HixImRuq6BCo2ZTpo0CRDlpVgrwy+U3k7UTcrn83DFujusGwIMvqteJMjiOY6DVCol+3fFCrj/YfR2gqiFx48fL71smt6Dc46qqiqMHz8ehghaQJH3Tvm7k+g71KR+h2rt6DrS6bQM8OhOt6hPhccDCi4TbedUKhX497Bgoi1vGAbGjBmDcePGRer6BhJqJTdmzBiMHDkSEBaw2PBNX0NlobW1FXmxl2N36JLw/DWHPxVDranooXJhvnfs2AHzCwZL/d/TUykIdWpQIpHA6NGjizZ74Oub+s+vU3BS4aJMHHzwwRg0aJD8rKNn3l3816Nek/9zxhgSiQQaGxvhiilq6jtX6UxZ6L27KoG2tjZs3bpVRomYAe7jsKAmCK2Cpul51EKv7hbV3X5UT0LNz61btyKTyXS7jIYuPHq4n376qfQ0daft3FNQTUv79h155JGorKz0Z9P0IIMHD8Zhhx0GQzgyulu4exJXzM/csmWLbP6qFrJUQhcehPg++eQTZLPZDp0rfQ0VAAA45JBDUFNT48+i6SZkSahVcfjhh/dIwe5pqBv02WefIRaLyZZQV+n6kT1EXuw/sGnTJjQ1NcmXEDZczEI3xDIUo0aNwoQJE/zZNN2ARGeaJizLwrhx4zBq1Ci5KkEUWj4qzc3NskvUkS+iM/R5CaeHDV/Hc8uWLWhsbJQPW50VQHn7Eq5s05XJZBCPx3HooYcCwhLati0tIvON8an3qCk+HGAId71lWcjn85gxY4aM1e1uwe4qaplUEwBs374d69evl3HExcokld1if0cYwvNDFqWpqQm1tbWyIIeN2sejzv5JJ52EESNGtKscomCd+yPqO85kMhg6dChmzZol/xa1yosJx8rOnTtlGe3O9YVeahhjiIkdVz/44AMwEZwcBZiwZDQlZMaMGTj33HPlA2dKRIOmNLhwnriuC9u28a1vfQszZswAIio8zjk++OADGCJ+F92MKw5deFyM1ViWhXfeeafD8ZG+homdgriI2zRNE7Nnz0Z1dbX0dkZlgLe/QZVaMplEeXk5LrzwQrnqQHcdF72B67pYsWIFYrEYPM9DeXm5P0tJROLustksHMdBXV0dGhsb5Uz0sMnLvRxc+cAnTpyImTNnyjxUcWhKwxSz+xljOPbYYzFp0qR9WhJRak18/vnnWLt2LXK5HFzXRS6X82cpidBLDBVa0zSRSqWwZcsWGTAdNtTBVyMVYrEYZs2ahXg8DlfElkbFQvcH6FnRs0ulUjj11FPlMFJUnqW//G3evBmpVAqmacK2baTT6XZ/L5VeER55dPwpCGrLm6aJdDqNtWvXyn3p1DxhWBVyqpAFpubRaaedhi996UvgYqEmLvoraqGh+/KngYz/XtV7JlH5PZnTp0/HiSeeiIqKCuTFpFd6zmEIkSpYtcxyzrF27Vp4YpXxYmW5FPq+NPsgq+I4DnK5HF577TU570mlJ262J7AsC2PGjMFdd93VroKgQkYvrDsd7/2BRCIBwzBw2223oaamRlZiYUNCJwcKxROvXLlSBkj3BKELD+JmqaZZt26d/8/tap+woRdxzDHH4Otf/zqy2WykYgr7C6lUCieffDKOP/54cBGsEIXKisoZWTfTNOE4TruNSXviOkMXHomKC7f9tm3bsHHjRmnSoyQ6KOt9cs5x1VVXyVnqUbrG/kAikcBll10mvYNR8hBzZc1Mxhg2btyILVu2yAq2J9516MJjYt4b1Xrbt2/H0qVL27Wn1b5C2LgijMwwDBx++OG4+uqr5RIF6rX6m8qa9lxyySU45phj5DvO5XKyeRclHMfBypUrZagY9VG7Wx77tHSoFkxNFKtHbvs/Pf4n7GneDSeXBWMAGIeTywLw/LtSAuh+7VMM1ZLRw1avM5FI4NJLL8U//uM/YtCgQVJs9HLU40iM6otTU3/Df/1B96BWRJZlYciQIQCAr371q7j11ltRXl4um3NmRGYimKaJ5uZmWJaF1tZWtLa24m9/+xvgW12c7tdflqm8fBF9KrwgmOjfUTMjnU5jU/0mrFnzAcrKypB38wA4DIOJdRBJbCLt+757HRIQABx44IG46KKL5L4Ktm3L5qi/MJbyYgYCdP+WZSGRSMgNaS699FK5X4b/GYVNNptFZWUlPM/DsGHD8OGHH+LNN9/s8euMhPCoMFIburW1FW+++SZcEU60e/ceGEY0pgsZYlDXdV0YzEBLSwvOOOMM3HzzzTAMA56IXCdnkUoUrr8vUK0gVVDpdBr5fB7XXHMNTjvtNPl3f/6wIU+1KwbJV65c2e0xuyBCFx5XIj/I6lm2hbffXkU5UFZWBs9zEYp580GCyuVysGMF62aaJi6//HKce+65KC8vl+NRUGr0/UV0hF9I8XgcZ511FubOnYtkMtkuTxQERzCxoBG1alauXNkrwxyhC0+FahrPdfHWW2/ho49qkc8X+lOu6xX6eyHDRH/FFjsHGYaBeDwOxhjmzp2LIUOGoKysrF0/gNhfxEdiMkQMrud5GDduHK699lpYYr1MejbqT//zCgPqvwPAhg0b8Prrr/fKvoiREB6Ni5CThQPYuXMnnnjiCbhuHs3NLTAMA67rwV92wyjMjuPI0CGy1pxzTJo0CY888giqqqqQSCRkFIYltpge6NA9cuEwo6b3qFGjcO+992L69OnIZrPF+3cReEb0PrPZLBYvXoxdu3bJ7kVP0iXhqU2E7iY6H5Tl3LhXuMnnn1+G7dt3YPDgQQULQi9XPAMu/Ct9DfUDmKjVPc+TsZszZszA7373OwwfPhye58l+q23bKCsrA4o4WfzPJeqJ7kFNUIKf6Z5GjhyJ3/zmNzjqqKPkc6JzqHDOw3iV8to9ZfjKNE00NjZi+fLl4GJ8mf6mHoduvLcuCa9P4MCmTfVYtWoV2tpapSUEfC8o/NYJoFhtxhiOPvpo3H333Rg8eDBMsVZHPp+XSxoQ/kLb3zEMQ86tLC8vR0VFBe655x6cdNJJ4F5hGccoDR0EQUMG7733HtauXStaWj0/sB9N4THAtAov59FHF4v4OA7PK4yhkJmj2iNsTNNELpeDKcKLTNPEySefjAceeAA1NTWwbRuDBg1CIpEAF86kqFx7V/HX4ExY9Xw+D9u2MWTIEDz88MOYNWsWOOfIOoWFrKBYiyjCxETsRx99FPF4HIZh9Fh8pko0hSfElclk8eabK9HQ8Kkw9WrzsrA7Wrf3SOshkslkoQkhHAqO4+Ab3/gG7rvvPnz5y19GS0sLMpkMksmkrPUpf38UIHn91ETNtBEjRmDx4sU49thjZUhdMpmEJWYkUD8qiliWhXXr1rXblq033k9En0ChD+E4OezZvRvz58+HYZhgbG9foOcfRdeh9j+NO9LPvFjA58EHH8Q3v/lNlJeXS4toiN1uSHz9CSamcfmTZVk44YQT8Pjjj8uNXvzWoj84mv7whz+gqakJmUwGrtigpKeJ7hvnDOCAZcXwyB8fwZoP1oB7DIwVvJsAg+PkC/ErjPdK2ic8rUgyjEI1QIKybbudx3Ps2LG4//778aMf/QiWZckmTC6XQ0VFhTyWi80Pwyqc/v4mU5a+4MLJoP6NnA5k7f/lX/4FCxYswKGHHoq82F/AEkMvTAmUKFiQfZ9jseR/Lx2lIMhqkeWi+2FiPFbl/fffx5NPPin/Te+kpzGHDRt+q//DL6Kpaaf/ox6H80Jzhsy9bds47rjjELNjYIyhrS2110vYC/6wQjO2swTnpnmFnHMMGjQI06ZNQ01NDerr67Fjxw4MGjQI6XRaWkkqyJ4YpKdj+xp/ISXBeSJImK6L8tXU1OCmm27C9773PVRXV0uLb4kxO+rbtYNB9tU7Q2dzBnU96F780LXRvaRSKSxYsAArVqyAKRZiom5DTxNdi6f0I5LJJJYvX47t27fLh1RRUbFPbRU1bBG3aZomWlpaUFlZiUsuuQQPP/wwzjjjDLmUAIWY0U86hgToT72F/zuYmDlCXj2qFMiSu66Ls88+G4sXL8YFF1yAZDLZbnCci0WiokosFkM+n4clhnx27NiB5557rl0e3ktLyUfW4tFLp5qnra0N+Xwes2bNamcJDNOIrMUzxBhfLBZr11wZNmwYvva1r2H69OlobGzEtm3bZBOV7pcqmL5GFR1E4SSrYIqgAdM0MWPGDNxyyy248sor5d6BlmXBMAxYpgXDLNx70f5rL91aKRbPE+PGVNbuuOMOvPzyy7KlRfdtiRkpPQmbMGFqyaW2vr7W/1GPYwkPWDweRzableNDf/rTn3DCCSfAcZyCex4czAx+sN0hWEpF4MVzk1UmQWUyGbm+SC6XQ2NjI5599lnMnz8fn376qczLRJ/I75xAD82ADkIVHf1OwqmoqEBTUxMmTpyIH//4xzjmmGMwZcoUaQ08ESyQy+VkZcOUlQX2gUn39BfS+ZyAwfcVuvr9XOnH5pQlGl999VXMnj0b6XRaXrMphomoAu1JImvxyNpRAaSXmMlkcMopp8gIiFy+dyZQFpdSEMG5Pc+TThZ6kbFYDJlMBlysMZJIJDBz5kx861vfkpY9lUohm83Kl602dfwWKQh/37CjvH6RkdDoJ+cclZWVGDFiBM466yzceeedOOWUU3DAAQfAFVto03F0v+QcUt/dPgR81BMEWTyI+1SfCcTyE+QE+rd/+ze8//77gPIcSHQQz6EniazFI9SCxhjDAQccgAULFuD444+HbdvwuIdY3O50jdhZgqVUhA4sXkdQn8nzPDiOg1gshsbGRrz6/17Fkv9ZgpUrV6KxsRFMOFqouUPCosJATUCqmNS/0/PjytbDXAx9QDxXaiLmcjnE43G5vOLQoUPx9a9/HbNmzcKsWbMwYsQImTfIApTUF+pDi0fQ86KfJLpXX30VF110EZqbm2Uf1Z+3p4m88KCIjwsrceyxx+Lxxx8v1KzgsOJW0Zquq5QkpRKFR4LgSoyg7VvScNeuXVi1ahWWLVuG1157DZs3b0ZzczPi8Tja2tpgWZbse6h9Qqb0jWnwmkRNe3cz4SU2RFSGK5azsG0byWQS48ePx1e+8hWceuqpOOqoozBkyBB5vdQ8I0ugEmjZitGHwlOfq19Qu3btwlVXXYWnn3663XvxH9fTRFZ4dNOqxaOCUl1djauuugpXXHEFDNOAFdu7yldJL78DSpJSF4UHZfBdFR8lz/OQSqWQSqWwdetWLF++HLW1tVi3bh0+//xz7Nq1a5/Ff8kyUp+Sgrc94Uggy8jE4ryDBw/GyJEjMWrUKBx11FE4+uijMWnSJJSXlyOZTIIr8yXJ2eCJ5Rq6RR8Lzy8mLiqkhQsX4rbbboPrunKal/8Y9GC5IiIvPPhumvp9VVVVeOyxx/APR/0DXF7wTBnMAFjxdn4plCSlLgqPaldPeP+oyal6N9VCTr/v3LkT27Ztw8cff4xNmzZhy5Yt2LZtGzZt2oTm5mZs2bIFsVgM6XQaXHjlRo0aheHDh6OyshJTpkxBTU0NDjroIBx00EEYM2aM3O2Wvouux1UiN1RHUZDFK4kQhOcX3+rVq/Hd734XO3fuRDablc1sNQ+xXwoP4sYpUa19zjnn4P4H7ofLXYABBjPADBZp4dF90b3QZyQ++rsrtv4liwXh6W1tbUUymZQxj0wM/GazWWSyGdR+WIsbbrgBGzasR3l5BTKZDMaPH4877rgDM2bMgGEaKC8rh2VZME0DjBXOQZaXhEbNT66skk1ipIrDT9BnRekF4TEwML7vNdDzpd/p59y5c7Fo0SJZkZBHVs1HlHRvnWDf6qETqDVIbyVVaHTTnnBTZzIZxGIxLF26FH98+I/IZ/OImTF4eQ8mNws/YcKAAYPvTYyzdv/uKDFuAJ1NnRQdAgTHxQsmC0J/t8QCQfQ7WZ2KigrZHyNBlJeXY+iwIagePgzjDjoQ6WwbPHhIpVuQyztoad2NUWNGonr4MAwdWolkWRx2rDDWxoyCCAyTwbJNxBMxmJaBWNyGZe+d7MsUDyX9259KgrN9n2ORxALeT1BifN9r4aIyMUWgAj3nv/7P/2DRokVgok/sOI7sK9M7UfGXz+6mLgkvTGhcK5/PY/fu3ViwYAHq6urg5l1YpoWWlhaYhpiM6Xt+PWEJowIVLvppMAaDFSwvQ8FEeJwL000FEsryGWRHOpP6FzygP0dRQTknh7Vr1+KOefN8R/Ut/Up4TAS1Uq02aNAg1NXV4e6774YlYuoGDx4sm0NqGkj4RccYAzMKzcaC0gw5farQ8KYqp/B3v6XyW4n+TJDobBG0blkWEskE5s2bh/Xr1/uO7Fv6lfAo7s8W2ySl02lYloWlS5firrvuAheeKnJKkAAHIn7xiU+lVSsk+rdfYMXSwMBf4eZyObm84H/+53/iueeekztBhUW/Ep7jOLKgkQPAFGE9d999N1544QXkxFLg+5vFK/SZCv0mxkwYzIDBTAAGGAzpAGIwpAX0p4GA+r7pd9M0EY/H8cILL+DXv/418vl86Nt99yvhcTGmpHaEU6kUXNdFKpXCXXfdhU8/LcxWp/yqRSDv4EDAL752cABgsrlZKIeF+Y2ex1H4r7/35DrGFYEFjDFks1l89NFHuPvuu7Fnzx5ZYYdZOXdJeP6mS2+kIFhA0C195rouVq9ejZtuugkff/yxtHoQS7WRaL/oO/obdI+F/t1eoXGv4M3j3t6C5Xl7d8HZV3Z9W/B6AvUd0j1Sq8gU06ocx8GOHTtw6623Ys2aNfJ57X0me7sj/jLYm6lLwosacbHSL+cc//u//4uHHnoIra2tYGLhGponptZqfV3D9Q3CeUKNRxrqEM1Qpn42AFBFRFAXJJ/Pg4lKeeHChfj73/8uV3kjUYbJgBAe9esgxsMWLlyIP//5z8hkMvBE4DA5ZqimG5AUva2B1ItrD71PSmoFyxjD448/jvvvvx+GWISKyooWXjdhormhejLT6TRuvPFGPP3004jFYjAMQ+7mM1CFV5AWWTpFaGokB/0+QG7f/x656E6QqJ5++mnccMMNaG1theM4yIvZ5plMRraSwqLfC48r0RR+p8ovf/lLPPfcc3IWNYlzoIqvneik+BSPp7R8pVi/UvL2Paq1I2zbxssvv4wbb7xR+gRsMeGVi9hVijsNi34vPChxjRAWMJ/Po6WlBY2Njbj99tvx6quvwhDL6bliFrgam+d/cdQBjip0zWpnHQA4d8G5C4+74PAAcBkSVvh3YeMXBuwTllU0RQB/JUn33NJS2FMjm80iL2b0u66Ld999FzfddBO2bdsmvZdUPsjbqZuavQQTMXi1tbW48cYb8cYbbyAvlhBPJBLwRNwnxe71dzhUY8aV9qRSaKNbl3SIvxKkLkVlZSVyuZzcIMayLLz33nu45pprUFtbi3g83i4+M0pE74p6CBqzM00Tq1evxty5c1FbWyubpI7jyGEGTf/A3zJJp9OIxWKF+FzTRF1dHX784x9j9erVKC8vl2O8UXzHA1Z4llgsidzK69evx1VXXYVly5bJPHYvLFSq6R1IPFyMvbnKqt3JZBKvvfYafvazn2Hz5s3gnMvhJBpeiBoDVng0VlNWVoZsNotcLoc1a9bg9ttvx2uvvQaIEDSa+KiJPqojxfM8GYO5YsUKXH311XjnnXek08QQcwl7Y1PJnmDACo82QGxra0MsFpNNjrVr1+InP/kJnn/+eVhi4R4aZoB4uVGsITsDl+FhAETAtPLXKOz72CU45/DcgneSiyEDmotI3sv6+nq4yuRd+h0BfcQoMGCFx5QpRFQLZjIZZLNZNDY24vLLL8dDDz0Exhh2794NKDWq0Ut7ovUqnP5XUFehrO0dOhDVSuHz6JVDiSoS1cIZZmEs1jAMNDU1IZvN4oEHHsBPf/pTrFu3Tg6c7/Xw7vVkUqUaJQas8IJgYjyHtsyaO3cuFixYIGtJcjGrFlDTt6gtD/WzjHCkeGLh3IULF+Kuu+5CY2OjtGxRdaQEsV8Jj2pE6h/Yto158+bh9ttvx9atW2FZFlKplLR6mnBQLR0X/bREMgnXdbF9+3bcfPPNuP322/H555/DEFFJ6ricKr4oNjOxvwmPLBv17TKZDNLpNH77299i7ty5WLlypVzTJewB1v0Vv8XiYj5dNptFbW0trr76avz3f/83XGUJQ4hAeQos6A/sV8LzlE00uFgc13VdxGIxLFu2DD/60Y+wZMkS5HK50EOK9mdUawfhoX7++edx0UUX4bnnnpOCo66DqWyFrR7HfJE9UaLbwvM3Czqqcfz5Okql4D+2o+MzmYwML6J1JymAtr6+HnPnzsW//uu/oq2tDVxEu+fFUt9Uu6rNVfXl+lOfoizxgIBngna/+w/uXYKeCz1DSvA5RMh6tba24pZbbsFPfvIT1NXVwbZtZLNZuGJlMPqdxvbU76Nz0rn8qRT8x3aUgvDn6bbwBgL0kvL5PJqbm/Hoo49izpw5ePbZZ6VImRKI7YjVm8n7qZulnYcKpl8kJBwSUz6fx7Jly/CDH/wA9913n4xOyeVyiImdiPozWniidqUCUFZWhlQqhRUrVuD888/H73//e6TTaTQ3N8vBWFMsgMqVxV79NVqxmm9/hp4JV1oPrhK0nBO786TTafzmN7/BZZddhuXLlwOif04tD09s4tmf0cITUL+hra1NNk1csVnhhRdeiDfeeANM2SE1k8nAFOKjmE9/0hRQnwf9boldWHNihgj1vV966SVceumlcn0UCmjPij0SKSKJJj73V7TwBEwsCUDxm6ZpoqysDLlcDi+99BJmz56NW265BXV1dYCI8/TE8ETYkyr7C6oAaQPIZDIJxhhWr16NG264Aeeeey6ef/55GXHElelP1N9Whdpf6ZWr78vavth3FfscAWM7hpibR00eLjr56XQamUxGivHee+/FxRdfjAcffBDbtm2D4ziyz0cFAuK76TvofD2J//r3PT/9fW+hpZAVzntj4+oC6nX4rRw1Len3srIyAEBDQwMWLlyIK664Ag888AC4MtxD/T2KSjGUULH+7nXukvDooe77wvei5vmivEH4jy2WOsKflwdstsF9K01R34GExBiD4zjSwbJlyxZcf/31+OY3v4klS5YUmpw+N7ba72PKXgMEiUFNpUDHtHsG8lEwGaPJlbwGK3z+BY+sW1DFA9F3o2uEqNwyYi1LW2w688c//hHf+973cNNNN6Gurk7uw0fNT/W90HtSvyMI//uWzycAf76OUin4jw06vkvC259pbm5GMplEQ0MDrr32WsyZMweLFy/GZ599Bk8srERNIip4qoj7msJL51JwjPXeDhKm2BgkJ6KC6N7z+bwMWt+zZw8eeeQRfPvb38Ztt92Gd999FxALVlHM7P6AFl6J0BACRbj8/e9/x89//nNcccUVeOaZZ7Bz507ZJGptbW3XTEIIi+oWalz6V+nWtRj+Gp2LMU9L7GzU3Nwsm+mmaaKtrQ1LlizB97//fVxzzTV48cUX0dTUJNc/MQwj9GXV+xItvBLhInaQJlrSZMxXXnkFl1xyCb7//e/j3nvvxfvvvw/btqXjhQRIXjl/6j0KFg8odPMYo0VXuodfdFxsDkIBCoMHDwYA1NfX495778W5556La6+9FitWrJBWUG1OemI4YX+hSxtTbtz4of+jfkNQjc8D2uAokpfG7wi1v2WIAfZEIoGqqipMnz4dF154IU444QS5r53ab1ExS9jamK6LCjwAMBScEZs2bcLZZ59dmIldsHEYPXoU/vrkk5g6ZSo4OEzTUDuFXSKosiCL19bWhv/7v//DE088gffffx+ff/45stmsXFCWWg1qX7jYcymVnjhHX9Al4fXFjrD9ESpUJMZ8Pg/btnHEEUfgO9/5Dr761a+iuroaVVVVgGh20ngUF948KFsuk7DovPQ3+p0KGf10XQ91dR/hvHPPw8ebN8MwCgI94IAD8NRTT2H69OlwlQmidG76nSoP9ZyF8xbGLm3LBkf7jR49sWjUnj17sGPHDrz22mv485//jDfffFOOveWVgW8iqFLbn9DC60FIcJRIJGQFq6urMWHCBJx44ok44YQTMHnyZCSTSSmAdCoNZjAkk0lAmV9G5yO4x2HZe/eGgCKcjz76COeccw62bNkijxs+fDiefPJJTJs2DVw0d1XU85AFouR5HuLxuJyxEY/H5TW1tbWhrq4Or7/+OpYuXYqGhgY0NDSgtbVVjolS81ELrz1aeD0MWQyIqSoZMWs6mUzKGESIpuXhhx+OU045BVOnTsXMmTNRUVGBRCIhrRKNZ3Ex9sXEID/BRCRNNpuVTo1169bh29/+Nurr66W1GT16NJ588klMnToVXASFkzDgm0BK3lj6bk94Y1OpFDzPQ2NjI959913U1tbipZdewjvvvAPHcWCJjUFpQJwC0NXnQWKma9+f0cLrRZjS9MyL9R39//ZE+NPBBx+ML33pSzj66KMxbdo0DB8+HIMGDUJVVRUGDx4s3fNkbai/ZFkWTGWV7PXr12P27Nmor6+Xn9fU1OCvf/0rJk6cCC6atJ5wbNA1QRGg67pIp9PYtWsXPv/8czQ1NeGdd97Be++9h7q6OtTX18t74IrDCEpTmCoIVdSavWjh9SKJRAKZTEYWdkME+lrKxpn5fF5GcVBzzhRB2KNGjcLEiRNx6KGH4rDDDsPkyZNRU1MDwzBk3CIUh08ul8PGjRvxT//0T6ivr5f9r5EjR+Lxxx/HwQcf3E4QEFYom82itbUVTU1NqK+vx3vvvYe3334ba9euxfbt28FFM5ExJhcBpt14yatLXltLLKenim1/t25BaOH1ASQMf81PhZYKNTlUSBT+AmvbNhKJBEaPHo0RI0Zg2LBhiMViUgye56G1tRXLly9HW1sbmOivxWIxnHbaaRg0aJA8l+M4SKfT2LNnDxoaGrB9+3ak02nZJyPxQzQ/ybJBmc3h77PR99G/g+5ZU0ALLyL4RVbsM/j6SmpBD8pPn3VGBEHHf9ExKkHHo8Rz7C/oAfQI0xMFlgTXE+fqCmF9b9TRwosIqkD8Fs2fiuHPxzsZWEz4j+3ou4LwH1vq8fsTWngRwV9gO0pB+PP48xY7TsV/bGeOUfEf25Vz7C9o4Wk0IdBt4flrt45qOH++jlIQ/jwdpWL48/VU3iD8x3Z0PDlH1FQM9TxflFelJ6+hu/ifS0epGP58xfL683SUtxj+YztKQfjzdFt4Go2mdLTwNJoQ0MLTaEJAC0+jCQEduaLRhIC2eBpNCGjhaTQhoIWn0YSAFp5GEwJaeBpNCHTJq9mfl/fTaKKAtngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCXdqYsr6+1v+RRqMpAW3xNJoQ0MLTaEJAC0+jCQEtPI0mBLrkXNm48UP/RxqNpgT+P/trZjxV7sFMAAAAAElFTkSuQmCC" alt="Celebration Church logo"></div>
+  <div class="header-text">
+    <div class="header-title">CELEBRATION CHURCH</div>
+    <div class="header-sub">Safety &amp; Security Team Academy</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val" id="hs-modules">0</div><div class="hstat-lbl">Certified</div></div>
+    <div class="hstat"><div class="hstat-val" id="hs-team">0</div><div class="hstat-lbl">Team</div></div>
+    <div class="hstat"><div class="hstat-val">3</div><div class="hstat-lbl">Services</div></div>
+  </div>
+  <button class="user-chip" id="adminChip" onclick="toggleAdmin()">🔒 Admin</button>
+</header>
+
+<div class="app">
+  <nav class="sidebar" id="appSidebar">
+    <div class="sidebar-label">Overview</div>
+    <div class="nav-item active" onclick="showSection('overview',this)"><span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span></div>
+    <div class="sidebar-label">Training</div>
+    <div class="nav-item" onclick="showSection('academy',this)"><span class="nav-icon">🎓</span><span class="nav-text">Academy</span></div>
+    <div class="nav-item" onclick="showSection('onboarding',this)"><span class="nav-icon">📋</span><span class="nav-text">Onboarding</span></div>
+    <div class="nav-item" onclick="showSection('resources',this)"><span class="nav-icon">📚</span><span class="nav-text">Training Resources</span></div>
+    <div class="sidebar-label">Operations</div>
+    <div class="nav-item" onclick="showSection('procedures',this)"><span class="nav-icon">🚨</span><span class="nav-text">Emergency Procedures</span></div>
+    <div class="nav-item" onclick="showSection('maps',this)"><span class="nav-icon">🗺️</span><span class="nav-text">Facility Maps</span></div>
+    <div class="nav-item" onclick="showSection('scheduling',this)"><span class="nav-icon">📅</span><span class="nav-text">Scheduling</span></div>
+    <div class="sidebar-label">People</div>
+    <div class="nav-item" onclick="showSection('team',this)"><span class="nav-icon">🛡️</span><span class="nav-text">Team</span></div>
+    <div class="nav-item" onclick="showSection('meetings',this)"><span class="nav-icon">🗣️</span><span class="nav-text">Team Meetings</span></div>
+    <div class="nav-item" onclick="showSection('leadership',this)"><span class="nav-icon">⛪</span><span class="nav-text">Leadership / Staff</span></div>
+  </nav>
+
+  <main class="main">
+
+    <!-- ══ DASHBOARD ══ -->
+    <section id="sec-overview" class="section active">
+      <div class="sec-header">
+        <div class="sec-icon amber">🏠</div>
+        <div>
+          <div class="sec-title">SAFETY &amp; SECURITY DASHBOARD</div>
+          <div class="sec-desc">Celebration Church · 2121 Caldwell Blvd, Nampa, ID 83651 · Sunday services 8:00 AM | 9:45 AM | 11:30 AM</div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:.9rem;">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">📞 EMERGENCY CONTACTS</div>
+          <div style="font-size:.85rem;line-height:2;">
+            <div><strong style="color:#f87171;">Emergency:</strong> <a href="tel:911" style="color:var(--tx);font-weight:800;">911</a></div>
+            <div><strong>Nampa Police (non-emergency):</strong><br><a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a></div>
+            <div><strong>Church Office:</strong><br><a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">⏰ SERVICE COVERAGE RULE</div>
+          <div style="font-size:.82rem;color:var(--tx2);line-height:1.7;">Every service requires a minimum of <strong style="color:var(--c);">3 safety/security team members</strong>, including <strong style="color:var(--c);">1 Team Lead</strong>.</div>
+          <div style="margin-top:.6rem;font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;color:var(--tx);">8:00 AM · 9:45 AM · 11:30 AM</div>
+          <div id="dashCoverage" style="margin-top:.5rem;"></div>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">🎓 MY TRAINING</div>
+          <div id="dashTraining" style="font-size:.8rem;color:var(--tx2);line-height:1.8;"></div>
+          <button class="btn btn-primary" style="margin-top:.6rem;" onclick="navTo('academy')">Go to Academy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
+        <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📝 RECENT ACTIVITY</div>
+        <div id="activityFeed" style="font-size:.76rem;color:var(--tx2);line-height:2;"></div>
+      </div>
+    </section>
+
+    <!-- ══ ACADEMY ══ -->
+    <section id="sec-academy" class="section">
+      <div class="sec-header">
+        <div class="sec-icon amber">🎓</div>
+        <div>
+          <div class="sec-title">SAFETY / SECURITY TEAM ACADEMY</div>
+          <div class="sec-desc">Complete each module's lessons, pass the quiz (80%+), and earn your certificate. Content is drawn from CISA, FEMA, NCMEC, and recognized church-security training organizations.</div>
+        </div>
+        <div style="margin-left:auto;text-align:right;">
+          <div style="font-family:var(--fh);font-size:1.4rem;color:var(--c);line-height:1;" id="academyPct">0%</div>
+          <div style="font-size:.62rem;color:var(--tx3);font-weight:700;">COMPLETE</div>
+        </div>
+      </div>
+      <div class="stats-row" style="margin-bottom:1rem;">
+        <div class="stat-pill">👤 Trainee: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong> <span style="color:var(--bl);cursor:pointer;margin-left:.3rem;" onclick="setTrainee()">change</span></div>
+        <div class="stat-pill" style="border-color:rgba(34,197,94,.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/6</div>
+      </div>
+      <div class="course-grid" id="courseGrid"></div>
+    </section>
+
+    <!-- ══ ONBOARDING ══ -->
+    <section id="sec-onboarding" class="section">
+      <div class="sec-header">
+        <div class="sec-icon blue">📋</div>
+        <div>
+          <div class="sec-title">NEW MEMBER ONBOARDING</div>
+          <div class="sec-desc">Required steps for every new safety/security team member before serving a service rotation.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📕 ONBOARDING MANUAL</div>
+        <div class="map-slot" style="min-height:130px;">
+          <div class="ms-icon">📄</div>
+          <div class="ms-title">SAFETY &amp; SECURITY ONBOARDING MANUAL (25 PAGES)</div>
+          <div class="ms-note">Placeholder — the official 25-page onboarding document will be uploaded here. Once added, new members must read it in full before completing the checklist below.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">✅ ONBOARDING CHECKLIST</div>
+          <div id="onboardChecklist"></div>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">⛪ WHO'S WHO — KNOW YOUR CHURCH</div>
+          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:.6rem;">Every team member must be able to recognize church leadership and staff on sight. Review the <span style="color:var(--bl);cursor:pointer;" onclick="navTo('leadership')">Leadership / Staff directory</span>, then walk the building with your Team Lead.</div>
+          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;">You must also know the facility: foyer, sanctuary, children's auditorium, children's check-in, exits, and the perimeter. See <span style="color:var(--bl);cursor:pointer;" onclick="navTo('maps')">Facility Maps</span>.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ FACILITY MAPS ══ -->
+    <section id="sec-maps" class="section">
+      <div class="sec-header">
+        <div class="sec-icon green">🗺️</div>
+        <div>
+          <div class="sec-title">FACILITY MAPS &amp; SITE SCHEMATICS</div>
+          <div class="sec-desc">Interior diagrams, perimeter map, and aerial view — 2121 Caldwell Blvd, Nampa, ID 83651.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🛰️ AERIAL VIEW — CHURCH &amp; PARKING LOT</div>
+        <div class="aerial-frame">
+          <iframe title="Aerial view of Celebration Church" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=2121%20Caldwell%20Blvd%2C%20Nampa%2C%20ID%2083651&t=k&z=18&output=embed"></iframe>
+        </div>
+        <div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">Satellite view via Google Maps · <a href="https://maps.app.goo.gl/biWC1jJyytMQq5WDA" target="_blank" rel="noopener" style="color:var(--bl);">Open full map ↗</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏗️ FULL SITE SCHEMATIC</div>
+        <div class="map-slot tall">
+          <div class="ms-icon">📐</div>
+          <div class="ms-title">INTERNAL + PERIMETER DIAGRAM</div>
+          <div class="ms-note">Placeholder — full-page site schematic will be uploaded. Must show all entrances/exits, evacuation routes, assembly areas, AED &amp; fire-extinguisher locations, and team post positions.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="map-slot"><div class="ms-icon">🚪</div><div class="ms-title">FOYER</div><div class="ms-note">Diagram placeholder — greeter posts, main entry doors, guest services.</div></div>
+        <div class="map-slot"><div class="ms-icon">⛪</div><div class="ms-title">SANCTUARY</div><div class="ms-note">Diagram placeholder — seating, stage, exits, team posts front/rear.</div></div>
+        <div class="map-slot"><div class="ms-icon">🧒</div><div class="ms-title">CHILDREN'S AUDITORIUM</div><div class="ms-note">Diagram placeholder — kids' rooms, exits, secure hallway coverage.</div></div>
+        <div class="map-slot"><div class="ms-icon">✅</div><div class="ms-title">CHILDREN'S CHECK-IN</div><div class="ms-note">Diagram placeholder — check-in stations, secure pickup flow, tag verification point.</div></div>
+      </div>
+    </section>
+    <!-- ══ EMERGENCY PROCEDURES ══ -->
+    <section id="sec-procedures" class="section">
+      <div class="sec-header">
+        <div class="sec-icon red">🚨</div>
+        <div>
+          <div class="sec-title">EMERGENCY PROCEDURES</div>
+          <div class="sec-desc">Quick-reference response protocols. Based on published guidance from CISA, FEMA, Ready.gov, and NCMEC — adapt details to this facility with your Team Lead.</div>
+        </div>
+      </div>
+
+      <div class="alert-box">🚑 <strong>In any life-threatening emergency, call 911 first.</strong> Nampa Police non-emergency: <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Church office: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></div>
+
+      <div class="proc-card open">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🔫</span><span class="proc-title">Active Shooter — Run · Hide · Fight</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <p>Federal guidance (DHS/CISA/FBI) teaches three options, in order of preference:</p>
+          <ol>
+            <li><strong>RUN</strong> — if there is an accessible escape path, evacuate. Leave belongings, help others if possible, keep hands visible, and get people moving away from the threat.</li>
+            <li><strong>HIDE</strong> — if evacuation is not possible, get out of the shooter's view. Lock/blockade doors, silence phones, stay quiet and behind solid objects.</li>
+            <li><strong>FIGHT</strong> — as a last resort and only when your life is in imminent danger, act with physical aggression and improvised weapons to incapacitate the shooter.</li>
+          </ol>
+          <p><strong>When law enforcement arrives:</strong> keep hands visible and empty, follow all commands immediately, avoid pointing or yelling, and do not stop officers to ask for help — they will move toward the threat first.</p>
+          <p><strong>Call 911 when safe.</strong> Give location, number/description of shooter(s), weapons, and number of potential victims.</p>
+          <div class="tip-box">📚 Team standard: complete the Academy module "Active Shooter Response," review the <a href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener">CISA Active Shooter Preparedness</a> resources, and take free FEMA course <a href="https://training.fema.gov/is/courseoverview.aspx?code=IS-907" target="_blank" rel="noopener">IS-907: Active Shooter — What You Can Do</a>.</div>
+        </div>
+      </div>
+
+      <div class="proc-card amber">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🧒</span><span class="proc-title">Lost Child — Code Adam</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <p>Code Adam is the National Center for Missing &amp; Exploited Children's free missing-child protocol, used in hundreds of thousands of facilities nationwide. The six steps:</p>
+          <ol>
+            <li>Obtain a <strong>detailed description</strong> of the child: age, hair, clothing, and especially <strong>shoes</strong> (clothing is easy to change; shoes usually aren't).</li>
+            <li><strong>Page/radio "Code Adam"</strong> with the description to all team members and staff.</li>
+            <li><strong>Monitor every exterior door</strong> immediately — no child leaves unaccompanied; watch the parking lot.</li>
+            <li><strong>Search the building</strong> systematically while calling the child's name — sanctuary, kids' areas, restrooms, hallways.</li>
+            <li>If the child is <strong>not found within 10 minutes, call 911</strong>.</li>
+            <li>If found safe with no foul play suspected, reunite with parent/guardian and verify the check-in tag. If found with someone other than a parent/guardian, use reasonable, non-violent efforts to delay their departure and note the description, vehicle, and direction of travel for police.</li>
+          </ol>
+          <div class="tip-box">📚 Free official Code Adam kit, poster, video, and employee quiz: <a href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener">missingkids.org — Code Adam</a>. Children's check-in tag matching is the everyday version of this protection — enforce it at every pickup.</div>
+        </div>
+      </div>
+
+      <div class="proc-card">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🔥</span><span class="proc-title">Fire &amp; Evacuation</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <ol>
+            <li>On alarm or visible fire/smoke: <strong>activate the alarm</strong> (if not already), begin evacuation immediately, and <strong>call 911</strong>.</li>
+            <li>Team members move to assigned zones: sanctuary doors, foyer, children's auditorium, and children's check-in. Children's workers evacuate kids by class; parents reunite <strong>at the assembly area, not in hallways</strong>.</li>
+            <li>Direct people to the nearest safe exit — never through smoke. Assist those with mobility needs; know accessible routes in advance.</li>
+            <li>Proceed to the designated <strong>assembly area</strong> (to be marked on the site schematic) and keep driveways clear for fire apparatus.</li>
+            <li>Account for people; report anyone missing (and last known location) to arriving responders. <strong>Do not re-enter</strong> until fire officials clear the building.</li>
+          </ol>
+          <div class="tip-box">📚 See <a href="https://www.ready.gov/home-fires" target="_blank" rel="noopener">Ready.gov — Fires</a> and the <a href="https://www.usfa.fema.gov/" target="_blank" rel="noopener">U.S. Fire Administration</a>. Assembly-area location and route arrows must be added to the uploaded site schematic.</div>
+        </div>
+      </div>
+
+      <div class="proc-card blue">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌪️</span><span class="proc-title">Severe Weather — Tornado / Inclement Weather</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <ol>
+            <li>Monitor NWS alerts (Boise office covers Nampa). A <strong>Watch</strong> = be ready; a <strong>Warning</strong> = act now.</li>
+            <li>Tornado warning: move everyone to <strong>interior rooms/hallways on the lowest level, away from windows</strong> and large-span roofs. Crouch low, cover heads.</li>
+            <li>Do not evacuate to vehicles during a tornado warning; sheltering in place is safer.</li>
+            <li>For winter storms/ice: leadership decides on delays/cancellations early; team assists with parking-lot conditions, entrance safety, and communication.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/tornadoes" target="_blank" rel="noopener">Ready.gov — Tornadoes</a> · <a href="https://www.weather.gov/boi/" target="_blank" rel="noopener">NWS Boise</a> · <a href="https://www.ready.gov/winter-weather" target="_blank" rel="noopener">Ready.gov — Winter Weather</a></div>
+        </div>
+      </div>
+
+      <div class="proc-card blue">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌍</span><span class="proc-title">Earthquake — Drop · Cover · Hold On</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <ol>
+            <li><strong>DROP</strong> to hands and knees, <strong>COVER</strong> head and neck (under sturdy furniture if possible), <strong>HOLD ON</strong> until shaking stops.</li>
+            <li>Do not run outside during shaking; most injuries come from falling objects and glass. Stay away from windows and tall shelving.</li>
+            <li>After shaking stops: check for injuries and hazards (gas smell, structural damage, fire), then evacuate calmly to the assembly area if the building is unsafe. Expect aftershocks.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/earthquakes" target="_blank" rel="noopener">Ready.gov — Earthquakes</a> · <a href="https://www.earthquakecountry.org/step5/" target="_blank" rel="noopener">Earthquake Country Alliance — Drop, Cover, Hold On</a>. Idaho is seismically active — treat this as a real scenario.</div>
+        </div>
+      </div>
+
+      <div class="proc-card blue">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🌊</span><span class="proc-title">Flooding</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <ol>
+            <li>Move people away from flooded areas and to higher floors/ground as needed; shut off electricity to affected areas if safe to do so.</li>
+            <li><strong>Turn Around, Don't Drown</strong> — never direct traffic through flooded sections of the parking lot or roadway; 6 inches of moving water can knock an adult down, 12 inches can carry a vehicle.</li>
+            <li>Report facility flooding to leadership and, if hazardous, call 911 / utilities.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov — Floods</a> · <a href="https://www.weather.gov/safety/flood" target="_blank" rel="noopener">NWS Flood Safety</a></div>
+        </div>
+      </div>
+
+      <div class="proc-card green">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🕊️</span><span class="proc-title">De-escalation — Disruptive or Agitated Individuals</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <p>Most incidents at churches are resolved with calm words, not force. Core principles taught by the Crisis Prevention Institute (CPI), Verbal Judo, and church-security trainers:</p>
+          <ul>
+            <li><strong>Be empathic and listen actively</strong> — let the person vent; acknowledge feelings without agreeing to demands ("I can hear that you're upset — let's figure this out").</li>
+            <li><strong>Respect personal space</strong> and keep non-threatening body language: hands visible, relaxed posture, calm and low tone of voice.</li>
+            <li><strong>Ask open-ended questions and offer choices</strong> ("Would you rather step outside to talk, or sit down over here?") — choices restore a sense of control.</li>
+            <li><strong>Set clear, simple limits</strong> and allow silence and time for decisions. Avoid commands like "calm down," arguing, or matching their volume.</li>
+            <li>Work in pairs; one talks, one observes. Position between the person and the congregation with an exit route for both of you.</li>
+            <li>If de-escalation fails or a weapon/threat appears, <strong>disengage to protect people and call 911</strong>. Safety over resolution — every time.</li>
+          </ul>
+          <div class="tip-box">📚 <a href="https://www.crisisprevention.com/blog/general/de-escalation-tips/" target="_blank" rel="noopener">CPI — Top 10 De-escalation Tips (free)</a> · <a href="https://verbaljudo.com/de-escalation-training-for-church-security/" target="_blank" rel="noopener">Verbal Judo — church security de-escalation</a></div>
+        </div>
+      </div>
+
+      <div class="proc-card amber">
+        <div class="proc-head" onclick="this.parentElement.classList.toggle('open')"><span class="proc-icon">🏛️</span><span class="proc-title">Church Continuity of Operations</span><span class="proc-arrow">▶</span></div>
+        <div class="proc-body">
+          <p>Continuity planning keeps ministry running after an emergency (fire, flood, violence, loss of facility). Following FEMA's continuity guidance, the church plan should identify:</p>
+          <ul>
+            <li><strong>Essential functions</strong> — worship services, children's ministry, communications, giving/finance, pastoral care.</li>
+            <li><strong>Orders of succession &amp; delegations</strong> — who leads if the Senior Pastor or a key staff member is unavailable.</li>
+            <li><strong>Alternate facilities</strong> — pre-identified worship/meeting locations and an online service option.</li>
+            <li><strong>Communications</strong> — how staff, team, and congregation are notified (call tree, text, email, social).</li>
+            <li><strong>Vital records</strong> — insurance policies, member data, and financial records backed up off-site.</li>
+          </ul>
+          <div class="tip-box">📚 <a href="https://www.fema.gov/emergency-managers/national-preparedness/continuity" target="_blank" rel="noopener">FEMA — Continuity Resources</a> · <a href="https://www.ready.gov/business/emergency-plans/continuity" target="_blank" rel="noopener">Ready.gov — Continuity Planning</a> · FEMA's <a href="https://www.fema.gov/sites/default/files/documents/fema_developing-eops-houses-worship_guide.pdf" target="_blank" rel="noopener">Guide for Developing High-Quality EOPs for Houses of Worship</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TEAM ══ -->
+    <section id="sec-team" class="section">
+      <div class="sec-header">
+        <div class="sec-icon amber">🛡️</div>
+        <div>
+          <div class="sec-title">SAFETY / SECURITY TEAM</div>
+          <div class="sec-desc">Roster with contact info and specialty background. Editing requires admin access.</div>
+        </div>
+        <button class="btn btn-primary" id="addMemberBtn" style="margin-left:auto;display:none;" onclick="openMemberModal()">+ Add Member</button>
+      </div>
+      <div id="teamAdminNote" class="tip-box" style="display:none;">🔒 Unlock <strong>Admin</strong> (top-right) to add or edit team members.</div>
+      <div class="table-scroll"><table class="data-table">
+        <thead><tr><th>First Name</th><th>Last Name</th><th>Phone</th><th>Specialty</th><th>Role</th><th id="teamActionsHead" style="display:none;">Actions</th></tr></thead>
+        <tbody id="teamBody"></tbody>
+      </table></div>
+      <div class="empty-note" id="teamEmpty" style="margin-top:.8rem;">No team members yet. Unlock Admin and select "+ Add Member" to build the roster.</div>
+    </section>
+
+    <!-- ══ SCHEDULING ══ -->
+    <section id="sec-scheduling" class="section">
+      <div class="sec-header">
+        <div class="sec-icon blue">📅</div>
+        <div>
+          <div class="sec-title">SERVICE SCHEDULING</div>
+          <div class="sec-desc">Assign coverage for each Sunday. Minimum per service: 3 team members including 1 Team Lead.</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:.5rem;align-items:center;">
+          <button class="btn btn-ghost" onclick="shiftSunday(-7)">◀</button>
+          <div style="font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;" id="schedDateLabel">—</div>
+          <button class="btn btn-ghost" onclick="shiftSunday(7)">▶</button>
+        </div>
+      </div>
+      <div id="schedAdminNote" class="tip-box" style="display:none;">🔒 Viewing only — unlock <strong>Admin</strong> to change assignments.</div>
+      <div class="grid-3" id="schedGrid"></div>
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-title">📋 COVERAGE SUMMARY — <span id="schedSummaryDate"></span></div>
+        <div id="schedSummary" style="font-size:.8rem;color:var(--tx2);"></div>
+      </div>
+    </section>
+
+    <!-- ══ TEAM MEETINGS ══ -->
+    <section id="sec-meetings" class="section">
+      <div class="sec-header">
+        <div class="sec-icon purple">🗣️</div>
+        <div>
+          <div class="sec-title">TEAM MEETINGS</div>
+          <div class="sec-desc">Schedule meetings, capture agendas and notes, and keep a record of team decisions and drills.</div>
+        </div>
+        <button class="btn btn-primary" id="addMeetingBtn" style="margin-left:auto;display:none;" onclick="openMeetingModal()">+ New Meeting</button>
+      </div>
+      <div id="meetAdminNote" class="tip-box" style="display:none;">🔒 Unlock <strong>Admin</strong> to add meetings and notes.</div>
+      <div id="meetingList"></div>
+      <div class="empty-note" id="meetingEmpty">No meetings logged yet.</div>
+    </section>
+    <!-- ══ TRAINING RESOURCES ══ -->
+    <section id="sec-resources" class="section">
+      <div class="sec-header">
+        <div class="sec-icon blue">📚</div>
+        <div>
+          <div class="sec-title">TRAINING RESOURCES</div>
+          <div class="sec-desc">Vetted external resources used by churches and houses of worship nationwide. All links verified — nothing invented.</div>
+        </div>
+      </div>
+
+      <div class="card-title" style="margin:.4rem 0 .5rem;">🏛️ FEDERAL / GOVERNMENT</div>
+      <a class="res-link" href="https://www.cisa.gov/topics/physical-security/protecting-houses-worship" target="_blank" rel="noopener"><span class="res-icon">🛡️</span><span><span class="res-name">Protecting Houses of Worship — CISA</span><div class="res-desc">DHS/CISA hub: security guide, self-assessment tool, trainings, and exercises covering active shooter, bombing, vehicle ramming, and more.</div><div class="res-org">CISA.gov</div></span></a>
+      <a class="res-link" href="https://www.fema.gov/sites/default/files/documents/fema_developing-eops-houses-worship_guide.pdf" target="_blank" rel="noopener"><span class="res-icon">📘</span><span><span class="res-name">Guide for Developing High-Quality Emergency Operations Plans for Houses of Worship</span><div class="res-desc">FEMA's foundational planning guide — the standard framework for building this team's Emergency Operations Plan.</div><div class="res-org">FEMA</div></span></a>
+      <a class="res-link" href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener"><span class="res-icon">🚨</span><span><span class="res-name">Active Shooter Preparedness + Emergency Action Plan Templates</span><div class="res-desc">CISA's preparedness resources, EAP templates, and free instructor-led webinars.</div><div class="res-org">CISA.gov</div></span></a>
+      <a class="res-link" href="https://www.fbi.gov/about/partnerships/office-of-partner-engagement/active-shooter-resources" target="_blank" rel="noopener"><span class="res-icon">🔎</span><span><span class="res-name">FBI Active Shooter Resources</span><div class="res-desc">Research, videos, and guidance from the FBI's Office of Partner Engagement.</div><div class="res-org">FBI.gov</div></span></a>
+      <a class="res-link" href="https://training.fema.gov/is/" target="_blank" rel="noopener"><span class="res-icon">🎓</span><span><span class="res-name">FEMA Independent Study Courses (free)</span><div class="res-desc">Recommended for this team: IS-907 (Active Shooter: What You Can Do), IS-360 (Preparing for Mass Casualty Incidents), IS-366 (Planning for the Needs of Children in Disasters), IS-906 (Workplace Security Awareness).</div><div class="res-org">FEMA Emergency Management Institute</div></span></a>
+      <a class="res-link" href="https://www.ready.gov/" target="_blank" rel="noopener"><span class="res-icon">✅</span><span><span class="res-name">Ready.gov Hazard Guides</span><div class="res-desc">Plain-language response guides for fire, tornado, earthquake, flood, and winter weather — used throughout this site's Emergency Procedures.</div><div class="res-org">DHS / Ready.gov</div></span></a>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">⛪ CHURCH SAFETY ORGANIZATIONS</div>
+      <a class="res-link" href="https://sheepdogchurchsecurity.net/" target="_blank" rel="noopener"><span class="res-icon">🐑</span><span><span class="res-name">Sheepdog Church Security</span><div class="res-desc">Developed by law-enforcement personnel for volunteer church teams — free articles plus a Safety Member Certification covering verbal disruptions through active-shooter response.</div><div class="res-org">sheepdogchurchsecurity.net</div></span></a>
+      <a class="res-link" href="https://www.guidestone.org/ChurchSafety" target="_blank" rel="noopener"><span class="res-icon">🏫</span><span><span class="res-name">GuideStone Church Safety &amp; Security Training</span><div class="res-desc">Free church security training resources produced with Strategos International.</div><div class="res-org">GuideStone</div></span></a>
+      <a class="res-link" href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener"><span class="res-icon">🧒</span><span><span class="res-name">Code Adam Program — Free Kit</span><div class="res-desc">Official NCMEC missing-child protocol: poster, manager checklist, training video, and employee quiz — free to implement.</div><div class="res-org">National Center for Missing &amp; Exploited Children</div></span></a>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">🕊️ DE-ESCALATION</div>
+      <a class="res-link" href="https://www.crisisprevention.com/blog/general/de-escalation-tips/" target="_blank" rel="noopener"><span class="res-icon">🧠</span><span><span class="res-name">CPI Top 10 De-escalation Tips (free download)</span><div class="res-desc">Evidence-based verbal intervention guidance from the Crisis Prevention Institute — empathic listening, personal space, limit setting.</div><div class="res-org">Crisis Prevention Institute</div></span></a>
+      <a class="res-link" href="https://verbaljudo.com/de-escalation-training-for-church-security/" target="_blank" rel="noopener"><span class="res-icon">🗣️</span><span><span class="res-name">Verbal Judo for Church Security</span><div class="res-desc">Tactical communication training adapted for greeters, ushers, and safety volunteers in a church culture of welcome.</div><div class="res-org">Verbal Judo Institute</div></span></a>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">📍 LOCAL</div>
+      <a class="res-link" href="https://www.cityofnampa.us/police" target="_blank" rel="noopener"><span class="res-icon">👮</span><span><span class="res-name">Nampa Police Department</span><div class="res-desc">Non-emergency: (208) 465-2257. Ask about facility walk-throughs, security assessments, and community liaison programs for houses of worship.</div><div class="res-org">City of Nampa</div></span></a>
+      <a class="res-link" href="https://www.weather.gov/boi/" target="_blank" rel="noopener"><span class="res-icon">🌦️</span><span><span class="res-name">National Weather Service — Boise</span><div class="res-desc">Forecasts, watches, and warnings covering Nampa and the Treasure Valley.</div><div class="res-org">NWS Boise</div></span></a>
+    </section>
+
+    <!-- ══ LEADERSHIP / STAFF ══ -->
+    <section id="sec-leadership" class="section">
+      <div class="sec-header">
+        <div class="sec-icon purple">⛪</div>
+        <div>
+          <div class="sec-title">CHURCH LEADERSHIP / STAFF</div>
+          <div class="sec-desc">Who's who at Celebration Church — every team member must recognize leadership on sight.</div>
+        </div>
+        <button class="btn btn-primary" id="addLeaderBtn" style="margin-left:auto;display:none;" onclick="openLeaderModal()">+ Add Person</button>
+      </div>
+      <div id="leaderAdminNote" class="tip-box" style="display:none;">🔒 Unlock <strong>Admin</strong> to add or edit staff entries. Photo slots are placeholders until headshots are added.</div>
+      <div class="course-grid" id="leaderGrid"></div>
+      <div style="font-size:.68rem;color:var(--tx3);margin-top:.8rem;">Pre-filled from the church's public website (thecelebration.church). Verify and complete the directory with actual staff before rollout.</div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ══ ADMIN PIN GATE ══ -->
+<div class="pin-gate-overlay" id="adminGate">
+  <div class="pin-gate-box">
+    <div class="pin-gate-icon">🔐</div>
+    <div class="pin-gate-title">ADMIN ACCESS</div>
+    <div class="pin-gate-sub">Enter the 4-digit admin PIN. Default is <strong style="color:var(--c);">2121</strong> — change it after first use.</div>
+    <div class="pin-dots"><div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div><div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div></div>
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pinKey('1')">1</button><button class="pin-key" onclick="pinKey('2')">2</button><button class="pin-key" onclick="pinKey('3')">3</button>
+      <button class="pin-key" onclick="pinKey('4')">4</button><button class="pin-key" onclick="pinKey('5')">5</button><button class="pin-key" onclick="pinKey('6')">6</button>
+      <button class="pin-key" onclick="pinKey('7')">7</button><button class="pin-key" onclick="pinKey('8')">8</button><button class="pin-key" onclick="pinKey('9')">9</button>
+      <button class="pin-key" onclick="pinKey('clear')">C</button><button class="pin-key" onclick="pinKey('0')">0</button><button class="pin-key" onclick="pinKey('back')">⌫</button>
+    </div>
+    <div class="pin-error" id="pinError"></div>
+    <button class="btn btn-ghost" onclick="closeAdminGate()" style="width:100%;margin-top:.5rem;font-size:.75rem;">Cancel</button>
+  </div>
+</div>
+
+<!-- ══ MEMBER MODAL ══ -->
+<div class="modal-overlay" id="memberModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title" id="memberModalTitle">🛡️ ADD TEAM MEMBER</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.2rem .75rem;">
+      <div class="form-row"><label>First Name</label><input type="text" id="mFirst"></div>
+      <div class="form-row"><label>Last Name</label><input type="text" id="mLast"></div>
+      <div class="form-row"><label>Phone</label><input type="tel" id="mPhone" placeholder="208-xxx-xxxx"></div>
+      <div class="form-row"><label>Specialty</label>
+        <select id="mSpec">
+          <option>Police / Law Enforcement</option>
+          <option>Fire</option>
+          <option>First Responder / EMS</option>
+          <option>Medical (Nurse / Doctor)</option>
+          <option>Military / Veteran</option>
+          <option>Security Professional</option>
+          <option>General / Trained Volunteer</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Role</label>
+        <select id="mRole"><option>Team Member</option><option>Team Lead</option></select>
+      </div>
+    </div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('memberModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMember()">Save Member</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LEADER MODAL ══ -->
+<div class="modal-overlay" id="leaderModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title" id="leaderModalTitle">⛪ ADD LEADERSHIP / STAFF</div>
+    <div class="form-row"><label>Name</label><input type="text" id="lName"></div>
+    <div class="form-row"><label>Title / Role</label><input type="text" id="lTitle" placeholder="e.g. Senior Pastor, Worship Pastor, Kids Director"></div>
+    <div class="form-row"><label>Notes (optional)</label><input type="text" id="lNotes" placeholder="e.g. office days, where usually found on Sundays"></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('leaderModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLeader()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MEETING MODAL ══ -->
+<div class="modal-overlay" id="meetingModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title">🗣️ NEW TEAM MEETING</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.2rem .75rem;">
+      <div class="form-row"><label>Date</label><input type="date" id="mtDate"></div>
+      <div class="form-row"><label>Time</label><input type="time" id="mtTime"></div>
+    </div>
+    <div class="form-row"><label>Topic / Title</label><input type="text" id="mtTitle" placeholder="e.g. Monthly team meeting, evacuation drill debrief"></div>
+    <div class="form-row"><label>Agenda / Notes</label><textarea id="mtNotes" rows="4" placeholder="Agenda items, decisions, action items, drill results..."></textarea></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('meetingModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMeeting()">Save Meeting</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ COURSE MODAL ══ -->
+<div class="modal-overlay" id="courseModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-top">
+        <div class="modal-course-icon" id="mIcon"></div>
+        <div><div class="modal-title" id="mTitle">—</div><div class="modal-meta" id="mMeta">—</div></div>
+        <button class="modal-close" onclick="closeCourseModal()">✕ Close</button>
+      </div>
+      <div class="modal-tabs">
+        <button class="mtab active" id="mtab-lessons" onclick="switchTab('lessons')">📖 Lessons</button>
+        <button class="mtab" id="mtab-quiz" onclick="switchTab('quiz')">❓ Quiz</button>
+        <button class="mtab" id="mtab-cert" onclick="switchTab('cert')">🏆 Certificate</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-panel active" id="mpanel-lessons"><div id="lessonContent"></div></div>
+      <div class="modal-panel" id="mpanel-quiz"><div id="quizContent"></div></div>
+      <div class="modal-panel" id="mpanel-cert"><div id="certContent"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeCourseModal()">Close</button>
+      <button class="btn btn-primary" id="footerQuizBtn" onclick="switchTab('quiz')" style="display:none;">Take the Quiz →</button>
+      <button class="btn btn-success" id="footerCertBtn" onclick="switchTab('cert')" style="display:none;">🏆 View Certificate</button>
+    </div>
+  </div>
+</div>
+<script>
+// ════════════════════════════════════════════════════════════════
+// ACADEMY DATA — 6 modules. Content based on published guidance:
+// CISA, FEMA/Ready.gov, FBI, NCMEC (Code Adam), CPI, Verbal Judo.
+// ════════════════════════════════════════════════════════════════
+const COURSES = [
+  {
+    id: 'ss101', icon: '🛡️', title: 'Team Fundamentals & Ministry of Presence',
+    meta: '3 lessons · ~15 min · Required first',
+    lessons: [
+      { title: 'Why This Team Exists', content: `<p>The safety/security team exists so that Celebration Church stays what it is meant to be — an open, welcoming house of worship — while people are protected. Our posture is <strong>hospitality first, protection always</strong>: most of what this team does on a Sunday looks like greeting, watching, and serving.</p><ul><li>We protect <strong>people</strong> (congregation, kids, guests, staff), the <strong>ministry</strong> (services continue safely), and the <strong>facility</strong>.</li><li>We are not police. We observe, report, de-escalate, and manage emergencies until professional responders arrive. In any life-threatening situation, <strong>call 911</strong>.</li><li>Every member serves under a <strong>Team Lead</strong>. The Team Lead makes the call during an incident and is the point of contact for staff and law enforcement.</li></ul><div class="tip-box">💡 Federal guidance for this mission comes from FEMA's <em>Guide for Developing High-Quality Emergency Operations Plans for Houses of Worship</em> and CISA's <em>Protecting Houses of Worship</em> program.</div>` },
+      { title: 'Coverage, Posts & Communication', content: `<p>Celebration Church runs three Sunday services: <strong>8:00 AM, 9:45 AM, and 11:30 AM</strong>. Our standing rule:</p><ul><li><strong>Minimum 3 team members per service, including 1 Team Lead.</strong></li><li>Core coverage areas: <strong>foyer/main entrance</strong>, <strong>sanctuary</strong>, and <strong>children's areas</strong> (auditorium + check-in). The parking lot/perimeter is patrolled before and after each service.</li><li>Arrive <strong>30 minutes before</strong> your service; stay until the lobby clears and children's pickup is complete.</li><li>Know your communication method (radio/text thread) and use plain language plus "Code Adam" for a missing child.</li></ul>` },
+      { title: 'Situational Awareness & Reporting', content: `<p>Most incidents announce themselves early. Your job is to notice.</p><ul><li>Watch <strong>behavior, not appearance</strong>: agitation, pacing, clothing inconsistent with weather (concealment), fixation on children's areas, testing doors, filming entrances.</li><li>Use a simple standard: <strong>See something → Say something → Do something.</strong> Report to your Team Lead immediately; never investigate alone.</li><li>CISA's "Pathway to Violence" research shows attackers usually display observable planning behaviors first — early reporting is prevention.</li><li>Document incidents the same day: what, where, when, who, and actions taken. Reports feed team meetings and training.</li></ul>` }
+    ],
+    quiz: [
+      { q: 'What is the minimum team staffing for every Celebration Church service?', opts: ['2 members', '3 members including 1 Team Lead', '5 members including 2 Team Leads', '1 Team Lead only'], ans: 1 },
+      { q: 'Who directs the team during an active incident?', opts: ['Whoever saw it first', 'The Senior Pastor', 'The Team Lead on duty', 'Dispatch'], ans: 2 },
+      { q: 'In a life-threatening emergency, your FIRST call is to:', opts: ['The church office', 'The Team Lead', '911', 'Nampa PD non-emergency line'], ans: 2 },
+      { q: 'Situational awareness means watching for:', opts: ['People who look different', 'Suspicious behaviors like door-testing, concealment, or fixation on kids\u2019 areas', 'Only the parking lot', 'Nothing until an alarm sounds'], ans: 1 },
+      { q: 'The team\u2019s Sunday posture is best described as:', opts: ['Undercover surveillance', 'Armed deterrence', 'Hospitality first, protection always', 'Strict rule enforcement'], ans: 2 }
+    ]
+  },
+  {
+    id: 'ss102', icon: '🕊️', title: 'De-escalation & Verbal Skills',
+    meta: '3 lessons · ~15 min',
+    lessons: [
+      { title: 'Recognizing Escalation Early', content: `<p>De-escalation starts before the shouting. Learn the ladder: <strong>anxiety → defensiveness → acting out → tension reduction</strong> (the Crisis Prevention Institute's Crisis Development Model follows this arc).</p><ul><li>Early signs: raised voice, rapid speech, clenched hands, pacing, invading space, refusing to move along.</li><li>Meet anxiety with <strong>support</strong>, defensiveness with <strong>calm direction</strong> — matching aggression with aggression escalates every time.</li><li>Approach in pairs when possible: one talks, one observes from an angle, both keep an exit path.</li></ul>` },
+      { title: 'Core Verbal Techniques', content: `<p>Field-tested techniques taught by CPI, Verbal Judo, and church-security trainers:</p><ul><li><strong>Listen actively and show empathy.</strong> Let them vent; acknowledge feelings without agreeing to demands: "I can hear this really matters to you."</li><li><strong>Respect personal space</strong> (about 1.5–3 feet extra) and keep non-threatening body language — hands visible, relaxed, slightly bladed stance.</li><li><strong>Calm, low, slow voice.</strong> Never say "calm down" — it does the opposite.</li><li><strong>Ask open-ended questions</strong> ("Can you tell me what happened?") and <strong>offer choices</strong> ("Want to step into the lobby, or sit here and talk?") — choice restores control.</li><li><strong>Set simple limits</strong> and allow silence: "I want to help you, and I need you to lower your voice so we can talk."</li></ul>` },
+      { title: 'Knowing When to Disengage', content: `<p>De-escalation requires the other person's participation. It has limits.</p><ul><li>If a weapon appears, threats become specific, or the person advances aggressively — <strong>disengage, protect people, and call 911.</strong></li><li>Position yourself between the person and the congregation, never cornered and never cornering them.</li><li>After any incident: report to the Team Lead, document it, and debrief at the next team meeting.</li></ul><div class="tip-box">📚 Read CPI's free <a href="https://www.crisisprevention.com/blog/general/de-escalation-tips/" target="_blank" rel="noopener">Top 10 De-escalation Tips</a> — required reading for this module.</div>` }
+    ],
+    quiz: [
+      { q: 'Which phrase is most likely to escalate an agitated person?', opts: ['\u201cI can hear that you\u2019re upset.\u201d', '\u201cCalm down.\u201d', '\u201cCan you tell me what happened?\u201d', '\u201cWould you like to step into the lobby?\u201d'], ans: 1 },
+      { q: 'Offering choices to an agitated person works because it:', opts: ['Distracts them', 'Restores a sense of control', 'Buys time for police', 'Shows authority'], ans: 1 },
+      { q: 'Ideal approach when engaging a disruptive individual:', opts: ['Alone, to avoid crowding', 'In pairs — one talks, one observes', 'With the whole team surrounding them', 'From behind'], ans: 1 },
+      { q: 'A weapon becomes visible during a conversation. You should:', opts: ['Keep talking calmly', 'Attempt to grab it', 'Disengage, protect people, call 911', 'Ask them to hand it over'], ans: 2 },
+      { q: 'Respecting personal space during de-escalation means:', opts: ['Standing toe-to-toe to show confidence', 'Allowing extra distance beyond normal conversation', 'Staying across the room and shouting', 'Touching their shoulder reassuringly'], ans: 1 }
+    ]
+  },
+  {
+    id: 'ss201', icon: '🚨', title: 'Active Shooter Response: Run · Hide · Fight',
+    meta: '3 lessons · ~18 min',
+    lessons: [
+      { title: 'Run — Hide — Fight', content: `<p>DHS, CISA, and the FBI teach three options, in order of preference:</p><ol><li><strong>RUN.</strong> If an escape path exists, evacuate. Leave belongings, move others with you if they'll come, keep hands visible outside.</li><li><strong>HIDE.</strong> If you can't run: out of view, behind locked/blockaded doors, phones silenced, lights off, behind solid cover. Spread out; stay quiet.</li><li><strong>FIGHT.</strong> Last resort, when your life is in imminent danger: commit fully, act with aggression, use improvised weapons, work together to incapacitate.</li></ol><p>As team members our added duty is to <strong>move people</strong>: direct evacuations toward safe exits, push groups into lockable rooms, and account for children's areas first.</p>` },
+      { title: 'Calling 911 & Police Arrival', content: `<ul><li><strong>Call 911 when safe.</strong> Report: location within the building, shooter description/count, weapons seen, and casualties. Stay on the line if possible.</li><li>When officers arrive: <strong>hands visible and empty, fingers spread, follow commands instantly.</strong> Do not run at officers, point, scream, or grab them for help — their first job is stopping the threat, not treating the injured.</li><li>Expect follow-on waves: rescue teams, EMS staging, and a family reunification point. The Team Lead coordinates with incident command.</li></ul>` },
+      { title: 'Prevention: The Pathway to Violence', content: `<p>Most attackers don't "snap" — they plan, and planning is observable. CISA's Pathway to Violence framework highlights escalating behaviors: grievance → ideation → research/planning → preparation → probing → attack.</p><ul><li>Take seriously: leaked threats, fixation on past church attacks, surveillance-like behavior, probing doors and security.</li><li>Report concerns to the Team Lead and leadership; contact Nampa PD ((208) 465-2257) for guidance on concerning individuals. Documentation matters.</li><li>Complete FEMA's free <a href="https://training.fema.gov/is/courseoverview.aspx?code=IS-907" target="_blank" rel="noopener">IS-907: Active Shooter — What You Can Do</a> as the companion to this module.</li></ul>` }
+    ],
+    quiz: [
+      { q: 'The preferred FIRST option in an active shooter event is:', opts: ['Fight', 'Hide', 'Run / evacuate', 'Negotiate'], ans: 2 },
+      { q: 'When hiding, you should:', opts: ['Group everyone tightly together in one corner', 'Lock/blockade doors, silence phones, stay behind solid cover', 'Keep the door open to hear the shooter', 'Play dead immediately'], ans: 1 },
+      { q: 'When police arrive, you should:', opts: ['Run to them for protection', 'Point and shout directions', 'Keep hands visible and empty, follow commands', 'Lead them to the injured first'], ans: 2 },
+      { q: '\u201cFight\u201d is appropriate:', opts: ['As soon as you see the shooter', 'Only as a last resort when your life is in imminent danger', 'Never', 'Whenever you outnumber the shooter'], ans: 1 },
+      { q: 'The \u201cPathway to Violence\u201d teaches that attackers:', opts: ['Always act spontaneously', 'Usually display observable planning behaviors first', 'Cannot be detected in advance', 'Only target large events'], ans: 1 }
+    ]
+  },
+  {
+    id: 'ss202', icon: '🧒', title: 'Lost Child & Code Adam',
+    meta: '3 lessons · ~15 min',
+    lessons: [
+      { title: 'Prevention: Secure Check-In', content: `<p>The best missing-child response is the one that never has to happen. Celebration Kids uses a secure check-in process — the team's job is to keep it airtight.</p><ul><li><strong>Every child, every tag, every time.</strong> Pickup requires the matching claim tag; no tag means a staff-verified ID process — no exceptions, even for people we recognize.</li><li>Watch children's hallways for adults without a child or a serving role; politely redirect them.</li><li>Exterior doors near kids' areas are monitored during transitions (drop-off, dismissal).</li></ul>` },
+      { title: 'The Six Steps of Code Adam', content: `<p>Code Adam is NCMEC's free national missing-child protocol, named for Adam Walsh. The six steps:</p><ol><li>Get a <strong>detailed description</strong> — age, hair, clothing, and especially <strong>shoes</strong> (clothes are easy to change; shoes usually aren't).</li><li>Announce <strong>"Code Adam"</strong> with the description over the team channel/page.</li><li><strong>Cover every exterior door</strong> and watch the parking lot — nothing leaves unnoticed.</li><li><strong>Search systematically</strong> while calling the child's name: sanctuary, kids' rooms, restrooms, hallways, play areas.</li><li>Not found in <strong>10 minutes → call 911.</strong></li><li>Found safe → reunite with the verified parent/guardian. Found with a non-guardian → use reasonable, non-violent delay, note description/vehicle/direction, and hand off to police.</li></ol>` },
+      { title: 'Reunification & Aftermath', content: `<ul><li>Only end a Code Adam when the child is found safe or law enforcement takes over.</li><li>Reunify away from crowds; verify the claim tag / guardian identity before release.</li><li>Debrief the same day: what worked, gaps in door coverage, timing. Update procedures.</li><li>Order the free official kit (poster, checklist, training video, employee quiz) at <a href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener">missingkids.org</a>.</li></ul>` }
+    ],
+    quiz: [
+      { q: 'Why do Code Adam descriptions emphasize the child\u2019s SHOES?', opts: ['Shoes are expensive', 'Clothing is easy to change quickly; shoes usually aren\u2019t', 'Shoes show the child\u2019s age', 'It\u2019s just tradition'], ans: 1 },
+      { q: 'Immediately after the Code Adam page goes out, exterior doors are:', opts: ['Locked with chains', 'Monitored so no child leaves unnoticed', 'Ignored — everyone searches', 'Opened for police'], ans: 1 },
+      { q: 'If the child is not found within 10 minutes:', opts: ['Search another 10 minutes', 'Call 911', 'Send everyone home', 'Check cameras first'], ans: 1 },
+      { q: 'The child is found with someone who is NOT a parent/guardian. You should:', opts: ['Tackle the person', 'Let them leave to avoid a scene', 'Use reasonable non-violent delay, note description/vehicle, involve police', 'Take a photo and post it'], ans: 2 },
+      { q: 'Secure children\u2019s pickup at Celebration requires:', opts: ['A matching claim tag or staff-verified ID — every time', 'Recognition by a volunteer', 'The child pointing at the adult', 'Nothing after the last service'], ans: 0 }
+    ]
+  },
+  {
+    id: 'ss203', icon: '🔥', title: 'Fire & Evacuation',
+    meta: '3 lessons · ~15 min',
+    lessons: [
+      { title: 'Evacuation Roles & Routes', content: `<ul><li>On alarm: the decision is already made — <strong>evacuate.</strong> Team members move to assigned zones: sanctuary doors, foyer, children's auditorium, children's check-in.</li><li>Direct people to the <strong>nearest safe exit</strong> — never through smoke; stay low if smoke is present.</li><li>Children evacuate <strong>by class with their leaders</strong>; parents are directed to reunify at the assembly area, not in hallways (hallway reunification blocks the evacuation).</li><li>Assist people with mobility needs — know accessible routes and refuge areas in advance (marked on the site schematic).</li></ul>` },
+      { title: 'Fire Response Basics', content: `<ul><li><strong>Call 911</strong> for any fire, even if it appears extinguished.</li><li>Only fight a fire if it is small and contained, you have a clear exit behind you, and you're trained on the extinguisher — remember <strong>PASS</strong>: Pull, Aim at the base, Squeeze, Sweep.</li><li>Close doors behind you as areas clear to slow spread. Never use elevators.</li><li>Keep driveways and hydrants clear for arriving apparatus; a team member meets the first units to report status and anyone missing.</li></ul>` },
+      { title: 'Assembly & Accountability', content: `<ul><li>Everyone proceeds to the designated <strong>assembly area</strong> (to be marked on the uploaded schematic) — far enough from the building for safety and fire access.</li><li>Team Leads account for team members, staff, and children's classes; anyone unaccounted for (and last known location) is reported to fire command — <strong>never re-enter to search.</strong></li><li>Re-entry only when fire officials declare the building safe.</li><li>Reference: <a href="https://www.ready.gov/home-fires" target="_blank" rel="noopener">Ready.gov — Fires</a> and your local fire authority's guidance on drills.</li></ul>` }
+    ],
+    quiz: [
+      { q: 'During evacuation, parents of checked-in children should:', opts: ['Go to the kids\u2019 rooms to grab their child', 'Reunify at the assembly area after classes evacuate together', 'Wait in the foyer', 'Drive around the building'], ans: 1 },
+      { q: 'PASS stands for:', opts: ['Point, Alert, Spray, Stop', 'Pull, Aim, Squeeze, Sweep', 'Prepare, Act, Stay, Safe', 'Pull, Alarm, Smother, Stand'], ans: 1 },
+      { q: 'You should attempt to fight a fire only if:', opts: ['It\u2019s smaller than a car', 'It\u2019s small/contained, you have an exit behind you, and you\u2019re trained', 'Others are watching', 'The alarm hasn\u2019t sounded yet'], ans: 1 },
+      { q: 'Someone is unaccounted for at the assembly area. You should:', opts: ['Re-enter and search', 'Report them and their last known location to fire command', 'Wait 10 minutes', 'Assume they went home'], ans: 1 },
+      { q: 'When is re-entry allowed after a fire alarm?', opts: ['When the alarm stops', 'After 15 minutes', 'When fire officials declare the building safe', 'When smoke is no longer visible'], ans: 2 }
+    ]
+  },
+  {
+    id: 'ss204', icon: '🌪️', title: 'Severe Weather, Earthquake & Continuity',
+    meta: '3 lessons · ~18 min',
+    lessons: [
+      { title: 'Tornado & Severe Weather', content: `<ul><li><strong>Watch = be ready. Warning = act now.</strong> Monitor NWS Boise for the Treasure Valley.</li><li>Tornado warning: move everyone to <strong>interior rooms and hallways on the lowest level, away from windows</strong> and wide-span roofs (like a sanctuary ceiling). Crouch low, protect heads.</li><li>Do not send people to their cars during a warning — sheltering in place is safer.</li><li>Winter weather: leadership calls delays/cancellations early; the team manages lot conditions, salted walkways, and entrance safety.</li></ul>` },
+      { title: 'Earthquake: Drop, Cover, Hold On', content: `<ul><li>During shaking: <strong>DROP</strong> to hands and knees, <strong>COVER</strong> head and neck under sturdy furniture if possible, <strong>HOLD ON</strong> until it stops. Idaho is seismically active — this is a real scenario.</li><li>Do not run outside during shaking; falling debris and glass cause most injuries. Stay clear of windows and tall fixtures.</li><li>After: check for injuries, gas odor, structural damage, and fire; evacuate to the assembly area if the building is suspect. Expect aftershocks.</li></ul>` },
+      { title: 'Flooding & Church Continuity', content: `<ul><li>Flooding: move people up and away; <strong>Turn Around, Don't Drown</strong> — 6 inches of moving water can knock an adult down, 12 inches can float a vehicle. Never route traffic through flooded lot sections.</li><li><strong>Continuity of ministry</strong> (per FEMA continuity guidance): know the church's essential functions, who succeeds whom in leadership, the alternate worship location/online option, the congregation notification method, and where vital records are backed up.</li><li>The team's continuity role: secure the facility, support communication, and staff the alternate site's first services.</li></ul>` }
+    ],
+    quiz: [
+      { q: 'A tornado WARNING during second service means:', opts: ['Continue and monitor', 'Move everyone to interior lowest-level rooms/hallways away from windows now', 'Evacuate to vehicles', 'Move everyone to the sanctuary center'], ans: 1 },
+      { q: 'During earthquake shaking you should:', opts: ['Run outside immediately', 'Stand in a doorway', 'Drop, Cover, Hold On', 'Pull the fire alarm'], ans: 2 },
+      { q: '\u201cTurn Around, Don\u2019t Drown\u201d exists because:', opts: ['Flood water is dirty', 'As little as 6\u2033 of moving water can knock an adult down', 'Cars float at 3 feet only', 'It rhymes'], ans: 1 },
+      { q: 'Continuity planning identifies all of the following EXCEPT:', opts: ['Essential functions', 'Orders of succession', 'Alternate facilities', 'Sermon topics for next year'], ans: 3 },
+      { q: 'A Watch vs. a Warning:', opts: ['They mean the same thing', 'Watch = conditions possible; Warning = happening/imminent — act now', 'Warning comes before Watch', 'Watches are only for winter storms'], ans: 1 }
+    ]
+  }
+];
+
+const ONBOARD_ITEMS = [
+  'Read the 25-page Safety & Security Onboarding Manual (placeholder until uploaded)',
+  'Meet the Team Lead(s) and receive your service assignment',
+  'Walk the full facility: foyer, sanctuary, children\u2019s auditorium, children\u2019s check-in, all exits, perimeter',
+  'Review Facility Maps & the site schematic (routes, assembly area, AED/extinguishers)',
+  'Review the Leadership/Staff directory — know who\u2019s who on sight',
+  'Complete Academy module SS-101: Team Fundamentals',
+  'Complete Academy module: De-escalation & Verbal Skills',
+  'Complete Academy modules: Active Shooter, Code Adam, Fire & Evacuation, Severe Weather',
+  'Review all Emergency Procedures incl. church continuity',
+  'Save key numbers: 911 · Nampa PD (208) 465-2257 · Church office (208) 466-5433',
+  'Shadow one full Sunday (all three services) with a Team Lead',
+  'Sign off with the Team Lead — cleared for the schedule'
+];
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+const LS_KEY = 'ccssta_v1';
+let S = load();
+function defaults() {
+  return {
+    pin: '2121',
+    trainee: '',
+    team: [],
+    leaders: [
+      { id: 'ld1', name: 'Roger Yadon', title: 'Senior Pastor', notes: 'Verify details at thecelebration.church/our-team' }
+    ],
+    meetings: [],
+    schedule: {},          // { '2026-09-20': { s0:{lead:'',members:[]}, s1:{...}, s2:{...} } }
+    training: {},          // { courseId: { doneLessons:[], quizScore:null, quizPassed:false, certName:'' } }
+    onboard: [],
+    activity: []
+  };
+}
+function load() {
+  try { const raw = localStorage.getItem(LS_KEY); if (raw) return Object.assign(defaults(), JSON.parse(raw)); } catch (e) {}
+  return defaults();
+}
+function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function addActivity(msg) {
+  S.activity.unshift({ t: new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }), msg });
+  S.activity = S.activity.slice(0, 12);
+  save(); renderActivity();
+}
+function getCS(id) {
+  if (!S.training[id]) S.training[id] = { doneLessons: [], quizScore: null, quizPassed: false, certName: '' };
+  return S.training[id];
+}
+
+// ════════════════════════════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════════════════════════════
+function showSection(key, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + key).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  else document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.toLowerCase().includes(key === 'academy' ? 'academy' : key)) n.classList.add('active'); });
+}
+function navTo(key) {
+  const items = Array.from(document.querySelectorAll('.nav-item'));
+  const map = { academy:'Academy', leadership:'Leadership', maps:'Facility Maps', team:'Team', scheduling:'Scheduling' };
+  const el = items.find(n => n.textContent.trim().startsWith(map[key] || '###'));
+  showSection(key, el || null);
+  window.scrollTo({ top: 0 });
+}
+
+// ════════════════════════════════════════════════════════════════
+// ADMIN PIN
+// ════════════════════════════════════════════════════════════════
+let adminOn = false, pinBuf = '';
+function toggleAdmin() {
+  if (adminOn) {
+    if (confirm('Lock admin mode?\n\n(OK = lock · Cancel = stay unlocked. To change the PIN, stay unlocked and use the Change PIN option in the Team tab.)')) {
+      adminOn = false; applyAdmin(); addActivity('Admin locked');
+    }
+    return;
+  }
+  pinBuf = ''; updateDots(); document.getElementById('pinError').textContent = '';
+  document.getElementById('adminGate').classList.add('open');
+}
+function pinKey(k) {
+  if (k === 'back') pinBuf = pinBuf.slice(0, -1);
+  else if (k === 'clear') pinBuf = '';
+  else if (pinBuf.length < 4) pinBuf += k;
+  updateDots();
+  if (pinBuf.length === 4) {
+    if (pinBuf === S.pin) {
+      adminOn = true; document.getElementById('adminGate').classList.remove('open');
+      applyAdmin(); addActivity('Admin unlocked');
+    } else {
+      document.getElementById('pinError').textContent = 'Incorrect PIN';
+      pinBuf = ''; setTimeout(updateDots, 350);
+    }
+  }
+}
+function updateDots() { for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.toggle('filled', i < pinBuf.length); }
+function closeAdminGate() { document.getElementById('adminGate').classList.remove('open'); }
+function changePin() {
+  const np = prompt('Enter a new 4-digit admin PIN:');
+  if (np && /^\d{4}$/.test(np)) { S.pin = np; save(); alert('Admin PIN updated.'); addActivity('Admin PIN changed'); }
+  else if (np !== null) alert('PIN must be exactly 4 digits.');
+}
+function applyAdmin() {
+  const chip = document.getElementById('adminChip');
+  chip.textContent = adminOn ? '🔓 Admin ON' : '🔒 Admin';
+  chip.style.background = adminOn ? 'rgba(34,197,94,.12)' : '';
+  chip.style.borderColor = adminOn ? 'rgba(34,197,94,.4)' : '';
+  chip.style.color = adminOn ? 'var(--gr)' : '';
+  document.getElementById('addMemberBtn').style.display = adminOn ? '' : 'none';
+  document.getElementById('addLeaderBtn').style.display = adminOn ? '' : 'none';
+  document.getElementById('addMeetingBtn').style.display = adminOn ? '' : 'none';
+  document.getElementById('teamActionsHead').style.display = adminOn ? '' : 'none';
+  document.getElementById('teamAdminNote').style.display = adminOn ? 'none' : '';
+  document.getElementById('meetAdminNote').style.display = adminOn ? 'none' : '';
+  document.getElementById('leaderAdminNote').style.display = adminOn ? 'none' : '';
+  document.getElementById('schedAdminNote').style.display = adminOn ? 'none' : '';
+  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule();
+}
+
+// ════════════════════════════════════════════════════════════════
+// TEAM
+// ════════════════════════════════════════════════════════════════
+let editingMemberId = null;
+const SPEC_CLASS = { 'Police / Law Enforcement':'spec-police', 'Fire':'spec-fire', 'First Responder / EMS':'spec-medical', 'Medical (Nurse / Doctor)':'spec-medical', 'Military / Veteran':'spec-military', 'Security Professional':'spec-police', 'General / Trained Volunteer':'spec-general' };
+function openMemberModal(id) {
+  editingMemberId = id || null;
+  document.getElementById('memberModalTitle').textContent = id ? '🛡️ EDIT TEAM MEMBER' : '🛡️ ADD TEAM MEMBER';
+  const m = id ? S.team.find(x => x.id === id) : null;
+  document.getElementById('mFirst').value = m ? m.first : '';
+  document.getElementById('mLast').value = m ? m.last : '';
+  document.getElementById('mPhone').value = m ? m.phone : '';
+  document.getElementById('mSpec').value = m ? m.spec : 'General / Trained Volunteer';
+  document.getElementById('mRole').value = m ? m.role : 'Team Member';
+  document.getElementById('memberModal').classList.add('open');
+}
+function saveMember() {
+  const first = document.getElementById('mFirst').value.trim();
+  const last = document.getElementById('mLast').value.trim();
+  const phone = document.getElementById('mPhone').value.trim();
+  if (!first || !last) { alert('First and last name are required.'); return; }
+  const data = { first, last, phone, spec: document.getElementById('mSpec').value, role: document.getElementById('mRole').value };
+  if (editingMemberId) Object.assign(S.team.find(x => x.id === editingMemberId), data);
+  else S.team.push(Object.assign({ id: 'tm' + Date.now() }, data));
+  save(); closeModalEl('memberModal'); renderTeam(); renderSchedule(); refreshDash();
+  addActivity((editingMemberId ? 'Updated' : 'Added') + ' team member: ' + first + ' ' + last);
+  editingMemberId = null;
+}
+function deleteMember(id) {
+  const m = S.team.find(x => x.id === id);
+  if (!confirm('Remove ' + m.first + ' ' + m.last + ' from the roster? They will also be removed from schedules.')) return;
+  S.team = S.team.filter(x => x.id !== id);
+  Object.values(S.schedule).forEach(day => Object.values(day).forEach(svc => {
+    if (svc.lead === id) svc.lead = '';
+    svc.members = svc.members.map(x => x === id ? '' : x);
+  }));
+  save(); renderTeam(); renderSchedule(); refreshDash(); addActivity('Removed team member: ' + m.first + ' ' + m.last);
+}
+function renderTeam() {
+  const tb = document.getElementById('teamBody');
+  document.getElementById('teamEmpty').style.display = S.team.length ? 'none' : '';
+  document.getElementById('hs-team').textContent = S.team.length;
+  tb.innerHTML = S.team.map(m => `
+    <tr>
+      <td style="font-weight:700;color:var(--tx);">${esc(m.first)}</td>
+      <td style="font-weight:700;color:var(--tx);">${esc(m.last)}</td>
+      <td><a href="tel:${esc(m.phone.replace(/\D/g,''))}" style="color:var(--bl);">${esc(m.phone)}</a></td>
+      <td><span class="spec-tag ${SPEC_CLASS[m.spec] || 'spec-general'}">${esc(m.spec)}</span></td>
+      <td>${m.role === 'Team Lead' ? '<span class="lead-tag">★ TEAM LEAD</span>' : '<span style="color:var(--tx2);">Team Member</span>'}</td>
+      ${adminOn ? `<td><button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;" onclick="openMemberModal('${m.id}')">Edit</button> <button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:#f87171;" onclick="deleteMember('${m.id}')">✕</button></td>` : ''}
+    </tr>`).join('');
+  const changePinRow = adminOn ? '<div style="margin-top:.7rem;"><button class="btn btn-ghost" style="font-size:.7rem;" onclick="changePin()">🔑 Change Admin PIN</button></div>' : '';
+  document.getElementById('teamEmpty').insertAdjacentHTML('afterend', '');
+  let pinDiv = document.getElementById('pinChangeRow');
+  if (!pinDiv) { pinDiv = document.createElement('div'); pinDiv.id = 'pinChangeRow'; document.getElementById('sec-team').appendChild(pinDiv); }
+  pinDiv.innerHTML = changePinRow;
+}
+
+// ════════════════════════════════════════════════════════════════
+// LEADERSHIP
+// ════════════════════════════════════════════════════════════════
+let editingLeaderId = null;
+function openLeaderModal(id) {
+  editingLeaderId = id || null;
+  document.getElementById('leaderModalTitle').textContent = id ? '⛪ EDIT LEADERSHIP / STAFF' : '⛪ ADD LEADERSHIP / STAFF';
+  const l = id ? S.leaders.find(x => x.id === id) : null;
+  document.getElementById('lName').value = l ? l.name : '';
+  document.getElementById('lTitle').value = l ? l.title : '';
+  document.getElementById('lNotes').value = l ? (l.notes || '') : '';
+  document.getElementById('leaderModal').classList.add('open');
+}
+function saveLeader() {
+  const name = document.getElementById('lName').value.trim();
+  const title = document.getElementById('lTitle').value.trim();
+  if (!name || !title) { alert('Name and title are required.'); return; }
+  const data = { name, title, notes: document.getElementById('lNotes').value.trim() };
+  if (editingLeaderId) Object.assign(S.leaders.find(x => x.id === editingLeaderId), data);
+  else S.leaders.push(Object.assign({ id: 'ld' + Date.now() }, data));
+  save(); closeModalEl('leaderModal'); renderLeaders();
+  addActivity((editingLeaderId ? 'Updated' : 'Added') + ' staff entry: ' + name);
+  editingLeaderId = null;
+}
+function deleteLeader(id) {
+  const l = S.leaders.find(x => x.id === id);
+  if (!confirm('Remove ' + l.name + ' from the directory?')) return;
+  S.leaders = S.leaders.filter(x => x.id !== id);
+  save(); renderLeaders(); addActivity('Removed staff entry: ' + l.name);
+}
+function renderLeaders() {
+  document.getElementById('leaderGrid').innerHTML = S.leaders.map(l => `
+    <div class="course-card" style="cursor:default;">
+      <div style="width:100%;height:110px;border:2px dashed var(--bd2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--tx3);font-size:.68rem;margin-bottom:.6rem;">📷 Photo placeholder</div>
+      <div class="cc-title">${esc(l.name)}</div>
+      <div style="font-size:.72rem;font-weight:800;color:var(--c);letter-spacing:.5px;">${esc(l.title)}</div>
+      ${l.notes ? `<div style="font-size:.72rem;color:var(--tx2);margin-top:.3rem;line-height:1.5;">${esc(l.notes)}</div>` : ''}
+      ${adminOn ? `<div style="margin-top:.55rem;"><button class="btn btn-ghost" style="padding:.22rem .5rem;font-size:.66rem;" onclick="openLeaderModal('${l.id}')">Edit</button> <button class="btn btn-ghost" style="padding:.22rem .5rem;font-size:.66rem;color:#f87171;" onclick="deleteLeader('${l.id}')">✕</button></div>` : ''}
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════════
+// MEETINGS
+// ════════════════════════════════════════════════════════════════
+function openMeetingModal() {
+  document.getElementById('mtDate').value = ''; document.getElementById('mtTime').value = '';
+  document.getElementById('mtTitle').value = ''; document.getElementById('mtNotes').value = '';
+  document.getElementById('meetingModal').classList.add('open');
+}
+function saveMeeting() {
+  const date = document.getElementById('mtDate').value, title = document.getElementById('mtTitle').value.trim();
+  if (!date || !title) { alert('Date and topic are required.'); return; }
+  S.meetings.push({ id: 'mt' + Date.now(), date, time: document.getElementById('mtTime').value, title, notes: document.getElementById('mtNotes').value.trim() });
+  S.meetings.sort((a, b) => b.date.localeCompare(a.date));
+  save(); closeModalEl('meetingModal'); renderMeetings(); addActivity('Meeting logged: ' + title);
+}
+function deleteMeeting(id) {
+  if (!confirm('Delete this meeting record?')) return;
+  S.meetings = S.meetings.filter(m => m.id !== id);
+  save(); renderMeetings();
+}
+function renderMeetings() {
+  document.getElementById('meetingEmpty').style.display = S.meetings.length ? 'none' : '';
+  document.getElementById('meetingList').innerHTML = S.meetings.map(m => {
+    const d = new Date(m.date + 'T12:00:00');
+    return `<div class="card">
+      <div style="display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;">
+        <div style="text-align:center;background:var(--s1);border:1px solid var(--bd2);border-radius:10px;padding:.35rem .6rem;min-width:56px;">
+          <div style="font-family:var(--fh);font-size:1.15rem;color:var(--c);line-height:1;">${d.getDate()}</div>
+          <div style="font-size:.6rem;color:var(--tx3);font-weight:800;">${d.toLocaleDateString('en-US',{month:'short'}).toUpperCase()}</div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:800;font-size:.92rem;">${esc(m.title)}</div>
+          <div style="font-size:.7rem;color:var(--tx3);">${d.toLocaleDateString('en-US',{weekday:'long',year:'numeric'})}${m.time ? ' · ' + esc(m.time) : ''}</div>
+        </div>
+        ${adminOn ? `<button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:#f87171;" onclick="deleteMeeting('${m.id}')">✕</button>` : ''}
+      </div>
+      ${m.notes ? `<div style="font-size:.8rem;color:var(--tx2);margin-top:.6rem;line-height:1.6;white-space:pre-wrap;">${esc(m.notes)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+// ════════════════════════════════════════════════════════════════
+// SCHEDULING — Sundays, 3 services, min 3 incl 1 Team Lead
+// ════════════════════════════════════════════════════════════════
+const SERVICES = [ { key: 's0', label: '8:00 AM' }, { key: 's1', label: '9:45 AM' }, { key: 's2', label: '11:30 AM' } ];
+let curSunday = nextSunday(new Date());
+function nextSunday(d) {
+  const x = new Date(d); x.setHours(12,0,0,0);
+  x.setDate(x.getDate() + ((7 - x.getDay()) % 7));
+  return x;
+}
+function iso(d) { return d.toISOString().slice(0, 10); }
+function shiftSunday(days) { curSunday = new Date(curSunday.getTime() + days * 864e5); renderSchedule(); }
+function getDay(dateIso) {
+  if (!S.schedule[dateIso]) S.schedule[dateIso] = { s0: { lead: '', members: ['','','',''] }, s1: { lead: '', members: ['','','',''] }, s2: { lead: '', members: ['','','',''] } };
+  return S.schedule[dateIso];
+}
+function setAssign(dateIso, svcKey, slot, val) {
+  const day = getDay(dateIso);
+  if (slot === 'lead') day[svcKey].lead = val; else day[svcKey].members[slot] = val;
+  save(); renderSchedule(); refreshDash();
+}
+function svcStatus(svc) {
+  const ids = [svc.lead, ...svc.members].filter(Boolean);
+  const unique = [...new Set(ids)];
+  const hasLead = !!svc.lead;
+  return { count: unique.length, hasLead, ok: unique.length >= 3 && hasLead };
+}
+function renderSchedule() {
+  const dateIso = iso(curSunday);
+  const day = getDay(dateIso);
+  const label = curSunday.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById('schedDateLabel').textContent = label;
+  document.getElementById('schedSummaryDate').textContent = label;
+  const leads = S.team.filter(m => m.role === 'Team Lead');
+  const all = S.team;
+  const opt = (list, sel) => '<option value="">— unassigned —</option>' + list.map(m => `<option value="${m.id}" ${m.id===sel?'selected':''}>${esc(m.first + ' ' + m.last)}</option>`).join('');
+  document.getElementById('schedGrid').innerHTML = SERVICES.map(sv => {
+    const svc = day[sv.key]; const st = svcStatus(svc);
+    const dis = adminOn ? '' : 'disabled';
+    return `<div class="svc-col">
+      <div class="svc-time">⛪ ${sv.label}</div>
+      <div class="svc-req">Min 3 team · 1 Team Lead required</div>
+      <div class="svc-slot"><span class="lead-tag" style="flex-shrink:0;">★ LEAD</span>
+        <select ${dis} onchange="setAssign('${dateIso}','${sv.key}','lead',this.value)">${opt(leads, svc.lead)}</select></div>
+      ${svc.members.map((mid, i) => `<div class="svc-slot"><span style="font-size:.62rem;color:var(--tx3);font-weight:800;flex-shrink:0;width:38px;">#${i + 2}</span>
+        <select ${dis} onchange="setAssign('${dateIso}','${sv.key}',${i},this.value)">${opt(all, mid)}</select></div>`).join('')}
+      <div class="svc-warn-box ${st.ok ? 'ok' : 'bad'}">${st.ok ? '✅ Coverage met (' + st.count + ' assigned)' : '⚠️ ' + st.count + '/3 assigned' + (st.hasLead ? '' : ' — no Team Lead')}</div>
+    </div>`;
+  }).join('');
+  if (!S.team.length) {
+    document.getElementById('schedSummary').innerHTML = '<div class="empty-note">Add team members in the Team tab to begin scheduling.</div>';
+  } else {
+    document.getElementById('schedSummary').innerHTML = SERVICES.map(sv => {
+      const svc = day[sv.key]; const st = svcStatus(svc);
+      const names = [...new Set([svc.lead, ...svc.members].filter(Boolean))].map(id => { const m = S.team.find(x => x.id === id); return m ? (m.role === 'Team Lead' && id === svc.lead ? '★ ' : '') + m.first + ' ' + m.last : ''; }).filter(Boolean);
+      return `<div style="margin-bottom:.4rem;"><strong style="color:${st.ok ? 'var(--gr)' : '#f87171'};">${sv.label}</strong> — ${names.length ? esc(names.join(', ')) : '<em>no one assigned</em>'}</div>`;
+    }).join('');
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// ONBOARDING CHECKLIST
+// ════════════════════════════════════════════════════════════════
+function renderOnboard() {
+  document.getElementById('onboardChecklist').innerHTML = ONBOARD_ITEMS.map((item, i) => {
+    const done = S.onboard.includes(i);
+    return `<label style="display:flex;gap:.55rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.8rem;color:${done ? 'var(--gr)' : 'var(--tx2)'};">
+      <input type="checkbox" ${done ? 'checked' : ''} onchange="toggleOnboard(${i})" style="margin-top:.2rem;accent-color:var(--gr);">
+      <span style="${done ? 'text-decoration:line-through;opacity:.75;' : ''}">${item}</span>
+    </label>`;
+  }).join('') + `<div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">${S.onboard.length}/${ONBOARD_ITEMS.length} complete</div>`;
+}
+function toggleOnboard(i) {
+  if (S.onboard.includes(i)) S.onboard = S.onboard.filter(x => x !== i);
+  else S.onboard.push(i);
+  save(); renderOnboard();
+}
+
+// ════════════════════════════════════════════════════════════════
+// ACADEMY — courses, lessons, quiz, certificate
+// ════════════════════════════════════════════════════════════════
+let curCourse = null, quizAnswers = {}, quizSubmitted = false;
+function renderCourses() {
+  let certs = 0;
+  document.getElementById('courseGrid').innerHTML = COURSES.map(c => {
+    const cs = getCS(c.id);
+    const pct = Math.round((cs.doneLessons.length / c.lessons.length) * 100);
+    if (cs.quizPassed) certs++;
+    return `<div class="course-card ${cs.quizPassed ? 'certified' : ''}" onclick="openCourse('${c.id}')">
+      ${cs.quizPassed ? '<div class="cc-badge">🏆</div>' : ''}
+      <div class="cc-icon">${c.icon}</div>
+      <div class="cc-title">${c.title}</div>
+      <div class="cc-meta">${c.meta}</div>
+      <div class="cc-bar"><div class="cc-fill" style="width:${pct}%;"></div></div>
+      <div style="font-size:.66rem;color:var(--tx3);margin-top:.3rem;">${cs.quizPassed ? '✅ Certified — ' + cs.quizScore * 20 + '%' : cs.doneLessons.length + '/' + c.lessons.length + ' lessons'}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('certCount').textContent = certs;
+  document.getElementById('hs-modules').textContent = certs;
+  document.getElementById('academyPct').textContent = Math.round((certs / COURSES.length) * 100) + '%';
+  document.getElementById('traineeName').textContent = S.trainee || 'not set';
+}
+function setTrainee() {
+  const n = prompt('Trainee name (appears on certificates):', S.trainee || '');
+  if (n !== null) { S.trainee = n.trim(); save(); renderCourses(); refreshDash(); }
+}
+function openCourse(id) {
+  curCourse = COURSES.find(c => c.id === id);
+  quizAnswers = {}; quizSubmitted = false;
+  document.getElementById('mIcon').textContent = curCourse.icon;
+  document.getElementById('mTitle').textContent = curCourse.title.toUpperCase();
+  document.getElementById('mMeta').textContent = curCourse.meta;
+  renderLessons(); renderQuiz(); renderCert();
+  const cs = getCS(id);
+  document.getElementById('footerQuizBtn').style.display = cs.doneLessons.length === curCourse.lessons.length && !cs.quizPassed ? '' : 'none';
+  document.getElementById('footerCertBtn').style.display = cs.quizPassed ? '' : 'none';
+  switchTab('lessons');
+  document.getElementById('courseModal').classList.add('open');
+}
+function closeCourseModal() { document.getElementById('courseModal').classList.remove('open'); curCourse = null; renderCourses(); refreshDash(); }
+function switchTab(tab) {
+  ['lessons','quiz','cert'].forEach(t => {
+    document.getElementById('mtab-' + t).classList.toggle('active', t === tab);
+    document.getElementById('mpanel-' + t).classList.toggle('active', t === tab);
+  });
+}
+function renderLessons() {
+  const cs = getCS(curCourse.id);
+  document.getElementById('lessonContent').innerHTML = curCourse.lessons.map((lesson, i) => {
+    const done = cs.doneLessons.includes(i);
+    return `<div class="lesson-item ${done ? 'done' : ''}" id="lesson-${i}">
+      <div class="li-header" onclick="document.getElementById('lesson-${i}').classList.toggle('expanded')">
+        <div class="li-num">${done ? '✓' : i + 1}</div>
+        <div class="li-title">${lesson.title}</div>
+        <div class="li-check">${done ? '✅' : '▶'}</div>
+      </div>
+      <div class="li-body">${lesson.content}
+        ${!done ? `<div class="mark-done-btn" onclick="event.stopPropagation();markDone(${i})">✅ Mark Complete</div>` : '<div style="font-size:.72rem;color:var(--gr);margin-top:.6rem;font-weight:700;">✓ Completed</div>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+function markDone(i) {
+  const cs = getCS(curCourse.id);
+  if (!cs.doneLessons.includes(i)) cs.doneLessons.push(i);
+  save(); renderLessons(); renderQuiz();
+  if (cs.doneLessons.length === curCourse.lessons.length && !cs.quizPassed) document.getElementById('footerQuizBtn').style.display = '';
+  addActivity('Completed lesson: ' + curCourse.lessons[i].title);
+}
+function renderQuiz() {
+  const el = document.getElementById('quizContent');
+  const cs = getCS(curCourse.id);
+  if (cs.quizPassed) {
+    el.innerHTML = `<div class="quiz-result"><div class="quiz-score-big pass">🏆</div><div style="font-size:1rem;font-weight:800;color:var(--gr);margin:.4rem 0;">Already Certified!</div><div style="font-size:.8rem;color:var(--tx2);">You passed with ${cs.quizScore * 20}%. Your certificate is available.</div></div>`;
+    return;
+  }
+  if (cs.doneLessons.length < curCourse.lessons.length) {
+    el.innerHTML = `<div class="quiz-result"><div style="font-size:2rem;">📖</div><div style="font-size:.9rem;font-weight:700;margin:.5rem 0;">Complete All Lessons First</div><div style="font-size:.78rem;color:var(--tx2);">Finish all ${curCourse.lessons.length} lessons before the quiz. You've done ${cs.doneLessons.length} so far.</div></div>`;
+    return;
+  }
+  let html = `<div style="font-size:.8rem;color:var(--tx2);margin-bottom:1rem;">Answer all ${curCourse.quiz.length} questions. Score <strong style="color:var(--c);">80% or higher</strong> (4/5) to earn your certificate.</div>`;
+  curCourse.quiz.forEach((q, qi) => {
+    html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1} of ${curCourse.quiz.length}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
+    q.opts.forEach((opt, oi) => { html += `<button class="quiz-opt ${quizAnswers[qi] === oi ? 'selected' : ''}" onclick="selectAnswer(${qi},${oi})">${opt}</button>`; });
+    html += '</div></div>';
+  });
+  html += '<div class="quiz-submit-row"><button class="btn btn-primary" onclick="submitQuiz()">Submit Quiz →</button></div>';
+  el.innerHTML = html;
+}
+function selectAnswer(qi, oi) { if (quizSubmitted) return; quizAnswers[qi] = oi; renderQuiz(); }
+function submitQuiz() {
+  if (curCourse.quiz.some((_, qi) => quizAnswers[qi] === undefined)) { alert('Please answer all ' + curCourse.quiz.length + ' questions.'); return; }
+  quizSubmitted = true;
+  let correct = 0;
+  curCourse.quiz.forEach((q, qi) => { if (quizAnswers[qi] === q.ans) correct++; });
+  const passed = correct >= 4;
+  const cs = getCS(curCourse.id);
+  cs.quizScore = correct; cs.quizPassed = passed;
+  if (passed && !cs.certName) cs.certName = S.trainee;
+  save();
+  let html = '';
+  curCourse.quiz.forEach((q, qi) => {
+    html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
+    q.opts.forEach((opt, oi) => {
+      let cls = '';
+      if (oi === q.ans) cls = 'correct'; else if (oi === quizAnswers[qi]) cls = 'wrong';
+      html += `<button class="quiz-opt ${cls}" disabled>${opt}</button>`;
+    });
+    html += '</div></div>';
+  });
+  html += `<div class="quiz-result"><div class="quiz-score-big ${passed ? 'pass' : 'fail'}">${correct}/5</div>
+    <div style="font-size:.9rem;font-weight:800;color:${passed ? 'var(--gr)' : 'var(--cr)'};margin:.4rem 0;">${passed ? '🎉 Passed! Certificate Earned!' : '❌ Not Passed — Try Again'}</div>
+    <div style="font-size:.78rem;color:var(--tx2);">${passed ? 'Your certificate is now available.' : 'You scored ' + correct * 20 + '%. You need 80% (4/5). Review the lessons and retry.'}</div>
+    ${passed ? `<button class="btn btn-success" style="margin-top:.75rem;" onclick="renderCert();switchTab('cert')">🏆 View Certificate</button>` : `<button class="btn btn-primary" style="margin-top:.75rem;" onclick="retryQuiz()">Retry Quiz</button>`}
+  </div>`;
+  document.getElementById('quizContent').innerHTML = html;
+  if (passed) { document.getElementById('footerCertBtn').style.display = ''; document.getElementById('footerQuizBtn').style.display = 'none'; renderCert(); addActivity('🏆 CERTIFIED: ' + curCourse.title); }
+  else addActivity('Quiz attempt (' + correct * 20 + '%): ' + curCourse.title);
+}
+function retryQuiz() {
+  quizAnswers = {}; quizSubmitted = false;
+  const cs = getCS(curCourse.id);
+  cs.quizScore = null; cs.quizPassed = false;
+  save(); renderQuiz();
+}
+function renderCert() {
+  const el = document.getElementById('certContent');
+  const cs = getCS(curCourse.id);
+  if (!cs.quizPassed) {
+    el.innerHTML = `<div class="cert-locked"><div class="lock-icon">🔒</div><p>Complete all lessons and pass the quiz with <strong>80% or higher</strong> to unlock your certificate for <strong>${curCourse.title}</strong>.</p><button class="btn btn-primary" style="margin-top:1rem;" onclick="switchTab('quiz')">Go to Quiz →</button></div>`;
+    return;
+  }
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  el.innerHTML = `<div class="cert-wrap">
+    <div class="certificate" id="certDocument">
+      <div class="cert-brand">CELEBRATION CHURCH — SAFETY &amp; SECURITY TEAM ACADEMY</div>
+      <div class="cert-title-main">CERTIFICATE OF COMPLETION</div>
+      <div class="cert-course-name">${curCourse.title}</div>
+      <div class="cert-name-line">This certifies that</div><br>
+      <div class="cert-recipient">${esc(cs.certName || S.trainee || 'Team Member')}</div>
+      <div class="cert-score">Score: ${cs.quizScore * 20}% · ${cs.quizScore}/5 correct</div>
+      <div class="cert-date">Issued: ${date} · Nampa, Idaho</div>
+      <div class="cert-seal">🏆</div>
+    </div>
+    <div style="margin-top:.75rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
+      <input type="text" placeholder="Name on certificate" value="${esc(cs.certName || S.trainee || '')}" style="padding:.4rem .8rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);width:200px;" oninput="updateCertName(this.value)">
+      <button class="cert-print-btn" onclick="window.print()">🖨️ Print Certificate</button>
+    </div>
+  </div>`;
+}
+function updateCertName(v) {
+  const cs = getCS(curCourse.id);
+  cs.certName = v; save();
+  document.querySelector('#certDocument .cert-recipient').textContent = v || 'Team Member';
+}
+
+// ════════════════════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════════════════════
+function refreshDash() {
+  const certs = COURSES.filter(c => getCS(c.id).quizPassed).length;
+  document.getElementById('dashTraining').innerHTML =
+    `<div>Trainee: <strong style="color:var(--tx);">${esc(S.trainee || 'not set')}</strong></div>
+     <div>Certificates: <strong style="color:var(--gr);">${certs}/${COURSES.length}</strong></div>
+     <div>Onboarding: <strong style="color:var(--c);">${S.onboard.length}/${ONBOARD_ITEMS.length}</strong> steps</div>`;
+  const dateIso = iso(nextSunday(new Date()));
+  const day = getDay(dateIso);
+  const cov = SERVICES.map(sv => {
+    const st = svcStatus(day[sv.key]);
+    return `<span class="stat-pill" style="border-color:${st.ok ? 'rgba(34,197,94,.35)' : 'rgba(204,51,51,.35)'};color:${st.ok ? 'var(--gr)' : '#f87171'};">${sv.label}: ${st.ok ? '✅' : st.count + '/3'}</span>`;
+  }).join(' ');
+  document.getElementById('dashCoverage').innerHTML = cov;
+  document.getElementById('dashNextSunday').innerHTML =
+    `<div style="font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;color:var(--tx);margin-bottom:.4rem;">${nextSunday(new Date()).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div>
+     <div class="stats-row">${cov}</div>
+     <button class="btn btn-ghost" style="margin-top:.7rem;" onclick="navTo('scheduling')">Open Scheduling →</button>`;
+  renderActivity();
+}
+function renderActivity() {
+  document.getElementById('activityFeed').innerHTML = S.activity.length
+    ? S.activity.map(a => `<div>· <span style="color:var(--tx3);">${a.t}</span> — ${esc(a.msg)}</div>`).join('')
+    : '<div style="color:var(--tx3);">No activity yet — start with the Academy or build the team roster.</div>';
+}
+
+// ════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════
+function closeModalEl(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay, .pin-gate-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
+renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard(); applyAdmin(); refreshDash();
+</script>
+</body>
+</html>

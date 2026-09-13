@@ -1,3 +1,10 @@
+# Celebration Church Safety & Security Team. Layer 3 of 3 of the privacy fence,
+# and the load-bearing one: this keeps the directory off the CDN ENTIRELY. The
+# app holds volunteer phone numbers behind nothing but a 4-digit UI PIN, which is
+# not security. It gets deployed only behind Vercel deployment protection, or
+# after Phase 4 real auth. Removing this line publishes a roster of real people.
+celebration-safety-team/
+
 # Internal working documents — kept in git, never uploaded to the CDN.
 # tools/ IS uploaded: the build command runs from it. It contains no secrets
 # and duplicates logic that is necessarily public in assets/catalog-render.js.
