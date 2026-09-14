@@ -99,6 +99,7 @@ function footer() {
 function robots() {
   return ['User-agent: *',
     'Disallow: /admin/', 'Disallow: /__owner__/', 'Disallow: /claim/',
+    'Disallow: /celebration-safety-team/',
     '',
     '# The 32 storefronts are near-identical templates and stay out of search.',
     '# vercel.json sends X-Robots-Tag: noindex for /sites/<slug>/ on the apex;',

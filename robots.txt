@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /admin/
 Disallow: /__owner__/
 Disallow: /claim/
+Disallow: /celebration-safety-team/
 
 # The 32 storefronts are near-identical templates and stay out of search.
 # vercel.json sends X-Robots-Tag: noindex for /sites/<slug>/ on the apex;
@@ -16,13 +17,5 @@ Disallow: /claim/
 # one path, and nothing else.
 Allow: /sites/$
 Disallow: /sites/
-
-# Celebration Church Safety & Security Team — a private client application, not
-# marketing. It carries a volunteer roster with personal phone numbers, facility
-# schematics and evacuation routes. It must never be indexed. Layer 2 of 3: the
-# page itself ships <meta name="robots" content="noindex">, and .vercelignore
-# keeps the directory off the CDN entirely until Phase 4 auth lands. This rule
-# exists so that the day it IS deployed, robots is already correct.
-Disallow: /celebration-safety-team/
 
 Sitemap: https://systemsbyvega.com/sitemap.xml
