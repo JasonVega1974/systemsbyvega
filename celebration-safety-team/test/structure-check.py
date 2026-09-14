@@ -36,6 +36,24 @@ builtin = {'document', 'window', 'event', 'this'}
 missing = sorted(h for h in handlers if h not in defined and h not in builtin)
 print("undefined inline handlers: %s" % (missing if missing else "none"))
 
+# Stacking: the app dialog is raised from inside other modals, and it is the
+# FIRST .modal-overlay in the DOM. At equal z-index the later overlays paint
+# over it and it becomes invisible and unclickable — a silent dead button.
+# This is not observable from node without a layout engine, so assert it here.
+def zindex_of(selector):
+    m = re.search(re.escape(selector) + r'[^{]*\{[^}]*?z-index:\s*(\d+)', s, re.S)
+    return int(m.group(1)) if m else None
+
+overlay_z = zindex_of('.pin-gate-overlay, .modal-overlay')
+dialog_z = zindex_of('#appDialog')
+if overlay_z is None or dialog_z is None:
+    print("z-index check: COULD NOT PARSE (overlay=%s dialog=%s)" % (overlay_z, dialog_z))
+elif dialog_z > overlay_z:
+    print("OK  #appDialog z-index %d > overlays %d" % (dialog_z, overlay_z))
+else:
+    print("MISMATCH #appDialog z-index %d must exceed overlays %d "
+          "— dialogs raised from a modal would render behind it" % (dialog_z, overlay_z))
+
 # Every getElementById target referenced in JS should exist in the markup
 ids_in_html = set(re.findall(r'\sid="([^"]+)"', s))
 ids_in_js = set(re.findall(r"getElementById\('([^']+)'\)", js))

@@ -357,6 +357,15 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   display: none; align-items: center; justify-content: center; z-index: 500; padding: 1rem;
 }
 .pin-gate-overlay.open, .modal-overlay.open { display: flex; }
+/* The app dialog is raised FROM other modals — a validation error on the Add
+   Member form, an unanswered-question warning over the quiz. It is also the
+   first .modal-overlay in the DOM, so at equal z-index every later overlay
+   painted on top of it and hid it completely: clicking Save appeared to do
+   nothing at all. It must outrank every other overlay.
+   Do not reorder it in the DOM to fix a future stacking problem — openOverlay()
+   finds the topmost dialog via querySelector, which returns DOM order, and
+   Escape-to-dismiss depends on this element being found first. */
+#appDialog { z-index: 700; }
 .pin-gate-box {
   background: var(--s2); border: 1px solid var(--bd2); border-radius: 16px;
   padding: 1.5rem; width: 100%; max-width: 340px; text-align: center;
