@@ -1178,6 +1178,23 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   </div>
 </div>
 
+<!-- ══ APP DIALOG — replaces native alert/confirm/prompt ══ -->
+<div class="modal-overlay" id="appDialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="admin-modal-box" style="max-width:440px;">
+    <div class="admin-modal-title" id="dlgTitle">&mdash;</div>
+    <div id="dlgBody" style="font-size:.85rem;color:var(--tx2);line-height:1.65;white-space:pre-wrap;"></div>
+    <div class="form-row" id="dlgInputRow" style="display:none;margin-top:.9rem;">
+      <label id="dlgInputLabel"></label>
+      <input type="text" id="dlgInput" onkeydown="if(event.key==='Enter'){event.preventDefault();dialogOk();}">
+    </div>
+    <div id="dlgError" style="color:#f87171;font-size:.75rem;min-height:1.05rem;margin-top:.35rem;"></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.6rem;">
+      <button class="btn btn-ghost" id="dlgCancel" onclick="dialogCancel()">Cancel</button>
+      <button class="btn btn-primary" id="dlgOk" onclick="dialogOk()">OK</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ WHO IS USING THIS DEVICE ══ -->
 <div class="modal-overlay" id="whoModal">
   <div class="admin-modal-box">
@@ -1644,8 +1661,10 @@ function save() {
     return false;
   }
 }
-function discardUnreadableData() {
-  if (!confirm('Discard the unreadable saved data and start from empty?\n\nIf you have not exported a backup, anything recoverable from it is gone for good.')) return;
+async function discardUnreadableData() {
+  if (!await confirmDialog('Discard the unreadable data?',
+    'The app will start from empty.\n\nIf you have not exported a backup, anything still recoverable from the damaged data is gone for good.',
+    { okLabel: 'Discard and start fresh', danger: true })) return;
   storageLocked = false;
   try { localStorage.removeItem(LS_KEY); } catch (e) {}
   S = defaults();
@@ -1711,7 +1730,7 @@ function importData(input) {
   if (!file) return;
   const reader = new FileReader();
   reader.onerror = () => backupStatus('❌ Could not read that file.', '#f87171');
-  reader.onload = () => {
+  reader.onload = async () => {
     let payload;
     try { payload = JSON.parse(reader.result); }
     catch (e) { backupStatus('❌ That file is not valid JSON.', '#f87171'); return; }
@@ -1734,12 +1753,14 @@ function importData(input) {
     const summary = (d.team || []).length + ' team members, ' +
       Object.keys(d.schedule || {}).length + ' scheduled Sundays, ' +
       (d.meetings || []).length + ' meetings, ' + (d.leaders || []).length + ' staff entries';
-    if (!confirm(
-      'Restore this backup?\n\nFrom: ' + when + '\nContains: ' + summary +
+    if (!await confirmDialog('Restore this backup?',
+      'From: ' + when + '\nContains: ' + summary +
       '\n\nThis REPLACES everything currently in this browser:\n' +
       S.team.length + ' team members, ' + Object.keys(S.schedule).length + ' scheduled Sundays, ' +
-      S.meetings.length + ' meetings.\n\nThis cannot be undone.'
-    )) { backupStatus('Restore cancelled — nothing changed.'); return; }
+      S.meetings.length + ' meetings.\n\nThis cannot be undone.',
+      { okLabel: 'Replace everything', danger: true })) {
+      backupStatus('Restore cancelled — nothing changed.'); return;
+    }
 
     storageLocked = false;
     clearStorageFlag();
@@ -1775,9 +1796,11 @@ function navTo(key) { showSection(key); window.scrollTo({ top: 0 }); }
 // ADMIN PIN
 // ════════════════════════════════════════════════════════════════
 let adminOn = false, pinBuf = '';
-function toggleAdmin() {
+async function toggleAdmin() {
   if (adminOn) {
-    if (confirm('Lock admin mode?\n\n(OK = lock · Cancel = stay unlocked. To change the PIN, stay unlocked and use the Change PIN option in the Team tab.)')) {
+    if (await confirmDialog('Lock admin mode?',
+      'Editing will be switched off until the PIN is entered again.\n\nTo change the PIN, stay unlocked and use Team → Admin Tools.',
+      { okLabel: 'Lock admin' })) {
       adminOn = false; applyAdmin(); addActivity('Admin locked');
     }
     return;
@@ -1813,10 +1836,16 @@ function updatePinHint() {
 }
 function updateDots() { for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.toggle('filled', i < pinBuf.length); }
 function closeAdminGate() { closeModalEl('adminGate'); }
-function changePin() {
-  const np = prompt('Enter a new 4-digit admin PIN:');
-  if (np && /^\d{4}$/.test(np)) { S.pin = np; save(); updatePinHint(); alert('Admin PIN updated.'); addActivity('Admin PIN changed'); }
-  else if (np !== null) alert('PIN must be exactly 4 digits.');
+async function changePin() {
+  const np = await promptDialog('🔑 Change admin PIN',
+    'Pick a 4-digit PIN the team will remember. This is a convenience gate, not security — anyone with browser developer tools can read it.',
+    { inputLabel: 'New 4-digit PIN', inputType: 'password', inputMode: 'numeric', placeholder: '••••',
+      okLabel: 'Update PIN',
+      validate: v => /^\d{4}$/.test(v) ? null : 'The PIN must be exactly 4 digits.' });
+  if (np === null) return;
+  S.pin = np; save(); updatePinHint();
+  addActivity('Admin PIN changed');
+  await alertDialog('✅ PIN updated', 'The admin PIN has been changed. Make sure the Team Leads who need it know.');
 }
 function applyAdmin() {
   const chip = document.getElementById('adminChip');
@@ -1852,11 +1881,11 @@ function openMemberModal(id) {
   document.getElementById('mRole').value = m ? m.role : 'Team Member';
   openModalEl('memberModal');
 }
-function saveMember() {
+async function saveMember() {
   const first = document.getElementById('mFirst').value.trim();
   const last = document.getElementById('mLast').value.trim();
   const phone = document.getElementById('mPhone').value.trim();
-  if (!first || !last) { alert('First and last name are required.'); return; }
+  if (!first || !last) { await alertDialog('Missing name', 'A first and last name are both required.'); return; }
   const data = { first, last, phone, spec: document.getElementById('mSpec').value, role: document.getElementById('mRole').value };
   if (editingMemberId) Object.assign(S.team.find(x => x.id === editingMemberId), data);
   else S.team.push(Object.assign({ id: 'tm' + Date.now() }, data));
@@ -1864,9 +1893,11 @@ function saveMember() {
   addActivity((editingMemberId ? 'Updated' : 'Added') + ' team member: ' + first + ' ' + last);
   editingMemberId = null;
 }
-function deleteMember(id) {
+async function deleteMember(id) {
   const m = S.team.find(x => x.id === id);
-  if (!confirm('Remove ' + m.first + ' ' + m.last + ' from the roster? They will also be removed from schedules.')) return;
+  if (!await confirmDialog('Remove ' + m.first + ' ' + m.last + '?',
+    'They will be taken off the roster and removed from every service they are scheduled for.\n\nTheir training records are kept.',
+    { okLabel: 'Remove from roster', danger: true })) return;
   S.team = S.team.filter(x => x.id !== id);
   Object.values(S.schedule).forEach(day => Object.values(day).forEach(svc => {
     if (svc.lead === id) svc.lead = '';
@@ -1902,10 +1933,10 @@ function openLeaderModal(id) {
   document.getElementById('lNotes').value = l ? (l.notes || '') : '';
   openModalEl('leaderModal');
 }
-function saveLeader() {
+async function saveLeader() {
   const name = document.getElementById('lName').value.trim();
   const title = document.getElementById('lTitle').value.trim();
-  if (!name || !title) { alert('Name and title are required.'); return; }
+  if (!name || !title) { await alertDialog('Missing details', 'A name and a title or role are both required.'); return; }
   const data = { name, title, notes: document.getElementById('lNotes').value.trim() };
   if (editingLeaderId) Object.assign(S.leaders.find(x => x.id === editingLeaderId), data);
   else S.leaders.push(Object.assign({ id: 'ld' + Date.now() }, data));
@@ -1913,9 +1944,10 @@ function saveLeader() {
   addActivity((editingLeaderId ? 'Updated' : 'Added') + ' staff entry: ' + name);
   editingLeaderId = null;
 }
-function deleteLeader(id) {
+async function deleteLeader(id) {
   const l = S.leaders.find(x => x.id === id);
-  if (!confirm('Remove ' + l.name + ' from the directory?')) return;
+  if (!await confirmDialog('Remove ' + l.name + '?', 'This removes the entry from the Leadership / Staff directory.',
+    { okLabel: 'Remove', danger: true })) return;
   S.leaders = S.leaders.filter(x => x.id !== id);
   save(); renderLeaders(); addActivity('Removed staff entry: ' + l.name);
 }
@@ -1938,15 +1970,16 @@ function openMeetingModal() {
   document.getElementById('mtTitle').value = ''; document.getElementById('mtNotes').value = '';
   openModalEl('meetingModal');
 }
-function saveMeeting() {
+async function saveMeeting() {
   const date = document.getElementById('mtDate').value, title = document.getElementById('mtTitle').value.trim();
-  if (!date || !title) { alert('Date and topic are required.'); return; }
+  if (!date || !title) { await alertDialog('Missing details', 'A date and a topic are both required.'); return; }
   S.meetings.push({ id: 'mt' + Date.now(), date, time: document.getElementById('mtTime').value, title, notes: document.getElementById('mtNotes').value.trim() });
   S.meetings.sort((a, b) => b.date.localeCompare(a.date));
   save(); closeModalEl('meetingModal'); renderMeetings(); addActivity('Meeting logged: ' + title);
 }
-function deleteMeeting(id) {
-  if (!confirm('Delete this meeting record?')) return;
+async function deleteMeeting(id) {
+  if (!await confirmDialog('Delete this meeting record?', 'The agenda and notes will be deleted. This cannot be undone.',
+    { okLabel: 'Delete', danger: true })) return;
   S.meetings = S.meetings.filter(m => m.id !== id);
   save(); renderMeetings();
 }
@@ -2170,7 +2203,7 @@ function renderWhoList() {
     </button>`;
   }).join('');
 }
-function setActiveMember(id) {
+async function setActiveMember(id) {
   /* The realistic path is: a volunteer trains first, and gets added to the
      roster afterwards. Offer to carry the guest record across rather than
      stranding it, but never overwrite a record the member already has. */
@@ -2180,8 +2213,10 @@ function setActiveMember(id) {
   const targetHasWork = target && (Object.keys(target.training).length || target.onboard.length);
   if (S.activeId === 'guest' && guestHasWork && !targetHasWork) {
     const m = S.team.find(x => x.id === id);
-    if (confirm('Move the unassigned training record' + (guest.name ? ' for "' + guest.name + '"' : '') +
-                ' to ' + m.first + ' ' + m.last + '?\n\nOK = move it across. Cancel = leave it where it is and just switch.')) {
+    if (await confirmDialog('Move the unassigned training record?',
+      'There is training progress' + (guest.name ? ' recorded under "' + guest.name + '"' : '') +
+      ' that is not linked to anyone on the roster.\n\nMove it to ' + m.first + ' ' + m.last + '?',
+      { okLabel: 'Move it across', cancelLabel: 'Just switch' })) {
       S.progress[id] = { name: '', training: guest.training, onboard: guest.onboard };
       delete S.progress.guest;
       addActivity('Linked training record to ' + m.first + ' ' + m.last);
@@ -2190,9 +2225,9 @@ function setActiveMember(id) {
   S.activeId = id;
   save(); closeModalEl('whoModal'); renderCourses(); renderOnboard(); refreshDash();
 }
-function saveGuestName() {
+async function saveGuestName() {
   const n = document.getElementById('whoGuest').value.trim();
-  if (!n) { alert('Type a name, or pick someone from the roster above.'); return; }
+  if (!n) { await alertDialog('No name entered', 'Type a name, or pick someone from the roster above.'); return; }
   S.activeId = 'guest';
   getProgress('guest').name = n;
   save(); closeModalEl('whoModal'); renderCourses(); renderOnboard(); refreshDash();
@@ -2288,8 +2323,13 @@ function renderQuiz() {
   el.innerHTML = html;
 }
 function selectAnswer(qi, oi) { if (quizSubmitted) return; quizAnswers[qi] = oi; renderQuiz(); }
-function submitQuiz() {
-  if (curCourse.quiz.some((_, qi) => quizAnswers[qi] === undefined)) { alert('Please answer all ' + curCourse.quiz.length + ' questions.'); return; }
+async function submitQuiz() {
+  if (curCourse.quiz.some((_, qi) => quizAnswers[qi] === undefined)) {
+    const missing = curCourse.quiz.filter((_, qi) => quizAnswers[qi] === undefined).length;
+    await alertDialog('Not finished yet',
+      missing + ' of ' + quizTotal(curCourse) + ' question' + (missing === 1 ? ' is' : 's are') + ' still unanswered.');
+    return;
+  }
   quizSubmitted = true;
   let correct = 0;
   curCourse.quiz.forEach((q, qi) => { if (quizAnswers[qi] === q.ans) correct++; });
@@ -2328,8 +2368,10 @@ function submitQuiz() {
    way to redo a module was to wipe localStorage, which would have taken the
    roster, schedule and meetings with it. Annual recertification is a normal
    church-security requirement, so it needs a real door. */
-function retakeModule() {
-  if (!confirm('Retake "' + curCourse.title + '"?\n\nThe certificate for this module is cleared until you pass again. Lesson progress is kept.')) return;
+async function retakeModule() {
+  if (!await confirmDialog('Retake this module?',
+    '"' + curCourse.title + '"\n\nThe certificate is cleared until you pass again. Lesson progress is kept.',
+    { okLabel: 'Start retake' })) return;
   retryQuiz();
   renderCert();
   document.getElementById('footerCertBtn').style.display = 'none';
@@ -2340,10 +2382,12 @@ function retakeModule() {
 /* The heavier action: clear lessons AS WELL, so the module has to be worked
    through again rather than just re-answered. This is what recertification
    actually means. */
-function adminResetModule() {
+async function adminResetModule() {
   if (!adminOn) return;
   const who = activeName() || 'this person';
-  if (!confirm('RESET "' + curCourse.title + '" for ' + who + '?\n\nClears the certificate AND all lesson progress. They will have to work through the whole module again.\n\nThis cannot be undone.')) return;
+  if (!await confirmDialog('Reset this module for ' + who + '?',
+    '"' + curCourse.title + '"\n\nClears the certificate AND all lesson progress. They will work through the whole module again.\n\nThis cannot be undone.',
+    { okLabel: 'Reset module', danger: true })) return;
   const cs = getCS(curCourse.id);
   cs.doneLessons = []; cs.quizScore = null; cs.quizTotal = null; cs.quizPassed = false;
   quizAnswers = {}; quizSubmitted = false;
@@ -2353,20 +2397,26 @@ function adminResetModule() {
   renderCourses(); refreshDash();
   addActivity('Admin reset module "' + curCourse.title + '" for ' + who);
 }
-function adminResetPerson() {
+async function adminResetPerson() {
   const who = activeName();
   if (!who) { backupStatus('Pick who you are in the Academy tab first.', '#f87171'); return; }
-  if (!confirm('Reset ALL six modules for ' + who + '?\n\nClears every certificate and all lesson progress for this one person.\n\nThis cannot be undone — export a backup first if you are unsure.')) return;
+  if (!await confirmDialog('Reset all training for ' + who + '?',
+    'Clears every certificate and all lesson progress across all ' + COURSES.length + ' modules, for this one person.\n\nThis cannot be undone. Export a backup first if you are unsure.',
+    { okLabel: 'Reset ' + who, danger: true })) return;
   activeProgress().training = {};
   save(); renderCourses(); refreshDash();
   backupStatus('Reset all certifications for ' + who + '.', 'var(--c)');
   addActivity('Admin reset all certifications for ' + who);
 }
-function adminResetEveryone() {
+async function adminResetEveryone() {
   const n = Object.keys(S.progress).length;
   if (!n) { backupStatus('No training records to reset.', '#f87171'); return; }
-  if (!confirm('ANNUAL RECERTIFICATION\n\nClear every certificate and all lesson progress for ALL ' + n + ' people with a training record?\n\nEveryone starts the Academy again from zero. The roster, schedule and meetings are NOT affected.\n\nThis cannot be undone. Export a backup first.')) return;
-  if (!confirm('Last check — this wipes training for ' + n + ' people. Continue?')) return;
+  if (!await confirmDialog('Annual recertification',
+    'Clear every certificate and all lesson progress for ALL ' + n + ' people with a training record?\n\nEveryone starts the Academy again from zero. The roster, schedule and meetings are NOT affected.\n\nThis cannot be undone. Export a backup first.',
+    { okLabel: 'Continue', danger: true })) return;
+  if (!await confirmDialog('Last check',
+    'This wipes training for ' + n + ' ' + (n === 1 ? 'person' : 'people') + '. There is no undo.',
+    { okLabel: 'Reset everyone', danger: true })) return;
   Object.keys(S.progress).forEach(id => { S.progress[id].training = {}; });
   save(); renderCourses(); refreshDash();
   backupStatus('Annual recertification: cleared training for ' + n + ' people.', 'var(--c)');
@@ -2448,6 +2498,86 @@ function renderActivity() {
 // ════════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+// IN-PAGE DIALOGS
+//
+// Replaces native alert/confirm/prompt. Those block the whole browser, look
+// like a browser-security warning rather than part of the app, are unstyleable,
+// cannot be made accessible, are suppressed outright by some kiosk and embedded
+// browsers — which would silently skip a destructive confirmation — and are
+// genuinely unpleasant on a phone, which is where a Team Lead actually uses
+// this. They also cannot show a scrollable body, so the longer restore and
+// recertification warnings were being truncated by the browser.
+//
+// Every dialog returns a promise, so call sites read almost identically to
+// before: `if (!await confirmDialog(...)) return;`
+// ════════════════════════════════════════════════════════════════
+let dlgResolve = null, dlgKind = 'alert', dlgValidate = null, dlgLastFocus = null;
+
+function openDialog(opts) {
+  return new Promise(resolve => {
+    /* A second dialog opening over an unresolved one would strand the first
+       promise forever. Resolve it defensively rather than leaking it. */
+    if (dlgResolve) { const stale = dlgResolve; dlgResolve = null; stale(dlgKind === 'prompt' ? null : false); }
+
+    dlgKind = opts.kind || 'alert';
+    dlgValidate = opts.validate || null;
+    dlgResolve = resolve;
+    dlgLastFocus = document.activeElement;
+
+    document.getElementById('dlgTitle').textContent = opts.title || '';
+    document.getElementById('dlgBody').textContent = opts.body || '';
+    document.getElementById('dlgError').textContent = '';
+
+    const row = document.getElementById('dlgInputRow');
+    const input = document.getElementById('dlgInput');
+    row.style.display = dlgKind === 'prompt' ? '' : 'none';
+    if (dlgKind === 'prompt') {
+      input.type = opts.inputType || 'text';
+      input.value = opts.inputValue || '';
+      input.placeholder = opts.placeholder || '';
+      input.setAttribute('inputmode', opts.inputMode || 'text');
+      document.getElementById('dlgInputLabel').textContent = opts.inputLabel || '';
+    }
+
+    const ok = document.getElementById('dlgOk');
+    const cancel = document.getElementById('dlgCancel');
+    ok.textContent = opts.okLabel || (dlgKind === 'alert' ? 'OK' : dlgKind === 'prompt' ? 'Save' : 'Confirm');
+    ok.className = 'btn ' + (opts.danger ? 'btn-danger' : 'btn-primary');
+    cancel.textContent = opts.cancelLabel || 'Cancel';
+    cancel.style.display = dlgKind === 'alert' ? 'none' : '';
+
+    document.getElementById('appDialog').classList.add('open');
+    /* Focus the input when there is one. Otherwise focus CANCEL, not OK —
+       a destructive confirm should not be one stray Enter away from running. */
+    setTimeout(() => (dlgKind === 'prompt' ? input : (dlgKind === 'alert' ? ok : cancel)).focus(), 0);
+  });
+}
+function settleDialog(value) {
+  if (!dlgResolve) return;
+  const r = dlgResolve;
+  dlgResolve = null;
+  document.getElementById('appDialog').classList.remove('open');
+  if (dlgLastFocus && dlgLastFocus.focus) dlgLastFocus.focus();
+  dlgLastFocus = null;
+  r(value);
+}
+function dialogOk() {
+  if (dlgKind === 'prompt') {
+    const v = document.getElementById('dlgInput').value;
+    if (dlgValidate) {
+      const err = dlgValidate(v);
+      if (err) { document.getElementById('dlgError').textContent = err; return; }
+    }
+    settleDialog(v);
+  } else settleDialog(true);
+}
+function dialogCancel() { settleDialog(dlgKind === 'prompt' ? null : false); }
+
+const alertDialog   = (title, body, opts) => openDialog(Object.assign({ kind: 'alert',   title, body }, opts || {}));
+const confirmDialog = (title, body, opts) => openDialog(Object.assign({ kind: 'confirm', title, body }, opts || {}));
+const promptDialog  = (title, body, opts) => openDialog(Object.assign({ kind: 'prompt',  title, body }, opts || {}));
+
 function toggleProc(btn) {
   const open = btn.parentElement.classList.toggle('open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -2464,7 +2594,8 @@ function openModalEl(id) {
   lastFocused = document.activeElement;
   const box = document.getElementById(id);
   box.classList.add('open');
-  const first = box.querySelector('input:not([type=file]), button, select, textarea, [tabindex]');
+  const first = [...box.querySelectorAll('input:not([type=file]), button, select, textarea, [tabindex]')]
+    .find(el => el.offsetParent !== null);
   if (first) first.focus();
 }
 function closeModalEl(id) {
@@ -2476,6 +2607,9 @@ function openOverlay() {
   return document.querySelector('.modal-overlay.open, .pin-gate-overlay.open');
 }
 function dismissOverlay(o) {
+  /* Escape or a backdrop click on the dialog must SETTLE its promise. Closing
+     the element alone would leave every awaiting caller hanging forever. */
+  if (o.id === 'appDialog') { dialogCancel(); return; }
   if (o.id === 'courseModal') closeCourseModal();
   else closeModalEl(o.id);
 }

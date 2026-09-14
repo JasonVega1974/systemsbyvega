@@ -34,9 +34,8 @@ function build(storage) {
       addEventListener: () => {}
     },
     window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){} },
-    alert: () => {}, confirm: () => true, prompt: () => null,
     Blob: function(){}, URL: { createObjectURL: () => '', revokeObjectURL(){} },
-    FileReader: function(){}, setTimeout, Date, Math, JSON, Object, Array, String, Number, Set, isNaN, parseInt
+    FileReader: function(){}, setTimeout, Date, Math, JSON, Object, Array, String, Number, Set, isNaN, parseInt, Promise
   };
   ctx.globalThis = ctx;
   vm.createContext(ctx);
@@ -46,8 +45,10 @@ function build(storage) {
   return { ctx, T: ctx.__t, alertEl };
 }
 
-const GOOD = JSON.stringify({ schemaVersion: 2, pin: '2121', team: [{ id: 'tm1', first: 'A', last: 'B', role: 'Team Lead' }],
+const GOOD = JSON.stringify({ schemaVersion: 2, pin: '2121', team: [{ id: 'tm1', first: 'A', last: 'B', phone: '', role: 'Team Lead' }],
   leaders: [], meetings: [], schedule: {}, progress: {}, activeId: 'guest', activity: [] });
+
+(async () => {
 
 group('healthy storage stays quiet');
 {
@@ -73,9 +74,18 @@ group('unreadable saved data is reported, NOT overwritten');
   check('the banner explains why', /Not saving/i.test(alertEl.innerHTML), alertEl.innerHTML.slice(0, 80));
   check('and offers a way out', /discardUnreadableData|Restore/i.test(alertEl.innerHTML));
 
-  ctx.discardUnreadableData();
-  check('discarding clears the lock', T.storageLocked === false);
-  check('and writing works again', store._v !== '{ this is not json' && store._v.length > 2, (store._v || '').slice(0, 40));
+  /* The confirm is an in-page dialog now, so the test drives it rather than
+     stubbing past it — that way it exercises the real settle path. */
+  const cancelled = ctx.discardUnreadableData();
+  ctx.dialogCancel();
+  await cancelled;
+  check('CANCELLING the discard leaves the data alone', store._v === '{ this is not json' && T.storageLocked === true, store._v);
+
+  const discarded = ctx.discardUnreadableData();
+  ctx.dialogOk();
+  await discarded;
+  check('confirming clears the lock', T.storageLocked === false);
+  check('and writing works again', store._v !== '{ this is not json' && (store._v || '').length > 2, (store._v || '').slice(0, 40));
 }
 
 group('a write that throws (quota full / blocked) is surfaced');
@@ -103,3 +113,4 @@ group('storage blocked entirely (private browsing / kiosk)');
 }
 
 done();
+})();

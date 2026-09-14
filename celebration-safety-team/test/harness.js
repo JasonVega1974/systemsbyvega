@@ -12,7 +12,11 @@ function loadApp(htmlPath) {
       if (k === 'classList') return { add(){}, remove(){}, toggle(){}, contains(){ return false; } };
       if (k === 'style') return {};
       if (k === 'files') return [];
-      if (['insertAdjacentHTML','appendChild','click','remove','addEventListener','focus'].includes(k)) return () => {};
+      if (['insertAdjacentHTML','appendChild','click','remove','addEventListener',
+           'removeEventListener','focus','blur','setAttribute','removeAttribute',
+           'querySelector','scrollIntoView'].includes(k)) return () => {};
+      if (k === 'querySelectorAll') return () => [];
+      if (k === 'getAttribute' || k === 'hasAttribute') return () => null;
       if (k === 'value' || k === 'textContent' || k === 'innerHTML') return '';
       return undefined;
     },
@@ -39,7 +43,8 @@ function loadApp(htmlPath) {
   get S() { return S; }, set S(v) { S = v; },
   get adminOn() { return adminOn; }, set adminOn(v) { adminOn = v; },
   COURSES, ONBOARD_ITEMS, ONBOARD_V1_ORDER, SERVICES, MIN_SLOTS, MAX_SLOTS,
-  PASS_THRESHOLD, SCHEMA_VERSION
+  PASS_THRESHOLD, SCHEMA_VERSION,
+  alertDialog, confirmDialog, promptDialog
 };`, ctx);
 
   return { ctx, T: ctx.__t };
