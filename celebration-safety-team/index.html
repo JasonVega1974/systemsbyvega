@@ -2156,6 +2156,30 @@ function toggleOnboard(stepId) {
 // ════════════════════════════════════════════════════════════════
 let curCourse = null, quizAnswers = {}, quizSubmitted = false;
 
+/* Option order, shuffled per attempt. Browser verification found that every
+   correct answer in the Medical module sat at index 1, and that 26 of the 37
+   questions in the whole app did — so answering "B" every time scored 100% on
+   Medical and 70% overall, clearing the 80% bar on several modules without
+   reading a word. For a certification that decides who is cleared to serve,
+   that is not a quiz.
+   Shuffling per attempt also kills the other version of the same problem: a
+   fixed order is memorisable across retakes.
+   quizAnswers always stores the ORIGINAL option index, so scoring against
+   q.ans is unchanged and stored results stay comparable. */
+let quizOrder = {};
+function buildQuizOrder(course) {
+  quizOrder = {};
+  course.quiz.forEach((q, qi) => {
+    const idx = q.opts.map((_, i) => i);
+    for (let i = idx.length - 1; i > 0; i--) {          // Fisher-Yates
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    quizOrder[qi] = idx;
+  });
+}
+function optionOrder(qi, q) { return quizOrder[qi] || q.opts.map((_, i) => i); }
+
 /* v1 hardcoded "5 questions, pass at 4" in six separate places. Every module
    happens to have five questions today, so it was correct — and would have gone
    on being correct right up until someone added a sixth question to one module,
@@ -2244,6 +2268,7 @@ async function saveGuestName() {
 function openCourse(id) {
   curCourse = COURSES.find(c => c.id === id);
   quizAnswers = {}; quizSubmitted = false;
+  buildQuizOrder(curCourse);
   document.getElementById('mIcon').textContent = curCourse.icon;
   document.getElementById('mTitle').textContent = curCourse.title.toUpperCase();
   document.getElementById('mMeta').textContent = curCourse.meta;
@@ -2325,7 +2350,7 @@ function renderQuiz() {
   let html = `<div style="font-size:.8rem;color:var(--tx2);margin-bottom:1rem;">Answer all ${quizTotal(curCourse)} questions. Score <strong style="color:var(--c);">${Math.round(PASS_THRESHOLD * 100)}% or higher</strong> (${passMark(curCourse)}/${quizTotal(curCourse)}) to earn your certificate.</div>`;
   curCourse.quiz.forEach((q, qi) => {
     html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1} of ${curCourse.quiz.length}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
-    q.opts.forEach((opt, oi) => { html += `<button class="quiz-opt ${quizAnswers[qi] === oi ? 'selected' : ''}" onclick="selectAnswer(${qi},${oi})">${opt}</button>`; });
+    optionOrder(qi, q).forEach(oi => { html += `<button class="quiz-opt ${quizAnswers[qi] === oi ? 'selected' : ''}" onclick="selectAnswer(${qi},${oi})">${q.opts[oi]}</button>`; });
     html += '</div></div>';
   });
   html += '<div class="quiz-submit-row"><button class="btn btn-primary" onclick="submitQuiz()">Submit Quiz →</button></div>';
@@ -2339,6 +2364,20 @@ async function submitQuiz() {
       missing + ' of ' + quizTotal(curCourse) + ' question' + (missing === 1 ? ' is' : 's are') + ' still unanswered.');
     return;
   }
+  /* v1 would happily issue "This certifies that Team Member". A Team Lead
+     auditing who is cleared to serve cannot use an anonymous certificate, and
+     the whole point of keying training to people was to make that audit
+     possible. Ask before scoring, not after. */
+  if (!activeName()) {
+    const who = await promptDialog('Who is taking this quiz?',
+      'Certificates are issued to a person, and Team Leads use these records to see who is cleared to serve. An unnamed certificate is no use to anyone.',
+      { inputLabel: 'Your name', okLabel: 'Continue',
+        validate: v => v.trim() ? null : 'Please enter your name.' });
+    if (who === null) return;
+    activeProgress().name = who.trim();
+    save(); renderCourses(); refreshDash();
+  }
+
   quizSubmitted = true;
   let correct = 0;
   curCourse.quiz.forEach((q, qi) => { if (quizAnswers[qi] === q.ans) correct++; });
@@ -2352,10 +2391,10 @@ async function submitQuiz() {
   let html = '';
   curCourse.quiz.forEach((q, qi) => {
     html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
-    q.opts.forEach((opt, oi) => {
+    optionOrder(qi, q).forEach(oi => {
       let cls = '';
       if (oi === q.ans) cls = 'correct'; else if (oi === quizAnswers[qi]) cls = 'wrong';
-      html += `<button class="quiz-opt ${cls}" disabled>${opt}</button>`;
+      html += `<button class="quiz-opt ${cls}" disabled>${q.opts[oi]}</button>`;
     });
     html += '</div></div>';
   });
@@ -2382,9 +2421,6 @@ async function retakeModule() {
     '"' + curCourse.title + '"\n\nThe certificate is cleared until you pass again. Lesson progress is kept.',
     { okLabel: 'Start retake' })) return;
   retryQuiz();
-  renderCert();
-  document.getElementById('footerCertBtn').style.display = 'none';
-  document.getElementById('footerQuizBtn').style.display = '';
   renderCourses(); refreshDash();
   addActivity('Retake started: ' + curCourse.title);
 }
@@ -2433,9 +2469,14 @@ async function adminResetEveryone() {
 }
 function retryQuiz() {
   quizAnswers = {}; quizSubmitted = false;
+  buildQuizOrder(curCourse);            // a retake gets a fresh order
   const cs = getCS(curCourse.id);
   cs.quizScore = null; cs.quizTotal = null; cs.quizPassed = false;
-  save(); renderQuiz();
+  save(); renderQuiz(); renderCert();
+  /* The footer kept offering "View Certificate" for a certificate that had
+     just been revoked, until the next submission re-rendered it. */
+  document.getElementById('footerCertBtn').style.display = 'none';
+  document.getElementById('footerQuizBtn').style.display = '';
 }
 function renderCert() {
   const el = document.getElementById('certContent');
