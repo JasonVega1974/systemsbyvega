@@ -2,13 +2,17 @@
    SYSTEMS BY VEGA — design system
    ----------------------------------------------------------------------------
    The catalog wearing the original agency identity, preserved at 3be3bcb.
-   Every token below is lifted verbatim from that file — nothing reinterpreted:
+   Every token below was lifted verbatim from that file, with ONE later
+   deviation: the amber ramp was re-cut from the logo artwork (see --amber).
+   Everything else is still verbatim — nothing reinterpreted:
 
      --paper #F1F4F8  --panel #FFFFFF  --ink #161B22  --ink-soft #48515F
-     --hair #DCE2EA   --amber #E8791B  --amber-deep #C9620C
+     --hair #DCE2EA   --amber #C69648  --amber-deep #9E773C
      --con #141821    --con-2 #1C2230  --con-hair #2C3444
-     --con-text #E8ECF2  --con-muted #949EAE  --con-amber #F3922F
-     Archivo · IBM Plex Sans · IBM Plex Mono · the V-square
+     --con-text #E8ECF2  --con-muted #949EAE  --con-amber #D9A962
+     Archivo · IBM Plex Sans · IBM Plex Mono · the brand mark
+     (the mark was a gold "V" square; it is now the logo icon itself,
+      /assets/logo-mark.png, set in .gnav-brand .sq)
 
    THE BAND SYSTEM IS THE STRUCTURE.
    The agency page ran full-width bands in three tones — paper, white panel,
@@ -38,26 +42,44 @@
   --ink:        #161B22;
   --ink-soft:   #48515F;
   --hair:       #DCE2EA;
-  --amber:      #E8791B;
-  --amber-deep: #C9620C;
+  /* The gold is sampled from the logo artwork (#C69648, hue 36). The token
+     names stay "amber" because 37 usages and an in-flight branch reference
+     them; the name is historical, the value is the brand. Each step keeps the
+     contrast role the old orange had — see the note on --amber-text below. */
+  --amber:      #C69648;
+  --amber-deep: #9E773C;
   --con:        #141821;
   --con-2:      #1C2230;
   --con-hair:   #2C3444;
   --con-text:   #E8ECF2;
   --con-muted:  #949EAE;
-  --con-amber:  #F3922F;
+  --con-amber:  #D9A962;
+
+  /* Channel triplets, so a translucent tint derives from the same source as the
+     solid colour instead of being kept in sync by hand. The orange -> gold swap
+     missed six rgba() literals for exactly that reason: --feat referenced a
+     token and followed, while its paired --feat-glow held a raw rgba() and did
+     not. Anything translucent in this file should use these. */
+  --amber-rgb:     198,150,72;    /* #C69648 */
+  --con-amber-rgb: 217,169,98;    /* #D9A962 */
   --shadow:     0 1px 2px rgba(20,28,40,.05),0 10px 30px rgba(20,28,40,.07);
 
-  /* amber-deep is #C9620C, which lands at 4.4:1 on white — just under AA for
-     body-sized text. Small amber labels use this darkened cousin instead; the
-     original amber is kept for borders, fills and large type where it passes. */
-  --amber-text: #A94E06;
+  /* Contrast ladder, measured against #FFFFFF. --amber is never text on a
+     light ground — only fills and borders, always with #1A1206 ink on top,
+     which sits at 6.97:1. --amber-deep is used for small label text and for
+     button fills under white text. --amber-text is the darkest rung, for
+     9.5px mono that has to clear AA.
+        --amber       2.66   fills, borders, large type       (was 2.92)
+        --amber-deep  4.07   small labels, button fills       (was 4.01)
+        --amber-text  5.78   small text on light              (was 5.56)
+        --con-amber   8.29 on --con, for dark grounds         (was 7.58) */
+  --amber-text: #806030;
 
   /* Family second-colours. The catalog always sits on a light ground, so
      these are chosen dark and saturated enough to carry 9.5px mono type at
      AA — a pastel would look better and fail the reader. Sale & Resale wears
      the house amber, because it is the family holding both open platforms. */
-  --fam-sale-resale:   #A9560A;
+  --fam-sale-resale:   #806030;
   --fam-haul-clear:    #14705A;
   --fam-curb-exterior: #1B5E8F;
   --fam-auto:          #5B3E8F;
@@ -175,7 +197,7 @@
   --elev:    var(--lift-1);
   --elev-2:  var(--lift-2);
   --feat:      var(--con-amber);
-  --feat-glow: rgba(243,146,47,.20);
+  --feat-glow: rgba(var(--con-amber-rgb),.20);
   /* Family colours re-declared brighter for a dark ground. No band in this
      group carries a family plate today — the catalog moved to paper — but the
      pair of sets is the reason a family accent can be dropped on any band
@@ -183,7 +205,7 @@
      half would quietly make that untrue. The light-ground set at :root is
      chosen dark enough to read on paper, which makes it invisible on #141821;
      the same hue cannot serve both. */
-  --fam-sale-resale:   #F3922F;
+  --fam-sale-resale:   #D9A962;
   --fam-haul-clear:    #4FD1A5;
   --fam-curb-exterior: #6FB8F0;
   --fam-auto:          #B79BFF;
@@ -207,7 +229,7 @@
   --elev:    var(--shadow);
   --elev-2:  0 14px 36px rgba(20,28,40,.1);
   --feat:      var(--amber);
-  --feat-glow: rgba(232,121,27,.14);
+  --feat-glow: rgba(var(--amber-rgb),.14);
   background:var(--bg);
   color:var(--tx);
 }
@@ -235,7 +257,7 @@
   --elev:    var(--shadow);
   --elev-2:  0 14px 36px rgba(20,28,40,.1);
   --feat:      var(--amber);
-  --feat-glow: rgba(232,121,27,.14);
+  --feat-glow: rgba(var(--amber-rgb),.14);
   background:var(--bg);
   color:var(--tx);
 }
@@ -314,7 +336,7 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
    wordmark deliberately does not appear here. */
 .plate{padding:0 0 0;position:relative;overflow:hidden}
 .plate::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(760px 340px at 82% -10%,rgba(243,146,47,.16),transparent 70%)}
+  background:radial-gradient(760px 340px at 82% -10%,rgba(var(--con-amber-rgb),.16),transparent 70%)}
 .plate > *{position:relative}
 .plate-body{padding:64px 0 8px;text-align:center}
 .plate-sub{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.16em;
@@ -614,7 +636,7 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
   min-height:var(--tap);background:var(--surface);color:var(--tx);
   border:1px solid var(--rule-2);border-radius:9px;transition:border-color .16s,box-shadow .16s}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc);
-  box-shadow:0 0 0 3px rgba(232,121,27,.16);outline:none}
+  box-shadow:0 0 0 3px rgba(var(--amber-rgb),.16);outline:none}
 .field input::placeholder,.field textarea::placeholder{color:var(--tx-3)}
 /* No page before /services/ used a <textarea> in this shared sheet — the rule
    above covers it structurally, this just sets the two things unique to a
@@ -1525,7 +1547,7 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 .wk-modal-tagline{font-size:14.5px;color:var(--ink-soft);margin-top:8px}
 .wk-modal-desc{font-size:15px;line-height:1.6;color:var(--ink-soft);margin-top:14px}
 .wk-modal-note{
-  margin-top:14px;padding:11px 13px;background:rgba(232,121,27,.08);
+  margin-top:14px;padding:11px 13px;background:rgba(var(--amber-rgb),.08);
   border-left:3px solid var(--amber);border-radius:0 6px 6px 0;
   font-size:13.5px;line-height:1.55;color:var(--ink-soft);
 }
@@ -1671,14 +1693,12 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
    region grows to 44px via this transparent overlay, matching the pattern
    .gnav uses nowhere else because nothing else here is this compact. */
 .gnav-brand::before{content:"";position:absolute;inset:-9px -4px}
-.gnav-brand .sq{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--con-amber),var(--amber-deep));
-  color:#1a1206;font-size:13px;font-weight:900}
+.gnav-brand .sq{width:24px;height:24px;border-radius:6px;display:block;flex:0 0 24px}
 .gnav-links{display:flex;align-items:center;gap:4px}
 .gnav-link{font-family:var(--display);font-weight:700;font-size:13.5px;color:#C2CAD6;
   text-decoration:none;padding:9px 13px;border-radius:7px;transition:.18s}
 .gnav-link:hover{color:#fff;background:rgba(255,255,255,.07)}
-.gnav-link.is-active{color:#fff;background:rgba(243,146,47,.14)}
+.gnav-link.is-active{color:#fff;background:rgba(var(--con-amber-rgb),.16)}
 .gnav-tools{display:flex;align-items:center;gap:10px}
 .gnav-burger{display:none;width:var(--tap);height:var(--tap);border:0;background:none;
   cursor:pointer;flex-direction:column;justify-content:center;gap:5px;padding:0 12px}

@@ -61,7 +61,7 @@ function nav(active) {
 <a class="skip" href="#main">Skip to content</a>
 <nav class="gnav" aria-label="Main">
   <div class="gnav-in">
-    <a class="gnav-brand" href="/"><span class="sq" aria-hidden="true">V</span> Systems by Vega</a>
+    <a class="gnav-brand" href="/"><img class="sq" src="/assets/logo-mark.png" srcset="/assets/logo-mark.png 1x, /assets/logo-mark@2x.png 2x, /assets/logo-mark@3x.png 3x" width="24" height="24" alt="" decoding="async"> Systems by Vega</a>
     <div class="gnav-links">${links}</div>
     <div class="gnav-tools">
       <a class="btn btn-pri gnav-cta" href="/sites/#line">Get in line</a>

@@ -427,7 +427,7 @@
             '<rect x="' + (x + 9).toFixed(1) + '" y="' + (y + 37).toFixed(1) + '" width="' + (TW - 40) +
               '" height="3.5" rx="1.8" fill="#16130E" opacity="' + (open ? '.28' : '.13') + '"/>' +
             '<circle cx="' + (x + TW / 2).toFixed(1) + '" cy="' + (y + 2).toFixed(1) + '" r="3.6" fill="' +
-              (open ? '#2FBF6B' : '#F3922F') + '" opacity="' + (open ? '1' : '.5') + '"/>' +
+              (open ? '#2FBF6B' : '#D9A962')   /* --con-amber; keep in step with sbv.css */ + '" opacity="' + (open ? '1' : '.5') + '"/>' +
           '</g>' +
         '</g>'
       );
