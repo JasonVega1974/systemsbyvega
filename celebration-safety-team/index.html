@@ -2653,8 +2653,20 @@ function closeModalEl(id) {
   if (lastFocused && lastFocused.focus) lastFocused.focus();
   lastFocused = null;
 }
+/* Returns the overlay a user would consider "on top", which is the one Escape
+   must dismiss. v1 used querySelector, i.e. DOM order — and #adminGate sits
+   before #appDialog in the document, so a dialog raised while the PIN gate was
+   open would have had Escape close the GATE and strand the dialog's promise.
+   No current flow does that (the PIN pad raises no dialogs), but it is the same
+   stacking-order assumption that made the dialog render behind modals, and
+   leaving one half of it fixed invites the other half back.
+   Compare z-index, falling back to DOM order on a tie, which is what the
+   painter does. */
 function openOverlay() {
-  return document.querySelector('.modal-overlay.open, .pin-gate-overlay.open');
+  const open = [...document.querySelectorAll('.modal-overlay.open, .pin-gate-overlay.open')];
+  if (!open.length) return null;
+  const z = el => parseInt((getComputedStyle(el).zIndex || '0'), 10) || 0;
+  return open.reduce((top, el) => (z(el) >= z(top) ? el : top));
 }
 function dismissOverlay(o) {
   /* Escape or a backdrop click on the dialog must SETTLE its promise. Closing
