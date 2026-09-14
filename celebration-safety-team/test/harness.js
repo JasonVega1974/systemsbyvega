@@ -38,7 +38,8 @@ function loadApp(htmlPath) {
 ;globalThis.__t = {
   get S() { return S; }, set S(v) { S = v; },
   get adminOn() { return adminOn; }, set adminOn(v) { adminOn = v; },
-  COURSES, ONBOARD_ITEMS, SERVICES, MIN_SLOTS, MAX_SLOTS
+  COURSES, ONBOARD_ITEMS, ONBOARD_V1_ORDER, SERVICES, MIN_SLOTS, MAX_SLOTS,
+  PASS_THRESHOLD, SCHEMA_VERSION
 };`, ctx);
 
   return { ctx, T: ctx.__t };
