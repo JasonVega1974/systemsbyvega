@@ -133,16 +133,34 @@
    /sites/ (Task 10) reuses the same three rules too, and reuses the SAME ids
    index.html's catalog already uses for #how/#catalog/#line/#registry/#faq —
    a different file, so no collision, and the alternation stays proven. Its
-   rhythm: nav dark, hero dark (.plate), #how white, #included paper,
-   #catalog dark, #line
-   white, #registry paper, #contact dark (the final ask, same job #proof and
-   #founder do on the homepage), #faq paper, footer dark.
+   rhythm: nav dark, hero dark (.plate), #how white, #included dark,
+   #catalog paper, #line white, #registry paper, #contact dark (the final ask,
+   same job #proof and #founder do on the homepage), #faq paper, footer dark.
+
+   #catalog AND #included SWAPPED TONES when the board was rebuilt on clean
+   cards. The catalog card is now the landing page's card — white .fcard
+   surface, screenshot on top — and "white" is not something a component can
+   ask for: it is what --surface resolves to, and on the dark ground --surface
+   is #1C2230. Hard-coding #FFFFFF into the card to beat that is precisely
+   what this token system exists to prevent, so the BAND moved instead and the
+   card kept reading the tokens it is handed. #catalog is paper now, which
+   makes --surface #FFFFFF, exactly as it is under #featured on the landing
+   page — the two grids are the same recipe, not two recipes that resemble
+   each other.
+
+   #included had to move because it sits directly above #catalog and was also
+   paper; leaving both would have put the first paper-on-paper seam in the
+   project. It went dark, which is the one tone neither of its neighbours
+   (#how white above, #catalog paper below) is using. .incl reads band tokens
+   for every colour it draws, so it needed no change to survive the move.
+
+   Both ids are on /sites/ and on no other page, so nothing else re-tones.
 
    Ruling R18: every id added to a band selector list above MUST also join
    the border-top:0 exception list below, or the page shows a stray hairline
    seam at that band's transition (the two lists are a pair, not a coincidence).
 */
-.plate, #catalog, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next{
+.plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -158,9 +176,13 @@
   --elev-2:  var(--lift-2);
   --feat:      var(--con-amber);
   --feat-glow: rgba(243,146,47,.20);
-  /* Family colours are re-declared brighter here. The light-ground set below
-     is chosen dark enough to read on paper, which makes it invisible on
-     #141821 — the same hue cannot serve both grounds. */
+  /* Family colours re-declared brighter for a dark ground. No band in this
+     group carries a family plate today — the catalog moved to paper — but the
+     pair of sets is the reason a family accent can be dropped on any band
+     without the component knowing which ground it landed on, and deleting one
+     half would quietly make that untrue. The light-ground set at :root is
+     chosen dark enough to read on paper, which makes it invisible on #141821;
+     the same hue cannot serve both. */
   --fam-sale-resale:   #F3922F;
   --fam-haul-clear:    #4FD1A5;
   --fam-curb-exterior: #6FB8F0;
@@ -190,7 +212,15 @@
   color:var(--tx);
 }
 #registry, #faq, #problem, #process, #esb, #csb, #story, #proof, #featured, #platforms,
-#included{
+#catalog,
+/* .nm is the card-detail modal. It hangs off <body>, outside every band, so
+   without this line --surface and --tx are undefined inside it and it has to
+   carry a private copy of the palette — which is what it used to do. Joining
+   the group its own board sits on is what makes "the modal is that card,
+   enlarged" true in the tokens rather than just in the comment. Its own
+   background (the dim scrim) is declared later at equal specificity and
+   still wins. */
+.nm{
   --bg:      var(--paper);
   --surface: var(--panel);
   --surface-2:var(--panel);
@@ -387,36 +417,45 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 .family:last-child{margin-bottom:0}
 
 /* ---------------------------------------------------------- the catalog ---
-   THE "OWN YOUR TOWN" PLATE, ported from GarageSaleBiz HEAD:niches.html.
-   Every device is the original's: the ruled surface, two galvanised staples
-   punched through the top edge, the tilted circular sticker, the stamped
-   status pill, the mono index label, the dashed divider, the red-arrow row.
+   THE CARD, REBUILT ON THE LANDING PAGE'S CARD.
 
-   ONE ADAPTATION. The source had six yellow plates. Twenty-nine would be a
-   yellow wall and the eye would stop separating them, so the paper tone varies
-   by family — yellow kept for Sale & Resale, the family holding both open
-   platforms. The board then reads as different forms pinned up together
-   rather than one sign repeated.
+   What stood here was the "OWN YOUR TOWN" plate ported from GarageSaleBiz
+   HEAD:niches.html: six paper tones by family, a ruled surface, an ink
+   border, two galvanised staples, a tilted circular price sticker, a hard
+   offset shadow, a degree of pin rotation and a periodic rustle.
 
-   Every paper carries the same near-black ink and all six are light enough to
-   do it at AA. The plates sit on the dark catalog band, which is what makes
-   them read as pinned objects rather than as the page itself.               */
+   It was a good sign. It was not the same product as the page before it.
+   `/` sells with .pcard and .fcard — white surfaces on a paper ground,
+   square to the grid, each led by a real screenshot of the site it points
+   at — and a visitor arriving here met an entirely different object and had
+   no reason to read the two as one shop. This card is now .fcard's larger
+   sibling by construction: the same band tokens, the same 13px radius, the
+   same 16:10 screenshot, the same hover lift.
 
-.family[data-fam="sale-resale"]   { --pa:#FFCE3B; --pb:#F5BE1E; }  /* yard-sign yellow */
-.family[data-fam="haul-clear"]    { --pa:#DCC29A; --pb:#D0B387; }  /* kraft */
-.family[data-fam="curb-exterior"] { --pa:#AEDCC4; --pb:#9CD0B6; }  /* mint */
-.family[data-fam="auto"]          { --pa:#B4C9E2; --pb:#A4BAD7; }  /* carbon blue */
-.family[data-fam="home-trade"]    { --pa:#F2C6C0; --pb:#E7B4AD; }  /* receipt pink */
-.family[data-fam="people-pets"]   { --pa:#E6DFA8; --pb:#DAD296; }  /* manila */
+   WHAT IS DELIBERATELY UNCHANGED. The board structure was never the problem.
+   Family plates still group the board and still carry their family accent,
+   now echoed by a dot on every card. The filter chips, the ledger bar, the
+   on-the-board count, the live open/claimed status and every JS hook are
+   untouched — see assets/catalog-render.js's entry() for the list of class
+   names that are load-bearing for assets/sbv.js.
 
-/* Four across on a wide screen. The steps below are sized to the CARD,
-   not to device names: an entry carries a price sticker, a mono code
-   line, a title and a job line, and it stops being readable under about
-   250px, so the column count drops before that happens. */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 22px;padding-top:10px}
-@media (max-width:1180px){.grid{grid-template-columns:repeat(3,1fr);gap:34px 26px}}
+   DENSITY IS THE DISTINCTION. The grid steps below are unchanged, so the
+   board still runs four across on a wide screen against #featured's three.
+   That is what keeps the landing page's six cards reading as the larger,
+   curated selection they are, rather than as a preview of this page.       */
+
+/* --pa/--pb are gone with the paper they filled. --fam survives as the one
+   family accent, set inline on .family by the renderer and resolved from the
+   :root palette — so the hue still has exactly one definition. */
+
+/* Four across on a wide screen. The steps are sized to the CARD, not to
+   device names: an entry carries a 16:10 screenshot, a mono code line, a
+   title and a job line, and the screenshot stops being recognisable under
+   about 220px, so the column count drops before that happens. */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 22px;padding-top:10px}
+@media (max-width:1180px){.grid{grid-template-columns:repeat(3,1fr);gap:26px}}
 @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:600px){.grid{grid-template-columns:1fr;gap:30px}}
+@media (max-width:600px){.grid{grid-template-columns:1fr;gap:24px}}
 /* #offer carries TWO cards now — the SaaS one was a smaller echo of the
    #platforms band directly above it. Two cards left in the shared
    four-column .grid would sit squeezed into the left third with two dead
@@ -429,134 +468,123 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 @media (max-width:760px){.ledger-bar{grid-template-columns:repeat(2,1fr)}.ledger-cell:nth-child(2n){border-right:0}}
 @media (max-width:420px){.ledger-bar{grid-template-columns:1fr}.ledger-cell{border-right:0}}
 
-/* the plate */
+/* the card */
 .entry.sheet{
   position:relative;
   display:flex;flex-direction:column;
-  padding:26px 22px 20px;
-  color:var(--plate-ink);
-  background:
-    repeating-linear-gradient(180deg, rgba(0,0,0,.05) 0 2px, rgba(255,255,255,.05) 2px 4px, transparent 4px 9px),
-    linear-gradient(180deg, var(--pa,#FFCE3B), var(--pb,#F5BE1E));
-  border:3px solid var(--plate-ink);
-  border-radius:6px;
-  box-shadow:var(--shadow-hard);
-  transition:transform .16s ease, box-shadow .16s ease;
+  overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:13px;
+  box-shadow:var(--elev);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
 }
-@media (min-width:601px){.entry.sheet{min-height:268px}}
-
-/* Pinned by hand, not machine-set. Kept under 1.2deg so a row of three still
-   reads as a row. */
-.grid > .entry.sheet:nth-child(odd){transform:rotate(-1deg)}
-.grid > .entry.sheet:nth-child(even){transform:rotate(1deg)}
-.entry.sheet:hover{transform:rotate(0) translateY(-5px);box-shadow:var(--shadow-hover);z-index:2}
-.entry.sheet:focus-within{transform:rotate(0);z-index:2}
-
-/* staples through the top edge */
-.staple{
-  position:absolute;top:-5px;width:22px;height:8px;border-radius:2px;
-  background:linear-gradient(180deg,#C9CED6,var(--metal) 55%,#7E848E);
-  border:1px solid #5C616A;box-shadow:0 1px 0 rgba(0,0,0,.4);
+.entry.sheet:hover,.entry.sheet:focus-within{
+  transform:translateY(-4px);box-shadow:var(--elev-2);border-color:var(--acc);z-index:2;
 }
-.staple.l{left:14%;transform:rotate(-2deg)}
-.staple.r{right:14%;transform:rotate(2deg)}
 
-/* the tilted circular sticker */
-.sticker{
-  position:absolute;top:-16px;right:-12px;
-  width:74px;height:74px;border-radius:50%;
-  display:grid;place-items:center;text-align:center;
-  transform:rotate(9deg);
-  border:3px solid var(--plate-ink);
-  box-shadow:3px 3px 0 rgba(0,0,0,.45);
-  font-family:var(--mono);font-weight:600;line-height:1.05;
-  z-index:3;
+/* THE SCREENSHOT. aspect-ratio rather than the intrinsic 16:10 of the file,
+   and object-fit:cover on top of it, so that a capture which ever ships at a
+   different size crops instead of changing the card's height and breaking
+   the row it sits in. object-position pins the crop to the top, because what
+   identifies one of these sites at 241px wide is its masthead. */
+.card-shot{
+  position:relative;aspect-ratio:16/10;overflow:hidden;
+  background:var(--surface-2);border-bottom:1px solid var(--rule);
 }
-/* The price sticker carries white text, and the source flame (#E8471F) gives
-   only 3.92:1 against it. --stamp is the same palette one step deeper and
-   reaches 5.7:1. The flame stays where it belongs — the CTA arrow, which is
-   outlined in ink and is decorative, not a text background. */
-.sticker.hot{background:var(--stamp);color:#fff}
-.sticker.soon{background:#F6F0E1;color:var(--plate-ink)}
-.sticker .big{font-size:17px;display:block}
-.sticker .small{font-size:8px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-top:2px}
+.card-shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 
-/* index label + stamped status pill */
-.card-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;
-  padding-right:66px}          /* clears the sticker */
-.code{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.16em;color:var(--plate-ink)}
+/* Three waitlist niches have no demo and therefore no capture. The box is
+   still 16:10 so the card keeps its height in the row; the family accent
+   identifies it, and the label says plainly why it is empty rather than
+   leaving a grey rectangle to read as a failed image load. */
+.card-shot-none{display:grid;place-items:center;align-content:center;gap:9px}
+.card-shot-mark{width:24px;height:24px;border-radius:50%;border:2px dashed var(--fam);opacity:.6}
+.card-shot-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--tx-3)}
+
+/* The text half stretches; the screenshot above it does not. Without this the
+   CTA lands at a different height in every card of a row — the exact defect
+   the featured grid carried. */
+.card-body{display:flex;flex-direction:column;flex:1;padding:16px 18px 18px}
+
+/* family dot + index label + status pill */
+.card-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.fam-dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--fam)}
+.code{font-family:var(--mono);font-weight:600;font-size:10.5px;letter-spacing:.12em;
+  color:var(--tx-3)}
+/* margin-left:auto rather than a spacer element, so the pill sits hard right
+   on the card and still behaves in the modal, which reuses this same row. */
 .tok{
-  font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  padding:3px 8px;border-radius:99px;border:2px solid var(--plate-ink);
+  margin-left:auto;
+  font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;white-space:nowrap;
+  padding:4px 9px;border-radius:99px;border:1px solid transparent;
 }
-/* #1E8A4C under white is 4.38:1 — a hair under AA at pill size. Darkened
-   just far enough to clear it; the shift is invisible next to the original. */
+/* --open-green is #17703D: 5.9:1 against white text, comfortably AA at pill
+   size. The other two carry band tokens already proven on this ground. */
 .tok.open{background:var(--open-green);color:#fff}
-.tok.wait{background:transparent;color:var(--plate-ink)}
-.tok.site{background:rgba(22,19,14,.09);color:var(--plate-ink)}
+.tok.wait{background:transparent;color:var(--acc-tx);border-color:var(--acc)}
+.tok.site{background:var(--surface-2);color:var(--tx-3);border-color:var(--rule)}
 
+/* The title was 900-weight uppercase display at clamp(23px,3.4vw,28px) —
+   a shout that belonged to the sign, not to a catalog row. It is .pcard's
+   register now, and it stays an <h3> because sbv.js promotes it into the
+   modal's trigger button. */
 .entry.sheet h3{
-  font-family:var(--display);font-weight:900;
-  font-size:clamp(23px,3.4vw,28px);line-height:1.02;letter-spacing:-.02em;
-  text-transform:uppercase;color:var(--plate-ink);
+  font-family:var(--display);font-weight:800;
+  font-size:19px;line-height:1.18;letter-spacing:-.018em;
+  color:var(--tx);
 }
-/* The demo brand name (e.g. "Larkspur & Ledge") and its feature chips —
-   assets/catalog-render.js's extras(), sourced from window.SBV_EXTRAS. Read
-   off the same plate-ink/mono system every other card device uses; nothing
-   here is a second palette. */
-.card-brand{margin-top:5px;font-family:var(--mono);font-size:11px;font-weight:600;
-  letter-spacing:.04em;color:rgba(22,19,14,.62)}
-.card-chips{margin-top:9px;display:flex;flex-wrap:wrap;gap:6px}
-.chip-sm{font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;
-  color:rgba(22,19,14,.68);background:rgba(255,255,255,.4);
-  border:1px solid rgba(22,19,14,.22);border-radius:20px;padding:3px 8px}
-.entry.sheet .job{margin-top:9px;font-size:14px;line-height:1.5;font-weight:500;
-  color:rgba(22,19,14,.84)}
+/* The demo brand name (e.g. "Larkspur & Ledge") — catalog-render.js's
+   brandLine(), sourced from window.SBV_EXTRAS. The feature chips that used to
+   follow it moved to the card-detail modal. */
+.card-brand{margin-top:5px;font-family:var(--mono);font-size:10.5px;font-weight:500;
+  letter-spacing:.04em;color:var(--tx-3)}
+.entry.sheet .job{margin-top:9px;font-size:13.5px;line-height:1.5;color:var(--tx-2)}
 .entry.sheet .caveat{
-  margin-top:11px;padding:8px 10px;font-family:var(--mono);font-size:10.5px;line-height:1.5;
-  color:rgba(22,19,14,.8);background:rgba(255,255,255,.42);
-  border:1px solid rgba(22,19,14,.28);border-radius:4px;
+  margin-top:11px;padding:9px 11px;font-family:var(--mono);font-size:10.5px;line-height:1.5;
+  color:var(--tx-2);background:var(--surface-2);
+  border:1px solid var(--rule);border-radius:7px;
 }
 
-/* dashed divider + red-arrow CTA row */
-.entry-foot{margin-top:auto;padding-top:0}
+/* price + CTA row */
+.entry-foot{margin-top:auto;padding-top:14px}
+/* The circular red price sticker, unstamped. One text node — see priceLine()
+   in catalog-render.js for why it must stay one. */
+.card-price{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--tx)}
+.card-price:empty{display:none}
 .card-go{
-  margin-top:14px;padding-top:12px;border-top:2px dashed rgba(22,19,14,.4);
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  min-height:44px;text-decoration:none;color:var(--plate-ink);
-  font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  margin-top:12px;padding-top:12px;
+  border:0;border-top:1px solid var(--rule);border-radius:0;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+  min-height:44px;background:none;text-align:left;cursor:pointer;text-decoration:none;
+  color:var(--acc-tx);
+  font-family:var(--display);font-weight:700;font-size:13px;
 }
-.card-go:hover span{text-decoration:underline;text-underline-offset:3px}
-.go-arrow{width:26px;height:14px;flex:none}
-.go-arrow path{fill:var(--flame);stroke:var(--plate-ink);stroke-width:4}
+.card-go:hover > span:not(.go-arrow){text-decoration:underline;text-underline-offset:3px}
+.go-arrow{flex:none;font-size:15px;line-height:1}
 .card-note{margin-top:8px;font-family:var(--mono);font-size:10.5px;line-height:1.5;
-  color:rgba(22,19,14,.72)}
-.card-note b{font-weight:700;color:var(--plate-ink)}
+  color:var(--tx-3)}
+.card-note b{font-weight:700;color:var(--tx-2)}
 .card-alt{
-  display:inline-flex;align-items:center;min-height:44px;margin-top:2px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(22,19,14,.74);text-decoration:underline;text-underline-offset:3px;
+  display:inline-flex;align-items:center;min-height:44px;
+  font-size:12.5px;color:var(--tx-2);text-decoration:underline;text-underline-offset:3px;
 }
-.card-alt:hover{color:var(--plate-ink)}
+.card-alt:hover{color:var(--tx)}
 /* Filled and unhidden by claim/claim.js's loadCounts(), never by the
    renderer — a count of 1-3 never arrives, enforced in SQL (see claim.js). */
-.card-claimed{margin-top:8px;font-family:var(--mono);font-size:10.5px;font-weight:600;
-  letter-spacing:.04em;color:var(--amber-text)}
+.card-claimed{margin-top:6px;font-family:var(--mono);font-size:10.5px;font-weight:600;
+  letter-spacing:.04em;color:var(--acc-tx)}
 .card-claimed[hidden]{display:none}
 
-/* the two you can buy today stay the loudest things on the board */
-.entry.sheet.is-open{border-width:4px;box-shadow:var(--shadow-hover)}
-.entry.sheet.is-website-only{opacity:.94}
-
-/* Narrow screens: the sticker overhangs the plate by 12px and the plates are
-   rotated, so both are pulled in to keep the band from scrolling sideways. */
-@media (max-width:600px){
-  .grid > .entry.sheet:nth-child(odd),
-  .grid > .entry.sheet:nth-child(even){transform:none}
-  .entry.sheet:hover{transform:translateY(-4px)}
-  .sticker{width:64px;height:64px;top:-12px;right:-6px}
-  .sticker .big{font-size:15px}
-  .card-meta{padding-right:58px}
+/* The ones you can buy today stay the loudest things on the board. This was a
+   4px ink border plus a pulsing glow; it is an accent border and a ring now.
+   The ring is a box-shadow rather than a thicker border so the card does not
+   reflow by a pixel against its neighbours in the same row. */
+.entry.sheet.is-open{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),var(--elev-2)}
+.entry.sheet.is-open:hover,.entry.sheet.is-open:focus-within{
+  box-shadow:0 0 0 1px var(--acc),var(--elev-2);
 }
 
 .legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);
@@ -725,25 +753,62 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
    discrete state a capture can differ from) — its card markup omits the .on
    image entirely, and with no .on child ".fcard:hover .on" simply matches
    nothing, so it degrades correctly on its own. */
+/* UNIFORM BY CONSTRUCTION, which it was not before. The six captures are all
+   1280x800, so the images were never the problem: .fcard was display:block,
+   which let the grid stretch the OUTER box to the row height while leaving
+   the contents top-aligned. A two-line brand name ("Larkspur & Ledge
+   Landscape Co.") against a one-line one ("DJ Nova") pushed everything under
+   it down, so "See the demo" landed at a different height in every card and
+   each one ended with a different amount of dead white beneath it. The row
+   was the same height; nothing inside it lined up.
+
+   Three rules fix it and they are the same three the catalog card uses: the
+   card is a flex column, the body is the part that stretches, and the CTA is
+   pinned to the bottom with margin-top:auto. aspect-ratio on the shot is the
+   belt to that braces — it holds the frame at 16:10 whatever a future capture
+   ships at, instead of letting one odd file resize a whole row. */
 .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 @media(max-width:900px){.fgrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.fgrid{grid-template-columns:1fr}}
-.fcard{display:block;text-decoration:none;color:inherit;background:var(--surface);
+.fcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+  background:var(--surface);
   border:1px solid var(--rule);border-radius:13px;overflow:hidden;
   box-shadow:var(--elev);transition:transform .18s,box-shadow .18s,border-color .18s}
 .fcard:hover,.fcard:focus-within{transform:translateY(-4px);box-shadow:var(--elev-2);border-color:var(--acc)}
-.fcard-shot{position:relative}
-.fcard-shot img{display:block;width:100%;height:auto}
+.fcard-shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
+.fcard-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
 .fcard-shot .on{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}
 .fcard:hover .on,.fcard:focus-within .on{opacity:1}
-.fcard-body{padding:18px 20px 22px}
+.fcard-body{display:flex;flex-direction:column;flex:1;padding:18px 20px 22px}
 .fcard-brand{font-family:var(--display);font-weight:800;font-size:16px;color:var(--tx)}
 .fcard-trade{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--tx-3);margin-top:5px}
 .fcard-line{font-size:13.5px;color:var(--tx-2);margin-top:11px;line-height:1.5}
-.fcard-go{display:inline-flex;align-items:center;gap:6px;margin-top:15px;
+/* margin-top:auto is what makes the six arrows share a baseline. */
+.fcard-go{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:15px;
   font-family:var(--display);font-weight:700;font-size:13px;color:var(--acc-tx)}
 @media(prefers-reduced-motion:reduce){.fcard-shot .on{transition:none}.fcard{transition:none}}
+
+/* ------------------------------------------------------- catalog hand-off ---
+   The link from the featured six to the board. It was a .btn-sec sitting on a
+   bare <p style="margin-top:20px"> immediately under the example-names fine
+   print — the smallest control in the band, at the end of the quietest
+   paragraph in it, carrying the single most important click on the page. It
+   read as a footnote to the disclaimer above it rather than as the next step.
+
+   It is a closing band now: its own rule, centred, with a line that says what
+   is on the other side of the click. The count inside the button is still
+   generated (BUILD:SITES_LINK), never typed. */
+.catalog-cta{
+  margin-top:36px;padding-top:32px;border-top:1px solid var(--rule);
+  display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
+}
+.catalog-cta-lead{max-width:54ch;margin:0;font-size:15.5px;line-height:1.6;color:var(--tx-2)}
+.catalog-cta .btn{padding:17px 38px;font-size:16.5px}
+@media(max-width:560px){
+  .catalog-cta{margin-top:28px;padding-top:26px}
+  .catalog-cta .btn{width:100%}
+}
 
 /* ------------------------------------------------------------- registry --- */
 .reg-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:32px}
@@ -957,112 +1022,60 @@ html.no-js .plate > .board{display:none}
    which outranks the user-agent [hidden] rule, so it has to be restated here. */
 [hidden]{display:none !important}
 
-/* When the board is re-filtered the surviving plates get re-pinned rather than
-   simply appearing. It is 260ms, and it is the difference between a list that
-   updated and a board somebody just rearranged. */
+/* When the board is re-filtered the survivors settle in rather than simply
+   appearing. It is 260ms, and it is the difference between a list that
+   updated and a board somebody just rearranged.
+
+   The rotation went with the pin. A card that is square to the grid at rest
+   cannot arrive at an angle without reading as a rendering fault, so what is
+   left is the rise and the fade — which is the half of the gesture that was
+   doing the work anyway. The class name stays: sbv.js adds and removes
+   .re-pin by that name in applyFilter(). */
 @keyframes re-pin{
-  0%  {opacity:0;rotate:-2.4deg;translate:0 -7px}
+  0%  {opacity:0;translate:0 -7px}
   60% {opacity:1}
-  100%{opacity:1;rotate:0deg;translate:0 0}
+  100%{opacity:1;translate:0 0}
 }
 
-/* --------------------------------------------------------------- twitch --- */
-/* Paper stapled to a board does not hold perfectly still. Each plate spends
-   roughly nine tenths of its cycle motionless, then rustles for about a fifth
-   of a second: under a degree of rotation, pivoting from the staple line
-   rather than the centre, with a couple of pixels of drop. Small enough that
-   you notice the board is alive before you notice any one card moving.
+/* ------------------------------------------------- the twitch, removed --- */
+/* A block of about seventy lines stood here: @keyframes sheet-twitch, a
+   7-cycle of nth-child delays, a 5-cycle of durations, a per-family offset so
+   no two neighbours shared a phase, and a gentler set of the same keyframes
+   under 600px.
 
-   The randomness is structural, not scripted. Delay runs on a 7-cycle and
-   duration on a 5-cycle — 35 combinations, both coprime with the 3-column
-   grid, so no two neighbours ever share a phase. A per-family offset on top
-   stops the first plate of each family lining up with the first plate of every
-   other family. Because the durations differ, phases drift apart permanently
-   instead of re-converging on some later beat. */
-@keyframes sheet-twitch{
-  0%,  88%  {rotate:0deg;    translate:0 0}
-  90%       {rotate:-.72deg; translate:0 1.5px}
-  92.5%     {rotate:.52deg;  translate:.5px 2px}
-  95%       {rotate:-.26deg; translate:0 1px}
-  97.5%     {rotate:.1deg;   translate:0 0}
-  100%      {rotate:0deg;    translate:0 0}
-}
-.anim .entry.sheet.in{
-  transform-origin:50% 8px;   /* the staple line, so it swings from its pin */
-  animation:sheet-twitch var(--tw-dur,11s) cubic-bezier(.25,.6,.35,1)
-            calc(var(--tw-fam,0s) + var(--tw-delay,0s)) infinite;
-}
-/* Hover and focus take the plate out of the rustle; otherwise the twitch
-   fights the lift. */
-.anim .entry.sheet.in:hover,
-.anim .entry.sheet.in:focus-within{animation-name:none;rotate:0deg;translate:0 0}
-/* Re-pin wins over the twitch for its 260ms, then the twitch resumes. */
-.anim .entry.sheet.re-pin{
-  animation:re-pin .26s cubic-bezier(.2,.85,.3,1.1) both var(--rp,0s) !important;
-}
+   It modelled paper stapled to a board rustling. There is no paper and there
+   are no staples now, and a white card square to the grid that periodically
+   rotates under a degree does not read as alive — it reads as a layout bug,
+   which is the note the narrow-screen override in the original was already
+   half-conceding. Removing it also takes roughly 38 infinite animations off
+   the board, which the scroll had been paying for.
 
-/* delay — 7-cycle */
-.grid > .entry.sheet:nth-child(7n+1){--tw-delay:0s}
-.grid > .entry.sheet:nth-child(7n+2){--tw-delay:1.6s}
-.grid > .entry.sheet:nth-child(7n+3){--tw-delay:3.1s}
-.grid > .entry.sheet:nth-child(7n+4){--tw-delay:4.7s}
-.grid > .entry.sheet:nth-child(7n+5){--tw-delay:6.2s}
-.grid > .entry.sheet:nth-child(7n+6){--tw-delay:7.8s}
-.grid > .entry.sheet:nth-child(7n+7){--tw-delay:9.3s}
-/* duration — 5-cycle */
-.grid > .entry.sheet:nth-child(5n+1){--tw-dur:11s}
-.grid > .entry.sheet:nth-child(5n+2){--tw-dur:13.4s}
-.grid > .entry.sheet:nth-child(5n+3){--tw-dur:9.6s}
-.grid > .entry.sheet:nth-child(5n+4){--tw-dur:14.7s}
-.grid > .entry.sheet:nth-child(5n+5){--tw-dur:12.1s}
-/* per-family offset — nth-child resets inside every .grid, so without this the
-   first plate of all six families would share a delay of zero */
-.family[data-fam="sale-resale"]   .grid > .entry.sheet{--tw-fam:0s}
-.family[data-fam="haul-clear"]    .grid > .entry.sheet{--tw-fam:.9s}
-.family[data-fam="curb-exterior"] .grid > .entry.sheet{--tw-fam:2.2s}
-.family[data-fam="auto"]          .grid > .entry.sheet{--tw-fam:3.5s}
-.family[data-fam="home-trade"]    .grid > .entry.sheet{--tw-fam:1.4s}
-.family[data-fam="people-pets"]   .grid > .entry.sheet{--tw-fam:2.9s}
+   What survives is .re-pin above, which is a response to an action rather
+   than ambient motion, and the hover lift on the card itself.            */
 
-/* One column, plates un-rotated: the rustle is halved. At that size a
-   full-width card moving a whole degree reads as a layout bug. */
-@media (max-width:600px){
-  @keyframes sheet-twitch{
-    0%,  90%  {rotate:0deg;    translate:0 0}
-    92%       {rotate:-.34deg; translate:0 1px}
-    94.5%     {rotate:.24deg;  translate:0 1.5px}
-    97%       {rotate:-.1deg;  translate:0 .5px}
-    100%      {rotate:0deg;    translate:0 0}
-  }
-}
-
-/* ------------------------------------------------------------ card depth --- */
-/* The plate already lifted on hover. What it was not doing was behaving like
-   an object: the sticker peels back toward flat, the staples catch the light,
-   and the arrow leans the way it points. */
-.entry.sheet .sticker{transition:transform .2s cubic-bezier(.2,.8,.3,1.35)}
-.entry.sheet:hover .sticker{transform:rotate(2deg) scale(1.07)}
-.staple{transition:box-shadow .2s ease,filter .2s ease}
-.entry.sheet:hover .staple{filter:brightness(1.22);box-shadow:0 2px 3px rgba(0,0,0,.45)}
+/* ------------------------------------------------------------ card depth --- *//* ------------------------------------------------------------ card depth --- */
+/* The card already lifted on hover. The gestures that went with it belonged
+   to the plate — the sticker peeling back toward flat, the staples catching
+   the light — and went with it. What is left is the arrow leaning the way it
+   points, and the screenshot easing up a little under the crop, which is the
+   landing page's own idiom for "this is a thing you can open". */
 .card-go .go-arrow{transition:transform .2s cubic-bezier(.2,.8,.3,1.4)}
 .card-go:hover .go-arrow{transform:translateX(4px)}
+.card-shot img{transition:transform .4s cubic-bezier(.2,.7,.3,1)}
+.entry.sheet:hover .card-shot img,
+.entry.sheet:focus-within .card-shot img{transform:scale(1.035)}
 
-/* The two that are open should be the two your eye lands on. A slow breath on
-   the border, not a flash — the only thing on the board that pulses, and it
-   stops the moment you touch it. */
-@keyframes open-breathe{
-  0%,100%{box-shadow:var(--shadow-hover),0 0 0 0 rgba(23,112,61,0)}
-  50%    {box-shadow:var(--shadow-hover),0 0 0 5px rgba(23,112,61,.20)}
-}
-.anim .entry.sheet.is-open.in{
-  animation:sheet-twitch var(--tw-dur,11s) cubic-bezier(.25,.6,.35,1)
-            calc(var(--tw-fam,0s) + var(--tw-delay,0s)) infinite,
-            open-breathe 3.6s ease-in-out infinite;
-}
-.anim .entry.sheet.is-open.in:hover,
-.anim .entry.sheet.is-open.in:focus-within{animation:none;rotate:0deg;translate:0 0}
+/* The ones that are open should be the ones your eye lands on, and on this
+   board they are: an amber border and a ring against thirty-five cards that
+   have neither (.entry.sheet.is-open, in the catalog block above).
 
-/* -------------------------------------------------------------- exit card --- */
+   The pulse that used to do this job — open-breathe, a slow amber glow on an
+   infinite loop — went with the twitch. It was legible on a dark ground
+   behind a yellow plate; on a white card under a screenshot it is a blinking
+   advertisement, and it was the last thing on the page still moving on its
+   own. A static accent is louder here precisely because nothing else is. */
+
+/* -------------------------------------------------------------- exit card --- *//* -------------------------------------------------------------- exit card --- */
 .exit{
   position:fixed;inset:0;z-index:100;display:grid;place-items:center;
   padding:24px;background:rgba(10,13,18,.62);
@@ -1099,14 +1112,18 @@ html.no-js .plate > .board{display:none}
 .exit-close:hover{color:var(--plate-ink);background:rgba(0,0,0,.06)}
 
 /* --------------------------------------------------- translated typography --- */
-/* Spanish runs roughly 20% longer than English, and the one place on this page
-   with no room to give is the round sticker — 74px of circle with a word in
-   the middle of it. "Soon" fits at 17px; "Pronto" does not. Scoped to
-   non-English so the English board is byte-for-byte what it was. */
-html:not([lang="en"]) .sticker.soon .big{font-size:13.5px}
-html:not([lang="en"]) .sticker .small{font-size:7.5px;letter-spacing:.04em}
-html:not([lang="en"]) .sticker .big,
-html:not([lang="en"]) .sticker .small{padding:0 4px;max-width:100%}
+/* Spanish runs roughly 20% longer than English. The place that used to have
+   no room to give was the round sticker — 74px of circle with a word in the
+   middle of it, where "Soon" fit at 17px and "Pronto" did not — and four
+   rules here shrank its type for non-English pages.
+
+   The sticker is gone. The status pill that replaced it sets its own width
+   from its text and wraps to the next line of .card-meta if it has to, so
+   "Solo sitio web" needs no special case. The one thing still worth pinning
+   is the pill's tracking: at .1em a three-word Spanish status can push the
+   pill wider than the column, and the letter-spacing is the cheapest thing
+   to give back. */
+html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 
 /* --------------------------------------------------------- language notice --- */
 /* Shown only when a translation is active. The legal blocks are deliberately
@@ -1127,24 +1144,37 @@ html:not([lang="en"]) .sticker .small{padding:0 4px;max-width:100%}
   .anim .entry.sheet.re-pin,
   .anim .board-tile{animation:none !important;rotate:0deg;translate:0 0}
   .board-tile{opacity:1}
-  .entry.sheet:hover .sticker,
+  .entry.sheet:hover .card-shot img,
+  .entry.sheet:focus-within .card-shot img,
   .card-go:hover .go-arrow{transform:none}
+  .card-shot img{transition:none}
   .exit,.exit-card{transition:none}
   .chip:hover{transform:none}
 }
 
 /* ==========================================================================
-   THE PLATE, OPENED — card detail modal
+   THE CARD, OPENED — card detail modal
    --------------------------------------------------------------------------
    The modal is not a dialog that happens to be near a card. It IS the card,
-   unpinned from the board and enlarged: same paper, same ruled surface, same
-   ink border, same staples, same family colour. The family colour is not
-   duplicated here — sbv.js copies the computed --pa/--pb off the card that was
-   clicked, so this palette has exactly one definition on the page.
+   lifted off the board and enlarged: same white surface, same hairline, same
+   radius, same family accent. It followed the board out of the notepad —
+   leaving it as ruled yellow paper with staples and an ink border would have
+   meant every click on the new board opened the old one.
 
-   Nothing in it is authored per-business. Every line is either lifted from the
-   card that opened it or derived from that card's status, which is what makes
-   it impossible for the modal to claim something the catalog does not.
+   THE FAMILY COLOUR STILL HAS EXACTLY ONE DEFINITION. sbv.js copies the
+   computed --fam off the card that was clicked (it used to copy --pa/--pb,
+   the two stops of the paper gradient, which no longer exist), and it is
+   spent here on two things only: the rail down the left edge and the dot
+   beside the family name. Everything else is a band token.
+
+   THIS IS ALSO WHERE THE FEATURE CHIPS LIVE NOW. They were on the card, where
+   they wrapped to four lines at a 241px column and were the largest single
+   source of height variance on the board. They describe what a template
+   ships with, which is detail, and detail is this surface's job.
+
+   Nothing in it is authored per-business. Every line is either lifted from
+   the card that opened it or derived from that card's status, which is what
+   makes it impossible for the modal to claim something the catalog does not.
    ========================================================================== */
 .nm{
   position:fixed;inset:0;z-index:110;
@@ -1166,72 +1196,90 @@ html:not([lang="en"]) .sticker .small{padding:0 4px;max-width:100%}
 .nm-card{
   position:relative;
   width:min(560px,100%);
-  /* Scrolling lives on .nm, not here. The staples sit above the card's top
-     edge, and an overflow context on the card itself clips them off. */
   margin:auto;
-  padding:34px 30px 26px;
-  color:var(--plate-ink);
-  background:
-    repeating-linear-gradient(180deg, rgba(0,0,0,.05) 0 2px, rgba(255,255,255,.05) 2px 4px, transparent 4px 9px),
-    linear-gradient(180deg, var(--pa,#FFCE3B), var(--pb,#F5BE1E));
-  border:4px solid var(--plate-ink);
-  border-radius:7px;
-  box-shadow:var(--shadow-hover);
-  rotate:-.4deg;
+  overflow:hidden;
+  padding:30px 28px 26px 34px;
+  background:var(--surface);
+  color:var(--tx);
+  border:1px solid var(--rule);
+  border-radius:15px;
+  box-shadow:0 24px 70px -18px rgba(10,13,18,.55);
 }
-.nm-card > .staple{top:-7px;width:26px;height:9px}
-.nm-card > .staple.l{left:22%}
-.nm-card > .staple.r{right:22%}
+/* The accent rail. A pseudo-element rather than a border-left so it cannot
+   be confused with the hairline that runs around the rest of the card, and
+   so the radius clips it at both ends. */
+.nm-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:var(--fam,var(--acc));
+}
 
+/* The modal reuses the card's .card-meta row, where .tok is pushed hard
+   right by margin-left:auto — which put the status pill directly underneath
+   the close button. The old card cleared its sticker the same way, with
+   padding on this row; the modal has to clear its own control. */
+.nm-card .card-meta{padding-right:52px}
 .nm-close{
-  position:absolute;top:6px;right:8px;width:42px;height:42px;
+  position:absolute;top:8px;right:10px;width:42px;height:42px;
   background:none;border:0;cursor:pointer;
-  font-size:26px;line-height:1;color:rgba(22,19,14,.55);border-radius:8px;
+  font-size:26px;line-height:1;color:var(--tx-3);border-radius:9px;
 }
-.nm-close:hover{color:var(--plate-ink);background:rgba(0,0,0,.07)}
+.nm-close:hover{color:var(--tx);background:var(--surface-2)}
 
-.nm-card h3{font-size:clamp(24px,4.4vw,32px);line-height:1.05;margin:8px 0 0;
-  font-family:var(--display);font-weight:800;letter-spacing:-.02em}
+.nm-card h3{font-size:clamp(22px,3.6vw,28px);line-height:1.1;margin:10px 0 0;
+  font-family:var(--display);font-weight:800;letter-spacing:-.02em;color:var(--tx)}
+/* The family name carries the same dot the card's .card-meta does, from the
+   same --fam, so the modal names its family the way the board does. */
 .nm-fam{
-  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(22,19,14,.62);margin-top:10px;
+  display:flex;align-items:center;gap:8px;margin-top:12px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--tx-3);
 }
-.nm-note{font-size:14px;line-height:1.55;color:rgba(22,19,14,.74);margin-top:4px}
+.nm-fam::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;
+  background:var(--fam,var(--acc))}
+.nm-note{font-size:14px;line-height:1.55;color:var(--tx-2);margin-top:6px}
 
-.nm-rows{margin-top:20px;border-top:2px dashed rgba(22,19,14,.28)}
-.nm-row{padding:14px 0;border-bottom:1px dashed rgba(22,19,14,.22)}
+.nm-rows{margin-top:20px;border-top:1px solid var(--rule)}
+.nm-row{padding:14px 0;border-bottom:1px solid var(--rule)}
 .nm-row:last-child{border-bottom:0}
 .nm-k{
   font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:rgba(22,19,14,.58);display:block;margin-bottom:5px;
+  text-transform:uppercase;color:var(--tx-3);display:block;margin-bottom:6px;
 }
-.nm-v{font-size:15.5px;line-height:1.55;font-weight:500;color:var(--plate-ink)}
+.nm-v{font-size:15px;line-height:1.55;color:var(--tx)}
 .nm-v b{font-weight:700}
+
+/* The chips, rehoused. .chip-sm was defined in the catalog block and moved
+   here with them — it has exactly one caller now, this row. */
+.nm-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip-sm{
+  font-family:var(--mono);font-size:10px;letter-spacing:.03em;color:var(--tx-2);
+  background:var(--surface-2);border:1px solid var(--rule);border-radius:20px;padding:4px 10px;
+}
 
 .nm-caveat{
   margin-top:14px;padding:11px 13px;
-  background:rgba(192,49,31,.13);
-  border-left:3px solid var(--stamp);border-radius:0 5px 5px 0;
-  font-size:13.5px;line-height:1.5;color:rgba(22,19,14,.82);
+  background:var(--surface-2);
+  border-left:3px solid var(--acc);border-radius:0 7px 7px 0;
+  font-size:13.5px;line-height:1.5;color:var(--tx-2);
 }
 
-.nm-foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.nm-foot .btn{flex:1 1 auto;justify-content:center;
-  background:var(--plate-ink);color:#FFF6E2;border-color:var(--plate-ink)}
-.nm-foot .btn:hover{background:#000;transform:translateY(-2px)}
+.nm-foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+/* .btn-pri and .btn-sec already read band tokens, so the modal no longer
+   restates either. .btn-ghost has no base rule anywhere else and is emitted
+   by sbv.js's fillModal(), so it is defined here, off the same tokens. */
+.nm-foot .btn{flex:1 1 auto;justify-content:center}
 .nm-foot .btn-ghost{
-  background:transparent;color:var(--plate-ink);border-color:rgba(22,19,14,.35);
-  flex:0 0 auto;
+  flex:0 0 auto;background:transparent;color:var(--tx);border-color:var(--rule-2);
 }
-.nm-foot .btn-ghost:hover{background:rgba(0,0,0,.06);color:var(--plate-ink)}
+.nm-foot .btn-ghost:hover{border-color:var(--acc);color:var(--acc-tx);transform:translateY(-2px)}
 .nm-fine{
   font-family:var(--mono);font-size:10.5px;line-height:1.6;
-  color:rgba(22,19,14,.6);margin-top:12px;
+  color:var(--tx-3);margin-top:14px;
 }
 
 @media (max-width:560px){
   .nm{padding:14px 12px}
-  .nm-card{padding:30px 20px 22px;rotate:0deg}
+  .nm-card{padding:26px 20px 22px 26px}
   .nm-foot .btn{flex:1 1 100%}
 }
 
@@ -1250,7 +1298,7 @@ html:not([lang="en"]) .sticker .small{padding:0 4px;max-width:100%}
 }
 .entry.sheet:hover .card-open,
 .card-open:hover,
-.card-open:focus-visible{border-bottom-color:rgba(22,19,14,.45)}
+.card-open:focus-visible{border-bottom-color:var(--rule-2)}
 .entry.sheet.is-clickable{cursor:pointer}
 
 /* A quiet hint that the plate opens, shown only on hover so it never competes

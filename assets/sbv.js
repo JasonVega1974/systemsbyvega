@@ -611,12 +611,17 @@
     var fam  = state.families.filter(function (f) { return f.key === card.getAttribute('data-fam'); })[0] || {};
     var box  = el('nm-card');
 
-    /* The family colour has exactly one definition on this page — the .family
-       rule in the stylesheet. Rather than repeat the palette for the modal,
-       read what the card actually resolved to. */
+    /* The family colour has exactly one definition on this page — the --fam
+       custom property the renderer sets on .family, resolved from the :root
+       palette. Rather than repeat it for the modal, read what the card
+       actually computed to and hand the modal that.
+
+       This used to copy --pa/--pb, the two stops of the notepad paper
+       gradient. There is no paper now; --fam is what the card spends its
+       family colour on (the dot in .card-meta) and what the modal spends it
+       on (the rail down its left edge and the dot beside the family name). */
     var cs = getComputedStyle(card);
-    box.style.setProperty('--pa', cs.getPropertyValue('--pa').trim() || '#FFCE3B');
-    box.style.setProperty('--pb', cs.getPropertyValue('--pb').trim() || '#F5BE1E');
+    box.style.setProperty('--fam', cs.getPropertyValue('--fam').trim() || 'var(--acc)');
 
     el('nm-code').textContent = txt(card, '.code');
     var tokSrc = card.querySelector('.tok');
@@ -634,6 +639,21 @@
     if (cav) rows += '<div class="nm-caveat">' + R.esc(cav) + '</div>';
 
     rows += row('What you get', copy.get);
+
+    /* The feature chips. They were printed on the card until the board was
+       rebuilt on clean cards, where at a 241px column they wrapped to four
+       lines and were the largest single source of height variance in a row.
+       They describe the demo ARTIFACT rather than the commercial state — see
+       the note on extras in assets/catalog-render.js — which is why they come
+       from SBV_EXTRAS and not from the row, and why the live overlay still
+       has them after the database replaces state.niches. */
+    var chips = R.chips(n.slug ? n : { slug: slug }, window.SBV_EXTRAS || {});
+    if (chips.length) {
+      rows += row('What this template ships with',
+        '<span class="nm-chips">' + chips.map(function (c) {
+          return '<span class="chip-sm">' + R.esc(c) + '</span>';
+        }).join('') + '</span>');
+    }
     rows += row('Territory', copy.terr);
     rows += row('Price', R.esc(copy.price || n.price_label || ''));
 
@@ -656,11 +676,11 @@
       foot += '<button type="button" class="btn btn-pri" id="nm-line" data-niche="' +
               R.esc(slug) + '">Claim a spot</button>';
       if (n.website_offer && n.demo_path) {
-        foot += '<a class="btn btn-ghost" href="' + R.esc(n.demo_path) + '">See the site</a>';
+        foot += '<a class="btn btn-ghost" href="' + R.esc(n.demo_path) + '">See the demo</a>';
       }
     } else if (n.demo_path) {
       foot += '<a class="btn btn-pri" href="' + R.esc(n.demo_path) + '">' +
-              'Check it out here&nbsp;&rarr;</a>';
+              'See the demo&nbsp;&rarr;</a>';
     }
     el('nm-foot').innerHTML = foot + '<p class="nm-fine">' + copy.fine + '</p>';
 

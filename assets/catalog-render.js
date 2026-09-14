@@ -10,11 +10,31 @@
 
    It lives in its own file specifically so those two paths cannot drift.
 
-   THE CARD IS THE "OWN YOUR TOWN" PLATE, ported from the multi-niche page in
-   the GarageSaleBiz repo (HEAD:niches.html). Every device is carried over:
-   the ruled plate surface, two galvanised staples through the top edge, the
-   tilted circular sticker, the stamped status pill, the mono index label, the
-   dashed divider and the red-arrow CTA row.
+   THE CARD WAS the "OWN YOUR TOWN" PLATE ported from the GarageSaleBiz repo
+   (HEAD:niches.html) — a ruled yellow notepad surface, two galvanised staples
+   through the top edge, a tilted circular price sticker in a stamped display
+   face, and a red-arrow CTA row. It is not that any more.
+
+   WHY IT CHANGED. The landing page sells with screenshots: .pcard and .fcard
+   are white, square to the grid, and lead with a real capture of the site
+   they point at. The catalog board — the page that actually has to close the
+   sale — was a different product visually, and a visitor moving from one to
+   the other had no reason to believe the two came from the same shop. The
+   board STRUCTURE was never the problem and is untouched: family plates,
+   filter chips, the ledger bar, the live open/claimed status, the
+   on-the-board count. What changed is the card surface, which now reads the
+   same band tokens .fcard does and leads with the same screenshot.
+
+   WHAT WENT: the paper gradient, the ink border, both staples, the circular
+   price sticker, the hard offset shadow, the pinned rotation and the rustle
+   that went with it. WHAT ARRIVED: a 16:10 screenshot across the top, a
+   family accent dot, a plain status pill, and a price printed as a line of
+   text rather than stamped on a circle.
+
+   THE FEATURE CHIPS MOVED TO THE MODAL. They described what a template ships
+   with, which is detail, and at a 241px column they wrapped to four lines and
+   were the single largest source of height variance on the board. chips()
+   below is what the modal reads; the card no longer prints them.
 
    ONE CONSTRAINT SHAPED EVERYTHING ELSE HERE: any field this markup reads must
    also exist on the rows sbv_niches returns, because sbv.js re-renders from
@@ -37,8 +57,10 @@
      meant to evidence, and an invented number would be worse than either. */
   var FLOOR = 3;
 
-  var ARROW = '<svg class="go-arrow" viewBox="0 0 60 30" aria-hidden="true">' +
-              '<path d="M2 10h34V2l22 13-22 13v-8H2z"/></svg>';
+  /* The CTA arrow was a 60x30 outlined flame-red chevron. A glyph in the
+     link's own colour is the landing page's idiom (.fcard-go) and needs no
+     second palette to stay legible on a white card. */
+  var ARROW = '<span class="go-arrow" aria-hidden="true">\u2192</span>';
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -57,37 +79,97 @@
     return fam + ' · N° ' + pad3(idx);
   }
 
-  /* Price badge, derived — never a second source of truth.
-     "$497 + $39/mo · 3 cities" -> $497 / FOUNDING
-     "$249 once · 3 cities"     -> $249 / ONE TIME
-     A one-time price says "once"; anything else on this catalog is a founding
-     rate. Both are read off the same string the card already prints. */
-  function badge(n) {
-    if (n.status !== 'open' || !n.price_label) return null;
-    var m = String(n.price_label).match(/\$[\d,]+/);
-    if (!m) return null;
-    return { big: m[0], small: /\bonce\b/i.test(n.price_label) ? 'One time' : 'Founding' };
+  /* THE THUMBNAIL SOURCE IS DERIVED, never a new seed field — the constraint
+     at the top of this file applies to it exactly like everything else.
+
+     Two paths, both off real sbv_niches columns:
+       demo_path set -> /assets/shots/rotator/<slug>.jpg. tools/build-shots.js
+                        captures that directory from the same seed rows, one
+                        file per slug, so the two cannot disagree about which
+                        frames exist (heroRotator() below reads it the same
+                        way).
+       open_url set  -> /assets/shots/platforms/<host minus .com>.jpg. The
+                        three open platforms have no demo_path, because they
+                        are whole businesses rather than templates, but they
+                        do have captures, and their hostnames land on those
+                        filenames exactly: estatesalebiz.com, garagesalebiz.com,
+                        consignmentbiz.com.
+
+     Three waitlist ideas match neither and get the placeholder below, rather
+     than a broken <img> or a collapsed card. */
+  function shot(n) {
+    if (n.demo_path) return '/assets/shots/rotator/' + esc(n.slug) + '.jpg';
+    if (n.open_url) {
+      var h = host(n.open_url).replace(/^www\./, '').replace(/\.com$/, '');
+      if (h) return '/assets/shots/platforms/' + esc(h) + '.jpg';
+    }
+    return null;
   }
 
+  /* 16:10 either way — the placeholder holds the same box the image would, so
+     a family containing one of the three undemoed niches does not get a short
+     card sitting beside tall ones. */
+  function thumb(n) {
+    var src = shot(n);
+    if (!src) {
+      return '<div class="card-shot card-shot-none">' +
+               '<span class="card-shot-mark" aria-hidden="true"></span>' +
+               '<span class="card-shot-label">No demo built yet</span>' +
+             '</div>';
+    }
+    return '<div class="card-shot">' +
+             '<img src="' + src + '" width="1280" height="800" loading="lazy" ' +
+                  'decoding="async" alt="A screenshot of the ' + esc(n.name) + ' site.">' +
+           '</div>';
+  }
+
+  /* Price, printed as a line of text. The circular red sticker it replaces
+     carried the same figure in a display face at 17px, rotated nine degrees.
+
+     DELIBERATELY ONE TEXT NODE. assets/i18n.js keys translations off the
+     English source string and walks text nodes, so wrapping the figure in a
+     <b> would split "$299 launch-ready · $499 custom" into two nodes and drop
+     the Spanish line that already exists for it. Weight is CSS's job here. */
+  function priceLine(n) {
+    var txt = null;
+    if (n.status === 'open' && n.price_label) txt = n.price_label;
+    else if (n.status === 'website_only')     txt = '$299 launch-ready · $499 custom';
+    if (!txt) return '';
+    return '<p class="card-price">' + esc(txt) + '</p>';
+  }
+
+  /* The three strings are the filter chips' three strings, exactly. They were
+     'Waitlist' and 'Website' here and 'In line' and 'Website only' on the
+     chips, which had the board naming one state two ways. Aligning them also
+     reuses the Spanish already in assets/lang/es.js for those chips, instead
+     of needing two more dictionary lines for the same idea. */
   function statusTok(n) {
     if (n.status === 'open')    return { cls: 'open', text: 'Open now' };
-    if (n.status === 'in_line') return { cls: 'wait', text: 'Waitlist' };
-    return { cls: 'site', text: 'Website' };
+    if (n.status === 'in_line') return { cls: 'wait', text: 'In line' };
+    return { cls: 'site', text: 'Website only' };
   }
 
   /* Demo brand name and feature chips. These are NOT database columns and
      must never become ones: they describe the artifact on disk, not the
      product's commercial state. Passed in as a lookup so the runtime
      re-render has them too — a field that lives only in the seed renders
-     once and disappears the moment live rows arrive. */
-  function extras(n, lookup) {
+     once and disappears the moment live rows arrive.
+
+     They are two functions now rather than one, because they render in two
+     different places: the brand name stays on the card, under the trade,
+     while the chips moved to the card-detail modal. Both still read the one
+     SBV_EXTRAS lookup, so neither can go stale against the other. */
+  function brandLine(n, lookup) {
     var x = (lookup && lookup[n.slug]) || {};
-    return (x.brand ? '<p class="card-brand">' + esc(x.brand) + '</p>' : '') +
-           (x.chips && x.chips.length
-             ? '<p class="card-chips">' + x.chips.map(function (c) {
-                 return '<span class="chip-sm">' + esc(c) + '</span>';
-               }).join('') + '</p>'
-             : '');
+    return x.brand ? '<p class="card-brand">' + esc(x.brand) + '</p>' : '';
+  }
+
+  /* Read by assets/sbv.js's fillModal(). Returns the array, not markup — the
+     modal decides how a row of chips is presented, the same way it decides
+     that for every other field it lifts off a card. */
+  function chips(n, lookup) {
+    var x = (lookup && lookup[n.slug]) || {};
+    return (x.chips && x.chips.length) ? x.chips.slice() : [];
   }
 
   /* "Claim this territory" opens the claim/claim.js modal — slug and name are
@@ -101,6 +183,23 @@
            '<p class="card-claimed" data-claimed="' + esc(n.slug) + '" hidden></p>';
   }
 
+  /* The price left this row for priceLine() above, which the card prints
+     immediately before it — so an open card no longer reads
+     "$497 + $39/mo · 3 cities · estatesalebiz.com" as one run-on note.
+
+     The commercial structure is otherwise unchanged, deliberately. The
+     primary action is still whatever that status can actually DO — buy it,
+     get in line, claim the territory — and the demo link is secondary to it
+     wherever a demo exists. What changed is that the secondary link says
+     "See the demo" everywhere, which is what the landing page's cards say,
+     instead of three different sentences for the same click. */
+  function demoAlt(n) {
+    return n.demo_path
+      ? '<a class="card-alt" href="' + esc(n.demo_path) + '">See the demo ' +
+        '\u2192</a>'
+      : '';
+  }
+
   function footRow(n, counts) {
     var c = (counts && counts[n.slug]) || {};
     var claim = claimBtn(n);
@@ -109,8 +208,7 @@
       return '<a class="card-go" href="' + esc(n.open_url) + '">' +
                '<span>See the deal</span>' + ARROW +
              '</a>' +
-             '<p class="card-note">' + esc(n.price_label || '') +
-               ' · ' + esc(host(n.open_url)) + '</p>';
+             '<p class="card-note">' + esc(host(n.open_url)) + '</p>';
     }
 
     if (n.status === 'in_line') {
@@ -122,44 +220,44 @@
       return '<a class="card-go js-line" href="#line" data-niche="' + esc(n.slug) + '">' +
                '<span>Claim a spot</span>' + ARROW +
              '</a>' + count +
-             (n.website_offer && n.demo_path
-               ? '<a class="card-alt" href="' + esc(n.demo_path) + '">See the site your customers would get</a>' + claim
-               : '');
+             (n.website_offer && n.demo_path ? demoAlt(n) + claim : '');
     }
 
     return (claim || ('<a class="card-go" href="' + esc(n.demo_path || '#websites') + '">' +
-             '<span>See the site</span>' + ARROW +
+             '<span>See the demo</span>' + ARROW +
            '</a>')) +
-           (claim && n.demo_path
-             ? '<a class="card-alt" href="' + esc(n.demo_path) + '">See the site first</a>'
-             : '') +
-           '<p class="card-note">$299 launch-ready · $499 custom</p>';
+           (claim ? demoAlt(n) : '');
   }
 
+  /* .entry.sheet, .code, .tok, h3, .job, .caveat, .card-go, .entry-foot,
+     data-fam and id="n-<slug>" are all load-bearing for assets/sbv.js — it
+     filters on them, counts on them, promotes the h3 into the modal button
+     and lifts the modal's contents off them. The shape around them changed;
+     not one of those names did.
+
+     .card-body is new and wraps everything under the screenshot, because the
+     card is now a flex column whose foot pins to the bottom: the thumbnail is
+     a fixed-ratio block and the text has to be the part that stretches, or
+     the CTA lands at a different height in every card in the row. That is
+     the exact defect the featured grid had. */
   function entry(n, famName, counts, idx, extrasLookup) {
     var tok = statusTok(n);
-    var bg  = badge(n);
     var cls = 'entry sheet reveal is-' + n.status.replace(/_/g, '-');
 
     return '<article class="' + cls + '" data-fam="' + esc(n.family) + '" id="n-' + esc(n.slug) + '">' +
-             '<span class="staple l" aria-hidden="true"></span>' +
-             '<span class="staple r" aria-hidden="true"></span>' +
-             (bg
-               ? '<span class="sticker hot" aria-hidden="true"><span class="big">' + esc(bg.big) +
-                 '</span><span class="small">' + esc(bg.small) + '</span></span>'
-               : (n.status === 'in_line'
-                   ? '<span class="sticker soon" aria-hidden="true"><span class="big">Soon</span>' +
-                     '<span class="small">Waitlist</span></span>'
-                   : '')) +
-             '<span class="card-meta">' +
-               '<span class="code">' + esc(indexLabel(n, idx)) + '</span>' +
-               '<span class="tok ' + tok.cls + '">' + esc(tok.text) + '</span>' +
-             '</span>' +
-             '<h3>' + esc(n.name) + '</h3>' +
-             extras(n, extrasLookup) +
-             '<p class="job">' + esc(n.job_line) + '</p>' +
-             (n.caveat ? '<p class="caveat">' + esc(n.caveat) + '</p>' : '') +
-             '<div class="entry-foot">' + footRow(n, counts) + '</div>' +
+             thumb(n) +
+             '<div class="card-body">' +
+               '<span class="card-meta">' +
+                 '<span class="fam-dot" aria-hidden="true"></span>' +
+                 '<span class="code">' + esc(indexLabel(n, idx)) + '</span>' +
+                 '<span class="tok ' + tok.cls + '">' + esc(tok.text) + '</span>' +
+               '</span>' +
+               '<h3>' + esc(n.name) + '</h3>' +
+               brandLine(n, extrasLookup) +
+               '<p class="job">' + esc(n.job_line) + '</p>' +
+               (n.caveat ? '<p class="caveat">' + esc(n.caveat) + '</p>' : '') +
+               '<div class="entry-foot">' + priceLine(n) + footRow(n, counts) + '</div>' +
+             '</div>' +
            '</article>';
   }
 
@@ -384,14 +482,16 @@
     esc: esc,
     catalog: catalog,
     entry: entry,
-    extras: extras,
+    brandLine: brandLine,
+    chips: chips,
     nicheSelect: nicheSelect,
     heroRotator: heroRotator,
     included: included,
     figures: figures,
     numWord: numWord,
     thesisOpen: thesisOpen,
-    badge: badge,
+    shot: shot,
+    priceLine: priceLine,
     indexLabel: indexLabel
   };
 }));

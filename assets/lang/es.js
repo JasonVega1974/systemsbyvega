@@ -133,6 +133,13 @@ window.SBV_LANG.es = {
   'See the deal': 'Ver la oferta',
   'Claim a spot': 'Reclamar un lugar',
   'See the site': 'Ver el sitio',
+  /* The card's secondary link says this on every status now, where it used to
+     say three different things for the same click. */
+  'See the demo': 'Ver la demostración',
+  'See the demo \u2192': 'Ver la demostración \u2192',
+  'Claim this territory': 'Reclamar este territorio',
+  'No demo built yet': 'Demostración aún no creada',
+  'What this template ships with': 'Lo que incluye esta plantilla',
   'See the site your customers would get': 'Vea el sitio que tendrían sus clientes',
   'in line': 'en fila',
   '$299 launch-ready · $499 custom': '$299 listo para lanzar · $499 personalizado',
