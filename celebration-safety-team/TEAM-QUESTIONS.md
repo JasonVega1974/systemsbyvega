@@ -2,9 +2,12 @@
 
 **Celebration Church · 2121 Caldwell Blvd, Nampa, ID 83651**
 
-Eight questions. Each one is currently blocking part of the team's written
+Twelve questions. Each one is currently blocking part of the team's written
 emergency procedures — the procedure exists and says the answer is unknown.
 Please write answers below; nothing here will be guessed or filled in for you.
+
+*Questions 9–12 are new since the first draft. They came out of the reunification,
+lockdown and shelter-in-place procedures written after that draft.*
 
 Date: ________________   Completed by: ______________________________
 
@@ -91,6 +94,46 @@ Fire / evacuation drill: ______________________________________________
 Code Adam walkthrough: _______________________________________________
 
 Who schedules and leads them? _________________________________________
+
+---
+
+### 9. Where do parents collect children after an evacuation?
+
+*Two separate places are needed: where parents check in, and where the children wait — with the children out of the parents' line of sight. That one decision is what keeps a reunification orderly instead of a crowd. This runs every time we evacuate during kids' ministry.*
+
+Parent check-in point: _______________________________________________
+
+Children wait at: ____________________________________________________
+
+---
+
+### 10. Which interior doors actually lock, and who has keys on a Sunday?
+
+*A lockdown procedure is worth exactly as much as the locks behind it. We do not currently know which classroom and office doors lock from the inside.*
+
+Doors that lock from inside: __________________________________________
+
+Who carries keys/fobs on a Sunday: ____________________________________
+
+---
+
+### 11. Which rooms can be sealed, and who can shut off the air handling?
+
+*For a chemical release or heavy smoke, the procedure is to seal an interior room above ground level and either shut down the HVAC or set it to full recirculation. Someone has to know how to do that before the day it matters.*
+
+Room(s): _____________________________________________________________
+
+Who can operate the HVAC: ____________________________________________
+
+Do we stock plastic sheeting and duct tape?  ☐ Yes, where: ____________  ☐ No
+
+---
+
+### 12. May we register with the "I Love U Guys" Foundation?
+
+*Our lockdown and reunification wording comes from their Standard Response Protocol and Standard Reunification Method. Both are free, but they ask to be told who is using the reunification method. It is one email.*
+
+☐ Yes, go ahead   ☐ Ask me again later   ☐ Who should send it: ___________
 
 ---
 

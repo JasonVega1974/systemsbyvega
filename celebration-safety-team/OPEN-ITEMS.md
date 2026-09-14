@@ -33,6 +33,10 @@ renders a clearly labelled placeholder and the item is tracked here.
 - [ ] **Accessible evacuation routes and areas of refuge** for people with mobility needs.
 - [ ] **Radio / communication channel decision.** Training says "know your communication method (radio/text thread)" without naming one. Decide and document.
 - [ ] **Which exterior doors are monitored** during children's drop-off and dismissal.
+- [ ] **Reunification location and parent check-in point.** *Now blocking a shipped procedure.* Two separate places are needed, with the children out of the parents' line of sight — that single decision is what keeps a reunification orderly.
+- [ ] **Reunification cards.** Do not exist yet. Needed before the procedure can be drilled.
+- [ ] **Which interior doors actually lock, and who carries keys or a fob on a Sunday.** *Now blocking a shipped procedure:* the Lockdown annex is worth exactly as much as the locks behind it.
+- [ ] **Shelter-in-place rooms**, who can shut down or recirculate the HVAC, and whether plastic sheeting and duct tape are stocked anywhere in the building. Sealing a room is the one protective action here that needs supplies bought in advance.
 
 ## 3. People to enter (never generated — admin entry only)
 
@@ -81,6 +85,31 @@ locations, localising shelter strategies, and adding an organisation logo. The
 directive lines in this app are therefore quoted exactly and must not be
 reworded, including by a future editor who thinks they read awkwardly. BIZ and
 K12 wording differ; **this app uses BIZ throughout** and must not mix editions.
+
+## 4b. Obligations we have taken on
+
+- [ ] **Notify the "I Love U Guys" Foundation of SRM use.** Their Terms of Use make this a condition, not a courtesy: email `srm@iloveuguys.org` or sign an MOU. SRP asks only that we let them know; SRM requires it. Both are otherwise free.
+- [ ] **Do not reword SRP directives.** Terms of Use permit localising evacuation locations and shelter strategies, and adding a logo — nothing else. Recorded in the ruling above and in the procedure itself.
+
+## 4c. For the church's legal counsel — not legal advice
+
+Statute citations only, gathered because volunteers will ask "can I be sued?"
+**Nothing here is interpreted, and none of it should be relied on until counsel
+has reviewed it.** Several commonly-cited references turned out to be stale:
+
+- **Idaho Code § 5-337 (AED immunity) NO LONGER EXISTS.** It is absent from the current Title 5 Chapter 3 index and the URL 404s, yet it is still widely cited by AED vendors. The live provisions are **§§ 39-701 / 39-702 / 39-703** (Sudden Cardiac Arrest), added 2023 ch. 123.
+- **§ 5-330** — general emergency first-aid immunity. **Amended in 2026**, so work from the live page, not a cached copy.
+- **§ 5-348** — immunity of volunteer security personnel for religious organisations. Directly on point for this team. **Renumbered from § 5-347 in 2025** — another stale-citation trap.
+- **§ 5-345** is titled "Immunity for aid during an emergency" but covers only architects, engineers and contractors. Easy to miscite from an index. Not applicable.
+
+## 4d. Technical note — automated link checking
+
+**`redcross.org` returns HTTP 200 and then serves an apology page** to automated
+clients. A status-code-only link checker will *falsely pass* every Red Cross URL
+in this app while readers get an error page. Any future link check must assert
+expected page text, not just a 200. The same care applies to `cdc.gov`,
+`cpr.heart.org`, `stroke.org` and `fema.gov`, which block some fetchers while
+serving browsers normally — a 403 from a checker does not mean a dead link.
 
 ## 5. Content verification — CLOSED
 

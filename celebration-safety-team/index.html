@@ -149,6 +149,16 @@ body {
   /* "Services: 3" never changes, so it is the one that goes when space runs out. */
   .header-stats .hstat:last-child { display: none; }
 }
+@media (max-width: 400px) {
+  /* A sticky header is only worth its height. At 320px the full-size logo
+     forced a third row and the header took ~31% of the screen permanently.
+     Shrinking the furniture keeps it to two rows. */
+  .header { padding: .55rem .8rem; gap: .6rem; }
+  .logo-mark { width: 34px; height: 34px; border-radius: 8px; }
+  .header-title { font-size: .95rem; letter-spacing: 1px; }
+  .header-sub { font-size: .58rem; letter-spacing: 1px; }
+  .user-chip { padding: .3rem .55rem; font-size: .68rem; }
+}
 .sidebar-label {
   font-size: .6rem;
   font-weight: 800;
@@ -714,6 +724,52 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
       </div>
 
+      <div class="proc-card blue">
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">📣</span><span class="proc-title">Emergency Actions — Hold · Secure · Lockdown · Evacuate · Shelter</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <div class="proc-body">
+          <p>Five words. Everyone in the building — team, staff, volunteers, congregation — reacts to the same five, and so do responding officers. That is the whole point: under pressure, nobody should have to interpret what was just shouted.</p>
+          <p>This is the <strong>Standard Response Protocol</strong> from the "I Love U Guys" Foundation, business edition. It is free for a church to use, and the wording below is quoted exactly as published.</p>
+          <div class="tip-box">✏️ <strong>Do not reword these lines.</strong> The Foundation permits us to localise <em>where</em> we evacuate to and <em>which</em> safety strategy a hazard calls for, and to add our logo. The action names and directives themselves must stay as written — a protocol whose words drift is no longer a shared protocol.</div>
+
+          <div class="alert-box" style="background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.25);">
+            <strong>HOLD!</strong> — "In your room, office or area. Clear the halls."<br>
+            <span style="color:var(--tx2);">Used when the hallways need to stay clear — a medical emergency in a corridor, an altercation, a spill. Ministry continues.</span><br>
+            <strong style="font-size:.78rem;">Everyone:</strong> <span style="color:var(--tx2);font-size:.8rem;">Clear the hallways and remain in room or area until the "All Clear" is announced · Do business as usual</span><br>
+            <strong style="font-size:.78rem;">Staff:</strong> <span style="color:var(--tx2);font-size:.8rem;">Close and lock door · Account for occupants and staff · Do business as usual</span>
+          </div>
+
+          <div class="alert-box" style="background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.25);">
+            <strong>SECURE!</strong> — "Get inside. Lock outside doors."<br>
+            <span style="color:var(--tx2);">The threat is <strong>outside</strong> — police activity in the neighbourhood, a pursuit, a dangerous animal in the lot. The building's shell is the protection. Ministry continues indoors.</span><br>
+            <strong style="font-size:.78rem;">Everyone:</strong> <span style="color:var(--tx2);font-size:.8rem;">Return inside · Do business as usual</span><br>
+            <strong style="font-size:.78rem;">Staff:</strong> <span style="color:var(--tx2);font-size:.8rem;">Bring everyone indoors · Lock outside doors · Increase situational awareness · Account for occupants and staff · Do business as usual</span>
+          </div>
+
+          <div class="alert-box">
+            <strong>LOCKDOWN!</strong> — "Locks, lights, out of sight."<br>
+            <span style="color:var(--tx2);">The threat is <strong>inside</strong>. See the Lockdown card below.</span><br>
+            <strong style="font-size:.78rem;">Everyone:</strong> <span style="color:var(--tx2);font-size:.8rem;">Move away from sight · Maintain silence · Do not open the door · Prepare to evade or defend</span><br>
+            <strong style="font-size:.78rem;">Staff:</strong> <span style="color:var(--tx2);font-size:.8rem;">Lock interior doors · Turn out the lights · Move away from sight · Do not open the door · Maintain silence · Account for occupants and staff · Prepare to evade or defend</span>
+          </div>
+
+          <div class="alert-box" style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);">
+            <strong>EVACUATE!</strong> — a location is named.<br>
+            <strong style="font-size:.78rem;">Everyone:</strong> <span style="color:var(--tx2);font-size:.8rem;">Evacuate to specified location · Bring your phone · Instructions may be provided about retaining or leaving belongings</span><br>
+            <strong style="font-size:.78rem;">Staff:</strong> <span style="color:var(--tx2);font-size:.8rem;">Lead evacuation to specified location · Account for occupants and staff · Notify if missing, extra or injured people</span>
+          </div>
+
+          <div class="alert-box" style="background:rgba(232,160,32,.08);border-color:rgba(232,160,32,.25);">
+            <strong>SHELTER!</strong> — the hazard and the safety strategy are both named.<br>
+            <strong style="font-size:.78rem;">Everyone:</strong> <span style="color:var(--tx2);font-size:.8rem;">Use appropriate safety strategy for the hazard</span><br>
+            <strong style="font-size:.78rem;">Staff:</strong> <span style="color:var(--tx2);font-size:.8rem;">Lead safety strategy · Account for occupants and staff · Notify if missing, extra or injured people</span><br>
+            <span style="color:var(--tx2);font-size:.8rem;">Tornado → evacuate to shelter area · Hazmat → seal the room · Earthquake → drop, cover and hold</span>
+          </div>
+
+          <div class="tip-box">⚠️ <strong>"Lockout" is dead language — never use it.</strong> It was replaced by <strong>Secure</strong> in 2020, for the reason that matters here: the Foundation found "Lockout vs. Lockdown was confusing, Secure vs. Lockdown is clear." Two words that sound alike and mean opposite directions of travel is exactly the mistake you cannot afford mid-incident.</div>
+          <div class="tip-box">📚 <a href="https://iloveuguys.org/The-Standard-Response-Protocol.html" target="_blank" rel="noopener">The "I Love U Guys" Foundation — Standard Response Protocol</a>. Our procedures keep FEMA's annex names for planning; SRP is what we say out loud.</div>
+        </div>
+      </div>
+
       <div class="proc-card">
         <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔫</span><span class="proc-title">Active Shooter — Run · Hide · Fight</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
@@ -726,6 +782,25 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <p><strong>When law enforcement arrives:</strong> keep hands visible and empty, follow all commands immediately, avoid pointing or yelling, and do not stop officers to ask for help — they will move toward the threat first.</p>
           <p><strong>Call 911 when safe.</strong> Give location, number/description of shooter(s), weapons, and number of potential victims.</p>
           <div class="tip-box">📚 Team standard: complete the Academy module "Active Shooter Response," review the <a href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener">CISA Active Shooter Preparedness</a> resources, and take free FEMA course <a href="https://training.fema.gov/programs/independent-study/courseoverview.aspx?code=is-907.a&amp;lang=en" target="_blank" rel="noopener">IS-907.A: Active Shooter — What You Can Do</a>.</div>
+        </div>
+      </div>
+
+      <div class="proc-card">
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔒</span><span class="proc-title">Lockdown — Threat Inside the Building</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <div class="proc-body">
+          <p><strong>LOCKDOWN! Locks, lights, out of sight.</strong> Called when the danger is <em>inside</em> — an intruder, a custody dispute turning aggressive, a violent person in the building. One of FEMA's five required functional annexes for a house of worship.</p>
+          <p>Lockdown is not evacuation and it is not Secure. <strong>Secure</strong> means the threat is outside and the walls are protecting us, so ministry continues. <strong>Lockdown</strong> means the threat is inside and ministry stops.</p>
+          <ol>
+            <li><strong>Announce it plainly</strong> over the team channel and the PA: "Lockdown! Locks, lights, out of sight." Repeat it. Do not use code numbers — visitors do not know them, and neither do arriving officers.</li>
+            <li><strong>Lock interior doors. Lights out. Everyone away from sight lines</strong> — away from door glass and windows, behind solid furniture. Silence phones, do not just mute the ring.</li>
+            <li><strong>Do not open the door.</strong> Not for a knock, not for a voice, not for someone in a uniform. Law enforcement will open doors themselves or identify through the door with dispatch confirmation. This rule is what makes a locked door worth anything.</li>
+            <li><strong>Account for people.</strong> Every room leader counts who is with them and reports missing, extra, or injured people to the Team Lead.</li>
+            <li><strong>Prepare to evade or defend.</strong> If the threat enters the room, lockdown has already failed for that room and the options in the Active Shooter procedure apply.</li>
+            <li><strong>Call 911.</strong> Give the building address, which part of the building, what you saw, and how many people are with you. Stay on the line if it is safe.</li>
+          </ol>
+          <div class="alert-box">🧒 <strong>Children's areas lock down first and unlock last.</strong> A child released into a hallway during a lockdown is the outcome this entire procedure exists to prevent. No child leaves a room, and no adult collects one, until a Team Lead or law enforcement gives the all-clear in person.</div>
+          <div class="tip-box">📚 FEMA, <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">Guide for Developing High-Quality EOPs for Houses of Worship</a> (Lockdown annex) · directive wording from <a href="https://iloveuguys.org/The-Standard-Response-Protocol.html" target="_blank" rel="noopener">SRP, business edition</a>.</div>
+          <div class="alert-box">📌 <strong>Open item:</strong> which interior doors actually lock, and who carries keys or a fob on a Sunday, has not been recorded. A lockdown procedure is only as good as the locks — this goes on the site schematic.</div>
         </div>
       </div>
 
@@ -751,12 +826,43 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="proc-body">
           <ol>
             <li>On alarm or visible fire/smoke: <strong>activate the alarm</strong> (if not already), begin evacuation immediately, and <strong>call 911</strong>.</li>
-            <li>Team members move to assigned zones: sanctuary doors, foyer, children's auditorium, and children's check-in. Children's workers evacuate kids by class; parents reunite <strong>at the assembly area, not in hallways</strong>.</li>
+            <li>Team members move to assigned zones: sanctuary doors, foyer, children's auditorium, and children's check-in. Children's workers evacuate kids <strong>by class, with a head count taken as they exit</strong>. Parents do <strong>not</strong> collect children from classrooms or hallways — see the <strong>Reunification</strong> procedure below, which is what turns "reunite at the assembly area" into something that actually works.</li>
             <li>Direct people to the nearest safe exit — never through smoke. Assist those with mobility needs; know accessible routes in advance.</li>
             <li>Proceed to the designated <strong>assembly area</strong> (to be marked on the site schematic) and keep driveways clear for fire apparatus.</li>
             <li>Account for people; report anyone missing (and last known location) to arriving responders. <strong>Do not re-enter</strong> until fire officials clear the building.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.usfa.fema.gov/prevention/workplace-fires/" target="_blank" rel="noopener">USFA — Workplace &amp; non-residential fires</a> · <a href="https://www.ready.gov/business/emergency-plans/emergency-response-plan" target="_blank" rel="noopener">Ready.gov — Emergency response plans for organisations</a> · <a href="https://www.usfa.fema.gov/" target="_blank" rel="noopener">U.S. Fire Administration</a>. <em>(v1 cited Ready.gov's home-fire page here. That page is written for a household — it has nothing to say about evacuating several hundred people from an assembly occupancy with a children's wing.)</em> Assembly-area location and route arrows must be added to the uploaded site schematic.</div>
+        </div>
+      </div>
+
+      <div class="proc-card green">
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">👨‍👩‍👧</span><span class="proc-title">Reunification — Returning Children to Parents After an Evacuation</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <div class="proc-body">
+          <p>This is the procedure that runs <em>every single time</em> the building evacuates during children's ministry. Without it, a fire alarm ends with several hundred adults converging on the kids' wing looking for their own child, which blocks the evacuation route and makes accountability impossible.</p>
+          <p>FEMA is direct about the risk: child release processes must exist <em>"to assure that no child is released to an unauthorized person, even if that person well meaning."</em></p>
+
+          <div class="alert-box">🔑 <strong>Normal pickup and emergency reunification are different things.</strong> Sunday check-in tags are a convenience system. Reunification is a <strong>chain-of-custody</strong> system: a controlled, accountable change of custody from the church to a verified parent or guardian. Improvising it, in the Standard Reunification Method's words, ignores "the responsibility … to maintain the chain of custody for every student."</div>
+
+          <p><strong>The one thing that cannot be negotiated: 100% accountability.</strong></p>
+          <ul>
+            <li>Class leaders take a head count <strong>as they exit</strong>, not at the assembly area.</li>
+            <li>Counts go to one person, who knows the total who were on site.</li>
+            <li><strong>Some people will leave on their own.</strong> Expect it, especially in a violent incident. Absent does not mean injured — but you must be able to <strong>name</strong> who is unaccounted for, not just count them. "We are missing 6" is useless to a fire officer; six names is not.</li>
+          </ul>
+
+          <p><strong>The flow.</strong> Keep the children out of the parents' line of sight — that single decision is what keeps the process orderly.</p>
+          <ol>
+            <li><strong>Parent check-in point</strong> — somewhere clearly separate from where the children are gathered.</li>
+            <li><strong>Children assembled elsewhere</strong>, with their class leaders, beyond the parents' field of vision.</li>
+            <li><strong>Greeter</strong> meets parents, explains the process, hands out a reunification card. Our friendliest people belong in this role.</li>
+            <li><strong>Checker</strong> verifies ID against the emergency contact list, splits the card, hands the parent the bottom half.</li>
+            <li><strong>Reunifier</strong> takes that half to the children's area, collects the child, and brings them out — and asks the child, <em>"Are you okay going home with this person?"</em></li>
+            <li><strong>Exit</strong> — one person collects the slip, records the child as released, and says goodbye. This is where the count closes.</li>
+          </ol>
+          <div class="tip-box">👥 <strong>Team size:</strong> the published rule of thumb is five people plus one more per hundred children. Worth knowing which of our three services that actually covers.</div>
+          <div class="tip-box">🚗 <strong>Tell parents where to park, and that they must not abandon vehicles.</strong> A blocked fire lane during an evacuation is its own emergency. If a parent cannot come, the child is released only to someone already on that child's emergency contact list — otherwise we keep the child until a parent arrives. No exceptions, including for people we recognise.</div>
+          <div class="alert-box">📌 <strong>Open items:</strong> the reunification and parent check-in locations have not been chosen, and reunification cards do not exist yet. Both are needed before this procedure can be drilled.</div>
+          <div class="tip-box">📚 Method: <a href="https://iloveuguys.org/The-Standard-Reunification-Method.html" target="_blank" rel="noopener">Standard Reunification Method</a>, "I Love U Guys" Foundation — free to use, and explicitly written to be adapted ("we use the word <em>method</em>. Not protocol. Not procedure."). Its material is written for schools, so the roles above are relabelled for a church, which the Foundation permits. Child-release principle and evacuation-annex requirements: <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">FEMA Houses of Worship EOP guide</a>, pp. 20 &amp; 31.</div>
         </div>
       </div>
 
@@ -783,6 +889,34 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>After shaking stops: check for injuries and hazards (gas smell, structural damage, fire), then evacuate calmly to the assembly area if the building is unsafe. Expect aftershocks.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.ready.gov/earthquakes" target="_blank" rel="noopener">Ready.gov — Earthquakes</a> · <a href="https://www.shakeout.org/dropcoverholdon/" target="_blank" rel="noopener">ShakeOut — Drop, Cover, Hold On</a>. <strong>Why this matters here:</strong> Idaho's damaging earthquakes have been in the <em>central</em> part of the state — Borah Peak (1983, M6.9) and near Stanley (2020, M6.5), both roughly 250–300 km from Nampa. Nampa sits in the western Snake River Plain, not on those faults. The realistic local exposure is strong <em>felt</em> shaking from a distant event during a service, which is enough to cause panic, falls and falling fixtures in a full sanctuary.</div>
+        </div>
+      </div>
+
+      <div class="proc-card amber">
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🏠</span><span class="proc-title">Shelter-in-Place — Sealing the Building Against Outside Air</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <div class="proc-body">
+          <p>One of FEMA's five required annexes, and the one most often confused with the others. This is for a hazard in the <strong>outside air</strong> — a chemical release, a tanker or rail incident, heavy smoke. It is not the tornado procedure and not Secure.</p>
+
+          <div class="tip-box"><strong>Three different things, three different actions:</strong><br>
+            <strong>Secure</strong> — threat outside, doors locked, ministry continues. Air is fine.<br>
+            <strong>Shelter (tornado / earthquake)</strong> — structural hazard; move to the right room, brace.<br>
+            <strong>Shelter-in-place (this card)</strong> — the <em>air</em> is the hazard. Seal the room.</div>
+
+          <p><strong>Deciding: stay or go?</strong> FEMA states the trade-off plainly — <em>"sheltering-in-place is best used when evacuating the public would cause greater risk to them than staying where they are, or when an evacuation cannot be performed due to time or other constraints."</em> And against it: <em>"Evacuation may be preferable when the substance released includes flammable vapors, the substance will linger for a long time in an area, or buildings cannot be closed tightly enough to provide safe shelter."</em></p>
+          <p>In practice, follow what emergency officials tell you. Where there is no instruction yet and the plume is close, sealing a room beats driving through it.</p>
+
+          <p><strong>Sealing the building</strong></p>
+          <ol>
+            <li><strong>Everyone inside.</strong> Close and lock all exterior doors and windows.</li>
+            <li><strong>Shut down the air handling.</strong> Turn off air conditioning and ventilation, <strong>or set the system to 100% recirculation so no outside air is drawn in</strong>. Close vents and any fireplace damper. Somebody must know how to do this before the day it matters.</li>
+            <li><strong>Move to an interior room with as few openings as possible, above ground level.</strong> Many chemical vapours are heavier than air, so higher is better and basements are worse.</li>
+            <li><strong>Seal it.</strong> Plastic sheeting and duct tape over doors, windows and vents. Also seal around air conditioning units, bathroom and kitchen exhaust fans, and stove and dryer vents. Wet towels along the bottoms of doors.</li>
+            <li>If vapour may already be inside, <strong>breathe shallowly through a cloth or towel.</strong></li>
+            <li><strong>Do not eat or drink anything</strong> that may have been exposed.</li>
+            <li>Monitor local radio or official alerts. <strong>Stay sealed until officials say it is over</strong> — people leaving a shelter too early is a known way this goes wrong.</li>
+          </ol>
+          <div class="alert-box">📌 <strong>Open items:</strong> nobody has recorded which interior rooms are suitable, who can shut down or recirculate the HVAC, or whether plastic sheeting and duct tape are stocked anywhere in the building. Sealing a room is the one protective action here that needs supplies bought in advance.</div>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/shelter" target="_blank" rel="noopener">Ready.gov — Shelter</a> · <a href="https://www.ready.gov/hazmat" target="_blank" rel="noopener">Ready.gov — Hazardous materials incidents</a> (the recirculation option and the above-ground guidance live here, not on the main shelter page) · <a href="https://www.fema.gov/cbrn-tools/key-planning-factors-chemical-incident/kpf4/4/4-1" target="_blank" rel="noopener">FEMA — Key Planning Factors, evacuation vs. sheltering</a></div>
         </div>
       </div>
 
