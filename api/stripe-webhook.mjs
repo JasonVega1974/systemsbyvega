@@ -4,7 +4,9 @@
    Stripe calls this. The browser never does.
 
      checkout.session.completed  -> claim the territory, create the operator
-     charge.refunded             -> release the territory back to the pool
+     charge.refunded             -> release the territory, but only on a FULL
+                                    refund; a partial one is recorded and the
+                                    territory stays held (see handleRefund)
 
    ── WHY THE WEBHOOK AND NOT THE BROWSER ────────────────────────────────────
    EstateSaleBiz provisioned from the buyer's own browser after the redirect
@@ -665,8 +667,42 @@ async function provision(session) {
 }
 
 /* ============================================================================
-   charge.refunded — put the territory back on the market
+   charge.refunded — put the territory back on the market, on a FULL refund
+
+   STRIPE FIRES THIS EVENT FOR PARTIAL REFUNDS TOO. `charge.refunded` is not a
+   "this charge is now fully refunded" signal; it is "a refund was created
+   against this charge", and it arrives again for each further partial. The
+   only fields that answer "is all of the money gone" are `charge.refunded`
+   (the boolean Stripe sets when the outstanding amount reaches zero) and the
+   arithmetic `amount_refunded >= amount`.
+
+   Here that distinction decides whether somebody keeps their business. The
+   published refund policy on legal/refund.html says a buyer "always keeps at
+   least 50% of the website fee", so a partial refund is the NORMAL outcome of
+   a refund request, not an edge case. Releasing on one would take the city
+   back on the market and deactivate a storefront whose owner has paid most of
+   the price and is still owed the site — flatly contradicting the refund page,
+   the FAQ and legal/terms.html section 6.
+
+   So: a full refund releases; a partial one is recorded, alerts a human, and
+   leaves the tenant active and the claim held.
    ========================================================================= */
+
+/* Full only if Stripe says so, or if the arithmetic says so. Two sources
+   because they fail differently: the boolean is authoritative but absent from
+   a hand-built or very old payload, and the amounts are always present but
+   meaningless if `amount` is missing or zero. Either one being convincing is
+   enough; neither being convincing means partial, which is the safe answer —
+   it holds the territory and asks a person, instead of taking a paid-up
+   operator's city away on a field we could not read. */
+function isFullRefund(charge) {
+  if (!charge) return false;
+  if (charge.refunded === true) return true;
+  const amount = Number(charge.amount);
+  const refunded = Number(charge.amount_refunded);
+  return Number.isFinite(amount) && amount > 0
+    && Number.isFinite(refunded) && refunded >= amount;
+}
 
 async function handleRefund(charge) {
   const piId = charge && charge.payment_intent;
@@ -688,6 +724,37 @@ async function handleRefund(charge) {
     return json({ ok: true, ignored: 'unknown_payment' });
   }
 
+  const amount   = Number(charge && charge.amount) || 0;
+  const refunded = Number(charge && charge.amount_refunded) || 0;
+  const money    = (c) => '$' + (c / 100).toFixed(2);
+
+  if (!isFullRefund(charge)) {
+    /* Recorded and escalated, NOT released. sbv_billing.status is the enum
+       ('paid','refunded') and a partial refund is neither — writing 'refunded'
+       here would tell every later reader the sale was undone when most of the
+       money is still ours and the operator still owns the city. Changing that
+       enum is DDL, which this branch does not do, so the record of a partial
+       lives in Stripe (where the refund objects are) and in this alert. */
+    await ownerAlert('Partial refund — territory NOT released', [
+      'session:  ' + billing.stripe_session_id,
+      'tenant:   ' + (billing.client_id || '(none)'),
+      'buyer:    ' + (billing.buyer_email || '(unknown)'),
+      'charge:   ' + ((charge && charge.id) || '(unknown)'),
+      'refunded: ' + money(refunded) + ' of ' + money(amount),
+      '',
+      'This is the normal outcome under legal/refund.html: the buyer keeps at',
+      'least 50% of the website fee. The storefront stays live and the city',
+      'stays held, which is what that policy promises.',
+      '',
+      'NEXT: nothing automatic. If this was meant to end the relationship,',
+      'refund the remainder in Stripe — the full refund releases the city.',
+    ]);
+
+    console.log('partial refund, territory held',
+      billing.stripe_session_id, refunded + '/' + amount);
+    return json({ ok: true, partial: true, refunded_cents: refunded, amount_cents: amount });
+  }
+
   let released;
   try {
     released = await rpc('sbv_release_territory',
@@ -697,10 +764,11 @@ async function handleRefund(charge) {
     return json({ ok: false, error: 'release_failed' }, 500);   // retry
   }
 
-  await ownerAlert('Refund processed — territory released', [
+  await ownerAlert('Full refund processed — territory released', [
     'session:  ' + billing.stripe_session_id,
     'tenant:   ' + (billing.client_id || '(none)'),
     'buyer:    ' + (billing.buyer_email || '(unknown)'),
+    'refunded: ' + money(refunded) + ' of ' + money(amount),
     'released: ' + JSON.stringify(released),
     '',
     'The storefront is deactivated and the city is back on the market.',

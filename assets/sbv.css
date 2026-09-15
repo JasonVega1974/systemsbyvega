@@ -1004,7 +1004,8 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 
 
 /* -------------------------------------------------------- what's included --
-   The $299 deliverables, rendered by R.included() into a BUILD marker on both
+   What the single plan includes, rendered by R.included() into a BUILD marker
+   on both
    `/` (inside #offer, under the two cards) and `/sites/` (its own paper band
    above the catalog board). One function, two surfaces — so the list cannot
    say different things in the two places a buyer reads it.
@@ -2258,11 +2259,11 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 .cm-tab.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(20,28,40,.1)}
 .cm-tab:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
 
-.cm-tiers{border:1px solid var(--hair);border-radius:10px;padding:12px 14px;margin:0 0 16px}
-.cm-tiers legend{font-family:var(--mono);font-size:10.5px;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);padding:0 6px}
-.cm-tiers label{display:flex;align-items:center;gap:9px;font-size:14.5px;padding:5px 0;cursor:pointer}
-.cm-tiers b{font-weight:700}
+/* The single plan, stated on the screen that carries the terms checkbox.
+   Replaces the two-tier .cm-tiers radio group: one price, nothing to pick. */
+.cm-plan{border:1px solid var(--hair);border-radius:10px;padding:12px 14px;
+  margin:0 0 16px;font-size:14.5px;color:var(--ink-soft)}
+.cm-plan b{font-weight:700;font-size:17px;color:var(--ink)}
 
 /* Scrollable so long terms cannot push the button off screen — and focusable,
    so a keyboard user can actually read them before the checkbox. */

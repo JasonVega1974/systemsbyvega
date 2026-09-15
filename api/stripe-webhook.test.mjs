@@ -35,7 +35,6 @@ process.env.SUPABASE_PUBLISHABLE_KEY  = 'anon-key';
 process.env.STRIPE_SECRET_KEY         = 'sk_test_fake';
 process.env.STRIPE_WEBHOOK_SECRET     = 'whsec_test_fake';
 process.env.STRIPE_PRICE_ID_LAUNCH    = 'price_launch';
-process.env.STRIPE_PRICE_ID_CUSTOM    = 'price_custom';
 process.env.BREVO_API_KEY             = 'brevo-key';
 process.env.VERCEL_TOKEN              = 'vercel-token';
 process.env.VERCEL_PROJECT_ID         = 'prj_fake';
@@ -61,6 +60,7 @@ function reset() {
   counts = {
     invites: 0, inviteResends: 0, links: 0, loginLinkMails: 0,
     brevo: 0, authLookups: 0, tenantInserts: 0, mappingInserts: 0, claims: 0,
+    releases: 0,
   };
 }
 
@@ -163,9 +163,23 @@ function rpc(fn, args) {
     return jsonRes({ ok: true });
   }
   if (fn === 'sbv_release_territory') {
+    /* Models the three writes sql/COMMERCE-2.sql makes, not just the claim.
+       A partial-refund test that only looked at claims could pass while the
+       storefront went dark, which is most of what releasing costs the
+       operator. */
+    counts.releases++;
+    const gone = db.sbv_city_claims.filter(
+      (c) => c.stripe_session_id === args.p_stripe_session_id);
     db.sbv_city_claims = db.sbv_city_claims.filter(
       (c) => c.stripe_session_id !== args.p_stripe_session_id);
-    return jsonRes({ ok: true });
+    for (const c of gone) {
+      const t = db.sbv_tenants.find((x) => x.client_id === c.client_id);
+      if (t) t.is_active = false;
+    }
+    for (const b of db.sbv_billing) {
+      if (b.stripe_session_id === args.p_stripe_session_id) b.status = 'refunded';
+    }
+    return jsonRes({ ok: true, released: gone.length });
   }
   throw new Error('fake pg: unknown rpc ' + fn);
 }
@@ -271,7 +285,13 @@ function seedPurchase({ intakeId, sessionId, niche, city, email }) {
   });
   SESSIONS.set(sessionId, {
     id: sessionId, mode: 'payment', payment_status: 'paid', currency: 'usd',
-    amount_total: 29900, payment_intent: 'pi_1',
+    /* THE REAL PRICE, NOT A ROUND NUMBER. The single plan is $99 and the
+       minimum-amount floor in _shared.mjs is compared against exactly this.
+       An earlier fixture said 29900, left over from the retired $299 tier,
+       and every provisioning test passed while the floor it was supposed to
+       clear sat at 25000 — so the one defect that charged real buyers and
+       provisioned nothing was invisible here. Keep this equal to list. */
+    amount_total: 9900, payment_intent: 'pi_1',
     customer_email: email, customer_details: { email },
     client_reference_id: String(intakeId),
     metadata: { intake_id: String(intakeId), operator_email: email },
@@ -738,4 +758,115 @@ test('a missed unconfirmed account costs one invite re-send, never two emails', 
   assert.equal(db.auth_users.length, 1, 'no duplicate account');
   assert.equal(db.sbv_client_users[0].user_id, 'usr_pending');
   assert.equal(db.sbv_tenants[0].is_active, true, 'they do have a way in');
+});
+
+/* ============================================================================
+   charge.refunded — full releases, PARTIAL DOES NOT
+
+   Stripe fires charge.refunded for a PARTIAL refund as well as a full one; it
+   means "a refund was created against this charge", not "this charge is now
+   empty". legal/refund.html promises the buyer "always keeps at least 50% of
+   the website fee", which makes a partial refund the NORMAL outcome of a
+   refund request here — so the difference between the two is the difference
+   between an operator who still owns their city and one whose storefront went
+   dark while most of their money stayed with us.
+   ========================================================================= */
+
+async function deliverRefund(charge) {
+  const body = JSON.stringify({
+    id: 'evt_refund_' + (charge.id || 'x'), type: 'charge.refunded',
+    data: { object: charge },
+  });
+  const t = Math.floor(Date.now() / 1000);
+  const v1 = crypto.createHmac('sha256', process.env.STRIPE_WEBHOOK_SECRET)
+    .update(t + '.' + body, 'utf8').digest('hex');
+  const res = await webhook.default.fetch(new Request('https://x/api/stripe-webhook', {
+    method: 'POST',
+    headers: { 'stripe-signature': 't=' + t + ',v1=' + v1, 'Content-Type': 'application/json' },
+    body,
+  }));
+  return { status: res.status, body: await res.json() };
+}
+
+/* Provision first, so there is a real claim, a real tenant and a real billing
+   row for the refund to find — the same path every other test here uses. */
+async function provisionThenRefund(charge) {
+  reset();
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+  await deliver('cs_1');
+  assert.equal(db.sbv_city_claims.length, 1, 'precondition: the city is held');
+  assert.equal(db.sbv_tenants[0].is_active, true, 'precondition: the storefront is live');
+  return deliverRefund({ id: 'ch_1', payment_intent: 'pi_1', amount: 9900, ...charge });
+}
+
+test('a PARTIAL refund keeps the territory: the claim holds and the storefront stays live', async () => {
+  /* $49 back on a $99 sale — the 50% the refund policy promises. */
+  const res = await provisionThenRefund({ refunded: false, amount_refunded: 4900 });
+
+  assert.equal(res.status, 200);
+  assert.equal(res.body.ok, true);
+  assert.equal(res.body.partial, true, 'answered as a partial, not a release');
+  assert.equal(res.body.refunded_cents, 4900);
+  assert.equal(counts.releases, 0, 'sbv_release_territory was never called');
+  assert.equal(db.sbv_city_claims.length, 1, 'the city is still theirs');
+  assert.equal(db.sbv_tenants[0].is_active, true, 'the storefront is still live');
+  assert.equal(db.sbv_billing[0].status, 'paid', 'a partial is not a refunded sale');
+  assert.ok(db.mail.some((m) => /Partial refund/i.test(m.subject)),
+    'a person is told, because nothing automatic happens next');
+});
+
+test('a partial refund of all but one cent is still partial', async () => {
+  /* The boundary, pinned: >= is the test, not >. 9899 of 9900 leaves money
+     outstanding, so Stripe leaves charge.refunded false and so do we. */
+  const res = await provisionThenRefund({ refunded: false, amount_refunded: 9899 });
+
+  assert.equal(res.body.partial, true);
+  assert.equal(counts.releases, 0);
+  assert.equal(db.sbv_city_claims.length, 1);
+});
+
+test('a FULL refund releases the territory and takes the storefront down', async () => {
+  const res = await provisionThenRefund({ refunded: true, amount_refunded: 9900 });
+
+  assert.equal(res.status, 200);
+  assert.equal(res.body.ok, true);
+  assert.equal(res.body.partial, undefined, 'not a partial');
+  assert.equal(counts.releases, 1);
+  assert.equal(db.sbv_city_claims.length, 0, 'the city is back on the market');
+  assert.equal(db.sbv_tenants[0].is_active, false, 'the storefront is down');
+  assert.equal(db.sbv_billing[0].status, 'refunded');
+  assert.ok(db.mail.some((m) => /Full refund/i.test(m.subject)));
+});
+
+test('a full refund is recognised from the amounts alone when charge.refunded is absent', async () => {
+  /* The boolean is authoritative but not guaranteed to be there — a replay
+     built by hand, or an older payload. amount_refunded >= amount is the
+     second reading of the same fact and must reach the same answer, or a
+     buyer owed their money back keeps a city they have paid nothing for. */
+  const res = await provisionThenRefund({ amount_refunded: 9900 });
+
+  assert.equal(counts.releases, 1);
+  assert.equal(db.sbv_city_claims.length, 0);
+  assert.equal(db.sbv_tenants[0].is_active, false);
+});
+
+test('a refund we cannot read is treated as partial: it holds the city and asks a person', async () => {
+  /* Neither source is convincing — no boolean, no amounts. Releasing on a
+     guess takes a paid-up operator's territory away and there is no undo, so
+     the safe answer is to hold and escalate. */
+  const res = await provisionThenRefund({ amount: undefined, amount_refunded: undefined });
+
+  assert.equal(res.body.partial, true);
+  assert.equal(counts.releases, 0);
+  assert.equal(db.sbv_city_claims.length, 1, 'held, not released on a guess');
+  assert.ok(db.mail.some((m) => /Partial refund/i.test(m.subject)));
+});
+
+test('a refund for a payment intent we never provisioned is ignored, not released', async () => {
+  reset();
+  const res = await deliverRefund({ id: 'ch_x', payment_intent: 'pi_unknown', refunded: true, amount: 9900, amount_refunded: 9900 });
+
+  assert.equal(res.status, 200);
+  assert.equal(res.body.ignored, 'unknown_payment');
+  assert.equal(counts.releases, 0);
 });

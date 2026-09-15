@@ -92,11 +92,21 @@
   var INLINE = false;
   var mountSel = null;
 
+  /* True only while initClaim() is running its synchronous boot. Read by
+     phase(), and only in INLINE mode — see the comment there. */
+  var booting = false;
+
+  /* The only tier there is. One $99 plan; the server's TIER_PRICE_ID has one
+     key and rejects anything else. Named rather than inlined so the three
+     places that carry it (resetIntent, the resumed claim, doClaim) cannot
+     drift apart the way the old radio group drifted from the price. */
+  var TIER = 'launch';
+
   function resetIntent(slug, name) {
     intent = {
       niche: slug, nicheName: name,
       city: '', state: '', cityNorm: '', nearMatches: [],
-      tier: 'launch', business: '', clientId: ''
+      tier: TIER, business: '', clientId: ''
     };
   }
 
@@ -217,13 +227,20 @@
         '<div class="cm-phase" data-phase="confirm" hidden>' +
           '<p class="cm-ok" id="cmOk"></p>' +
           '<p class="cm-msg" id="cmNear" hidden></p>' +
-          '<fieldset class="cm-tiers">' +
-            '<legend>Package</legend>' +
-            '<label><input type="radio" name="cmTier" value="launch" checked>' +
-              '<b>$299</b> launch-ready</label>' +
-            '<label><input type="radio" name="cmTier" value="custom">' +
-              '<b>$499</b> custom launch</label>' +
-          '</fieldset>' +
+          /* ONE PLAN, stated once. This screen carries "I have read and agree
+             to the above", so whatever price it shows is the price the buyer
+             agrees to — and a radio group left over from the retired two-tier
+             era had them agreeing to the old launch price while the hero, the
+             comparison table and Terms section 3 all said the new one. There
+             is nothing to choose any more, so there is no control: the price
+             is a statement, and the tier posted to /api/create-checkout is
+             the constant below.
+
+             This file is scanned by the price guard in tools/check-pages.js.
+             No figure here — prose included — may be anything but PRICE, so
+             the old amounts are described rather than quoted. */
+          '<p class="cm-plan"><b>$99</b> once &mdash; everything included,' +
+            ' live today.</p>' +
           /* NOT #cmEmail — that one belongs to the sign-in form in the auth
              phase and is still wired to it. This is the buyer's address for
              the account that gets created after payment. */
@@ -292,6 +309,27 @@
       name === 'check' ? 'Check your city'
       : name === 'auth' ? 'Sign in to continue'
       : 'Confirm your territory';
+    /* MOVING FOCUS IS A MODAL BEHAVIOUR, AND THE INLINE PAGE IS NOT A MODAL.
+       In the /sites/ modal the dialog has just appeared over the page and the
+       first field is where the buyer is going, so focusing it is right on
+       every call. Mounted inline at /claim/?niche=<slug> the same call fires
+       during page load, and focusing an input scrolls it into view — the
+       reader arrives below their own <h1> and past the one-operator-per-city
+       explanation, having been shown neither.
+
+       So every phase() reached during the inline mount leaves focus where the
+       browser put it — the plain mount and the resumed-from-inbox mount both,
+       since both run inside initClaim() and both land the reader mid-page.
+       Afterwards it behaves exactly like the modal, because a later transition
+       (city accepted -> confirm, 409 -> back to check) is a response to
+       something the buyer just did and moving focus is the point.
+
+       Gated on the boot flag rather than on "has phase() run before", because
+       the inbox-return path calls open() twice before the buyer has done
+       anything, and a first-call-only test would focus on the second one.
+       INLINE already gates the focus trap, the backdrop and Escape; this was
+       the last modal reflex it still inherited. */
+    if (INLINE && booting) return;
     var first = modal.querySelector('.cm-phase:not([hidden]) input, .cm-phase:not([hidden]) button');
     if (first) first.focus();
   }
@@ -550,7 +588,12 @@
     if (slug.length < 3) { msg.textContent = 'Your web address needs at least 3 letters or numbers.'; return; }
     if (!acceptance) { msg.textContent = 'The terms did not load. Reload the page.'; return; }
 
-    var tier = (modal.querySelector('input[name="cmTier"]:checked') || {}).value || 'launch';
+    /* Not read off the form: there is no tier control any more, and the server
+       only accepts this one key (TIER_PRICE_ID in api/_shared.mjs). The string
+       'launch' is what sbv_intake.tier has always stored and keeps storing —
+       no DDL — so it stays the name of the single plan rather than becoming
+       something new to migrate. */
+    var tier = intent.tier || TIER;
 
     btn.disabled = true; btn.textContent = 'Opening checkout…';
 
@@ -710,10 +753,11 @@
         niche_name: intent.nicheName,
         city_label: intent.city,
         state_code: intent.state,
-        /* Always 'launch' today: the tier radio lives in phase 3 and the buyer
-           has not reached it yet. Stored so the restore pre-selects whatever
-           resetIntent defaulted to, and so this keeps working unchanged if the
-           choice ever moves earlier. Do not read it as a preference. */
+        /* Always TIER: there is one plan and no control to choose it with.
+           Carried through the round trip anyway so the resumed claim posts
+           the same tier it started with, and so a second plan would only have
+           to be added to intent rather than threaded through here as well.
+           Do not read it as a preference. */
         tier: intent.tier,
         city_norm: intent.cityNorm,
         saved_at: Date.now()
@@ -772,9 +816,13 @@
     $('#cmCity').value = p.city_label;
     $('#cmState').value = p.state_code;
     intent.cityNorm = p.city_norm || '';
-    intent.tier = p.tier || 'launch';
-    var radio = modal.querySelector('input[name="cmTier"][value="' + intent.tier + '"]');
-    if (radio) radio.checked = true;
+    /* A stored tier is only honoured if it is still a tier we sell. Records
+       written before the single-plan change can carry 'custom', and that value
+       reaching create-checkout is a 400 at the pay button after the form is
+       filled in — the exact late failure this resume path exists to avoid.
+       Nothing is pre-selected any more: the plan is a statement, not a
+       control. */
+    intent.tier = p.tier === TIER ? p.tier : TIER;
 
     /* The city was open when they left for their inbox. That was minutes or
        hours ago and somebody else may have taken it since, so the stored yes is
@@ -879,6 +927,7 @@
   function initClaim(opts) {
     if (started) return;
     started = true;
+    booting = true;
     opts = opts || {};
     INLINE = !!opts.mount;
     mountSel = opts.mount || null;
@@ -915,6 +964,11 @@
     if (confirmed) resumeClaim();
     confirmedBanner(confirmed);
     loadCounts();
+
+    /* Boot is over. Everything from here is the buyer acting, so phase()
+       moves focus again in both modes. Last statement on purpose: anything
+       added above it is still mount, not interaction. */
+    booting = false;
   }
 
   window.initClaim = initClaim;

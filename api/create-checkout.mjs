@@ -2,7 +2,7 @@
    POST /api/create-checkout
    ----------------------------------------------------------------------------
    Called by the claim page after the buyer has chosen a niche, named their
-   city, picked a tier, given the email they want their login sent to and
+   city, given the email they want their login sent to and
    ticked the acceptance box. Validates everything that can be validated, parks
    the submission in sbv_intake, and returns a Stripe Checkout URL for the
    browser to redirect to.
@@ -222,8 +222,13 @@ async function handler(request) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(nicheSlug)) {
     return bad('bad_niche', 'Pick a business from the catalog.', 'niche_slug');
   }
+  /* ONE PLAN. TIERS has a single key now that the $499 custom build is
+     retired, so anything but 'launch' is a request the claim page cannot have
+     produced — a stale tab, a saved record from the two-tier era, or somebody
+     posting by hand. The message names the only thing on sale rather than
+     offering a choice that no longer exists. */
   if (!TIERS.includes(tier)) {
-    return bad('bad_tier', 'Choose the launch-ready or the custom build.', 'tier');
+    return bad('bad_tier', 'Reload the page and try again — there is one plan.', 'tier');
   }
   if (!TIER_PRICE_ID[tier]) {
     console.error('create-checkout: no Stripe Price configured for tier', tier);

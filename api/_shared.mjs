@@ -79,18 +79,40 @@ export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || '';
    the session's line item carries the Price id this tier is supposed to sell
    (see verifyStripeSession). That is immune to a price change in the Stripe
    dashboard, whereas a hardcoded cents figure silently starts rejecting every
-   legitimate payment the moment someone edits the price. */
+   legitimate payment the moment someone edits the price.
+
+   ONE PLAN. The two-tier era ($299 launch / $499 custom) is over: there is a
+   single $99 plan and `launch` is the only key. The retired `custom` tier was
+   deliberately deleted rather than left pointing at an empty env var, because
+   TIERS derives from these keys — leaving it here kept `custom` postable, and
+   STRIPE_PRICE_ID_CUSTOM still holding a value from the old pricing meant a
+   buyer could be charged $499 for the $99 product and provisioned cleanly.
+   `sbv_intake.tier` keeps storing the string 'launch' (Jason's decision: no
+   DDL), so this stays a map rather than collapsing to a bare constant. */
 export const TIER_PRICE_ID = {
   launch: process.env.STRIPE_PRICE_ID_LAUNCH || '',
-  custom: process.env.STRIPE_PRICE_ID_CUSTOM || '',
 };
 export const TIERS = Object.keys(TIER_PRICE_ID);
 
-/* A sanity floor, not the real check. Set it BELOW the cheapest tier: each
-   sibling in this family has a different price, and inheriting one of theirs
-   puts the floor above list price and rejects every real payment as
-   amount_too_low. $250 sits under the $299 launch tier. */
-export const MIN_AMOUNT_CENTS = Number(process.env.STRIPE_MIN_AMOUNT_CENTS || '25000');
+/* A sanity floor, not the real check — the real check is the Price id
+   assertion in verifyStripeSession, which is the only one that cannot drift
+   when somebody edits an amount in the Stripe dashboard. This exists to catch
+   a session whose amount is nowhere near the product: a test charge, a
+   leftover payment link from a different Price, or a sibling platform's env
+   var inherited by mistake.
+
+   IT MUST SIT BELOW LIST PRICE OR IT REJECTS EVERY REAL PAYMENT. The single
+   plan is $99, i.e. 9900 cents, so the floor is $50 = 5000 — about half of
+   list, comfortably under anything a real buyer can be charged here, and
+   still above the small amounts ($25 Care Plan, a sibling's $39) that would
+   mean the wrong Price reached this session.
+
+   This is not a hypothetical. An earlier revision kept a 25000 floor written
+   for the retired $299 tier; 9900 >= 25000 is false, so every real $99
+   purchase came back amount_too_low, the webhook answered 200, Stripe never
+   retried, and the buyer was charged with nothing provisioned. If the plan
+   price ever moves, move this with it. */
+export const MIN_AMOUNT_CENTS = Number(process.env.STRIPE_MIN_AMOUNT_CENTS || '5000');
 
 export const BREVO_API_KEY = process.env.BREVO_API_KEY || '';
 
@@ -652,8 +674,9 @@ export async function verifyStripeSession(sessionId, expectedTier) {
   let session;
   try {
     /* line_items so the Price id can be checked against the tier. An amount
-       alone would let a $299 payment provision a $499 build the moment either
-       price is edited in the dashboard. */
+       alone proves nothing the moment the price is edited in the dashboard:
+       the figure in this file goes stale, not Stripe's, and a hardcoded cents
+       comparison then rejects every legitimate payment. */
     session = await stripeGet(
       'checkout/sessions/' + encodeURIComponent(sessionId) + '?expand[]=line_items');
   } catch (e) {

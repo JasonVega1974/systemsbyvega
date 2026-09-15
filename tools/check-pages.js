@@ -164,23 +164,40 @@ const PRICE_SRC = 'assets/catalog-render.js';
 const SEED_SRC  = 'assets/data/niches.seed.json';
 
 /* Prices that are real, hand-typed, and not ours to source from PRICE. Each
-   carries its reason, because a future reader deserves to know why an amount
-   is waved through rather than guessing. */
+   carries the FILE it is allowed in and the reason, because a future reader
+   deserves to know why an amount is waved through rather than guessing.
+
+   THE FILE COLUMN IS NOT BOOKKEEPING — IT IS THE GUARD. An earlier version of
+   this list held a bare ['$299', 'an HTML comment in services/ …'], which
+   waved $299 through EVERYWHERE on the strength of one comment on one page.
+   The retired $299/$499 tier radio sat on the claim confirm screen, above "I
+   have read and agree to the above", through a whole reprice — and this guard
+   could not have objected even once the file was in range, because the
+   exception was global. An exception is only ever true of the file that
+   earned it. Scope every entry; never add a bare amount. */
 const ALLOWED_PRICES = [
-  ['$25',  'Care Plan, monthly — legal/terms.html section 3 and section 5'],
-  ['$299', 'services/ HTML comment contrasting us with a template shop; not our price'],
+  ['$25',  'legal/terms.html', 'Care Plan, monthly — sections 3 and 5'],
+  ['$299', 'services/index.html', 'HTML comment contrasting us with a template shop; not our price'],
 ];
 
 /* Every surface whose text a buyer reads before or after paying. Wider than
    PAGES on purpose: the Terms quote the price too, and a Terms page quoting a
    stale price is worse than a landing page doing it — and the shared JS at the
    end renders price strings straight into those same pages, so a figure typed
-   there ships exactly like a figure typed in the HTML. */
+   there ships exactly like a figure typed in the HTML.
+
+   claim/ IS THE MOST IMPORTANT ENTRY IN THIS LIST AND WAS THE LAST ONE ADDED.
+   claim/claim.js builds the confirm screen for both the /sites/ modal and the
+   /claim/?niche= page — the screen carrying "I have read and agree to the
+   above". A price there is not marketing copy, it is the figure the buyer
+   consents to, and it went a whole reprice reading $299/$499 because this list
+   stopped at pages and shared assets. Anything under claim/ belongs here. */
 const PRICE_PAGES = [
   'index.html', 'sites/index.html', 'platforms/index.html',
   'services/index.html', 'work/index.html', 'about/index.html',
   'legal/terms.html', 'legal/refund.html', 'legal/privacy.html',
   'legal/operator-agreement.html',
+  'claim/index.html', 'claim/claim.js',
   'assets/catalog-render.js', 'assets/sbv.js', 'assets/lang/es.js',
 ];
 
@@ -223,29 +240,60 @@ const AMOUNT_RE = /\$\d[\d,]*(?:\.\d{2})?(?![\d.,]|\s*[kKmM]\b)/g;
   }
 
   if (price) {
-    const allowed = new Map();
-    allowed.set(price, `PRICE in ${PRICE_SRC}`);
-    for (const a of seedAmounts) if (!allowed.has(a)) allowed.set(a, `price_label in ${SEED_SRC}`);
-    for (const [a, why] of ALLOWED_PRICES) if (!allowed.has(a)) allowed.set(a, why);
+    /* Global sources: true of every surface, because they ARE the sources. */
+    const global = new Map();
+    global.set(price, `PRICE in ${PRICE_SRC}`);
+    for (const a of seedAmounts) if (!global.has(a)) global.set(a, `price_label in ${SEED_SRC}`);
+
+    /* Every entry in ALLOWED_PRICES is checked here, so a stale exception —
+       one whose file no longer contains the amount, or was renamed away — is
+       reported rather than sitting in the list waving something through
+       forever. An exception nobody needs is the next global $299. */
+    const exceptionUsed = new Set();
 
     for (const file of PRICE_PAGES) {
       const abs = path.join(ROOT, file);
       if (!fs.existsSync(abs)) { bad(route, `missing file ${file}`); continue; }
       const html = fs.readFileSync(abs, 'utf8');
 
+      /* Scoped per file: the exceptions this ONE file earned, nothing more. */
+      const allowed = new Map(global);
+      for (const [a, where, why] of ALLOWED_PRICES) {
+        if (where !== file) continue;
+        if (!allowed.has(a)) allowed.set(a, why);
+      }
+
       const unsourced = new Map();
       for (const a of html.match(AMOUNT_RE) || []) {
+        if (ALLOWED_PRICES.some(function (e) { return e[0] === a && e[1] === file; })) {
+          exceptionUsed.add(a + '@' + file);
+        }
         if (allowed.has(a)) continue;
         unsourced.set(a, (unsourced.get(a) || 0) + 1);
       }
       for (const [a, n] of unsourced) {
         bad(route, `${file} states ${a}${n > 1 ? ' \u00d7' + n : ''} — not ${price} ` +
-                   `(${PRICE_SRC}) and not in the seed or ALLOWED_PRICES`);
+                   `(${PRICE_SRC}), not in the seed, and not an ALLOWED_PRICES ` +
+                   `exception scoped to ${file}`);
       }
 
       if (MUST_STATE_PRICE.includes(file) && !html.includes(price)) {
         bad(route, `${file} never states ${price} — the price guard is not ` +
                    `satisfied by removing the price`);
+      }
+    }
+
+    /* An exception that matches nothing is the next global $299 waiting to
+       happen: it survives the removal of the line that justified it, and the
+       next reader takes it as licence. Every entry must earn its keep on
+       every run. */
+    for (const [a, where, why] of ALLOWED_PRICES) {
+      if (!PRICE_PAGES.includes(where)) {
+        bad(route, `ALLOWED_PRICES allows ${a} in ${where}, which PRICE_PAGES ` +
+                   `does not scan — the exception can never apply (${why})`);
+      } else if (!exceptionUsed.has(a + '@' + where)) {
+        bad(route, `ALLOWED_PRICES allows ${a} in ${where} but ${where} no ` +
+                   `longer states it — stale exception (${why})`);
       }
     }
   }
