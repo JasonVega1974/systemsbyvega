@@ -132,6 +132,9 @@ body::after{
    SIGNATURE — WAND-REVEAL HERO PANEL
    ========================================================= */
 .wandwrap{position:relative}
+/* Standalone placement (R10): outside the hero grid the widget has no column
+   to bound its width, so cap it the same way bin-cleaning caps its ba-wrap. */
+.wandwrap--section{max-width:560px;margin:0 auto}
 .wandhero{
   position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1/1;max-height:520px;
   border:1px solid var(--card-brd);box-shadow:var(--shadow);background:var(--panel);

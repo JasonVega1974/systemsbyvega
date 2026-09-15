@@ -19,6 +19,7 @@
   },
   "photoSlots": [
     "logo",
+    "hero",
     "before",
     "after",
     "owner"
@@ -45,5 +46,8 @@
     "beforeAfter": "niche.beforeImg/afterImg",
     "reviews": "testimonials",
     "ownerShape": "owner"
-  }
+  },
+  "heroDefault": "/sites/bin-cleaning/photos/after.jpg",
+  "heroAlt": "A freshly power-washed, sanitized garbage bin gleaming in a driveway",
+  "heroWired": true
 }

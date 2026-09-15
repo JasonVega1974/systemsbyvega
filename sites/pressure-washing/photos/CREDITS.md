@@ -9,3 +9,9 @@ wand-clean-pavers.jpg  "High-resolution gray brick pavement texture in a herring
 # Note: the two are a matched pair (concrete block pavers, flat top-down,
 # similar scale), not a true same-surface before/after — a genuine
 # same-surface pair was not findable under a license-safe source.
+
+# R10 (2026-09-15): wand-clean-pavers.jpg now also renders as the hero photo
+# card (manifest.json heroDefault/heroAlt), in addition to its original role
+# as the "clean" layer of the wand-reveal demo (now its own section, id
+# "demo", below the trust strip). Same file, same credit above — no new
+# asset, no new attribution required.

@@ -43,5 +43,8 @@
     "beforeAfter": "none",
     "reviews": "testimonials",
     "ownerShape": "owner"
-  }
+  },
+  "heroDefault": "/sites/pressure-washing/photos/wand-clean-pavers.jpg",
+  "heroAlt": "Clean, freshly power-washed grey paver stones in a herringbone pattern",
+  "heroWired": true
 }

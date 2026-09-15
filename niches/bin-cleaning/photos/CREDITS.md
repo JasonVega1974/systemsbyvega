@@ -1,8 +1,10 @@
 # Prime Bin Cleaning brand assets — used with the owner's authorization
 # (recorded 2026-09-05). Not stock; do not reuse in any other niche.
-logo.png    Prime Bin Cleaning crown-P logo
+logo.png    Prime Bin Cleaning crown-P logo (nav + footer)
 before.jpg  Prime's own before shot (drag slider, left)
-after.jpg   Prime's own after shot (drag slider, right)
+after.jpg   Prime's own after shot (drag slider, right; also the hero photo
+            card as of R10, 2026-09-15 — same file, same authorization,
+            replacing the logo mark that used to sit in .hero__art)
 
 # DECIDED 2026-09-09, so it is not reopened: this niche KEEPS the real brand
 # name, this logo and these photographs, and the owner confirmed the

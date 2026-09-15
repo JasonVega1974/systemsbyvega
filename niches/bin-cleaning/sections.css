@@ -14,12 +14,11 @@
 .logo-img{background-position:center;background-repeat:no-repeat;background-size:contain}
 .brand-logo{height:46px;width:50px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
 .footer-logo{height:64px;width:60px}
-/* hero badge: base.css's .hero__art/.halo/@keyframes pulse target an <svg>
-   child by tag name — the logo here is a background-image span instead, so
-   its own sizing + the (shared) float keyframe are applied directly. */
-.hero__art .hero-logo{position:relative;z-index:1;display:block;
-  width:min(480px,90%);aspect-ratio:947/1000;margin-inline:auto;
-  filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));animation:float 6s ease-in-out infinite}
+/* .hero__art no longer carries the crown-P logo badge (R10, 2026-09-15) --
+   it renders the shared hero-photo component now, styled by
+   _template/components/hero-photo.css. The logo-badge sizing/float rules
+   that used to target .hero__art .hero-logo were removed with the markup;
+   the logo itself still lives on in .brand-logo (nav) and .footer-logo. */
 
 /* =========================================================
    SIGNATURE — falling water droplets in hero
@@ -211,5 +210,4 @@
    ========================================================= */
 @media(prefers-reduced-motion:reduce){
   .drop{animation:none}
-  .hero__art .hero-logo{animation:none}
 }
