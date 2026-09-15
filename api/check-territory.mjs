@@ -129,17 +129,30 @@ async function handler(request) {
     return bad('bad_state', 'Choose a state.', 'state');
   }
 
-  /* Both calls in parallel: one round trip instead of two. sbv_norm_city is
-     not granted to anon, but this endpoint holds the service role, which is
-     not subject to those grants. */
-  let avail, cityNorm;
+  /* Three calls in parallel: one round trip, not three. sbv_norm_city is not
+     granted to anon, but this endpoint holds the service role, which is not
+     subject to those grants.
+
+     near_matches is ADVISORY, not the gate — availability is what decides
+     whether a buyer can proceed, near_matches only decides whether the modal
+     also shows "did you mean...". So its rpc call carries its own .catch()
+     INSIDE the Promise.all: a failure there resolves to null rather than
+     rejecting the whole group, and never reaches the catch block below or
+     turns into a lookup_failed response. A buyer must never be blocked from
+     buying a free city because an advisory lookup broke. */
+  let avail, cityNorm, nearRows;
   try {
-    [avail, cityNorm] = await Promise.all([
+    [avail, cityNorm, nearRows] = await Promise.all([
       rpc('sbv_city_available', {
         p_niche_slug: niche, p_city_label: city, p_state_code: state,
       }),
       /* Display only — see the note on the response below. */
       rpc('sbv_norm_city', { p: city }),
+      rpc('sbv_city_near_matches', { p_niche: niche, p_city: city, p_state: state })
+        .catch((e) => {
+          console.error('check-territory: near-match lookup failed (non-fatal):', e.message, e.body || '');
+          return null;
+        }),
     ]);
   } catch (e) {
     console.error('check-territory: lookup failed:', e.message, e.body || '');
@@ -148,6 +161,14 @@ async function handler(request) {
       message: 'We could not check that just now. Try again in a moment.',
     }, 503);
   }
+
+  /* Zero rows means either the city is free or the match was exact — both are
+     handled by `available` above. near_matches is ONLY the near-but-not-exact
+     case, and city_norm never enters this computation: see the comment above
+     the response below for why. */
+  const near = Array.isArray(nearRows)
+    ? nearRows.map((r) => ({ city_label: r.city_label, distance: r.distance }))
+    : [];
 
   if (!avail || typeof avail.available !== 'boolean') {
     console.error('check-territory: unexpected rpc shape:', JSON.stringify(avail));
@@ -173,5 +194,6 @@ async function handler(request) {
     city_label: city,
     city_norm: typeof cityNorm === 'string' ? cityNorm : null,
     state_code: state,
+    near_matches: near,
   });
 }
