@@ -312,11 +312,22 @@
        applies once a tenant's niche is known, which is after this is gone. -->
   <section class="card" id="gate">
     <h1>Sign in to edit your site</h1>
-    <p class="sub">Use the email and password you created when you claimed your territory.</p>
+    <p class="sub">Sign in with your password below if you have one, or use "Email me a sign-in link" if you don&rsquo;t.</p>
     <label><span>Email</span><input type="email" id="email" autocomplete="email"></label>
     <label><span>Password</span><input type="password" id="pass" autocomplete="current-password"></label>
     <button type="button" class="go" id="signIn">Sign in</button>
     <p class="msg" id="gateMsg" role="alert"></p>
+
+    <!-- No-password path (Task 7b). The webhook that provisions a new operator
+         never sets a password — it emails a one-time sign-in link instead — so
+         this is the ONLY way back in for anyone who has not since set one
+         (see #setPass in #sec-start). signInWithOtp() always reports success;
+         it does not reveal whether the address has an account, so the message
+         below must stay true either way rather than claiming "we found you". -->
+    <p class="sub" style="margin-top:22px">No password, or can&rsquo;t remember it? We&rsquo;ll email you a
+      link &mdash; it signs you in, no password needed.</p>
+    <button type="button" class="go" id="gateOtp">Email me a sign-in link</button>
+    <p class="msg" id="gateOtpMsg" role="alert"></p>
   </section>
 
   <!-- EDITOR. #panel is now a plain visibility wrapper (no card styling of its
@@ -328,6 +339,20 @@
   <section id="panel" hidden>
     <h1>Your site</h1>
     <p class="sub" id="panelSub"></p>
+
+    <!-- Tenant switcher (Task 7b). Rendered ONLY when this operator maps to
+         more than one tenant — renderTenantSwitch() leaves this hidden and
+         empty for the (still-typical) single-tenant operator, so there is no
+         chrome for a case that does not exist. Picking an option reloads with
+         ?tenant= set to it; resolve() already treats that param as a HINT it
+         verifies against the caller's own sbv_client_users rows, so this can
+         never open a tenant RLS would not already allow. -->
+    <div id="tenantSwitchWrap" hidden style="margin:0 0 18px">
+      <label style="max-width:340px"><span>Switch site</span>
+        <select id="tenantSwitch"></select>
+      </label>
+    </div>
+
     <!-- Visible even when #saveBar is hidden (load() has not necessarily
          made anything dirty yet) — a load failure must not go silently into
          the save bar's message slot, which is invisible at that point. -->
@@ -340,6 +365,19 @@
     <section class="card" id="sec-start">
       <p class="sec-h">Start here</p>
       <p id="startWelcome" class="hint"></p>
+
+      <!-- Set-a-password (Task 7b). Most operators land here by clicking the
+           emailed sign-in link, never having set a password, so without this
+           the link is the ONLY way in, forever. Optional — leaving it blank
+           changes nothing, and the link keeps working either way. -->
+      <div id="setPasswordWrap" style="margin:18px 0 0">
+        <p class="sub" style="margin:0 0 8px">Signed in with an emailed link? Set a password so you can
+          sign in directly next time, without waiting on email.</p>
+        <label style="max-width:340px"><span>New password</span>
+          <input type="password" id="newPass" autocomplete="new-password"></label>
+        <button type="button" class="go" id="setPass">Set password</button>
+        <p class="msg" id="setPassMsg" role="alert"></p>
+      </div>
 
       <div id="startStepsWrap" hidden>
         <p class="sec-h" style="margin-top:22px">Your first week</p>
@@ -770,6 +808,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var DEFAULT_SECTIONS = { pricing: true, reviews: true, social: true, jobDetails: true, ownerBlock: true };
 
   var sb = null, clientId = null, hadRow = false;
+  var tenantIds = [];        /* every client_id this operator maps to (Task 7b switcher) */
+  var tenantLabels = {};     /* client_id -> "niche — business name", filled in by load() */
   var photoUrls = {};        /* slot -> public URL, committed on Save */
   var themeLogoUrl = null;   /* theme-provided logo, takes priority over a saved logo_url */
   var currentManifest = null;      /* the resolved niche's manifest entry, or null (regression path) */
@@ -1559,13 +1599,36 @@ document.addEventListener('DOMContentLoaded', function () {
     if (r.state === 'no_mapping') { show('noAccess', true); return; }
 
     clientId = r.clientId;
+    tenantIds = r.all || [clientId];
     show('panel', true);
     show('sectionNav', true);
+    renderTenantSwitch();
     /* initUploads() no longer runs here: the photo zones it binds to are now
        rendered from the manifest's photoSlots, which is only known partway
        through load() (once niche_slug resolves) — see renderPhotoZones()
        there. */
     load();
+  }
+
+  /* Renders (or hides) the tenant switcher. Called once from paint() with
+     whatever labels are known so far (client_id, at worst) and again from
+     load() once sbv_public_tenants() has resolved friendlier ones — never
+     gated on that fetch, since a slow or failed lookup must not be the reason
+     a two-tenant operator can't reach their second site. ids.length < 2 hides
+     the wrapper outright: no chrome for a case that does not exist. */
+  function renderTenantSwitch() {
+    var wrap = $('tenantSwitchWrap');
+    if (tenantIds.length < 2) { wrap.hidden = true; return; }
+    var sel = $('tenantSwitch');
+    sel.innerHTML = '';
+    tenantIds.forEach(function (id) {
+      var opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = tenantLabels[id] || id; /* textContent — never innerHTML */
+      if (id === clientId) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    wrap.hidden = false;
   }
 
   /* ------------------------------------------------------------------ load */
@@ -1632,6 +1695,19 @@ document.addEventListener('DOMContentLoaded', function () {
       var rows = (rt && rt.data || []).filter(function (t) { return t.client_id === clientId; });
       var row = rows[0];
       var nicheSlug = row && row.niche_slug;
+
+      /* Friendlier switcher labels, best-effort. sbv_public_tenants() returns
+         every ACTIVE tenant, not just this operator's, so it is filtered down
+         to tenantIds rather than trusted wholesale; a tenant still processing
+         (Task 5) simply keeps its client_id as its label until it goes live. */
+      (rt && rt.data || []).forEach(function (t) {
+        if (tenantIds.indexOf(t.client_id) === -1) return;
+        var niche = (t.niche_slug || '').replace(/-/g, ' ');
+        tenantLabels[t.client_id] = t.business_name
+          ? (t.business_name + (niche ? ' — ' + niche : ''))
+          : (niche || t.client_id);
+      });
+      renderTenantSwitch();
       /* hasOwnProperty guard, not a bare `manifestIndex[nicheSlug]`:
          niche_slug ultimately comes from the database, and a slug that
          collided with an inherited Object.prototype key (e.g.
@@ -2247,6 +2323,82 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('signIn').addEventListener('click', signIn);
   $('pass').addEventListener('keydown', function (e) { if (e.key === 'Enter') signIn(); });
+
+  /* No-password path (Task 7b). The webhook that provisions a new operator
+     never sets a password — see stripe-webhook.mjs's sendLoginLink — so this
+     is how anyone who has not since set one (#setPass below) gets back in on
+     a later day or a different device.
+
+     signInWithOtp() ALWAYS reports success, whether or not the address has an
+     account — that is deliberate on Supabase's side, the same anti-enumeration
+     reasoning signIn()'s own error message already follows above. So the
+     message here must be true either way: "a link has been sent if that
+     address has one", never "we found your account". */
+  function sendMagicLink() {
+    var btn = $('gateOtp');
+    var email = $('email').value.trim();
+    if (!email) { say('gateOtpMsg', 'Enter your email above first.', 'bad'); return; }
+
+    btn.disabled = true; btn.textContent = 'Sending…'; say('gateOtpMsg', '');
+    /* location.pathname, not a hardcoded '/admin/' — this IS /admin/, and
+       building it from the page's own location keeps it correct if that ever
+       changes. ?tenant= (and nothing else) is carried over so a multi-niche
+       operator's link-based sign-in lands back on the tenant they started
+       from. This exact origin + pathname must be on the Supabase auth
+       redirect allow-list or GoTrue silently substitutes the project's Site
+       URL instead — see the deploy note in this task's report. */
+    var tenant = new URLSearchParams(location.search).get('tenant');
+    var redirectTo = location.origin + location.pathname + (tenant ? '?tenant=' + encodeURIComponent(tenant) : '');
+    sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectTo } }).then(function (r) {
+      btn.disabled = false; btn.textContent = 'Email me a sign-in link';
+      if (r.error) {
+        say('gateOtpMsg', 'We could not send that right now. Try again in a moment.', 'bad');
+        return;
+      }
+      say('gateOtpMsg', 'If that address has an account, a sign-in link is on its way — check your email.', 'ok');
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Email me a sign-in link';
+      say('gateOtpMsg', 'We could not reach the sign-in server. Try again in a moment.', 'bad');
+    });
+  }
+  $('gateOtp').addEventListener('click', sendMagicLink);
+
+  /* Set-a-password (Task 7b). Converts a link-only operator into one who can
+     use signIn() above next time, without giving up the link as a fallback.
+     Requires a live session, which #setPass is only ever visible under
+     (#sec-start is inside #panel, hidden until paint() confirms one). */
+  function setPassword() {
+    var btn = $('setPass');
+    var pass = $('newPass').value;
+    if (!pass) { say('setPassMsg', 'Enter a new password first.', 'bad'); return; }
+
+    btn.disabled = true; btn.textContent = 'Saving…'; say('setPassMsg', '');
+    sb.auth.updateUser({ password: pass }).then(function (r) {
+      btn.disabled = false; btn.textContent = 'Set password';
+      if (r.error) {
+        /* Supabase's own message here is about the PASSWORD (too short, and
+           so on), not the account — safe to show verbatim, unlike signIn()'s
+           deliberately vague failure. */
+        say('setPassMsg', r.error.message || 'That did not work. Try again.', 'bad');
+        return;
+      }
+      $('newPass').value = '';
+      say('setPassMsg', 'Password set. You can sign in with it next time.', 'ok');
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Set password';
+      say('setPassMsg', 'We could not reach the server. Try again in a moment.', 'bad');
+    });
+  }
+  $('setPass').addEventListener('click', setPassword);
+
+  /* Tenant switch (Task 7b). Reload with ?tenant= set to the chosen id —
+     resolve() on the next load treats that as a hint it verifies against this
+     operator's own sbv_client_users rows, so this can only ever land on a
+     tenant they already map to. */
+  $('tenantSwitch').addEventListener('change', function () {
+    location.href = location.pathname + '?tenant=' + encodeURIComponent(this.value);
+  });
+
   $('save').addEventListener('click', save);
 
   /* ---- danger zone: reset to defaults ------------------------------------
