@@ -95,22 +95,30 @@ export const MIN_AMOUNT_CENTS = Number(process.env.STRIPE_MIN_AMOUNT_CENTS || '2
 export const BREVO_API_KEY = process.env.BREVO_API_KEY || '';
 
 /* The hosted Brevo template (#20) for the operator welcome email. 0 means
-   "not configured": a missing, empty, or non-numeric env var all collapse to
-   the same falsy case, and sendWelcome() falls back to building the email
-   inline exactly as it did before this existed.
+   "not configured": a missing, empty, or invalid env var all collapse to the
+   same falsy case, and sendWelcome() falls back to building the email inline
+   exactly as it did before this existed.
 
-   A non-numeric value is almost certainly a typo rather than intent, though,
-   and a failed welcome send gates tenant activation — so a typo'd env var
-   must not hold a buyer's storefront dark. It gets one warning at load time
-   so the misconfiguration is visible, then falls through to the same safe
-   default as "unset". */
-if (process.env.BREVO_SITELAB_TEMPLATE_ID
-    && !/^\d+$/.test(process.env.BREVO_SITELAB_TEMPLATE_ID)) {
-  console.warn('brevo: BREVO_SITELAB_TEMPLATE_ID is not a positive integer, falling back to inline welcome HTML:',
-    process.env.BREVO_SITELAB_TEMPLATE_ID);
+   validTemplateId is computed ONCE and both the warning and the exported
+   constant read that same boolean — never two separate checks. Two checks
+   can drift (a loose one guarding the warning, a stricter one feeding the
+   constant, say), and when they do, the warning lies about what the code
+   just did: it can say "falling back" on a call that actually used the
+   template, which sends whoever is debugging a mail problem chasing a
+   fallback that never happened. Trim first, since a value pasted into the
+   Vercel dashboard commonly carries incidental whitespace — that is a paste
+   artefact, not a misconfiguration, and must not warn. Everything else
+   non-numeric, or numeric but not a positive integer (leading -, trailing
+   junk), is a genuine typo: it gets one warning at load time so the
+   misconfiguration is visible, then falls through to the same safe default
+   as "unset". */
+const rawTemplateId = (process.env.BREVO_SITELAB_TEMPLATE_ID || '').trim();
+const validTemplateId = /^\d+$/.test(rawTemplateId) && Number(rawTemplateId) > 0;
+if (rawTemplateId && !validTemplateId) {
+  console.warn('brevo: BREVO_SITELAB_TEMPLATE_ID is not a positive integer, ' +
+    'falling back to inline welcome HTML:', rawTemplateId);
 }
-export const BREVO_SITELAB_TEMPLATE_ID =
-  Number.parseInt(process.env.BREVO_SITELAB_TEMPLATE_ID || '', 10) || 0;
+export const BREVO_SITELAB_TEMPLATE_ID = validTemplateId ? Number(rawTemplateId) : 0;
 
 /* ------------------------------------------------------------------ vercel */
 

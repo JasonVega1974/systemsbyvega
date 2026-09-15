@@ -585,55 +585,17 @@ test('with no BREVO_SITELAB_TEMPLATE_ID configured, the welcome payload is uncha
   assert.equal(captured.params, undefined, 'no params on the fallback path');
 });
 
-/* The next two tests need a value of BREVO_SITELAB_TEMPLATE_ID other than what
-   the top of this file sets, and _shared.mjs reads that env var once, at
-   import time. Mutating process.env here would not reach a module this
+/* The remaining tests need a value of BREVO_SITELAB_TEMPLATE_ID other than
+   what the top of this file sets, and _shared.mjs reads that env var once,
+   at import time. Mutating process.env here would not reach a module this
    process already loaded, so — same fix as verify-session.test.mjs uses for
    the same problem — each runs in its own child process, with its own env,
-   importing stripe-webhook.mjs fresh. */
+   importing stripe-webhook.mjs fresh.
 
-test('with BREVO_SITELAB_TEMPLATE_ID configured, the welcome sends Brevo template #20 with all eight params, and no htmlContent/textContent', async () => {
-  const { execFileSync } = await import('node:child_process');
-  const script = `
-    let captured;
-    globalThis.fetch = async (input, init) => {
-      const url = new URL(typeof input === 'string' ? input : input.url);
-      if (url.hostname !== 'api.brevo.com') throw new Error('unexpected fetch ' + url.href);
-      captured = JSON.parse(init.body);
-      return new Response(JSON.stringify({ messageId: 'm1' }),
-        { headers: { 'Content-Type': 'application/json' } });
-    };
-    const m = await import('./stripe-webhook.mjs');
-    const intake = { operator_name: 'Ada', business_name: 'Acme',
-      operator_email: 'buyer@example.com', city_label: 'Austin', state_code: 'TX' };
-    const ok = await m.sendWelcome(intake, 'acme', 'DJ');
-    console.log(JSON.stringify({ ok, captured }));
-  `;
-  const env = { ...process.env, BREVO_API_KEY: 'brevo-key', BREVO_SITELAB_TEMPLATE_ID: '20' };
-  delete env.PUBLIC_SITE_URL;
-  const out = execFileSync(process.execPath, ['--input-type=module', '-e', script],
-    { cwd: import.meta.dirname, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
-  const { ok, captured } = JSON.parse(out.trim().split('\n').pop());
-
-  assert.equal(ok, true);
-  assert.equal(captured.templateId, 20);
-  assert.equal(captured.htmlContent, undefined, 'template path must not carry htmlContent');
-  assert.equal(captured.textContent, undefined, 'template path must not carry textContent');
-  assert.deepEqual(Object.keys(captured.params).sort(), [
-    'admin_url', 'city_label', 'client_id', 'niche_name',
-    'operator_name', 'site_url', 'state_code', 'support_email',
-  ].sort(), 'exactly the eight {{tokens}} email/sitelab-welcome.html documents');
-  assert.equal(captured.params.operator_name, 'Ada');
-  assert.equal(captured.params.niche_name, 'DJ');
-  assert.equal(captured.params.city_label, 'Austin');
-  assert.equal(captured.params.state_code, 'TX');
-  assert.equal(captured.params.client_id, 'acme');
-  assert.equal(captured.params.site_url, 'https://acme.systemsbyvega.com/');
-  assert.equal(captured.params.admin_url, 'https://systemsbyvega.com/admin/?tenant=acme');
-  assert.equal(captured.params.support_email, 'info@kingdom-creatives.com');
-});
-
-test('a junk BREVO_SITELAB_TEMPLATE_ID falls back to inline HTML — never a broken templateId: NaN request — and warns once', async () => {
+   Shared so every case exercises the exact same call shape and only the env
+   value varies — otherwise a difference between cases could hide in the
+   harness instead of in the thing being tested. */
+async function sendWelcomeWithTemplateEnv(rawTemplateId) {
   const { execFileSync } = await import('node:child_process');
   const script = `
     const warnings = [];
@@ -654,11 +616,37 @@ test('a junk BREVO_SITELAB_TEMPLATE_ID falls back to inline HTML — never a bro
     const ok = await m.sendWelcome(intake, 'acme', 'DJ');
     console.log(JSON.stringify({ ok, captured, warnings }));
   `;
-  const env = { ...process.env, BREVO_API_KEY: 'brevo-key', BREVO_SITELAB_TEMPLATE_ID: 'banana' };
+  const env = { ...process.env, BREVO_API_KEY: 'brevo-key', BREVO_SITELAB_TEMPLATE_ID: rawTemplateId };
   delete env.PUBLIC_SITE_URL;
   const out = execFileSync(process.execPath, ['--input-type=module', '-e', script],
     { cwd: import.meta.dirname, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
-  const { ok, captured, warnings } = JSON.parse(out.trim().split('\n').pop());
+  return JSON.parse(out.trim().split('\n').pop());
+}
+
+test('with BREVO_SITELAB_TEMPLATE_ID configured, the welcome sends Brevo template #20 with all eight params, and no htmlContent/textContent', async () => {
+  const { ok, captured, warnings } = await sendWelcomeWithTemplateEnv('20');
+
+  assert.equal(ok, true);
+  assert.equal(captured.templateId, 20);
+  assert.equal(captured.htmlContent, undefined, 'template path must not carry htmlContent');
+  assert.equal(captured.textContent, undefined, 'template path must not carry textContent');
+  assert.deepEqual(Object.keys(captured.params).sort(), [
+    'admin_url', 'city_label', 'client_id', 'niche_name',
+    'operator_name', 'site_url', 'state_code', 'support_email',
+  ].sort(), 'exactly the eight {{tokens}} email/sitelab-welcome.html documents');
+  assert.equal(captured.params.operator_name, 'Ada');
+  assert.equal(captured.params.niche_name, 'DJ');
+  assert.equal(captured.params.city_label, 'Austin');
+  assert.equal(captured.params.state_code, 'TX');
+  assert.equal(captured.params.client_id, 'acme');
+  assert.equal(captured.params.site_url, 'https://acme.systemsbyvega.com/');
+  assert.equal(captured.params.admin_url, 'https://systemsbyvega.com/admin/?tenant=acme');
+  assert.equal(captured.params.support_email, 'info@kingdom-creatives.com');
+  assert.equal(warnings.length, 0, 'a valid id is not a misconfiguration');
+});
+
+test('a junk BREVO_SITELAB_TEMPLATE_ID falls back to inline HTML — never a broken templateId: NaN request — and warns once', async () => {
+  const { ok, captured, warnings } = await sendWelcomeWithTemplateEnv('banana');
 
   assert.equal(ok, true);
   assert.equal(captured.templateId, undefined, 'a typo must not send templateId: NaN');
@@ -668,6 +656,56 @@ test('a junk BREVO_SITELAB_TEMPLATE_ID falls back to inline HTML — never a bro
   assert.ok(captured.textContent.length > 0);
   assert.equal(warnings.length, 1, 'the misconfiguration is visible exactly once, not once per send');
   assert.match(warnings[0], /BREVO_SITELAB_TEMPLATE_ID/);
+});
+
+/* Three cases the fix round pinned, because the bug it fixed was the warning
+   and the resolved value being computed by two DIFFERENT checks that could
+   disagree — and only WOULD disagree on values shaped like these, not on
+   obvious garbage like "banana". */
+test('whitespace around a valid BREVO_SITELAB_TEMPLATE_ID is a paste artefact, not a misconfiguration', async () => {
+  /* " 20 " is what pasting into the Vercel dashboard commonly produces. It
+     must resolve to the template AND must not warn — a warning here would be
+     a false alarm that sends whoever reads the logs chasing a fallback that
+     never happened. */
+  const { ok, captured, warnings } = await sendWelcomeWithTemplateEnv(' 20 ');
+
+  assert.equal(ok, true);
+  assert.equal(captured.templateId, 20, 'trimmed whitespace still resolves to the configured template');
+  assert.equal(captured.htmlContent, undefined, 'the template path was actually taken');
+  assert.equal(captured.textContent, undefined);
+  assert.equal(warnings.length, 0, 'whitespace alone is not a misconfiguration');
+});
+
+test('trailing junk after a numeric BREVO_SITELAB_TEMPLATE_ID genuinely falls back, and the warning matches', async () => {
+  /* "20abc" starts with a valid-looking number. Number.parseInt(...) || 0
+     alone would happily resolve this to 20 and send it — the exact mismatch
+     the fix closes: the resolved value and the warning must come from one
+     check, so a value that warns can never also reach the wire. */
+  const { ok, captured, warnings } = await sendWelcomeWithTemplateEnv('20abc');
+
+  assert.equal(ok, true);
+  assert.equal(captured.templateId, undefined, 'trailing junk must not resolve to the leading digits');
+  assert.equal(typeof captured.htmlContent, 'string');
+  assert.ok(captured.htmlContent.length > 0);
+  assert.equal(typeof captured.textContent, 'string');
+  assert.ok(captured.textContent.length > 0);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /BREVO_SITELAB_TEMPLATE_ID/);
+});
+
+test('a negative BREVO_SITELAB_TEMPLATE_ID never reaches the wire', async () => {
+  /* Number.parseInt('-5', 10) || 0 is -5, which is truthy — that value would
+     have gone out as templateId: -5. \d+ has no sign, so it can never match
+     a negative, however it is parsed. */
+  const { ok, captured, warnings } = await sendWelcomeWithTemplateEnv('-5');
+
+  assert.equal(ok, true);
+  assert.equal(captured.templateId, undefined, 'a negative id must fall back, not go out as templateId: -5');
+  assert.equal(typeof captured.htmlContent, 'string');
+  assert.ok(captured.htmlContent.length > 0);
+  assert.equal(typeof captured.textContent, 'string');
+  assert.ok(captured.textContent.length > 0);
+  assert.equal(warnings.length, 1, 'a negative id is a genuine misconfiguration and should warn');
 });
 
 test('a missed unconfirmed account costs one invite re-send, never two emails', async () => {
