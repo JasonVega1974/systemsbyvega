@@ -171,8 +171,11 @@
 
         /* ---- phase 2 ---- */
         '<div class="cm-phase" data-phase="auth" hidden>' +
-          '<p class="cm-lead">Territories are held against an account, so this' +
-            ' step comes before payment.</p>' +
+          /* True on the ONLY path that still reaches this phase: back from a
+             confirmation link, setting up a login. It is no longer a step on
+             the way to paying and must not claim to be one. */
+          '<p class="cm-lead">This is your login, not your claim &mdash; a territory' +
+            ' is held by payment. Sign in to pick up where you left off.</p>' +
           '<div class="cm-tabs">' +
             '<button type="button" class="cm-tab on" data-mode="in">Sign in</button>' +
             '<button type="button" class="cm-tab" data-mode="up">Create account</button>' +
