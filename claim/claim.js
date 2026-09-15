@@ -1,9 +1,13 @@
 /* ============================================================================
-   claim/claim.js — the territory claim modal for sites/index.html
+   claim/claim.js — the territory claim flow for sites/index.html and /claim/
    ----------------------------------------------------------------------------
-   Loaded from the bottom of the Site Shop. Owns the modal, sign-in, and the
-   hand-off to Stripe. sites/index.html keeps only: the config block, the
-   vendored SDK, a pair of buttons per card, and the modal's CSS.
+   Loaded from the bottom of the Site Shop, and from claim/index.html (Task
+   12b). Owns the flow, sign-in, and the hand-off to Stripe. sites/index.html
+   keeps only: the config block, the vendored SDK, a pair of buttons per
+   card, and the modal's CSS. claim/index.html additionally validates
+   ?niche= against its own inlined seed and passes the result to
+   window.initClaim({ mount, slug, name }) — see initClaim() at the bottom
+   for what that does differently from the plain sites/index.html call.
 
    ── TWO PHASES, AND WHY THEY ARE SEPARATE ──────────────────────────────────
      1  CHECK    is this city open for this business?
@@ -80,6 +84,13 @@
   var lastFocus = null;       /* restored when the modal closes             */
   var acceptance = null;      /* { version, text } from /api/acceptance     */
   var intent = null;          /* what the buyer has told us so far          */
+
+  /* INLINE (Task 12b): true when initClaim() was called with { mount }. Same
+     build(), same phases, same fetches — only where the markup lands and
+     whether there is a backdrop to dismiss changes. See initClaim() at the
+     bottom for the two ways in. */
+  var INLINE = false;
+  var mountSel = null;
 
   function resetIntent(slug, name) {
     intent = {
@@ -158,13 +169,12 @@
       return '<option value="' + s + '">' + s + '</option>';
     }).join('');
 
-    var el = document.createElement('div');
-    el.className = 'cm-back';
-    el.id = 'claimModal';
-    el.setAttribute('hidden', '');
-    el.innerHTML =
-      '<div class="cm" role="dialog" aria-modal="true" aria-labelledby="cmTitle">' +
-        '<button type="button" class="cm-x" id="cmClose" aria-label="Close">&times;</button>' +
+    /* The × only makes sense over a backdrop — inline mode has nothing to
+       dismiss BACK TO, so it is left out of the markup rather than wired to
+       a button that would do something confusing. */
+    var dialogHtml =
+      '<div class="cm" role="dialog" aria-modal="' + (INLINE ? 'false' : 'true') + '" aria-labelledby="cmTitle">' +
+        (INLINE ? '' : '<button type="button" class="cm-x" id="cmClose" aria-label="Close">&times;</button>') +
         '<p class="cm-step" id="cmStep">Step 1 of 2</p>' +
         '<h2 class="cm-title" id="cmTitle">Check your city</h2>' +
 
@@ -241,8 +251,28 @@
         '</div>' +
       '</div>';
 
-    document.body.appendChild(el);
-    modal = el;
+    if (INLINE) {
+      /* Mounted into the page's own flow (Task 12b, /claim/?niche=<slug>),
+         not into a modal shell. Same markup, same IDs, same wire() — the
+         host plays the part the .cm-back backdrop plays below. There is no
+         hide/show, no scroll lock and no focus trap to wire for it: it sits
+         on screen like any other section of the page. */
+      var host = document.querySelector(mountSel);
+      if (!host) {
+        console.error('claim.js: mount target "' + mountSel + '" not found. Claim disabled.');
+        return;
+      }
+      host.innerHTML = dialogHtml;
+      modal = host;
+    } else {
+      var back = document.createElement('div');
+      back.className = 'cm-back';
+      back.id = 'claimModal';
+      back.setAttribute('hidden', '');
+      back.innerHTML = dialogHtml;
+      document.body.appendChild(back);
+      modal = back;
+    }
     wire();
   }
 
@@ -558,6 +588,7 @@
 
   function open(slug, name) {
     if (!modal) build();
+    if (!modal) return;   /* build() failed to find its mount — see its own log */
     resetIntent(slug, name);
     lastFocus = document.activeElement;
     $('#cmLead').textContent = name + ' — one operator per city. Check whether yours is open.';
@@ -573,13 +604,15 @@
     $('#cmCheckMsg').textContent = ''; $('#cmCheckMsg').className = 'cm-msg';
     $('#cmAuthMsg').textContent = ''; $('#cmConfirmMsg').textContent = '';
     $('#cmAccept').checked = false; $('#cmClaim').disabled = true;
-    modal.removeAttribute('hidden');
-    document.body.style.overflow = 'hidden';
+    if (!INLINE) {
+      modal.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
     phase('check');
   }
 
   function close() {
-    if (!modal) return;
+    if (!modal || INLINE) return;   /* nothing to dismiss inline — no close button reaches this */
     modal.setAttribute('hidden', '');
     document.body.style.overflow = '';
     if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -600,9 +633,14 @@
   }
 
   function wire() {
-    on($('#cmClose'), 'click', close);
-    on(modal, 'click', function (e) { if (e.target === modal) close(); });
-    on(modal, 'keydown', trap);
+    /* Backdrop click, Escape, and the Tab trap only make sense over a modal
+       — inline mode has no backdrop to click and no dialog boundary to trap
+       focus inside, so none of the three are wired for it. */
+    if (!INLINE) {
+      on($('#cmClose'), 'click', close);
+      on(modal, 'click', function (e) { if (e.target === modal) close(); });
+      on(modal, 'keydown', trap);
+    }
     on($('#cmCheck'), 'click', doCheck);
     on($('#cmCity'), 'keydown', function (e) { if (e.key === 'Enter') doCheck(); });
     on($('#cmAuthGo'), 'click', doAuth);
@@ -824,17 +862,26 @@
 
   /* ------------------------------------------------------------------ boot */
 
-  /* ONE ENTRY POINT. sites/index.html calls window.initClaim() and nothing
-     else; there is no auto-boot on DOMContentLoaded. That means this file can
-     be loaded on a page that does not want it without binding anything, and
-     the page controls the moment of wiring rather than racing the parser.
+  /* ONE ENTRY POINT, TWO MODES. sites/index.html calls window.initClaim()
+     with no argument and gets the modal, exactly as before. claim/index.html
+     (Task 12b) calls window.initClaim({ mount: '#claimHost', slug, name })
+     and gets the same flow mounted inline into that element instead — the
+     page validated the slug against the seed before ever calling this, the
+     same way the R4 preview overlay treats ?preview=. There is still no
+     auto-boot on DOMContentLoaded and still only one global: a second one
+     for the second page would be exactly the fork this file exists to avoid.
 
-     Idempotent: calling it twice re-binds nothing and rebuilds nothing. */
+     Idempotent: calling it twice re-binds nothing and rebuilds nothing —
+     including a second call with a different mount, which is not a
+     supported way to move the flow after boot. */
   var started = false;
 
-  function initClaim() {
+  function initClaim(opts) {
     if (started) return;
     started = true;
+    opts = opts || {};
+    INLINE = !!opts.mount;
+    mountSel = opts.mount || null;
 
     /* FIRST, before initNav(). That calls client() synchronously, and
        createClient consumes the URL fragment on construction — so by the time
@@ -849,13 +896,22 @@
        header comment — which would silently orphan one-shot listeners bound
        here at boot, on the buttons catalog-render.js's footRow() draws. One
        delegated listener on the document survives every repaint; it is the
-       same fix sbv.js's wireModal() already uses for the identical reason. */
+       same fix sbv.js's wireModal() already uses for the identical reason.
+       Wired in both modes — no .claim-btn ships on /claim/ today, but there
+       is no reason the two modes should wire a different set of listeners. */
     on(document, 'click', function (e) {
       var btn = e.target && e.target.closest && e.target.closest('.claim-btn');
       if (!btn) return;
       open(btn.getAttribute('data-slug'), btn.getAttribute('data-name'));
     });
     initNav();
+
+    /* Inline mode's whole reason to exist: render the flow immediately for
+       the slug the page already validated. resumeClaim() below can still
+       override it — a pending claim from an inbox trip outranks whatever
+       slug is sitting in the URL. */
+    if (INLINE && opts.slug) open(opts.slug, opts.name || opts.slug);
+
     if (confirmed) resumeClaim();
     confirmedBanner(confirmed);
     loadCounts();

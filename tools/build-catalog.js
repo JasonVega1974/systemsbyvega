@@ -72,6 +72,13 @@ const TARGETS = [
     markers: ['SVC_SITES'] },
   { file: path.join(ROOT, 'work', 'index.html'),
     markers: ['WK_SITES'] },
+  /* Task 12b: /claim/?niche=<slug> validates the query string against this
+     same seed before ever calling window.initClaim() — the R4 preview
+     overlay's own pattern, applied to a page that takes payment instead of
+     just opening a demo. Seed only; claim/index.html has no catalog board
+     of its own to re-render, so it needs nothing else from build-catalog.js. */
+  { file: path.join(ROOT, 'claim', 'index.html'),
+    markers: ['SEED_SCRIPT'] },
 ];
 
 /* ------------------------------------------------------------- validation */
