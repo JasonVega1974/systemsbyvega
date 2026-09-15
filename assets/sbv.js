@@ -909,10 +909,11 @@
     var capEl  = document.querySelector('[data-rotator-cap]');
     var caps   = capEl ? capEl.querySelectorAll('.seq-cap-layer') : null;
     if (caps && caps.length !== 2) caps = null;
+    var previewBtn = document.querySelector('.js-preview');
 
     var frames = (seed.niches || []).filter(function (n) { return n.demo_path; })
       .map(function (n) {
-        return { src: '/assets/shots/rotator/' + n.slug + '.jpg', trade: n.name };
+        return { src: '/assets/shots/rotator/' + n.slug + '.jpg', trade: n.name, slug: n.slug };
       });
     /* One frame is not a rotation. The static markup is already correct, so
        leave it alone rather than starting a timer that changes nothing. */
@@ -924,6 +925,51 @@
     var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
     function other() { return front === 0 ? 1 : 0; }
+
+    /* ---------------------------------------------------------- the scrim ---
+       THE HERO IS FULL-BLEED AND THE HEADLINE SITS ON THE IMAGE. White clears
+       4.5:1 on all 32 frames only because assets/hero-scrim.css darkens each
+       frame by an alpha MEASURED for that frame, and it selects that alpha on
+       .seq[data-slug]. So this attribute is not a label — it IS the contrast
+       of the hero, and it has to name the frame ACTUALLY on screen. If it
+       lagged the crossfade, every frame would be painted with the previous
+       frame's scrim, and no static screenshot of the page would ever show it.
+
+       THE 600ms WHERE BOTH FRAMES ARE VISIBLE. One attribute cannot hold two
+       frames' alphas, and for the length of the crossfade two frames are on
+       screen at once. Flipping it early under-protects the frame fading OUT;
+       flipping it late under-protects the one fading IN. So it flips at the
+       START of the fade (the incoming frame is covered from its first visible
+       pixel) and the OUTGOING frame's alpha is parked in --scrim-hold for the
+       duration; .seq-scrim-extra in sbv.css paints max() of the two, so the
+       heavier scrim is the one on screen while both images are, and neither
+       frame is ever under its own measured alpha.
+
+       The outgoing value is READ BACK from the cascade rather than kept in a
+       table here: the numbers live in exactly one place, the generated
+       stylesheet, and a copy of them in this file would be a second place to
+       forget to regenerate. */
+    var HOLD_MS = 600;          // matches the .seq-layer opacity transition
+    var holdTimer = null;
+
+    function markFrame(idx, crossfading) {
+      var prevExtra = crossfading
+        ? window.getComputedStyle(seqEl).getPropertyValue('--scrim-extra').trim()
+        : '';
+      seqEl.setAttribute('data-slug', frames[idx].slug);
+      /* The preview overlay is a later task; this button is its trigger and
+         carries the slug of whatever is showing when it is clicked. */
+      if (previewBtn) previewBtn.setAttribute('data-slug', frames[idx].slug);
+
+      if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+      if (!prevExtra) return;
+      seqEl.style.setProperty('--scrim-hold', prevExtra);
+      holdTimer = setTimeout(function () {
+        seqEl.style.removeProperty('--scrim-hold');
+        holdTimer = null;
+      }, HOLD_MS);
+    }
+
 
     /* Point the hidden layer at a frame. Setting src IS the fetch — this is
        the only place a rotator image is ever requested. */
@@ -947,6 +993,7 @@
       /* The whole rotator is one role="img"; its label names what is in it
          now, so it never describes a frame that has already faded out. */
       seqEl.setAttribute('aria-label', 'The ' + frames[next].trade + ' demo storefront.');
+      markFrame(next, true);
       front = other();
       i = next;
       load((i + 1) % frames.length);    // stay exactly one frame ahead
@@ -963,12 +1010,22 @@
       timer = null;
     }
 
-    /* Hover pauses. The frame under the pointer is the one someone is
-       looking at, so it should stay until they look away. */
-    var frameEl = seqEl.closest ? seqEl.closest('.seq-frame') : null;
-    if (frameEl) {
-      frameEl.addEventListener('mouseenter', stop);
-      frameEl.addEventListener('mouseleave', start);
+    /* HOVER-PAUSE IS GONE, deliberately. It used to hang off .seq-frame, the
+       640px card the rotator lived in, where "the pointer is on the frame"
+       meant "someone is looking at this screenshot". The frame is now the
+       whole hero background, so the same rule would freeze the rotator for
+       anyone whose pointer merely rests in the top of the page.
+
+       What it protected is still protected, and more precisely: the only
+       reason a moving frame is a problem is that the demo button carries the
+       current slug, so pause while the pointer or the focus ring is ON that
+       button and the demo that opens is the one that was on screen when it
+       was aimed at. */
+    if (previewBtn) {
+      previewBtn.addEventListener('mouseenter', stop);
+      previewBtn.addEventListener('mouseleave', start);
+      previewBtn.addEventListener('focus', stop);
+      previewBtn.addEventListener('blur', start);
     }
     /* A hidden tab should not burn through frames — or fetch them. */
     document.addEventListener('visibilitychange', function () {
@@ -980,6 +1037,10 @@
       mq.addEventListener('change', function (e) { if (e.matches) stop(); else start(); });
     }
 
+    /* Frame 1's data-slug already ships in the generated markup, so the
+       no-JS hero is scrimmed correctly. This re-states it from the seed and,
+       more to the point, gives the demo button its first slug. */
+    markFrame(0, false);
     start();
   }
 

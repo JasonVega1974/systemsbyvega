@@ -297,6 +297,28 @@
      no-JS and reduced-motion renderings are this markup exactly as it
      stands: frame 1, its caption, and the full trade list below.
 
+     THE SCRIM IS PART OF THIS MARKUP, AND SO IS data-slug. The hero is
+     full-bleed now — the headline sits ON the frame — so white text clears
+     4.5:1 only because assets/hero-scrim.css darkens each frame by an amount
+     MEASURED for that frame. Three things that markup owns:
+
+       data-slug        keys the per-frame alpha. It ships on frame 1 so the
+                        no-JS and reduced-motion renderings are scrimmed
+                        correctly too, and rotator() in assets/sbv.js moves it
+                        with the crossfade. A lagging attribute paints frame N
+                        with frame N-1's scrim, which no screenshot reveals.
+       THREE scrim      --scrim-base and --scrim-extra are composited as
+       divs             separate layers, never summed into one alpha: they
+                        were solved by painting one over the other in sRGB,
+                        and sRGB compositing is not additive in alpha. The
+                        third, .seq-scrim-floor, is the MEASURED FLOOR this
+                        layout needs on top of them — see THE FLOOR in
+                        assets/sbv.css for what it is and why the generated
+                        pair alone does not cover a headline.
+       inside .seq      the custom properties are declared on .seq[data-slug],
+                        so the layers have to be its descendants to inherit
+                        them.
+
      The chips are the reduced-motion (and no-JS) presentation, revealed by
      CSS. They are CAPPED at CHIP_CAP, with a generated '+N more' link for
      the rest. Printing all thirty-two put a 559px wall of pills in the hero
@@ -304,7 +326,13 @@
      a worse reduced-motion experience than the animation it stands in for.
      The remainder is stated rather than dropped, its count computed here
      (Ruling R20: a count in this markup is never typed), and the link goes
-     to the page that lists every one of them. */
+     to the page that lists every one of them.
+
+     .hero-media and .seq-meta split the block in two on purpose. .hero-media
+     is taken out of flow as the hero's background; .seq-meta stays IN flow,
+     after it, so the caption and the chip wall add real height instead of
+     overhanging a fixed box — and so the '+N more' link is tabbed after the
+     hero's own CTAs rather than before them. */
   var CHIP_CAP = 11;
   function heroRotator(niches) {
     var frames = niches.filter(function (n) { return n.demo_path; });
@@ -313,25 +341,32 @@
     var shot = function (n) { return '/assets/shots/rotator/' + esc(n.slug) + '.jpg'; };
 
     return '' +
-      '<div class="seq" data-rotator role="img" aria-label="The ' + esc(first.name) +
-        ' demo storefront.">' +
-        '<img class="seq-layer is-on" src="' + shot(first) + '" width="1280" height="800" ' +
-             'fetchpriority="high" decoding="async" alt="">' +
-        '<img class="seq-layer" width="1280" height="800" decoding="async" alt="">' +
+      '<div class="hero-media">' +
+        '<div class="seq" data-rotator data-slug="' + esc(first.slug) + '" role="img" ' +
+             'aria-label="The ' + esc(first.name) + ' demo storefront.">' +
+          '<img class="seq-layer is-on" src="' + shot(first) + '" width="1280" height="800" ' +
+               'fetchpriority="high" decoding="async" alt="">' +
+          '<img class="seq-layer" width="1280" height="800" decoding="async" alt="">' +
+          '<div class="seq-scrim seq-scrim-base" aria-hidden="true"></div>' +
+          '<div class="seq-scrim seq-scrim-extra" aria-hidden="true"></div>' +
+          '<div class="seq-scrim seq-scrim-floor" aria-hidden="true"></div>' +
+        '</div>' +
       '</div>' +
-      '<div class="seq-cap" data-rotator-cap aria-hidden="true">' +
-        '<span class="seq-cap-layer is-on">' + esc(first.name) + '</span>' +
-        '<span class="seq-cap-layer"></span>' +
-      '</div>' +
-      '<div class="seq-steps">' +
-        frames.slice(0, CHIP_CAP).map(function (n, i) {
-          return '<span class="seq-step' + (i === 0 ? ' is-current' : '') + '">' +
-                 esc(n.name) + '</span>';
-        }).join('') +
-        (frames.length > CHIP_CAP
-          ? '<a class="seq-step seq-step-more" href="/sites/">+' +
-            (frames.length - CHIP_CAP) + ' more &rarr;</a>'
-          : '') +
+      '<div class="seq-meta">' +
+        '<div class="seq-cap" data-rotator-cap aria-hidden="true">' +
+          '<span class="seq-cap-layer is-on">' + esc(first.name) + '</span>' +
+          '<span class="seq-cap-layer"></span>' +
+        '</div>' +
+        '<div class="seq-steps">' +
+          frames.slice(0, CHIP_CAP).map(function (n, i) {
+            return '<span class="seq-step' + (i === 0 ? ' is-current' : '') + '">' +
+                   esc(n.name) + '</span>';
+          }).join('') +
+          (frames.length > CHIP_CAP
+            ? '<a class="seq-step seq-step-more" href="/sites/">+' +
+              (frames.length - CHIP_CAP) + ' more &rarr;</a>'
+            : '') +
+        '</div>' +
       '</div>';
   }
 
@@ -433,6 +468,50 @@
       '</div>';
   }
 
+  /* THE OFFER CARD — the price, what it buys, and the button, in the first
+     screen beside the hero headline.
+
+     ITS FIVE LINES ARE NOT TYPED HERE. They are INCLUDED.slice(0, OFFER_ROWS)
+     — the same array, in the same order, that R.included() renders in full
+     lower down the page and on /sites/. A hand-typed summary of a generated
+     list is a copy that drifts the first time the real list changes, and the
+     drift is silent because nothing compares the two. Taking a slice means the
+     card cannot say something the full list does not.
+
+     Only the bold TITLE of each row is used. The card is a summary sitting
+     next to the headline; the sentence that qualifies each line is three
+     sections further down, in the full list, where there is room for it.
+
+     The price is written once, in PRICE, and rendered into both the heading
+     and the button label from that one string. */
+  var OFFER_ROWS = 5;
+  var PRICE = '$99';
+
+  function offerCard() {
+    return '' +
+      '<aside class="offer" aria-labelledby="offer-price">' +
+        '<p class="offer-eyebrow">One price</p>' +
+        '<h2 class="offer-price" id="offer-price">' + esc(PRICE) +
+          ' once. <span>Live today.</span></h2>' +
+        '<ul class="offer-list">' +
+          INCLUDED.slice(0, OFFER_ROWS).map(function (row) {
+            return '<li class="offer-item">' +
+              '<span class="offer-ico" aria-hidden="true">' +
+                '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+                     'stroke-linecap="round" stroke-linejoin="round">' +
+                  INCL_ICONS[row[0]] +
+                '</svg></span>' +
+              '<span class="offer-txt">' + esc(row[1]) + '</span>' +
+            '</li>';
+          }).join('') +
+        '</ul>' +
+        '<a class="btn btn-pri btn-block offer-go" href="/sites/">Get your site &mdash; ' +
+          esc(PRICE) + '</a>' +
+        '<p class="offer-fine">Pick your trade, claim your city, and it is live the same day. ' +
+          'Everything it covers is in the <a class="link" href="/legal/terms.html">Terms</a>.</p>' +
+      '</aside>';
+  }
+
   function nicheSelect(niches) {
     var open = [], line = [];
     niches.forEach(function (n) {
@@ -487,6 +566,7 @@
     nicheSelect: nicheSelect,
     heroRotator: heroRotator,
     included: included,
+    offerCard: offerCard,
     figures: figures,
     numWord: numWord,
     thesisOpen: thesisOpen,

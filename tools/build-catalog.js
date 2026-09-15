@@ -54,7 +54,7 @@ const CHECK = process.argv.includes('--check');
 const TARGETS = [
   { file: path.join(ROOT, 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_OFFER', 'SITES_STEP', 'SITES_LINK',
-               'HERO_ROTATOR', 'SEED_SCRIPT', 'INCLUDED'] },
+               'HERO_ROTATOR', 'OFFER_CARD', 'SEED_SCRIPT', 'INCLUDED'] },
   { file: path.join(ROOT, 'sites', 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'THESIS_OPEN',
               'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT', 'INCLUDED'] },
@@ -218,6 +218,11 @@ function main() {
     /* The same list on `/` and `/sites/`, from one function, so the two
        cannot drift apart the way two hand-kept copies would. */
     INCLUDED:     '\n' + R.included() + '\n',
+    /* The hero's offer card. Its five lines are a SLICE of the same INCLUDED
+       array R.included() renders in full — one source, two renderings, so the
+       card in the first screen cannot promise something the list further down
+       the page does not. */
+    OFFER_CARD:   '\n' + R.offerCard() + '\n',
     CATALOG:      '\n' + R.catalog(seed.families, seed.niches, {}, extras) + '\n',
     NICHE_SELECT: '\n' + R.nicheSelect(seed.niches) + '\n',
     SEED_SCRIPT:  seedScript,
