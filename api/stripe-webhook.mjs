@@ -880,7 +880,7 @@ export function sendWelcome(intake, clientId, nicheName) {
   /* Inline styles only: Gmail strips a <style> block and Outlook ignores web
      fonts. 600px is the widest that survives a phone without horizontal
      scroll. Palette from assets/sbv.css — amber-text #806030 rather than
-     --amber, because #C69648 lands at 4.4:1 on white and fails AA at body
+     --amber, because #C69648 lands at 2.66:1 on white and fails AA at body
      size. */
   const P = { ink: '#161B22', soft: '#48515F', amber: '#806030',
               hair: '#DCE2EA', paper: '#F1F4F8' };
