@@ -1,10 +1,17 @@
 /* ============================================================================
    POST /api/create-checkout
    ----------------------------------------------------------------------------
-   Called by the claim page after the buyer has signed in, chosen a niche, named
-   their city, picked a tier and ticked the acceptance box. Validates everything
-   that can be validated, parks the submission in sbv_intake, and returns a
-   Stripe Checkout URL for the browser to redirect to.
+   Called by the claim page after the buyer has chosen a niche, named their
+   city, picked a tier, given the email they want their login sent to and
+   ticked the acceptance box. Validates everything that can be validated, parks
+   the submission in sbv_intake, and returns a Stripe Checkout URL for the
+   browser to redirect to.
+
+   NO ACCOUNT IS REQUIRED TO GET HERE. Buying used to demand a Supabase sign-in
+   first, which put the heaviest form in the funnel in front of the payment.
+   The account is created from this email AFTER the card clears, in the
+   webhook. That is why operator_email arrives in the body rather than being
+   read off a JWT, and why the intake row's user_id is null until then.
 
    WHY THIS ENDPOINT EXISTS AT ALL. A plain Stripe payment link would be simpler
    and is what EstateSaleBiz used — which also meant the buyer chose their city
@@ -40,7 +47,7 @@
    ========================================================================= */
 
 import {
-  json, preflight, userFromRequest,
+  json, preflight,
   pgSelectOne, pgInsert, pgUpdate, rpc,
   stripePost, StripeError,
   sha256Hex, slugify,
@@ -48,6 +55,7 @@ import {
   SITE_URL, SUPPORT_EMAIL, SUPABASE_URL, SERVICE_KEY,
   STRIPE_SECRET_KEY, TIER_PRICE_ID, TIERS,
 } from './_shared.mjs';
+import { normaliseBuyerEmail } from './_checkout-lib.mjs';
 
 export const config = { runtime: 'nodejs' };
 
@@ -104,26 +112,11 @@ async function handler(request) {
     }, 503);
   }
 
-  /* ---- who is asking ----------------------------------------------------- */
-  const who = await userFromRequest(request);
-  if (who.error) {
-    /* Distinguish "we could not reach Supabase" from "your token is bad": the
-       first is ours to fix and deserves a retry, the second is a sign-in. */
-    if (who.error.startsWith('auth_unreachable')) {
-      console.error('create-checkout:', who.error);
-      return json({ ok: false, error: 'auth_unreachable',
-        message: 'We could not verify your sign-in. Try again in a moment.' }, 503);
-    }
-    return json({ ok: false, error: 'not_signed_in',
-      message: 'Sign in first, then claim your city.' }, 401);
-  }
-  const user = who.user;
-  if (!user.email) {
-    return json({ ok: false, error: 'no_email',
-      message: `Your account has no email address. Email ${SUPPORT_EMAIL} and we will sort it out.` }, 400);
-  }
-
-  /* ---- body -------------------------------------------------------------- */
+  /* ---- body --------------------------------------------------------------
+     No sign-in gate above this line, on purpose. The buyer is identified by
+     the email they type below and nothing else; a session, if the browser
+     happens to have one, is not read and does not change what happens here.
+     One code path, whether or not they already have an account. */
   let body;
   try { body = await request.json(); }
   catch { return json({ ok: false, error: 'bad_json' }, 400); }
@@ -138,6 +131,10 @@ async function handler(request) {
   const tier         = str(body.tier).toLowerCase();
   const businessName = str(body.business_name);
   const operatorName = str(body.operator_name);
+  /* The address the login link and the receipt both go to. Normalised through
+     the shared helper so this and sbv_tenants.operator_email cannot disagree
+     about what an email is. */
+  const operatorEmail = normaliseBuyerEmail(body.operator_email);
   const operatorPhone = str(body.operator_phone);
   const cityLabel    = str(body.city_label);
   const stateCode    = str(body.state_code).toUpperCase();
@@ -161,6 +158,9 @@ async function handler(request) {
   }
   if (businessName.length < 2 || businessName.length > 120) {
     return bad('bad_business_name', 'Give your business a name, 2 to 120 characters.', 'business_name');
+  }
+  if (!operatorEmail) {
+    return bad('bad_email', 'Give the email address you want your login sent to.', 'operator_email');
   }
   if (operatorName.length > 120)  return bad('bad_operator_name', 'That name is too long.', 'operator_name');
   if (operatorPhone.length > 40)  return bad('bad_phone', 'That phone number is too long.', 'operator_phone');
@@ -265,14 +265,20 @@ async function handler(request) {
   let intake;
   try {
     const rows = await pgInsert('sbv_intake', {
-      user_id: user.id,
+      /* Null until the webhook creates or finds the account for this email.
+         Nobody is signed in at this point and inventing an id here would be a
+         guess about which person this is. */
+      user_id: null,
       niche_slug: nicheSlug,
       client_id: clientId,
       business_name: businessName,
       operator_name: operatorName || null,
-      /* The signed-in address, not one typed into the form. It is the one we
-         know a person can actually receive mail at. */
-      operator_email: user.email,
+      /* The address the buyer typed, and the only identity this row carries.
+         The webhook provisions the account against it, so a typo here is a
+         login that never arrives — which is why the client validates it with
+         the same rule before sending, and why Stripe is given the same value
+         and mails the receipt to it. */
+      operator_email: operatorEmail,
       operator_phone: operatorPhone || null,
       city_label: cityLabel,
       state_code: stateCode,
@@ -305,14 +311,17 @@ async function handler(request) {
          cannot read sbv_billing (no policy) and has no Stripe key. */
       success_url: SITE_URL + '/claim/thank-you.html?session_id={CHECKOUT_SESSION_ID}',
       cancel_url:  SITE_URL + '/claim/?cancelled=1',
-      customer_email: user.email,
+      customer_email: operatorEmail,
       client_reference_id: String(intake.id),
       /* The webhook reads intake_id from here and then trusts the row. The
          rest is for legibility in the Stripe dashboard when reconciling by
          hand — it is not an input to provisioning. */
       metadata: {
         intake_id: String(intake.id),
-        user_id: user.id,
+        /* No user_id key any more: there is no account yet, and a metadata
+           value of null or "" reads in the dashboard as a lost id rather than
+           as one that never existed. The email is the identity here. */
+        operator_email: operatorEmail,
         niche_slug: nicheSlug,
         client_id: clientId,
         tier,

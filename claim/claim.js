@@ -5,14 +5,25 @@
    hand-off to Stripe. sites/index.html keeps only: the config block, the
    vendored SDK, a pair of buttons per card, and the modal's CSS.
 
-   ── THREE PHASES, AND WHY THEY ARE SEPARATE ────────────────────────────────
+   ── TWO PHASES, AND WHY THEY ARE SEPARATE ──────────────────────────────────
      1  CHECK    is this city open for this business?
-     2  AUTH     who are you?          (skipped entirely if already signed in)
-     3  CONFIRM  what exactly, and do you agree?   -> Stripe
+     2  CONFIRM  what exactly, and do you agree?   -> Stripe
 
-   Phase 1 answers live in `intent` for the life of the modal, so returning
-   from a sign-in does not lose the city someone just typed. Nothing is written
-   to the database before Stripe; the first row is the intake that
+   NOBODY SIGNS IN TO BUY. An account used to be step 2 and it was the heaviest
+   thing in the funnel. The confirm phase now asks for the email instead, the
+   card is charged, and the webhook creates the account from that address. A
+   buyer who IS already signed in gets that field pre-filled and nothing else:
+   the request body is identical either way, so the server has one code path.
+
+   The auth phase markup below is still built and still wired — sign in, create
+   account, the tabs — and the email-confirmation return path it belongs to is
+   untouched. Nothing in the claim flow shows it any more, so it is kept rather
+   than removed: pulling it would take the confirmed-signup return with it, and
+   that is a separate piece of work from taking a payment.
+
+   Phase 1 answers live in `intent` for the life of the modal, so a trip out to
+   an inbox and back does not lose the city someone just typed. Nothing is
+   written to the database before Stripe; the first row is the intake that
    /api/create-checkout parks.
 
    ── WHAT THIS FILE DOES NOT DECIDE ─────────────────────────────────────────
@@ -106,6 +117,18 @@
       .slice(0, 40).replace(/-+$/g, '');
   }
 
+  /* Mirrors normaliseBuyerEmail() in api/_checkout-lib.mjs, which in turn
+     mirrors the CHECK on sbv_tenants.operator_email. Same shape on purpose:
+     an address this accepts and the server rejects would be a buyer bounced
+     out of checkout for a rule they were never shown. Returns '' for no. */
+  var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i;
+
+  function normEmail(s) {
+    var v = String(s == null ? '' : s).trim().toLowerCase();
+    if (!v || v.length > 254) return '';
+    return EMAIL_RE.test(v) ? v : '';
+  }
+
   function client() {
     if (sb) return sb;
     if (!window.supabase || !window.supabase.createClient) return null;
@@ -130,7 +153,7 @@
     el.innerHTML =
       '<div class="cm" role="dialog" aria-modal="true" aria-labelledby="cmTitle">' +
         '<button type="button" class="cm-x" id="cmClose" aria-label="Close">&times;</button>' +
-        '<p class="cm-step" id="cmStep">Step 1 of 3</p>' +
+        '<p class="cm-step" id="cmStep">Step 1 of 2</p>' +
         '<h2 class="cm-title" id="cmTitle">Check your city</h2>' +
 
         /* ---- phase 1 ---- */
@@ -173,6 +196,13 @@
             '<label><input type="radio" name="cmTier" value="custom">' +
               '<b>$499</b> custom launch</label>' +
           '</fieldset>' +
+          /* NOT #cmEmail — that one belongs to the sign-in form in the auth
+             phase and is still wired to it. This is the buyer's address for
+             the account that gets created after payment. */
+          '<label class="cm-f"><span>Email for your login link</span>' +
+            '<input type="email" id="cmBuyerEmail" maxlength="254" autocomplete="email"></label>' +
+          '<p class="cm-hint">Your receipt and the link that sets up your' +
+            ' account both go here.</p>' +
           '<label class="cm-f"><span>Business name</span>' +
             /* autocomplete off: Chrome otherwise fills this from the saved
                contact profile right after the phase-2 credentials autofill,
@@ -205,8 +235,11 @@
     for (var i = 0; i < all.length; i++) {
       all[i].hidden = all[i].getAttribute('data-phase') !== name;
     }
-    var n = { check: 1, auth: 2, confirm: 3 }[name];
-    $('#cmStep').textContent = 'Step ' + n + ' of 3';
+    /* Two steps, not three: auth is no longer one of them. It keeps a number
+       only because the phase still exists and a blank counter would read as a
+       bug if anything ever shows it again. */
+    var n = { check: 1, auth: 2, confirm: 2 }[name] || 1;
+    $('#cmStep').textContent = 'Step ' + n + ' of 2';
     $('#cmTitle').textContent =
       name === 'check' ? 'Check your city'
       : name === 'auth' ? 'Sign in to continue'
@@ -273,16 +306,10 @@
       });
   }
 
-  /* Where phase 1 hands off to: straight past auth if there is a session. */
-  function next() {
-    var c = client();
-    if (!c) { toConfirm(); return; }      /* SDK missing — handled at claim */
-    c.auth.getSession().then(function (res) {
-      var s = res && res.data && res.data.session;
-      if (s && s.access_token) { paintAuth(s.user); toConfirm(); }
-      else phase('auth');
-    }).catch(function () { phase('auth'); });
-  }
+  /* Where phase 1 hands off to: confirm, always. There is nothing to decide
+     here any more — a session changes what toConfirm() pre-fills, not where
+     the buyer goes. */
+  function next() { toConfirm(); }
 
   /* ---- phase 2: auth ----------------------------------------------------- */
 
@@ -410,8 +437,27 @@
     }
 
     if (!$('#cmBiz').value) $('#cmBiz').value = '';
+    prefillEmail();
     phase('confirm');
     loadTerms();
+  }
+
+  /* The ONLY thing a live session changes. The value is still read from the
+     input and still sent in the body, so a returning operator and a first-time
+     buyer send the same request; this just saves them typing an address we
+     already know. Async and unguarded on purpose — if there is no session, or
+     the SDK never loaded, the field simply stays empty and they type it. */
+  function prefillEmail() {
+    var el = $('#cmBuyerEmail');
+    if (!el || el.value) return;
+    var c = client();
+    if (!c) return;
+    c.auth.getSession().then(function (res) {
+      var s = res && res.data && res.data.session;
+      if (!s || !s.user || !s.user.email) return;
+      if (!el.value) el.value = s.user.email;
+      paintAuth(s.user);
+    }).catch(function () { /* signed out is the default */ });
   }
 
   function loadTerms() {
@@ -446,42 +492,44 @@
     var btn = $('#cmClaim');
     msg.textContent = '';
 
+    /* Checked here with the server's own rule, so nobody reaches Stripe on an
+       address create-checkout will refuse. */
+    var email = normEmail($('#cmBuyerEmail').value);
     var biz = $('#cmBiz').value.trim();
     var slug = slugify($('#cmSlug').value || biz);
+    if (!email) { msg.textContent = 'Give the email address you want your login sent to.'; return; }
     if (biz.length < 2) { msg.textContent = 'Give your business a name.'; return; }
     if (slug.length < 3) { msg.textContent = 'Your web address needs at least 3 letters or numbers.'; return; }
     if (!acceptance) { msg.textContent = 'The terms did not load. Reload the page.'; return; }
 
     var tier = (modal.querySelector('input[name="cmTier"]:checked') || {}).value || 'launch';
-    var c = client();
-    if (!c) { msg.textContent = 'Sign-in could not load. Reload the page.'; return; }
 
     btn.disabled = true; btn.textContent = 'Opening checkout…';
 
-    c.auth.getSession().then(function (res) {
-      var s = res && res.data && res.data.session;
-      if (!s || !s.access_token) { phase('auth'); btn.disabled = false; btn.textContent = 'Claim this territory'; return; }
-
-      return fetch('/api/create-checkout', {
-        method: 'POST',
-        headers: { Authorization: 'Bearer ' + s.access_token, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          niche_slug: intent.niche, tier: tier, client_id: slug,
-          business_name: biz, city_label: intent.city, state_code: intent.state,
-          acceptance_version: acceptance.version
-        })
-      }).then(function (r) {
-        return r.json().catch(function () { return {}; })
-          .then(function (b) { return { status: r.status, body: b }; });
-      }).then(function (out) {
-        var b = out.body || {};
-        if (b.ok && b.url) { window.location.href = b.url; return; }
-        btn.disabled = false; btn.textContent = 'Claim this territory';
-        /* 409 means the city went while they were filling this in — send them
-           back to phase 1 rather than leaving them staring at a dead button. */
-        if (out.status === 409) { msg.textContent = b.message || 'That city was just claimed. Try another.'; phase('check'); return; }
-        msg.textContent = b.message || 'We could not open checkout. Try again in a moment.';
-      });
+    /* No session read and no Authorization header. The endpoint identifies the
+       buyer by operator_email alone, and asking the SDK for a token first
+       would make a signed-in buyer send a different request from a signed-out
+       one for no gain. */
+    fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        niche_slug: intent.niche, tier: tier, client_id: slug,
+        business_name: biz, operator_email: email,
+        city_label: intent.city, state_code: intent.state,
+        acceptance_version: acceptance.version
+      })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; })
+        .then(function (b) { return { status: r.status, body: b }; });
+    }).then(function (out) {
+      var b = out.body || {};
+      if (b.ok && b.url) { window.location.href = b.url; return; }
+      btn.disabled = false; btn.textContent = 'Claim this territory';
+      /* 409 means the city went while they were filling this in — send them
+         back to phase 1 rather than leaving them staring at a dead button. */
+      if (out.status === 409) { msg.textContent = b.message || 'That city was just claimed. Try another.'; phase('check'); return; }
+      msg.textContent = b.message || 'We could not open checkout. Try again in a moment.';
     }).catch(function () {
       btn.disabled = false; btn.textContent = 'Claim this territory';
       msg.textContent = 'We could not reach our server. Try again in a moment.';
@@ -500,6 +548,9 @@
        claim reappears on the next open, which reads as "we pre-filled it".
        The touched flag resets with it so the name→slug auto-fill re-arms. */
     $('#cmBiz').value = ''; $('#cmSlug').value = '';
+    /* Cleared too, so prefillEmail() can refill it from whatever session is
+       live now rather than leaving the last buyer's address on screen. */
+    $('#cmBuyerEmail').value = '';
     delete $('#cmSlug').dataset.touched;
     $('#cmCheckMsg').textContent = ''; $('#cmCheckMsg').className = 'cm-msg';
     $('#cmAuthMsg').textContent = ''; $('#cmConfirmMsg').textContent = '';
@@ -676,8 +727,8 @@
        GarageSaleBiz's create-checkout header records as the direct cause of
        every paid-but-blocked operator on EstateSaleBiz.
 
-       doCheck's own next() then skips phase 2 when the session is live and
-       stops there when it is not, and its failure paths leave the buyer on
+       doCheck's own next() then goes straight to confirm — there is no auth
+       step to stop at any more — and its failure paths leave the buyer on
        phase 1 with the city already filled in — one click, not a retype. */
     doCheck();
   }
