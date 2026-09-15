@@ -257,35 +257,10 @@ function serve() {
   });
 }
 
-/* Browser resolution (Ruling R12). @sparticuz/chromium's executablePath is
-   undefined outside its AWS Lambda build environment — verified on this
-   machine — so it is never tried here. Each attempt is recorded so a total
-   failure can name all three rather than producing nothing silently. */
-async function launchBrowser() {
-  const { chromium } = require('playwright-core');
-  const attempts = [];
-  const LAUNCH_ARGS = ['--hide-scrollbars', '--force-color-profile=srgb'];
-
-  if (process.env.SBV_CHROME) {
-    try {
-      return await chromium.launch({ executablePath: process.env.SBV_CHROME, args: LAUNCH_ARGS });
-    } catch (e) { attempts.push(`SBV_CHROME=${process.env.SBV_CHROME} -> ${e.message.split('\n')[0]}`); }
-  } else {
-    attempts.push('SBV_CHROME not set');
-  }
-
-  try {
-    return await chromium.launch({ channel: 'chrome', args: LAUNCH_ARGS });
-  } catch (e) { attempts.push(`channel:'chrome' -> ${e.message.split('\n')[0]}`); }
-
-  const npxCache = 'C:/Users/JasonVega/AppData/Local/npm-cache/_npx/9833c18b2d85bc59/node_modules/playwright';
-  try {
-    const pw = require(npxCache);
-    return await pw.chromium.launch({ args: LAUNCH_ARGS });
-  } catch (e) { attempts.push(`npx cache (${npxCache}) -> ${e.message.split('\n')[0]}`); }
-
-  throw new Error('No local Chromium found. Attempts:\n  ' + attempts.join('\n  '));
-}
+/* Browser resolution (Ruling R12) lives in tools/lib/browser.js so this tool
+   and tools/build-scrim.js cannot drift on the fallback chain. Same three
+   strategies, same loud failure naming all of them. */
+const { launchBrowser } = require('./lib/browser');
 
 (async () => {
   const browser = await launchBrowser();

@@ -25,6 +25,7 @@
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const WCAG = require('./lib/wcag');
 
 const REPO = path.resolve(__dirname, '..');
 const args = process.argv.slice(2);
@@ -208,12 +209,12 @@ const PROBE = () => {
     const p = m[1].split(',').map(Number);
     return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
   };
-  const lum = c => {
-    const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
-    return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
-  };
-  const ratio = (a, b) => { const L1 = lum(a), L2 = lum(b);
-    return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05); };
+  /* WCAG relative luminance and the ratio formula come from tools/lib/wcag.js,
+     injected as window.__wcag by the runner below. PROBE cannot require(), and
+     a second copy of this arithmetic in the repo is exactly what we are
+     avoiding — tools/build-scrim.js solves its scrim alphas with the same two
+     functions. */
+  const { lum, ratio } = window.__wcag;
 
   const TEXT = 'p, li, a, span, h1, h2, h3, h4, button, label, td, th, figcaption, small, strong, em, div';
   const seen = new Set();
@@ -270,6 +271,8 @@ const PROBE = () => {
 
   const ctx = await browser.newContext({ viewport: { width: WIDTH, height: 800 },
                                          deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  /* Hand PROBE the shared WCAG math; see the note beside its contrast block. */
+  await ctx.addInitScript({ content: WCAG.SRC });
   const page = await ctx.newPage();
   const all = [];
 
