@@ -373,8 +373,8 @@
       <div id="setPasswordWrap" style="margin:18px 0 0">
         <p class="sub" style="margin:0 0 8px">Signed in with an emailed link? Set a password so you can
           sign in directly next time, without waiting on email.</p>
-        <label style="max-width:340px"><span>New password</span>
-          <input type="password" id="newPass" autocomplete="new-password"></label>
+        <label style="max-width:340px"><span>New password <span class="hint">&mdash; at least 6 characters</span></span>
+          <input type="password" id="newPass" autocomplete="new-password" minlength="6"></label>
         <button type="button" class="go" id="setPass">Set password</button>
         <p class="msg" id="setPassMsg" role="alert"></p>
       </div>
@@ -2303,9 +2303,15 @@ document.addEventListener('DOMContentLoaded', function () {
   function signIn() {
     var btn = $('signIn');
     var email = $('email').value.trim(), pass = $('pass').value;
+    /* L1: the gate has two independent message boxes now (password + magic
+       link). Clearing only this one left a stale red/green message from the
+       OTHER path sitting on screen — e.g. a failed password attempt directly
+       under a leftover "a sign-in link is on its way". Every attempt on
+       either path clears both. */
+    say('gateMsg', ''); say('gateOtpMsg', '');
     if (!email || !pass) { say('gateMsg', 'Email and password, please.', 'bad'); return; }
 
-    btn.disabled = true; btn.textContent = 'Signing in…'; say('gateMsg', '');
+    btn.disabled = true; btn.textContent = 'Signing in…';
     sb.auth.signInWithPassword({ email: email, password: pass }).then(function (r) {
       btn.disabled = false; btn.textContent = 'Sign in';
       if (r.error) {
@@ -2324,22 +2330,57 @@ document.addEventListener('DOMContentLoaded', function () {
   $('signIn').addEventListener('click', signIn);
   $('pass').addEventListener('keydown', function (e) { if (e.key === 'Enter') signIn(); });
 
+  /* GoTrue's answer to signInWithOtp({ shouldCreateUser:false }) for an
+     address with NO account: a 422 whose code/error_code is "otp_disabled"
+     and whose message says some variant of "Signups not allowed" (wording
+     has moved between GoTrue releases, hence the message fallback below
+     rather than trusting `code` alone). sendMagicLink() treats this exact
+     rejection as success — see the comment there for why. Anything else
+     (network failure, 5xx, a genuinely malformed request) is a real error
+     and falls through to the red message. */
+  function isOtpDisabled(err) {
+    if (!err) return false;
+    if (err.code === 'otp_disabled') return true;
+    var msg = String(err.message || '').toLowerCase();
+    return msg.indexOf('otp_disabled') !== -1 ||
+      msg.indexOf('signups not allowed') !== -1 ||
+      msg.indexOf('signup not allowed') !== -1;
+  }
+
   /* No-password path (Task 7b). The webhook that provisions a new operator
      never sets a password — see stripe-webhook.mjs's sendLoginLink — so this
      is how anyone who has not since set one (#setPass below) gets back in on
      a later day or a different device.
 
-     signInWithOtp() ALWAYS reports success, whether or not the address has an
-     account — that is deliberate on Supabase's side, the same anti-enumeration
-     reasoning signIn()'s own error message already follows above. So the
-     message here must be true either way: "a link has been sent if that
-     address has one", never "we found your account". */
+     shouldCreateUser:false and the isOtpDisabled() branch below are ONE FIX,
+     not two independent ones — do not "simplify" this back to either half:
+
+       - Without shouldCreateUser:false, this is a PUBLIC gate that lets
+         anyone type any address and have GoTrue mint them an unconfirmed
+         auth.users row and mail THAT stranger a "Confirm your signup" from
+         this project — unbounded, attributable to the brand, and a
+         deliverability problem. (Not a privilege escalation: a spurious user
+         gets no sbv_client_users row, so resolve() lands on #noAccess and
+         every RLS policy is tenant-scoped through sbv_is_tenant() regardless
+         — abuse, not takeover. But abuse is still worth closing.)
+       - shouldCreateUser:false ALONE creates a DIFFERENT hole: GoTrue then
+         answers an unrecognised address with a distinct 422, which a known
+         address does not get — a visible enumeration oracle against the
+         operator list, exactly what this neutral copy exists to prevent.
+         So that specific rejection is folded back into the same neutral
+         success message; only a genuine transport failure gets the red one.
+
+     Residual, not fixable here: the anon key is public, so this same call
+     can be made directly against /auth/v1/otp with no page involved at all.
+     GoTrue's own rate limits are the real control — the point of this fix is
+     only that the PAGE should not be the cannon. */
   function sendMagicLink() {
     var btn = $('gateOtp');
     var email = $('email').value.trim();
+    say('gateMsg', ''); say('gateOtpMsg', ''); /* L1 — see signIn() */
     if (!email) { say('gateOtpMsg', 'Enter your email above first.', 'bad'); return; }
 
-    btn.disabled = true; btn.textContent = 'Sending…'; say('gateOtpMsg', '');
+    btn.disabled = true; btn.textContent = 'Sending…';
     /* location.pathname, not a hardcoded '/admin/' — this IS /admin/, and
        building it from the page's own location keeps it correct if that ever
        changes. ?tenant= (and nothing else) is carried over so a multi-niche
@@ -2349,13 +2390,17 @@ document.addEventListener('DOMContentLoaded', function () {
        URL instead — see the deploy note in this task's report. */
     var tenant = new URLSearchParams(location.search).get('tenant');
     var redirectTo = location.origin + location.pathname + (tenant ? '?tenant=' + encodeURIComponent(tenant) : '');
-    sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectTo } }).then(function (r) {
+    var NEUTRAL_OK = 'If that address has an account, a sign-in link is on its way — check your email.';
+    sb.auth.signInWithOtp({
+      email: email,
+      options: { emailRedirectTo: redirectTo, shouldCreateUser: false }
+    }).then(function (r) {
       btn.disabled = false; btn.textContent = 'Email me a sign-in link';
-      if (r.error) {
+      if (r.error && !isOtpDisabled(r.error)) {
         say('gateOtpMsg', 'We could not send that right now. Try again in a moment.', 'bad');
         return;
       }
-      say('gateOtpMsg', 'If that address has an account, a sign-in link is on its way — check your email.', 'ok');
+      say('gateOtpMsg', NEUTRAL_OK, 'ok');
     }).catch(function () {
       btn.disabled = false; btn.textContent = 'Email me a sign-in link';
       say('gateOtpMsg', 'We could not reach the sign-in server. Try again in a moment.', 'bad');
@@ -2366,11 +2411,19 @@ document.addEventListener('DOMContentLoaded', function () {
   /* Set-a-password (Task 7b). Converts a link-only operator into one who can
      use signIn() above next time, without giving up the link as a fallback.
      Requires a live session, which #setPass is only ever visible under
-     (#sec-start is inside #panel, hidden until paint() confirms one). */
+     (#sec-start is inside #panel, hidden until paint() confirms one).
+
+     L2: no confirmation field, on purpose — a typo here is recoverable
+     (the magic link keeps working regardless, by design), so a second field
+     would add friction against a low-severity mistake. What it DOES need is
+     a stated minimum, so a typo-driven failure doesn't read as "the button
+     is broken": the label already says "at least 6 characters" and this
+     checks the same number client-side before the round trip. */
   function setPassword() {
     var btn = $('setPass');
     var pass = $('newPass').value;
     if (!pass) { say('setPassMsg', 'Enter a new password first.', 'bad'); return; }
+    if (pass.length < 6) { say('setPassMsg', 'Use at least 6 characters.', 'bad'); return; }
 
     btn.disabled = true; btn.textContent = 'Saving…'; say('setPassMsg', '');
     sb.auth.updateUser({ password: pass }).then(function (r) {
