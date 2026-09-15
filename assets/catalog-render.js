@@ -516,7 +516,12 @@
   function included(opts) {
     var o = opts || {};
     return '' +
-      '<div class="incl">' +
+      /* .reveal (R8): this block IS the body of #offer on / and the WHOLE of
+         #included on /sites/, so without it that second section had nothing
+         to scroll-reveal. The class is inert until observe() in sbv.js adds
+         .anim, which it only does when it can take it off again — so the
+         no-JS rendering of this list is unchanged. */
+      '<div class="incl reveal">' +
         '<h3 class="incl-h">' + esc(o.heading || "What's included with every site") + '</h3>' +
         '<ul class="incl-list">' +
           INCLUDED.map(function (row) {

@@ -299,6 +299,34 @@
     Array.prototype.forEach.call(document.querySelectorAll('.reveal:not(.in)'), function (e) { io.observe(e); });
   }
 
+  /* The closing band carries the page's one animated gradient. It is a
+     transform/opacity keyframe on .cta-glow, which means a compositor layer
+     that stays awake for as long as the declaration matches — and on a phone
+     that is battery spent on a band below the fold.
+
+     So the animation is bound to .is-lit and this toggles it from the band's
+     own intersection. Deliberately NOT the .reveal observer: that one
+     unobserves on first sight, because a reveal is a one-way trip. This one
+     has to keep both directions for the life of the page, so it is its own
+     observer and it never unobserves.
+
+     threshold 0 with a 120px margin: start the drift just before the band
+     edges into view so it is already moving when it arrives, and stop it as
+     soon as the last pixel leaves. No REDUCED check here — the reduced-motion
+     rule in sbv.css already answers this class with animation:none, and
+     leaving the decision in CSS means a visitor who changes the system setting
+     mid-session gets the new answer without a reload. */
+  function wireGlow() {
+    var band = document.querySelector('.cta-close');
+    if (!band || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) band.classList.add('is-lit');
+        else                  band.classList.remove('is-lit');
+      });
+    }, { threshold: 0, rootMargin: '120px 0px' }).observe(band);
+  }
+
   /* ------------------------------------------------------------- language */
   /* i18n.js owns the dictionary and the walk; this is only the hook the
      repaint needs. Guarded because the page has to work if that file 404s. */
@@ -1665,6 +1693,7 @@
     wireFaq();
     wireNav();
     observe();
+    wireGlow();
 
     /* Everything below decorates a catalog that is already in the HTML, so it
        runs before the network is touched and is correct whether or not the

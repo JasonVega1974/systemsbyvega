@@ -1304,6 +1304,44 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
     radial-gradient(40% 54% at var(--glow-x2,80%) var(--glow-y2,88%),
       rgba(var(--con-amber-rgb),.13), rgba(var(--con-amber-rgb),0) 70%);
 }
+
+/* THE HOOK, NOW MOVING (R8) — and NOT the way the note above proposed.
+   Interpolating --glow-x/--glow-y/--glow-x2/--glow-y2 through @property would
+   feed a new value into background-image on every frame, which means
+   re-rasterising two radial gradients across a full-bleed band sixty times a
+   second. The brief rules that out by name. What ships instead leaves the wash
+   painted exactly once and moves the finished layer: transform and opacity
+   only, the two things the compositor can run without asking the main thread
+   for a repaint. The gradient stops are untouched, so the still frame a
+   reduced-motion or no-JS visitor sees is byte-for-byte the one that was here
+   before.
+
+   The drift stays inside the clip for free: .cta-glow is inset -30% -12% and
+   .cta-close is overflow:hidden, so a 2% shift and a 7% scale-up never bring
+   an edge of the layer anywhere near the band.
+
+   .is-lit IS THE OFF SWITCH. wireGlow() in sbv.js toggles it from an
+   IntersectionObserver on the band, so scrolling away drops the declaration
+   entirely — the animation is REMOVED, not paused, the compositor layer is
+   released with will-change, and getComputedStyle(.cta-glow).animationName
+   reads "none". A band nobody is looking at costs nothing.
+
+   .anim is in the selector for the same reason it is in every other motion
+   rule in this file: no IntersectionObserver means no .anim, which means this
+   never matches and the band renders as the finished static wash it already
+   was. */
+@keyframes cta-drift{
+  0%  {transform:translate3d(0,0,0) scale(1);opacity:1}
+  50% {transform:translate3d(2.2%,-2.4%,0) scale(1.07);opacity:.84}
+  100%{transform:translate3d(0,0,0) scale(1);opacity:1}
+}
+.anim .cta-close.is-lit .cta-glow{
+  animation:cta-drift 19s cubic-bezier(.45,0,.55,1) infinite;
+  will-change:transform,opacity;
+}
+@media (prefers-reduced-motion:reduce){
+  .anim .cta-close.is-lit .cta-glow{animation:none;will-change:auto}
+}
 .cta-close-in{text-align:center;display:flex;flex-direction:column;align-items:center}
 /* .eyebrow is an inline-flex with a 26px rule before it; centring it needs the
    BOX centred, which text-align cannot do to a flex item. */
@@ -1339,6 +1377,48 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
   .anim .reveal{opacity:1;transform:none;transition:none}
   .anim .grid .entry{transition-delay:0s !important}
   .entry:hover,.btn:hover,a.proof-shot:hover{transform:none}
+}
+
+/* THE LIFT HAS TO OUT-RANK THE REVEAL. Found while wiring R8, and it was not
+   a small thing: `.anim .reveal.in` three lines up sets transform:none to
+   land a revealed element at rest, it is (0,3,0), and it sits later in this
+   file than every card's own :hover rule. .entry.sheet:hover is also (0,3,0)
+   and loses the tie on source order; .scard:hover and .pcard:hover are
+   (0,2,0) and lose outright. Every card on / and on /sites/ carries .reveal,
+   so the hover lift was being cancelled on all of them the moment the
+   observer revealed them — which is to say before the pointer could ever
+   reach one. Only the box-shadow and the border-colour were still landing,
+   which is why it read as a weak hover rather than a broken one.
+
+   Restated here rather than fixed by reordering: `.anim .reveal.in` is
+   load-bearing for the reveal and must keep its place. transform is the only
+   property named, so each card's own :hover rule still owns its shadow and
+   its border. transform is also the only property that MAY be named —
+   .family>.grid on /sites/ is CSS multi-column masonry, and a margin, height
+   or top change here would repack the columns under the pointer.
+
+   :focus-within for the two cards with focusable children, :focus-visible for
+   .scard, which IS the anchor. That mirrors what each card already declares,
+   so a keyboard user gets the same lift as a mouse user rather than an
+   outline and nothing else. */
+.anim .reveal.in.entry.sheet:hover,
+.anim .reveal.in.entry.sheet:focus-within,
+.anim .reveal.in.scard:hover,
+.anim .reveal.in.scard:focus-visible,
+.anim .reveal.in.pcard:hover,
+.anim .reveal.in.pcard:focus-within{transform:translateY(-4px)}
+/* Same reason the rule above exists, one rung further up: these selectors now
+   outrank the generic `.entry:hover{transform:none}` in the reduce block
+   above, so reduced motion has to name them too or the lift would move for
+   exactly the people who asked it not to. Shadow and border still change —
+   reduced motion means still, not featureless. */
+@media (prefers-reduced-motion:reduce){
+  .anim .reveal.in.entry.sheet:hover,
+  .anim .reveal.in.entry.sheet:focus-within,
+  .anim .reveal.in.scard:hover,
+  .anim .reveal.in.scard:focus-visible,
+  .anim .reveal.in.pcard:hover,
+  .anim .reveal.in.pcard:focus-within{transform:none}
 }
 
 /* ==========================================================================
@@ -1856,14 +1936,21 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 .related-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .related-card{display:block;padding:18px 20px;border:1px solid var(--rule);border-radius:4px;
   background:var(--bg-2);text-decoration:none;transition:border-color .18s ease,transform .18s ease}
-.related-card:hover{border-color:var(--acc);transform:translateY(-2px)}
+/* :focus-visible gets the lift as well as the ring (R8). An outline alone
+   tells a keyboard user where they are; it does not give them the same
+   "this is a thing you can take" feedback the pointer gets, and every other
+   card on these two pages — .scard, .pcard, .entry.sheet — already pairs the
+   two. transform only, never a box-model property: these sit in an
+   auto-fit grid and a margin change would relay the row. */
+.related-card:hover,
+.related-card:focus-visible{border-color:var(--acc);transform:translateY(-2px)}
 .related-card:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 .related-card b{display:block;font-family:var(--display);font-size:17px;color:var(--tx-1);margin-bottom:5px}
 .related-card span{display:block;font-size:13.5px;line-height:1.55;color:var(--tx-2)}
 .related-card em{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--tx-3);font-style:normal}
 @media (prefers-reduced-motion:reduce){.related-card{transition:none}
-  .related-card:hover{transform:none}}
+  .related-card:hover,.related-card:focus-visible{transform:none}}
 
 /* ========================================================== /work/ grid ==
    Task 7 — Ruling R4: every colour below is a BAND TOKEN
@@ -2380,6 +2467,46 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
    users who asked for less movement. */
 @media (prefers-reduced-motion:reduce){
   .anim .cmp tr.reveal{opacity:1;transition:none}
+}
+
+/* THE MARKS DRAW IN (R8), on the contract the note at the head of this
+   section set up: .cmp-path is the stroke, and stroke-dashoffset is the only
+   thing that moves. No opacity on the mark, no transform on the row.
+
+   26 IS ONE NUMBER THAT COVERS BOTH GLYPHS. The tick is a two-segment path
+   about 17.4 user units long. The cross is two subpaths of about 11.9 each,
+   23.8 end to end. Implementations have historically disagreed about whether
+   the dash pattern restarts at every subpath, and 26 is longer than the
+   longest subpath AND the longest whole path — so at offset 26 the glyph is
+   entirely inside the gap either way, and at 0 it is entirely drawn either
+   way. No pathLength attribute needed on eight-and-thirty marks.
+
+   DEFAULT IS DRAWN, which is the whole point. stroke-dasharray is never set
+   outside .anim, so with JavaScript off, or on a browser with no
+   IntersectionObserver, every mark in all eight rows is a solid finished
+   glyph that was never dashed. The dashes exist only for the visitors who are
+   about to watch them resolve. The row this sits in already carries the
+   same guarantee for its own opacity.
+
+   The stagger runs ACROSS the columns rather than down the rows — the rows
+   already arrive one at a time as you scroll — and it starts with our column,
+   so the eye lands there a beat before the three it is being compared with. */
+.anim .cmp tr.reveal .cmp-path{stroke-dasharray:26;stroke-dashoffset:26}
+.anim .cmp tr.reveal.in .cmp-path{
+  stroke-dashoffset:0;
+  transition:stroke-dashoffset .44s cubic-bezier(.35,.8,.4,1);
+}
+.anim .cmp tr.reveal.in td:nth-of-type(1) .cmp-path{transition-delay:.07s}
+.anim .cmp tr.reveal.in td:nth-of-type(2) .cmp-path{transition-delay:.13s}
+.anim .cmp tr.reveal.in td:nth-of-type(3) .cmp-path{transition-delay:.19s}
+.anim .cmp tr.reveal.in td:nth-of-type(4) .cmp-path{transition-delay:.25s}
+/* Same trap as the row rule above, one level deeper: these selectors outrank
+   anything generic, so reduced motion has to undash them by name or the marks
+   would sit hidden for exactly the people who asked for less movement. */
+@media (prefers-reduced-motion:reduce){
+  .anim .cmp tr.reveal .cmp-path,
+  .anim .cmp tr.reveal.in .cmp-path{stroke-dasharray:none;stroke-dashoffset:0;transition:none}
+  .anim .cmp tr.reveal.in td .cmp-path{transition-delay:0s}
 }
 
 /* ===================================================== GLOBAL CHROME ==
