@@ -56,8 +56,12 @@ function reset() {
     sbv_blocked_purchases: [],
     sbv_niches: [{ slug: 'dj', name: 'DJ' }, { slug: 'bbq', name: 'BBQ Catering' }],
     auth_users: [],
+    mail: [],
   };
-  counts = { invites: 0, brevo: 0, authLookups: 0, tenantInserts: 0, mappingInserts: 0, claims: 0 };
+  counts = {
+    invites: 0, inviteResends: 0, links: 0, loginLinkMails: 0,
+    brevo: 0, authLookups: 0, tenantInserts: 0, mappingInserts: 0, claims: 0,
+  };
 }
 
 /* Primary keys, so the stand-in can answer 409 where the real schema would. */
@@ -166,8 +170,17 @@ function rpc(fn, args) {
   throw new Error('fake pg: unknown rpc ' + fn);
 }
 
-/* GoTrue. The filter search and the invite, which are the only two admin
-   endpoints the webhook uses. */
+/* GoTrue: the filter search, the invite, and admin link generation.
+
+   THE INVITE BRANCH MODELS THE REAL ONE, INCLUDING THE PART THAT BITES.
+   supabase/auth internal/api/invite.go computes
+   `isConfirmed := user != nil && user.IsConfirmed()` and raises
+   email_exists only inside `if !isCreate { if isConfirmed { ... } }`. So an
+   address belonging to somebody who was invited and never opened the link does
+   NOT get a 422 — GoTrue re-sends the invitation and answers 200 with the
+   user. An earlier version of this fake returned 422 for any existing user,
+   which made the webhook look safe on exactly the population it was not safe
+   on. A fake kinder than production is worse than no fake at all. */
 function auth(url, init) {
   if (url.pathname === '/auth/v1/admin/users') {
     counts.authLookups++;
@@ -177,17 +190,38 @@ function auth(url, init) {
       : db.auth_users.slice();
     return jsonRes({ users });
   }
+
   if (url.pathname === '/auth/v1/invite') {
-    const body = JSON.parse(init.body);
-    const email = String(body.email).toLowerCase();
-    if (db.auth_users.some((u) => u.email === email)) {
+    const email = String(JSON.parse(init.body).email).toLowerCase();
+    const existing = db.auth_users.find((u) => u.email === email);
+    if (existing && existing.confirmed) {
       return jsonRes({ error_code: 'email_exists', msg: 'A user with this email address has already been registered' }, 422);
     }
+    /* Either a new account, or a re-send to an unconfirmed one. Both put an
+       email in the buyer's inbox, so both count. */
     counts.invites++;
-    const user = { id: 'usr_' + (db.auth_users.length + 1), email };
+    if (existing) { counts.inviteResends++; return jsonRes(existing, 200); }
+    const user = { id: 'usr_' + (db.auth_users.length + 1), email, confirmed: false };
     db.auth_users.push(user);
     return jsonRes(user, 200);
   }
+
+  /* internal/api/mail.go: the response is the user with action_link and
+     friends merged in at the TOP level, and it sends no mail of its own. */
+  if (url.pathname === '/auth/v1/admin/generate_link') {
+    const body = JSON.parse(init.body);
+    const email = String(body.email).toLowerCase();
+    const user = db.auth_users.find((u) => u.email === email);
+    if (!user) return jsonRes({ error_code: 'user_not_found', msg: 'User not found' }, 404);
+    counts.links++;
+    return jsonRes({
+      ...user,
+      action_link: 'https://fake.supabase.co/auth/v1/verify?token=tok&type=' + body.type,
+      email_otp: '123456', hashed_token: 'hsh', verification_type: body.type,
+      redirect_to: body.redirect_to || null,
+    });
+  }
+
   throw new Error('fake auth: unexpected ' + url.pathname);
 }
 
@@ -215,7 +249,13 @@ globalThis.fetch = async (input, init) => {
     return url.pathname.startsWith('/auth/') ? auth(url, init) : rest(url, init);
   }
   if (url.hostname === 'api.stripe.com') return stripe(url);
-  if (url.hostname === 'api.brevo.com') { counts.brevo++; return jsonRes({ messageId: 'm1' }); }
+  if (url.hostname === 'api.brevo.com') {
+    counts.brevo++;
+    const m = JSON.parse(init.body);
+    db.mail.push({ to: m.to[0].email, subject: m.subject, text: m.textContent });
+    if (/sign-in link/i.test(m.subject)) counts.loginLinkMails++;
+    return jsonRes({ messageId: 'm1' });
+  }
   if (url.hostname === 'api.vercel.com') return jsonRes({ name: 'x' });
   throw new Error('fake fetch: unexpected host ' + url.hostname);
 };
@@ -268,6 +308,7 @@ test('a first delivery provisions: account, mapping, active tenant', async () =>
   assert.equal(first.body.ok, true);
   assert.equal(first.body.client_id, 'acme');
   assert.equal(counts.invites, 1, 'one invitation');
+  assert.equal(counts.links, 0, 'a brand new address needs no link of ours');
   assert.equal(db.auth_users.length, 1);
   assert.equal(db.sbv_tenants.length, 1);
   assert.equal(db.sbv_tenants[0].is_active, true, 'live only after the login exists');
@@ -296,6 +337,7 @@ test('a redelivered event changes nothing and invites nobody', async () => {
   assert.equal(second.status, 200);
   assert.equal(second.body.already, true, 'took the already-provisioned path');
   assert.equal(counts.invites, 1, 'NO second invitation');
+  assert.equal(counts.links, 0, 'and no sign-in link generated either');
   assert.equal(db.auth_users.length, 1, 'no second account');
   assert.equal(db.sbv_tenants.length, 1, 'no second tenant');
   assert.equal(db.sbv_client_users.length, 1, 'no second mapping');
@@ -336,6 +378,9 @@ test('a second niche for the same buyer reuses the account and adds a mapping', 
 
   assert.equal(second.body.ok, true);
   assert.equal(counts.invites, 1, 'the repeat buyer is not invited again');
+  assert.equal(counts.inviteResends, 0, 'and /invite was never even called');
+  assert.equal(counts.links, 1, 'they get a link of ours instead');
+  assert.equal(counts.loginLinkMails, 1, 'and it was actually mailed');
   assert.equal(db.auth_users.length, 1, 'one person, one account');
   assert.equal(db.sbv_tenants.length, 2, 'one tenant per niche');
   assert.equal(db.sbv_client_users.length, 2, 'two mappings on the composite key');
@@ -350,7 +395,7 @@ test('an account the cheap search missed is found before a duplicate is made', a
      older GoTrue that does not understand `filter` looks like once the project
      has more users than one page. The invite refuses, the exhaustive search
      finds them, and nobody gets a second account or a second email. */
-  db.auth_users.push({ id: 'usr_old', email: 'buyer@example.com' });
+  db.auth_users.push({ id: 'usr_old', email: 'buyer@example.com', confirmed: true });
   seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
 
   const real = globalThis.fetch;
@@ -366,6 +411,7 @@ test('an account the cheap search missed is found before a duplicate is made', a
 
   assert.equal(res.body.ok, true);
   assert.equal(counts.invites, 0, 'no invitation was sent');
+  assert.equal(counts.links, 1, 'they were mailed a link instead');
   assert.equal(db.auth_users.length, 1, 'no duplicate account');
   assert.equal(db.sbv_client_users[0].user_id, 'usr_old');
   assert.equal(db.sbv_tenants[0].is_active, true);
@@ -391,4 +437,145 @@ test('no invite means no activation — the storefront is held, not lit', async 
   assert.equal(db.sbv_client_users.length, 0);
   assert.equal(db.sbv_billing.length, 1, 'the payment is still recorded');
   assert.equal(db.sbv_city_claims.length, 1, 'and the territory is still held');
+});
+
+/* ------------------------------------------- the unconfirmed invitee, Fix A */
+
+test('an unconfirmed invitee gets a login link, never a second invite', async () => {
+  reset();
+  /* The population a resumed delivery is most likely to meet: invited at some
+     point, never opened the link. Real GoTrue does NOT answer 422 for this
+     account — /invite would re-send the invitation and answer 200, which is a
+     second email nobody asked for. */
+  db.auth_users.push({ id: 'usr_pending', email: 'buyer@example.com', confirmed: false });
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+
+  const res = await deliver('cs_1');
+
+  assert.equal(res.body.ok, true);
+  assert.equal(counts.invites, 0, '/invite was never called');
+  assert.equal(counts.inviteResends, 0, 'so nothing was re-sent');
+  assert.equal(counts.links, 1, 'one link generated');
+  assert.equal(counts.loginLinkMails, 1, 'and one link email sent');
+  assert.equal(db.auth_users.length, 1, 'no second account');
+  assert.equal(db.sbv_client_users[0].user_id, 'usr_pending');
+  assert.equal(db.sbv_tenants[0].is_active, true, 'live, because they now have a way in');
+  const link = db.mail.find((m) => /sign-in link/i.test(m.subject));
+  assert.equal(link.to, 'buyer@example.com');
+  assert.match(link.text, /auth\/v1\/verify\?token=tok&type=magiclink/);
+});
+
+test('a reused account whose link cannot be mailed holds the storefront dark', async () => {
+  reset();
+  db.auth_users.push({ id: 'usr_pending', email: 'buyer@example.com', confirmed: false });
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+
+  const real = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    /* Brevo refuses the link email; the alert to us still goes out. */
+    if (url.hostname === 'api.brevo.com' && /sign-in link/i.test(JSON.parse(init.body).subject)) {
+      return jsonRes({ message: 'sender blocked' }, 400);
+    }
+    return real(input, init);
+  };
+  const res = await deliver('cs_1');
+  globalThis.fetch = real;
+
+  assert.equal(res.body.blocked, 'no_operator_login');
+  assert.equal(db.sbv_tenants[0].is_active, false, 'a link that never arrived is not a way in');
+  assert.equal(db.sbv_client_users.length, 0);
+  assert.equal(db.sbv_billing.length, 1, 'the payment is still recorded');
+});
+
+/* ------------------------------------------------ the auth API refuses, Fix B */
+
+test('a 403 from the admin API holds and alerts — it does not burn the retry window', async () => {
+  reset();
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+
+  const real = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    if (url.pathname === '/auth/v1/admin/users') return jsonRes({ msg: 'invalid api key' }, 403);
+    return real(input, init);
+  };
+  const res = await deliver('cs_1');
+  globalThis.fetch = real;
+
+  assert.equal(res.status, 200, 'NOT 500 — a revoked key does not fix itself');
+  assert.equal(res.body.blocked, 'auth_lookup_refused');
+  assert.equal(counts.brevo, 1, 'and a human was told, like every other hold here');
+  assert.match(db.mail[0].subject, /Supabase Auth refused/);
+  assert.equal(db.sbv_tenants[0].is_active, false);
+  assert.equal(counts.invites, 0, 'no account was guessed into existence');
+});
+
+test('a 503 from the admin API still returns 500 so Stripe retries', async () => {
+  reset();
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+
+  const real = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    if (url.pathname === '/auth/v1/admin/users') return jsonRes({ msg: 'upstream unavailable' }, 503);
+    return real(input, init);
+  };
+  const res = await deliver('cs_1');
+  globalThis.fetch = real;
+
+  assert.equal(res.status, 500, 'transient — the next delivery may work');
+  assert.equal(res.body.error, 'auth_lookup_failed');
+  assert.equal(counts.brevo, 0, 'and no alert, because this is not a hold');
+  assert.equal(db.sbv_tenants[0].is_active, false);
+});
+
+/* ------------------------------------------------- the welcome email, Fix C */
+
+test('the welcome email points at the sign-in link, not at an account they never made', async () => {
+  reset();
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+
+  await deliver('cs_1');
+
+  const welcome = db.mail.find((m) => /territory is claimed/i.test(m.subject));
+  assert.ok(welcome, 'the buyer got a confirmation');
+  /* Deliberately broader than the one sentence that was wrong, and phrased so
+     the offending line cannot creep back in under a synonym — nobody creates
+     an account at checkout any more, in any wording. */
+  assert.doesNotMatch(welcome.text, /created at checkout/i,
+    'nobody creates an account at checkout any more');
+  assert.match(welcome.text, /sign-in link is in a separate email/);
+});
+
+test('a missed unconfirmed account costs one invite re-send, never two emails', async () => {
+  reset();
+  /* The residual case, pinned so it stays small. If the cheap search cannot
+     see an UNCONFIRMED account, /invite is reached and GoTrue answers 200
+     after re-sending the invitation — there is no 422 to tell us otherwise,
+     and the user object it returns looks exactly like a fresh signup. The
+     buyer still ends up with exactly one usable link and one email; what we
+     lose is only the chance to send our own. A resumed delivery never lands
+     here, because step 1 stops on the mapping long before. */
+  db.auth_users.push({ id: 'usr_pending', email: 'buyer@example.com', confirmed: false });
+  seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
+
+  const real = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    if (url.pathname === '/auth/v1/admin/users' && url.searchParams.get('filter')) {
+      return jsonRes({ users: [] });
+    }
+    return real(input, init);
+  };
+  const res = await deliver('cs_1');
+  globalThis.fetch = real;
+
+  assert.equal(res.body.ok, true);
+  assert.equal(counts.invites, 1, 'one email, not two');
+  assert.equal(counts.inviteResends, 1, 'and it was a re-send of the existing invitation');
+  assert.equal(counts.loginLinkMails, 0, 'we did not also send a link of our own');
+  assert.equal(db.auth_users.length, 1, 'no duplicate account');
+  assert.equal(db.sbv_client_users[0].user_id, 'usr_pending');
+  assert.equal(db.sbv_tenants[0].is_active, true, 'they do have a way in');
 });

@@ -404,6 +404,11 @@ export async function findAuthUserByEmail(email, { deep = false } = {}) {
    has already taken somebody's money and needs to decide what to do next
    rather than unwind.
 
+   ONLY CALL THIS WHEN NO ACCOUNT EXISTS. It is not idempotent against an
+   UNCONFIRMED user: GoTrue raises email_exists only for a confirmed one, and
+   for an invitee who never opened the link it re-sends the invitation and
+   answers 200. Use generateAuthLink() for an address you already found.
+
      { ok: true,  user }
      { ok: false, alreadyRegistered: true }   the account exists; go find it
      { ok: false, status, reason }            nothing was sent
@@ -437,6 +442,63 @@ export async function inviteAuthUser(email, { redirectTo = null, data = null } =
     return { ok: false, alreadyRegistered: true, status: r.status, reason: msg };
   }
   if (r.ok) return { ok: false, status: r.status, reason: 'invite returned no user' };
+  return { ok: false, status: r.status, reason: (code ? code + ': ' : '') + msg };
+}
+
+/* Generate a sign-in link for an account that ALREADY EXISTS, and hand it back
+   rather than mailing it. Returns { ok: true, actionLink, user } or
+   { ok: false, status, reason }.
+
+   WHY THIS EXISTS AND WHY /invite IS NOT USED FOR A KNOWN USER. GoTrue answers
+   422 email_exists from /invite only when the account is CONFIRMED
+   (internal/api/invite.go: `isConfirmed := user != nil && user.IsConfirmed()`
+   — the 422 is raised inside `if !isCreate { if isConfirmed { ... } }`). For a
+   user who was invited and never opened the link, /invite quietly RE-SENDS the
+   invitation and answers 200 with the user. That is precisely the population a
+   resumed provisioning run keeps meeting, so calling /invite on a known
+   address is how a buyer ends up with two emails.
+
+   It also does not send mail: the reference calls generateLink "email links
+   and OTPs to be sent via a custom email provider". That suits this system,
+   which already sends everything else through Brevo — one voice, one sender,
+   and a failure we can see and hold on.
+
+   Endpoint and shapes confirmed against the implementation rather than
+   assumed. supabase/auth internal/api/api.go mounts
+   `r.Post("/generate_link", api.adminGenerateLink)` under /admin, and
+   internal/api/mail.go declares the request as
+   { type, email, new_email, password, data, redirect_to } and the response as
+   an embedded user plus action_link / email_otp / hashed_token /
+   verification_type / redirect_to — so the user id is at the TOP level of the
+   body, beside action_link, not nested under it.
+
+   magiclink is the type, not recovery: recovery is a password reset, and a
+   buyer invited moments ago has no password to reset. */
+export async function generateAuthLink(email, { type = 'magiclink', redirectTo = null, data = null } = {}) {
+  const to = String(email || '').trim().toLowerCase();
+  if (!to) return { ok: false, status: 0, reason: 'no_email' };
+
+  const body = { type, email: to };
+  if (redirectTo) body.redirect_to = redirectTo;
+  if (data) body.data = data;
+
+  let r;
+  try {
+    r = await authAdminFetch('admin/generate_link',
+      { method: 'POST', body: JSON.stringify(body) }, 'auth admin generate link');
+  } catch (e) {
+    return { ok: false, status: 0, reason: e.message };
+  }
+
+  if (r.ok && r.data && r.data.action_link) {
+    return { ok: true, actionLink: r.data.action_link, user: r.data };
+  }
+
+  const err = r.data && typeof r.data === 'object' ? r.data : {};
+  const code = String(err.error_code || err.code || err.error || '');
+  const msg  = String(err.msg || err.message ||
+    (typeof r.data === 'string' ? r.data : '') || ('HTTP ' + r.status));
+  if (r.ok) return { ok: false, status: r.status, reason: 'generate_link returned no action_link' };
   return { ok: false, status: r.status, reason: (code ? code + ': ' : '') + msg };
 }
 

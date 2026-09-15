@@ -44,7 +44,7 @@
 import {
   json, pgSelectOne, pgInsert, pgUpdate, pgDelete, rpc,
   verifyStripeSignature, verifyStripeSession,
-  findAuthUserByEmail, inviteAuthUser,
+  findAuthUserByEmail, inviteAuthUser, generateAuthLink,
   sendBrevo, ownerAlert, escHtml,
   STRIPE_WEBHOOK_SECRET, SUPPORT_EMAIL, SITE_URL, APEX,
   SUPABASE_URL, SERVICE_KEY, RESERVED_SLUGS,
@@ -440,33 +440,30 @@ async function provision(session) {
       return json({ ok: true, blocked: 'no_operator_email' });
     }
 
+    /* Where the link lands. data rides along as user_metadata so a support
+       question can be answered from the Auth table alone. */
+    const dashboard = SITE_URL + '/admin/?tenant=' + encodeURIComponent(clientId);
+    const meta = {
+      client_id: clientId,
+      niche_slug: intake.niche_slug,
+      business_name: intake.business_name,
+    };
+
     let existing = null;
     try {
       existing = await findAuthUserByEmail(buyerEmail);
     } catch (e) {
       /* "I could not ask" is not "there is no account". Inviting on a guess
-         duplicates a repeat buyer; skipping leaves them with no login. Retry
-         instead: the tenant and the claim both survive, and step 7 recognises
-         the claim as ours on the next delivery. */
-      console.error('webhook: auth user lookup failed:', e.message, e.body || '');
-      return json({ ok: false, error: 'auth_lookup_failed' }, 500);   // retry
+         duplicates a repeat buyer; skipping leaves them with no login. */
+      return authLookupHold(e, { sessionId, clientId, buyerEmail, where: 'lookup' });
     }
 
-    if (existing && existing.id) {
-      operatorUserId = existing.id;
-      console.log('webhook: existing account reused for', buyerEmail, '->', operatorUserId);
-    } else {
-      /* redirect_to lands them on their own dashboard rather than the apex.
-         data rides along as user_metadata so a support question can be
-         answered from the Auth table alone. */
-      const invite = await inviteAuthUser(buyerEmail, {
-        redirectTo: SITE_URL + '/admin/?tenant=' + encodeURIComponent(clientId),
-        data: {
-          client_id: clientId,
-          niche_slug: intake.niche_slug,
-          business_name: intake.business_name,
-        },
-      });
+    let why = 'unknown';
+
+    /* NEW ADDRESS → /invite. GoTrue creates the account and mails the link
+       itself, which is the one case where that endpoint is the right tool. */
+    if (!existing) {
+      const invite = await inviteAuthUser(buyerEmail, { redirectTo: dashboard, data: meta });
 
       if (invite.ok && invite.user && invite.user.id) {
         operatorUserId = invite.user.id;
@@ -475,44 +472,69 @@ async function provision(session) {
         /* The cheap search said no and GoTrue says yes, so the search was
            wrong — an older instance ignoring the filter parameter is the known
            cause. Pay for the exhaustive one now that something has actually
-           contradicted the cheap answer. No invitation was sent by the call
-           above, so nothing has been duplicated. */
+           contradicted the cheap answer. No invitation was sent by the refused
+           call, so nothing has been duplicated; `existing` then takes the
+           known-user path below and they get a link like anyone else. */
         console.warn('webhook: invite says the address is registered; searching again:', buyerEmail);
         try {
-          const again = await findAuthUserByEmail(buyerEmail, { deep: true });
-          if (again && again.id) operatorUserId = again.id;
+          existing = await findAuthUserByEmail(buyerEmail, { deep: true });
         } catch (e) {
-          console.error('webhook: deep auth user lookup failed:', e.message, e.body || '');
-          return json({ ok: false, error: 'auth_lookup_failed' }, 500);   // retry
+          return authLookupHold(e, { sessionId, clientId, buyerEmail, where: 'deep lookup' });
         }
+        if (!existing) why = 'invite refused as already registered, but no account could be found';
       } else {
         console.error('webhook: invite failed for', buyerEmail, '-', invite.reason);
+        why = invite.reason || 'invite failed';
       }
+    }
 
-      if (!operatorUserId) {
-        /* HOLD. The rule this file is built around is that a storefront never
-           goes live before its operator can reach it, and there is no route in
-           without an account. Activating here would break that rule in the one
-           case where it is least likely to be noticed — a live site the buyer
-           cannot sign in to looks fine from the outside. */
-        console.error('webhook: could not resolve an account for', buyerEmail, 'session', sessionId);
-        await ownerAlert('Claimed, paid, but no operator login', [
-          'session:  ' + sessionId,
-          'tenant:   ' + clientId + '   (left INACTIVE on purpose)',
-          'buyer:    ' + buyerEmail,
-          'reason:   ' + (invite.reason || 'unknown'),
-          '',
-          'The territory is claimed and the payment is recorded, but the invite',
-          'could not be sent and no existing account matched, so nobody could',
-          'sign in. The storefront has deliberately NOT been activated.',
-          '',
-          'NEXT: check Supabase Auth for ' + buyerEmail + ' — the account may',
-          'exist even though the mail failed. Invite or find them, insert the',
-          'sbv_client_users row for ' + clientId + ', then set',
-          'sbv_tenants.is_active = true.',
-        ]);
-        return json({ ok: true, blocked: 'no_operator_login' });
+    /* KNOWN ADDRESS → a link of our own, NEVER /invite.
+       Two reasons, and both of them are the governing rule. /invite is not
+       idempotent against an unconfirmed user — it re-sends the invitation and
+       answers 200 — so a repeat buyer or a resumed run would get a second
+       email. And saying nothing at all is worse: an account that was invited
+       and never opened, or whose link has expired, is not a way in, and
+       admin/ offers a password box and nothing else. So the operator is mailed
+       a fresh link, and the storefront waits on that mail actually leaving. */
+    if (!operatorUserId && existing && existing.id) {
+      const link = await generateAuthLink(buyerEmail, {
+        type: 'magiclink', redirectTo: dashboard, data: meta,
+      });
+      if (!link.ok) {
+        console.error('webhook: could not generate a login link for', buyerEmail, '-', link.reason);
+        why = 'login link could not be generated: ' + link.reason;
+      } else if (!(await sendLoginLink(intake, clientId, buyerEmail, link.actionLink))) {
+        console.error('webhook: login link generated but not delivered to', buyerEmail);
+        why = 'login link generated but the email could not be sent';
+      } else {
+        operatorUserId = existing.id;
+        console.log('webhook: existing account reused, link sent:', buyerEmail, '->', operatorUserId);
       }
+    }
+
+    if (!operatorUserId) {
+      /* HOLD. The rule this file is built around is that a storefront never
+         goes live before its operator can reach it, and an account they cannot
+         open is not a way in. Activating here would break that rule in the one
+         case where it is least likely to be noticed — a live site the buyer
+         cannot sign in to looks perfectly fine from the outside. */
+      console.error('webhook: could not resolve an account for', buyerEmail, 'session', sessionId);
+      await ownerAlert('Claimed, paid, but no operator login', [
+        'session:  ' + sessionId,
+        'tenant:   ' + clientId + '   (left INACTIVE on purpose)',
+        'buyer:    ' + buyerEmail,
+        'reason:   ' + why,
+        '',
+        'The territory is claimed and the payment is recorded, but no sign-in',
+        'link reached the buyer, so nobody could get in. The storefront has',
+        'deliberately NOT been activated.',
+        '',
+        'NEXT: check Supabase Auth for ' + buyerEmail + ' — the account may',
+        'exist even though the mail failed. Send them a link, insert the',
+        'sbv_client_users row for ' + clientId + ', then set',
+        'sbv_tenants.is_active = true.',
+      ]);
+      return json({ ok: true, blocked: 'no_operator_login' });
     }
   }
 
@@ -693,6 +715,45 @@ async function handleRefund(charge) {
    helpers
    ========================================================================= */
 
+/* What to do when Supabase Auth will not answer. The whole status-code
+   discipline at the top of this file turns on one question — can the next
+   delivery do better? — and the admin API answers it in its status:
+
+     0 / 429 / 5xx   the network, a rate limit, an outage.  RETRY (500).
+     4xx otherwise   a revoked or wrong service key, the project moved, the
+                     endpoint gone. Three days of retries will not mint a new
+                     key, and every one of those attempts is silent. HOLD (200)
+                     and send the alert, like every other hold in this file.
+
+   A 404 counts as permanent on purpose: a GoTrue that does not have this route
+   is a deployment fact, not a bad minute. */
+async function authLookupHold(e, { sessionId, clientId, buyerEmail, where }) {
+  const status = Number(e && e.status) || 0;
+  const transient = status === 0 || status === 429 || status >= 500;
+
+  console.error('webhook: auth ' + where + ' failed (' + status + '):',
+    e && e.message, (e && e.body) || '');
+
+  if (transient) return json({ ok: false, error: 'auth_lookup_failed' }, 500);   // retry
+
+  await ownerAlert('Supabase Auth refused the provisioning call', [
+    'session:  ' + sessionId,
+    'tenant:   ' + clientId + '   (left INACTIVE on purpose)',
+    'buyer:    ' + buyerEmail,
+    'status:   ' + status + '  (' + where + ')',
+    'detail:   ' + ((e && e.message) || ''),
+    '',
+    'Supabase Auth answered ' + status + ', which retrying will not change —',
+    'a wrong or revoked SUPABASE_SERVICE_ROLE_KEY is the usual cause. The',
+    'payment IS recorded and the city IS claimed. No account was created and',
+    'the storefront has deliberately NOT been activated.',
+    '',
+    'NEXT: fix the service key, then replay this event from the Stripe',
+    'dashboard — it will resume from here rather than start over.',
+  ]);
+  return json({ ok: true, blocked: 'auth_lookup_refused' });
+}
+
 /* Attach <client_id>.systemsbyvega.com to the Vercel project, so the operator's
    storefront resolves without anyone touching a dashboard.
 
@@ -782,7 +843,13 @@ export function sendWelcome(intake, clientId, nicheName) {
      9.5 attaches the subdomain and middleware.js routes it, and /admin/ is a
      real page. "Example content until you customise it" is load-bearing copy —
      the site IS live but wears the niche demo until the first save, and a
-     buyer told simply "your site is live" would report the demo as a bug. */
+     buyer told simply "your site is live" would report the demo as a bug.
+
+     BEAT 2 POINTS AT THE OTHER EMAIL, and must keep doing so. Nobody creates
+     an account at checkout any more — step 9 does it afterwards, and the link
+     it sends is the buyer's only way in, because admin/ offers a password box
+     and this buyer has no password. Telling them to "sign in" without saying
+     where the link is would send them to a form they cannot fill. */
   const adminUrl = SITE_URL + '/admin/?tenant=' + encodeURIComponent(clientId);
   const lines = [
     'Hi ' + who + ',',
@@ -796,8 +863,9 @@ export function sendWelcome(intake, clientId, nicheName) {
     '   https://' + web + '/',
     '   It opens with example content until you customise it.',
     '',
-    '2. Make it yours. Sign in with the account you created at checkout',
-    '   and edit your business details:',
+    '2. Make it yours. Your sign-in link is in a separate email from us —',
+    '   open that first. It takes you straight here, where you edit your',
+    '   business details:',
     '   ' + adminUrl,
     '   Changes show on your site within a minute.',
     '',
@@ -842,9 +910,10 @@ export function sendWelcome(intake, clientId, nicheName) {
           ';font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px">' +
           escHtml(web) + '</a> — it opens with example content until you customise it.') +
         step(2, 'Make it yours.',
-          'Sign in with the account you created at checkout and ' +
-          '<a href="' + adminUrl + '" style="color:' + P.amber + '">edit your business info</a>. ' +
-          'Changes show on your site within a minute.') +
+          'Your sign-in link is in a separate email from us — open that first. ' +
+          'It takes you straight to ' +
+          '<a href="' + adminUrl + '" style="color:' + P.amber + '">your business info</a>, ' +
+          'and changes show on your site within a minute.') +
         step(3, 'Wrong city or business name?',
           'Just reply to this email and we will fix it.') +
       '</table>' +
@@ -860,6 +929,63 @@ export function sendWelcome(intake, clientId, nicheName) {
     to: intake.operator_email,
     toName: who,
     subject: 'Your territory is claimed — ' + city,
+    text: lines.join('\n'),
+    html,
+  });
+}
+
+/* The sign-in link for a buyer who ALREADY had an account — the repeat buyer
+   taking a second niche, and the invitee who never opened the first link.
+   GoTrue mails its own invitation when it creates an account; it does not mail
+   anything for a user that already exists, so this is that email, sent through
+   Brevo like everything else here so the sender and the voice stay the same.
+
+   IT GATES ACTIVATION. sendBrevo returns false rather than throwing, and the
+   caller holds the storefront dark on a false. That is the point: this mail is
+   the operator's only route in on this path, so "the site is live" must not be
+   true before "they can open it" is. */
+export function sendLoginLink(intake, clientId, buyerEmail, actionLink) {
+  const city = intake.city_label + ', ' + intake.state_code;
+  const who = intake.operator_name || intake.business_name;
+
+  const lines = [
+    'Hi ' + who + ',',
+    '',
+    'Here is your sign-in link for ' + city + ':',
+    '',
+    actionLink,
+    '',
+    'It opens your dashboard, where you edit your business details.',
+    'The link is single use. If it has expired by the time you get to it,',
+    'just reply and we will send another.',
+    '',
+    SUPPORT_EMAIL,
+  ];
+
+  const P = { ink: '#161B22', soft: '#48515F', amber: '#A94E06', hair: '#DCE2EA' };
+  const base = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+
+  const html =
+  '<div style="' + base + ';max-width:600px;margin:0 auto;padding:8px 4px;color:' + P.ink + '">' +
+    '<p style="font-size:15px;line-height:1.6;margin:0 0 18px">Hi ' + escHtml(who) + ',</p>' +
+    '<p style="font-size:15px;line-height:1.6;margin:0 0 22px">Here is your sign-in link for ' +
+      '<strong>' + escHtml(city) + '</strong>.</p>' +
+    '<p style="margin:0 0 22px">' +
+      '<a href="' + escHtml(actionLink) + '" style="' + base + ';display:inline-block;' +
+        'background:' + P.amber + ';color:#fff;text-decoration:none;font-size:15px;' +
+        'font-weight:700;padding:13px 22px;border-radius:8px">Open my dashboard</a></p>' +
+    '<p style="font-size:14px;line-height:1.6;margin:0 0 18px;color:' + P.soft + '">' +
+      'The link is single use. If it has expired by the time you get to it, just ' +
+      'reply and we will send another.</p>' +
+    '<hr style="border:0;border-top:1px solid ' + P.hair + ';margin:22px 0 16px">' +
+    '<p style="font-size:14px;line-height:1.6;margin:0;color:' + P.soft + '">Questions? Just reply.<br>' +
+      '<a href="mailto:' + SUPPORT_EMAIL + '" style="color:' + P.amber + '">' + SUPPORT_EMAIL + '</a></p>' +
+  '</div>';
+
+  return sendBrevo({
+    to: buyerEmail,
+    toName: who,
+    subject: 'Your sign-in link — ' + city,
     text: lines.join('\n'),
     html,
   });
