@@ -174,17 +174,211 @@
 <!-- /BUILD:HERO_ROTATOR -->
 </header>
 
+<!-- ══════════════════════════ COMPARISON ═════════════════════════════════ -->
+<!-- Section 2, directly under the hero, and the page's central persuasive
+     claim. Which is exactly why nothing in it is decorative.
+
+     THE RULE THIS SECTION IS BUILT ON: every cell has to be true, and "true"
+     cuts both ways. Each ✓ in our column is backed by something that ships
+     today — the evidence is written against each row below, so the next
+     person can check it instead of trusting it. And a competitor column only
+     gets a ✗ where it is true of that whole CATEGORY. DIY builders really do
+     give you an editor and really do have contact forms; crossing those out
+     would be false, and one false cell discredits the seven true ones. Where
+     a category genuinely varies the cell carries a short factual phrase
+     rather than a forced tick or cross.
+
+     ROW 2 IS THE ONE CLEAN SWEEP, and it is the point of the table. None of
+     the three categories grants territory exclusivity; ours is enforced by
+     the partial unique index on (niche_slug, city_norm, state_code) behind
+     sbv_claim_city(), which api/stripe-webhook.mjs calls on every purchase.
+
+     WHY THE BRANDS ARE IN THE LEDE AND NOWHERE ELSE (Option C, DECISIONS.md):
+     Wix, Squarespace and UENI are named once, in prose, to say what the
+     generic column headings mean. A brand name in a column header or a cell
+     would turn a statement about a category into a statement about one
+     company's current feature list, which changes without telling us. -->
+<section class="section" id="compare">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The honest comparison</span>
+      <h2 id="compare-h">Four ways to get online. <br>Here is what each one hands you.</h2>
+      <p class="lede" style="margin-top:12px">
+        There are three other routes: build it yourself on a DIY builder like Wix or
+        Squarespace, pay a done-for-you service like UENI to build it for you, or hire an
+        agency. All three are real answers, and this table says so on the rows where it is
+        true. One row is ours alone.
+      </p>
+    </div>
+
+    <!-- role="region" + tabindex="0" is not decoration either: this element
+         scrolls sideways on a narrow screen, and a scroll container only a
+         mouse can move is not operable (WCAG 2.1.1). Its name is the h2. -->
+    <div class="cmp-scroll" role="region" aria-labelledby="compare-h" tabindex="0">
+      <table class="cmp">
+        <caption class="cmp-sr">
+          How a $99 Systems by Vega site compares with DIY builders, done-for-you services
+          and agencies. Each row is one thing you either get or do not get; cells read
+          &ldquo;Included&rdquo;, &ldquo;Not included&rdquo;, or a short description where
+          the answer varies by provider.
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="cmp-corner"><span class="cmp-sr">What you get</span></th>
+            <th scope="col" class="c-us">Systems by&nbsp;Vega</th>
+            <th scope="col">DIY builders</th>
+            <th scope="col">Done-for-you services</th>
+            <th scope="col">Agencies</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- 1. LIVE TODAY. Ours: the site answers on the subdomain the moment
+               the claim lands — sendWelcome() in api/stripe-webhook.mjs tells
+               the buyer exactly that ("Your site is live now"), and it would be
+               the first thing they reported as a lie if it were not.
+               Theirs: none of these is a ✗. A DIY builder can be live in an
+               hour if you do the work; the point is that YOU do it. The other
+               two build it for you, which by definition takes time — that is a
+               statement about the shape of the category, not a dig at anyone's
+               turnaround, and no number is put on it. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Live today</th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-txt">You build it first</span></td>
+            <td><span class="cmp-txt">After they build it</span></td>
+            <td><span class="cmp-txt">After the project</span></td>
+          </tr>
+
+          <!-- 2. TERRITORY. The one row where all three crosses are honest.
+               Ours is not a promise in copy — it is the partial unique index
+               sbv_city_claims_unique_active on (niche_slug, city_norm,
+               state_code) in sql/COMMERCE.sql, claimed through sbv_claim_city()
+               at step 7 of api/stripe-webhook.mjs. Two buyers can both pass the
+               availability check; exactly one of them gets past the index. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Territory<span class="cmp-note">One operator per city, per niche</span></th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-no"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="M5.8 5.8 14.2 14.2M14.2 5.8 5.8 14.2"/></svg><span class="cmp-sr">Not included</span></span></td>
+            <td><span class="cmp-mark is-no"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="M5.8 5.8 14.2 14.2M14.2 5.8 5.8 14.2"/></svg><span class="cmp-sr">Not included</span></span></td>
+            <td><span class="cmp-mark is-no"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="M5.8 5.8 14.2 14.2M14.2 5.8 5.8 14.2"/></svg><span class="cmp-sr">Not included</span></span></td>
+          </tr>
+
+          <!-- 3. DONE-FOR-YOU DESIGN. Ours: the niche sites already built under
+               sites/, each with a live demo — the design exists before you
+               arrive. DIY is not a ✗: builders ship good templates, you just
+               assemble them yourself, which is what DIY means. The other two
+               get a ✓, because designing it for you is literally their product,
+               and crossing that out would be the table lying in our favour. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Done-for-you design<span class="cmp-note">Built for your trade before you arrive</span></th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-txt">Templates, you assemble</span></td>
+            <td><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+          </tr>
+
+          <!-- 4. YOUR OWN ADMIN. Ours: admin/index.html is a real editor, not a
+               request form — #sec-business through #sec-legal. DIY gets a ✓ and
+               must: an editor is the whole product there. The other two vary
+               genuinely — some hand over a CMS, some keep the keys and take
+               change requests — so they get a phrase rather than a mark we
+               could not stand behind for the whole category. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Your own admin<span class="cmp-note">You edit the site yourself</span></th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-txt">Varies by provider</span></td>
+            <td><span class="cmp-txt">Depends on the build</span></td>
+          </tr>
+
+          <!-- 5. LEADS INBOX. All four are ✓ and that is deliberate. A working
+               contact form is table stakes in every one of these categories,
+               and a row where everyone ties is worth keeping precisely because
+               it shows the other rows were not rigged. Ours: api/submit-lead.mjs
+               writes sbv_leads for the admin list and still sends the email —
+               "A leads inbox" in the generated BUILD:INCLUDED block below. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Leads inbox<span class="cmp-note">Enquiries land somewhere you can read them</span></th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+          </tr>
+
+          <!-- 6. MARKETING KIT. Ours: api/marketing-kit.mjs imports qrcode and
+               renders a real QR into a social image and a printable flyer. This
+               row is about INCLUSION, not capability — you can make a flyer with
+               any builder's tools, and an agency will make you one if you pay
+               for it. So the DIY cell says who does the work and the other two
+               say what it costs. None of the three is a cross. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Marketing kit with QR<span class="cmp-note">Social image and printable flyer</span></th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-txt">You make it</span></td>
+            <td><span class="cmp-txt">Usually extra</span></td>
+            <td><span class="cmp-txt">Usually extra</span></td>
+          </tr>
+
+          <!-- 7. OWNER'S GUIDE. Ours: sites/<niche>/guide.html, written for the
+               trade and carrying the operator's brand. The two crosses are about
+               what those categories SELL, not about their competence: a website
+               builder and a website service sell a website, and neither ships a
+               manual for running an estate sale or a pressure-washing round.
+               Agencies are not crossed — an agency will write you a playbook, it
+               is simply something you scope and pay for on top. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Owner&rsquo;s guide<span class="cmp-note">How to run the business, not the website</span></th>
+            <td class="c-us"><span class="cmp-mark is-yes"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="m4.2 10.4 4 4 7.6-8.9"/></svg><span class="cmp-sr">Included</span></span></td>
+            <td><span class="cmp-mark is-no"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="M5.8 5.8 14.2 14.2M14.2 5.8 5.8 14.2"/></svg><span class="cmp-sr">Not included</span></span></td>
+            <td><span class="cmp-mark is-no"><svg class="cmp-glyph" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="cmp-path" d="M5.8 5.8 14.2 14.2M14.2 5.8 5.8 14.2"/></svg><span class="cmp-sr">Not included</span></span></td>
+            <td><span class="cmp-txt">If you scope it</span></td>
+          </tr>
+
+          <!-- 8. PRICE. "$99 once" is the number legal/terms.html section 3
+               carries: "A niche website — $99 one-time". The other three
+               describe a billing SHAPE, which is the thing the category itself
+               commits to — builders and website services are subscriptions,
+               agency work is quoted per project. No competitor figure is
+               printed, because nobody here can stand behind someone else's
+               current price list, and a stale number would be a false claim. -->
+          <tr class="reveal">
+            <th scope="row" class="cmp-feat">Price</th>
+            <td class="c-us"><span class="cmp-price">$99 once</span></td>
+            <td><span class="cmp-txt">Monthly, ongoing</span></td>
+            <td><span class="cmp-txt">Monthly, ongoing</span></td>
+            <td><span class="cmp-txt">Project quote</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Shown only at the widths where .cmp actually overflows its container.
+         A scroll affordance that lies about being needed is worse than none. -->
+    <p class="cmp-hint">Scroll the table sideways to see every column.</p>
+
+    <p class="cmp-foot">
+      Everything in our column ships today. What each line covers, in full, is in the
+      <a class="link" href="/legal/terms.html">Terms</a>. The other three columns describe
+      those categories in general, not any one company &mdash; no brand is scored here.
+    </p>
+  </div>
+</section>
 <!-- ══════════════════════════ PLATFORMS ══════════════════════════════════ -->
-<!-- The premier tier, and the first thing after the hero. These are whole
+<!-- The premier tier, and the first BUSINESS on the page. These are whole
      businesses with their own software, not a website for a business someone
-     already runs — so they lead, and the $99 catalog follows.
+     already runs — so they lead, and the $99 catalog follows. It is section 3
+     now rather than section 2: #compare was added above it, because the
+     comparison answers "why you at all" and this band answers "which one",
+     and the second question only lands after the first.
 
      Weight is carried by the cards, not by the band: #platforms is PAPER, not
-     dark. It sits directly under a dark hero now, and a second dark band in a
-     row would break the alternation the whole site is built on (see THE BAND
-     SYSTEM in sbv.css). Presence comes from .pcard instead — a real
-     screenshot at the top of each, a wider column, and more room than the
-     .entry cards in #offer below get.
+     dark. It cannot repeat its neighbour's tone, and #compare above it is
+     white (see THE BAND SYSTEM in sbv.css) — the same alternation rule that
+     kept it off dark when it sat directly under the hero. Presence comes from
+     .pcard instead — a real screenshot at the top of each, a wider column, and
+     more room than the .entry cards in #offer below get.
 
      Status and price are hydrated from the same database rows that run
      checkout (paintPlatforms in sbv.js). Neither is typed here — a price in

@@ -116,9 +116,9 @@
 
    Task 9 rebuilt `/` as the landing page and retired the diagram above — the
    catalog, #line, #registry, #faq and #founder all moved to /sites/ (Task 10).
-   `/`'s rhythm now: nav dark, hero dark (.plate), #platforms paper, #offer
-   white, #featured paper, #how white, #proof paper, #teaser white, footer
-   dark. #proof moved bands with the page — it printed the four figures next
+   `/`'s rhythm now: nav dark, hero dark (.plate), #compare white, #platforms
+   paper, #offer white, #featured paper, #how white, #proof paper, #teaser
+   white, footer dark. #proof moved bands with the page — it printed the four figures next
    to a dark hero before; now it is its own paper-toned strip further down,
    so it left the dark selector group below and joined the paper one.
 
@@ -129,6 +129,16 @@
    too. Its visual weight comes from .pcard (screenshot-topped cards, a wider
    column, more room than #offer's .entry cards get), not from its ground.
    No content band repeats a neighbour's tone.
+
+   #compare (the comparison table) then took section 2 and pushed #platforms
+   to 3. It is WHITE, and only white was available: dark would repeat the
+   hero above it and paper would repeat #platforms below it. That constraint
+   happens to be the right answer anyway — the table is a grid of hairlines
+   and small marks sitting immediately under a full-bleed photograph, and the
+   flattest, highest-contrast ground on the page is what makes the eye stop
+   treating the area as picture and start reading it as data. Its card
+   surface is therefore --paper on a --panel band, which is the same
+   figure/ground pair #offer's components already use one band lower.
 
    /services/ reuses the same three rules rather than inventing a fourth.
    Its rhythm: nav dark, hero dark (.plate — the same nav+hero exception the
@@ -214,7 +224,8 @@
   background:var(--bg);
   color:var(--tx);
 }
-#how, #line, #websites, #build, #inquiry, #gsb, #roster, #boundaries, #offer, #teaser{
+#how, #line, #websites, #build, #inquiry, #gsb, #roster, #boundaries, #offer, #teaser,
+#compare{
   --bg:      var(--panel);
   --surface: var(--paper);
   --surface-2:var(--panel);
@@ -623,7 +634,7 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #featured, #platforms, #teaser, #included, .gfoot{border-top:0}
+#offer, #featured, #platforms, #teaser, #included, #compare, .gfoot{border-top:0}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -1969,6 +1980,172 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 .cb-x:hover{color:var(--ink)}
 @keyframes cb-in{from{opacity:0;transform:translateX(-50%) translateY(10px)}}
 @media (prefers-reduced-motion:reduce){.cb{animation:none}.cb.out{transition:none}}
+
+/* ============================================ THE COMPARISON TABLE (#compare)
+   Section 2 on `/`, and the page's central persuasive claim. Which is why
+   the two decisions below are about truth and about screen readers, not
+   about looks.
+
+   WHY IT SCROLLS SIDEWAYS AT 390px INSTEAD OF BECOMING FOUR CARDS.
+   Five columns do not fit a phone. The usual fix is `display:block` on the
+   <table>, the <tr>s and the <td>s so each column stacks as its own card.
+   That fix drops the implicit table / row / cell roles in Chrome and Safari:
+   the markup stays a <table> and the accessibility tree stops being one, so
+   a screen reader on a phone loses the row-header + column-header pairing
+   that is the entire content of a comparison. Re-adding role="table" /
+   "row" / "cell" by hand gets it back, but it is a second source of truth
+   for the table's structure, and it is exactly the kind of thing that rots.
+   The table therefore stays a real table at every width and scrolls inside
+   .cmp-scroll:
+     - .cmp-scroll is the ONLY thing that scrolls. The page body never moves
+       sideways — overscroll-behavior-x:contain stops the gesture chaining
+       out of it, and the table's min-width lives on .cmp inside the
+       overflow container, so it can never widen .wrap.
+     - .cmp-scroll is role="region" with a name and tabindex="0", so a
+       keyboard-only user can focus it and scroll with the arrow keys. A
+       scroll container only a mouse can move fails WCAG 2.1.1.
+     - the label column is position:sticky at left:0, so the row you are
+       reading keeps its name while the four columns slide under it. Without
+       that, sideways scrolling turns the table into anonymous ticks.
+
+   position:sticky is also why nothing above the table may carry a transform:
+   a transformed ancestor becomes the containing block and sticky silently
+   dies. That is why the row reveal below is opacity-only.
+
+   MOTION HOOKS ONLY — the motion task owns the animation. The scroll-reveal
+   machinery already exists (the .reveal observer in assets/sbv.js, which
+   adds .in when an element enters view). What this file contributes is the
+   contract that task can hang keyframes on without touching the markup:
+   every <tr> carries .reveal, and every mark is
+       .cmp-mark[.is-yes|.is-no] > .cmp-glyph > .cmp-path
+   so `.anim .cmp tr.reveal.in .cmp-path` can draw the strokes in with
+   stroke-dasharray. Default state is fully drawn: with JS off, .anim never
+   lands and the whole table renders, all eight rows.
+
+   COLOUR AND GLYPH ARE NEVER THE MESSAGE. Every mark carries a .cmp-sr text
+   node — "Included" / "Not included" — which a screen reader reads together
+   with the row and column headers, so the comparison survives with no
+   colour, no shape and no CSS at all. The tick is --acc-tx (#806030,
+   5.78:1 on white); --amber at 2.66:1 would fail at this size. The cross is
+   --tx-3 grey and deliberately NOT red: red reads as an error or an
+   accusation, and a factual "this category does not include that" is
+   neither. */
+/* position:relative is load-bearing, not habit. The accessible names below are
+   position:absolute (that is how .cmp-sr takes them out of flow without taking
+   them out of the accessibility tree), and an absolutely positioned box is
+   clipped by an overflow container ONLY if that container is also its
+   containing block. Without this line their containing block is the initial
+   one, they escape .cmp-scroll at their static position — out at the Agencies
+   column, past the right edge of a phone — and the DOCUMENT grows sideways by
+   the width of that escape. Measured: 390px viewport, documentElement
+   scrollWidth 508 before, 390 after. The same trap is why .cmp-mark below is
+   relative too. */
+#compare .cmp-scroll{
+  position:relative;
+  overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
+  background:var(--surface);border:1px solid var(--rule);border-radius:13px;
+  box-shadow:var(--elev);
+}
+#compare .cmp-scroll:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+
+.cmp{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;text-align:left}
+
+/* One visually-hidden recipe, used by the <caption> and by every mark's
+   accessible name. Not display:none and not visibility:hidden — both remove
+   the text from the accessibility tree, which is the opposite of the job. */
+.cmp-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+.cmp th,.cmp td{padding:14px 16px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td{border-bottom:0}
+
+.cmp thead th{
+  font-family:var(--display);font-weight:700;font-size:13.5px;line-height:1.28;
+  letter-spacing:-.01em;color:var(--tx-2);vertical-align:bottom;
+  padding-top:17px;padding-bottom:13px;border-bottom:1px solid var(--rule-2);
+}
+
+/* The sticky label column. It needs an opaque background of its own — it is
+   painted over the cells sliding beneath it — and a right-hand hairline, so
+   that at scroll offset 0 it still reads as a column divider rather than as
+   a seam that appeared out of nowhere when you scrolled. */
+.cmp-corner,.cmp-feat{
+  position:sticky;left:0;z-index:2;background:var(--surface);
+  width:206px;min-width:206px;border-right:1px solid var(--rule);
+}
+.cmp thead .cmp-corner{z-index:3;border-bottom-color:var(--rule-2)}
+
+.cmp-feat{font-family:var(--display);font-weight:700;font-size:14.5px;
+  letter-spacing:-.01em;color:var(--tx);line-height:1.25}
+/* The qualifier that makes a ✗ precise. "Owner's guide" alone would leave an
+   agency's brand playbook arguable; "how to run the business, not the
+   website" does not. Body font, not display, so it reads as a note. */
+.cmp-note{display:block;font-family:var(--body);font-weight:400;font-size:12.5px;
+  line-height:1.42;color:var(--tx-3);margin-top:4px}
+
+/* Our column, tinted from the channel triplet rather than a raw rgba() — see
+   the note on --amber-rgb at :root. The amber cap sits on the header cell
+   only, so the emphasis is stated once instead of on all nine cells. */
+.cmp .c-us{background:rgba(var(--amber-rgb),.07)}
+.cmp thead .c-us{color:var(--tx);font-size:14.5px;box-shadow:inset 0 3px 0 var(--acc)}
+
+.cmp-mark{position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:27px;height:27px;border-radius:50%}
+.cmp-glyph{width:19px;height:19px;display:block}
+.cmp-mark.is-yes{color:var(--acc-tx);background:rgba(var(--amber-rgb),.15)}
+.cmp-mark.is-no{color:var(--tx-3);background:transparent}
+.cmp .c-us .cmp-mark.is-yes{background:rgba(var(--amber-rgb),.2)}
+
+.cmp-txt{display:inline-block;font-size:13.5px;line-height:1.4;color:var(--tx-2);max-width:20ch}
+.cmp-price{font-family:var(--display);font-weight:700;font-size:15.5px;color:var(--tx)}
+.cmp .c-us .cmp-price{color:var(--acc-tx)}
+
+/* The hint appears only at the widths where .cmp actually overflows .wrap —
+   an affordance that lies about being needed is worse than none. .cmp is
+   760px wide and .wrap is --shell plus two gutters, so the crossover is a
+   little over 800px. */
+.cmp-hint{display:none}
+.cmp-foot{margin-top:18px;font-size:13.5px;line-height:1.6;color:var(--tx-3);max-width:74ch}
+/* .link renders 19px tall, under the 24px AA floor for a target. It is that
+   height everywhere on the site and fixing it globally is a different task,
+   but this section does not get to ADD to that debt — so the one link it
+   introduces is padded up the top, which leaves the underline where .link
+   put it and costs nothing but a slightly taller line box. */
+.cmp-foot .link{display:inline-block;padding-top:6px}
+
+@media (max-width:860px){
+  .cmp-hint{display:block;margin-top:12px;font-family:var(--mono);font-size:11.5px;
+    line-height:1.6;color:var(--tx-3)}
+  .cmp{min-width:680px}
+  .cmp th,.cmp td{padding:12px 13px}
+  .cmp thead th{font-size:13px}
+  .cmp-corner,.cmp-feat{width:168px;min-width:168px}
+  .cmp-feat{font-size:14px}
+}
+/* At 390px the shell is 342px inside the gutters. A 140px label column leaves
+   about 200px of board, which is two columns at a time — enough to compare a
+   row against us without losing what the row is. */
+@media (max-width:430px){
+  .cmp{min-width:560px}
+  .cmp th,.cmp td{padding:11px 11px}
+  .cmp-corner,.cmp-feat{width:140px;min-width:140px}
+  .cmp-note{font-size:11.5px}
+  .cmp-txt{font-size:12.5px;max-width:15ch}
+  .cmp-price{font-size:14.5px}
+}
+
+/* Rows fade, they do not translate. A transform on a <tr> would make it the
+   containing block for the sticky label cell inside it and break the sticky
+   column for the length of the transition. */
+.anim .cmp tr.reveal{opacity:0;transform:none}
+.anim .cmp tr.reveal.in{opacity:1}
+/* This override is required, not belt-and-braces: the global reduced-motion
+   rule is `.anim .reveal` (0,2,0) and the rule above is (0,3,1), so without
+   it the specific selector would keep the rows at opacity:0 for exactly the
+   users who asked for less movement. */
+@media (prefers-reduced-motion:reduce){
+  .anim .cmp tr.reveal{opacity:1;transition:none}
+}
 
 /* ===================================================== GLOBAL CHROME ==
    Nav and footer, injected by tools/build-chrome.js. Reads band tokens
