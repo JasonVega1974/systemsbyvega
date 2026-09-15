@@ -115,6 +115,22 @@
          (and therefore window.initClaim) only loads on /sites/. */
       if (window.initClaim && window.initClaim.loadCounts) window.initClaim.loadCounts();
     }
+    /* THE LANDING PAGE'S .sgrid IS DELIBERATELY NOT REPAINTED HERE. It is
+       build-time markup only, the same posture the hero rotator takes, and
+       for a concrete reason rather than an omission: each of its cards leads
+       with the DEMO BRAND NAME, which is not an sbv_niches column and never
+       will be (see brandLine in catalog-render.js). Those names reach the
+       build through SBV_EXTRAS, and `/` does not carry that payload — five
+       kilobytes of which the landing grid would use only the brand half.
+       Repainting from live rows without it would quietly replace thirty-two
+       brand names with thirty-two trade names.
+
+       Nothing is lost by leaving it: the grid shows a screenshot, a brand and
+       a trade, and the live overlay carries status, price and waiting counts,
+       none of which this card prints. The preview overlay needs nothing from
+       here either — its ONE delegated listener on document matches
+       .js-preview[data-slug] on whatever is in the DOM at click time. */
+
     var sel = el('f-niche');
     if (sel) {
       var keep = sel.value;

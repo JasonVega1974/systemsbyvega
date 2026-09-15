@@ -24,9 +24,12 @@
    Ruling R1 — three files, three marker sets. inject() throws on a marker a
    file does not declare, so each target below names exactly what it carries.
    index.html carries TOTAL/OPEN/SITES for its proof strip, plus (Ruling R20)
-   SITES_OFFER/SITES_STEP/SITES_LINK for the three other places that page
-   says "32" in prose — inject() cannot reuse one marker name twice in a
-   file, so each spot gets its own name, all fed the same fig.sites value.
+   SITES_ALL/SITES_STEP for the two other places that page says "32" in prose
+   — inject() cannot reuse one marker name twice in a file, so each spot gets
+   its own name, all fed the same fig.sites value. R6 replaced the featured
+   six with SITES_GRID, all thirty-two cards, and the two prose markers that
+   lived inside the sections R6 deleted (SITES_OFFER in the "two more ways"
+   strip, SITES_LINK in the featured band's All-32 button) went with them.
 
    Run:  node tools/build-catalog.js          (from the repo root)
          node tools/build-catalog.js --check  (verify, write nothing; CI-safe)
@@ -53,8 +56,8 @@ const CHECK = process.argv.includes('--check');
    missing marker, so each target names exactly what it carries. */
 const TARGETS = [
   { file: path.join(ROOT, 'index.html'),
-    markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_OFFER', 'SITES_STEP', 'SITES_LINK',
-               'HERO_ROTATOR', 'OFFER_CARD', 'SEED_SCRIPT', 'INCLUDED'] },
+    markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_ALL', 'SITES_STEP',
+               'HERO_ROTATOR', 'OFFER_CARD', 'SITES_GRID', 'SEED_SCRIPT', 'INCLUDED'] },
   { file: path.join(ROOT, 'sites', 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'THESIS_OPEN',
               'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT', 'INCLUDED'] },
@@ -194,15 +197,13 @@ function main() {
     TOTAL:        String(fig.total),
     OPEN:         String(fig.open),
     SITES:        String(fig.sites),
-    /* Ruling R20: three more spots on index.html print the same site count in
-       prose ("32 industries…", "32 built and live…", "All 32 sites →").
-       inject() splices between the FIRST open/close pair for a marker name,
-       so one name cannot appear twice in a file — hence three distinct
-       marker names, all fed this same fig.sites value, never typed by hand
-       a second time. */
-    SITES_OFFER:  String(fig.sites),
+    /* Ruling R20: two more spots on index.html print the same site count in
+       prose ("All 32 of them.", "32 built and live…"). inject() splices
+       between the FIRST open/close pair for a marker name, so one name
+       cannot appear twice in a file — hence distinct marker names, all fed
+       this same fig.sites value, never typed by hand a second time. */
+    SITES_ALL:    String(fig.sites),
     SITES_STEP:   String(fig.sites),
-    SITES_LINK:   String(fig.sites),
     /* Finding 3: services/index.html and work/index.html each print the
        site count once in prose; platforms/index.html prints the in-line
        count right above the chips that already render it. All three fed
@@ -223,6 +224,12 @@ function main() {
        card in the first screen cannot promise something the list further down
        the page does not. */
     OFFER_CARD:   '\n' + R.offerCard() + '\n',
+    /* The landing page's flat grid of all thirty-two turnkey sites. Same
+       seed rows and same SBV_EXTRAS lookup the catalog board reads, so the
+       two surfaces cannot disagree about which sites exist or what the demo
+       on each one is called. Server-rendered for the same reason the catalog
+       is: with JavaScript off, the grid is still the whole grid. */
+    SITES_GRID:   '\n' + R.siteGrid(seed.niches, extras) + '\n',
     CATALOG:      '\n' + R.catalog(seed.families, seed.niches, {}, extras) + '\n',
     NICHE_SELECT: '\n' + R.nicheSelect(seed.niches) + '\n',
     SEED_SCRIPT:  seedScript,

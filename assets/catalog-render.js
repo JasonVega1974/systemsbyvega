@@ -15,15 +15,16 @@
    through the top edge, a tilted circular price sticker in a stamped display
    face, and a red-arrow CTA row. It is not that any more.
 
-   WHY IT CHANGED. The landing page sells with screenshots: .pcard and .fcard
-   are white, square to the grid, and lead with a real capture of the site
+   WHY IT CHANGED. The landing page sells with screenshots: .pcard and (at the
+   time) .fcard — .scard since R6 replaced the featured six with all thirty-two
+   — are square to the grid and lead with a real capture of the site
    they point at. The catalog board — the page that actually has to close the
    sale — was a different product visually, and a visitor moving from one to
    the other had no reason to believe the two came from the same shop. The
    board STRUCTURE was never the problem and is untouched: family plates,
    filter chips, the ledger bar, the live open/claimed status, the
    on-the-board count. What changed is the card surface, which now reads the
-   same band tokens .fcard does and leads with the same screenshot.
+   same band tokens that card family does and leads with the same screenshot.
 
    WHAT WENT: the paper gradient, the ink border, both staples, the circular
    price sticker, the hard offset shadow, the pinned rotation and the rustle
@@ -58,7 +59,7 @@
   var FLOOR = 3;
 
   /* The CTA arrow was a 60x30 outlined flame-red chevron. A glyph in the
-     link's own colour is the landing page's idiom (.fcard-go) and needs no
+     link's own colour is the landing page's idiom (.scard-go) and needs no
      second palette to stay legible on a white card. */
   var ARROW = '<span class="go-arrow" aria-hidden="true">\u2192</span>';
 
@@ -293,6 +294,62 @@
                '</div>' +
              '</div>';
     }).join('');
+  }
+
+  /* THE LANDING PAGE'S SITES GRID — every turnkey site, flat, four across.
+     Replaces the hand-written "featured six + All 32 sites →" pattern that
+     stood here before: six cards chosen by a person, each carrying a second
+     hover capture, and a button promising twenty-six more somewhere else.
+
+     WHY IT IS GENERATED AND NOT WRITTEN. Thirty-two hand-written cards would
+     be the largest hand-kept copy of the catalog in the project, and the one
+     most likely to go stale — the featured six already carried brand names,
+     trade names and job lines typed out a second time beside the seed that
+     holds them. This reads the same rows /sites/ reads, so a niche added to
+     the seed joins this grid on the next build and one removed leaves it.
+
+     FLAT ON PURPOSE. No family plates: those are /sites/'s structure, and
+     this grid's whole argument is "here is all of it at once". Sorted by the
+     seed's own `sort`, which is the order the families themselves are in, so
+     the grouping is still legible without headings asserting it.
+
+     THE CARD IS THE PREVIEW CONTROL. .js-preview + data-slug hand the click
+     to wirePreview() in assets/sbv.js — ONE delegated listener on document
+     matching `.js-preview[data-slug]`, which closest() resolves from whatever
+     inside the card was actually clicked. So there is no per-card JS, nothing
+     to re-bind, and no second overlay implementation. The href is a real href
+     to the demo: with JavaScript off, or a slug the seed cannot resolve, the
+     card is still a working link to the site it pictures.
+
+     Every child is a <span>, not a <div> or a <p>. The card is an <a>, and an
+     <a> may only contain phrasing content — a <p> inside it is a parse error
+     the browser silently repairs by closing the link early, which would leave
+     three quarters of each card outside its own hit area.
+
+     TWO FIELDS FROM THE SEED, ONE FROM EXTRAS. name and slug are real
+     sbv_niches columns, so they survive the live re-render. The demo brand is
+     not a column and must never become one (see brandLine above); it comes
+     through the same SBV_EXTRAS lookup the catalog card uses, and falls back
+     to the trade name if a demo has no content.json to read a brand from. */
+  function siteGrid(niches, extrasLookup) {
+    return niches
+      .filter(function (n) { return n.website_offer && n.demo_path; })
+      .sort(function (a, b) { return (a.sort || 0) - (b.sort || 0); })
+      .map(function (n) {
+        var x = (extrasLookup && extrasLookup[n.slug]) || {};
+        return '<a class="scard reveal js-preview" data-slug="' + esc(n.slug) + '" href="' +
+                 esc(n.demo_path) + '">' +
+                 '<span class="scard-shot">' +
+                   '<img src="' + shot(n) + '" width="1280" height="800" loading="lazy" ' +
+                        'decoding="async" alt="A screenshot of the ' + esc(n.name) + ' demo site.">' +
+                 '</span>' +
+                 '<span class="scard-body">' +
+                   '<span class="scard-brand">' + esc(x.brand || n.name) + '</span>' +
+                   '<span class="scard-trade">' + esc(n.name) + '</span>' +
+                   '<span class="scard-go">Preview →</span>' +
+                 '</span>' +
+               '</a>';
+      }).join('');
   }
 
   /* The landing-page hero rotator. One frame per niche that has a demo, in
@@ -570,6 +627,7 @@
     FLOOR: FLOOR,
     esc: esc,
     catalog: catalog,
+    siteGrid: siteGrid,
     entry: entry,
     brandLine: brandLine,
     chips: chips,

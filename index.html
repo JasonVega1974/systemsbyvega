@@ -365,6 +365,74 @@
     </p>
   </div>
 </section>
+
+<!-- ══════════════════════════ THE SITES ══════════════════════════════════ -->
+<!-- Section 3. The whole shop, at once — it replaces the "featured six plus a
+     button promising twenty-six more" band that stood here before.
+
+     WHY ALL OF THEM. The six were chosen by hand, and choosing implies the
+     other twenty-six are the ones that were not good enough to show. The
+     product's actual claim is the opposite: thirty-two finished sites, any of
+     which can be running under a buyer's name today. A grid that shows them
+     all makes that claim visually instead of asserting it in a button, and it
+     removes the extra click between "I am interested" and "show me mine".
+
+     NO FILTER CHIPS, DELIBERATELY. /sites/ is where filtering belongs, and it
+     already has chips — wireFilters() in assets/sbv.js binds to #filterbar and
+     drives #catalog-root, and both of those ids are that page's. Reusing them
+     here would hand this grid to the live catalog repaint, which renders
+     FAMILY PLATES; this grid is flat by design. Giving `/` its own second
+     filter system instead would be two implementations of one idea, for a
+     grid whose entire argument is that you can see all of it without filtering.
+
+     NO FAMILY PLATES either, for the same reason: the grouping is /sites/'s
+     structure. Seed `sort` order keeps the families adjacent anyway, so the
+     shape is still legible without headings asserting it.
+
+     BAND: dark. #compare above is white and #platforms below is paper, so
+     dark is the only ground that repeats neither (see THE BAND SYSTEM in
+     sbv.css). It also happens to be the right ground for thirty-two bright
+     screenshots, which is the same reason the demo pages frame their own
+     galleries this way. Ruling R18: #sites joins the border-top:0 list too. -->
+<section class="section" id="sites">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The whole shop</span>
+      <h2>Every site I have built. <br>All <!-- BUILD:SITES_ALL -->32<!-- /BUILD:SITES_ALL --> of them.</h2>
+      <p class="lede" style="margin-top:12px">
+        Screenshots, not renderings. Open any one of them and the real site loads right here
+        on this page &mdash; the same site that would be running under your name.
+      </p>
+    </div>
+
+    <!-- Generated. The wrapper is hand-kept and the cards are not: the same
+         seed rows /sites/ renders, through R.siteGrid(), so a niche added to
+         the seed joins this grid on the next build and one removed leaves it.
+
+         BUILD-TIME ONLY, unlike #catalog-root on /sites/ — paint() in
+         assets/sbv.js deliberately does not re-render this grid from live
+         database rows, because the demo brand on each card is not a database
+         column. The reasoning is written out at that skip in sbv.js. -->
+    <div class="sgrid">
+<!-- BUILD:SITES_GRID -->
+<a class="scard reveal js-preview" data-slug="estate-sale" href="/sites/estate-sale/"><span class="scard-shot"><img src="/assets/shots/rotator/estate-sale.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Estate Sales demo site."></span><span class="scard-body"><span class="scard-brand">Magpie &amp; Mantel Estate Sales</span><span class="scard-trade">Estate Sales</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="garage-sale" href="/sites/garage-sale/"><span class="scard-shot"><img src="/assets/shots/rotator/garage-sale.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Garage Sales demo site."></span><span class="scard-body"><span class="scard-brand">Sunup Garage Sales</span><span class="scard-trade">Garage Sales</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="delivery" href="/sites/delivery/"><span class="scard-shot"><img src="/assets/shots/rotator/delivery.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Delivery &amp; Courier demo site."></span><span class="scard-body"><span class="scard-brand">Swiftwater Courier Co.</span><span class="scard-trade">Delivery &amp; Courier</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="dumpster-rental" href="/sites/dumpster-rental/"><span class="scard-shot"><img src="/assets/shots/rotator/dumpster-rental.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Dumpster Rental demo site."></span><span class="scard-body"><span class="scard-brand">Sawtooth Dumpster Co.</span><span class="scard-trade">Dumpster Rental</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="moving" href="/sites/moving/"><span class="scard-shot"><img src="/assets/shots/rotator/moving.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Moving demo site."></span><span class="scard-body"><span class="scard-brand">Osprey Moving Co.</span><span class="scard-trade">Moving</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="pressure-washing" href="/sites/pressure-washing/"><span class="scard-shot"><img src="/assets/shots/rotator/pressure-washing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Pressure Washing demo site."></span><span class="scard-body"><span class="scard-brand">Grit &amp; Gleam Powerwashing</span><span class="scard-trade">Pressure Washing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="bin-cleaning" href="/sites/bin-cleaning/"><span class="scard-shot"><img src="/assets/shots/rotator/bin-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Bin Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Prime Bin Cleaning</span><span class="scard-trade">Bin Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="landscaping" href="/sites/landscaping/"><span class="scard-shot"><img src="/assets/shots/rotator/landscaping.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Landscaping demo site."></span><span class="scard-body"><span class="scard-brand">Larkspur &amp; Ledge Landscape Co.</span><span class="scard-trade">Landscaping</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="painting" href="/sites/painting/"><span class="scard-shot"><img src="/assets/shots/rotator/painting.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Painting demo site."></span><span class="scard-body"><span class="scard-brand">Bristlecone Paint Co.</span><span class="scard-trade">Painting</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="roofing" href="/sites/roofing/"><span class="scard-shot"><img src="/assets/shots/rotator/roofing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Roofing demo site."></span><span class="scard-body"><span class="scard-brand">Storm Ridge Roofing</span><span class="scard-trade">Roofing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="residential-cleaning" href="/sites/residential-cleaning/"><span class="scard-shot"><img src="/assets/shots/rotator/residential-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the House Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Yarrow &amp; Broom Cleaning Co.</span><span class="scard-trade">House Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="commercial-cleaning" href="/sites/commercial-cleaning/"><span class="scard-shot"><img src="/assets/shots/rotator/commercial-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Office Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Keyholder Facility Care</span><span class="scard-trade">Office Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="window-cleaning" href="/sites/window-cleaning/"><span class="scard-shot"><img src="/assets/shots/rotator/window-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Window Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Pane &amp; Prairie Window Co.</span><span class="scard-trade">Window Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="sprinkler" href="/sites/sprinkler/"><span class="scard-shot"><img src="/assets/shots/rotator/sprinkler.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Sprinkler &amp; Irrigation demo site."></span><span class="scard-body"><span class="scard-brand">Riserline Irrigation Co.</span><span class="scard-trade">Sprinkler &amp; Irrigation</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="christmas-lights" href="/sites/christmas-lights/"><span class="scard-shot"><img src="/assets/shots/rotator/christmas-lights.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Christmas Lights demo site."></span><span class="scard-body"><span class="scard-brand">Cedar &amp; Filament Holiday Lighting</span><span class="scard-trade">Christmas Lights</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="car-detailing" href="/sites/car-detailing/"><span class="scard-shot"><img src="/assets/shots/rotator/car-detailing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Car Detailing demo site."></span><span class="scard-body"><span class="scard-brand">Kestrel Detail Co.</span><span class="scard-trade">Car Detailing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="auto-repair" href="/sites/auto-repair/"><span class="scard-shot"><img src="/assets/shots/rotator/auto-repair.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Auto Repair demo site."></span><span class="scard-body"><span class="scard-brand">Rimrock Garage</span><span class="scard-trade">Auto Repair</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="auto-body" href="/sites/auto-body/"><span class="scard-shot"><img src="/assets/shots/rotator/auto-body.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Auto Body demo site."></span><span class="scard-body"><span class="scard-brand">Ironwood Collision Co.</span><span class="scard-trade">Auto Body</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="mechanic" href="/sites/mechanic/"><span class="scard-shot"><img src="/assets/shots/rotator/mechanic.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Mobile Mechanic demo site."></span><span class="scard-body"><span class="scard-brand">Gravel &amp; Gasket Mobile Mechanic</span><span class="scard-trade">Mobile Mechanic</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="plumbing" href="/sites/plumbing/"><span class="scard-shot"><img src="/assets/shots/rotator/plumbing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Plumbing demo site."></span><span class="scard-body"><span class="scard-brand">Cascade &amp; Copper Plumbing</span><span class="scard-trade">Plumbing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="electrician" href="/sites/electrician/"><span class="scard-shot"><img src="/assets/shots/rotator/electrician.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Electrician demo site."></span><span class="scard-body"><span class="scard-brand">Voltridge Electric</span><span class="scard-trade">Electrician</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="hvac" href="/sites/hvac/"><span class="scard-shot"><img src="/assets/shots/rotator/hvac.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Heating &amp; Air demo site."></span><span class="scard-body"><span class="scard-brand">Whitecloud Heating &amp; Air</span><span class="scard-trade">Heating &amp; Air</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="contracting" href="/sites/contracting/"><span class="scard-shot"><img src="/assets/shots/rotator/contracting.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Contracting demo site."></span><span class="scard-body"><span class="scard-brand">Summit &amp; Stone Contracting</span><span class="scard-trade">Contracting</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="metal-fabrication" href="/sites/metal-fabrication/"><span class="scard-shot"><img src="/assets/shots/rotator/metal-fabrication.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Metal Fabrication demo site."></span><span class="scard-body"><span class="scard-brand">Black Anvil Fabrication</span><span class="scard-trade">Metal Fabrication</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="dog-walking" href="/sites/dog-walking/"><span class="scard-shot"><img src="/assets/shots/rotator/dog-walking.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Dog Walking demo site."></span><span class="scard-body"><span class="scard-brand">Bluebird &amp; Biscuit Pet Care</span><span class="scard-trade">Dog Walking</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="child-care" href="/sites/child-care/"><span class="scard-shot"><img src="/assets/shots/rotator/child-care.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Child Care demo site."></span><span class="scard-body"><span class="scard-brand">Huckleberry Sitters</span><span class="scard-trade">Child Care</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="caregiving" href="/sites/caregiving/"><span class="scard-shot"><img src="/assets/shots/rotator/caregiving.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Caregiving demo site."></span><span class="scard-body"><span class="scard-brand">Hearth &amp; Home Companion Care</span><span class="scard-trade">Caregiving</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="personal-trainer" href="/sites/personal-trainer/"><span class="scard-shot"><img src="/assets/shots/rotator/personal-trainer.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Personal Trainer demo site."></span><span class="scard-body"><span class="scard-brand">Cora Vale Fitness</span><span class="scard-trade">Personal Trainer</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="tattoo-studio" href="/sites/tattoo-studio/"><span class="scard-shot"><img src="/assets/shots/rotator/tattoo-studio.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Tattoo Studio demo site."></span><span class="scard-body"><span class="scard-brand">Static Rose Tattoo</span><span class="scard-trade">Tattoo Studio</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="dj" href="/sites/dj/"><span class="scard-shot"><img src="/assets/shots/rotator/dj.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the DJ demo site."></span><span class="scard-body"><span class="scard-brand">DJ Nova</span><span class="scard-trade">DJ</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="bbq-food-truck" href="/sites/bbq-food-truck/"><span class="scard-shot"><img src="/assets/shots/rotator/bbq-food-truck.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the BBQ Food Truck demo site."></span><span class="scard-body"><span class="scard-brand">Cinder Hog BBQ</span><span class="scard-trade">BBQ Food Truck</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="personal-assistant" href="/sites/personal-assistant/"><span class="scard-shot"><img src="/assets/shots/rotator/personal-assistant.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Personal Assistant demo site."></span><span class="scard-body"><span class="scard-brand">Wrenfield &amp; Co.</span><span class="scard-trade">Personal Assistant</span><span class="scard-go">Preview →</span></span></a>
+<!-- /BUILD:SITES_GRID -->
+    </div>
+
+    <p class="fine" style="margin-top:26px;max-width:70ch">
+      <strong>Nearly every business name above is an example</strong> &mdash; a demo built to show the
+      template in action, not a real company. One exception: Prime Bin Cleaning is a real operator
+      running on this exact template.
+    </p>
+
+    <div class="catalog-cta">
+      <p class="catalog-cta-lead">Pick the one closest to your trade, claim your city, and it is
+        yours the same day &mdash; rebuilt under your name, with your admin behind it.</p>
+      <a class="btn btn-pri" href="/sites/">Pick your trade &rarr;</a>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════ PLATFORMS ══════════════════════════════════ -->
 <!-- The premier tier, and the first BUSINESS on the page. These are whole
      businesses with their own software, not a website for a business someone
@@ -482,32 +550,28 @@
   </div>
 </section>
 
-<!-- ══════════════════════════ THREE ROOMS ════════════════════════════════ -->
+<!-- ══════════════════════════ WHAT YOU GET ═══════════════════════════════ -->
+<!-- R6 took the "Two more ways to work with me" strip out of this section.
+     Its two cards pointed at /sites/ and /services/ — one of which is now the
+     thirty-two-card grid three sections up, and the other of which is a page
+     in the nav and in the footer. A "pick a room" chooser on a page rebuilt
+     around ONE offer is the page arguing against itself.
+
+     What is left is what the $99 actually buys, and the section is framed as
+     that now rather than as a menu.
+
+     BAND: dark. #featured (paper) used to separate #offer from #how, and
+     removing it would have put the project's first white-on-white seam here
+     (see THE BAND SYSTEM in sbv.css). Dark is the one tone neither neighbour
+     uses — #platforms paper above, #how white below — and it is the tone
+     /sites/ already gives this exact list on #included, so the one component
+     now reads the same on both surfaces. Ruling R18: #offer stays on the
+     border-top:0 list it was already on. -->
 <section class="section" id="offer">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Pick a room</span>
-      <h2>Two more ways to work with me. <br>Pick the one that fits.</h2>
-    </div>
-    <!-- Two cards, not three. The third was "SaaS platforms — see the
-         platforms", which after the platforms band was promoted to section 2
-         sat directly beneath the thing it pointed at, as a smaller echo of it.
-         #offer now carries only what is NOT already a band of its own. -->
-    <div class="grid">
-      <article class="entry reveal">
-        <div class="entry-top"><span class="cat-no">$99</span></div>
-        <h3>Turnkey websites</h3>
-        <p class="job"><!-- BUILD:SITES_OFFER -->32<!-- /BUILD:SITES_OFFER --> industries, live demos, owner admin included. Pick the one closest to
-          yours and it gets rebuilt under your name.</p>
-        <p style="margin-top:14px"><a class="link" href="/sites/">Browse the catalog &rarr;</a></p>
-      </article>
-      <article class="entry reveal">
-        <div class="entry-top"><span class="cat-no">Quoted</span></div>
-        <h3>Custom builds</h3>
-        <p class="job">Dashboards, databases, automation. Scoped and quoted for what your
-          business actually needs.</p>
-        <p style="margin-top:14px"><a class="link" href="/services/">Talk about a build &rarr;</a></p>
-      </article>
+      <span class="eyebrow">One price</span>
+      <h2>Everything you need. <br>One price.</h2>
     </div>
 
     <!-- What the $99 buys, spelled out. Generated by R.included() into the
@@ -519,127 +583,6 @@
 <!-- BUILD:INCLUDED -->
 <div class="incl"><h3 class="incl-h">What&#39;s included with every site</h3><ul class="incl-list"><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c2 2.4 3 4.9 3 7.5s-1 5.1-3 7.5c-2-2.4-3-4.9-3-7.5s1-5.1 3-7.5z"/></svg></span><span class="incl-txt"><b>Your site, on your own subdomain</b> Live at yourbusiness.systemsbyvega.com from the moment you claim — carrying the example content until your first save.</span></li><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h15M2.5 14h15"/><circle cx="7" cy="6" r="2.2"/><circle cx="13" cy="14" r="2.2"/></svg></span><span class="incl-txt"><b>Your own operator admin</b> Business details, hours, service area, photos, pricing, reviews and social links — plus before/after shots where the niche uses them.</span></li><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.5 5 4h10l2.5 7.5v4a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z"/><path d="M2.5 11.5h4l1 2h5l1-2h4"/></svg></span><span class="incl-txt"><b>A leads inbox</b> Every enquiry your site receives lands in your admin as a running list, and in your email.</span></li><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1"/><rect x="11.5" y="2.5" width="6" height="6" rx="1"/><rect x="2.5" y="11.5" width="6" height="6" rx="1"/><path d="M11.5 11.5h2.5v2.5M17.5 11.5v6h-6"/></svg></span><span class="incl-txt"><b>A marketing kit</b> A social image and a printable flyer, both carrying a QR code that points at your site.</span></li><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3.5h4.5A2.5 2.5 0 0 1 10 6v11a2 2 0 0 0-2-2H3z"/><path d="M17 3.5h-4.5A2.5 2.5 0 0 0 10 6v11a2 2 0 0 1 2-2h5z"/></svg></span><span class="incl-txt"><b>The owner guide</b> How to run this business, written for your niche and carrying your brand.</span></li><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 16.5 5v5c0 4-2.7 6.7-6.5 8-3.8-1.3-6.5-4-6.5-8V5z"/><path d="M7.3 10.2 9.2 12l3.5-3.6"/></svg></span><span class="incl-txt"><b>Customer Terms and Privacy pages</b> Pre-filled with your business name, city, contact details and service area.</span></li><li class="incl-item"><span class="incl-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5v5h5"/><path d="M4.4 12.2a6.8 6.8 0 1 0 .6-5.2"/></svg></span><span class="incl-txt"><b>Reset to defaults</b> Put the site back to its example content and start over, whenever you want.</span></li></ul><p class="incl-note">What each of these covers, in full, is in the <a class="link" href="/legal/terms.html">Terms</a>.</p></div>
 <!-- /BUILD:INCLUDED -->
-  </div>
-</section>
-
-<!-- ══════════════════════════ FEATURED SITES ═════════════════════════════ -->
-<section class="section" id="featured">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">A few of the strongest</span>
-      <h2>Screenshots, not renderings. <br>Hover one to see it work.</h2>
-      <p class="lede" style="margin-top:12px">
-        Every one of these is a live, running site. Hover a card — or tab to it — to see its
-        signature interaction.
-      </p>
-    </div>
-
-    <div class="fgrid">
-      <a class="fcard reveal" href="/sites/bin-cleaning/">
-        <div class="fcard-shot">
-          <img src="/assets/shots/featured/bin-cleaning.jpg" width="1280" height="800" loading="lazy"
-               alt="The Prime Bin Cleaning homepage.">
-          <img class="on" src="/assets/shots/featured/bin-cleaning-hover.jpg" width="1280" height="800" loading="lazy"
-               alt="Prime Bin Cleaning's before/after drag slider, mid-drag.">
-        </div>
-        <div class="fcard-body">
-          <div class="fcard-brand">Prime Bin Cleaning</div>
-          <div class="fcard-trade">Bin Cleaning</div>
-          <p class="fcard-line">Clean the trash bins on a route, on a schedule, every month.</p>
-          <span class="fcard-go">See the demo &rarr;</span>
-        </div>
-      </a>
-
-      <a class="fcard reveal" href="/sites/landscaping/">
-        <div class="fcard-shot">
-          <img src="/assets/shots/featured/landscaping.jpg" width="1280" height="800" loading="lazy"
-               alt="The Larkspur &amp; Ledge Landscape Co. homepage.">
-          <img class="on" src="/assets/shots/featured/landscaping-hover.jpg" width="1280" height="800" loading="lazy"
-               alt="Larkspur &amp; Ledge's season wheel, switched to a different season.">
-        </div>
-        <div class="fcard-body">
-          <div class="fcard-brand">Larkspur &amp; Ledge Landscape Co.</div>
-          <div class="fcard-trade">Landscaping</div>
-          <p class="fcard-line">Keep yards cut, edged, and planted through all four seasons.</p>
-          <span class="fcard-go">See the demo &rarr;</span>
-        </div>
-      </a>
-
-      <a class="fcard reveal" href="/sites/dumpster-rental/">
-        <div class="fcard-shot">
-          <img src="/assets/shots/featured/dumpster-rental.jpg" width="1280" height="800" loading="lazy"
-               alt="The Sawtooth Dumpster Co. homepage.">
-          <img class="on" src="/assets/shots/featured/dumpster-rental-hover.jpg" width="1280" height="800" loading="lazy"
-               alt="Sawtooth Dumpster Co.'s size and price picker, a size selected.">
-        </div>
-        <div class="fcard-body">
-          <div class="fcard-brand">Sawtooth Dumpster Co.</div>
-          <div class="fcard-trade">Dumpster Rental</div>
-          <p class="fcard-line">Drop the container, haul it off, bill a flat rate.</p>
-          <span class="fcard-go">See the demo &rarr;</span>
-        </div>
-      </a>
-
-      <a class="fcard reveal" href="/sites/dog-walking/">
-        <div class="fcard-shot">
-          <img src="/assets/shots/featured/dog-walking.jpg" width="1280" height="800" loading="lazy"
-               alt="The Bluebird &amp; Biscuit Pet Care homepage.">
-          <img class="on" src="/assets/shots/featured/dog-walking-hover.jpg" width="1280" height="800" loading="lazy"
-               alt="Bluebird &amp; Biscuit's weekly walk builder, days selected.">
-        </div>
-        <div class="fcard-body">
-          <div class="fcard-brand">Bluebird &amp; Biscuit Pet Care</div>
-          <div class="fcard-trade">Dog Walking</div>
-          <p class="fcard-line">Walk the dogs on a weekly rhythm their owners can count on.</p>
-          <span class="fcard-go">See the demo &rarr;</span>
-        </div>
-      </a>
-
-      <a class="fcard reveal" href="/sites/dj/">
-        <div class="fcard-shot">
-          <img src="/assets/shots/featured/dj.jpg" width="1280" height="800" loading="lazy"
-               alt="The DJ Nova homepage, pink theme.">
-          <img class="on" src="/assets/shots/featured/dj-hover.jpg" width="1280" height="800" loading="lazy"
-               alt="DJ Nova's live canvas visualiser, mid-animation.">
-        </div>
-        <div class="fcard-body">
-          <div class="fcard-brand">DJ Nova</div>
-          <div class="fcard-trade">DJ</div>
-          <p class="fcard-line">Play the room — weddings, clubs, and anywhere with a dance floor.</p>
-          <span class="fcard-go">See the demo &rarr;</span>
-        </div>
-      </a>
-
-      <!-- child-care: no .on image (Ruling R13). Its hero is an ambient CSS
-           twinkle with no discrete state a screenshot can differ from —
-           assets/shots/featured/child-care-hover.jpg deliberately does not
-           exist. A broken <img> is worse than no hover, and .fcard:hover .on
-           simply matches nothing here, which is the correct degrade. -->
-      <a class="fcard reveal" href="/sites/child-care/">
-        <div class="fcard-shot">
-          <img src="/assets/shots/featured/child-care.jpg" width="1280" height="800" loading="lazy"
-               alt="The Huckleberry Sitters homepage at dusk.">
-        </div>
-        <div class="fcard-body">
-          <div class="fcard-brand">Huckleberry Sitters</div>
-          <div class="fcard-trade">Child Care</div>
-          <p class="fcard-line">Watch the kids so the parents can have the evening.</p>
-          <span class="fcard-go">See the demo &rarr;</span>
-        </div>
-      </a>
-    </div>
-
-    <p class="fine" style="margin-top:24px;max-width:70ch">
-      <strong>Nearly every business name above is an example</strong> — a demo built to show the
-      template in action, not a real company. One exception: Prime Bin Cleaning is a real operator
-      running on this exact template.
-    </p>
-
-    <div class="catalog-cta">
-      <p class="catalog-cta-lead">Every trade in the shop is on the board — grouped by family,
-        with a live demo behind each one and a filter for what is open today.</p>
-      <a class="btn btn-pri" href="/sites/">All <!-- BUILD:SITES_LINK -->32<!-- /BUILD:SITES_LINK --> sites &rarr;</a>
-    </div>
   </div>
 </section>
 
@@ -705,17 +648,15 @@
   </div>
 </section>
 
-<!-- ══════════════════════════ CUSTOM WORK TEASER ═════════════════════════ -->
-<section class="section" id="teaser">
-  <div class="wrap-narrow" style="text-align:center">
-    <span class="eyebrow">Need something else</span>
-    <p class="lede" style="margin:16px auto 0;max-width:60ch">
-      Not every business fits a template. When it doesn't, I build the dashboards, databases,
-      and automation it actually needs — scoped and quoted, not templated.
-    </p>
-    <p style="margin-top:22px"><a class="btn btn-pri" href="/services/">Talk about a custom build &rarr;</a></p>
-  </div>
-</section>
+<!-- THE GAP. Brief §1 puts an FAQ accordion (8) and a dark closing CTA band (9)
+     between #proof and the footer. Both are a later task's work and neither is
+     stubbed here on purpose: an empty section with a heading and no answers in
+     it would ship as a visible hole if that task slipped, and #teaser — the
+     custom-builds band that used to sit in this position — is gone because
+     /services/ carries that offer and is linked from both the nav and the
+     footer above. Whoever builds them: #proof above is PAPER, the footer below
+     is DARK, so the pair has to read paper→white→dark or paper→dark→… with the
+     footer's own tone in mind (see THE BAND SYSTEM in sbv.css). -->
 
 <!-- ══════════════════════════ FOOTER ════════════════════════════════════ -->
 </main>

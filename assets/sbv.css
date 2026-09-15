@@ -116,9 +116,9 @@
 
    Task 9 rebuilt `/` as the landing page and retired the diagram above — the
    catalog, #line, #registry, #faq and #founder all moved to /sites/ (Task 10).
-   `/`'s rhythm now: nav dark, hero dark (.plate), #compare white, #platforms
-   paper, #offer white, #featured paper, #how white, #proof paper, #teaser
-   white, footer dark. #proof moved bands with the page — it printed the four figures next
+   `/`'s rhythm now: nav dark, hero dark (.plate), #compare white, #sites dark,
+   #platforms paper, #offer dark, #how white, #proof paper, footer dark.
+   #proof moved bands with the page — it printed the four figures next
    to a dark hero before; now it is its own paper-toned strip further down,
    so it left the dark selector group below and joined the paper one.
 
@@ -139,6 +139,25 @@
    treating the area as picture and start reading it as data. Its card
    surface is therefore --paper on a --panel band, which is the same
    figure/ground pair #offer's components already use one band lower.
+
+   R6 REPLACED #featured WITH #sites AND RE-TONED #offer. The featured six
+   became the flat thirty-two-card grid, which now sits at section 3 between
+   #compare white and #platforms paper — dark is the only tone left, and it is
+   the right one anyway: thirty-two bright screenshots want a ground that gets
+   out of their way, the same argument the demo pages make for their own
+   galleries.
+
+   #offer had to move because #featured was what kept it off its neighbour.
+   It was WHITE with paper above and white below, and #featured paper sat
+   between it and #how white; delete that and #offer/#how is the project's
+   first white-on-white seam. Dark is the one tone neither #platforms (paper,
+   above) nor #how (white, below) uses — and it is the tone /sites/ already
+   gives this exact list on #included, so .incl now reads identically on both
+   surfaces instead of nearly-identically. .incl draws every colour from band
+   tokens, which is what made that a one-line change rather than a restyle.
+
+   #teaser left the list with its section — /services/ is in the nav and the
+   footer, so the offer it carried is still one click away.
 
    /services/ reuses the same three rules rather than inventing a fourth.
    Its rhythm: nav dark, hero dark (.plate — the same nav+hero exception the
@@ -170,15 +189,17 @@
    same job #proof and #founder do on the homepage), #faq paper, footer dark.
 
    #catalog AND #included SWAPPED TONES when the board was rebuilt on clean
-   cards. The catalog card is now the landing page's card — white .fcard
-   surface, screenshot on top — and "white" is not something a component can
+   cards. The catalog card is now the landing page's card — white surface,
+   screenshot on top, the shape .fcard had before R6 replaced it with .scard
+   — and "white" is not something a component can
    ask for: it is what --surface resolves to, and on the dark ground --surface
    is #1C2230. Hard-coding #FFFFFF into the card to beat that is precisely
    what this token system exists to prevent, so the BAND moved instead and the
    card kept reading the tokens it is handed. #catalog is paper now, which
-   makes --surface #FFFFFF, exactly as it is under #featured on the landing
-   page — the two grids are the same recipe, not two recipes that resemble
-   each other.
+   makes --surface #FFFFFF, exactly as it was under #featured on the landing
+   page — the two grids were the same recipe, not two recipes that resemble
+   each other. (R6 replaced #featured with #sites, which is dark; the catalog
+   card's argument is unchanged, since it is about the TOKENS, not the band.)
 
    #included had to move because it sits directly above #catalog and was also
    paper; leaving both would have put the first paper-on-paper seam in the
@@ -192,7 +213,8 @@
    the border-top:0 exception list below, or the page shows a stray hairline
    seam at that band's transition (the two lists are a pair, not a coincidence).
 */
-.plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next{
+.plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next,
+#sites, #offer{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -224,7 +246,7 @@
   background:var(--bg);
   color:var(--tx);
 }
-#how, #line, #websites, #build, #inquiry, #gsb, #roster, #boundaries, #offer, #teaser,
+#how, #line, #websites, #build, #inquiry, #gsb, #roster, #boundaries,
 #compare{
   --bg:      var(--panel);
   --surface: var(--paper);
@@ -244,7 +266,7 @@
   background:var(--bg);
   color:var(--tx);
 }
-#registry, #faq, #problem, #process, #esb, #csb, #story, #proof, #featured, #platforms,
+#registry, #faq, #problem, #process, #esb, #csb, #story, #proof, #platforms,
 #catalog,
 /* .nm is the card-detail modal. It hangs off <body>, outside every band, so
    without this line --surface and --tx are undefined inside it and it has to
@@ -634,7 +656,7 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #featured, #platforms, #teaser, #included, #compare, .gfoot{border-top:0}
+#offer, #sites, #platforms, #included, #compare, .gfoot{border-top:0}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -658,12 +680,13 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
    offset shadow, a degree of pin rotation and a periodic rustle.
 
    It was a good sign. It was not the same product as the page before it.
-   `/` sells with .pcard and .fcard — white surfaces on a paper ground,
-   square to the grid, each led by a real screenshot of the site it points
-   at — and a visitor arriving here met an entirely different object and had
-   no reason to read the two as one shop. This card is now .fcard's larger
-   sibling by construction: the same band tokens, the same 13px radius, the
-   same 16:10 screenshot, the same hover lift.
+   `/` sells with .pcard and (then) .fcard — clean surfaces on a quiet
+   ground, square to the grid, each led by a real screenshot of the site it
+   points at — and a visitor arriving here met an entirely different object
+   and had no reason to read the two as one shop. This card is built as that
+   family's larger sibling: the same band tokens, the same 13px radius, the
+   same 16:10 screenshot, the same hover lift. R6 retired .fcard and put
+   .scard in its place on `/`; the recipe is the one that carried over.
 
    WHAT IS DELIBERATELY UNCHANGED. The board structure was never the problem.
    Family plates still group the board and still carry their family accent,
@@ -673,12 +696,17 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
    names that are load-bearing for assets/sbv.js.
 
    DENSITY WAS THE DISTINCTION, AND IT COST TOO MUCH. The board ran four
-   across against #featured's three, which made each column narrow enough
-   that the 16:10 screenshot — the one thing that actually sells a card —
-   shrank to a thumbnail nobody could read. The board now runs THREE across
-   and flows masonry inside each family (see .family>.grid below). The cards
-   are wider, so the capture is bigger for free, and #featured stays the
-   curated selection by being six cards rather than by being less dense.    */
+   across against the landing page's then-three, which made each column
+   narrow enough that the 16:10 screenshot — the one thing that actually
+   sells a card — shrank to a thumbnail nobody could read. The board now runs
+   THREE across and flows masonry inside each family (see .family>.grid
+   below). The cards are wider, so the capture is bigger for free.
+
+   R6 INVERTED THE COMPARISON and it still holds. The landing page's grid is
+   .sgrid now, four across and deliberately SMALLER than this board: it is a
+   contact sheet whose job is "all thirty-two at once", and this board is
+   where one of them gets read. Two densities, two jobs — which is the same
+   distinction, drawn the other way round.                                  */
 
 /* --pa/--pb are gone with the paper they filled. --fam survives as the one
    family accent, set inline on .family by the renderer and resolved from the
@@ -970,10 +998,16 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
    worse answer than seven lines they can take in at once. The bold lead is
    the thing; the rest qualifies it.
 
-   Reads band tokens, so it inherits white inside #offer and paper inside
-   #included without either page carrying a colour. */
+   Reads band tokens, so it draws itself correctly on whichever ground it
+   lands on. Both are dark now — #included on /sites/ and, since R6 re-toned
+   it, #offer on / — which is the point: one component, one appearance.
+
+   The top rule is for a list that FOLLOWS something inside its section. It
+   did on / when the "two more ways" strip sat above it, and R6 removed that
+   strip, so #offer joins #included in resetting it — a hairline immediately
+   under a section heading reads as a stray seam, not as a divider. */
 .incl{margin-top:40px;padding-top:32px;border-top:1px solid var(--rule)}
-#included .incl{margin-top:0;padding-top:0;border-top:0}
+#included .incl, #offer .incl{margin-top:0;padding-top:0;border-top:0}
 .incl-h{font-family:var(--display);font-weight:800;font-size:clamp(18px,2.4vw,24px);
   letter-spacing:-.018em;color:var(--tx);margin:0 0 22px}
 .incl-list{list-style:none;margin:0;padding:0;display:grid;
@@ -996,7 +1030,7 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 
    Weight comes from three things instead: a real screenshot across the top
    of every card, three columns against #offer's four, and noticeably more
-   padding and type inside. .fcard further down the page is the closest
+   padding and type inside. .scard further up the page is the closest
    relative — same screenshot-over-body shape — but .pcard is deliberately
    the larger of the two, because the thing it sells is the larger one. */
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;padding-top:10px}
@@ -1045,61 +1079,79 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 .pcard-live:hover{text-decoration:underline;text-underline-offset:3px}
 @media(prefers-reduced-motion:reduce){.pcard{transition:none}.pcard:hover,.pcard:focus-within{transform:none}}
 
-/* ------------------------------------------------------------- featured ---
+/* ---------------------------------------------------------- the sites ---
 
-   Six screenshots, never iframes — the old /sites/ armed 32 of them at once
-   (audit §6.4). Hover, and :focus-within so keyboard users get it too, swaps
-   to a second shot of the same site's signature interaction. child-care has
-   no second frame (Ruling R13: its hero is an ambient CSS twinkle with no
-   discrete state a capture can differ from) — its card markup omits the .on
-   image entirely, and with no .on child ".fcard:hover .on" simply matches
-   nothing, so it degrades correctly on its own. */
-/* UNIFORM BY CONSTRUCTION, which it was not before. The six captures are all
-   1280x800, so the images were never the problem: .fcard was display:block,
-   which let the grid stretch the OUTER box to the row height while leaving
-   the contents top-aligned. A two-line brand name ("Larkspur & Ledge
-   Landscape Co.") against a one-line one ("DJ Nova") pushed everything under
-   it down, so "See the demo" landed at a different height in every card and
-   each one ended with a different amount of dead white beneath it. The row
-   was the same height; nothing inside it lined up.
+   THE GRID OF ALL THIRTY-TWO, on `/`. It replaced .fgrid/.fcard — six
+   hand-picked cards, each with a second capture that cross-faded in on
+   hover. Both class names and every rule that drew them went with the
+   markup: nothing else in the project used them, and dead rules for a band
+   that no longer exists are how a stylesheet stops describing its own page.
+   (assets/shots/featured/*.jpg, the eleven captures those cards pointed at,
+   are unreferenced now and were deliberately left on disk — deleting a
+   capture is build-shots.js’s business, not a stylesheet edit’s.)
 
-   Three rules fix it and they are the same three the catalog card uses: the
-   card is a flex column, the body is the part that stretches, and the CTA is
-   pinned to the bottom with margin-top:auto. aspect-ratio on the shot is the
-   belt to that braces — it holds the frame at 16:10 whatever a future capture
-   ships at, instead of letting one odd file resize a whole row. */
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-@media(max-width:900px){.fgrid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.fgrid{grid-template-columns:1fr}}
-.fcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+   FOUR ACROSS, SMALL. The whole argument of the band is "all of it, at
+   once", so the card is deliberately smaller than .fcard was: a 16:10
+   screenshot, the demo brand, the trade, and the control. No job line — at
+   this width a sentence per card is thirty-two sentences of noise between a
+   visitor and the one picture they are looking for.
+
+   minmax(0,1fr) rather than 1fr on every breakpoint. A bare 1fr track has an
+   auto minimum, so one long unbroken word in a demo brand would push the
+   track wider than its share and give the whole PAGE a horizontal scrollbar
+   at 390px. This is the belt to `body{overflow-x:hidden}`’s braces, and the
+   one that fixes the cause rather than hiding it.
+
+   UNIFORM BY CONSTRUCTION, the same three rules .fcard needed and for the
+   same reason: the card is a flex column, the body is the part that
+   stretches, and the control is pinned with margin-top:auto — so a
+   two-line brand name ("Larkspur & Ledge Landscape Co.") beside a one-line
+   one ("DJ Nova") cannot land the two "Preview" rows at different heights.
+   aspect-ratio on the shot holds the frame whatever a future capture ships
+   at, instead of letting one odd file resize a whole row of eight.
+
+   THE CARD IS AN <a>, so :focus-within is not the hook .fcard needed —
+   there is nothing focusable inside it. :focus-visible on the card itself
+   is, and it gives a keyboard user the same lift a mouse user gets. */
+.sgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media(max-width:1080px){.sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:780px){.sgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
+.scard{display:flex;flex-direction:column;text-decoration:none;color:inherit;
   background:var(--surface);
-  border:1px solid var(--rule);border-radius:13px;overflow:hidden;
+  border:1px solid var(--rule);border-radius:11px;overflow:hidden;
   box-shadow:var(--elev);transition:transform .18s,box-shadow .18s,border-color .18s}
-.fcard:hover,.fcard:focus-within{transform:translateY(-4px);box-shadow:var(--elev-2);border-color:var(--acc)}
-.fcard-shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
-.fcard-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
-.fcard-shot .on{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}
-.fcard:hover .on,.fcard:focus-within .on{opacity:1}
-.fcard-body{display:flex;flex-direction:column;flex:1;padding:18px 20px 22px}
-.fcard-brand{font-family:var(--display);font-weight:800;font-size:16px;color:var(--tx)}
-.fcard-trade{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+.scard:hover,.scard:focus-visible{transform:translateY(-4px);box-shadow:var(--elev-2);
+  border-color:var(--acc)}
+.scard-shot{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
+.scard-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+.scard-body{display:flex;flex-direction:column;flex:1;padding:13px 15px 15px}
+.scard-brand{font-family:var(--display);font-weight:800;font-size:14px;line-height:1.3;
+  color:var(--tx)}
+.scard-trade{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--tx-3);margin-top:5px}
-.fcard-line{font-size:13.5px;color:var(--tx-2);margin-top:11px;line-height:1.5}
-/* margin-top:auto is what makes the six arrows share a baseline. */
-.fcard-go{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:15px;
-  font-family:var(--display);font-weight:700;font-size:13px;color:var(--acc-tx)}
-@media(prefers-reduced-motion:reduce){.fcard-shot .on{transition:none}.fcard{transition:none}}
+/* margin-top:auto is what makes all thirty-two controls share a baseline. */
+.scard-go{display:block;margin-top:auto;padding-top:13px;
+  font-family:var(--display);font-weight:700;font-size:12.5px;color:var(--acc-tx)}
+@media(prefers-reduced-motion:reduce){
+  .scard{transition:none}
+  .scard:hover,.scard:focus-visible{transform:none}
+}
 
 /* ------------------------------------------------------- catalog hand-off ---
-   The link from the featured six to the board. It was a .btn-sec sitting on a
-   bare <p style="margin-top:20px"> immediately under the example-names fine
-   print — the smallest control in the band, at the end of the quietest
-   paragraph in it, carrying the single most important click on the page. It
-   read as a footnote to the disclaimer above it rather than as the next step.
+   The ask at the foot of #sites. It was a .btn-sec sitting on a bare
+   <p style="margin-top:20px"> immediately under the example-names fine print
+   — the smallest control in the band, at the end of the quietest paragraph in
+   it, carrying the single most important click on the page. It read as a
+   footnote to the disclaimer above it rather than as the next step.
 
    It is a closing band now: its own rule, centred, with a line that says what
-   is on the other side of the click. The count inside the button is still
-   generated (BUILD:SITES_LINK), never typed. */
+   is on the other side of the click.
+
+   R6 took the count OUT of the button. It used to read "All 32 sites →",
+   because the grid above it showed six of them; the grid above it now shows
+   all thirty-two, so a button restating the number would be counting what the
+   visitor has just finished scrolling past. The count moved up into the
+   section heading, still generated (BUILD:SITES_ALL), still never typed. */
 .catalog-cta{
   margin-top:36px;padding-top:32px;border-top:1px solid var(--rule);
   display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
