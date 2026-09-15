@@ -61,7 +61,7 @@
   function resetIntent(slug, name) {
     intent = {
       niche: slug, nicheName: name,
-      city: '', state: '', cityNorm: '',
+      city: '', state: '', cityNorm: '', nearMatches: [],
       tier: 'launch', business: '', clientId: ''
     };
   }
@@ -165,6 +165,7 @@
         /* ---- phase 3 ---- */
         '<div class="cm-phase" data-phase="confirm" hidden>' +
           '<p class="cm-ok" id="cmOk"></p>' +
+          '<p class="cm-msg" id="cmNear" hidden></p>' +
           '<fieldset class="cm-tiers">' +
             '<legend>Package</legend>' +
             '<label><input type="radio" name="cmTier" value="launch" checked>' +
@@ -262,6 +263,7 @@
         intent.city = b.city_label;
         intent.state = b.state_code;
         intent.cityNorm = b.city_norm || '';
+        intent.nearMatches = Array.isArray(b.near_matches) ? b.near_matches : [];
         next();
       })
       .catch(function () {
@@ -391,6 +393,21 @@
   function toConfirm() {
     $('#cmOk').innerHTML = '<b>' + esc(intent.city) + ', ' + esc(intent.state)
       + '</b> is available for ' + esc(intent.nicheName) + '.';
+
+    /* A near match does not block the claim — sbv_city_available() already
+       said this exact city is open. It only warns, because the unmatched
+       spelling might really be the same city under a different name. */
+    var near = $('#cmNear');
+    if (intent.nearMatches && intent.nearMatches.length) {
+      near.innerHTML = 'We already have an operator in ' + esc(intent.nearMatches[0].city_label)
+        + ', ' + esc(intent.state) + '. If that is a different city, carry on &mdash; your claim is for '
+        + esc(intent.city) + ', ' + esc(intent.state) + '.';
+      near.hidden = false;
+    } else {
+      near.innerHTML = '';
+      near.hidden = true;
+    }
+
     if (!$('#cmBiz').value) $('#cmBiz').value = '';
     phase('confirm');
     loadTerms();
