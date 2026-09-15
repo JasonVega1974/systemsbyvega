@@ -1611,6 +1611,7 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 
 .cm-msg{font-size:14px;line-height:1.55;margin:0 0 14px;min-height:1.2em;color:var(--ink-soft)}
 .cm-msg.bad{color:#B3261E}
+.cm-msg.warn{color:var(--amber-text)}
 .cm-norm{color:var(--ink-soft);font-size:13px}
 .cm-ok{font-size:15.5px;line-height:1.6;margin:0 0 18px;padding:12px 14px;
   background:rgba(23,112,61,.08);border-left:3px solid var(--open-green);border-radius:0 8px 8px 0}

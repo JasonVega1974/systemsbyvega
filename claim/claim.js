@@ -402,6 +402,7 @@
       near.innerHTML = 'We already have an operator in ' + esc(intent.nearMatches[0].city_label)
         + ', ' + esc(intent.state) + '. If that is a different city, carry on &mdash; your claim is for '
         + esc(intent.city) + ', ' + esc(intent.state) + '.';
+      near.className = 'cm-msg warn';
       near.hidden = false;
     } else {
       near.innerHTML = '';
