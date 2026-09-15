@@ -957,8 +957,9 @@
         ? window.getComputedStyle(seqEl).getPropertyValue('--scrim-extra').trim()
         : '';
       seqEl.setAttribute('data-slug', frames[idx].slug);
-      /* The preview overlay is a later task; this button is its trigger and
-         carries the slug of whatever is showing when it is clicked. */
+      /* The preview overlay's trigger carries the slug of whatever is showing
+         when it is clicked. This is the ONLY place that attribute is written;
+         wirePreview() only ever reads it. */
       if (previewBtn) previewBtn.setAttribute('data-slug', frames[idx].slug);
 
       if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
@@ -1044,7 +1045,312 @@
     start();
   }
 
-  /* ------------------------------------------------------------ platforms */
+    /* ------------------------------------------------------- preview overlay */
+  /* THE DEMO, SHOWN IN PLACE. Clicking any .js-preview[data-slug] opens that
+     niche's live demo in a full-screen iframe under a slim bar. Escape closes,
+     body scroll locks, Back closes, and /?preview=<slug> opens it on load.
+
+     ONE DELEGATED LISTENER ON document, not a handler per trigger. The hero
+     button is the only trigger today; the sites grid on / and the cards on
+     /sites/ add many more, and those are REPAINTED by the live database
+     overlay in loadLive(). A listener bound to the nodes themselves would be
+     thrown away with the nodes it was bound to. Delegation survives that, and
+     costs one listener no matter how many triggers ship later.
+
+     THE SLUG IS NEVER TRUSTED AND NEVER CONCATENATED. ?preview= is whatever a
+     stranger put in a link, and it ends up in an iframe src. So it is used as
+     a LOOKUP KEY against the seed inlined by BUILD:SEED_SCRIPT and nothing
+     else: the src that is actually set is the seed row's own demo_path. An
+     unknown slug, a path traversal, a javascript: URL — none of them resolve
+     to a row, so none of them reach the frame. hasOwnProperty guards the
+     lookup so that "constructor" and friends are not rows either.
+
+     THE MARKUP IS BUILT HERE, not shipped in index.html. With JavaScript off a
+     deep link has to render a perfectly normal page, and the surest way to
+     guarantee that is for the overlay to not exist until something opens it.
+
+     ANALYTICS ARE ALREADY HANDLED: every demo page guards its Vercel tag on
+     window.self !== window.top, so a demo viewed in this frame is not counted
+     twice. Nothing here re-solves that, and the guard stays. */
+  function wirePreview() {
+    /* The seed IS the allow-list. Without it there is nothing to validate a
+       slug against, so nothing may be opened — including by deep link. */
+    var demos = {}, any = false;
+    var rows = seed.niches || [];
+    for (var r = 0; r < rows.length; r++) {
+      if (rows[r] && rows[r].slug && rows[r].demo_path) { demos[rows[r].slug] = rows[r]; any = true; }
+    }
+    if (!any) return;
+
+    var box = null, frame = null, tabLink = null, closeBtn = null, loadMsg = null;
+    var lastFocus = null, openSlug = '', pushed = false, loadTimer = null;
+    var scrollY = 0, priorStyle = null;
+
+    function resolve(slug) {
+      if (!slug || typeof slug !== 'string') return null;
+      return Object.prototype.hasOwnProperty.call(demos, slug) ? demos[slug] : null;
+    }
+
+    /* Read ?preview= without URLSearchParams — one regex, and a malformed
+       escape returns empty instead of throwing out of decodeURIComponent,
+       which is exactly what /?preview=%E0%A4%A would otherwise do. */
+    function fromQuery() {
+      var m = /[?&]preview=([^&#]*)/.exec(location.search || '');
+      if (!m) return '';
+      try { return decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) { return ''; }
+    }
+
+    /* ---------------------------------------------------------- scroll lock
+       overflow:hidden on <body> is NOT enough on iOS Safari — the page keeps
+       scrolling under a fixed overlay, and momentum from touch-scrolling the
+       frame is handed to the document behind it. What does work there is
+       taking the body out of flow at its current offset: position:fixed with
+       top:-scrollY, restored to the same pixel on close. overscroll-behavior
+       on .pv stops the chaining; this stops the page moving at all.
+
+       Inline styles are saved and put back rather than cleared, so this cannot
+       trample whatever else set them — closeModal() writes body.style.overflow
+       for the niche modal. */
+    function lockScroll() {
+      var b = document.body;
+      scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      priorStyle = {
+        position: b.style.position, top: b.style.top, left: b.style.left,
+        right: b.style.right, width: b.style.width, overflow: b.style.overflow
+      };
+      b.style.position = 'fixed';
+      b.style.top = (-scrollY) + 'px';
+      b.style.left = '0';
+      b.style.right = '0';
+      b.style.width = '100%';
+      b.style.overflow = 'hidden';
+    }
+    function unlockScroll() {
+      if (!priorStyle) return;
+      var b = document.body;
+      b.style.position = priorStyle.position;
+      b.style.top      = priorStyle.top;
+      b.style.left     = priorStyle.left;
+      b.style.right    = priorStyle.right;
+      b.style.width    = priorStyle.width;
+      b.style.overflow = priorStyle.overflow;
+      priorStyle = null;
+      /* Instant, not smooth. html carries scroll-behavior:smooth, so the plain
+         two-argument form animates the restore — the page visibly scrolls
+         itself back up after the overlay closes, which reads as a bug. */
+      try { window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' }); }
+      catch (e) { window.scrollTo(0, scrollY); }
+    }
+
+    function onKey(e) {
+      if (e.key === 'Escape' || e.keyCode === 27) { e.preventDefault(); close(false); }
+      /* Tab is deliberately NOT trapped here. The frame is a whole other
+         document, and the half of the tabbing that happens inside it is
+         invisible to this handler. The .pv-edge sentinels hold the boundary
+         instead — they catch focus on its way out of either end. */
+    }
+
+    function onFrameLoad() {
+      if (!box) return;
+      box.setAttribute('data-loaded', '1');
+      if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+      /* The demo is same-origin, so its keydowns never bubble out to us but we
+         are allowed to listen inside it. Without this, Escape stops working
+         the moment anyone clicks into the demo — the one moment they are most
+         likely to reach for it. */
+      try {
+        var d = frame.contentDocument;
+        if (d) d.addEventListener('keydown', onKey);
+      } catch (e) {}
+    }
+
+    function build() {
+      if (box) return;
+      box = document.createElement('div');
+      box.className = 'pv';
+      box.id = 'pv';
+      box.hidden = true;
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', 'Live demo preview');
+      box.innerHTML =
+        '<span class="pv-edge" tabindex="0"></span>' +
+        '<div class="pv-bar">' +
+          '<p class="pv-note"><b>Demo</b> — built on Systems by Vega ' +
+            '<span class="pv-dot">·</span> this site is for sale</p>' +
+          '<div class="pv-acts">' +
+            '<a class="pv-act" id="pv-tab" href="/sites/" target="_blank" rel="noopener" ' +
+              'aria-label="Open this demo in a new tab">' +
+              '<span class="pv-wide">Open in new tab</span> ↗</a>' +
+            '<button type="button" class="pv-act" id="pv-close" aria-label="Close preview">' +
+              '<span class="pv-wide">Close preview</span> ×</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pv-stage"><p class="pv-load">Loading the demo…</p></div>' +
+        '<span class="pv-edge" tabindex="0"></span>';
+      document.body.appendChild(box);
+
+      tabLink  = box.querySelector('#pv-tab');
+      closeBtn = box.querySelector('#pv-close');
+      loadMsg  = box.querySelector('.pv-load');
+      newFrame();
+
+      closeBtn.addEventListener('click', function () { close(false); });
+
+      /* Focus that walks off either end of the overlay lands on a sentinel and
+         is bounced back inside, so it can never reach the page behind — the
+         part a keydown trap cannot do once focus is inside the frame. */
+      var edges = box.querySelectorAll('.pv-edge');
+      edges[0].addEventListener('focus', function () { closeBtn.focus(); });
+      edges[1].addEventListener('focus', function () { tabLink.focus(); });
+    }
+
+    /* A FRESH IFRAME EVERY TIME, and this is not fussiness. src='' re-requests
+       the current page in some browsers and about:blank leaves a live browsing
+       context behind; replacing the ELEMENT destroys the demo's document
+       outright — scripts, timers, rotators, fetches and all. It also keeps the
+       demo's own navigations out of the session history, because the first
+       navigation of a brand-new browsing context replaces rather than pushes,
+       so Back stays ours to handle. */
+    function newFrame() {
+      var stage = box.querySelector('.pv-stage');
+      var next = document.createElement('iframe');
+      next.className = 'pv-frame';
+      next.id = 'pv-frame';
+      next.setAttribute('title', 'Live demo');
+      next.addEventListener('load', onFrameLoad);
+      if (frame && frame.parentNode) frame.parentNode.removeChild(frame);
+      stage.appendChild(next);
+      frame = next;
+    }
+
+    function isOpen() { return !!box && box.getAttribute('data-open') === '1'; }
+
+    function open(slug, viaHistory, trigger) {
+      var row = resolve(slug);
+      if (!row) return false;                 /* refused: not a slug we ship */
+      build();
+      if (isOpen() && openSlug === slug) return true;
+      if (isOpen()) newFrame();               /* swapping demos: drop the old one first */
+
+      openSlug = slug;
+      lastFocus = trigger || document.activeElement;
+
+      var label = row.name || slug;
+      frame.setAttribute('title', label + ' — live demo');
+      tabLink.setAttribute('href', row.demo_path);
+      box.removeAttribute('data-loaded');
+      loadMsg.textContent = 'Loading the ' + label + ' demo…';
+      /* The seed row's own path. Not the query value, not a concatenation. */
+      frame.setAttribute('src', row.demo_path);
+
+      if (loadTimer) clearTimeout(loadTimer);
+      loadTimer = setTimeout(function () {
+        if (box.getAttribute('data-loaded') === '1') return;
+        loadMsg.textContent = 'This demo is taking longer than usual. Open it in a new '
+          + 'tab, or close the preview — the bar above does both.';
+      }, 8000);
+
+      box.hidden = false;
+      void box.offsetHeight;                  /* give the fade a frame to start from */
+      box.setAttribute('data-open', '1');
+      lockScroll();
+      document.addEventListener('keydown', onKey);
+      closeBtn.focus();
+
+      /* Back closes the overlay instead of leaving the site. viaHistory means
+         the browser already moved us here, so pushing again would stack a
+         second entry on the same URL. */
+      pushed = false;
+      if (!viaHistory && window.history && history.pushState) {
+        try {
+          history.pushState({ sbvPreview: slug }, '',
+            location.pathname + '?preview=' + encodeURIComponent(slug) + location.hash);
+          pushed = true;
+        } catch (e) {}
+      }
+      return true;
+    }
+
+    function close(viaHistory) {
+      if (!isOpen()) return;
+      box.setAttribute('data-open', '0');
+      document.removeEventListener('keydown', onKey);
+      if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+
+      /* THE LINE THAT MATTERS. An overlay that only hides itself leaves a whole
+         demo site running for the rest of the session — its timers, its own
+         rotator, its fetches — invisible on screen and obvious in a profiler.
+         The frame is destroyed, not hidden. */
+      newFrame();
+      box.removeAttribute('data-loaded');
+      openSlug = '';
+
+      /* preventScroll, and BEFORE the unlock. focus() scrolls its element into
+         view, and doing that after the restore threw the visitor back to
+         wherever the trigger happens to sit — measured: closing from 400px
+         down the page landed at 0, because the hero button is at the top. */
+      if (lastFocus && lastFocus.focus) {
+        try { lastFocus.focus({ preventScroll: true }); } catch (e) { lastFocus.focus(); }
+      }
+      lastFocus = null;
+      unlockScroll();
+      setTimeout(function () { if (!isOpen()) box.hidden = true; }, 220);
+
+      if (viaHistory) { pushed = false; return; }
+      if (pushed) { pushed = false; history.back(); return; }
+      /* Open from a URL we did not push (the deep-link path below normally
+         converts that into a push). Strip the parameter in place so a reload
+         does not re-open, without leaving a dead entry behind. */
+      if (window.history && history.replaceState && /[?&]preview=/.test(location.search)) {
+        try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+      }
+    }
+
+    /* One listener, every trigger, now and later. */
+    document.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return;
+      var t = e.target && e.target.closest ? e.target.closest('.js-preview[data-slug]') : null;
+      if (!t) return;
+      var slug = t.getAttribute('data-slug');
+      /* The hero button ships data-slug="" and rotator() fills it from the
+         frame on screen. If the rotator never runs (one frame, or no rotator
+         on this page) the button would be inert, so fall back to the slug the
+         generated markup already carries. Read-only: rotator() stays the only
+         thing that WRITES that attribute. */
+      if (!slug) {
+        var seq = document.querySelector('[data-rotator][data-slug]');
+        if (seq) slug = seq.getAttribute('data-slug');
+      }
+      if (!resolve(slug)) return;   /* not ours — leave the element's own behaviour alone */
+      e.preventDefault();
+      open(slug, false, t);
+    });
+
+    /* Back/forward. Back out of an open preview closes it; Forward into one
+       re-opens it, because the URL is the state and it has to mean the same
+       thing whichever direction it was reached from. */
+    window.addEventListener('popstate', function () {
+      var slug = fromQuery();
+      if (resolve(slug)) { open(slug, true, null); return; }
+      close(true);
+    });
+
+    /* Deep link. A preview URL is often the FIRST entry in the history, and
+       closing from there would have nowhere to go back to — so the bare page
+       is written into that entry first and the preview pushed on top of it.
+       Back then closes the overlay here exactly as it does everywhere else,
+       instead of leaving the site. */
+    var initial = fromQuery();
+    if (resolve(initial)) {
+      if (window.history && history.replaceState) {
+        try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+      }
+      open(initial, false, null);
+    }
+  }
+
+/* ------------------------------------------------------------ platforms */
   /* /platforms/ AND the landing page — both carry #platforms-root, so both
      get hydrated here; a no-op on the four pages that do not, which return
      before touching the DOM (Ruling R3). (This comment said "/platforms/
@@ -1355,6 +1661,9 @@
     wireExit();
     paintPlatforms();
     rotator();
+    /* After rotator(), so the hero trigger already carries a slug before the
+       first click can land. A no-op on any page whose seed has no demo. */
+    wirePreview();
 
     /* /work/ only — no-op everywhere else (Ruling R3). */
     wkWireFilters();

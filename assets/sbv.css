@@ -1764,6 +1764,102 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 @media (prefers-reduced-motion:reduce){.wk-modal,.wk-modal-card{transition:none}}
 
 /* ==========================================================================
+   PREVIEW OVERLAY — the live demo, in place
+   --------------------------------------------------------------------------
+   A full-screen iframe with a slim bar over it, NOT a drawer (DECISIONS.md:
+   Jason withdrew the 420px drawer). Every demo is a whole site, so it gets the
+   whole viewport; the bar is the only chrome, and it is the only way out.
+
+   THE BAR IS OUTSIDE THE IFRAME AND ALWAYS PAINTED. That is the point of the
+   flex column: .pv-stage takes the remaining height and the iframe fills it,
+   so a demo that is slow, blank or broken never produces a full-screen box
+   with no exit — the bar, its close control and "open in new tab" are page
+   chrome and do not depend on the frame loading at all.
+
+   min-height:0 on .pv-stage is load-bearing. A flex item's default
+   min-height:auto refuses to shrink below its content, and an iframe's
+   content is a whole document: without it the stage overflows the column at
+   390px and the bar is pushed off the top of the screen.
+
+   Root tokens, never band tokens — like .nm-card, this floats above whichever
+   band happened to be on screen and must read the same over all of them.
+   ========================================================================== */
+.pv{
+  position:fixed;inset:0;z-index:300;
+  display:flex;flex-direction:column;
+  background:var(--con);
+  overscroll-behavior:contain;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease;
+}
+/* opacity + pointer-events, not visibility — the same F7 fix .nm carries
+   above: a visibility transition is still unfocusable on the frame where the
+   attribute flips, which is the frame open() calls focus() on. */
+.pv[data-open="1"]{opacity:1;pointer-events:auto}
+
+.pv-bar{
+  flex:none;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+  padding:8px 14px;
+  background:var(--con);color:var(--con-text);
+  border-bottom:1px solid var(--con-hair);
+}
+.pv-note{
+  flex:1 1 240px;min-width:0;margin:0;
+  font-size:13px;line-height:1.35;color:var(--con-muted);
+}
+.pv-note b{color:var(--con-text);font-weight:700}
+.pv-note .pv-dot{color:var(--con-amber)}
+
+.pv-acts{flex:none;display:flex;align-items:center;gap:8px}
+/* min-height AND min-width are var(--tap) = 48px, so the close control clears
+   the 44px thumb target at 390px even when its label collapses to a glyph. */
+.pv-act{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:var(--tap);min-width:var(--tap);padding:0 14px;
+  border:1px solid var(--con-hair);border-radius:9px;
+  background:transparent;color:var(--con-text);
+  font:inherit;font-size:13.5px;font-weight:600;line-height:1;
+  text-decoration:none;cursor:pointer;transition:.18s;
+}
+.pv-act:hover{background:rgba(255,255,255,.07);border-color:var(--con-amber);color:#fff}
+.pv-act:focus-visible{outline:2px solid var(--con-amber);outline-offset:2px}
+
+.pv-stage{position:relative;flex:1 1 auto;min-height:0;background:var(--paper)}
+.pv-frame{display:block;width:100%;height:100%;border:0;background:var(--paper)}
+
+/* The loading state sits UNDER the frame's own paint, not over it: it is
+   removed on the frame's load event, and if that event never arrives it stays
+   up saying so rather than leaving a blank rectangle. */
+.pv-load{
+  position:absolute;inset:0;margin:0;display:grid;place-items:center;
+  padding:0 24px;text-align:center;
+  font-size:14px;line-height:1.6;color:var(--ink-soft);background:var(--paper);
+  transition:opacity .2s ease;
+}
+.pv[data-loaded="1"] .pv-load{opacity:0;visibility:hidden}
+
+/* Focus sentinels. The frame holds a whole other document, and focus that has
+   walked off its last control would otherwise land on the page BEHIND the
+   overlay. These two catch it at each edge and bounce it back inside — which
+   is why the keydown handler traps nothing: Tab is free to enter the demo,
+   and cannot leave the overlay. */
+.pv-edge{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+@media (max-width:560px){
+  .pv-bar{padding:7px 10px;gap:8px}
+  .pv-note{flex:1 1 130px;font-size:11.5px}
+  .pv-act{padding:0 12px;font-size:16px}
+  /* The labels collapse to their glyph; aria-label carries the full wording,
+     which is set in JS and does not collapse with the text. */
+  .pv-wide{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pv,.pv-load,.pv-act{transition:none}
+}
+
+/* ==========================================================================
    TERRITORY CLAIM MODAL — /sites/ only, markup injected by claim/claim.js
    --------------------------------------------------------------------------
    Ported from sites/index.html's inline <style> (Ruling R11), which styled

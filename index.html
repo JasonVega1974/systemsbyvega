@@ -140,8 +140,11 @@
       </p>
       <div class="plate-cta">
         <a class="btn btn-pri" href="/sites/">Get your site &mdash; $99</a>
-        <!-- The preview overlay is a LATER task. This button is the trigger and
-             nothing else: no handler ships yet, and none is written here.
+        <!-- The trigger for the preview overlay. No handler is written here:
+             wirePreview() in assets/sbv.js binds ONE delegated listener on
+             document for .js-preview[data-slug]. The triggers the sites grid
+             adds later, and the ones the live DB repaint replaces, therefore
+             need no wiring of their own.
 
              data-slug is left empty in the markup on purpose. It has to name
              the frame currently on screen, and that is the rotator's business —
