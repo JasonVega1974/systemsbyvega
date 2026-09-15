@@ -192,11 +192,20 @@
      get in line, claim the territory — and the demo link is secondary to it
      wherever a demo exists. What changed is that the secondary link says
      "See the demo" everywhere, which is what the landing page's cards say,
-     instead of three different sentences for the same click. */
+     instead of three different sentences for the same click.
+
+     .js-preview + data-slug hand the click to the R4 preview overlay in
+     sbv.js, which opens the demo in a full-screen iframe instead of
+     navigating away from the board. It is ONE delegated listener on
+     document matching exactly `.js-preview[data-slug]`, so the attributes
+     are the whole wiring, and there is no per-card JS to add, and nothing to
+     re-bind after loadLive() throws these nodes away and renders new ones.
+     The href stays real: with JavaScript off, or if the slug does not
+     resolve to a seed row, the link is still a working link to the demo. */
   function demoAlt(n) {
     return n.demo_path
-      ? '<a class="card-alt" href="' + esc(n.demo_path) + '">See the demo ' +
-        '\u2192</a>'
+      ? '<a class="card-alt js-preview" data-slug="' + esc(n.slug) + '" href="' +
+        esc(n.demo_path) + '">See the demo \u2192</a>'
       : '';
   }
 

@@ -672,10 +672,13 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
    untouched — see assets/catalog-render.js's entry() for the list of class
    names that are load-bearing for assets/sbv.js.
 
-   DENSITY IS THE DISTINCTION. The grid steps below are unchanged, so the
-   board still runs four across on a wide screen against #featured's three.
-   That is what keeps the landing page's six cards reading as the larger,
-   curated selection they are, rather than as a preview of this page.       */
+   DENSITY WAS THE DISTINCTION, AND IT COST TOO MUCH. The board ran four
+   across against #featured's three, which made each column narrow enough
+   that the 16:10 screenshot — the one thing that actually sells a card —
+   shrank to a thumbnail nobody could read. The board now runs THREE across
+   and flows masonry inside each family (see .family>.grid below). The cards
+   are wider, so the capture is bigger for free, and #featured stays the
+   curated selection by being six cards rather than by being less dense.    */
 
 /* --pa/--pb are gone with the paper they filled. --fam survives as the one
    family accent, set inline on .family by the renderer and resolved from the
@@ -684,11 +687,76 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 /* Four across on a wide screen. The steps are sized to the CARD, not to
    device names: an entry carries a 16:10 screenshot, a mono code line, a
    title and a job line, and the screenshot stops being recognisable under
-   about 220px, so the column count drops before that happens. */
+   about 220px, so the column count drops before that happens.
+
+   THIS RULE IS NOT THE CATALOG BOARD any more. .grid is shared: #how on
+   three pages and #offer on / both use it for three or two plain .entry
+   cards with no screenshot. The catalog's own grids are .family>.grid and
+   are overridden immediately below. Leaving this rule alone is deliberate —
+   re-cutting it would silently restyle bands that were never in scope. */
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 22px;padding-top:10px}
 @media (max-width:1180px){.grid{grid-template-columns:repeat(3,1fr);gap:26px}}
 @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:600px){.grid{grid-template-columns:1fr;gap:24px}}
+
+/* ------------------------------------------------- the board, as masonry ---
+   THREE ACROSS, RAGGED BOTTOMS, SCOPED TO ONE FAMILY AT A TIME.
+
+   WHY NOT ONE MASONRY CONTAINER OVER ALL 32 CARDS. Because the board is not
+   one list — it is six, and each one is introduced by a .plate-head that has
+   to stay directly above the cards it names. A single container would flow
+   Auto cards up beside Sale & Resale cards and leave every plate heading
+   pointing at whatever landed under it. So the selector is .family>.grid:
+   each family is its own independent multi-column context, the plate and its
+   note sit outside it as ordinary block siblings, and no card can cross a
+   family boundary because no two families share a container. The direct-child
+   combinator also keeps the shared .grid rule above off the catalog and the
+   catalog off #how.
+
+   WHY MULTI-COLUMN AND NOT grid-template-rows:masonry OR A JS PACKER.
+   `masonry` is still behind a flag in Chrome, so it would ship as a plain
+   grid for nearly everyone. A JS packer that absolutely-positions cards after
+   paint would have to re-run on every resize AND after loadLive()'s repaint
+   destroys and rebuilds every card — and, worse, it decouples where a card IS
+   from where it sits in the DOM, so Tab starts jumping around the board.
+   Multi-column is layout, not script: it survives the repaint because it was
+   never bound to the nodes, and `column-fill:balance` (the default for an
+   auto-height multicol) fills column 1, then column 2, then column 3 IN
+   SOURCE ORDER. Reading order and tab order are therefore the same walk the
+   browser used to place the cards — proven, not assumed, in the r7 report.
+
+   THE GAP IS A MARGIN, NOT `gap`. column-gap handles the horizontal rule;
+   the vertical rhythm has to come from the cards themselves because there are
+   no rows to space. The container's negative bottom margin cancels the last
+   card's, so .family's own 52px separation is not doubled at the foot of a
+   column. */
+.family>.grid{
+  display:block;
+  column-count:3;
+  column-gap:22px;
+  column-fill:balance;
+  padding-top:10px;
+  margin-bottom:-26px;
+}
+/* break-inside is what makes this masonry rather than a newspaper: without it
+   a card would be sliced across the column boundary mid-screenshot. The two
+   legacy aliases are there for older WebKit, which honours neither the modern
+   property nor the fragmentation it implies without them. */
+.family>.grid>.entry{
+  -webkit-column-break-inside:avoid;
+  page-break-inside:avoid;
+  break-inside:avoid;
+  width:100%;
+  margin:0 0 26px;
+}
+/* Two across from tablet down. The step is at 1080px, not the 1180px the
+   shared grid uses, because three of these wider cards still read well at
+   1100px where four never did. */
+@media (max-width:1080px){.family>.grid{column-count:2}}
+@media (max-width:620px){
+  .family>.grid{column-count:1;column-gap:0;margin-bottom:-24px}
+  .family>.grid>.entry{margin-bottom:24px}
+}
 /* #offer carries TWO cards now — the SaaS one was a smaller echo of the
    #platforms band directly above it. Two cards left in the shared
    four-column .grid would sit squeezed into the left third with two dead
