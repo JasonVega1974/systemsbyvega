@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your territory is claimed — Systems by Vega</title>
+</head>
+<!--
+  email/sitelab-welcome.html — the SiteLab operator welcome email
+  ===========================================================================
+
+  READ THIS BEFORE EDITING.
+
+  THIS FILE DOES NOT SEND. Nothing in the codebase reads it. The email that
+  actually reaches a buyer today is built in code, by sendWelcome() in
+  api/stripe-webhook.mjs (~line 835), and posted to Brevo from there. If you
+  change the wording here and not there, the buyer still sees the old wording.
+
+  That is a deliberate constraint, not an oversight. tools/resend-welcome.mjs
+  imports sendWelcome() rather than copying it, for exactly this reason: two
+  copies of the same wording drift, and the one that drifts is always the one
+  nobody is looking at. This file is a third copy, so treat it as a DESIGN AND
+  COPY ARTEFACT — something to review, mark up, and hand to someone — and not
+  as a source of truth.
+
+  To see what genuinely sends, render the live function instead:
+
+      node tools/preview-email.mjs --niche landscaping --city "Boise, ID"
+
+  IF YOU WIRE THIS UP FOR REAL, remove the duplication rather than keeping
+  both: move this markup into sendWelcome(), or have sendWelcome() read this
+  file, so that one artefact remains. Do not add a second send path.
+
+  ---------------------------------------------------------------------------
+  MERGE FIELDS. Every {{token}} maps to a column on the sbv_intake row, or to
+  a value the webhook already derives from one. The names match the code, so
+  wiring this up is a lookup rather than a translation:
+
+      {{operator_name}}   intake.operator_name, falling back to business_name
+      {{niche_name}}      the niche's display name (sbv_niches.name), NOT the
+                          slug — the slug is hyphenated and reads as a URL
+      {{city_label}}      intake.city_label     e.g. Boise
+      {{state_code}}      intake.state_code     two letters, uppercase
+      {{client_id}}       the tenant id, which is also the subdomain label
+      {{site_url}}        https://{{client_id}}.systemsbyvega.com/
+      {{admin_url}}       https://systemsbyvega.com/admin/?tenant={{client_id}}
+      {{support_email}}   info@kingdom-creatives.com
+
+  ---------------------------------------------------------------------------
+  COMPLIANCE — NON-NEGOTIABLE, AND THE REASON THE COPY READS AS PLAINLY AS IT
+  DOES. No earnings language. No projection. No promise of outcome. No implied
+  customers, leads, or bookings. No testimonial, badge, or number that is not
+  literally true of this buyer at the moment of sending. Systems by Vega sells
+  software, documents, and training — it does not supply clients, leads, or
+  locations, and an operator is an independent business, not a franchisee.
+  Anything that would read as "this will make you money" must not go in.
+
+  ---------------------------------------------------------------------------
+  EMAIL-CLIENT CONSTRAINTS. Gmail strips <style> blocks, so every rule here is
+  inline. Outlook ignores web fonts, so the stack is system fonts only, and
+  the layout is tables rather than flex or grid. 600px is the widest that
+  survives a phone without horizontal scrolling.
+
+  Colours come from assets/sbv.css. Note #806030 (--amber-text) for text on
+  white rather than #C69648 (--amber): the brand gold lands at 2.66:1 on white
+  and fails WCAG AA at body size, where #806030 reaches 5.78:1.
+-->
+<body style="margin:0;padding:0;background:#F1F4F8;">
+
+  <!-- Preheader: the grey line a client shows beside the subject. Hidden in
+       the body itself via zero sizing rather than display:none, which several
+       clients ignore. -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;visibility:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#F1F4F8;">
+    Your city is reserved. Your site is live. Here is how to make it yours.
+  </div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#F1F4F8;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:100%;background:#FFFFFF;border:1px solid #DCE2EA;border-radius:10px;">
+
+          <!-- Wordmark as text, not an image: most clients block remote images
+               by default, and a logo that must load to make sense is a logo
+               that often does not. -->
+          <tr>
+            <td style="padding:24px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#806030;">
+              Systems by Vega
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:18px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#161B22;">
+              Hi {{operator_name}},
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:14px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#161B22;">
+              You now hold <strong style="color:#806030;">{{niche_name}} &mdash; {{city_label}}, {{state_code}}</strong>.
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:6px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#48515F;">
+              That category is yours in that city for as long as your account is
+              active. Nobody else can claim it.
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:26px 28px 0 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#48515F;">
+              What happens next
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:14px 28px 0 28px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+                <tr>
+                  <td width="26" valign="top" style="padding:0 0 18px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;color:#806030;">1.</td>
+                  <td style="padding:0 0 18px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#161B22;">
+                    <strong>Your site is live now.</strong><br>
+                    <a href="{{site_url}}" style="color:#806030;text-decoration:underline;">{{site_url}}</a><br>
+                    <span style="color:#48515F;">It opens with example content until you
+                    customise it &mdash; so what you see today is a placeholder, not a mistake.</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td width="26" valign="top" style="padding:0 0 18px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;color:#806030;">2.</td>
+                  <td style="padding:0 0 18px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#161B22;">
+                    <strong>Make it yours.</strong><br>
+                    <span style="color:#48515F;">Your sign-in link is in a separate email from
+                    us &mdash; open that one first. It takes you straight to your editor, where
+                    you change your business name, contact details, hours, and the services you
+                    list:</span><br>
+                    <a href="{{admin_url}}" style="color:#806030;text-decoration:underline;">{{admin_url}}</a><br>
+                    <span style="color:#48515F;">Changes show on your site within a minute.</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td width="26" valign="top" style="padding:0 0 4px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;color:#806030;">3.</td>
+                  <td style="padding:0 0 4px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#161B22;">
+                    <strong>Wrong city or business name?</strong><br>
+                    <span style="color:#48515F;">Just reply to this email and we will fix it.</span>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:20px 28px 0 28px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="background:#806030;border-radius:6px;">
+                    <a href="{{admin_url}}" style="display:inline-block;padding:12px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#FFFFFF;text-decoration:none;">Open your editor</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 28px 0 28px;border-top:1px solid #DCE2EA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.6;color:#48515F;">
+              <span style="display:block;padding-top:18px;">Your payment receipt comes from Stripe separately.</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:12px 28px 26px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.6;color:#48515F;">
+              Questions? Just reply, or write to
+              <a href="mailto:{{support_email}}" style="color:#806030;text-decoration:underline;">{{support_email}}</a>.
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- Standing disclaimer. Present on every customer-facing surface and
+             deliberately not translated: a disclaimer that says something
+             slightly different in another language is worse than one the
+             reader translates themselves. -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:100%;">
+          <tr>
+            <td style="padding:18px 8px 8px 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.55;color:#48515F;">
+              Systems by Vega provides software, documents, and training. It does not
+              provide clients, leads, or locations, and makes no representation about
+              income, revenue, profit, or results. Operators are independent
+              businesses, not franchisees, employees, or agents of Kingdom Creatives
+              LLC. Nothing in this email is legal, tax, or insurance advice.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 8px 24px 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.55;color:#48515F;">
+              Systems by Vega &middot; A Kingdom Creatives LLC company &middot; Nampa, Idaho
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

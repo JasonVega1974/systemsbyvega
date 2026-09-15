@@ -33,3 +33,12 @@ tools/resend-welcome.mjs
 # file was publicly readable at systemsbyvega.com. Only facebook.html and
 # flyer.html are needed on the CDN; reference/ never was.
 niches/*/marketing/reference/
+
+# Local one-off, same reasoning as brevo-diag above. Renders the buyer emails
+# to .preview/ by intercepting the Brevo call; never runs in a deployment.
+tools/preview-email.mjs
+
+# Email templates are source artefacts, not pages. Nothing links to them and
+# they carry implementation notes; served from the apex they would be a
+# crawlable internal document at /email/<name>.html.
+email/
