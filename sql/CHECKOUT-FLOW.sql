@@ -3,6 +3,17 @@
 -- that are CLOSE but not equal, so the buyer can be warned and still proceed.
 -- Lives in SQL because sbv_norm_city() is the single authority on
 -- normalisation and a JS twin that drifts lets a taken city read as free.
+--
+-- HAZARD — DDL and verify live in separate files on purpose. The Supabase
+-- CLI (`db query --linked -f`) sends a whole file as ONE query string, so
+-- Postgres wraps it in a single implicit transaction. A trailing `rollback;`
+-- therefore unwinds any DDL earlier in the SAME file too, not just the rows
+-- the verify block inserted — and the CLI only returns the last statement's
+-- rows, so the failure is silent (exit 0, plausible-looking output, function
+-- gone). This file is DDL ONLY — no begin/rollback — so applying it with one
+-- `-f` call actually leaves the function deployed. The matching verify block
+-- lives in sql/CHECKOUT-FLOW.verify.sql, which is safe to wrap because it
+-- contains no DDL for the rollback to eat.
 
 create extension if not exists fuzzystrmatch;
 
@@ -24,32 +35,3 @@ $fn$;
 
 grant execute on function public.sbv_city_near_matches(text,text,text)
   to anon, authenticated, service_role;
-
--- ── verify ────────────────────────────────────────────────────────────────
-begin;
-insert into public.sbv_tenants (client_id, niche_slug, business_name, operator_email, is_active)
-select 'op-nearmatch', slug, 'Near Co', 'info@kingdom-creatives.com', true
-  from public.sbv_niches where website_offer and is_listed limit 1;
-
-select public.sbv_claim_city(
-  (select slug from public.sbv_niches where website_offer and is_listed limit 1),
-  'Saint Charles','MO','op-nearmatch','cs_verify_nearmatch');
-
--- expect ONE row, distance 2 ("st charles" vs "saint charles" after norm)
-select 'near_hit' as check, count(*) as n
-  from public.sbv_city_near_matches(
-    (select slug from public.sbv_niches where website_offer and is_listed limit 1),
-    'St. Charles','MO');
-
--- expect ZERO rows: exact match is NOT a near match, it is a hard block
-select 'exact_excluded' as check, count(*) as n
-  from public.sbv_city_near_matches(
-    (select slug from public.sbv_niches where website_offer and is_listed limit 1),
-    'Saint Charles','MO');
-
--- expect ZERO rows: different state
-select 'state_scoped' as check, count(*) as n
-  from public.sbv_city_near_matches(
-    (select slug from public.sbv_niches where website_offer and is_listed limit 1),
-    'St. Charles','ID');
-rollback;
