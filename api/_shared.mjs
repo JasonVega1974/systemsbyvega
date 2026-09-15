@@ -311,6 +311,135 @@ export async function userFromRequest(request) {
   return { user };
 }
 
+/* ------------------------------------------------ auth admin (service key) */
+
+/* GoTrue's admin API, reached the same way PostgREST is above: plain fetch with
+   the service key in both `apikey` and `Authorization`. No SDK, for the reason
+   at the top of this file — @supabase/supabase-js exists largely to wrap these
+   two requests, and a dependency tree is a high price for that.
+
+   ONLY THE WEBHOOK SHOULD CALL THESE. The service key bypasses RLS and these
+   endpoints create accounts and send mail; nothing that takes a browser request
+   has any business here. */
+function authUrl(path) {
+  return SUPABASE_URL + '/auth/v1/' + path;
+}
+
+/* Returns { ok, status, data } and never throws on an HTTP status, because the
+   two callers below want opposite things from a failure: one treats it as
+   transient and retries, the other has to hold and alert. Network-level
+   failures still throw, as PgError, so they cannot be mistaken for a decision
+   the server made. */
+async function authAdminFetch(path, init, what) {
+  assertConfigured();
+  let res;
+  try {
+    res = await fetch(authUrl(path), {
+      ...init,
+      headers: serviceHeaders((init && init.headers) || {}),
+    });
+  } catch (e) {
+    throw new PgError(what + ': ' + e.message, 0, null);
+  }
+  const text = await res.text();
+  let data = null;
+  if (text) { try { data = JSON.parse(text); } catch { data = text; } }
+  return { ok: res.ok, status: res.status, data };
+}
+
+function pickUserByEmail(list, email) {
+  const want = String(email || '').toLowerCase();
+  for (const u of Array.isArray(list) ? list : []) {
+    if (u && typeof u.email === 'string' && u.email.toLowerCase() === want) return u;
+  }
+  return null;
+}
+
+/** One page of the admin user list. `filter` is GoTrue's search string. */
+async function listAuthUsers({ page = 1, perPage = 200, filter = null } = {}) {
+  let qs = 'admin/users?page=' + page + '&per_page=' + perPage;
+  if (filter) qs += '&filter=' + encodeURIComponent(filter);
+  const r = await authAdminFetch(qs, { method: 'GET' }, 'auth admin list users');
+  if (!r.ok) {
+    throw new PgError('auth admin list users failed (' + r.status + ')', r.status,
+      typeof r.data === 'string' ? r.data : JSON.stringify(r.data));
+  }
+  const users = (r.data && r.data.users) || (Array.isArray(r.data) ? r.data : []);
+  return Array.isArray(users) ? users : [];
+}
+
+/* Find an existing account by address. Returns the user object or null.
+   Throws PgError if the API cannot be reached or refuses — "I do not know"
+   must never be flattened into "no such user", because the caller turns null
+   into an invitation and a wrong null is a duplicate account for a buyer who
+   already has one.
+
+   TWO STRATEGIES, AND WHY. `filter` is the search box the Supabase dashboard
+   uses and matches on email, so one request normally settles it. An older
+   GoTrue that does not know the parameter answers with an UNFILTERED first
+   page instead of an error, and on a project with more users than fit in that
+   page the address would read as absent. `deep` is the answer to that: it pages
+   the whole list and matches exactly. It costs up to ten requests, so the
+   webhook only spends it when something has already contradicted the cheap
+   answer — an invite that came back "already registered". */
+export async function findAuthUserByEmail(email, { deep = false } = {}) {
+  const want = String(email || '').trim().toLowerCase();
+  if (!want) return null;
+
+  const hit = pickUserByEmail(await listAuthUsers({ filter: want }), want);
+  if (hit || !deep) return hit;
+
+  const perPage = 200;
+  for (let page = 1; page <= 10; page++) {
+    const users = await listAuthUsers({ page, perPage });
+    const found = pickUserByEmail(users, want);
+    if (found) return found;
+    if (users.length < perPage) break;
+  }
+  return null;
+}
+
+/* Invite an address: creates the account and mails the sign-in link, in one
+   call. Returns a verdict rather than throwing, because every caller of this
+   has already taken somebody's money and needs to decide what to do next
+   rather than unwind.
+
+     { ok: true,  user }
+     { ok: false, alreadyRegistered: true }   the account exists; go find it
+     { ok: false, status, reason }            nothing was sent
+
+   alreadyRegistered is not an error in this system. Repeat buyers are the
+   expected case — one person can hold several niches — and the composite key
+   on sbv_client_users exists precisely so their second purchase maps cleanly. */
+export async function inviteAuthUser(email, { redirectTo = null, data = null } = {}) {
+  const to = String(email || '').trim().toLowerCase();
+  if (!to) return { ok: false, status: 0, reason: 'no_email' };
+
+  let r;
+  try {
+    r = await authAdminFetch(
+      'invite' + (redirectTo ? '?redirect_to=' + encodeURIComponent(redirectTo) : ''),
+      { method: 'POST', body: JSON.stringify(data ? { email: to, data } : { email: to }) },
+      'auth admin invite');
+  } catch (e) {
+    return { ok: false, status: 0, reason: e.message };
+  }
+
+  if (r.ok && r.data && r.data.id) return { ok: true, user: r.data };
+
+  const body = r.data && typeof r.data === 'object' ? r.data : {};
+  const code = String(body.error_code || body.code || body.error || '');
+  const msg  = String(body.msg || body.message || body.error_description ||
+    (typeof r.data === 'string' ? r.data : '') || ('HTTP ' + r.status));
+
+  if (code === 'email_exists' || code === 'user_already_exists' ||
+      /already (been )?registered|already exists/i.test(msg)) {
+    return { ok: false, alreadyRegistered: true, status: r.status, reason: msg };
+  }
+  if (r.ok) return { ok: false, status: r.status, reason: 'invite returned no user' };
+  return { ok: false, status: r.status, reason: (code ? code + ': ' : '') + msg };
+}
+
 /* ------------------------------------------------------------------ stripe */
 
 /* Stripe's API is form-encoded, including nested structures:

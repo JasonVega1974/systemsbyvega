@@ -44,11 +44,14 @@
 import {
   json, pgSelectOne, pgInsert, pgUpdate, pgDelete, rpc,
   verifyStripeSignature, verifyStripeSession,
+  findAuthUserByEmail, inviteAuthUser,
   sendBrevo, ownerAlert, escHtml,
   STRIPE_WEBHOOK_SECRET, SUPPORT_EMAIL, SITE_URL, APEX,
   SUPABASE_URL, SERVICE_KEY, RESERVED_SLUGS,
   VERCEL_TOKEN, VERCEL_PROJECT_ID, VERCEL_TEAM_ID,
 } from './_shared.mjs';
+import { normaliseBuyerEmail } from './_checkout-lib.mjs';
+import { buyerEmailFromSession } from './_provision-lib.mjs';
 
 export const config = { runtime: 'nodejs' };
 
@@ -128,11 +131,20 @@ async function provision(session) {
   if (billing && billing.client_id) {
     tenant = await pgSelectOne('sbv_tenants',
       'client_id=eq.' + q(billing.client_id) + '&select=client_id,is_active,niche_slug');
-    if (billing.user_id) {
-      mapped = await pgSelectOne('sbv_client_users',
-        'user_id=eq.' + q(billing.user_id) +
-        '&client_id=eq.' + q(billing.client_id) + '&select=user_id');
-    }
+
+    /* KEYED ON THE TENANT, NOT ON billing.user_id. Nobody is signed in when
+       the card is charged, so the first delivery writes the billing row with a
+       null user_id and only learns the operator's id at step 9. A retry that
+       landed after step 9 but before that row was patched would read null
+       here, conclude "no mapping", and invite the buyer all over again — a
+       second email to somebody who is already holding the first one.
+       The operator mapping for this tenant is the durable fact, so that is
+       what is read. role=eq.operator because sbv_client_users also carries
+       'staff' rows, and a colleague added later must never be mistaken for
+       the operator's own login. */
+    mapped = await pgSelectOne('sbv_client_users',
+      'client_id=eq.' + q(billing.client_id) +
+      '&role=eq.operator&select=user_id,client_id');
   }
   if (billing && tenant && tenant.is_active && mapped) {
     console.log('already provisioned, nothing to do:', sessionId);
@@ -377,15 +389,142 @@ async function provision(session) {
     return json({ ok: false, error: 'billing_link_failed' }, 500);   // retry
   }
 
-  /* ── 9. THE MAPPING — without this the operator cannot log in ──────────── */
-  if (!mapped && userId) {
+  /* ── 9. THE ACCOUNT — without this the operator cannot log in ──────────
+     Until Task 4 the buyer signed in BEFORE paying, so an id was waiting on
+     the intake row and this step was a single insert. It is not any more:
+     sbv_intake.user_id is nullable and create-checkout writes null into it on
+     purpose, because nobody is signed in when the card is charged. The buyer's
+     identity at this point is an email address, and the account is resolved
+     from it HERE, after the money and after the claim.
+
+     FIND FIRST, INVITE SECOND, and the order is not a nicety. Stripe retries
+     this delivery for about three days; an unconditional invite would mail a
+     second sign-in link to a buyer who already has one. It is also the
+     multi-niche path: one person may hold several territories, so an address
+     that already has an account keeps that same user id and gains a SECOND
+     sbv_client_users row — the composite key (user_id, client_id) exists for
+     exactly this. Never a second tenant bolted onto the first: sbv_tenants is
+     one row per niche, by design.
+
+     `mapped` first, because a resumed delivery already did all of this. */
+  let operatorUserId = (mapped && mapped.user_id) || userId || null;
+
+  if (!operatorUserId) {
+    /* Stripe's copy of the address leads: it is what the buyer actually paid
+       under, and create-checkout also stamped it into the session metadata.
+       The intake row is the backstop — our own API validated that value before
+       Stripe ever saw it. */
+    const buyerEmail = buyerEmailFromSession(paidSession)
+      || normaliseBuyerEmail(intake && intake.operator_email);
+
+    if (!buyerEmail) {
+      /* Nothing anywhere to build a login from. STOP — but with a 200. A throw
+         or a 500 here would have Stripe redeliver a permanently broken session
+         for three days and bury the one alert that matters. The money is
+         recorded, the territory is claimed, the storefront stays dark. */
+      console.error('webhook: no usable buyer email anywhere for session', sessionId);
+      await ownerAlert('Claimed, paid, but no address to build a login from', [
+        'session:  ' + sessionId,
+        'tenant:   ' + clientId + '   (left INACTIVE on purpose)',
+        'intake:   ' + intake.id,
+        '',
+        'Neither the Stripe session nor the intake row carried an email address',
+        'that passes validation, so there is nobody to invite. The payment IS',
+        'recorded and the city IS claimed; the storefront has deliberately NOT',
+        'been activated.',
+        '',
+        'NEXT: get the address from the Stripe dashboard, invite them in',
+        'Supabase Auth, insert the sbv_client_users row for ' + clientId + ',',
+        'then set sbv_tenants.is_active = true.',
+      ]);
+      return json({ ok: true, blocked: 'no_operator_email' });
+    }
+
+    let existing = null;
+    try {
+      existing = await findAuthUserByEmail(buyerEmail);
+    } catch (e) {
+      /* "I could not ask" is not "there is no account". Inviting on a guess
+         duplicates a repeat buyer; skipping leaves them with no login. Retry
+         instead: the tenant and the claim both survive, and step 7 recognises
+         the claim as ours on the next delivery. */
+      console.error('webhook: auth user lookup failed:', e.message, e.body || '');
+      return json({ ok: false, error: 'auth_lookup_failed' }, 500);   // retry
+    }
+
+    if (existing && existing.id) {
+      operatorUserId = existing.id;
+      console.log('webhook: existing account reused for', buyerEmail, '->', operatorUserId);
+    } else {
+      /* redirect_to lands them on their own dashboard rather than the apex.
+         data rides along as user_metadata so a support question can be
+         answered from the Auth table alone. */
+      const invite = await inviteAuthUser(buyerEmail, {
+        redirectTo: SITE_URL + '/admin/?tenant=' + encodeURIComponent(clientId),
+        data: {
+          client_id: clientId,
+          niche_slug: intake.niche_slug,
+          business_name: intake.business_name,
+        },
+      });
+
+      if (invite.ok && invite.user && invite.user.id) {
+        operatorUserId = invite.user.id;
+        console.log('webhook: invited', buyerEmail, '->', operatorUserId);
+      } else if (invite.alreadyRegistered) {
+        /* The cheap search said no and GoTrue says yes, so the search was
+           wrong — an older instance ignoring the filter parameter is the known
+           cause. Pay for the exhaustive one now that something has actually
+           contradicted the cheap answer. No invitation was sent by the call
+           above, so nothing has been duplicated. */
+        console.warn('webhook: invite says the address is registered; searching again:', buyerEmail);
+        try {
+          const again = await findAuthUserByEmail(buyerEmail, { deep: true });
+          if (again && again.id) operatorUserId = again.id;
+        } catch (e) {
+          console.error('webhook: deep auth user lookup failed:', e.message, e.body || '');
+          return json({ ok: false, error: 'auth_lookup_failed' }, 500);   // retry
+        }
+      } else {
+        console.error('webhook: invite failed for', buyerEmail, '-', invite.reason);
+      }
+
+      if (!operatorUserId) {
+        /* HOLD. The rule this file is built around is that a storefront never
+           goes live before its operator can reach it, and there is no route in
+           without an account. Activating here would break that rule in the one
+           case where it is least likely to be noticed — a live site the buyer
+           cannot sign in to looks fine from the outside. */
+        console.error('webhook: could not resolve an account for', buyerEmail, 'session', sessionId);
+        await ownerAlert('Claimed, paid, but no operator login', [
+          'session:  ' + sessionId,
+          'tenant:   ' + clientId + '   (left INACTIVE on purpose)',
+          'buyer:    ' + buyerEmail,
+          'reason:   ' + (invite.reason || 'unknown'),
+          '',
+          'The territory is claimed and the payment is recorded, but the invite',
+          'could not be sent and no existing account matched, so nobody could',
+          'sign in. The storefront has deliberately NOT been activated.',
+          '',
+          'NEXT: check Supabase Auth for ' + buyerEmail + ' — the account may',
+          'exist even though the mail failed. Invite or find them, insert the',
+          'sbv_client_users row for ' + clientId + ', then set',
+          'sbv_tenants.is_active = true.',
+        ]);
+        return json({ ok: true, blocked: 'no_operator_login' });
+      }
+    }
+  }
+
+  /* ── 9a. THE MAPPING — the row that actually grants access ────────────── */
+  if (!mapped) {
     try {
       await pgInsert('sbv_client_users',
-        { user_id: userId, client_id: clientId, role: 'operator' },
+        { user_id: operatorUserId, client_id: clientId, role: 'operator' },
         { minimal: true });
     } catch (e) {
       if (e.status === 409) {
-        console.warn('webhook: mapping already existed:', userId, clientId);
+        console.warn('webhook: mapping already existed:', operatorUserId, clientId);
       } else {
         /* Roll BOTH back. The claim must go too — otherwise a retry hits this
            buyer's own city row and reads it as a conflict against itself,
@@ -400,28 +539,21 @@ async function provision(session) {
         return json({ ok: false, error: 'mapping_failed' }, 500);   // retry
       }
     }
-  } else if (!userId) {
-    /* Cannot normally happen — sbv_intake.user_id is NOT NULL — but if it ever
-       does, STOP HERE rather than carrying on to step 10.
-       The rule this file is built around is that a storefront never goes live
-       before its operator can reach it. Activating a tenant nobody can sign in
-       to would break exactly that rule, in the one case where it is least
-       likely to be noticed. The territory is claimed and the money is recorded;
-       what remains is a person's job. */
-    console.error('webhook: no user_id anywhere for session', sessionId);
-    await ownerAlert('Claimed, paid, but no operator login', [
-      'session:  ' + sessionId,
-      'tenant:   ' + clientId + '   (left INACTIVE on purpose)',
-      'buyer:    ' + intake.operator_email,
-      '',
-      'The territory is claimed and the payment is recorded, but no auth user',
-      'was attached, so nobody could sign in. The storefront has deliberately',
-      'NOT been activated.',
-      '',
-      'NEXT: find or create their auth user, insert the sbv_client_users row,',
-      'then set sbv_tenants.is_active = true.',
-    ]);
-    return json({ ok: true, blocked: 'no_operator_login' });
+  }
+
+  /* ── 9b. POINT THE MONEY AT THE PERSON ─────────────────────────────────
+     Best effort on purpose. sbv_client_users is what step 1 reads to decide a
+     delivery is already done, so this row is bookkeeping and reconciliation,
+     not the idempotency anchor. Failing the whole provision over it — after
+     the account exists and the mapping is in place — would be trading a
+     complete sale for a tidy column. */
+  if (!billing || billing.user_id !== operatorUserId) {
+    try {
+      await pgUpdate('sbv_billing', 'stripe_session_id=eq.' + q(sessionId),
+        { user_id: operatorUserId });
+    } catch (e) {
+      console.error('webhook: could not attach billing to the operator:', e.message);
+    }
   }
 
   /* ── 9.5 SUBDOMAIN — before activation, and never fatal ────────────────────
@@ -456,8 +588,14 @@ async function provision(session) {
     return json({ ok: false, error: 'activate_failed' }, 500);   // retry
   }
 
+  /* user_id alongside the status, in the request that was already going out.
+     create-checkout writes the intake row before an account exists, so this is
+     the only moment the submission and the person can be joined up — and
+     verify-session reads the intake row when the buyer lands back from
+     Stripe. */
   try {
-    await pgUpdate('sbv_intake', 'id=eq.' + q(intake.id), { status: 'paid' });
+    await pgUpdate('sbv_intake', 'id=eq.' + q(intake.id),
+      { status: 'paid', user_id: operatorUserId });
   } catch (e) { console.error('webhook: could not mark intake paid:', e.message); }
 
   /* ── 11. MAIL — best effort, never fails the request ───────────────────
