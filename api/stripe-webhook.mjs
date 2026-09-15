@@ -879,10 +879,10 @@ export function sendWelcome(intake, clientId, nicheName) {
 
   /* Inline styles only: Gmail strips a <style> block and Outlook ignores web
      fonts. 600px is the widest that survives a phone without horizontal
-     scroll. Palette from assets/sbv.css — amber-text #A94E06 rather than
-     --amber, because #E8791B lands at 4.4:1 on white and fails AA at body
+     scroll. Palette from assets/sbv.css — amber-text #806030 rather than
+     --amber, because #C69648 lands at 4.4:1 on white and fails AA at body
      size. */
-  const P = { ink: '#161B22', soft: '#48515F', amber: '#A94E06',
+  const P = { ink: '#161B22', soft: '#48515F', amber: '#806030',
               hair: '#DCE2EA', paper: '#F1F4F8' };
   const base = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
   const step = (n, title, body) =>
@@ -962,7 +962,7 @@ export function sendLoginLink(intake, clientId, buyerEmail, actionLink) {
     SUPPORT_EMAIL,
   ];
 
-  const P = { ink: '#161B22', soft: '#48515F', amber: '#A94E06', hair: '#DCE2EA' };
+  const P = { ink: '#161B22', soft: '#48515F', amber: '#806030', hair: '#DCE2EA' };
   const base = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
   const html =
