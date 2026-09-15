@@ -34,20 +34,30 @@ const SRC = `
     var m = function (o, u) { return o * alpha + u * (1 - alpha); };
     return { r: m(over.r, under.r), g: m(over.g, under.g), b: m(over.b, under.b) };
   }
-  /* Luminance of a composite, without allocating the intermediate object —
-     the hot path when a tool walks half a million pixels per frame. */
-  function compositeLum(oR, oG, oB, uR, uG, uB, alpha) {
-    var k = 1 - alpha;
-    return lum({ r: oR * alpha + uR * k, g: oG * alpha + uG * k, b: oB * alpha + uB * k });
+  /* Luminance of a STACK of overlays, applied bottom-up, without allocating an
+     object per pixel — the hot path when a tool walks half a million pixels per
+     frame. \`alphas\` is applied in paint order, so [0.30, 0.12] means the
+     baseline goes down first and the per-image top-up over it.
+
+     This is deliberately a LOOP over real composites and not a combined alpha:
+     sRGB compositing is not additive in alpha, and the whole point of the
+     exercise is to measure the stack exactly as the browser paints it. */
+  function stackLum(over, uR, uG, uB, alphas) {
+    var r = uR, gg = uG, b = uB;
+    for (var i = 0; i < alphas.length; i++) {
+      var a = alphas[i], k = 1 - a;
+      r = over.r * a + r * k; gg = over.g * a + gg * k; b = over.b * a + b * k;
+    }
+    return lum({ r: r, g: gg, b: b });
   }
-  g.__wcag = { lum: lum, ratio: ratio, composite: composite, compositeLum: compositeLum };
+  g.__wcag = { lum: lum, ratio: ratio, composite: composite, stackLum: stackLum };
 })(typeof window !== 'undefined' ? window : this);
 `;
 
 /* Evaluate the same text here so Node and the page run identical math. */
 const scope = {};
 new Function(SRC).call(scope);
-const { lum, ratio, composite, compositeLum } = scope.__wcag;
+const { lum, ratio, composite, stackLum } = scope.__wcag;
 
 const WHITE = { r: 255, g: 255, b: 255 };
 
@@ -60,4 +70,4 @@ function hexToRgb(hex) {
            b: parseInt(full.slice(4, 6), 16) };
 }
 
-module.exports = { lum, ratio, composite, compositeLum, hexToRgb, WHITE, SRC };
+module.exports = { lum, ratio, composite, stackLum, hexToRgb, WHITE, SRC };

@@ -1,13 +1,25 @@
 #!/usr/bin/env node
 'use strict';
-/* build-scrim.js — the per-image hero scrim strength, measured rather than
- * eyeballed. DATA ONLY: it emits assets/hero-scrim.css and styles nothing.
+/* build-scrim.js — the hero scrim, measured rather than eyeballed.
+ * DATA ONLY: it emits assets/hero-scrim.css and styles nothing.
  *
- * WHY PER IMAGE. The landing hero is full-bleed with white text laid over it,
- * cycling through 32 niche screenshots. One fixed overlay cannot serve all 32:
- * set it for the dark frames and the bright ones lose the headline; set it for
- * the bright frames and the dark ones turn to mud. So each frame gets its own
- * alpha, keyed by slug, and the rotator's active frame selects it.
+ * THE SCRIM IS TWO LAYERS.
+ *   1. a BASELINE, one constant, on every one of the 32 frames. It gives the
+ *      hero a consistent brand tone so the weight does not visibly change as
+ *      the rotator advances. A purely per-image alpha makes a dark frame look
+ *      bare sitting next to a bright one.
+ *   2. a per-image ADJUSTMENT (--scrim-extra) that tops up only the frames
+ *      that actually need more. Most frames need nothing; that is expected,
+ *      not a bug, and they emit an explicit 0 so a MISSING entry is always a
+ *      bug rather than an intentional zero.
+ *
+ * THE CORRECTNESS POINT. The adjustment is solved ON TOP OF the baseline, over
+ * the real two-layer composite — never solved independently and added. sRGB
+ * compositing is not additive in alpha: baseline 0.34 plus adjustment 0.34 is
+ * an effective 0.56, not 0.68. Solving the two separately and summing
+ * overshoots the dark frames and, far worse, UNDERSHOOTS the bright ones.
+ * Every number below comes from the full stack as the browser paints it:
+ * baseline, then adjustment, then white text.
  *
  * WHY A PERCENTILE AND NOT THE MEAN. A frame can average out perfectly while
  * carrying a blown-out window or a white van exactly where the headline sits.
@@ -20,15 +32,17 @@
  * vivid and is never sampled.
  *
  * WHY NUMERIC AND NOT ALGEBRAIC. CSS composites in sRGB; WCAG luminance is
- * computed from LINEARISED channels. The closed form for alpha is easy to get
- * subtly wrong in a way that still looks plausible. So we step alpha from 0.00
- * to 0.95 in 0.01 and measure, using the same tools/lib/wcag.js functions that
+ * computed from LINEARISED channels. The closed form is easy to get subtly
+ * wrong in a way that still looks plausible. So every alpha here is found by
+ * stepping and measuring, using the same tools/lib/wcag.js functions that
  * tools/a11y-sweep.js measures the rest of the site with.
  *
  *   node tools/build-scrim.js            measure and write assets/hero-scrim.css
  *   node tools/build-scrim.js --check    verify, write nothing, exit 1 on drift
- *   node tools/build-scrim.js --verify   re-measure WITH the committed alphas
- *                                        and assert every frame clears 4.5:1
+ *   node tools/build-scrim.js --verify   re-measure the FULL STACK from the
+ *                                        committed CSS; assert all 32 >= 4.5:1
+ *   node tools/build-scrim.js --baselines  print the baseline trade-off table
+ *                                          that BASELINE was chosen from
  */
 const fs = require('fs');
 const path = require('path');
@@ -41,8 +55,9 @@ const FRAMES  = path.join(ROOT, 'assets', 'shots', 'rotator');
 const OUT     = path.join(ROOT, 'assets', 'hero-scrim.css');
 const SEED    = path.join(ROOT, 'assets', 'data', 'niches.seed.json');
 
-const CHECK  = process.argv.includes('--check');
-const VERIFY = process.argv.includes('--verify');
+const CHECK     = process.argv.includes('--check');
+const VERIFY    = process.argv.includes('--verify');
+const BASELINES = process.argv.includes('--baselines');
 
 /* ---------------------------------------------------------------- constants */
 
@@ -56,6 +71,31 @@ const VERIFY = process.argv.includes('--verify');
 const SCRIM_HEX = '#141821';
 const SCRIM     = WCAG.hexToRgb(SCRIM_HEX);
 
+/* THE BASELINE, and why this number.
+
+   `--baselines` prints the table this was picked from. The count of frames
+   needing NO adjustment climbs with the baseline and then flattens:
+
+       0.28 -> 18    0.30 -> 20    0.32 -> 21    0.34 -> 22    0.40 -> 22
+       0.29 -> 20    0.31 -> 20    0.33 -> 21    0.35 -> 22    0.50 -> 22
+
+   0.34 is the knee. Every 0.01 beyond it dims all 32 frames and buys nothing:
+   the ten frames still needing help are near-white storefront heroes nowhere
+   near clearing, and no realistic baseline reaches them.
+
+   It is also where the population splits cleanly. Below 0.34 the smallest
+   non-zero adjustment is 0.02-0.05 — noise, a frame sitting on the boundary
+   and contributing a cascade entry nobody can see. At 0.34 the adjustments
+   start at 0.35: a frame is either comfortably covered by the baseline or it
+   is genuinely fighting the text, with nothing in between.
+
+   And it does not crush the dark end. #141821's own luminance is 0.0091,
+   BRIGHTER than the median sampled pixel of the darkest frames (tattoo-studio
+   sits at 0.0036). The baseline lifts those very slightly toward the brand's
+   dark rather than flattening them — it behaves as a floor, not a crusher.
+   Every frame still keeps two thirds of its own contrast. */
+const BASELINE = 0.34;
+
 const TEXT_SIDE  = 0.55;   // sample the left 55% of the frame, full height
 const PERCENTILE = 0.90;   // worst-case, not mean; see the header
 const TARGET     = 4.5;    // WCAG AA for normal-size white text
@@ -63,6 +103,8 @@ const MARGIN     = 0.04;   // JPEG artefacts and browser scaling move pixels;
                            // a frame that measures exactly 4.50 fails in the wild
 const ALPHA_MAX  = 0.95;
 const ALPHA_STEP = 0.01;
+const STEPS      = Math.round(ALPHA_MAX / ALPHA_STEP);
+const EPS        = 1e-12;  // float slack on a <= comparison of two luminances
 
 /* --------------------------------------------------------------- the frames */
 
@@ -91,15 +133,14 @@ function frames() {
 
 /* Runs INSIDE the page. Draws the frame at its natural size — NOT scaled to the
    hero box, because the browser's own downscaling averages neighbouring pixels
-   and would soften exactly the blown-out patch we are hunting for. Composites
-   the scrim over every sampled pixel at `alpha` (0 on the first pass), then
-   returns the percentile of the resulting luminance. */
+   and would soften exactly the blown-out patch we are hunting for. Applies the
+   overlay STACK to every sampled pixel in paint order, then returns the
+   percentile of the resulting luminance. `alphas: []` measures the bare frame. */
 const PROBE = async (arg) => {
-  const { dataUrl, alpha, scrim, side, pct } = arg;
-  const { lum, compositeLum } = window.__wcag;
+  const { dataUrl, alphas, scrim, side, pct } = arg;
+  const { stackLum } = window.__wcag;
 
   const img = new Image();
-  img.decoding = 'sync';
   await new Promise((res, rej) => {
     img.onload = res;
     img.onerror = () => rej(new Error('image failed to decode'));
@@ -116,13 +157,8 @@ const PROBE = async (arg) => {
 
   const n = px.length / 4;
   const L = new Float64Array(n);
-  let sum = 0;
   for (let i = 0, p = 0; i < n; i++, p += 4) {
-    const v = alpha > 0
-      ? compositeLum(scrim.r, scrim.g, scrim.b, px[p], px[p + 1], px[p + 2], alpha)
-      : lum({ r: px[p], g: px[p + 1], b: px[p + 2] });
-    L[i] = v;
-    sum += v;
+    L[i] = stackLum(scrim, px[p], px[p + 1], px[p + 2], alphas);
   }
 
   const sorted = Float64Array.from(L).sort();
@@ -134,10 +170,9 @@ const PROBE = async (arg) => {
 
      It must be the DIMMEST pixel at or above the threshold, not the first one
      found in raster order — the first pixel above the p90 line can easily be a
-     0.95-luminance highlight, which would hand the solver the max instead of
-     the percentile and blacken the frame. (It did, before this loop was
-     written this way: christmas-lights measured a p90 of 0.126 and was handed
-     a pixel that demanded alpha 0.58.) */
+     0.95-luminance highlight, which would hand the solver the MAX instead of
+     the percentile and blacken the frame. (It did: christmas-lights measured a
+     p90 of 0.126, already clearing 4.5:1 unaided, and was assigned 0.58.) */
   let pix = null, best = Infinity;
   for (let i = 0, p = 0; i < n; i++, p += 4) {
     if (L[i] >= target && L[i] < best) {
@@ -148,7 +183,7 @@ const PROBE = async (arg) => {
   }
 
   return { w, h, sampled: n, pLum: target, pPixel: pix,
-           meanLum: sum / n, maxLum: sorted[n - 1] };
+           medLum: sorted[Math.floor(0.5 * n)], maxLum: sorted[n - 1] };
 };
 
 function dataUrl(slug) {
@@ -156,9 +191,9 @@ function dataUrl(slug) {
   return 'data:image/jpeg;base64,' + buf.toString('base64');
 }
 
-async function measure(page, slug, alpha) {
+async function measure(page, slug, alphas) {
   return page.evaluate(PROBE, {
-    dataUrl: dataUrl(slug), alpha: alpha || 0,
+    dataUrl: dataUrl(slug), alphas: alphas || [],
     scrim: SCRIM, side: TEXT_SIDE, pct: PERCENTILE,
   });
 }
@@ -168,82 +203,129 @@ async function measure(page, slug, alpha) {
 const ratioOnWhite = rgb => WCAG.ratio(WCAG.WHITE, rgb);
 const ratioFromLum = L => (1.0 + 0.05) / (L + 0.05);   // white's luminance is exactly 1
 
-/* Smallest alpha in 0.01 steps at which white clears TARGET over `pixel`.
-   Stepped, never solved in closed form — see the header. */
-function solveAlpha(pixel) {
-  for (let i = 0; i <= Math.round(ALPHA_MAX / ALPHA_STEP); i++) {
+/* Step 1 — the smallest single-layer alpha at which white clears TARGET over
+   `pixel`. Only used to locate the margin; the adjustment itself is solved on
+   the real stack in step 3. Stepped, never solved in closed form. */
+function solveFlat(pixel) {
+  for (let i = 0; i <= STEPS; i++) {
     const a = i * ALPHA_STEP;
-    if (ratioOnWhite(WCAG.composite(SCRIM, pixel, a)) >= TARGET) {
-      return Math.round(a * 100) / 100;
+    if (ratioOnWhite(WCAG.composite(SCRIM, pixel, a)) >= TARGET) return a;
+  }
+  return null;
+}
+
+/* Step 3 — the smallest ADJUSTMENT, laid ON TOP OF the baseline, that brings
+   the stack to `needLum` or darker. Walks the real two-layer composite: the
+   baseline goes down first and each candidate alpha is painted over the RESULT,
+   exactly as the browser will. Returns 0 when the baseline already gets there,
+   which is the common case and is not a bug. */
+function solveExtra(pixel, needLum) {
+  const base = WCAG.composite(SCRIM, pixel, BASELINE);
+  for (let i = 0; i <= STEPS; i++) {
+    const x = i * ALPHA_STEP;
+    if (WCAG.lum(WCAG.composite(SCRIM, base, x)) <= needLum + EPS) {
+      return Math.round(x * 100) / 100;
     }
   }
   return null;
 }
 
+/* The whole solve for one frame, from its p90 pixel. */
+function solve(pixel) {
+  const flat = solveFlat(pixel);
+  if (flat === null) return null;
+  /* The safety margin lands on the FINAL STACK: the stack must end up as dark
+     as (the alpha that just clears TARGET) + 0.04 would have made it. A frame
+     that measures exactly 4.50 fails in the wild once JPEG artefacts and the
+     browser's own scaling have moved a few pixels. */
+  const flatMargined = Math.min(ALPHA_MAX, Math.round((flat + MARGIN) * 100) / 100);
+  const needLum = WCAG.lum(WCAG.composite(SCRIM, pixel, flatMargined));
+  const extra = solveExtra(pixel, needLum);
+  return extra === null ? null : { flat, flatMargined, extra };
+}
+
 /* ----------------------------------------------------------------- rendering */
 
-const HEADER = [
+const HEADER = rows => [
   '/* GENERATED by tools/build-scrim.js — do not edit by hand.',
   ' *',
-  ' * Per-frame hero scrim strength. One custom property per rotator slug: the',
-  ' * minimum overlay alpha at which white text clears WCAG AA (4.5:1) over the',
-  ' * TEXT SIDE of that frame, plus a safety margin.',
+  ' * Hero scrim, measured per frame. TWO LAYERS, in paint order:',
+  ' *',
+  ` *   1. --scrim-base   ${BASELINE.toFixed(2)}  one constant, on every frame. Holds the hero`,
+  ' *                           at a consistent brand tone so its weight does not',
+  ' *                           visibly change as the rotator advances.',
+  ' *   2. --scrim-extra        per frame, laid OVER the baseline. Tops up only',
+  ' *                           the frames that need it. Most need none and say',
+  ` *                           so with an explicit 0 — ${rows.filter(r => r.extra === 0).length} of ${rows.length} frames.`,
+  ' *',
+  ' * The adjustment is solved ON TOP OF the baseline over the real composite,',
+  ' * never solved alone and added: sRGB compositing is not additive in alpha.',
+  ` * Baseline ${BASELINE.toFixed(2)} + adjustment ${BASELINE.toFixed(2)} is an effective ` +
+    `${(1 - (1 - BASELINE) * (1 - BASELINE)).toFixed(2)}, not ${(BASELINE * 2).toFixed(2)}.`,
   ' *',
   ` * Scrim colour  --con ${SCRIM_HEX} (the brand's dark console ground)`,
   ` * Sampled       left ${Math.round(TEXT_SIDE * 100)}% of the frame, full height`,
-  ` *               (the right side is deliberately left vivid and never sampled)`,
+  ' *               (the right side is deliberately left vivid and never sampled)',
   ` * Statistic     ${Math.round(PERCENTILE * 100)}th percentile of per-pixel relative luminance`,
-  ` * Target        >= ${TARGET.toFixed(1)}:1 against #FFFFFF, solved numerically in ${ALPHA_STEP} steps`,
-  ` * Margin        +${MARGIN.toFixed(2)} on the solved minimum, clamped to ${ALPHA_MAX}`,
+  ` * Target        >= ${TARGET.toFixed(1)}:1 for #FFFFFF, solved numerically in ${ALPHA_STEP} steps`,
+  ` * Margin        +${MARGIN.toFixed(2)} of alpha on the FINAL stack`,
   ' *',
   ' * Regenerate:  node tools/build-scrim.js',
   ' * Verify:      node tools/build-scrim.js --check',
+  ' *              node tools/build-scrim.js --verify   (re-measures the stack)',
   ' */',
 ].join('\n');
 
+/* A zero is printed as a bare 0, not 0.00 — it should be scannable at a glance
+   which frames the baseline already covers. */
+const fmt = a => (a === 0 ? '0' : a.toFixed(2));
+
 function render(rows) {
+  const base = `.seq{--scrim-base:${BASELINE.toFixed(2)}}`;
   const rules = rows.map(r =>
-    `.seq[data-slug="${r.slug}"]{--scrim:${r.alpha.toFixed(2)}}`).join('\n');
+    `.seq[data-slug="${r.slug}"]{--scrim-extra:${fmt(r.extra)}}`).join('\n');
 
   const w = Math.max(...rows.map(r => r.slug.length), 4);
   const table = [
     '/* MEASURED — the evidence, beside the result.',
     ' *',
-    ' *   ' + 'slug'.padEnd(w) + '   p90 lum   bare    min a   alpha   ratio',
+    ' *   ' + 'slug'.padEnd(w) + '   p90 lum   bare    extra   eff a   ratio',
     ' *   ' + '-'.repeat(w) + '   -------   -----   -----   -----   -----',
   ].concat(rows.map(r =>
     ' *   ' + r.slug.padEnd(w) +
     '   ' + r.pLum.toFixed(4).padStart(7) +
     '   ' + r.bareRatio.toFixed(2).padStart(5) +
-    '   ' + r.minAlpha.toFixed(2).padStart(5) +
-    '   ' + r.alpha.toFixed(2).padStart(5) +
+    '   ' + fmt(r.extra).padStart(5) +
+    '   ' + r.effective.toFixed(2).padStart(5) +
     '   ' + r.ratio.toFixed(2).padStart(5)
   )).concat([
     ' *',
-    ` *   bare  = contrast of white on the unscrimmed p90 pixel`,
-    ` *   min a = smallest alpha reaching ${TARGET.toFixed(1)}:1;  alpha = min a + ${MARGIN.toFixed(2)} (clamped ${ALPHA_MAX})`,
-    ` *   ratio = re-measured at the chosen alpha`,
+    ' *   bare  = contrast of white on the unscrimmed p90 pixel',
+    ` *   extra = --scrim-extra, solved on top of the ${BASELINE.toFixed(2)} baseline`,
+    ' *   eff a = the single alpha the two-layer stack is equivalent to',
+    ' *   ratio = re-measured over the FULL STACK, every sampled pixel',
     ' */',
   ]).join('\n');
 
-  return HEADER + '\n\n' + rules + '\n\n' + table + '\n';
+  return HEADER(rows) + '\n\n' + base + '\n\n' + rules + '\n\n' + table + '\n';
 }
 
 /* autocrlf is true with no .gitattributes, so the file on disk may be CRLF
    while this tool writes LF. Compare on content, not on line endings. */
 const norm = s => s.replace(/\r\n/g, '\n');
 
-/* ---------------------------------------------------------------------- main */
-
-/* Read the alphas back out of the generated stylesheet — --verify must trust
-   the committed file, not this run's in-memory numbers, or it proves nothing. */
-function readAlphas(css) {
-  const out = new Map();
-  const re = /\.seq\[data-slug="([^"]+)"\]\{--scrim:([0-9.]+)\}/g;
+/* Read the scrim back OUT of the generated stylesheet — --verify must trust the
+   committed file, not this run's in-memory numbers, or it proves nothing. */
+function readScrim(css) {
+  const b = /\.seq\{--scrim-base:([0-9.]+)\}/.exec(css);
+  const extras = new Map();
+  const re = /\.seq\[data-slug="([^"]+)"\]\{--scrim-extra:([0-9.]+)\}/g;
   let m;
-  while ((m = re.exec(css))) out.set(m[1], Number(m[2]));
-  return out;
+  while ((m = re.exec(css))) extras.set(m[1], Number(m[2]));
+  return { base: b ? Number(b[1]) : null, extras };
 }
+
+/* ---------------------------------------------------------------------- main */
 
 (async () => {
   const slugs = frames();
@@ -255,63 +337,120 @@ function readAlphas(css) {
   await page.goto('about:blank');
 
   try {
+    /* ---- --verify: trust only the committed file ---- */
     if (VERIFY) {
       if (!fs.existsSync(OUT)) {
         console.error('no assets/hero-scrim.css — run: node tools/build-scrim.js');
         process.exit(1);
       }
-      const alphas = readAlphas(fs.readFileSync(OUT, 'utf8'));
+      const { base, extras } = readScrim(fs.readFileSync(OUT, 'utf8'));
+      if (base === null) {
+        console.error('assets/hero-scrim.css has no .seq{--scrim-base} rule');
+        process.exit(1);
+      }
+      console.log(`  baseline ${base.toFixed(2)} from the committed stylesheet\n`);
       const results = [];
       let failed = 0;
       for (const slug of slugs) {
-        const a = alphas.get(slug);
-        if (a === undefined) {
-          console.error(`  MISSING  ${slug} has no --scrim rule`);
+        if (!extras.has(slug)) {
+          console.error(`  MISSING  ${slug} has no --scrim-extra rule`);
           failed++; continue;
         }
-        /* An independent re-measure: composite the scrim over EVERY sampled
-           pixel at the committed alpha, then take the p90 of what comes out.
-           This does not reuse the pixel the solve picked. */
-        const m = await measure(page, slug, a);
+        const x = extras.get(slug);
+        /* An independent re-measure of the FULL STACK: baseline then adjustment
+           over EVERY sampled pixel, then the p90 of what comes out. It does not
+           reuse the single pixel the solver was handed. */
+        const m = await measure(page, slug, [base, x]);
         const ratio = ratioFromLum(m.pLum);
-        results.push({ slug, alpha: a, ratio });
+        results.push({ slug, x, ratio });
         const bad = ratio < TARGET;
         if (bad) failed++;
-        console.log(`  ${bad ? 'FAIL' : 'ok  '}  ${slug.padEnd(20)} a=${a.toFixed(2)}  ${ratio.toFixed(2)}:1`);
+        console.log(`  ${bad ? 'FAIL' : 'ok  '}  ${slug.padEnd(20)} ` +
+                    `base ${base.toFixed(2)} + ${fmt(x).padStart(4)}  ${ratio.toFixed(2)}:1`);
       }
-      results.sort((x, y) => x.ratio - y.ratio);
-      console.log(`\n  ${results.length} frames · lowest three: ` +
+      results.sort((a, b) => a.ratio - b.ratio);
+      console.log(`\n  ${results.length} frames · ${results.filter(r => r.x === 0).length} need no adjustment`);
+      console.log('  lowest three: ' +
         results.slice(0, 3).map(r => `${r.slug} ${r.ratio.toFixed(2)}:1`).join(' · '));
       if (failed) {
         console.error(`\n  ${failed} frame(s) below ${TARGET}:1 — the floor does NOT hold.`);
         process.exit(1);
       }
-      console.log(`  floor holds: every frame >= ${TARGET}:1`);
+      console.log(`  floor holds: every frame >= ${TARGET}:1 over the full stack`);
       return;
     }
 
+    /* ---- measure every frame once ---- */
+    const bare = new Map();
+    for (const slug of slugs) {
+      const m = await measure(page, slug, []);
+      if (!m.pPixel) throw new Error(`${slug}: no pixels sampled`);
+      bare.set(slug, m);
+    }
+
+    /* ---- --baselines: the trade-off table BASELINE was chosen from ---- */
+    if (BASELINES) {
+      const dark = slugs.slice().sort((a, b) => bare.get(a).pLum - bare.get(b).pLum)[0];
+      /* sRGB grey with a given relative luminance — the inverse of lum() for a
+         neutral. Used only for the crush readout in the last column. */
+      const greyOf = L => {
+        const inv = v => (v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055);
+        return inv(L) * 255;
+      };
+      console.log(`\n  darkest frame: ${dark} — median sampled luminance ` +
+                  `${bare.get(dark).medLum.toFixed(4)}; scrim colour ${WCAG.lum(SCRIM).toFixed(4)}`);
+      console.log('\n  baseline   need 0   adjustments   its median after baseline');
+      console.log('  --------   ------   -----------   -------------------------');
+      for (let i = 20; i <= 50; i += i < 24 || i >= 40 ? 5 : 1) {
+        const B = i / 100;
+        const xs = slugs.map(s => {
+          const flat = solveFlat(bare.get(s).pPixel);
+          const need = WCAG.lum(WCAG.composite(SCRIM, bare.get(s).pPixel,
+            Math.min(ALPHA_MAX, Math.round((flat + MARGIN) * 100) / 100)));
+          const base = WCAG.composite(SCRIM, bare.get(s).pPixel, B);
+          for (let j = 0; j <= STEPS; j++) {
+            const x = j * ALPHA_STEP;
+            if (WCAG.lum(WCAG.composite(SCRIM, base, x)) <= need + EPS) return Math.round(x * 100) / 100;
+          }
+          return null;
+        });
+        const nz = xs.filter(x => x > 0);
+        /* Crush check: the darkest frame's MEDIAN pixel put through the
+           baseline alone, so the column shows whether the baseline flattens
+           the dark end or floats it. */
+        const g = greyOf(bare.get(dark).medLum);
+        const medAfter = WCAG.lum(WCAG.composite(SCRIM, { r: g, g: g, b: g }, B));
+        console.log(`  ${B.toFixed(2)}       ${String(xs.filter(x => x === 0).length).padStart(2)}       ` +
+          `${nz.length ? Math.min(...nz).toFixed(2) + '-' + Math.max(...nz).toFixed(2) : '   none   '}` +
+          `              ${medAfter.toFixed(4)}`);
+      }
+      console.log('\n  The last column RISES with the baseline: the scrim colour is brighter');
+      console.log('  than the darkest frames, so the baseline floors them rather than');
+      console.log(`  crushing them. Chosen: ${BASELINE.toFixed(2)} — see the note beside BASELINE.`);
+      return;
+    }
+
+    /* ---- solve, then re-measure the whole stack ---- */
     const rows = [];
     for (const slug of slugs) {
-      const bare = await measure(page, slug, 0);
-      if (!bare.pPixel) throw new Error(`${slug}: no pixels sampled`);
-
-      const minAlpha = solveAlpha(bare.pPixel);
-      if (minAlpha === null) {
-        throw new Error(`${slug}: no alpha up to ${ALPHA_MAX} reaches ${TARGET}:1 ` +
-                        `on a p90 pixel of rgb(${bare.pPixel.r},${bare.pPixel.g},${bare.pPixel.b})`);
+      const m = bare.get(slug);
+      const sol = solve(m.pPixel);
+      if (!sol) {
+        throw new Error(`${slug}: no adjustment up to ${ALPHA_MAX} over a ${BASELINE} baseline ` +
+          `reaches ${TARGET}:1 on a p90 pixel of rgb(${m.pPixel.r},${m.pPixel.g},${m.pPixel.b})`);
       }
-      const alpha = Math.min(ALPHA_MAX, Math.round((minAlpha + MARGIN) * 100) / 100);
-
-      /* Re-measure at the chosen alpha the same way --verify will: composite
-         every sampled pixel, take the p90 of the result. The number in the
-         table is therefore the number the page will actually show. */
-      const after = await measure(page, slug, alpha);
+      /* Re-measure the stack exactly as --verify will: baseline then adjustment
+         over every sampled pixel, p90 of the result. The number in the table is
+         therefore the number the page will actually show. */
+      const after = await measure(page, slug, [BASELINE, sol.extra]);
       const ratio = ratioFromLum(after.pLum);
-
-      rows.push({ slug, pLum: bare.pLum, meanLum: bare.meanLum, maxLum: bare.maxLum,
-                  bareRatio: ratioFromLum(bare.pLum), minAlpha, alpha, ratio,
-                  sampled: bare.sampled, size: `${bare.w}x${bare.h}` });
-      console.log(`  ${slug.padEnd(20)} p90 ${bare.pLum.toFixed(4)}  a ${alpha.toFixed(2)}  ${ratio.toFixed(2)}:1`);
+      if (ratio < TARGET) {
+        throw new Error(`${slug}: stack re-measured at ${ratio.toFixed(2)}:1, below ${TARGET}`);
+      }
+      rows.push({ slug, pLum: m.pLum, bareRatio: ratioFromLum(m.pLum),
+                  flat: sol.flat, extra: sol.extra, ratio,
+                  effective: 1 - (1 - BASELINE) * (1 - sol.extra) });
+      console.log(`  ${slug.padEnd(20)} p90 ${m.pLum.toFixed(4)}  +${fmt(sol.extra).padStart(4)}  ${ratio.toFixed(2)}:1`);
     }
 
     const css = render(rows);
@@ -329,17 +468,14 @@ function readAlphas(css) {
 
     fs.writeFileSync(OUT, css);
 
-    const low = rows.slice().sort((a, b) => a.ratio - b.ratio).slice(0, 3);
-    const heavy = rows.slice().sort((a, b) => b.alpha - a.alpha).slice(0, 3);
-    const as = rows.map(r => r.alpha);
+    const low   = rows.slice().sort((a, b) => a.ratio - b.ratio).slice(0, 3);
+    const heavy = rows.slice().sort((a, b) => b.extra - a.extra).slice(0, 3);
+    const nz    = rows.filter(r => r.extra > 0).map(r => r.extra);
     console.log(`\n  wrote assets/hero-scrim.css · ${rows.length} frames`);
-    console.log(`  alpha ${Math.min(...as).toFixed(2)} – ${Math.max(...as).toFixed(2)}` +
-                `  ·  heaviest: ${heavy.map(r => `${r.slug} ${r.alpha.toFixed(2)}`).join(', ')}`);
+    console.log(`  baseline ${BASELINE.toFixed(2)} · ${rows.length - nz.length} need no adjustment · ` +
+      `adjustment ${nz.length ? Math.min(...nz).toFixed(2) + ' – ' + Math.max(...nz).toFixed(2) : 'none'}`);
+    console.log(`  heaviest: ${heavy.map(r => `${r.slug} +${fmt(r.extra)}`).join(', ')}`);
     console.log(`  lowest ratios: ${low.map(r => `${r.slug} ${r.ratio.toFixed(2)}:1`).join(', ')}`);
-    if (low[0].ratio < TARGET) {
-      console.error(`\n  ${low[0].slug} lands at ${low[0].ratio.toFixed(2)}:1 — below ${TARGET}.`);
-      process.exit(1);
-    }
   } finally {
     await browser.close();
   }
