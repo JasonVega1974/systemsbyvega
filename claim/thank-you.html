@@ -49,13 +49,13 @@
   .ty-giveup{display:none}
   .ty-giveup.on{display:block}
 
-  /* Sign-in. Deliberately minimal — 3c owns the real auth surface, and two
-     competing modals would be worse than one plain form. */
-  .ty-form{max-width:340px;margin:18px 0 0}
-  .ty-form label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 5px}
-  .ty-form input{width:100%;padding:10px 12px;font:inherit;font-size:15px;border:1px solid var(--hair);border-radius:8px;background:#fff;margin:0 0 14px}
-  .ty-form input:focus-visible{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
-  .ty-err{font-size:14px;color:#B3261E;margin:0 0 12px;min-height:1.2em}
+  /* The masked address the sign-in link went to. Monospaced because it is a
+     thing to COMPARE against what they typed, not prose to read past. */
+  .ty-addr{font-family:var(--mono);font-size:14px;color:var(--ink);word-break:break-all}
+  /* Every optional line is hidden until the lookup actually supplies it —
+     an empty label is worse than no label. */
+  .ty-opt{display:none}
+  .ty-opt.on{display:block}
   .ty-nav{border-top:1px solid var(--hair);padding:22px 0 40px;font-family:var(--mono);font-size:12px}
 </style>
 <!-- Vercel Analytics. Same-origin, cookieless, and defer so it never
@@ -111,28 +111,40 @@
   </div>
 
   <!-- ready -->
+  <!-- NOTHING HERE LINKS TO /admin/, and that is deliberate. The buyer paid
+       before an account existed; the webhook created one from the address they
+       typed at checkout and mailed them a sign-in link. They have no password,
+       so a button marked "Edit your business info" would send them to a form
+       they cannot fill in — the most dispiriting possible end to a purchase.
+       The email is the only door they have, so the page points at the email.
+       (Task 7b gives /admin/ a link-based entry; this copy is correct either
+       way, because the link in their inbox is still how they get in.) -->
   <div data-state="ready">
     <div class="ty-panel">
       <p class="ty-label">Your territory</p>
       <p class="ty-terr" id="r-terr"></p>
-      <p class="ty-note" style="margin:0 0 14px" id="r-biz"></p>
-      <p class="ty-label" style="margin:0 0 4px">Your site &mdash; live now</p>
-      <p class="ty-mono"><a class="link" id="r-web" href="/" rel="noopener"></a></p>
+      <p class="ty-note ty-opt" style="margin:0 0 14px" id="r-biz"></p>
+      <div class="ty-opt" id="r-web-wrap">
+        <p class="ty-label" style="margin:0 0 4px">Your site &mdash; live now</p>
+        <p class="ty-mono"><a class="link" id="r-web" href="/" rel="noopener"></a></p>
+      </div>
     </div>
     <p class="ty-label">What happens next</p>
     <ol class="ty-steps">
-      <li><b>Visit your site.</b> It is live right now at the address above,
-        wearing example content until you make it yours.</li>
-      <!-- href works without the tenant too: /admin/ resolves the operator's
-           own tenants from their sign-in, and ?tenant= is only a hint. The JS
-           below adds it so a buyer with several territories lands on the right
-           one. -->
-      <li><b>Make it yours.</b> <a class="link" id="r-admin" href="/admin/">Edit
-        your business info</a> &mdash; sign in with the account you created at
-        checkout. Changes show on your site within a minute.</li>
+      <li><b>Check your email.</b> Your sign-in link is on its way<span id="r-to"></span>.
+        Opening it takes you straight in &mdash; there is no password to invent
+        or remember.
+        <!-- The masked address is the only way a buyer who mistyped their
+             email will ever find out. Shown even though it is redundant for
+             everyone else. -->
+        <p class="ty-addr ty-opt" id="r-hint" style="margin:8px 0 0"></p>
+      </li>
+      <li><b>Make it yours.</b> That link opens your dashboard, where you edit
+        your business info. Changes show on your site within a minute.</li>
     </ol>
     <p class="ty-note">Your payment receipt comes from Stripe separately.
-      Wrong city or business name? Email
+      Nothing in your inbox after a few minutes &mdash; or wrong city, business
+      name or email address? Email
       <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>
       and we will fix it.</p>
   </div>
@@ -143,6 +155,10 @@
       <p style="margin:0 0 8px"><b>Payment received.</b></p>
       <p class="ty-note" style="margin:0">We are setting up your territory now.
         This page updates on its own.</p>
+      <div class="ty-opt" id="p-hint-wrap" style="margin-top:14px">
+        <p class="ty-label" style="margin:0 0 4px">Your sign-in link goes to</p>
+        <p class="ty-addr" id="p-hint"></p>
+      </div>
     </div>
     <p class="ty-note" id="p-note" role="status">Usually a second or two&hellip;</p>
     <div class="ty-giveup" id="p-give-up">
@@ -178,25 +194,15 @@
       <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
   </div>
 
-  <!-- signed out -->
-  <div data-state="signin">
-    <div class="ty-panel">
-      <p style="margin:0 0 8px"><b>Sign in to view your order.</b></p>
-      <p class="ty-note" style="margin:0">Use the account you created at checkout.
-        Your purchase is safe either way &mdash; this page only reads it.</p>
-    </div>
-    <form class="ty-form" id="si-form" novalidate>
-      <label for="si-email">Email</label>
-      <input id="si-email" type="email" autocomplete="email" required>
-      <label for="si-pass">Password</label>
-      <input id="si-pass" type="password" autocomplete="current-password" required>
-      <p class="ty-err" id="si-err" role="alert"></p>
-      <button class="btn btn-pri btn-block" type="submit" id="si-go">Sign in</button>
-    </form>
-    <p class="ty-note" style="margin-top:16px">Trouble signing in? Email
-      <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>
-      with your payment receipt and we will confirm your order by hand.</p>
-  </div>
+  <!-- There is no sign-in state any more, and its absence is the point of this
+       change. It asked for an email and a PASSWORD, and under Stripe-first the
+       buyer standing here has neither an account nor a password — the webhook
+       is still creating the one and there has never been the other. The form
+       could not succeed, and it was shown to every buyer, so the ordinary
+       outcome of a successful purchase was a login box that rejected them.
+       /api/verify-session no longer demands a token: the Stripe session id in
+       the URL is the proof, and it answers anyone holding one with a
+       deliberately thin view of their own order. -->
 
   <!-- not found / error -->
   <div data-state="error">
@@ -246,12 +252,12 @@ window.SBV_CONFIG = {
 
   /* NO supabase-js, on purpose. assets/sbv.js:5 already records the reasoning
      for this codebase: pulling the SDK in to make a couple of HTTP calls would
-     outweigh every other byte on the page. Sign-in is one POST to
-     /auth/v1/token and the session is a JSON blob in localStorage.
+     outweigh every other byte on the page.
 
-     The storage key and shape deliberately match what supabase-js writes, so
-     when 3c adds the real auth surface — with or without the SDK — a session
-     created here is already valid to it. */
+     This page does not sign anybody in — it only READS a session that some
+     other page put in localStorage, and works perfectly well without one. The
+     storage key and shape are supabase-js's, so whichever surface created the
+     session, the token is where this expects it. */
   var CFG = window.SBV_CONFIG;
   /* Derived from the hostname rather than a regex on the whole URL. The regex
      form only matched https://<ref>.supabase.co and fell back to '' for
@@ -292,19 +298,24 @@ window.SBV_CONFIG = {
   var VALID_SID = /^cs_[A-Za-z0-9_]{8,120}$/.test(sid);
 
   var polls = 0;
+  var retriedAnonymously = false;
   /* 3s x 12 = 36s. Long enough for a Stripe webhook retry to land, short
      enough that nobody watches a spinner past the point of usefulness. */
   var MAX_POLLS = 12;
   var POLL_MS = 3000;
 
+  /* The token is OFFERED, never required. A buyer who has just paid has no
+     account yet, so the common case here is no token at all; the endpoint
+     answers that with a limited view of their own order keyed on the session
+     id in the URL. An operator who happens to be signed in already — a second
+     territory, a reopened tab — sends the token and gets the full view, which
+     is the only way this page ever learns the web address. */
   function verify() {
     var s = session();
-    if (!s) {
-      show('signin', 'Sign in to view your order', 'Your purchase is safe — this page only reads it.');
-      return;
-    }
+    var headers = {};
+    if (s) headers.Authorization = 'Bearer ' + s.access_token;
     fetch('/api/verify-session?session_id=' + encodeURIComponent(sid), {
-      headers: { Authorization: 'Bearer ' + s.access_token },
+      headers: headers,
       cache: 'no-store'
     }).then(function (r) {
       return r.json().catch(function () { return {}; })
@@ -316,15 +327,39 @@ window.SBV_CONFIG = {
     });
   }
 
+  /* Fill an optional line, or leave it hidden. Called with everything the
+     lookup might not have supplied — the limited answer has no web address and
+     no business name, the full one has no masked email — so "missing" is the
+     normal case for roughly half of these on any given load. */
+  function fill(id, value) {
+    var el = $(id);
+    if (!el) return false;
+    var has = !!(value && String(value).trim());
+    el.textContent = has ? value : '';
+    el.classList.toggle('on', has);
+    return has;
+  }
+
+  /* "DJ — Boise, ID", degrading one piece at a time. niche_name is the catalog
+     label and the slug is the fallback; if neither survived the lookup the
+     heading is still a true sentence rather than an empty line. */
+  function territory(b) {
+    var name = b.niche_name || (b.niche_slug || '').replace(/-/g, ' ');
+    var where = b.city ? b.city + (b.state ? ', ' + b.state : '') : '';
+    if (name && where) return name + ' — ' + where;
+    return name || where || 'Your territory';
+  }
+
   function render(res) {
     var b = res.body || {};
 
     if (res.status === 401) {
-      /* The token was rejected — expired, or from another project. Clear it so
-         the form is not fighting a stale value. */
+      /* Should not happen any more: verify-session stopped demanding a token.
+         If it ever does, the token we sent is the only thing that could have
+         caused it, so drop it and try once as an anonymous caller rather than
+         showing the buyer an error about an account they may not have. */
       try { localStorage.removeItem(STORE); } catch (e) {}
-      show('signin', 'Sign in to view your order', 'Your purchase is safe — this page only reads it.');
-      return;
+      if (!retriedAnonymously) { retriedAnonymously = true; verify(); return; }
     }
 
     if (res.status === 404 || res.status === 400) {
@@ -346,24 +381,37 @@ window.SBV_CONFIG = {
     }
 
     if (b.status === 'ready') {
-      /* niche_name is the catalog label; the slug is the fallback. */
-      var terr = b.niche_name || (b.niche_slug || '').replace(/-/g, ' ');
-      if (b.city) terr += ' — ' + b.city + (b.state ? ', ' + b.state : '');
-      $('#r-terr').textContent = terr;
-      $('#r-biz').textContent = b.business_name || '';
+      /* The generic headline stands on its own: every line below it is
+         optional, and on a lookup that returned almost nothing the buyer still
+         reads "your territory is claimed" rather than a page of blanks. */
+      $('#r-terr').textContent = territory(b);
+      fill('#r-biz', b.business_name);
+
+      /* Only the full answer carries the web address. The limited one leaves
+         it out on purpose — it is the tenant id, and the buyer gets it in the
+         email instead — so the whole block goes away rather than showing an
+         empty link. */
       var web = b.web_address || '';
-      $('#r-web').textContent = web;
-      if (web) $('#r-web').setAttribute('href', 'https://' + web + '/');
-      if (b.client_id) {
-        $('#r-admin').setAttribute('href',
-          '/admin/?tenant=' + encodeURIComponent(b.client_id));
+      $('#r-web-wrap').classList.toggle('on', !!web);
+      if (web) {
+        $('#r-web').textContent = web;
+        $('#r-web').setAttribute('href', 'https://' + web + '/');
       }
+
+      /* " to j•••@example.com", or nothing. Written into a span inside the
+         sentence so the sentence reads correctly without it. */
+      $('#r-to').textContent = b.email_hint ? ' to the address you gave us' : '';
+      fill('#r-hint', b.email_hint);
+
       show('ready', 'Your territory is claimed',
         'That category is yours in that city for as long as your account is active.');
       return;
     }
 
-    if (b.status === 'blocked') {
+    /* 'blocked' is the signed-in wording; 'attention' is what the limited
+       answer says instead, which deliberately does not name the reason. Both
+       mean the same thing to the buyer: a person is already on it. */
+    if (b.status === 'blocked' || b.status === 'attention') {
       $('#b-msg').textContent = b.message || '';
       show('blocked', 'We need to sort something out', '');
       return;
@@ -376,6 +424,8 @@ window.SBV_CONFIG = {
 
     /* processing — the webhook has not landed yet. Poll, but not forever:
        an endless spinner is worse than an honest "check your email". */
+    $('#p-hint-wrap').classList.toggle('on', !!b.email_hint);
+    if (b.email_hint) $('#p-hint').textContent = b.email_hint;
     show('processing', 'Payment received',
       'We are setting up your territory now.');
     polls++;
@@ -388,47 +438,6 @@ window.SBV_CONFIG = {
       $('#p-give-up').classList.add('on');
     }
   }
-
-  /* ---- sign-in ---------------------------------------------------------- */
-  var form = $('#si-form');
-  form.addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    var btn = $('#si-go');
-    var err = $('#si-err');
-    err.textContent = '';
-    btn.disabled = true;
-    btn.textContent = 'Signing in…';
-
-    fetch(CFG.url + '/auth/v1/token?grant_type=password', {
-      method: 'POST',
-      headers: { apikey: CFG.key, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: $('#si-email').value.trim(), password: $('#si-pass').value })
-    }).then(function (r) {
-      return r.json().catch(function () { return {}; })
-        .then(function (b) { return { ok: r.ok, body: b }; });
-    }).then(function (out) {
-      btn.disabled = false;
-      btn.textContent = 'Sign in';
-      if (!out.ok || !out.body.access_token) {
-        /* Deliberately not "no account with that email" — that would confirm
-           which addresses exist to anyone who asks. */
-        err.textContent = 'That email and password did not match. Try again.';
-        return;
-      }
-      try {
-        localStorage.setItem(STORE, JSON.stringify(out.body));
-      } catch (e) { /* private mode — the token below still works this once */ }
-      /* One clean state: verify immediately with the token we just got, rather
-         than reloading and re-reading storage. */
-      polls = 0;
-      show('loading', 'Checking your order…', 'One moment.');
-      verify();
-    }).catch(function () {
-      btn.disabled = false;
-      btn.textContent = 'Sign in';
-      err.textContent = 'We could not reach the sign-in server. Try again in a moment.';
-    });
-  });
 
   /* ---- boot ------------------------------------------------------------- */
   /* location.href, not "#". A bare hash drops session_id, so the reload would

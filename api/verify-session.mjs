@@ -18,14 +18,46 @@
    round trip. If this endpoint ever grows a write, that reasoning has been
    lost and the bug is back.
 
-   ── WHY IT REQUIRES A SIGN-IN ──────────────────────────────────────────────
-   A Checkout Session id is high-entropy and unguessable, but it travels in a
-   URL: it lands in browser history, in a screenshot, in a pasted link. Since
-   buying already requires an account (auth before payment), asking for that
-   same account here costs a signed-in buyer nothing and stops a leaked URL
-   from telling a stranger what somebody bought and where they operate.
+   ── TWO ANSWERS, AND WHY THERE ARE TWO ─────────────────────────────────────
+   This endpoint used to require a sign-in from every caller, on this reasoning:
 
-   The caller must own the session, not merely be signed in. See authorise().
+     A Checkout Session id is high-entropy and unguessable, but it travels in a
+     URL: it lands in browser history, in a screenshot, in a pasted link. Since
+     buying already requires an account (auth before payment), asking for that
+     same account here costs a signed-in buyer nothing and stops a leaked URL
+     from telling a stranger what somebody bought and where they operate.
+
+   The first half of that is still true. The second half is not: buying no
+   longer requires an account. create-checkout takes an email address, parks an
+   intake row with a NULL user_id, and the account is created from that address
+   by the webhook AFTER the payment clears. So at the moment the buyer lands
+   here there is nothing to sign in to, and demanding a sign-in tells a paying
+   customer to use an account that does not exist yet.
+
+   The answer is not to drop the check but to split the answer in two:
+
+     THE FULL ANSWER (fullAnswer) is unchanged and still needs a signed-in
+     caller who owns the session. client_id, the web address, the business
+     name, the tier: everything an operator needs and nobody else should have.
+
+     THE LIMITED ANSWER (limitedAnswer) is what a bare session id buys. The id
+     is the only proof a buyer can hold before their account exists, and it is
+     good proof — unguessable, and Stripe handed it to them a second ago. But
+     because it also leaks the way a URL leaks, the limited answer is an
+     ALLOW-LIST of four things: the niche's display name, the city and state,
+     the buyer's own email MASKED so they can tell whether they mistyped it,
+     and a coarse status. It carries no client_id, no web address, no user id,
+     no amount, no payment intent, and nothing out of sbv_blocked_purchases
+     beyond "a person needs to look at this".
+
+   So a leaked URL still cannot tell a stranger who to impersonate or where to
+   sign in. It can tell them a product category and a city, which is the price
+   of letting an account-less buyer see their own order at all.
+
+   Sign-in is never demanded now, only honoured. A caller with a good token and
+   a session they own gets the full answer; every other caller holding a valid
+   session id gets the limited one. The one refusal left is a signed-in caller
+   asking about somebody ELSE's session — see authorise().
    ========================================================================= */
 
 import {
@@ -56,32 +88,34 @@ async function handler(request) {
     return json({ ok: false, error: 'bad_session_id' }, 400);
   }
 
+  /* Identity is OPTIONAL, and this is the only thing that changed about it. A
+     missing or rejected token is not an error here — it is the ordinary state
+     of a buyer two seconds after paying — so it yields userId = null and the
+     limited answer. An UNREACHABLE auth server is a different thing: that is
+     us being broken, and quietly handing a signed-in operator the stripped
+     down view because GoTrue timed out would hide the outage. */
   const who = await userFromRequest(request);
-  if (who.error) {
-    if (who.error.startsWith('auth_unreachable')) {
-      console.error('verify-session:', who.error);
-      return json({ ok: false, error: 'auth_unreachable' }, 503);
-    }
-    /* The buyer has paid at this point, so the page must not imply otherwise.
-       "Sign in to see it", never "we cannot find your order". */
-    return json({
-      ok: false, error: 'not_signed_in',
-      message: 'Sign in with the account you bought with to see your order.',
-    }, 401);
+  if (who.error && who.error.startsWith('auth_unreachable')) {
+    console.error('verify-session:', who.error);
+    return json({ ok: false, error: 'auth_unreachable' }, 503);
   }
-  const userId = who.user.id;
+  const userId = who.error ? null : who.user.id;
 
   const q = (v) => encodeURIComponent(String(v));
 
   /* Read everything this session could be recorded in. Any one of them may be
      absent depending on how far the webhook got — that is the whole point of
-     the status this endpoint returns. */
+     the status this endpoint returns.
+
+     operator_email is read for the masked hint in the limited answer. It is
+     the only identity an intake row carries before the webhook runs, and it
+     never leaves this file whole. */
   let intake, billing, blocked;
   try {
     [intake, billing, blocked] = await Promise.all([
       pgSelectOne('sbv_intake',
         'stripe_session_id=eq.' + q(sessionId) +
-        '&select=id,user_id,status,niche_slug,client_id,business_name,city_label,state_code,tier'),
+        '&select=id,user_id,status,niche_slug,client_id,business_name,city_label,state_code,tier,operator_email'),
       pgSelectOne('sbv_billing',
         'stripe_session_id=eq.' + q(sessionId) +
         '&select=user_id,client_id,status,amount_cents'),
@@ -101,20 +135,37 @@ async function handler(request) {
     return json({ ok: false, error: 'unknown_session' }, 404);
   }
 
-  if (!authorise(userId, intake, billing, blocked)) {
-    /* 404, not 403. Telling a stranger "that session exists but is not yours"
-       confirms the session is real, which is most of what they wanted to know. */
+  const owners = recordedOwners(intake, billing, blocked);
+
+  if (userId && authorise(userId, owners)) {
+    return fullAnswer(intake, billing, blocked, q);
+  }
+
+  /* The one refusal left. Somebody IS recorded as owning this purchase and the
+     signed-in caller is not them, so the session id in their hands did not
+     come to them from Stripe. 404, not 403: telling a stranger "that session
+     exists but is not yours" confirms the session is real, which is most of
+     what they wanted to know.
+
+     Gated on userId on purpose. An anonymous caller does not fail this. They
+     are the buyer whose account was created by the webhook a moment ago and
+     who has not opened the sign-in email yet, which is the normal case rather
+     than the attack — and the limited answer is sized for a stranger anyway. */
+  if (userId && owners.some((o) => o && o !== userId)) {
     console.warn('verify-session: user', userId, 'asked about a session they do not own');
     return json({ ok: false, error: 'unknown_session' }, 404);
   }
 
-  /* ---- the answer -------------------------------------------------------
-     Four states, named from the buyer's point of view rather than the
-     database's. In particular there is no "awaiting payment": by the time
-     anyone loads the thank-you page they have paid, and the webhook simply may
-     not have landed yet. Calling that "pending payment" would tell a paying
-     customer their payment had not gone through. */
+  return limitedAnswer(intake, billing, blocked, q);
+}
 
+/* ---- the full answer ------------------------------------------------------
+   Unchanged from when it was the only answer. Four states, named from the
+   buyer's point of view rather than the database's. In particular there is no
+   "awaiting payment": by the time anyone loads the thank-you page they have
+   paid, and the webhook simply may not have landed yet. Calling that "pending
+   payment" would tell a paying customer their payment had not gone through. */
+async function fullAnswer(intake, billing, blocked, q) {
   if (blocked && !blocked.resolved) {
     return json({
       ok: true,
@@ -143,9 +194,7 @@ async function handler(request) {
   if (billing && billing.client_id) {
     let tenant = null;
     try {
-      tenant = await pgSelectOne('sbv_tenants',
-        'client_id=eq.' + q(billing.client_id) +
-        '&select=client_id,business_name,niche_slug,is_active');
+      tenant = await lookupTenant(billing.client_id, q);
     } catch (e) {
       console.error('verify-session: tenant lookup failed:', e.message);
       return json({ ok: false, error: 'lookup_failed' }, 503);
@@ -157,14 +206,7 @@ async function handler(request) {
          first screen a buyer sees after paying. Sent as a separate field rather
          than replacing niche_slug, which is still the stable key. Best-effort:
          a lookup failure costs a nicer label, not the confirmation. */
-      let nicheName = null;
-      try {
-        const n = await pgSelectOne('sbv_niches',
-          'slug=eq.' + q(tenant.niche_slug) + '&select=name');
-        nicheName = n && n.name;
-      } catch (e) {
-        console.warn('verify-session: niche name lookup failed:', e.message);
-      }
+      const nicheName = await lookupNicheName(tenant.niche_slug, q);
 
       return json({
         ok: true,
@@ -191,11 +233,142 @@ async function handler(request) {
     status: 'processing',
     city: intake ? intake.city_label : null,
     state: intake ? intake.state_code : null,
-    message:
-      'Payment received. We are setting up your territory now — this page ' +
-      'updates on its own, and your confirmation email is on its way either way.',
+    message: PROCESSING_MESSAGE,
     support: SUPPORT_EMAIL,
   });
+}
+
+/* ---- the limited answer ---------------------------------------------------
+   Everything a bare session id buys, and nothing else. Built by NAMING each
+   field rather than by deleting fields from the full answer: a deny-list here
+   would leak the next column somebody adds to sbv_intake, and this object goes
+   to whoever is holding a URL.
+
+   THE STATUS VOCABULARY IS SMALLER than the full answer's on purpose. Three
+   words — processing, ready, attention — and a refund collapses into
+   "attention" rather than earning one of its own. "This order was refunded" is
+   a fact about somebody's purchase history; the buyer it belongs to learns it
+   from their email and from a signed-in page, not from a link. */
+async function limitedAnswer(intake, billing, blocked, q) {
+  const base = {
+    ok: true,
+    niche_name: await displayNiche(intake, q),
+    city: intake ? intake.city_label : null,
+    state: intake ? intake.state_code : null,
+    /* From sbv_intake only. sbv_blocked_purchases carries a buyer_email too,
+       but nothing out of that table is in the allow-list. */
+    email_hint: maskEmail(intake && intake.operator_email),
+    support: SUPPORT_EMAIL,
+  };
+
+  if ((blocked && !blocked.resolved) || (billing && billing.status === 'refunded')) {
+    return json({
+      ...base,
+      status: 'attention',
+      message:
+        'Your payment went through, but this order needs a person to look at ' +
+        'it. Nothing is lost — we have been alerted and will email you today.',
+    });
+  }
+
+  let live = false;
+  if (billing && billing.client_id) {
+    try {
+      const tenant = await lookupTenant(billing.client_id, q);
+      live = !!(tenant && tenant.is_active);
+    } catch (e) {
+      /* Not fatal the way it is in the full answer: that answer is BUILT out
+         of the tenant row, this one only asks it a yes/no question. Saying
+         "still setting up" for one more poll is the honest fallback. */
+      console.warn('verify-session: tenant lookup failed:', e.message);
+    }
+  }
+
+  if (live) {
+    return json({
+      ...base,
+      status: 'ready',
+      message:
+        'Your territory is claimed. Your sign-in link and your web address ' +
+        'are in the email we just sent you — open that to get in.',
+    });
+  }
+
+  return json({ ...base, status: 'processing', message: PROCESSING_MESSAGE });
+}
+
+const PROCESSING_MESSAGE =
+  'Payment received. We are setting up your territory now — this page ' +
+  'updates on its own, and your confirmation email is on its way either way.';
+
+/* ---- lookups --------------------------------------------------------------
+   Shared by both answers so neither can drift into reading a column the other
+   does not. */
+
+function lookupTenant(clientId, q) {
+  return pgSelectOne('sbv_tenants',
+    'client_id=eq.' + q(clientId) +
+    '&select=client_id,business_name,niche_slug,is_active');
+}
+
+async function lookupNicheName(slug, q) {
+  if (!slug) return null;
+  try {
+    const n = await pgSelectOne('sbv_niches', 'slug=eq.' + q(slug) + '&select=name');
+    return (n && n.name) || null;
+  } catch (e) {
+    console.warn('verify-session: niche name lookup failed:', e.message);
+    return null;
+  }
+}
+
+/* The label for the limited answer. Falls back to the slug with its hyphens
+   opened out, because a buyer shown nothing at all cannot tell whether we
+   found their order. The slug carries the same public product category the
+   display name does, so this is a formatting fallback, not a second field. */
+async function displayNiche(intake, q) {
+  const slug = (intake && intake.niche_slug) || null;
+  const name = await lookupNicheName(slug, q);
+  if (name) return name;
+  return slug ? slug.replace(/-/g, ' ') : null;
+}
+
+/* Enough of an address for a buyer to recognise their own, or to spot the typo
+   that is sending their sign-in link into a void, and not enough to mail
+   anybody.
+ *
+ * The mask is a FIXED three characters whatever the local part's length, so
+ * the length is not leaked either. The domain is kept whole: "it went to my
+ * gmail" is the half a buyer actually checks, and a domain on its own
+ * addresses nobody. A one-character local part is therefore shown in full;
+ * there is no way to hint at an address that short without doing so. Returns
+ * null for anything that is not an address, so a junk value in the column
+ * becomes an absent hint rather than an echo of itself. */
+export function maskEmail(value) {
+  const s = String(value == null ? '' : value).trim();
+  if (/\s/.test(s)) return null;
+  const at = s.lastIndexOf('@');
+  if (at < 1 || at === s.length - 1) return null;
+  const domain = s.slice(at + 1);
+  if (!domain.includes('.')) return null;
+  return s.slice(0, 1) + '•••@' + domain;
+}
+
+/* The owner column of every row that EXISTS, nulls included.
+ *
+ * The null is the point. An intake row whose user_id is null is not a row with
+ * a missing answer, it is a row that says "nobody owns this yet" — the buyer
+ * paid before the account existed. The previous version ran .filter(Boolean)
+ * over the same three values, which collapsed "this row is absent" and "this
+ * row exists and is unattributed" into each other, so every pay-first purchase
+ * looked like a payment made outside our flow and got a 404. Those are
+ * different facts and the caller branches on both. */
+function recordedOwners(intake, billing, blocked) {
+  const out = [];
+  for (const row of [intake, billing, blocked]) {
+    if (row) out.push(row.user_id || null);
+  }
+  return out;
 }
 
 /* Does this caller own this session?
@@ -203,12 +376,17 @@ async function handler(request) {
  * Checked against every row that could carry an owner, because which rows
  * exist depends on how far the webhook got. A session whose intake says one
  * user and whose billing says another is not a case that should exist; if it
- * ever does, neither of them gets an answer here. */
-function authorise(userId, intake, billing, blocked) {
-  const owners = [intake && intake.user_id, billing && billing.user_id, blocked && blocked.user_id]
-    .filter(Boolean);
-  /* No recorded owner at all — a payment made outside our flow. The webhook
-     has already alerted a human about it; this endpoint says nothing. */
-  if (!owners.length) return false;
-  return owners.every((o) => o === userId);
+ * ever does, neither of them gets an answer here.
+ *
+ * UNCHANGED in what it lets through: still needs at least one recorded owner,
+ * and still needs every recorded owner to be this caller. Unattributed rows
+ * are skipped rather than counted against the caller, which is exactly what
+ * .filter(Boolean) did before. What changed is upstream — the caller now tells
+ * "no recorded owner at all" apart from "not yours" instead of turning both
+ * into the same 404. */
+function authorise(userId, owners) {
+  if (!userId) return false;
+  const known = owners.filter(Boolean);
+  if (!known.length) return false;
+  return known.every((o) => o === userId);
 }
