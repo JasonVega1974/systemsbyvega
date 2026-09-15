@@ -577,10 +577,11 @@
     'is-website-only': {
       get:  'The site white-labelled to your business name, colours and contact details. ' +
             'Domain connected, lead form to your inbox, owner admin panel, setup guide.',
-      terr: 'This one is a website, not a territory — no exclusivity, no city, no registry.',
+      terr: 'One operator per city. The business category and city you claim at checkout ' +
+            'are written to the registry, and are yours for as long as your account is active.',
       price:'$99 one-time',
-      fine: 'Licensed trades and chair-based work are sold as websites, because a territory ' +
-            'would be selling you something we cannot deliver.'
+      fine: 'Licensed trades and chair-based work still need their own licence. A territory ' +
+            'decides who else we sell to, not who is allowed to work in your town.'
     }
   };
 

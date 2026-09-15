@@ -139,5 +139,122 @@ for (const page of PAGES) {
   }
 }
 
-console.log(failures ? `\n${failures} failure(s)` : `\n${PAGES.length} page(s) + projects.json clean`);
+/* ── THE PRICE GUARD ───────────────────────────────────────────────────────
+   The defect this exists to prevent: "$99" is typed by hand ten times on /,
+   twenty-six times on /sites/ and once in the Terms, while the number itself
+   lives in exactly one place — PRICE in assets/catalog-render.js. Change the
+   constant and the prose keeps quoting the old figure, which is the count bug
+   that build-catalog already prevents, wearing a dollar sign.
+
+   Nine BUILD markers would be heavier than the problem and nobody maintains
+   them. So this is the forbidden-string scan turned inside out: on a page that
+   sells, every dollar amount must be one we can NAME the source of. Anything
+   else is a hand-typed price and the gate goes red.
+
+   Three legitimate sources, in descending order of trust:
+     1. PRICE, read out of assets/catalog-render.js — the single source.
+     2. Every amount inside a price_label in assets/data/niches.seed.json —
+        the sibling platforms' own prices, which are data, not prose.
+     3. ALLOWED_PRICES below — the short, reasoned literal list, same shape
+        and same discipline as FORBIDDEN.
+   Budget bands ($5k, $40k+) are not prices: AMOUNT_RE's lookahead rejects an
+   amount followed by k or m, and one followed by a further digit or separator
+   so a partial match can never be read as a whole one. */
+const PRICE_SRC = 'assets/catalog-render.js';
+const SEED_SRC  = 'assets/data/niches.seed.json';
+
+/* Prices that are real, hand-typed, and not ours to source from PRICE. Each
+   carries its reason, because a future reader deserves to know why an amount
+   is waved through rather than guessing. */
+const ALLOWED_PRICES = [
+  ['$25',  'Care Plan, monthly — legal/terms.html section 3 and section 5'],
+  ['$299', 'services/ HTML comment contrasting us with a template shop; not our price'],
+];
+
+/* Every surface whose text a buyer reads before or after paying. Wider than
+   PAGES on purpose: the Terms quote the price too, and a Terms page quoting a
+   stale price is worse than a landing page doing it — and the shared JS at the
+   end renders price strings straight into those same pages, so a figure typed
+   there ships exactly like a figure typed in the HTML. */
+const PRICE_PAGES = [
+  'index.html', 'sites/index.html', 'platforms/index.html',
+  'services/index.html', 'work/index.html', 'about/index.html',
+  'legal/terms.html', 'legal/refund.html', 'legal/privacy.html',
+  'legal/operator-agreement.html',
+  'assets/catalog-render.js', 'assets/sbv.js', 'assets/lang/es.js',
+];
+
+/* Pages that must actually STATE the price. Without this the guard would be
+   satisfied by deleting every mention, which is not the same as being right. */
+const MUST_STATE_PRICE = ['index.html', 'sites/index.html', 'legal/terms.html'];
+
+const AMOUNT_RE = /\$\d[\d,]*(?:\.\d{2})?(?![\d.,]|\s*[kKmM]\b)/g;
+
+{
+  const route = 'price guard';
+  pageFailures = 0;
+
+  let price = null;
+  const priceAbs = path.join(ROOT, PRICE_SRC);
+  if (!fs.existsSync(priceAbs)) {
+    bad(route, `missing price source ${PRICE_SRC}`);
+  } else {
+    const m = fs.readFileSync(priceAbs, 'utf8').match(/\bPRICE\s*=\s*'(\$[\d,]+(?:\.\d{2})?)'/);
+    if (!m) bad(route, `could not read PRICE out of ${PRICE_SRC}`);
+    else price = m[1];
+  }
+
+  /* Seed amounts are data. Reading them here rather than listing them means a
+     sibling's price can change without anybody having to remember this file. */
+  const seedAmounts = new Set();
+  const seedAbs = path.join(ROOT, SEED_SRC);
+  if (!fs.existsSync(seedAbs)) {
+    bad(route, `missing seed ${SEED_SRC}`);
+  } else {
+    let seed;
+    try { seed = JSON.parse(fs.readFileSync(seedAbs, 'utf8')); }
+    catch (e) { bad(route, `${SEED_SRC} is not valid JSON — ${e.message}`); seed = []; }
+    const rows = Array.isArray(seed) ? seed : (seed.niches || []);
+    for (const row of rows) {
+      const label = row && row.price_label;
+      if (typeof label !== 'string') continue;
+      for (const a of label.match(AMOUNT_RE) || []) seedAmounts.add(a);
+    }
+  }
+
+  if (price) {
+    const allowed = new Map();
+    allowed.set(price, `PRICE in ${PRICE_SRC}`);
+    for (const a of seedAmounts) if (!allowed.has(a)) allowed.set(a, `price_label in ${SEED_SRC}`);
+    for (const [a, why] of ALLOWED_PRICES) if (!allowed.has(a)) allowed.set(a, why);
+
+    for (const file of PRICE_PAGES) {
+      const abs = path.join(ROOT, file);
+      if (!fs.existsSync(abs)) { bad(route, `missing file ${file}`); continue; }
+      const html = fs.readFileSync(abs, 'utf8');
+
+      const unsourced = new Map();
+      for (const a of html.match(AMOUNT_RE) || []) {
+        if (allowed.has(a)) continue;
+        unsourced.set(a, (unsourced.get(a) || 0) + 1);
+      }
+      for (const [a, n] of unsourced) {
+        bad(route, `${file} states ${a}${n > 1 ? ' \u00d7' + n : ''} — not ${price} ` +
+                   `(${PRICE_SRC}) and not in the seed or ALLOWED_PRICES`);
+      }
+
+      if (MUST_STATE_PRICE.includes(file) && !html.includes(price)) {
+        bad(route, `${file} never states ${price} — the price guard is not ` +
+                   `satisfied by removing the price`);
+      }
+    }
+  }
+
+  if (pageFailures === 0) {
+    ok(route, `every price on ${PRICE_PAGES.length} surface(s) traces to ${price} or to data`);
+  }
+}
+
+console.log(failures ? `\n${failures} failure(s)`
+                     : `\n${PAGES.length} page(s) + projects.json + the price guard clean`);
 process.exit(failures ? 1 : 0);

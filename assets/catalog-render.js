@@ -409,15 +409,16 @@
      selling line, and naming it invites a support expectation this list is
      not the place to set.
 
-     TERRITORY is not mentioned, and that is not an oversight. Terms section 4
-     says "A website purchase on its own does not include a territory" and the
-     /sites/ FAQ explains the website-only niches exist BECAUSE exclusivity
-     cannot be delivered for them — while the acceptance text every buyer ticks
-     (ACCEPTANCE_TEXTS in api/_shared.mjs) grants "Territory exclusivity ...
-     in this city only", and the webhook, claim flow and the partial unique
-     index behind sbv_claim_city() all enforce it. Those two customer-facing
-     documents contradict each other. Until that is resolved in the legal copy,
-     this list stays silent rather than taking a side on a page that sells. */
+     TERRITORY is not mentioned here, but it IS part of the offer. The old
+     contradiction is gone: Terms section 4, the Refund Policy section 5 and
+     the /sites/ FAQ now all say a purchase includes a marketing territory,
+     matching the acceptance text every buyer ticks (ACCEPTANCE_TEXTS in
+     api/_shared.mjs), the welcome email, and the partial unique index behind
+     sbv_claim_city() that actually enforces it. Territory is carried by the
+     comparison table (row 2) and the registry section rather than by this
+     list, so it is said once in the place that evidences it. Adding it here
+     as an eighth item is now unblocked, but it is a copy decision, not a
+     correctness one. */
   var INCLUDED = [
     ['globe',   'Your site, on your own subdomain',
      'Live at yourbusiness.systemsbyvega.com from the moment you claim — carrying the example content until your first save.'],

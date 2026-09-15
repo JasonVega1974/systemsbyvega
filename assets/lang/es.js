@@ -294,10 +294,10 @@ window.SBV_LANG.es = {
   'A row is written once.': 'Un renglón se escribe una vez.',
   'It cannot be written twice.': 'No se puede escribir dos veces.',
   'The checker reads that row.': 'El verificador lee ese renglón.',
-  'Exclusivity is only worth something if it is written down somewhere you can check. For the two businesses that are open, that row already exists, and the availability checker on each of their sites reads it. That is the whole mechanism — there is no bidding, no renewal auction, and no tier that buys you more of the map.':
-    'La exclusividad solo vale algo si está escrita en un lugar que usted pueda consultar. Para los dos negocios que están abiertos, ese renglón ya existe, y el verificador de disponibilidad de cada sitio lo lee. Ese es todo el mecanismo — no hay pujas, ni subasta de renovación, ni un nivel que le compre más mapa.',
-  'For everything else in the catalog there is nothing to check yet, because there is nothing built. So instead we write down who asked, and for which town. When enough people ask for the same business, that is the one that gets built next — and the people who asked get the first offer on their own city before it is listed publicly.':
-    'Para todo lo demás en el catálogo todavía no hay nada que consultar, porque no hay nada construido. En cambio, anotamos quién lo pidió y para qué pueblo. Cuando suficientes personas piden el mismo negocio, ese es el que se construye después — y quienes lo pidieron reciben la primera oferta sobre su propia ciudad antes de que se publique.',
+  'Exclusivity is only worth something if it is written down somewhere you can check. When you claim a city, the row is written the moment your payment clears, and the availability checker reads that same row. Two people can both see a city as free; only one of them gets the row. That is the whole mechanism — there is no bidding, no renewal auction, and no tier that buys you more of the map.':
+    'La exclusividad solo vale algo si está escrita en un lugar que usted pueda consultar. Cuando usted reclama una ciudad, el renglón se escribe en el momento en que se acredita su pago, y el verificador de disponibilidad lee ese mismo renglón. Dos personas pueden ver la misma ciudad como libre; solo una de ellas se queda con el renglón. Ese es todo el mecanismo — no hay pujas, ni subasta de renovación, ni un nivel que le compre más mapa.',
+  'For the businesses in the catalog that are not built yet, there is no row to claim. So instead we write down who asked, and for which town. When enough people ask for the same business, that is the one that gets built next — and the people who asked get the first offer on their own city before it is listed publicly.':
+    'Para los negocios del catálogo que todavía no están construidos, no hay renglón que reclamar. En cambio, anotamos quién lo pidió y para qué pueblo. Cuando suficientes personas piden el mismo negocio, ese es el que se construye después — y quienes lo pidieron reciben la primera oferta sobre su propia ciudad antes de que se publique.',
   'It does not mean you would be the only person in town allowed to do the work. We cannot grant that and nobody can. Anyone is free to run their own sales, and other companies may operate near you. What you get is exclusivity within the platform, and the tools and training that come with it.':
     'No significa que usted sería la única persona del pueblo autorizada a hacer el trabajo. No podemos otorgar eso y nadie puede. Cualquiera es libre de hacer sus propias ventas, y otras empresas pueden operar cerca de usted. Lo que recibe es exclusividad dentro de la plataforma, junto con las herramientas y la capacitación que la acompañan.',
   'Waiting counts appear only above three. A registry that says one person is waiting argues against the thing it is meant to evidence, and an invented number would be worse than either. Below that, this section carries the mechanism on its own.':
@@ -323,8 +323,6 @@ window.SBV_LANG.es = {
   'Then you don’t need a business.': 'Entonces no necesita un negocio.',
   "Then you don't need a business.": 'Entonces no necesita un negocio.',
   'You need a website.': 'Necesita un sitio web.',
-  'Twenty-three trades, twenty-three sites already built. Pick the one closest to yours and it gets rebuilt under your name, your colours, and your service area. This is a website, not a territory — no exclusivity, no city, no registry.':
-    'Veintitrés oficios, veintitrés sitios ya construidos. Elija el más parecido al suyo y se reconstruye con su nombre, sus colores y su área de servicio. Esto es un sitio web, no un territorio — sin exclusividad, sin ciudad, sin registro.',
   'Launch-ready': 'Listo para lanzar',
   'The site white-labelled to your business name, colours and contact details. Domain connected, lead form to your inbox, owner admin panel, setup guide.':
     'El sitio con la marca de su negocio, sus colores y sus datos de contacto. Dominio conectado, formulario de contacto a su correo, panel de administración y guía de configuración.',
@@ -355,8 +353,8 @@ window.SBV_LANG.es = {
   'For some of these, yes, and it varies enormously by state and city. Where we know a business commonly needs one, the catalog entry says so — but you must check the rules where you live and comply with them yourself. Nothing on this site is legal, tax, or insurance advice.':
     'Para algunos de estos, sí, y varía enormemente según el estado y la ciudad. Cuando sabemos que un negocio suele necesitarla, la entrada del catálogo lo dice — pero usted debe revisar las reglas donde vive y cumplirlas por su cuenta. Nada en este sitio es asesoría legal, fiscal ni de seguros.',
   'Why are some of these websites only?': '¿Por qué algunos son solo sitio web?',
-  'Because a territory would be selling you something we cannot deliver. Plumbing, electrical, heating and air, roofing and general contracting are licensed trades — the licence already decides who can work in your town, so exclusivity from a software vendor would add nothing. Others depend on a shop, a chair, or a particular person. Those we sell as a website, which is the part we can actually hand over.':
-    'Porque un territorio sería venderle algo que no podemos entregar. Plomería, electricidad, calefacción y aire, techos y contratación general son oficios con licencia — la licencia ya decide quién puede trabajar en su pueblo, así que la exclusividad de un proveedor de software no agregaría nada. Otros dependen de un local, una silla o una persona en particular. Esos los vendemos como sitio web, que es la parte que sí podemos entregar.',
+  '“Website only” means the site and the business kit, once — not one of the full platforms like EstateSaleBiz, which come with operator software, a multi-city licence and a monthly fee. It does not mean you get no territory. The business category and city you claim at checkout are yours for as long as your account is active, and we will not sell that same category in that same city to anyone else. What a territory cannot do is let you trade: plumbing, electrical, heating and air, roofing and general contracting are licensed trades, and the licence — not us — decides who can work in your town.':
+    '«Solo sitio web» significa el sitio y el kit del negocio, una sola vez — no una de las plataformas completas como EstateSaleBiz, que incluyen software para el operador, una licencia de varias ciudades y una cuota mensual. No significa que usted no reciba territorio. La categoría de negocio y la ciudad que reclame al pagar son suyas mientras su cuenta esté activa, y no le venderemos esa misma categoría en esa misma ciudad a nadie más. Lo que un territorio no puede hacer es permitirle trabajar: plomería, electricidad, calefacción y aire, techos y contratación general son oficios con licencia, y la licencia — no nosotros — decide quién puede trabajar en su pueblo.',
 
   /* --------------------------------------------------------------- footer */
   'A Kingdom Creatives LLC company · Nampa, Idaho ·': 'Una empresa de Kingdom Creatives LLC · Nampa, Idaho ·',
@@ -392,10 +390,10 @@ window.SBV_LANG.es = {
 
   'The site white-labelled to your business name, colours and contact details. Domain connected, lead form to your inbox, owner admin panel, setup guide.':
     'El sitio con la marca de su negocio, sus colores y sus datos de contacto. Dominio conectado, formulario de contacto a su correo, panel de administración y guía de configuración.',
-  'This one is a website, not a territory — no exclusivity, no city, no registry.':
-    'Este es un sitio web, no un territorio — sin exclusividad, sin ciudad, sin registro.',
-  'Licensed trades and chair-based work are sold as websites, because a territory would be selling you something we cannot deliver.':
-    'Los oficios con licencia y el trabajo que depende de una silla se venden como sitio web, porque un territorio sería venderle algo que no podemos entregar.',
+  'One operator per city. The business category and city you claim at checkout are written to the registry, and are yours for as long as your account is active.':
+    'Un operador por ciudad. La categoría de negocio y la ciudad que usted reclame al pagar quedan escritas en el registro, y son suyas mientras su cuenta esté activa.',
+  'Licensed trades and chair-based work still need their own licence. A territory decides who else we sell to, not who is allowed to work in your town.':
+    'Los oficios con licencia y el trabajo que depende de una silla siguen necesitando su propia licencia. Un territorio decide a quién más le vendemos, no quién puede trabajar en su pueblo.',
 
   'Check it out on garagesalebiz.com →': 'Véalo en garagesalebiz.com →',
   'Check it out on estatesalebiz.com →': 'Véalo en estatesalebiz.com →',
