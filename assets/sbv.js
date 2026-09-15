@@ -578,7 +578,7 @@
       get:  'The site white-labelled to your business name, colours and contact details. ' +
             'Domain connected, lead form to your inbox, owner admin panel, setup guide.',
       terr: 'This one is a website, not a territory — no exclusivity, no city, no registry.',
-      price:'$299 launch-ready · $499 custom',
+      price:'$99 one-time',
       fine: 'Licensed trades and chair-based work are sold as websites, because a territory ' +
             'would be selling you something we cannot deliver.'
     }

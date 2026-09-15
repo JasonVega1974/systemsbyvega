@@ -128,12 +128,12 @@
 
      DELIBERATELY ONE TEXT NODE. assets/i18n.js keys translations off the
      English source string and walks text nodes, so wrapping the figure in a
-     <b> would split "$299 launch-ready · $499 custom" into two nodes and drop
-     the Spanish line that already exists for it. Weight is CSS's job here. */
+     <b> would split "$99 one-time" into two nodes and drop the Spanish line
+     that already exists for it. Weight is CSS's job here. */
   function priceLine(n) {
     var txt = null;
     if (n.status === 'open' && n.price_label) txt = n.price_label;
-    else if (n.status === 'website_only')     txt = '$299 launch-ready · $499 custom';
+    else if (n.status === 'website_only')     txt = '$99 one-time';
     if (!txt) return '';
     return '<p class="card-price">' + esc(txt) + '</p>';
   }
@@ -335,7 +335,7 @@
       '</div>';
   }
 
-  /* WHAT'S INCLUDED — the $299 Launch-Ready deliverables, rendered into a
+  /* WHAT'S INCLUDED — the $99 website deliverables, rendered into a
      BUILD marker on BOTH `/` and `/sites/` so the two surfaces cannot drift.
 
      EVERY LINE BELOW WAS CHECKED AGAINST SOMETHING THAT SHIPS. Nothing here
