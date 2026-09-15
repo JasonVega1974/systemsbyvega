@@ -172,14 +172,23 @@
   </div>
 
   <!-- blocked -->
+  <!-- TWO ORDERS LAND HERE and the static copy has to be true for both. A
+       signed-in buyer whose city was claimed minutes ago gets status
+       "blocked"; anyone holding only the link gets "attention", which the API
+       also uses for an order that was refunded and closed weeks ago. Every
+       specific — the city, the timescale, what we are about to do — lives in
+       #b-msg, which the server writes. An earlier version hard-coded "we will
+       email you today to sort out a refund or another city" HERE, where no
+       server message could override it, so the buyer of a long-settled refund
+       was told a promise nobody was going to keep. -->
   <div data-state="blocked">
     <div class="ty-panel ty-warn">
-      <p style="margin:0 0 8px"><b>Your payment went through.</b></p>
+      <p style="margin:0 0 8px"><b>This order needs a look from us.</b></p>
       <p class="ty-note" style="margin:0" id="b-msg"></p>
     </div>
-    <p class="ty-note">Nothing is lost, and you do not need to do anything right
-      now. We have been alerted and will email you today to sort out a refund or
-      another city. If you would rather reach us first,
+    <p class="ty-note">There is nothing for you to do, and nothing is lost. If
+      you have already heard from us about this order, that email is the
+      current status. If you would rather reach us first,
       <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>.</p>
   </div>
 
@@ -298,7 +307,10 @@ window.SBV_CONFIG = {
   var VALID_SID = /^cs_[A-Za-z0-9_]{8,120}$/.test(sid);
 
   var polls = 0;
+  /* Set once a token has been shown to be the thing causing the refusal. From
+     then on verify() stops offering it for the rest of this page's life. */
   var retriedAnonymously = false;
+  var skipToken = false;
   /* 3s x 12 = 36s. Long enough for a Stripe webhook retry to land, short
      enough that nobody watches a spinner past the point of usefulness. */
   var MAX_POLLS = 12;
@@ -311,7 +323,7 @@ window.SBV_CONFIG = {
      territory, a reopened tab — sends the token and gets the full view, which
      is the only way this page ever learns the web address. */
   function verify() {
-    var s = session();
+    var s = skipToken ? null : session();
     var headers = {};
     if (s) headers.Authorization = 'Bearer ' + s.access_token;
     fetch('/api/verify-session?session_id=' + encodeURIComponent(sid), {
@@ -319,7 +331,9 @@ window.SBV_CONFIG = {
       cache: 'no-store'
     }).then(function (r) {
       return r.json().catch(function () { return {}; })
-        .then(function (b) { return { status: r.status, body: b }; });
+        /* withToken travels with the answer because render() has to know
+           whether the token was OURS to blame — see the retry below. */
+        .then(function (b) { return { status: r.status, body: b, withToken: !!s }; });
     }).then(render).catch(function () {
       show('error', 'Something went wrong', '');
       $('#e-head').textContent = 'We could not reach our server.';
@@ -353,13 +367,44 @@ window.SBV_CONFIG = {
   function render(res) {
     var b = res.body || {};
 
-    if (res.status === 401) {
-      /* Should not happen any more: verify-session stopped demanding a token.
-         If it ever does, the token we sent is the only thing that could have
-         caused it, so drop it and try once as an anonymous caller rather than
-         showing the buyer an error about an account they may not have. */
-      try { localStorage.removeItem(STORE); } catch (e) {}
-      if (!retriedAnonymously) { retriedAnonymously = true; verify(); return; }
+    /* A TOKEN WE SENT CAN NOW CAUSE A 404, which it could not before.
+       create-checkout always parks the intake with user_id null and the
+       webhook backfills the owner from the STRIPE email, so a buyer signed in
+       as one account who types a different address at checkout does not own
+       their own purchase the moment provisioning lands — and neither does
+       anyone using a browser where somebody else is still signed in. The
+       endpoint is right to refuse them the full answer, but the session id in
+       the URL still entitles them to the limited one. Without this the page
+       flips mid-poll from "Payment received" to "it may belong to a different
+       account", which is a horrible thing to show someone who has just paid.
+
+       401 shares the path. It should be unreachable now that the endpoint
+       never demands a token, and if it ever appears the token is the only
+       thing that could have produced it.
+
+       ONCE, and only when a token was actually sent. A 404 from an already
+       anonymous request is a genuinely unknown session and must show the
+       error rather than loop. */
+    if ((res.status === 404 || res.status === 401) && res.withToken && !retriedAnonymously) {
+      retriedAnonymously = true;
+      skipToken = true;
+      /* Cleared for a 401 — expired, or from another project, so worthless.
+         NOT for a 404: that token may be perfectly good and belong to an admin
+         session somebody else in this browser is relying on, and signing them
+         out to render this page would be a rude way to fix it. */
+      if (res.status === 401) { try { localStorage.removeItem(STORE); } catch (e) {} }
+      verify();
+      return;
+    }
+
+    if (res.status === 429) {
+      /* Our own limiter, not a failure. Stop polling and hand over the manual
+         "Check again" rather than spending the rest of the allowance proving
+         the allowance is gone. */
+      $('#p-note').textContent = '';
+      $('#p-give-up').classList.add('on');
+      show('processing', 'Payment received', 'We are setting up your territory now.');
+      return;
     }
 
     if (res.status === 404 || res.status === 400) {

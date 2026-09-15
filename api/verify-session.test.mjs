@@ -125,12 +125,19 @@ globalThis.fetch = async (input, init) => {
 
 /* ------------------------------------------------------------------ helpers */
 
-async function call({ sid = SESSION, token = null } = {}) {
-  const headers = token ? { Authorization: 'Bearer ' + token } : {};
+/* EVERY CALL GETS ITS OWN CLIENT IP UNLESS THE TEST ASKS FOR ONE. The rate
+   limiter's Map is module state and outlives a test, so a shared default
+   bucket would make the suite order-dependent and would eventually trip on
+   nothing but its own test count. A test that cares about the limiter pins the
+   ip and owns that bucket alone. */
+let ipSeq = 0;
+async function call({ sid = SESSION, token = null, ip = null } = {}) {
+  const headers = { 'x-forwarded-for': ip || ('10.1.' + (++ipSeq % 256) + '.' + ipSeq) };
+  if (token) headers.Authorization = 'Bearer ' + token;
   const res = await mod.default.fetch(new Request(
     'https://systemsbyvega.com/api/verify-session?session_id=' + encodeURIComponent(sid),
     { method: 'GET', headers }));
-  return { status: res.status, body: await res.json(), text: null };
+  return { status: res.status, body: await res.json(), headers: res.headers };
 }
 
 /* The absence half of the allow-list. Searches the SERIALISED body, so a
@@ -210,6 +217,28 @@ test('no token + a refunded purchase: folded into "attention", not named', async
   assert.equal(status, 200);
   assert.equal(body.status, 'attention');
   assert.ok(!JSON.stringify(body).includes('refunded'));
+  /* Pinned like every other unauthenticated body. This is the path Fix 3
+     rewrote, and an unpinned body on the path being edited is exactly where a
+     leak would hide. */
+  assert.deepEqual(Object.keys(body).sort(), LIMITED_KEYS);
+  assertNoSecrets(body);
+});
+
+test('the "attention" wording is true for a refund closed weeks ago', async () => {
+  /* It must promise no timescale and no action of ours: the same sentence is
+     read by a buyer blocked ten minutes ago and by one following a link to an
+     order that was settled and refunded last month. */
+  reset(); provisioned();
+  db.sbv_billing[0].status = 'refunded';
+  db.sbv_billing[0].user_id = null;
+  db.sbv_intake[0].user_id = null;
+  const { body } = await call();
+
+  assert.ok(!/today|shortly|within the hour|in a few minutes/i.test(body.message),
+    'the attention message promised a timescale: ' + body.message);
+  assert.ok(!/we will email you today|sort out a refund/i.test(body.message));
+  assert.match(body.message, /already heard from us/);
+  assert.match(body.message, /nothing for you to do/);
 });
 
 test('a rejected token is not a 401 — it falls back to the limited answer', async () => {
@@ -229,6 +258,8 @@ test('no niche row: the slug is opened out rather than shown as nothing', async 
   db.sbv_intake[0].niche_slug = 'bbq-food-truck';
   const { body } = await call();
   assert.equal(body.niche_name, 'bbq food truck');
+  assert.deepEqual(Object.keys(body).sort(), LIMITED_KEYS);
+  assertNoSecrets(body);
 });
 
 /* --------------------------------------------------------- the authenticated */
@@ -329,6 +360,122 @@ test('POST is refused: this endpoint never writes', async () => {
     'https://systemsbyvega.com/api/verify-session?session_id=' + SESSION,
     { method: 'POST' }));
   assert.equal(res.status, 405);
+});
+
+/* -------------------------------------------------------------- rate limit  */
+
+test('the page own twelve polls do not trip the limiter', async () => {
+  /* thank-you.html: one request on load plus eleven at POLL_MS = 3000, so
+     MAX_POLLS = 12 requests inside thirty-three seconds — comfortably inside
+     one sixty-second window. If this ever fails, the limit has been tuned
+     below the traffic the product itself generates. */
+  reset(); unclaimedPurchase();
+  const ip = '203.0.113.11';
+  for (let i = 1; i <= 12; i++) {
+    const { status } = await call({ ip });
+    assert.equal(status, 200, 'poll ' + i + ' of 12 was refused');
+  }
+});
+
+test('three page-lives fit, and the forty-first request is refused', async () => {
+  reset(); unclaimedPurchase();
+  const ip = '203.0.113.12';
+  for (let i = 1; i <= 40; i++) {
+    assert.equal((await call({ ip })).status, 200, 'request ' + i + ' was refused');
+  }
+  const over = await call({ ip });
+  assert.equal(over.status, 429);
+  assert.equal(over.body.error, 'rate_limited');
+  assert.equal(over.headers.get('Retry-After'), '60');
+  /* A 429 says nothing about the order, so there is nothing to leak here. */
+  assert.ok(!('city' in over.body) && !('email_hint' in over.body));
+});
+
+test('one client being throttled does not throttle another', async () => {
+  reset(); unclaimedPurchase();
+  for (let i = 1; i <= 41; i++) await call({ ip: '203.0.113.13' });
+  assert.equal((await call({ ip: '203.0.113.13' })).status, 429);
+  assert.equal((await call({ ip: '203.0.113.14' })).status, 200);
+});
+
+test('a malformed session id is not charged to the allowance', async () => {
+  /* It costs one regex and no I/O. A buyer who lands on a mangled URL and
+     reloads it a few times must not find their real link throttled. */
+  reset(); unclaimedPurchase();
+  const ip = '203.0.113.15';
+  for (let i = 0; i < 60; i++) {
+    assert.equal((await call({ sid: 'not-a-session', ip })).status, 400);
+  }
+  assert.equal((await call({ ip })).status, 200);
+});
+
+/* ---------------------------------------------------- a missing config key  */
+
+test('a missing SUPABASE_PUBLISHABLE_KEY is a loud 503, not a quiet downgrade', async () => {
+  /* ANON_KEY is captured by _shared.mjs at import time, so this cannot be
+     tested by mutating process.env in this process — the module is already
+     built. A child process with the variable absent is the honest way to ask.
+     Left unfixed, every signed-in operator would have been served the limited
+     answer with no error, no log and nothing on the page to explain it. */
+  const { execFileSync } = await import('node:child_process');
+  const script = `
+    globalThis.fetch = async () => { throw new Error('no request should be made'); };
+    const m = await import('./verify-session.mjs');
+    const res = await m.default.fetch(new Request(
+      'https://systemsbyvega.com/api/verify-session?session_id=${SESSION}',
+      { headers: { Authorization: 'Bearer anything', 'x-forwarded-for': '198.51.100.1' } }));
+    console.log(JSON.stringify({ status: res.status, body: await res.json() }));
+  `;
+  const env = { ...process.env };
+  delete env.SUPABASE_PUBLISHABLE_KEY;
+  env.SUPABASE_URL = 'https://fake.supabase.co';
+  env.SUPABASE_SERVICE_ROLE_KEY = 'service-key';
+
+  const out = execFileSync(process.execPath, ['--input-type=module', '-e', script],
+    { cwd: import.meta.dirname, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  const got = JSON.parse(out.trim().split('\n').pop());
+
+  assert.equal(got.status, 503);
+  assert.equal(got.body.error, 'not_configured');
+});
+
+test('with the key missing an anonymous caller is still served', async () => {
+  /* userFromRequest checks for a token before it checks its own config, so
+     'no_token' still wins and the buyer with no account is unaffected. Only
+     the caller who presented a token — the one this would silently
+     short-change — gets the 503. */
+  const { execFileSync } = await import('node:child_process');
+  const script = `
+    const rows = { sbv_intake: [{ stripe_session_id: '${SESSION}', user_id: null,
+      niche_slug: 'dj', city_label: 'Boise', state_code: 'ID',
+      operator_email: '${EMAIL}' }], sbv_billing: [], sbv_blocked_purchases: [],
+      sbv_niches: [{ slug: 'dj', name: 'DJ' }] };
+    globalThis.fetch = async (i) => {
+      const u = new URL(typeof i === 'string' ? i : i.url);
+      const t = u.pathname.replace('/rest/v1/', '');
+      const want = u.searchParams.get('stripe_session_id') || u.searchParams.get('slug');
+      const out = (rows[t] || []).filter((r) =>
+        !want || r.stripe_session_id === want.slice(3) || r.slug === want.slice(3));
+      return new Response(JSON.stringify(out), { headers: { 'Content-Type': 'application/json' } });
+    };
+    const m = await import('./verify-session.mjs');
+    const res = await m.default.fetch(new Request(
+      'https://systemsbyvega.com/api/verify-session?session_id=${SESSION}',
+      { headers: { 'x-forwarded-for': '198.51.100.2' } }));
+    console.log(JSON.stringify({ status: res.status, body: await res.json() }));
+  `;
+  const env = { ...process.env };
+  delete env.SUPABASE_PUBLISHABLE_KEY;
+  env.SUPABASE_URL = 'https://fake.supabase.co';
+  env.SUPABASE_SERVICE_ROLE_KEY = 'service-key';
+
+  const out = execFileSync(process.execPath, ['--input-type=module', '-e', script],
+    { cwd: import.meta.dirname, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  const got = JSON.parse(out.trim().split('\n').pop());
+
+  assert.equal(got.status, 200);
+  assert.equal(got.body.status, 'processing');
+  assert.equal(got.body.email_hint, 'j•••@example.com');
 });
 
 /* ------------------------------------------------------------------ masking */

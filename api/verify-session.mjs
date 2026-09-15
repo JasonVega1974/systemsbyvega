@@ -69,6 +69,71 @@ export const config = { runtime: 'nodejs' };
 
 export default { fetch: handler };
 
+/* ---------------------------------------------------------------- rate limit */
+
+/* LIFTED VERBATIM FROM api/create-checkout.mjs, which lifted it from
+ * api/check-territory.mjs — same Map, same window, same prune, same clientKey,
+ * and the same honest ceiling: on Vercel each instance holds its own Map, it
+ * empties on cold start and is not shared between instances, so the real limit
+ * is (instances x MAX_HITS) per window. A speed bump against a naive loop, not
+ * a security control. Three files that throttle the same way should read the
+ * same way, and the seam for swapping all three to Upstash or Vercel KV is the
+ * two functions below in each file.
+ *
+ * WHY THIS FILE NEEDED ONE. Until the token stopped being mandatory, the 401
+ * WAS the throttle: a caller with no token was turned away before Promise.all
+ * and cost nothing. Now every anonymous request runs three service-role
+ * PostgREST queries, and up to five once the tenant is live. Dropping the 401
+ * without adding this would have left an unauthenticated caller able to spend
+ * our database as fast as they can open sockets.
+ *
+ * FORTY, not five. This endpoint is POLLED BY DESIGN and its own page is the
+ * heaviest caller it has: thank-you.html makes one request on load and up to
+ * eleven more at three-second intervals (MAX_POLLS = 12, POLL_MS = 3000), so a
+ * single page-life is twelve requests inside thirty-three seconds — well
+ * within one sixty-second window. A buyer who presses "Check again" spends a
+ * second twelve, and the same link open on a laptop and a phone behind one
+ * household NAT spends a third. Forty covers three page-lives per minute per
+ * IP and still caps an enumerator at forty requests a minute per instance,
+ * which is two hundred PostgREST queries rather than unbounded. Checkout's
+ * five would trip on the first honest buyer before the webhook had landed.
+ *
+ * A 429 is not an error the buyer has to read: thank-you.html stops polling
+ * and shows its manual "Check again", which is the same ending it already had
+ * for a webhook that takes too long. */
+const WINDOW_MS = 60_000;
+const MAX_HITS = 40;
+const hits = new Map();
+
+/* Unbounded growth is not a real risk on short-lived instances, but a Map that
+   only ever grows is a bad habit to leave in a file someone will copy. */
+function prune(now) {
+  if (hits.size < 5000) return;
+  for (const [key, stamps] of hits) {
+    if (!stamps.some((t) => now - t < WINDOW_MS)) hits.delete(key);
+  }
+}
+
+function rateLimited(key) {
+  const now = Date.now();
+  prune(now);
+  const recent = (hits.get(key) || []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(key, recent);
+  return recent.length > MAX_HITS;
+}
+
+/* x-forwarded-for is what Vercel sets, and its FIRST entry is the client —
+   later entries are proxies and are trivially spoofable by an attacker who
+   sets the header themselves. Falling back to a single 'unknown' bucket means
+   header-less callers share one allowance, which fails toward limiting rather
+   than toward waving everyone through. */
+function clientKey(request) {
+  const fwd = request.headers.get('x-forwarded-for') || '';
+  const first = fwd.split(',')[0].trim();
+  return first || 'unknown';
+}
+
 async function handler(request) {
   if (request.method === 'OPTIONS') return preflight();
   if (request.method !== 'GET') {
@@ -88,16 +153,46 @@ async function handler(request) {
     return json({ ok: false, error: 'bad_session_id' }, 400);
   }
 
+  /* AFTER the shape check and BEFORE everything that costs anything — the auth
+     call, the three lookups, the two that follow them. A malformed id is
+     answered by one regex and no I/O, so it is deliberately not charged to the
+     allowance: a buyer who lands on a mangled URL and reloads it a few times
+     should not then find their real link throttled. */
+  if (rateLimited(clientKey(request))) {
+    return json({
+      ok: false, error: 'rate_limited',
+      message: 'Too many checks from this connection. Wait a minute and reload — your purchase is unaffected.',
+    }, 429, { 'Retry-After': '60' });
+  }
+
   /* Identity is OPTIONAL, and this is the only thing that changed about it. A
      missing or rejected token is not an error here — it is the ordinary state
      of a buyer two seconds after paying — so it yields userId = null and the
-     limited answer. An UNREACHABLE auth server is a different thing: that is
-     us being broken, and quietly handing a signed-in operator the stripped
-     down view because GoTrue timed out would hide the outage. */
+     limited answer.
+
+     TWO FAILURES ARE NOT THAT, and both must be loud. An UNREACHABLE auth
+     server is us being broken, and quietly handing a signed-in operator the
+     stripped-down view because GoTrue timed out would hide the outage. A
+     MISSING SUPABASE_PUBLISHABLE_KEY is worse, because it does not recover: no
+     token can ever be verified, so every operator silently gets the limited
+     answer forever, with no error, no log and nothing on the page to say why.
+     That is a deployment fault and it is entitled to a 503 that somebody will
+     see in the logs.
+
+     Note that userFromRequest checks for a token BEFORE it checks its own
+     configuration, so a genuinely anonymous caller still gets 'no_token' and
+     the limited answer even with the key missing. Only a caller who presented
+     a token — the one person this would silently short-change — reaches here. */
   const who = await userFromRequest(request);
   if (who.error && who.error.startsWith('auth_unreachable')) {
     console.error('verify-session:', who.error);
     return json({ ok: false, error: 'auth_unreachable' }, 503);
+  }
+  if (who.error === 'not_configured') {
+    console.error('verify-session: SUPABASE_PUBLISHABLE_KEY is missing, so no ' +
+      'signed-in caller can be verified. Serving 503 rather than silently ' +
+      'downgrading every operator to the limited answer.');
+    return json({ ok: false, error: 'not_configured' }, 503);
   }
   const userId = who.error ? null : who.user.id;
 
@@ -261,13 +356,27 @@ async function limitedAnswer(intake, billing, blocked, q) {
     support: SUPPORT_EMAIL,
   };
 
+  /* ONE branch for two very different orders, and the wording has to be true
+     for both. A blocked purchase is minutes old and a person is being alerted
+     right now. A refunded one may be three weeks closed, and its buyer is
+     following an old link. An earlier draft said "we will email you today",
+     which is a promise nobody is going to keep to the second of those, and it
+     reframes a finished order as an open problem.
+
+     So: no timescale, and no claim about what we are about to do. It points at
+     the mail we have ALREADY sent, which exists in both cases — the blocked
+     alert goes out within the hour, the refund notice went out when it
+     happened — and leaves the buyer with one true instruction either way.
+     Splitting this into a refund-specific branch would fix the tense at the
+     cost of putting purchase history back on the unauthenticated path. */
   if ((blocked && !blocked.resolved) || (billing && billing.status === 'refunded')) {
     return json({
       ...base,
       status: 'attention',
       message:
-        'Your payment went through, but this order needs a person to look at ' +
-        'it. Nothing is lost — we have been alerted and will email you today.',
+        'This order needs a look from us, and there is nothing for you to do. ' +
+        'If you have already heard from us about it, that email is the current ' +
+        'status. If you have not, we will be in touch.',
     });
   }
 
