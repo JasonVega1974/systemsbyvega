@@ -94,6 +94,24 @@ export const MIN_AMOUNT_CENTS = Number(process.env.STRIPE_MIN_AMOUNT_CENTS || '2
 
 export const BREVO_API_KEY = process.env.BREVO_API_KEY || '';
 
+/* The hosted Brevo template (#20) for the operator welcome email. 0 means
+   "not configured": a missing, empty, or non-numeric env var all collapse to
+   the same falsy case, and sendWelcome() falls back to building the email
+   inline exactly as it did before this existed.
+
+   A non-numeric value is almost certainly a typo rather than intent, though,
+   and a failed welcome send gates tenant activation — so a typo'd env var
+   must not hold a buyer's storefront dark. It gets one warning at load time
+   so the misconfiguration is visible, then falls through to the same safe
+   default as "unset". */
+if (process.env.BREVO_SITELAB_TEMPLATE_ID
+    && !/^\d+$/.test(process.env.BREVO_SITELAB_TEMPLATE_ID)) {
+  console.warn('brevo: BREVO_SITELAB_TEMPLATE_ID is not a positive integer, falling back to inline welcome HTML:',
+    process.env.BREVO_SITELAB_TEMPLATE_ID);
+}
+export const BREVO_SITELAB_TEMPLATE_ID =
+  Number.parseInt(process.env.BREVO_SITELAB_TEMPLATE_ID || '', 10) || 0;
+
 /* ------------------------------------------------------------------ vercel */
 
 /* Attaching <client_id>.systemsbyvega.com to the project after a sale.
@@ -699,9 +717,15 @@ export function escHtml(s) {
    is already correct. A Brevo outage must not become a 500 that makes Stripe
    retry work that is already done, and must not surface to the buyer as a
    failed purchase. Returns true/false so the caller can log it. */
-export async function sendBrevo({ to, toName, subject, html, text, replyTo }) {
+export async function sendBrevo({ to, toName, subject, html, text, replyTo, templateId, params }) {
   if (!BREVO_API_KEY) { console.warn('brevo: no API key, mail skipped:', subject); return false; }
   if (!to)            { console.warn('brevo: no recipient, mail skipped:', subject); return false; }
+  /* A positive integer means "use the hosted template" — Brevo rejects a
+     request that carries htmlContent/textContent alongside templateId, so
+     the two shapes are mutually exclusive on the wire. subject still passes
+     through either way: Brevo uses the template's own subject unless this
+     call overrides it. */
+  const useTemplate = Number.isInteger(templateId) && templateId > 0;
   try {
     const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -715,8 +739,9 @@ export async function sendBrevo({ to, toName, subject, html, text, replyTo }) {
         replyTo: { email: replyTo || SUPPORT_EMAIL },
         to: [{ email: to, name: toName || undefined }],
         subject,
-        htmlContent: html,
-        textContent: text,
+        ...(useTemplate
+          ? { templateId, params }
+          : { htmlContent: html, textContent: text }),
       }),
     });
     if (!res.ok) {

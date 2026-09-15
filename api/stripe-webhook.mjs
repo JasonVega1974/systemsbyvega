@@ -47,6 +47,7 @@ import {
   findAuthUserByEmail, inviteAuthUser, generateAuthLink,
   sendBrevo, ownerAlert, escHtml,
   STRIPE_WEBHOOK_SECRET, SUPPORT_EMAIL, SITE_URL, APEX,
+  BREVO_SITELAB_TEMPLATE_ID,
   SUPABASE_URL, SERVICE_KEY, RESERVED_SLUGS,
   VERCEL_TOKEN, VERCEL_PROJECT_ID, VERCEL_TEAM_ID,
 } from './_shared.mjs';
@@ -924,6 +925,30 @@ export function sendWelcome(intake, clientId, nicheName) {
     '<p style="font-size:14px;line-height:1.6;margin:0;color:' + P.soft + '">Questions? Just reply.<br>' +
       '<a href="mailto:' + SUPPORT_EMAIL + '" style="color:' + P.amber + '">' + SUPPORT_EMAIL + '</a></p>' +
   '</div>';
+
+  /* {{tokens}} documented in email/sitelab-welcome.html, and Jason is
+     aligning Brevo template #20 to match these exact names. Not free choices
+     — every key here is a contract with a template this code cannot see. */
+  const params = {
+    operator_name: who,
+    niche_name:    niche,
+    city_label:    intake.city_label,
+    state_code:    intake.state_code,
+    client_id:     clientId,
+    site_url:      'https://' + web + '/',
+    admin_url:     adminUrl,
+    support_email: SUPPORT_EMAIL,
+  };
+
+  if (BREVO_SITELAB_TEMPLATE_ID) {
+    return sendBrevo({
+      to: intake.operator_email,
+      toName: who,
+      subject: 'Your territory is claimed — ' + city,
+      templateId: BREVO_SITELAB_TEMPLATE_ID,
+      params,
+    });
+  }
 
   return sendBrevo({
     to: intake.operator_email,

@@ -532,6 +532,12 @@ test('a 503 from the admin API still returns 500 so Stripe retries', async () =>
 
 /* ------------------------------------------------- the welcome email, Fix C */
 
+/* This test only covers the inline-HTML fallback path (BREVO_SITELAB_TEMPLATE_ID
+   unset, as it is for this whole file). Once that env var is set, sendWelcome()
+   sends Brevo template #20 instead — no htmlContent/textContent in the payload,
+   so there is no `welcome.text` here for this assertion to read, and no test in
+   this file (or anywhere else) can see the wording that template carries. The
+   protection below stops working the moment that switch is flipped in Vercel. */
 test('the welcome email points at the sign-in link, not at an account they never made', async () => {
   reset();
   seedPurchase({ intakeId: 'i1', sessionId: 'cs_1', niche: 'dj', city: 'Austin', email: 'buyer@example.com' });
@@ -546,6 +552,122 @@ test('the welcome email points at the sign-in link, not at an account they never
   assert.doesNotMatch(welcome.text, /created at checkout/i,
     'nobody creates an account at checkout any more');
   assert.match(welcome.text, /sign-in link is in a separate email/);
+});
+
+/* ------------------------------------------ the welcome email, Brevo template */
+
+test('with no BREVO_SITELAB_TEMPLATE_ID configured, the welcome payload is unchanged: htmlContent and textContent, no templateId', async () => {
+  /* BREVO_SITELAB_TEMPLATE_ID is unset for this whole file (see the top),
+     so this can run in-process against the module already imported there —
+     unlike the two tests below, it needs no child process. */
+  reset();
+  const intake = {
+    operator_name: 'Ada', business_name: 'Acme', operator_email: 'buyer@example.com',
+    city_label: 'Austin', state_code: 'TX',
+  };
+  let captured;
+  const real = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url = new URL(typeof input === 'string' ? input : input.url);
+    if (url.hostname !== 'api.brevo.com') throw new Error('unexpected fetch ' + url.href);
+    captured = JSON.parse(init.body);
+    return new Response(JSON.stringify({ messageId: 'm1' }), { headers: { 'Content-Type': 'application/json' } });
+  };
+  const ok = await webhook.sendWelcome(intake, 'acme', 'DJ');
+  globalThis.fetch = real;
+
+  assert.equal(ok, true);
+  assert.equal(typeof captured.htmlContent, 'string');
+  assert.ok(captured.htmlContent.length > 0, 'inline HTML still built and sent');
+  assert.equal(typeof captured.textContent, 'string');
+  assert.ok(captured.textContent.length > 0, 'inline text still built and sent');
+  assert.equal(captured.templateId, undefined, 'no templateId on the fallback path');
+  assert.equal(captured.params, undefined, 'no params on the fallback path');
+});
+
+/* The next two tests need a value of BREVO_SITELAB_TEMPLATE_ID other than what
+   the top of this file sets, and _shared.mjs reads that env var once, at
+   import time. Mutating process.env here would not reach a module this
+   process already loaded, so — same fix as verify-session.test.mjs uses for
+   the same problem — each runs in its own child process, with its own env,
+   importing stripe-webhook.mjs fresh. */
+
+test('with BREVO_SITELAB_TEMPLATE_ID configured, the welcome sends Brevo template #20 with all eight params, and no htmlContent/textContent', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const script = `
+    let captured;
+    globalThis.fetch = async (input, init) => {
+      const url = new URL(typeof input === 'string' ? input : input.url);
+      if (url.hostname !== 'api.brevo.com') throw new Error('unexpected fetch ' + url.href);
+      captured = JSON.parse(init.body);
+      return new Response(JSON.stringify({ messageId: 'm1' }),
+        { headers: { 'Content-Type': 'application/json' } });
+    };
+    const m = await import('./stripe-webhook.mjs');
+    const intake = { operator_name: 'Ada', business_name: 'Acme',
+      operator_email: 'buyer@example.com', city_label: 'Austin', state_code: 'TX' };
+    const ok = await m.sendWelcome(intake, 'acme', 'DJ');
+    console.log(JSON.stringify({ ok, captured }));
+  `;
+  const env = { ...process.env, BREVO_API_KEY: 'brevo-key', BREVO_SITELAB_TEMPLATE_ID: '20' };
+  delete env.PUBLIC_SITE_URL;
+  const out = execFileSync(process.execPath, ['--input-type=module', '-e', script],
+    { cwd: import.meta.dirname, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  const { ok, captured } = JSON.parse(out.trim().split('\n').pop());
+
+  assert.equal(ok, true);
+  assert.equal(captured.templateId, 20);
+  assert.equal(captured.htmlContent, undefined, 'template path must not carry htmlContent');
+  assert.equal(captured.textContent, undefined, 'template path must not carry textContent');
+  assert.deepEqual(Object.keys(captured.params).sort(), [
+    'admin_url', 'city_label', 'client_id', 'niche_name',
+    'operator_name', 'site_url', 'state_code', 'support_email',
+  ].sort(), 'exactly the eight {{tokens}} email/sitelab-welcome.html documents');
+  assert.equal(captured.params.operator_name, 'Ada');
+  assert.equal(captured.params.niche_name, 'DJ');
+  assert.equal(captured.params.city_label, 'Austin');
+  assert.equal(captured.params.state_code, 'TX');
+  assert.equal(captured.params.client_id, 'acme');
+  assert.equal(captured.params.site_url, 'https://acme.systemsbyvega.com/');
+  assert.equal(captured.params.admin_url, 'https://systemsbyvega.com/admin/?tenant=acme');
+  assert.equal(captured.params.support_email, 'info@kingdom-creatives.com');
+});
+
+test('a junk BREVO_SITELAB_TEMPLATE_ID falls back to inline HTML — never a broken templateId: NaN request — and warns once', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const script = `
+    const warnings = [];
+    const realWarn = console.warn;
+    console.warn = (...args) => { warnings.push(args.join(' ')); };
+    let captured;
+    globalThis.fetch = async (input, init) => {
+      const url = new URL(typeof input === 'string' ? input : input.url);
+      if (url.hostname !== 'api.brevo.com') throw new Error('unexpected fetch ' + url.href);
+      captured = JSON.parse(init.body);
+      return new Response(JSON.stringify({ messageId: 'm1' }),
+        { headers: { 'Content-Type': 'application/json' } });
+    };
+    const m = await import('./stripe-webhook.mjs');
+    console.warn = realWarn;
+    const intake = { operator_name: 'Ada', business_name: 'Acme',
+      operator_email: 'buyer@example.com', city_label: 'Austin', state_code: 'TX' };
+    const ok = await m.sendWelcome(intake, 'acme', 'DJ');
+    console.log(JSON.stringify({ ok, captured, warnings }));
+  `;
+  const env = { ...process.env, BREVO_API_KEY: 'brevo-key', BREVO_SITELAB_TEMPLATE_ID: 'banana' };
+  delete env.PUBLIC_SITE_URL;
+  const out = execFileSync(process.execPath, ['--input-type=module', '-e', script],
+    { cwd: import.meta.dirname, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  const { ok, captured, warnings } = JSON.parse(out.trim().split('\n').pop());
+
+  assert.equal(ok, true);
+  assert.equal(captured.templateId, undefined, 'a typo must not send templateId: NaN');
+  assert.equal(typeof captured.htmlContent, 'string');
+  assert.ok(captured.htmlContent.length > 0);
+  assert.equal(typeof captured.textContent, 'string');
+  assert.ok(captured.textContent.length > 0);
+  assert.equal(warnings.length, 1, 'the misconfiguration is visible exactly once, not once per send');
+  assert.match(warnings[0], /BREVO_SITELAB_TEMPLATE_ID/);
 });
 
 test('a missed unconfirmed account costs one invite re-send, never two emails', async () => {
