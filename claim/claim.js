@@ -16,10 +16,22 @@
    the request body is identical either way, so the server has one code path.
 
    The auth phase markup below is still built and still wired — sign in, create
-   account, the tabs — and the email-confirmation return path it belongs to is
-   untouched. Nothing in the claim flow shows it any more, so it is kept rather
-   than removed: pulling it would take the confirmed-signup return with it, and
-   that is a separate piece of work from taking a payment.
+   account, the tabs, savePending() — and NOTHING REACHES ANY OF IT. There is
+   no call left in this file that switches to it. (These comments deliberately
+   do not spell that call out: grepping for it is how someone checks the claim,
+   and prose that matches the grep would answer the question with itself.)
+
+   ⚠ Including the email-confirmation return. An earlier note here said that
+   path still landed on the auth phase. It does not:
+   arrivedFromConfirm() -> resumeClaim() -> doCheck() -> next() -> toConfirm()
+   goes straight to confirm. Recorded plainly because the next person to touch
+   this decides its fate from what is written here, and that claim was wrong.
+
+   Retained anyway, pending a decision that belongs with the webhook: deleting
+   it is a choice about how operators get an account at all, which is not a
+   question this file answers. Its copy is corrected in the meantime — dead
+   copy that still promises an account before payment is what gets revived by
+   mistake.
 
    Phase 1 answers live in `intent` for the life of the modal, so a trip out to
    an inbox and back does not lose the city someone just typed. Nothing is
@@ -171,9 +183,12 @@
 
         /* ---- phase 2 ---- */
         '<div class="cm-phase" data-phase="auth" hidden>' +
-          /* True on the ONLY path that still reaches this phase: back from a
-             confirmation link, setting up a login. It is no longer a step on
-             the way to paying and must not claim to be one. */
+          /* UNREACHABLE — nothing switches to the auth phase any more, the
+             confirmation return included. Rewritten regardless: the line it
+             replaced said a territory is held against an account and that
+             signing in comes before payment, and both are now false. Dead
+             copy that lies is one revival away from being shown to a buyer,
+             and this one sits in the file that takes card details. */
           '<p class="cm-lead">This is your login, not your claim &mdash; a territory' +
             ' is held by payment. Sign in to pick up where you left off.</p>' +
           '<div class="cm-tabs">' +

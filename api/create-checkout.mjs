@@ -76,6 +76,68 @@ export const config = { runtime: 'nodejs' };
  * intermittently and look like a Stripe outage. */
 const CHECKOUT_TTL_SECONDS = 32 * 60;
 
+/* ---------------------------------------------------------------- rate limit */
+
+/* LIFTED VERBATIM FROM api/check-territory.mjs — same Map, same window, same
+ * prune, same clientKey. Deliberately not a cleverer design: two files that
+ * throttle the same way should read the same way, and the seam for swapping
+ * both to Upstash or Vercel KV is the two functions below in each file.
+ *
+ * WHY THIS FILE NEEDS ONE MORE THAN THE SIBLING DOES. check-territory guards a
+ * READ of data that is public anyway. This endpoint is an unauthenticated
+ * WRITER: one request costs three Supabase reads, a service-role INSERT into
+ * sbv_intake, a live Stripe Checkout Session, and an UPDATE. Until this change
+ * the 401 was the throttle — no token, no work done — and dropping it left
+ * nothing at all.
+ *
+ * And the work is replayable verbatim. Nothing upstream of the insert consults
+ * sbv_intake: client_id_taken reads sbv_tenants, sbv_city_available() reads
+ * sbv_city_claims. So one captured valid body loops forever, each pass writing
+ * a fresh row and creating a fresh Stripe session, and there is no sweeper, no
+ * TTL on the rows and no checkout.session.expired handler to undo any of it.
+ * Stripe's write limit is account-wide, so a flood 429s real buyers.
+ *
+ * FIVE, not ten. A person buying one territory clicks this once, perhaps twice
+ * after fixing a subdomain. Ten was sized for an availability box someone can
+ * legitimately hammer while trying cities.
+ *
+ * Honest about its ceiling, exactly as the sibling is: on Vercel each instance
+ * holds its own Map, it empties on cold start and is not shared between
+ * instances, so the real ceiling is (instances x MAX_HITS) per window. It is a
+ * speed bump against a naive loop, not a security control. */
+const WINDOW_MS = 60_000;
+const MAX_HITS = 5;
+const hits = new Map();
+
+/* Unbounded growth is not a real risk on short-lived instances, but a Map that
+   only ever grows is a bad habit to leave in a file someone will copy. */
+function prune(now) {
+  if (hits.size < 5000) return;
+  for (const [key, stamps] of hits) {
+    if (!stamps.some((t) => now - t < WINDOW_MS)) hits.delete(key);
+  }
+}
+
+function rateLimited(key) {
+  const now = Date.now();
+  prune(now);
+  const recent = (hits.get(key) || []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(key, recent);
+  return recent.length > MAX_HITS;
+}
+
+/* x-forwarded-for is what Vercel sets, and its FIRST entry is the client —
+   later entries are proxies and are trivially spoofable by an attacker who
+   sets the header themselves. Falling back to a single 'unknown' bucket means
+   header-less callers share one allowance, which fails toward limiting rather
+   than toward waving everyone through. */
+function clientKey(request) {
+  const fwd = request.headers.get('x-forwarded-for') || '';
+  const first = fwd.split(',')[0].trim();
+  return first || 'unknown';
+}
+
 /* Buyer-facing text for each way sbv_city_available() can say no. Kept here
  * rather than in the database because these are words for a person, and the
  * function's job is to be correct, not friendly. No reason string is passed
@@ -110,6 +172,18 @@ async function handler(request) {
       ok: false, error: 'not_configured',
       message: `Checkout is not available right now. Email ${SUPPORT_EMAIL} and we will set you up by hand.`,
     }, 503);
+  }
+
+  /* ---- throttle ----------------------------------------------------------
+     BEFORE the body is read, deliberately. A flood should cost a header lookup
+     and nothing else; parsing JSON first would hand an attacker work to do on
+     every rejected request. This sits directly under the configuration check
+     because a misconfigured endpoint has a different, louder answer. */
+  if (rateLimited(clientKey(request))) {
+    return json({
+      ok: false, error: 'rate_limited',
+      message: 'That is a lot of attempts in a short time. Wait a minute and try again.',
+    }, 429, { 'Retry-After': '60' });
   }
 
   /* ---- body --------------------------------------------------------------
