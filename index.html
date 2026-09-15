@@ -648,15 +648,259 @@
   </div>
 </section>
 
-<!-- THE GAP. Brief §1 puts an FAQ accordion (8) and a dark closing CTA band (9)
-     between #proof and the footer. Both are a later task's work and neither is
-     stubbed here on purpose: an empty section with a heading and no answers in
-     it would ship as a visible hole if that task slipped, and #teaser — the
-     custom-builds band that used to sit in this position — is gone because
-     /services/ carries that offer and is linked from both the nav and the
-     footer above. Whoever builds them: #proof above is PAPER, the footer below
-     is DARK, so the pair has to read paper→white→dark or paper→dark→… with the
-     footer's own tone in mind (see THE BAND SYSTEM in sbv.css). -->
+<!-- ══════════════════════════ THE QUESTIONS ══════════════════════════════ -->
+<!-- Section 8. R6 left this gap deliberately; R6b fills it.
+
+     EVERY ANSWER BELOW IS SOURCED, AND THE SOURCE IS NAMED IN THE COMMENT
+     ABOVE IT. An FAQ is the easiest place on a marketing page to write a
+     reassuring sentence nobody checked — which is the exact failure the
+     compliance rule on this project exists to prevent. Nothing here is
+     softened: where the paperwork says "no guarantee", so does the answer.
+
+     <details>/<summary>, NOT the .qa accordion. .qa hides its answer with
+     display:none and reveals it by a class sbv.js toggles, so with JavaScript
+     off every answer on this page would be unreachable. <details> is
+     keyboard-operable, correctly announced, and fully expandable with no
+     script at all. wireFaq() binds to `.qa button` and never touches these.
+
+     BAND: white. #proof above is paper and the footer below is dark; white is
+     the one tone that repeats neither, and it is the flattest ground on the
+     page for nine blocks of running prose. Ruling R18: #questions joins the
+     border-top:0 list with its band. -->
+<section class="section" id="questions">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Before you buy</span>
+      <h2>The honest answers, <br>including the unflattering ones.</h2>
+      <p class="lede" style="margin-top:12px">
+        Every answer below is what the Terms, the Operator Agreement, the Refund Policy or the
+        running code actually says. Where the honest answer is &ldquo;no guarantee&rdquo;, it
+        says that rather than something warmer.
+      </p>
+    </div>
+
+    <div class="qna reveal">
+      <!-- sendWelcome() in api/stripe-webhook.mjs — beat 1 ("Your site is live
+           now" + "It opens with example content until you customise it") and
+           beat 2 ("Changes show on your site within a minute"); the subdomain
+           form is legal/terms.html section 6. The example-content sentence is
+           load-bearing: a buyer told only "your site is live" reports the demo
+           content as a bug. -->
+      <details class="qna-i">
+        <summary class="qna-q">How fast is it live?</summary>
+        <div class="qna-a">
+          <p>As soon as your payment clears. The site answers on your own subdomain &mdash;
+            <em>yourbusiness</em>.systemsbyvega.com &mdash; and the welcome email carries the
+            address.</p>
+          <p>One thing to be straight about: it opens with the example content you saw in the
+            demo, and keeps it until your first save. Making it yours is the next step, you do
+            that step yourself, and what you save shows on the site within a minute.</p>
+        </div>
+      </details>
+
+      <!-- legal/terms.html section 6 (the editable fields, and "You do not need
+           us to do it, and there is no charge for doing it yourself" — quoted
+           verbatim below); admin/index.html carries #sec-business, #sec-details,
+           #sec-pricing, #sec-photos, #sec-reviews, #sec-marketing, #sec-leads,
+           #sec-legal and #sec-danger. The same list is generated into
+           BUILD:INCLUDED from INCLUDED in assets/catalog-render.js. -->
+      <details class="qna-i">
+        <summary class="qna-q">Can I edit it myself?</summary>
+        <div class="qna-a">
+          <p>Yes, and that is the normal way to change it. Your admin is a real editor, not a
+            request form: business details, hours, service area, photos, pricing, reviews, social
+            links, your customer Terms and Privacy pages, your leads, and a reset that puts the
+            site back to its example content.</p>
+          <p>What you save goes live on your site. You do not need us to do it, and there is no
+            charge for doing it yourself.</p>
+        </div>
+      </details>
+
+      <!-- legal/terms.html section 4; legal/operator-agreement.html section 2
+           ("What the exclusivity covers" / "What it does not cover"); and the
+           partial unique index sbv_city_claims_unique_active on
+           (niche_slug, city_norm, state_code) in sql/COMMERCE.sql, which is
+           what makes this enforced rather than promised. These four surfaces —
+           Terms, Operator Agreement, welcome email, database — were reconciled
+           and now agree, which is why the answer can be this flat. -->
+      <details class="qna-i">
+        <summary class="qna-q">Is my city really exclusive?</summary>
+        <div class="qna-a">
+          <p>Yes. The business category and the city you claim at checkout are yours for as long
+            as your account is active, and we will not sell that same category in that same city
+            to anyone else. It is enforced in the database, not only on paper: a unique index on
+            the category, the normalised city and the state means a second live claim on your
+            city cannot be written.</p>
+          <p>Two limits, stated plainly. It is a commitment about who else <em>we</em> sell to
+            &mdash; not a licence to trade, and not a restriction on anyone who is not our
+            customer. And neighbouring areas are separate territories that may be sold to someone
+            else. The <a class="link" href="/legal/operator-agreement.html">Operator
+            Agreement</a> is the document that controls it.</p>
+        </div>
+      </details>
+
+      <!-- legal/terms.html line 88 (section 6: "You may connect your own domain
+           at any time and we would encourage it… If you stop using our hosting,
+           the subdomain stops resolving; your content and your own domain are
+           unaffected") and line 114 (section 10). -->
+      <details class="qna-i">
+        <summary class="qna-q">What if I want a custom domain?</summary>
+        <div class="qna-a">
+          <p>Connect one whenever you like &mdash; we would encourage it. The subdomain is a
+            convenience we provide for as long as we host your site, not a domain name you own,
+            and a domain you own is the address you keep if you ever move the site elsewhere.</p>
+          <p>You may point your own domain at your site, or move the site elsewhere, at any time.
+            If you stop using our hosting the subdomain stops resolving; your content and your own
+            domain are unaffected.</p>
+        </div>
+      </details>
+
+      <!-- legal/refund.html sections 1, 2, 5 and 7. The 50% line is the policy's
+           own floor wording, kept as written rather than paraphrased, because
+           paraphrasing a refund floor is how a refund floor changes meaning. -->
+      <details class="qna-i">
+        <summary class="qna-q">What&rsquo;s the refund policy?</summary>
+        <div class="qna-a">
+          <p>Three stages. Before we open your build you get 100% back &mdash; no questions and no
+            time limit. Once work has started you get back the portion we have not yet performed,
+            with a floor: you always keep at least 50% of the website fee, whatever stage we
+            reached. Once the site is delivered it is not refundable.</p>
+          <p>If something is broken or does not match what we agreed, that is a fix, not a refund,
+            and we will fix it. A full refund releases your territory back to general availability
+            the same day. The whole policy is on the
+            <a class="link" href="/legal/refund.html">Refund page</a>.</p>
+        </div>
+      </details>
+
+      <!-- legal/terms.html line 87 ("What you type and upload is yours"),
+           line 104 (ownership on delivery, and what we retain), line 105
+           (modify freely / no resale) and line 106 ("Any enquiry your site
+           receives is yours"). -->
+      <details class="qna-i">
+        <summary class="qna-q">Do I own the content?</summary>
+        <div class="qna-a">
+          <p>The content you supply is yours, and so is every enquiry your site receives. We do not
+            contact, market to, or sell your customers or leads to anyone.</p>
+          <p>What stays ours is the underlying template, code, design system and illustration
+            library, and every other site built from them. You may modify your own site freely;
+            you may not resell the template or use it to build sites for other businesses.</p>
+        </div>
+      </details>
+
+      <!-- legal/terms.html line 113 (section 10): "Sites are static files. We
+           host them on third-party infrastructure and do not guarantee
+           uninterrupted availability." Deliberately NOT written as a feature —
+           hosting is real but it is not a selling line, and dressing it up
+           would set a support expectation we have not committed to. The same
+           reasoning is recorded against INCLUDED in assets/catalog-render.js,
+           which leaves hosting out of the included list for this reason. -->
+      <details class="qna-i">
+        <summary class="qna-q">What about hosting?</summary>
+        <div class="qna-a">
+          <p>We host the site, and we are not going to dress that up as a feature. Sites are static
+            files, we host them on third-party infrastructure, and we do not guarantee
+            uninterrupted availability. There is no uptime commitment here, and the Terms say so
+            in those words rather than burying it.</p>
+          <p>We may change how the platform works and may move hosting providers, provided your
+            site keeps working &mdash; and you can point your own domain at the site, or move it
+            elsewhere, at any time.</p>
+        </div>
+      </details>
+
+      <!-- SUPPORT_EMAIL in api/_shared.mjs line 36, which is the address the
+           welcome email signs off with and the address legal/refund.html
+           section 6 sends refund requests to. sendWelcome() ends "Questions?
+           Just reply" and offers a reply for a wrong city or business name.
+           NOT claimed: a response time. Nothing in the code or the Terms
+           commits to one for support, so the answer does not invent one. -->
+      <details class="qna-i">
+        <summary class="qna-q">Who do I contact?</summary>
+        <div class="qna-a">
+          <p>Email <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a>.
+            You can also just reply to any email we send you &mdash; the welcome email ends
+            &ldquo;Questions? Just reply&rdquo;, and it means it. Wrong city or business name after
+            checkout? Reply to that email and we will fix it.</p>
+          <p>Refund requests go to the same address, from the address you bought with.</p>
+        </div>
+      </details>
+
+      <!-- legal/terms.html section 3 ("A niche website — $99 one-time") and
+           legal/operator-agreement.html section 3 ("a one-time charge. There is
+           no royalty, no revenue share, no franchise fee, and no ongoing charge
+           except the optional Care Plan"). api/create-checkout.mjs opens the
+           Stripe session with mode: payment — a one-time charge, and the only
+           mode this codebase uses.
+
+           THE CARE PLAN IS NAMED BUT NOT SOLD. It is in Terms sections 3 and 5,
+           so pretending it does not exist would leave a buyer who reads the
+           Terms thinking we hid a monthly fee. But there is no billing path for
+           it anywhere in this repo — no subscription mode, no recurring price,
+           nothing that could charge it — so it is not offered as something to
+           buy today, and its figure is not quoted here. Flagged in the R6b
+           report as a Terms/code mismatch for Jason to resolve. -->
+      <details class="qna-i">
+        <summary class="qna-q">Is there a monthly fee?</summary>
+        <div class="qna-a">
+          <p>No. The site is $99 once. There is no royalty, no revenue share and no ongoing charge
+            to keep your territory &mdash; that is the Operator Agreement&rsquo;s own wording
+            &mdash; and checkout is a one-time payment, not a subscription.</p>
+          <p>The Terms also describe an optional Care Plan, for edits you would rather hand to us
+            than make yourself. There is no way to buy one on this site today, so treat $99 once as
+            the whole price.</p>
+        </div>
+      </details>
+    </div>
+
+    <p class="fine" style="margin-top:26px">
+      The full text sits in the <a class="link" href="/legal/terms.html">Terms</a>, the
+      <a class="link" href="/legal/operator-agreement.html">Operator Agreement</a> and the
+      <a class="link" href="/legal/refund.html">Refund Policy</a>. Where the Terms and the
+      Operator Agreement disagree about territory, the Operator Agreement controls.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ THE CLOSING ASK ════════════════════════════ -->
+<!-- Section 9. One headline, one button, and it repeats the hero's offer
+     verbatim rather than inventing a second one — a visitor who scrolled the
+     whole page should land on the same sentence they started with.
+
+     ONE BUTTON. No secondary CTA: the page has already offered the demo
+     overlay, the catalog and /services/ further up, and a choice at the
+     closing ask is a way of not asking.
+
+     THE GRADIENT IS A HOOK, NOT AN ANIMATION. Jason asked for a subtle
+     animated gradient here; the motion system is a later task's, so this
+     emits .cta-glow with a STATIC two-stop wash positioned from four custom
+     properties (--glow-x/-y/-x2/-y2). That task animates those properties and
+     nothing else moves. The band is finished-looking with no JS and identical
+     under prefers-reduced-motion, which is the state it ships in today.
+
+     BAND: dark, and it abuts the dark footer. That is the one tone repeat on
+     the page and it is deliberate. Paper repeats #proof two bands up and
+     white repeats #questions directly above, so dark is the only ground left
+     — and the page already runs the mirror image of this seam at the top,
+     where the dark .plate hero sits under the dark nav. Chrome is dark at
+     both ends of every page in the project; a dark band against chrome is the
+     established exception, not a new one. The seam is drawn rather than
+     hidden: #close keeps a hairline on its BOTTOM edge, which is the same
+     rule .section states for same-tone neighbours, applied at the only place
+     on this page where two same-tone bands meet. Ruling R18: #close joins the
+     border-top:0 list with its band. -->
+<section class="section cta-close" id="close">
+  <span class="cta-glow" aria-hidden="true"></span>
+  <div class="wrap-narrow cta-close-in reveal">
+    <!-- NOT "One price" again. The hero offer card and #offer already carry
+         that eyebrow; a third would read as a template rather than a close. -->
+    <span class="eyebrow">One more time</span>
+    <h2 class="cta-close-h">$99 once. Live today.</h2>
+    <p class="cta-close-p">Pick your trade, claim your city, and the site answers on your
+      subdomain the moment your payment clears.</p>
+    <a class="btn btn-pri cta-close-go" href="/sites/">Get your site &mdash; $99</a>
+    <p class="fine cta-close-fine">One operator per city, per category. What the price covers,
+      in full, is in the <a class="link" href="/legal/terms.html">Terms</a>.</p>
+  </div>
+</section>
 
 <!-- ══════════════════════════ FOOTER ════════════════════════════════════ -->
 </main>

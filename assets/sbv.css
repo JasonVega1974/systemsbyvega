@@ -117,7 +117,23 @@
    Task 9 rebuilt `/` as the landing page and retired the diagram above — the
    catalog, #line, #registry, #faq and #founder all moved to /sites/ (Task 10).
    `/`'s rhythm now: nav dark, hero dark (.plate), #compare white, #sites dark,
-   #platforms paper, #offer dark, #how white, #proof paper, footer dark.
+   #platforms paper, #offer dark, #how white, #proof paper, #questions white,
+   #close dark, footer dark.
+
+   R6b ADDED #questions AND #close, the FAQ and the closing ask, into the gap
+   R6 left between #proof and the footer. #questions is WHITE because it is
+   the only tone that repeats neither #proof (paper) above nor #close (dark)
+   below, and because nine blocks of running prose want the flattest ground on
+   the page. #close is DARK and it abuts the dark footer — the one tone repeat
+   anywhere on this page, and a deliberate one: paper would repeat #proof two
+   bands up, white would repeat #questions directly above, and the closing ask
+   is specified dark. The page already runs the mirror image of that seam at
+   the top, where the dark .plate hero sits under the dark nav; chrome is dark
+   at both ends of every page here, so a content band against chrome is the
+   exception this file already makes, not a new one. The seam is drawn rather
+   than hidden — #close carries a hairline on its BOTTOM edge, which is
+   .section's own "same-tone neighbours keep one" rule applied at the only
+   place on `/` where two same-tone bands meet.
    #proof moved bands with the page — it printed the four figures next
    to a dark hero before; now it is its own paper-toned strip further down,
    so it left the dark selector group below and joined the paper one.
@@ -214,7 +230,7 @@
    seam at that band's transition (the two lists are a pair, not a coincidence).
 */
 .plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next,
-#sites, #offer{
+#sites, #offer, #close{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -247,7 +263,7 @@
   color:var(--tx);
 }
 #how, #line, #websites, #build, #inquiry, #gsb, #roster, #boundaries,
-#compare{
+#compare, #questions{
   --bg:      var(--panel);
   --surface: var(--paper);
   --surface-2:var(--panel);
@@ -656,7 +672,7 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #sites, #platforms, #included, #compare, .gfoot{border-top:0}
+#offer, #sites, #platforms, #included, #compare, #questions, #close, .gfoot{border-top:0}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -1197,6 +1213,105 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 .qa.open button::after{content:"–"}
 .qa-a{display:none;padding:0 0 20px;color:var(--tx-2);font-size:15px;max-width:70ch}
 .qa.open .qa-a{display:block}
+
+/* ------------------------------------------------- the questions (/) ------
+   .qna IS .qa REBUILT ON <details>, and the two are not interchangeable.
+
+   .qa above hides its answer with display:none and reveals it by an .open
+   class that wireFaq() in sbv.js toggles. With JavaScript off, every answer
+   inside a .qa is unreachable — acceptable where it stands (a secondary FAQ
+   under a form), unacceptable for the nine sourced answers on `/`, which are
+   the page's compliance surface. If the script fails, an uptime disclaimer
+   and a refund floor must still be readable.
+
+   <details>/<summary> gives, for free and with no script at all: keyboard
+   operation (Enter and Space on the focused summary), correct screen-reader
+   announcement of expanded/collapsed state, in-page find that opens the
+   matching answer, and printing. Nothing here re-implements any of it. The
+   two rules that matter are the marker resets — list-style on the summary and
+   the WebKit pseudo-element — without which the browser draws its own
+   triangle beside our +/– glyph.
+
+   No `name` attribute on the <details>: an exclusive accordion would close the
+   answer a visitor just opened when they open the next one, and two answers
+   open at once is not a defect on a page whose whole argument is disclosure.
+
+   THE GLYPH IS THE ONLY DECORATION, and it reads --acc-tx, which is
+   --amber-text #806030 on this white band (5.78:1). Never --amber: 2.66:1. */
+.qna{border-top:1px solid var(--rule)}
+.qna-i{border-bottom:1px solid var(--rule)}
+.qna-q{
+  display:block;list-style:none;cursor:pointer;position:relative;
+  font-family:var(--display);font-weight:700;font-size:16.5px;line-height:1.35;
+  color:var(--tx);padding:19px 44px 19px 0;min-height:var(--tap);
+  transition:color .18s;
+}
+.qna-q::-webkit-details-marker{display:none}
+.qna-q::marker{content:""}
+.qna-q:hover{color:var(--acc-tx)}
+.qna-q::after{
+  content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  font-family:var(--mono);font-size:21px;line-height:1;color:var(--acc-tx);
+}
+.qna-i[open] > .qna-q::after{content:"\2013"}
+/* Drawn inside the row so the ring never crosses the hairline it sits on, and
+   never overlaps the neighbouring question's tap target. */
+.qna-q:focus-visible{outline:2px solid var(--acc);outline-offset:-4px;border-radius:7px}
+.qna-a{padding:0 44px 22px 0;color:var(--tx-2);font-size:15px;max-width:70ch}
+.qna-a p + p{margin-top:13px}
+
+/* The panel settles in rather than snapping. It animates the ANSWER, not the
+   <details> box: animating the box would need a height, and a height on an
+   accordion is the one thing that breaks when a translation makes an answer
+   taller. Purely cosmetic — the open state is already correct at frame one. */
+@keyframes qna-open{
+  from{opacity:0;transform:translateY(-4px)}
+  to  {opacity:1;transform:none}
+}
+.qna-i[open] > .qna-a{animation:qna-open .22s cubic-bezier(.2,.7,.3,1) both}
+@media (prefers-reduced-motion:reduce){
+  .qna-i[open] > .qna-a{animation:none}
+  .qna-q{transition:none}
+}
+
+/* ------------------------------------------------------- the closing ask ---
+   One headline, one button. The band is dark (see THE BAND SYSTEM above for
+   why it may sit against the dark footer) and carries the page's only
+   gradient, which is what keeps that seam from reading as one flat field.
+
+   THE GRADIENT IS A HOOK. Jason asked for a subtle ANIMATED gradient here;
+   the motion system is a later task's, so .cta-glow ships as a static wash
+   whose two stops are positioned entirely from --glow-x/--glow-y/--glow-x2/
+   --glow-y2. Animating this band means animating those four custom properties
+   (with @property so they interpolate) and nothing else — no new element, no
+   markup change, no JS. Everything below is the finished no-JS state, and it
+   is byte-identical under prefers-reduced-motion, so there is nothing here to
+   switch off.
+
+   isolation:isolate is load-bearing. .cta-glow sits at z-index:-1 so it paints
+   under the copy without needing a z-index on the copy; without the stacking
+   context on #close it would paint under the SECTION'S OWN BACKGROUND and
+   disappear entirely. overflow:hidden keeps the oversized wash from widening
+   the page at 390px. */
+.cta-close{position:relative;isolation:isolate;overflow:hidden;
+  padding:clamp(60px,8vw,88px) 0 clamp(64px,8.5vw,92px);
+  border-bottom:1px solid var(--con-hair)}
+.cta-glow{
+  position:absolute;inset:-30% -12%;z-index:-1;pointer-events:none;display:block;
+  background:
+    radial-gradient(44% 58% at var(--glow-x,24%) var(--glow-y,16%),
+      rgba(var(--con-amber-rgb),.22), rgba(var(--con-amber-rgb),0) 70%),
+    radial-gradient(40% 54% at var(--glow-x2,80%) var(--glow-y2,88%),
+      rgba(var(--con-amber-rgb),.13), rgba(var(--con-amber-rgb),0) 70%);
+}
+.cta-close-in{text-align:center;display:flex;flex-direction:column;align-items:center}
+/* .eyebrow is an inline-flex with a 26px rule before it; centring it needs the
+   BOX centred, which text-align cannot do to a flex item. */
+.cta-close-in > .eyebrow{align-self:center}
+.cta-close-h{font-size:clamp(30px,5.4vw,46px);margin:14px 0 0}
+.cta-close-p{margin-top:14px;font-size:17px;color:var(--tx-2);max-width:46ch}
+.cta-close-go{margin-top:26px;font-size:16.5px;padding:17px 34px}
+.cta-close-fine{margin-top:20px;max-width:62ch}
 
 /* --------------------------------------------------------------- footer --- */
 .foot{padding:38px 0 52px;color:var(--tx-2)}
