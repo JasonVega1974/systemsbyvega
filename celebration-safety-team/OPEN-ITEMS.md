@@ -11,18 +11,114 @@ renders a clearly labelled placeholder and the item is tracked here.
 
 ---
 
+## 0. Documents received — 2026-09-15
+
+Five documents arrived from the church: `7 Steps to follow.docx` (generic AED
+steps), `CCST SAFETY TEAM POLICY AND PROCEDURES.docx` (the full safety-team
+policy manual, working copy, **March 2025**), `Evacuation Plan updated
+Septmeber 2025.docx`, `Giving CPR.docx` (generic Red Cross CPR steps), and
+`General Map Blueprint EXIT.pdf` (a floor-plan drawing with colour-coded
+evacuation routes). What each one changed, and two things it revealed that
+need a decision — not a guess — before they go further.
+
+**The floor plan is now in the app** — Facility Maps → Full Site Schematic.
+It is real progress on item 1 below, **not** the complete document that item
+asked for: it shows entrances, exits and two colour-coded evacuation routes
+(red = adults, blue = kids), but it has **no AED positions, no fire-extinguisher
+positions, and no team post positions** marked anywhere on it. Those three are
+still open exactly as before.
+
+**Fire & Evacuation** now carries the sweep list from the church's own
+Evacuation Plan — Restrooms, Classrooms, Warehouse, Media Room — swept by the
+Team Lead after the building clears, sourced and attributed in the card.
+
+**Medical Emergency** gained two things not in the app before: the AED
+precautions from `7 Steps to follow.docx` (no contact during defibrillation,
+no alcohol on the chest, never in a moving vehicle, never on someone in water
+or on a conductive surface), and the church's own radio protocol for calling
+one — see item 6 below, it answers part of Team Question 6.
+
+**Bomb Threat** — the church's own March 2025 policy DOES assign a decision
+role: "the ranking pastoral staff member or Safety Team Leader" decides on
+evacuation, and elsewhere, "the Pastoral staff in consultation with the Safety
+Team Leadership has the ultimate responsibility." That is a role, written down
+— which is more than the app previously credited the church with having. It is
+**still not** the single **named individual** working from **written
+evacuation criteria** that CISA recommends and that Team Question 4 asks for.
+The card now says so precisely instead of "not yet named."
+
+The March 2025 policy also carries the church's **own** telephone bomb-threat
+call-taker script — different questions from CISA's one-page checklist (it
+asks things like "why do you want to blow up the church"), and undated /
+older. **Both now exist.** The team should decide which one lives by the
+phones — CISA's newer one, the church's own older one, or both — rather than
+have the app pick.
+
+**Eight new procedure cards were added**, each built entirely from the March
+2025 CCST policy and attributed to it at the bottom of the card, matching
+several items already on the "still missing" list in §6: Disruptive Person,
+Trespassing & Suspicious Person · Weapon Seen in the Building · Child Abuse,
+Neglect & Mandatory Reporting · Robbery & Cash/Offering Handling · Facility
+Security — Doors, Alarms & Burglary Response · Power/Utility Failure,
+Biohazard & Hazardous Material · Transportation & Off-Site Ministry Emergency ·
+Suicide Threat or Attempt. None of these have an Academy training module yet —
+same gap already noted for Medical Emergency in §7.
+
+**Two things these documents got us weren't asked for, and need the team's
+word, not this app's judgement:**
+
+- ⚠️ **The two evacuation documents disagree on which exit the kids' wing
+  uses.** The September 2025 Evacuation Plan says, in writing, "Kids evacuate
+  through the West exit." The floor-plan drawing shows the kids' classroom
+  wing's own marked route (blue) running out an exit corridor on the
+  **opposite side of the building** — the same side the four classrooms and
+  the small group room sit on — heading south, not west. **The app states
+  only what both documents agree on** (children evacuate by class, separately
+  from the sanctuary route, and assemble with a checked roster) and does not
+  print a compass direction for the kids' exit until the team confirms which
+  document is current. Somebody needs to walk the building with both
+  documents in hand and correct whichever one is wrong.
+
+- ⚠️ **The reunification method in current use does not match the procedure
+  already built in this app.** The September 2025 plan describes: teachers
+  hold clipboards with the class's roster and age marked, high enough for
+  parents to see, in the same North West corner of the parking lot the kids
+  assemble in — parents and children in the same place, in each other's
+  sight, checked off by hand against a roster. **This app's Reunification
+  procedure is built on the "I Love U Guys" Foundation's Standard
+  Reunification Method** (adopted before these documents arrived), whose
+  entire design principle is the opposite: children **out of the parents'
+  line of sight**, released only through a card-based chain-of-custody flow.
+  These are not two descriptions of the same system — they solve the same
+  problem in incompatible ways. **The team needs to decide: adopt SRM fully
+  (retire the clipboard/one-lot method and update the September 2025 plan to
+  match), keep the current clipboard method and remove the SRM procedure, or
+  run something else entirely.** Nothing has been changed to force this
+  decision either way; the Reunification card still describes SRM, flagged
+  with a pointer to this item.
+
+**What these documents did NOT answer** — every one of these stays exactly as
+open as before: AED locations, fire-extinguisher positions, team post
+positions, severe-weather shelter rooms, HVAC control and who runs it, which
+interior doors lock and who holds keys/fobs, radio channel and how many
+radios exist, the admin PIN holder, Kim/Kimberly, a **named** bomb-threat
+decision maker with **written** criteria, and the reunification-card design.
+
+
+---
+
 ## 1. Documents to upload (Phase 2 builds the slots)
 
 | Item | Status | Notes |
 |---|---|---|
 | Safety & Security Onboarding Manual (25 pages, PDF) | **NEEDED** | Onboarding step 1 is gated on reading it. |
-| Full site schematic | **NEEDED** | All entrances/exits, evacuation routes, assembly area, **AED and fire-extinguisher positions**, team post positions. |
+| Full site schematic | **PARTIAL — received 2026-09-15** | The floor plan with entrances/exits and colour-coded evacuation routes is in the app (Facility Maps). Still missing from it: **AED positions, fire-extinguisher positions, and team post positions.** See §0. |
 | Foyer diagram | **NEEDED** | Greeter posts, main entry doors, guest services. |
 | Sanctuary diagram | **NEEDED** | Seating, stage, exits, team posts front/rear. |
 | Children's auditorium diagram | **NEEDED** | Kids' rooms, exits, secure hallway coverage. |
 | Children's check-in diagram | **NEEDED** | Check-in stations, secure pickup flow, tag verification point. |
 | Leadership / staff headshots | **NEEDED** | One per directory card. |
-| **CISA bomb threat checklist, printed** | **NEEDED** | [One-page PDF](https://www.cisa.gov/sites/default/files/2025-08/Bomb_Threat_Checklist_082025_508.pdf). A copy by every phone that takes outside calls. Nobody composes good questions from memory mid-threat. |
+| **A bomb threat checklist, printed** | **NEEDED — now a choice, not a gap** | The church's own March 2025 policy has its own call-taker script (see §0); CISA's [one-page PDF](https://www.cisa.gov/sites/default/files/2025-08/Bomb_Threat_Checklist_082025_508.pdf) is the other option. Team picks one (or keeps both) and a copy goes by every phone that takes outside calls. Nobody composes good questions from memory mid-threat. |
 
 ## 2. Facility facts nobody has told us yet
 
@@ -31,9 +127,9 @@ renders a clearly labelled placeholder and the item is tracked here.
 - [ ] **Fire extinguisher positions.**
 - [ ] **Severe-weather shelter locations** — which specific interior, lowest-level rooms and hallways. NWS rules out the sanctuary and the fellowship hall (large open rooms with wide-span roofs), so this needs a real answer, not "move to the interior."
 - [ ] **Accessible evacuation routes and areas of refuge** for people with mobility needs.
-- [ ] **Radio / communication channel decision.** Training says "know your communication method (radio/text thread)" without naming one. Decide and document.
+- [ ] **Radio channel and count.** The method itself is no longer a question — the church's own written policy confirms radios, with real call protocol (a "Medical Emergency" call is stated TWICE with location; "Code-4" clears the channel; "Code-5" is used to call out a contact with a suspicious person). What is still unknown: how many radios exist, which channel, and who holds them.
 - [ ] **Which exterior doors are monitored** during children's drop-off and dismissal.
-- [ ] **Reunification location and parent check-in point.** *Now blocking a shipped procedure.* Two separate places are needed, with the children out of the parents' line of sight — that single decision is what keeps a reunification orderly.
+- [ ] **Reunification location and parent check-in point.** *Now blocking a shipped procedure — and now also a methodology conflict, see §0.* The church's own September 2025 plan names one location (the North West end of the parking lot) shared by parents and children in the same sightline; the app's SRM-based procedure requires two locations with children out of the parents' sight. Which method the team is actually running has to be decided before either the location or the reunification cards can be finalised.
 - [ ] **Reunification cards.** Do not exist yet. Needed before the procedure can be drilled.
 - [ ] **Which interior doors actually lock, and who carries keys or a fob on a Sunday.** *Now blocking a shipped procedure:* the Lockdown annex is worth exactly as much as the locks behind it.
 - [ ] **Shelter-in-place rooms**, who can shut down or recirculate the HVAC, and whether plastic sheeting and duct tape are stocked anywhere in the building. Sealing a room is the one protective action here that needs supplies bought in advance.
@@ -140,29 +236,33 @@ from headers), and the exact address string on the Google Maps listing.*
 
 ## 6. Procedure coverage
 
-**Now covered:** active shooter · lost child/Code Adam · fire & evacuation · severe weather · earthquake · flooding · de-escalation · continuity · **medical emergency** · **bomb threat** · **wildfire smoke**
+**Now covered:** active shooter · lost child/Code Adam · fire & evacuation · reunification · lockdown · shelter-in-place · severe weather · earthquake · flooding · de-escalation · continuity · **medical emergency** · **bomb threat** · **wildfire smoke** · disruptive person/trespassing/suspicious person · weapon in the building · child abuse & mandatory reporting · robbery & cash/offering handling · facility security (doors/alarms/burglary) · power/utility failure & hazmat/biohazard · transportation & off-site ministry emergency · suicide threat or attempt
+
+*(Reunification, Lockdown and Shelter-in-Place had already shipped as procedure
+cards by the time this list was last edited — correcting the record rather
+than leaving them listed as missing.)*
 
 - [x] **Medical emergency** — cardiac arrest, AED, seizure, falls. Sourced from AHA, Red Cross, CDC and the Epilepsy Foundation. Placed first and open by default, because it is the likeliest emergency this congregation faces. *Blocked on AED locations.*
-- [x] **Bomb threat / suspicious package.** *Blocked on a named Decision Maker and written evacuation criteria.*
+- [x] **Bomb threat / suspicious package.** *Blocked on a named Decision Maker and written evacuation criteria — see §0.*
 - [x] **Wildfire smoke / air quality.** Note: the EPA/AirNow activity table is written for schools and stops at Very Unhealthy, so the Hazardous (301+) tier is framed as a leadership call rather than given a fabricated threshold.
+- [x] **Reunification / child accountability during evacuation.** *Methodology conflict with the church's current practice — see §0.*
+- [x] **Lockdown / lockout / shelter-in-place**, built on SRP directive wording (see the terminology ruling above). *Blocked on which doors lock and who holds keys.*
+- [x] **Disruptive person, trespassing & suspicious person on campus** — added 2026-09-15 from the church's own March 2025 CCST policy.
+- [x] **Weapon seen in the building** (not yet an active shooter) — added 2026-09-15, same source.
+- [x] **Child abuse, neglect & mandatory reporting** — added 2026-09-15, same source. Idaho's specific mandatory-reporting statute is not named in the source document and has not been added here; see §4c for the pattern this project uses for statute citations (verify with counsel, do not rely on a cached number).
+- [x] **Robbery & cash/offering handling** — added 2026-09-15, same source.
+- [x] **Facility security — doors, alarms & burglary response** — added 2026-09-15, same source.
+- [x] **Power/utility failure & biohazard/hazardous material spill** — added 2026-09-15, same source.
+- [x] **Transportation & off-site ministry emergency** — added 2026-09-15, same source.
+- [x] **Suicide threat or attempt** — added 2026-09-15, same source. The source material does not mention the 988 crisis line; leadership may want it added.
 
 **Still missing**, ranked by likelihood for this specific church:
 
-- [ ] **Reunification / child accountability during evacuation.** Happens *every* time an evacuation happens. Right now a fire alarm during kids' ministry ends in an uncontrolled parent surge.
-- [ ] **Lockdown / lockout / shelter-in-place as named, standalone procedures.** Three of FEMA's five mandatory annexes. Lockout (an external threat nearby) triggers far more often than the shooter scenario it is associated with.
-- [ ] **Power / utility failure.** A Sunday outage means no lights, sound, HVAC or electronic locks, and a decision on two remaining services.
-- [ ] **Child protection / abuse-allegation response / background screening.** Highest-consequence recurring exposure for a church with children's ministry, and explicitly required by CISA. Idaho is a universal-mandatory-reporting state, so the response is legally time-bound.
 - [ ] **Missing at-risk adult (dementia wandering).** Code Adam covers children only. With an aging congregation this may outrank lost-child, and the protocol differs — immediate 911, vehicle and canal checks.
-- [ ] Suspicious person / trespass / no-contact enforcement.
 - [ ] Extreme heat and cold; who has authority to cancel a service.
 - [ ] Crisis communications / mass notification / who speaks for the church.
-- [ ] Security annex — open, lock, close; key control; pre-service sweeps.
-- [ ] Cash and offering handling — the most common actual crime at a church.
 - [ ] Recovery annex and after-action review.
-- [ ] Mental health crisis / suicidal person (the 988 pathway).
-- [ ] Gas leak / hazmat / carbon monoxide.
 - [ ] Cyber and donor-data breach.
-- [ ] Church van and offsite excursions.
 - [ ] Food safety at fellowship meals.
 - [ ] Protest / civil disturbance.
 - [ ] Hostage / barricade — Colleyville (2022) was exactly this at a house of worship, and the response diverges sharply from Run-Hide-Fight.
@@ -171,9 +271,12 @@ from headers), and the exact address string on the Google Maps listing.*
 ## 7. Academy modules
 
 The Academy has six modules. Medical emergency response has a procedure card but
-**no training module**, which is a gap given it is the likeliest emergency.
+**no training module**, which is a gap given it is the likeliest emergency. The
+eight procedure cards added 2026-09-15 (see §0/§6) have no training module either
+— same gap, now eight times over instead of once.
 
 - [ ] Decide whether to add a Medical Emergency module (CPR/AED/seizure/falls) as a seventh. The pass-mark logic is no longer tied to five questions, so a module of any length now works correctly.
+- [ ] Decide which, if any, of the new procedure cards need a training module of their own, or whether a shorter combined module ("Trespassing, Weapons & Mandatory Reporting," for instance) covers enough of them.
 
 ---
 
