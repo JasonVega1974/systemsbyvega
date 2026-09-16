@@ -116,7 +116,7 @@
       if (window.initClaim && window.initClaim.loadCounts) window.initClaim.loadCounts();
     }
     /* THE LANDING PAGE'S .sgrid IS DELIBERATELY NOT REPAINTED HERE. It is
-       build-time markup only, the same posture the hero rotator takes, and
+       build-time markup only, the same posture the hero photograph takes, and
        for a concrete reason rather than an omission: each of its cards leads
        with the DEMO BRAND NAME, which is not an sbv_niches column and never
        will be (see brandLine in catalog-render.js). Those names reach the
@@ -926,203 +926,6 @@
     });
   }
 
-  /* ------------------------------------------------------------- rotator */
-  /* The landing-page hero. A no-op everywhere else — [data-rotator] exists on
-     no other page, so this returns before touching the DOM (Ruling R3).
-
-     THE POINT OF THIS FUNCTION IS THE FETCHING, not the fading. The markup
-     ships two <img> layers and one src; everything else it needs is already
-     on the page in window.SBV_SEED. Each tick promotes the back layer to the
-     front and then points the new back layer at the frame AFTER the one now
-     showing. So the browser has fetched the current frame and exactly one
-     more, whatever the frame count is.
-
-     Frames come from the SEED, deliberately, and not from state.niches —
-     state.niches is replaced by the live database overlay in loadLive(), and
-     a row that arrives live has no screenshot committed for it yet. The seed
-     is the list tools/build-shots.js captured from, so it is the only list
-     whose every entry is guaranteed to resolve. A niche added to the database
-     joins the hero when the site is rebuilt, which is also when its frame is
-     captured — together, or not at all. */
-  /* 6s per frame (R13, Jason). Long enough to read the caption and take in the
-     storefront; short enough that a second frame arrives before a visitor has
-     decided the hero is a static image. */
-  var ROT_MS = 6000;
-  function rotator() {
-    var seqEl = document.querySelector('[data-rotator]');
-    if (!seqEl) return;
-    var layers = seqEl.querySelectorAll('.seq-layer');
-    if (layers.length !== 2) return;
-
-    var capEl  = document.querySelector('[data-rotator-cap]');
-    var caps   = capEl ? capEl.querySelectorAll('.seq-cap-layer') : null;
-    if (caps && caps.length !== 2) caps = null;
-    var previewBtn = document.querySelector('.js-preview');
-
-    var frames = (seed.niches || []).filter(function (n) { return n.demo_path; })
-      .map(function (n) {
-        return { src: '/assets/shots/rotator/' + n.slug + '.jpg', trade: n.name, slug: n.slug };
-      });
-    /* One frame is not a rotation. The static markup is already correct, so
-       leave it alone rather than starting a timer that changes nothing. */
-    if (frames.length < 2) return;
-
-    var i = 0;            // index of the frame currently on screen
-    var front = 0;        // which of the two layers is showing it
-    var timer = null;
-    var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-
-    function other() { return front === 0 ? 1 : 0; }
-
-    /* ---------------------------------------------------------- the scrim ---
-       THE HERO IS FULL-BLEED AND THE HEADLINE SITS ON THE IMAGE. White clears
-       4.5:1 on all 32 frames only because assets/hero-scrim.css darkens each
-       frame by an alpha MEASURED for that frame, and it selects that alpha on
-       .seq[data-slug]. So this attribute is not a label — it IS the contrast
-       of the hero, and it has to name the frame ACTUALLY on screen. If it
-       lagged the crossfade, every frame would be painted with the previous
-       frame's scrim, and no static screenshot of the page would ever show it.
-
-       THE 600ms WHERE BOTH FRAMES ARE VISIBLE. One attribute cannot hold two
-       frames' alphas, and for the length of the crossfade two frames are on
-       screen at once. Flipping it early under-protects the frame fading OUT;
-       flipping it late under-protects the one fading IN. So it flips at the
-       START of the fade (the incoming frame is covered from its first visible
-       pixel) and the OUTGOING frame's alpha is parked in --scrim-hold for the
-       duration; .seq-scrim-extra in sbv.css paints max() of the two, so the
-       heavier scrim is the one on screen while both images are, and neither
-       frame is ever under its own measured alpha.
-
-       The outgoing value is READ BACK from the cascade rather than kept in a
-       table here: the numbers live in exactly one place, the generated
-       stylesheet, and a copy of them in this file would be a second place to
-       forget to regenerate. */
-    var HOLD_MS = 600;          // matches the .seq-layer opacity transition
-    var holdTimer = null;
-
-    function markFrame(idx, crossfading) {
-      var prevExtra = crossfading
-        ? window.getComputedStyle(seqEl).getPropertyValue('--scrim-extra').trim()
-        : '';
-      seqEl.setAttribute('data-slug', frames[idx].slug);
-      /* The preview overlay's trigger carries the slug of whatever is showing
-         when it is clicked. This is the ONLY place that attribute is written;
-         wirePreview() only ever reads it. */
-      if (previewBtn) previewBtn.setAttribute('data-slug', frames[idx].slug);
-
-      if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
-      if (!prevExtra) return;
-      seqEl.style.setProperty('--scrim-hold', prevExtra);
-      holdTimer = setTimeout(function () {
-        seqEl.style.removeProperty('--scrim-hold');
-        holdTimer = null;
-      }, HOLD_MS);
-    }
-
-
-    /* Point the hidden layer at a frame. Setting src IS the fetch — this is
-       the only place a rotator image is ever requested. */
-    function load(idx) {
-      var b = layers[other()];
-      var want = frames[idx].src;
-      if (b.getAttribute('src') !== want) b.setAttribute('src', want);
-    }
-
-    function step() {
-      var next = (i + 1) % frames.length;
-      var b = layers[other()];
-      load(next);                       // normally already done; cheap if so
-      if (caps) {
-        caps[other()].textContent = frames[next].trade;
-        caps[front].classList.remove('is-on');
-        caps[other()].classList.add('is-on');
-      }
-      layers[front].classList.remove('is-on');
-      b.classList.add('is-on');
-      /* The whole rotator is one role="img"; its label names what is in it
-         now, so it never describes a frame that has already faded out. */
-      seqEl.setAttribute('aria-label', 'The ' + frames[next].trade + ' demo storefront.');
-      markFrame(next, true);
-      front = other();
-      i = next;
-      load((i + 1) % frames.length);    // stay exactly one frame ahead
-    }
-
-    function start() {
-      if (timer || holds || (mq && mq.matches)) return;
-      load((i + 1) % frames.length);
-      timer = setInterval(step, ROT_MS);
-    }
-    function stop() {
-      if (!timer) return;
-      clearInterval(timer);
-      timer = null;
-    }
-
-    /* PAUSING IS A COUNT, NOT A FLAG, and that is the whole reason this is not
-       four calls to stop() and four to start().
-
-       Three different things want the rotator held: the pointer resting on the
-       hero, the focus ring resting on the demo button, and a backgrounded tab.
-       They overlap. A pointer on the demo button is also a pointer on the hero,
-       so a naive `mouseleave -> start()` on the button would RESUME the rotator
-       the moment the pointer slid off the button onto the headline — while it
-       is still, plainly, hovering the hero.
-
-       So every reason to hold takes a ticket and every reason gives it back,
-       and the timer only runs when nobody holds one. Each hold() below is
-       paired with exactly one release() on the opposite event, which is what
-       keeps the count balanced. */
-    var holds = 0;
-    function hold()    { holds++; stop(); }
-    function release() { if (holds > 0) holds--; start(); }
-
-    /* HOVER-PAUSE, restored in R13 at Jason's request and bound to the HERO
-       rather than to a card. It used to hang off .seq-frame, the 640px card
-       the rotator lived in; that card is gone and the frame is the whole hero
-       background, so the hero element is now the only honest answer to "the
-       pointer is on the frame".
-
-       mouseenter/mouseleave, never mouseover/mouseout: the latter pair fires
-       again at every descendant boundary the pointer crosses, so gliding from
-       the headline onto a button would churn the count. Both are no-ops on a
-       touch device, which is the intent — there is no hovering to pause for. */
-    var heroEl = seqEl.closest ? seqEl.closest('.hero-full') : null;
-    if (heroEl) {
-      heroEl.addEventListener('mouseenter', hold);
-      heroEl.addEventListener('mouseleave', release);
-    }
-
-    /* The demo button holds on FOCUS, which hover does not cover: the button
-       carries the slug of whatever frame is on screen, so the rotator has to
-       hold still while the focus ring is on it or a keyboard visitor opens a
-       different demo from the one they aimed at. No mouse pair here — the
-       hero's own listeners already cover the pointer, and adding a second one
-       inside the first is what the count exists to make unnecessary. */
-    if (previewBtn) {
-      previewBtn.addEventListener('focus', hold);
-      previewBtn.addEventListener('blur', release);
-    }
-
-    /* A hidden tab should not burn through frames — or fetch them. */
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) hold(); else release();
-    });
-
-    /* Reduced motion can be switched on mid-visit. Honour it live: stop, and
-       stop fetching. Turning it back off resumes from wherever it stopped —
-       start() re-checks mq itself, and re-checks the hold count with it. */
-    if (mq && mq.addEventListener) {
-      mq.addEventListener('change', function (e) { if (e.matches) stop(); else start(); });
-    }
-
-    /* Frame 1's data-slug already ships in the generated markup, so the
-       no-JS hero is scrimmed correctly. This re-states it from the seed and,
-       more to the point, gives the demo button its first slug. */
-    markFrame(0, false);
-    start();
-  }
-
     /* ------------------------------------------------------- preview overlay */
   /* THE DEMO, SHOWN IN PLACE. Clicking any .js-preview[data-slug] opens that
      niche's live demo in a full-screen iframe under a slim bar. Escape closes,
@@ -1391,15 +1194,10 @@
       var t = e.target && e.target.closest ? e.target.closest('.js-preview[data-slug]') : null;
       if (!t) return;
       var slug = t.getAttribute('data-slug');
-      /* The hero button ships data-slug="" and rotator() fills it from the
-         frame on screen. If the rotator never runs (one frame, or no rotator
-         on this page) the button would be inert, so fall back to the slug the
-         generated markup already carries. Read-only: rotator() stays the only
-         thing that WRITES that attribute. */
-      if (!slug) {
-        var seq = document.querySelector('[data-rotator][data-slug]');
-        if (seq) slug = seq.getAttribute('data-slug');
-      }
+      /* No fallback, and none needed: every .js-preview on every page now
+         ships a real slug in its markup. The hero's used to ship EMPTY and be
+         filled in by rotator() from the frame on screen — R14 deleted the
+         rotator, and R.heroDemoBtn() emits the slug at build time instead. */
       if (!resolve(slug)) return;   /* not ours — leave the element's own behaviour alone */
       e.preventDefault();
       open(slug, false, t);
@@ -1739,9 +1537,6 @@
     wireRail();
     wireExit();
     paintPlatforms();
-    rotator();
-    /* After rotator(), so the hero trigger already carries a slug before the
-       first click can land. A no-op on any page whose seed has no demo. */
     wirePreview();
 
     /* /work/ only — no-op everywhere else (Ruling R3). */

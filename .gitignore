@@ -24,3 +24,9 @@ supabase/.temp/
 # sendLoginLink(), so it is regenerated on demand and never worth committing —
 # a checked-in copy is exactly the stale duplicate the tool exists to avoid.
 /.preview/
+
+# The hero photograph's ORIGINAL, as Jason supplied it. tools/build-hero-image.js
+# re-encodes it into assets/hero/owner.jpg (138 KB), which is the file the site
+# actually ships; 1.5 MB of PNG carrying the same picture has no reason to be in
+# the repo beside it. Kept on disk so the encode stays repeatable, never committed.
+/assets/hero/owner-source.png

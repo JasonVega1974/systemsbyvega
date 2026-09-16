@@ -3,6 +3,15 @@
 /* build-scrim.js — the hero scrim, measured rather than eyeballed.
  * DATA ONLY: it emits assets/hero-scrim.css and styles nothing.
  *
+ * DORMANT SINCE R14, AND KEPT ON PURPOSE. The landing hero is one static
+ * photograph now; there is no rotator, no scrim, and index.html no longer
+ * links assets/hero-scrim.css. Neither this tool nor that stylesheet is
+ * referenced by anything the site serves. Both were left in place rather than
+ * deleted: assets/shots/ is still the source of the /sites/ board and the
+ * 32-card grid on /, so the frames this measures still exist, and a hero that
+ * ever goes back to showing them will want these numbers rather than a second
+ * derivation of them. Everything below describes the hero as it was BEFORE R14.
+ *
  * THE SCRIM IS TWO LAYERS.
  *   1. a BASELINE, one constant, on every one of the 32 frames. It gives the
  *      hero a consistent brand tone so the weight does not visibly change as

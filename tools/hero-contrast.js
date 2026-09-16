@@ -1,40 +1,41 @@
 #!/usr/bin/env node
 'use strict';
-/* hero-contrast.js — is the hero headline actually legible, on all 32 frames?
+/* hero-contrast.js — is the hero's copy actually legible on the photograph?
  *
- * WHY THIS EXISTS ALONGSIDE tools/build-scrim.js. build-scrim MODELS the stack:
- * it composites numbers in a canvas and publishes the per-frame alphas the hero
- * needs. That model is only as true as its assumptions, and R13 invalidated two
- * of them — the base layer is now flat black at 0.45 rather than --con at 0.34,
- * and the copy is CENTRED rather than sitting in the left 55% the model samples.
- * Re-deriving the arithmetic would have produced a second model to keep honest.
+ * WHAT CHANGED IN R14, AND WHY THIS FILE SURVIVED IT. The hero used to be 32
+ * rotating screenshots under three measured scrim layers, and this tool ran
+ * per FRAME to prove the scrim was heavy enough. There is one static
+ * photograph now and no scrim at all, so it runs per WIDTH instead: the same
+ * measurement, against the same 4.5:1 bar, on the six viewports the layout is
+ * actually written for. Nothing else about it moved — a second measurement
+ * tool would be a second set of assumptions to keep honest.
  *
- * So this tool models nothing. It opens index.html in Chromium, hides the copy
- * so only the ground it sits on is left, and SCREENSHOTS the exact rectangle
- * each piece of hero text occupies. Every pixel it reads is a pixel the browser
- * really painted: the gradient falloff, the elliptical plateau, object-fit
- * cropping, JPEG artefacts and the per-frame --scrim-extra, all of it, composed
- * the way a visitor gets it.
+ * IT MODELS NOTHING. It opens index.html in Chromium and SCREENSHOTS the exact
+ * rectangle each piece of hero text occupies, with the glyphs made transparent
+ * so what is sampled is the GROUND the text stands on. Every pixel it reads is
+ * a pixel the browser really painted: the photo, `cover` cropping at that
+ * viewport, JPEG artefacts, and any wash a button paints under its own label.
  *
- * WHAT IS SAMPLED. Three rects, every one of them white text on the frame:
- * the h1, the sub-copy, and the frame caption at the foot of the hero. The
- * element boxes are used rather than the glyph boxes, which is deliberately
- * conservative — a centred line of type is narrower than its block, so the
- * sample includes ground the letters never touch.
+ * WHY color:transparent AND NOT visibility:hidden. The primary button's ground
+ * IS its own amber fill and the secondary's is a dark wash over the photo.
+ * Hiding those elements would sample the photo where a button is and report a
+ * contrast no visitor ever sees. Transparent glyphs leave every box painted
+ * exactly as it ships and remove only the letters.
  *
- * WHY THE 90th PERCENTILE, not the mean or the max. Same reason build-scrim
- * uses it: a frame can average out perfectly while carrying a blown-out window
- * exactly where the headline sits. The mean hides that pixel and the headline
- * lands on it. The max is the opposite error — one specular pixel would black
- * out the whole hero.
+ * EACH RECT IS MEASURED AGAINST ITS OWN TEXT COLOUR, read off the live element
+ * before the glyphs are hidden. Four of the five are #FFFFFF; the primary CTA
+ * is --acc-ink on amber, and calling that white would be measuring a button
+ * that does not exist.
  *
- *   node tools/hero-contrast.js           measure every frame at the committed
- *                                         --scrim-floor; exit 1 if any < 4.5:1
- *   node tools/hero-contrast.js --solve   measure with the pool OFF, then solve
- *                                         the smallest --scrim-floor that
- *                                         clears every frame, and verify it by
- *                                         measuring again at that value
- *   node tools/hero-contrast.js --width N measure at a different viewport
+ * WHY THE 90th PERCENTILE, not the mean or the max. A photograph can average
+ * out perfectly while carrying a bright patch exactly where the headline sits.
+ * The mean hides that pixel and the headline lands on it. The max is the
+ * opposite error — one specular pixel would condemn the whole hero.
+ *
+ *   node tools/hero-contrast.js            all six widths; exit 1 under 4.5:1
+ *   node tools/hero-contrast.js --width N  one width
+ *   node tools/hero-contrast.js --keep     leave the probe screenshots in
+ *                                          .preview/hero-contrast/
  */
 const fs   = require('fs');
 const http = require('http');
@@ -44,13 +45,11 @@ const { launchBrowser } = require('./lib/browser');
 const WCAG = require('./lib/wcag');
 
 const ROOT = path.resolve(__dirname, '..');
-const SEED = path.join(ROOT, 'assets', 'data', 'niches.seed.json');
-const CSS  = path.join(ROOT, 'assets', 'sbv.css');
 
 /* The page is SERVED, not opened off disk: every asset reference on it is
-   root-relative (/assets/sbv.css, /assets/shots/...), and under file:// those
-   resolve against the filesystem root and 404. A hero measured without its
-   stylesheet would report a perfect score on a page that does not exist.
+   root-relative (/assets/sbv.css, /assets/hero/owner.jpg), and under file://
+   those resolve against the filesystem root and 404. A hero measured without
+   its stylesheet would report a perfect score on a page that does not exist.
    Lifted from tools/a11y-sweep.js, which serves for the same reason. */
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
                 '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml',
@@ -73,103 +72,78 @@ function serve() {
   });
 }
 
-const SOLVE = process.argv.includes('--solve');
-const WIDTH = (() => {
+/* The six the hero's rules are written for: the phone band, the tablet, the
+   width the layout switches at, the two common laptops and the photo's own
+   native width. */
+const WIDTHS = (() => {
   const i = process.argv.indexOf('--width');
-  return i === -1 ? 1280 : parseInt(process.argv[i + 1], 10) || 1280;
+  if (i !== -1) return [parseInt(process.argv[i + 1], 10) || 1280];
+  return [390, 768, 1024, 1280, 1440, 1920];
 })();
+const KEEP = process.argv.includes('--keep');
+const SHOTS = path.join(ROOT, '.preview', 'hero-contrast');
 
 const HEIGHT     = 900;
 const PERCENTILE = 0.90;
 const TARGET     = 4.5;
-/* The same +0.04-of-alpha spirit as build-scrim's margin, expressed where it is
-   easier to check: solve to a ratio slightly above the bar so a frame that
-   measures 4.50 on this machine is not a frame that measures 4.49 on another. */
-const SOLVE_TO   = 4.60;
-const STEP       = 0.01;
 
-/* The rects to sample. Everything white that sits on the frame. */
+/* Everything the visitor reads inside the hero. Both CTAs included: the brief
+   for R14 asked for them by name, and they are the two rects whose ground is
+   not simply "the photo". */
 const SELECTORS = [
+  ['eyebrow',  '.hero-full .plate-sub'],
   ['headline', '.hero-full h1.display'],
   ['subcopy',  '.hero-full .thesis'],
-  ['eyebrow',  '.hero-full .plate-sub'],
-  ['caption',  '.hero-full .seq-cap'],
+  ['cta-1',    '.hero-full .plate-cta .btn-pri'],
+  ['cta-2',    '.hero-full .plate-cta .btn-sec'],
 ];
-
-/* --scrim-floor as the stylesheet actually commits it, so the default run
-   reports the shipped hero rather than whatever this file last hard-coded. */
-function committedFloor() {
-  const m = /--scrim-floor:\s*([0-9.]+)/.exec(fs.readFileSync(CSS, 'utf8'));
-  if (!m) throw new Error('no --scrim-floor in assets/sbv.css');
-  return parseFloat(m[1]);
-}
-
-function slugs() {
-  const seed = JSON.parse(fs.readFileSync(SEED, 'utf8'));
-  return (seed.niches || []).filter(n => n.demo_path).map(n => n.slug);
-}
-
-const ratioFromLum = L => 1.05 / (L + 0.05);
 
 /* ------------------------------------------------------------------ in-page */
 
-/* Park the page in a known state: no timer advancing the frames underneath the
-   measurement, nothing painted over the hero, and the copy hidden so the
-   screenshot is of the GROUND rather than of the text standing on it.
-   clearInterval over the whole id space is blunt, and it is the point — it does
-   not need to know which handle the rotator took. */
-const FREEZE = () => {
-  for (let i = 1; i < 5000; i++) clearInterval(i);
-  const s = document.createElement('style');
-  s.id = '__probe';
-  s.textContent =
-    '.gnav,.rail{visibility:hidden !important}' +
-    '.hero-copy,.hero-full .seq-meta{visibility:hidden !important}' +
-    '.seq-layer{transition:none !important}';
-  document.head.appendChild(s);
-};
-
-/* Point the hero at one frame and wait for it to be on screen for real. The
-   data-slug has to move with it: it is what selects that frame's --scrim-extra
-   out of the generated assets/hero-scrim.css. */
-const SHOW = async (arg) => {
-  const { src, slug, floor } = arg;
-  const seq = document.querySelector('[data-rotator]');
-  const on  = seq.querySelector('.seq-layer.is-on');
-  const hero = seq.closest('.hero-full');
-  if (floor === null) hero.style.removeProperty('--scrim-floor');
-  else hero.style.setProperty('--scrim-floor', String(floor));
-  seq.setAttribute('data-slug', slug);
-  seq.style.removeProperty('--scrim-hold');
-  on.setAttribute('src', src);
-  await on.decode();
-  /* Two frames, not one: decode() resolves when the bitmap is ready, which is
-     before it has been composited. Measuring one rAF early samples the frame
-     that was there before. */
-  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-  return true;
-};
-
+/* Measure first, hide second — the rects and the colours have to be read while
+   the type is still painted normally. */
 const RECTS = (sels) => {
+  const rgb = (css) => {
+    const m = /rgba?\(([^)]+)\)/.exec(css);
+    if (!m) return null;
+    const p = m[1].split(',').map(parseFloat);
+    return { r: p[0], g: p[1], b: p[2] };
+  };
   const out = [];
   sels.forEach(([name, sel]) => {
     const el = document.querySelector(sel);
     if (!el) return;
     const r = el.getBoundingClientRect();
     if (r.width < 2 || r.height < 2) return;
-    out.push({ name,
+    out.push({ name, sel,
       x: Math.round(r.left + window.scrollX),
       y: Math.round(r.top + window.scrollY),
-      w: Math.round(r.width), h: Math.round(r.height) });
+      w: Math.round(r.width), h: Math.round(r.height),
+      color: rgb(window.getComputedStyle(el).color) || { r: 255, g: 255, b: 255 } });
   });
   return out;
 };
 
-/* Read one screenshot back: p90 of per-pixel luminance, plus the RGB of the
-   dimmest pixel at or above that percentile. The RGB is what makes --solve
-   possible without a second screenshot per candidate alpha — the pool is flat
-   black at full strength over these rects, so painting it is exactly
-   channel * (1 - alpha), which can be stepped in node. */
+/* Park the page in a known state: nothing floating over the hero, and the
+   glyphs transparent so the screenshot is of the GROUND rather than of the
+   text standing on it. The eyebrow's amber rule is a MARK, not type — it
+   carries no contrast obligation and would otherwise dominate the p90 of the
+   box it shares with the eyebrow's words, so it is faded out too (opacity, so
+   the box it occupies is still measured, as photo). */
+const FREEZE = () => {
+  const s = document.createElement('style');
+  s.id = '__probe';
+  s.textContent =
+    '.gnav,.rail{visibility:hidden !important}' +
+    '.hero-full .hero-copy, .hero-full .hero-copy *' +
+      '{color:transparent !important;text-shadow:none !important;' +
+      ' -webkit-text-fill-color:transparent !important}' +
+    '.hero-full .plate-sub::before{opacity:0 !important}';
+  document.head.appendChild(s);
+  return true;
+};
+
+/* Read one screenshot back: the p90 of per-pixel luminance over the rect. */
 const READ = async (dataUrl) => {
   const { lum } = window.__wcag;
   const img = new Image();
@@ -200,98 +174,81 @@ const READ = async (dataUrl) => {
 
 /* --------------------------------------------------------------- the driver */
 
-async function measureAll(page, list, rects, floor) {
-  const rows = [];
-  for (const slug of list) {
-    const src = '/assets/shots/rotator/' + slug + '.jpg';
-    await page.evaluate(SHOW, { src, slug, floor });
-    let worst = null;
-    for (const r of rects) {
-      const shot = await page.screenshot({ clip: { x: r.x, y: r.y, width: r.w, height: r.h } });
-      const got = await page.evaluate(READ, 'data:image/png;base64,' + shot.toString('base64'));
-      const row = { slug, where: r.name, lum: got.lum, pixel: got.pixel,
-                    ratio: ratioFromLum(got.lum) };
-      if (!worst || row.ratio < worst.ratio) worst = row;
-    }
-    rows.push(worst);
-  }
-  rows.sort((a, b) => b.ratio - a.ratio);
-  return rows;
+/* Where the copy ENDS as a fraction of the viewport. The photo's dark band
+   runs to 44% of the width (tools/build-hero-image.js --profile); a rect that
+   ends past that is the failure mode the layout is written to prevent, and it
+   is worth reporting even on a width that still passes 4.5:1. */
+function reach(rects, width) {
+  let far = 0;
+  rects.forEach(r => { far = Math.max(far, r.x + r.w); });
+  return far / width;
 }
 
-/* The smallest black alpha over `pixel` at which white clears `to`. Stepped,
-   never solved in closed form: CSS composites in sRGB and WCAG luminance is
-   computed from linearised channels, and the closed form is easy to get subtly
-   and plausibly wrong. */
-function solveFloor(pixel, to) {
-  for (let i = 0; i <= Math.round(0.95 / STEP); i++) {
-    const a = i * STEP;
-    const c = { r: pixel.r * (1 - a), g: pixel.g * (1 - a), b: pixel.b * (1 - a) };
-    if (ratioFromLum(WCAG.lum(c)) >= to) return Math.round(a * 100) / 100;
-  }
-  return null;
-}
-
-function table(rows, floor) {
-  const w = Math.max(...rows.map(r => r.slug.length), 4);
-  console.log(`\n  --scrim-floor ${floor === null ? '(as committed)' : floor.toFixed(2)}` +
-              `   viewport ${WIDTH}x${HEIGHT}   p90 of ${rows.length} frames\n`);
-  console.log('  ' + 'slug'.padEnd(w) + '   where      p90 lum   ratio');
-  console.log('  ' + '-'.repeat(w) + '   --------   -------   -----');
+function table(width, rows, far) {
+  /* Below 1000px the copy is on flat colour and the photo is a band under
+     it, so how far the copy reaches says nothing about the picture. */
+  const where = width < 1000
+    ? 'stacked — copy on flat ground, photo in the band below'
+    : 'copy reaches ' + (far * 100).toFixed(1) + '% of the width (dark band ends at 44%)';
+  console.log(`\n  ${width}x${HEIGHT}   ${where}`);
+  console.log('  where      text       p90 lum   ratio');
+  console.log('  --------   --------   -------   -----');
   rows.forEach(r => console.log(
-    '  ' + r.slug.padEnd(w) + '   ' + r.where.padEnd(8) +
+    '  ' + r.where.padEnd(8) +
+    '   ' + ('#' + [r.color.r, r.color.g, r.color.b]
+               .map(v => Math.round(v).toString(16).padStart(2, '0')).join('')).padEnd(8) +
     '   ' + r.lum.toFixed(4).padStart(7) +
     '   ' + r.ratio.toFixed(2).padStart(5) +
     (r.ratio < TARGET ? '  FAIL' : '')));
 }
 
 async function main() {
-  const list = slugs();
   const { s, port } = await serve();
   const browser = await launchBrowser();
-  const ctx = await browser.newContext({ viewport: { width: WIDTH, height: HEIGHT },
-                                         deviceScaleFactor: 1 });
-  await ctx.addInitScript({ content: WCAG.SRC });
-  const page = await ctx.newPage();
-  await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'load' });
-  await page.evaluate(FREEZE);
-  const rects = await page.evaluate(RECTS, SELECTORS);
-  console.log('  sampling: ' + rects.map(r => `${r.name} ${r.w}x${r.h}`).join(', '));
+  if (KEEP) fs.mkdirSync(SHOTS, { recursive: true });
 
-  let failed = false;
+  const all = [];
 
-  if (SOLVE) {
-    const bare = await measureAll(page, list, rects, 0);
-    table(bare, 0);
-    let need = 0, driver = null;
-    bare.forEach(r => {
-      const f = solveFloor(r.pixel, SOLVE_TO);
-      if (f === null) throw new Error(`no alpha clears ${SOLVE_TO}:1 on ${r.slug}`);
-      if (f > need) { need = f; driver = r; }
-    });
-    console.log(`\n  SOLVED  --scrim-floor:${need.toFixed(2)}` +
-                `   driven by ${driver.slug} (${driver.where})`);
-    const check = await measureAll(page, list, rects, need);
-    table(check, need);
-    const worst = check[check.length - 1];
-    console.log(`\n  worst after the pool: ${worst.ratio.toFixed(2)}:1 on ` +
-                `${worst.slug} (${worst.where})`);
-    failed = worst.ratio < TARGET;
-  } else {
-    const floor = committedFloor();
-    const rows = await measureAll(page, list, rects, null);
-    table(rows, floor);
-    const worst = rows[rows.length - 1];
-    console.log(`\n  worst: ${worst.ratio.toFixed(2)}:1 on ${worst.slug} (${worst.where})` +
-                `   target ${TARGET.toFixed(1)}:1`);
-    failed = worst.ratio < TARGET;
+  for (const width of WIDTHS) {
+    const ctx = await browser.newContext({ viewport: { width, height: HEIGHT },
+                                           deviceScaleFactor: 1 });
+    await ctx.addInitScript({ content: WCAG.SRC });
+    const page = await ctx.newPage();
+    await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'load' });
+    /* The photo is a CSS background; `load` covers it, but one more frame
+       costs nothing and rules out measuring a pre-paint composite. */
+    await page.evaluate(() => new Promise(r =>
+      requestAnimationFrame(() => requestAnimationFrame(r))));
+
+    const rects = await page.evaluate(RECTS, SELECTORS);
+    await page.evaluate(FREEZE);
+    await page.evaluate(() => new Promise(r => requestAnimationFrame(r)));
+
+    const rows = [];
+    for (const r of rects) {
+      const shot = await page.screenshot({ clip: { x: r.x, y: r.y, width: r.w, height: r.h } });
+      if (KEEP) fs.writeFileSync(path.join(SHOTS, `${width}-${r.name}.png`), shot);
+      const got = await page.evaluate(READ, 'data:image/png;base64,' + shot.toString('base64'));
+      rows.push({ width, where: r.name, color: r.color, lum: got.lum, pixel: got.pixel,
+                  ratio: WCAG.ratio(r.color, got.pixel) });
+    }
+    table(width, rows, reach(rects, width));
+    all.push(...rows);
+    await ctx.close();
   }
 
   await browser.close();
   s.close();
-  if (failed) {
-    console.error('\n  A hero frame is under 4.5:1. Raise --scrim-floor in assets/sbv.css');
-    console.error('  (node tools/hero-contrast.js --solve prints the value to use).');
+
+  all.sort((a, b) => a.ratio - b.ratio);
+  const worst = all[0];
+  console.log(`\n  worst across ${WIDTHS.length} width(s): ${worst.ratio.toFixed(2)}:1 ` +
+              `on ${worst.where} at ${worst.width}px   target ${TARGET.toFixed(1)}:1`);
+
+  if (worst.ratio < TARGET) {
+    console.error('\n  A piece of hero copy is under 4.5:1 on the photograph.');
+    console.error('  Narrow the copy column or darken that rect locally — see THE PHOTO');
+    console.error('  HERO in assets/sbv.css for where the dark band actually ends.');
     process.exit(1);
   }
 }

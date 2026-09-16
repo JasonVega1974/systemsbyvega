@@ -123,8 +123,9 @@
        demo_path set -> /assets/shots/rotator/<slug>.jpg. tools/build-shots.js
                         captures that directory from the same seed rows, one
                         file per slug, so the two cannot disagree about which
-                        frames exist (heroRotator() below reads it the same
-                        way).
+                        frames exist. The directory keeps the name it took
+                        from the hero rotator R14 deleted; the catalog
+                        board and the 32-card grid read it now.
        open_url set  -> /assets/shots/platforms/<host minus .com>.jpg. The
                         three open platforms have no demo_path, because they
                         are whole businesses rather than templates, but they
@@ -407,100 +408,29 @@
       }).join('');
   }
 
-  /* The landing-page hero rotator. One frame per niche that has a demo, in
-     seed order, captured by tools/build-shots.js into assets/shots/rotator/
-     under the niche's own slug — so this function and that tool read the same
-     list and cannot disagree about which frames exist.
+  /* THE HERO'S DEMO BUTTON, and the only reason it is generated: the SLUG.
 
-     Only FRAME 1 gets a src here. The other thirty-one are fetched by
-     assets/sbv.js, one ahead of the one showing, which is the whole reason
-     the hero can carry 32 frames without 32 downloads. That also means the
-     no-JS and reduced-motion renderings are this markup exactly as it
-     stands: frame 1, its caption, and the full trade list below.
+     The button opens the preview overlay, and wirePreview() in assets/sbv.js
+     resolves .js-preview[data-slug] against the seed before it will open
+     anything. Until R14 that attribute shipped EMPTY and the hero rotator
+     filled it in at runtime from the frame on screen. R14 replaced the
+     rotator with one static photograph, so something else has to put a real
+     slug there — and the only honest source is the list every other surface
+     already reads: the first niche in the seed that has a demo_path.
 
-     THE SCRIM IS PART OF THIS MARKUP, AND SO IS data-slug. The hero is
-     full-bleed now — the headline sits ON the frame — so white text clears
-     4.5:1 only because assets/hero-scrim.css darkens each frame by an amount
-     MEASURED for that frame. Three things that markup owns:
+     TYPING A SLUG INTO index.html WOULD WORK TODAY AND ROT SILENTLY. A slug
+     that no longer names a seed row does not throw, does not log, and does
+     not look broken: the button simply stops opening anything. Emitting it
+     here keeps the first demo recorded in exactly one place (Ruling R20),
+     the same way no count on this page is ever typed.
 
-       data-slug        keys the per-frame alpha. It ships on frame 1 so the
-                        no-JS and reduced-motion renderings are scrimmed
-                        correctly too, and rotator() in assets/sbv.js moves it
-                        with the crossfade. A lagging attribute paints frame N
-                        with frame N-1's scrim, which no screenshot reveals.
-       THREE scrim      --scrim-base and --scrim-extra are composited as
-       divs             separate layers, never summed into one alpha: they
-                        were solved by painting one over the other in sRGB,
-                        and sRGB compositing is not additive in alpha. The
-                        third, .seq-scrim-floor, is the MEASURED FLOOR this
-                        layout needs on top of them — see THE FLOOR in
-                        assets/sbv.css for what it is and why the generated
-                        pair alone does not cover a headline.
-       inside .seq      the custom properties are declared on .seq[data-slug],
-                        so the layers have to be its descendants to inherit
-                        them.
-
-     The chips are the reduced-motion (and no-JS) presentation, revealed by
-     CSS. They are CAPPED at CHIP_CAP, with a generated '+N more' link for
-     the rest. Printing all thirty-two put a 559px wall of pills in the hero
-     at 390px — measured — which pushes the CTAs off the first screen and is
-     a worse reduced-motion experience than the animation it stands in for.
-     The remainder is stated rather than dropped, its count computed here
-     (Ruling R20: a count in this markup is never typed), and the link goes
-     to the page that lists every one of them.
-
-     .hero-media and .seq-meta split the block in two on purpose. .hero-media
-     is taken out of flow as the hero's background; .seq-meta stays IN flow,
-     after it, so the caption and the chip wall add real height instead of
-     overhanging a fixed box — and so the '+N more' link is tabbed after the
-     hero's own CTAs rather than before them. */
-  var CHIP_CAP = 11;
-  function heroRotator(niches, extrasLookup) {
-    var frames = niches.filter(function (n) { return n.demo_path; });
-    if (!frames.length) return '';
-    var first = frames[0];
-    var x = (extrasLookup && extrasLookup[first.slug]) || {};
-    var shot = function (n) { return '/assets/shots/rotator/' + esc(n.slug) + '.jpg'; };
-    /* R12: the gradient goes on .seq itself, BEFORE the two <img> layers and
-       the three scrim divs that follow them in the markup below -- an
-       element's own background always paints behind its children, so this
-       sits under the scrim exactly the way the brief requires without
-       touching the scrim's own layers. Only frame 1 can carry this at build
-       time (frames 2..32 are fetched by assets/sbv.js at runtime, one ahead
-       of the one showing), and only frame 1's file is ever checked for
-       existence here -- same noShot rule as thumb()/siteGrid() above. */
-    var frame1Img = x.noShot
-      ? '<img class="seq-layer is-on" width="1280" height="800" decoding="async" alt="">'
-      : '<img class="seq-layer is-on" src="' + shot(first) + '" width="1280" height="800" ' +
-             'fetchpriority="high" decoding="async" alt="">';
-
-    return '' +
-      '<div class="hero-media">' +
-        '<div class="seq" data-rotator data-slug="' + esc(first.slug) + '" role="img" ' +
-             'aria-label="The ' + esc(first.name) + ' demo storefront."' + shotBg(x) + '>' +
-          frame1Img +
-          '<img class="seq-layer" width="1280" height="800" decoding="async" alt="">' +
-          '<div class="seq-scrim seq-scrim-base" aria-hidden="true"></div>' +
-          '<div class="seq-scrim seq-scrim-extra" aria-hidden="true"></div>' +
-          '<div class="seq-scrim seq-scrim-floor" aria-hidden="true"></div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="seq-meta">' +
-        '<div class="seq-cap" data-rotator-cap aria-hidden="true">' +
-          '<span class="seq-cap-layer is-on">' + esc(first.name) + '</span>' +
-          '<span class="seq-cap-layer"></span>' +
-        '</div>' +
-        '<div class="seq-steps">' +
-          frames.slice(0, CHIP_CAP).map(function (n, i) {
-            return '<span class="seq-step' + (i === 0 ? ' is-current' : '') + '">' +
-                   esc(n.name) + '</span>';
-          }).join('') +
-          (frames.length > CHIP_CAP
-            ? '<a class="seq-step seq-step-more" href="/sites/">+' +
-              (frames.length - CHIP_CAP) + ' more &rarr;</a>'
-            : '') +
-        '</div>' +
-      '</div>';
+     No demo in the seed means NO BUTTON, rather than a button that cannot
+     open one. */
+  function heroDemoBtn(niches) {
+    var first = niches.filter(function (n) { return n.demo_path; })[0];
+    if (!first) return '';
+    return '<button type="button" class="btn btn-sec js-preview" data-slug="' +
+           esc(first.slug) + '">See a live demo</button>';
   }
 
   /* WHAT'S INCLUDED — the $99 website deliverables, rendered into a
@@ -660,7 +590,7 @@
     brandLine: brandLine,
     chips: chips,
     nicheSelect: nicheSelect,
-    heroRotator: heroRotator,
+    heroDemoBtn: heroDemoBtn,
     included: included,
     figures: figures,
     numWord: numWord,

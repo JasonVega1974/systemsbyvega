@@ -57,7 +57,7 @@ const CHECK = process.argv.includes('--check');
 const TARGETS = [
   { file: path.join(ROOT, 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_ALL', 'SITES_STEP',
-               'HERO_ROTATOR', 'SITES_GRID', 'SEED_SCRIPT', 'INCLUDED'] },
+               'HERO_DEMO_BTN', 'SITES_GRID', 'SEED_SCRIPT', 'INCLUDED'] },
   { file: path.join(ROOT, 'sites', 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'THESIS_OPEN',
               'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT', 'INCLUDED'] },
@@ -241,11 +241,14 @@ function main() {
     SVC_SITES:    String(fig.sites),
     WK_SITES:     String(fig.sites),
     PLAT_INLINE:  String(fig.inLine),
-    /* The hero rotator's 32 frames, from the same seed rows that name the
-       screenshots tools/build-shots.js captures. Generated, not typed: a
-       niche given a demo_path in the seed joins the hero on the next build,
-       the same way it joins the catalog. */
-    HERO_ROTATOR: '\n' + R.heroRotator(seed.niches, extras) + '\n',
+    /* The hero's "See a live demo" button, generated for its data-slug and
+       for nothing else. R14 replaced the rotating screenshots with one
+       static photograph; the rotator used to write that attribute at
+       runtime, and a button whose slug names no seed row opens nothing and
+       reports nothing. R.heroDemoBtn() takes the first niche in this same
+       seed that has a demo_path, so the first demo is recorded once, here,
+       and never typed into index.html. */
+    HERO_DEMO_BTN: R.heroDemoBtn(seed.niches),
     /* The same list on `/` and `/sites/`, from one function, so the two
        cannot drift apart the way two hand-kept copies would. */
     INCLUDED:     '\n' + R.included() + '\n',
