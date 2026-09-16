@@ -57,7 +57,7 @@ const CHECK = process.argv.includes('--check');
 const TARGETS = [
   { file: path.join(ROOT, 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_ALL', 'SITES_STEP',
-               'HERO_ROTATOR', 'OFFER_CARD', 'SITES_GRID', 'SEED_SCRIPT', 'INCLUDED'] },
+               'HERO_ROTATOR', 'SITES_GRID', 'SEED_SCRIPT', 'INCLUDED'] },
   { file: path.join(ROOT, 'sites', 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'THESIS_OPEN',
               'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT', 'INCLUDED'] },
@@ -249,11 +249,6 @@ function main() {
     /* The same list on `/` and `/sites/`, from one function, so the two
        cannot drift apart the way two hand-kept copies would. */
     INCLUDED:     '\n' + R.included() + '\n',
-    /* The hero's offer card. Its five lines are a SLICE of the same INCLUDED
-       array R.included() renders in full — one source, two renderings, so the
-       card in the first screen cannot promise something the list further down
-       the page does not. */
-    OFFER_CARD:   '\n' + R.offerCard() + '\n',
     /* The landing page's flat grid of all thirty-two turnkey sites. Same
        seed rows and same SBV_EXTRAS lookup the catalog board reads, so the
        two surfaces cannot disagree about which sites exist or what the demo

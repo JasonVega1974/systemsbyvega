@@ -166,6 +166,17 @@
            '</div>';
   }
 
+  /* THE PRICE, AND THE ONLY PLACE IT IS WRITTEN DOWN. tools/check-pages.js
+     reads this constant out of this file by name and then refuses any dollar
+     amount on a selling page that it cannot trace back to here, to a
+     price_label in the seed, or to its own short ALLOWED_PRICES list. So the
+     name and the shape of this line are load-bearing: rename it and the price
+     guard goes red rather than quietly stopping.
+
+     It used to be declared beside the hero offer card, which R13 removed. It
+     belongs here instead, next to the only renderer that still prints it. */
+  var PRICE = '$99';
+
   /* Price, printed as a line of text. The circular red sticker it replaces
      carried the same figure in a display face at 17px, rotated nine degrees.
 
@@ -176,7 +187,7 @@
   function priceLine(n) {
     var txt = null;
     if (n.status === 'open' && n.price_label) txt = n.price_label;
-    else if (n.status === 'website_only')     txt = '$99 one-time';
+    else if (n.status === 'website_only')     txt = PRICE + ' one-time';
     if (!txt) return '';
     return '<p class="card-price">' + esc(txt) + '</p>';
   }
@@ -596,50 +607,6 @@
       '</div>';
   }
 
-  /* THE OFFER CARD — the price, what it buys, and the button, in the first
-     screen beside the hero headline.
-
-     ITS FIVE LINES ARE NOT TYPED HERE. They are INCLUDED.slice(0, OFFER_ROWS)
-     — the same array, in the same order, that R.included() renders in full
-     lower down the page and on /sites/. A hand-typed summary of a generated
-     list is a copy that drifts the first time the real list changes, and the
-     drift is silent because nothing compares the two. Taking a slice means the
-     card cannot say something the full list does not.
-
-     Only the bold TITLE of each row is used. The card is a summary sitting
-     next to the headline; the sentence that qualifies each line is three
-     sections further down, in the full list, where there is room for it.
-
-     The price is written once, in PRICE, and rendered into both the heading
-     and the button label from that one string. */
-  var OFFER_ROWS = 5;
-  var PRICE = '$99';
-
-  function offerCard() {
-    return '' +
-      '<aside class="offer" aria-labelledby="offer-price">' +
-        '<p class="offer-eyebrow">One price</p>' +
-        '<h2 class="offer-price" id="offer-price">' + esc(PRICE) +
-          ' once. <span>Live today.</span></h2>' +
-        '<ul class="offer-list">' +
-          INCLUDED.slice(0, OFFER_ROWS).map(function (row) {
-            return '<li class="offer-item">' +
-              '<span class="offer-ico" aria-hidden="true">' +
-                '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" ' +
-                     'stroke-linecap="round" stroke-linejoin="round">' +
-                  INCL_ICONS[row[0]] +
-                '</svg></span>' +
-              '<span class="offer-txt">' + esc(row[1]) + '</span>' +
-            '</li>';
-          }).join('') +
-        '</ul>' +
-        '<a class="btn btn-pri btn-block offer-go" href="/sites/">Get your site &mdash; ' +
-          esc(PRICE) + '</a>' +
-        '<p class="offer-fine">Pick your trade, claim your city, and it is live the same day. ' +
-          'Everything it covers is in the <a class="link" href="/legal/terms.html">Terms</a>.</p>' +
-      '</aside>';
-  }
-
   function nicheSelect(niches) {
     var open = [], line = [];
     niches.forEach(function (n) {
@@ -695,7 +662,6 @@
     nicheSelect: nicheSelect,
     heroRotator: heroRotator,
     included: included,
-    offerCard: offerCard,
     figures: figures,
     numWord: numWord,
     thesisOpen: thesisOpen,

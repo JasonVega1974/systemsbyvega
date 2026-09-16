@@ -102,33 +102,43 @@
 <main>
 
 <!-- ══════════════════════════ HERO ═══════════════════════════════════════ -->
-<!-- FULL-BLEED. The rotator is no longer a framed screenshot beside the copy —
-     it IS the hero, and the headline, the two CTAs and the offer card sit on
-     top of it. The browser-chrome frame that used to hold it is gone with it:
-     a chrome bezel frames an image, which is the opposite of full-bleed.
+<!-- FULL-BLEED, AND NOW CENTRED. The rotator IS the hero: a screenshot of a
+     real demo storefront fills the viewport edge to edge and one centred
+     column of copy sits on it. No card, no panel, no right-hand column — R13
+     took the offer card out of the hero entirely, and nothing it said is lost.
+     The price is in the button label; the five deliverables it listed are the
+     #offer list further down, rendered in full from the same INCLUDED array;
+     "$99 once. Live today." is the closing CTA at the foot of the page.
 
-     WHAT MAKES THE WHITE TEXT LEGAL. assets/hero-scrim.css darkens every frame
-     by an amount MEASURED for that frame (tools/build-scrim.js, sampling the
-     left 55% at the 90th percentile of luminance). Three conditions, all of
-     them live in code other than this file, and all three are load-bearing:
+     WHAT MAKES THE WHITE TEXT LEGAL, now that the copy is CENTRED and the
+     global scrim is deliberately LIGHT so the screenshot stays recognisable.
+     Three layers, painted in assets/sbv.css, in this order:
 
-       1. the scrim is painted as TWO stacked layers (.seq-scrim-base over the
-          image, .seq-scrim-extra over that) and never as one summed alpha —
-          sRGB compositing is not additive in alpha;
-       2. the gradient holds FULL strength across the whole left 55% before it
-          begins to fade, because that is the band the alphas were solved over;
-       3. data-slug on .seq tracks the frame ACTUALLY on screen. It ships on
-          frame 1 from R.heroRotator and rotator() in assets/sbv.js moves it
-          with the crossfade.
+       1. .seq-scrim-base   flat rgba(0,0,0,.45) over the whole frame. This is
+                            the "you can still see the screenshot" layer, and
+                            on its own it is NOT enough for white text. That is
+                            the point, and it is why layer 3 exists.
+       2. .seq-scrim-extra  the per-frame top-up MEASURED by
+                            tools/build-scrim.js and published as --scrim-extra
+                            in assets/hero-scrim.css. It is selected on
+                            .seq[data-slug], so data-slug must always name the
+                            frame ACTUALLY on screen — rotator() in
+                            assets/sbv.js moves it with the crossfade and parks
+                            the outgoing frame's value in --scrim-hold for the
+                            length of it.
+       3. .seq-scrim-floor  THE TEXT POOL. A soft ellipse of extra darkness
+                            sized to the centred copy and to nothing else, so
+                            the frame keeps the light 0.45 out at its edges
+                            while the text sits on its own darker ground. Its
+                            strength (--scrim-floor) was not guessed: it was
+                            solved by tools/hero-contrast.js against the real
+                            painted pixels of all 32 frames, with the text
+                            hidden so what is sampled is the ground itself.
 
-     Everything laid over the image is #FFFFFF, including the eyebrow and the
-     sub-copy. The measurement guarantees 4.5:1 for WHITE; the gold that would
-     normally carry the eyebrow (--con-amber, 8.29:1 on --con) drops to about
-     2.3:1 over a scrimmed frame and is not usable here. Gold appears in the
-     hero only on the offer card, which brings its own white ground.
-
-     THE OFFER CARD IS GENERATED. Its five lines are a slice of the same
-     INCLUDED array that renders in full at #offer — see R.offerCard(). -->
+     Everything laid over the image is #FFFFFF, the eyebrow and the frame
+     caption included. --con-amber measures about 2.3:1 over a scrimmed frame
+     and is not usable as type here; it survives only as the rule beside the
+     eyebrow, which is a mark and carries no contrast obligation. -->
 <header class="plate hero-full" id="main">
   <div class="wrap hero-grid">
     <div class="hero-copy">
@@ -138,6 +148,8 @@
         Turnkey local businesses, multi-tenant SaaS platforms, and custom software —
         built solo, shipped, and running today.
       </p>
+      <!-- The two CTAs, side by side, and the ONLY place the price appears in
+           the hero now that the offer card is gone. -->
       <div class="plate-cta">
         <a class="btn btn-pri" href="/sites/">Get your site &mdash; $99</a>
         <!-- The trigger for the preview overlay. No handler is written here:
@@ -155,9 +167,6 @@
         <button type="button" class="btn btn-sec js-preview" data-slug="">See a live demo</button>
       </div>
     </div>
-<!-- BUILD:OFFER_CARD -->
-<aside class="offer" aria-labelledby="offer-price"><p class="offer-eyebrow">One price</p><h2 class="offer-price" id="offer-price">$99 once. <span>Live today.</span></h2><ul class="offer-list"><li class="offer-item"><span class="offer-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c2 2.4 3 4.9 3 7.5s-1 5.1-3 7.5c-2-2.4-3-4.9-3-7.5s1-5.1 3-7.5z"/></svg></span><span class="offer-txt">Your site, on your own subdomain</span></li><li class="offer-item"><span class="offer-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h15M2.5 14h15"/><circle cx="7" cy="6" r="2.2"/><circle cx="13" cy="14" r="2.2"/></svg></span><span class="offer-txt">Your own operator admin</span></li><li class="offer-item"><span class="offer-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.5 5 4h10l2.5 7.5v4a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z"/><path d="M2.5 11.5h4l1 2h5l1-2h4"/></svg></span><span class="offer-txt">A leads inbox</span></li><li class="offer-item"><span class="offer-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1"/><rect x="11.5" y="2.5" width="6" height="6" rx="1"/><rect x="2.5" y="11.5" width="6" height="6" rx="1"/><path d="M11.5 11.5h2.5v2.5M17.5 11.5v6h-6"/></svg></span><span class="offer-txt">A marketing kit</span></li><li class="offer-item"><span class="offer-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3.5h4.5A2.5 2.5 0 0 1 10 6v11a2 2 0 0 0-2-2H3z"/><path d="M17 3.5h-4.5A2.5 2.5 0 0 0 10 6v11a2 2 0 0 1 2-2h5z"/></svg></span><span class="offer-txt">The owner guide</span></li></ul><a class="btn btn-pri btn-block offer-go" href="/sites/">Get your site &mdash; $99</a><p class="offer-fine">Pick your trade, claim your city, and it is live the same day. Everything it covers is in the <a class="link" href="/legal/terms.html">Terms</a>.</p></aside>
-<!-- /BUILD:OFFER_CARD -->
   </div>
 
   <!-- Generated: .hero-media (taken out of flow as the hero's background, and

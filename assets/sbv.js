@@ -944,7 +944,10 @@
      whose every entry is guaranteed to resolve. A niche added to the database
      joins the hero when the site is rebuilt, which is also when its frame is
      captured — together, or not at all. */
-  var ROT_MS = 5000;
+  /* 6s per frame (R13, Jason). Long enough to read the caption and take in the
+     storefront; short enough that a second frame arrives before a visitor has
+     decided the hero is a static image. */
+  var ROT_MS = 6000;
   function rotator() {
     var seqEl = document.querySelector('[data-rotator]');
     if (!seqEl) return;
@@ -1046,7 +1049,7 @@
     }
 
     function start() {
-      if (timer || (mq && mq.matches)) return;
+      if (timer || holds || (mq && mq.matches)) return;
       load((i + 1) % frames.length);
       timer = setInterval(step, ROT_MS);
     }
@@ -1056,29 +1059,59 @@
       timer = null;
     }
 
-    /* HOVER-PAUSE IS GONE, deliberately. It used to hang off .seq-frame, the
-       640px card the rotator lived in, where "the pointer is on the frame"
-       meant "someone is looking at this screenshot". The frame is now the
-       whole hero background, so the same rule would freeze the rotator for
-       anyone whose pointer merely rests in the top of the page.
+    /* PAUSING IS A COUNT, NOT A FLAG, and that is the whole reason this is not
+       four calls to stop() and four to start().
 
-       What it protected is still protected, and more precisely: the only
-       reason a moving frame is a problem is that the demo button carries the
-       current slug, so pause while the pointer or the focus ring is ON that
-       button and the demo that opens is the one that was on screen when it
-       was aimed at. */
-    if (previewBtn) {
-      previewBtn.addEventListener('mouseenter', stop);
-      previewBtn.addEventListener('mouseleave', start);
-      previewBtn.addEventListener('focus', stop);
-      previewBtn.addEventListener('blur', start);
+       Three different things want the rotator held: the pointer resting on the
+       hero, the focus ring resting on the demo button, and a backgrounded tab.
+       They overlap. A pointer on the demo button is also a pointer on the hero,
+       so a naive `mouseleave -> start()` on the button would RESUME the rotator
+       the moment the pointer slid off the button onto the headline — while it
+       is still, plainly, hovering the hero.
+
+       So every reason to hold takes a ticket and every reason gives it back,
+       and the timer only runs when nobody holds one. Each hold() below is
+       paired with exactly one release() on the opposite event, which is what
+       keeps the count balanced. */
+    var holds = 0;
+    function hold()    { holds++; stop(); }
+    function release() { if (holds > 0) holds--; start(); }
+
+    /* HOVER-PAUSE, restored in R13 at Jason's request and bound to the HERO
+       rather than to a card. It used to hang off .seq-frame, the 640px card
+       the rotator lived in; that card is gone and the frame is the whole hero
+       background, so the hero element is now the only honest answer to "the
+       pointer is on the frame".
+
+       mouseenter/mouseleave, never mouseover/mouseout: the latter pair fires
+       again at every descendant boundary the pointer crosses, so gliding from
+       the headline onto a button would churn the count. Both are no-ops on a
+       touch device, which is the intent — there is no hovering to pause for. */
+    var heroEl = seqEl.closest ? seqEl.closest('.hero-full') : null;
+    if (heroEl) {
+      heroEl.addEventListener('mouseenter', hold);
+      heroEl.addEventListener('mouseleave', release);
     }
+
+    /* The demo button holds on FOCUS, which hover does not cover: the button
+       carries the slug of whatever frame is on screen, so the rotator has to
+       hold still while the focus ring is on it or a keyboard visitor opens a
+       different demo from the one they aimed at. No mouse pair here — the
+       hero's own listeners already cover the pointer, and adding a second one
+       inside the first is what the count exists to make unnecessary. */
+    if (previewBtn) {
+      previewBtn.addEventListener('focus', hold);
+      previewBtn.addEventListener('blur', release);
+    }
+
     /* A hidden tab should not burn through frames — or fetch them. */
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) stop(); else start();
+      if (document.hidden) hold(); else release();
     });
+
     /* Reduced motion can be switched on mid-visit. Honour it live: stop, and
-       stop fetching. Turning it back off resumes from wherever it stopped. */
+       stop fetching. Turning it back off resumes from wherever it stopped —
+       start() re-checks mq itself, and re-checks the hold count with it. */
     if (mq && mq.addEventListener) {
       mq.addEventListener('change', function (e) { if (e.matches) stop(); else start(); });
     }
