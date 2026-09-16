@@ -116,17 +116,38 @@
 
    Task 9 rebuilt `/` as the landing page and retired the diagram above — the
    catalog, #line, #registry, #faq and #founder all moved to /sites/ (Task 10).
-   R16 BROUGHT MOST OF THEM BACK AND DELETED /sites/ ENTIRELY. `/`'s rhythm
-   now: nav dark, hero dark (.plate), #compare white, #paths dark, #catalog
-   paper, #line white, #platforms paper, #offer dark, #how white, #proof paper,
-   #registry white, #contact dark, #questions white, #close dark, footer dark.
-   Fourteen bands and not one tone repeat except the two deliberate seams
-   against the chrome at either end.
+   R16 BROUGHT MOST OF THEM BACK AND DELETED /sites/ ENTIRELY, and R18 then
+   swapped two of the tones (see below). `/`'s rhythm now: nav dark, hero dark
+   (.plate), #compare white, #paths PAPER, #catalog DARK, #line white,
+   #platforms paper, #offer dark, #how white, #proof paper, #registry white,
+   #contact dark, #questions white, #close dark, footer dark. Fourteen bands
+   and not one tone repeat except the two deliberate seams against the chrome
+   at either end.
 
    R15 ADDED #paths, the two-path choice, and dark was the only tone left: it
    sits between #compare white and #catalog paper. The two cards it carries
    read band tokens like every other component here, so the pair needed no
    dark variant — the same reason .incl survived moving bands in R6.
+
+   R18 SWAPPED #paths AND #catalog, and that "only tone left" is exactly why.
+   R18 replaced the catalog BOARD with the flat contact sheet (.sgrid, four
+   across, thirty-two screenshots at once), and that grid wants DARK for the
+   same reason #sites did before R16: a ground that gets out of thirty-two
+   bright captures' way. #paths directly above was the dark band, so one of
+   the two had to move or the page would run its first mid-page dark-on-dark
+   seam — the tone repeat this file otherwise allows only against the chrome
+   at either end. #paths moved to PAPER, which R15's own note predicted
+   without meaning to: dark was "the only tone left" ONLY while #catalog held
+   paper, so re-toning #catalog handed paper straight back. #compare above
+   #paths is white and #line below #catalog is white, so the run reads
+   white → paper → dark → white with no repeat anywhere in it, and .pathcard
+   needed no change because it reads band tokens like everything else.
+
+   DRAWING A HAIRLINE SEAM INSTEAD WAS THE OTHER OPTION AND IT IS WORSE HERE.
+   #close/.foot gets away with a drawn seam because the footer is chrome and
+   short; #paths and #catalog are both tall content bands, and stacking them
+   would have cost the page its rhythm over the two most important sections
+   on it. Re-toning is one selector-list edit and keeps the invariant.
 
    TWO IDS CHANGED TONE IN R16 AND ONLY TWO. #sites is GONE — the flat grid
    it toned was the same thirty-two rows the catalog board renders, so R16
@@ -134,9 +155,16 @@
    selector lists below with it. #registry moved PAPER -> WHITE because it now
    follows #proof, which is paper; it is the one tone neither #proof above nor
    #contact below is using. #catalog stayed PAPER deliberately — see the note
-   further down about why the catalog card cannot simply be told to be white —
+   further down about why the catalog CARD cannot simply be told to be white —
    and paper repeats neither #compare above nor #line below, so nothing about
    the card or the .nm modal that shares its token group had to change.
+
+   R18 RETIRED THAT CARD AND WITH IT THE REASON #catalog WAS PAPER. #catalog
+   renders .scard now, not .entry.sheet, and .scard was always the DARK-ground
+   card on this page (#sites was its home before R16). The paper-only argument
+   below belongs to the board, which no longer renders on any surface; .nm
+   stays in the paper group because it is a floating overlay with no band of
+   its own, and it still reads correctly wherever it is opened from.
 
    R6b ADDED #questions AND #close, the FAQ and the closing ask, into the gap
    R6 left between #proof and the footer. #questions is WHITE because it is
@@ -248,7 +276,7 @@
    seam at that band's transition (the two lists are a pair, not a coincidence).
 */
 .plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next,
-#offer, #close, #paths{
+#offer, #close, #catalog, #sites{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -265,8 +293,10 @@
   --feat:      var(--con-amber);
   --feat-glow: rgba(var(--con-amber-rgb),.20);
   /* Family colours re-declared brighter for a dark ground. No band in this
-     group carries a family plate today — the catalog moved to paper — but the
-     pair of sets is the reason a family accent can be dropped on any band
+     group carries a family plate today — R18 retired the plates with the
+     catalog board, and the contact sheet that replaced it on #catalog does
+     not group by family at all — but the pair of sets is the reason a family
+     accent can be dropped on any band
      without the component knowing which ground it landed on, and deleting one
      half would quietly make that untrue. The light-ground set at :root is
      chosen dark enough to read on paper, which makes it invisible on #141821;
@@ -301,14 +331,15 @@
   color:var(--tx);
 }
 #faq, #problem, #process, #esb, #csb, #story, #proof, #platforms,
-#catalog,
+#paths,
 /* .nm is the card-detail modal. It hangs off <body>, outside every band, so
    without this line --surface and --tx are undefined inside it and it has to
-   carry a private copy of the palette — which is what it used to do. Joining
-   the group its own board sits on is what makes "the modal is that card,
-   enlarged" true in the tokens rather than just in the comment. Its own
-   background (the dim scrim) is declared later at equal specificity and
-   still wins. */
+   carry a private copy of the palette — which is what it used to do. It joined
+   the group its own board sat on, which is what made "the modal is that card,
+   enlarged" true in the tokens rather than just in the comment; R18 retired
+   that board, so it stays here as the self-contained light overlay it already
+   was rather than following a band it no longer has. Its own background (the
+   dim scrim) is declared later at equal specificity and still wins. */
 .nm{
   --bg:      var(--paper);
   --surface: var(--panel);
@@ -422,18 +453,6 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
   line-height:1.6;max-width:56ch;margin:24px auto 0;color:var(--tx-2)}
 .thesis em{font-style:normal;color:var(--acc);font-weight:600}
 .plate-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:34px 0 46px}
-
-/* The agency page's hero chips, carrying the three real figures. */
-.ledger-bar{display:grid;grid-template-columns:repeat(4,1fr);
-  background:rgba(255,255,255,.04);border:1px solid #283040;border-radius:10px;
-  overflow:hidden;margin-bottom:56px}
-.ledger-cell{padding:20px 12px;text-align:center;border-right:1px solid #283040}
-.ledger-cell:last-child{border-right:0}
-.ledger-cell b{display:block;font-family:var(--display);font-weight:900;
-  font-size:clamp(28px,4.6vw,40px);line-height:1;color:var(--acc);
-  font-variant-numeric:lining-nums tabular-nums}
-.ledger-cell span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--tx-3);margin-top:9px}
 
 /* ======================================================== THE PHOTO HERO ====
    ONE PHOTOGRAPH, FULL-BLEED, AND NOTHING MOVING. R14 retired the rotating
@@ -573,7 +592,17 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #platforms, #included, #compare, #questions, #close, #paths, .gfoot{border-top:0}
+#offer, #platforms, #included, #compare, #questions, #close, #paths, #sites, .gfoot{border-top:0}
+
+/* THE CONTACT SHEET'S GROUND, and it is deliberately darker than every other
+   dark band. Jason asked for #0a0f1a to match the hero photograph's own navy
+   rather than the --con #141821 the rest of the dark bands share.
+   Only --bg is overridden: the selector above still hands #sites the whole
+   dark token set — text, rules, accents, family colours — so a card dropped
+   on this band reads correctly without knowing it is on a darker ground than
+   its siblings. Overriding the ground alone is the difference between a
+   deeper band and a band whose components have to be re-styled. */
+#sites{--bg:#0a0f1a}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -623,7 +652,17 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
    .sgrid now, four across and deliberately SMALLER than this board: it is a
    contact sheet whose job is "all thirty-two at once", and this board is
    where one of them gets read. Two densities, two jobs — which is the same
-   distinction, drawn the other way round.                                  */
+   distinction, drawn the other way round.
+
+   R18 SETTLED THE ARGUMENT AND THE CONTACT SHEET WON. Everything above
+   describes the BOARD, and nothing renders it any more: R18 replaced
+   #catalog's contents with .sgrid, and "where one of them gets read" is the
+   preview overlay and the demo page itself, not a second grid on the same
+   scroll. The rules below are kept rather than deleted because
+   catalog-render.js's catalog()/entry() still emit exactly this markup and
+   are one restore away — but nothing on any shipped page reaches them today,
+   so treat this whole block as reference for that renderer and not as a
+   description of a band you can go and look at.                            */
 
 /* --pa/--pb are gone with the paper they filled. --fam survives as the one
    family accent, set inline on .family by the renderer and resolved from the
@@ -711,8 +750,6 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
    fewer of them. .grid itself is untouched — #how still uses all four. */
 #offer .grid{grid-template-columns:repeat(2,1fr);gap:34px 28px;max-width:860px}
 @media (max-width:700px){#offer .grid{grid-template-columns:1fr;gap:30px}}
-@media (max-width:760px){.ledger-bar{grid-template-columns:repeat(2,1fr)}.ledger-cell:nth-child(2n){border-right:0}}
-@media (max-width:420px){.ledger-bar{grid-template-columns:1fr}.ledger-cell{border-right:0}}
 
 /* the card */
 .entry.sheet{
@@ -839,10 +876,6 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
   box-shadow:0 0 0 1px var(--acc),var(--elev-2);
 }
 
-.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);
-  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-3)}
-.legend i{font-style:normal;color:var(--acc)}
-
 /* --------------------------------------------------------- example names ---
    The "nearly every business name is an example" disclosure. Band tokens
    throughout, so it reads correctly wherever it is placed — it moved from
@@ -896,8 +929,8 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 .proof-cap b{color:var(--tx);font-weight:600}
 
 /* the homepage proof strip — the four true figures, and no fifth. Reads
-   R.figures() through the same BUILD:TOTAL/OPEN/SITES markers the ledger
-   bar uses; "1 operator per city" is the exclusivity rule, not a count of
+   R.figures() through the BUILD:TOTAL/OPEN/SITES markers; "1 operator per
+   city" is the exclusivity rule, not a count of
    sbv_tenants rows, so it is never wrapped in a marker. */
 .proof-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
   background:var(--rule);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
@@ -1077,8 +1110,10 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 
 /* ---------------------------------------------------------- the sites ---
 
-   THE GRID OF ALL THIRTY-TWO, on `/`. It replaced .fgrid/.fcard — six
-   hand-picked cards, each with a second capture that cross-faded in on
+   THE GRID OF ALL THIRTY-TWO, on `/`. It lives in #catalog now (R18) rather
+   than in the #sites band R6 built it for and R16 deleted — same rules, same
+   dark ground, one section further down the page. It replaced .fgrid/.fcard —
+   six hand-picked cards, each with a second capture that cross-faded in on
    hover. Both class names and every rule that drew them went with the
    markup: nothing else in the project used them, and dead rules for a band
    that no longer exists are how a stylesheet stops describing its own page.
@@ -1476,8 +1511,9 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 /* ------------------------------------------------------------ hero board --- */
 /* A miniature of the catalog itself, drawn behind the headline: one tile per
    listed business, in its family colour, with the open ones lit green. It
-   carries the same three figures the ledger bar states in words directly
-   below it — so the decoration is not decoration, it is the data at a glance.
+   carries the same three figures the proof strip states in words further
+   down the page — so the decoration is not decoration, it is the data at a
+   glance.
 
    Absolutely positioned and aria-hidden, so it contributes no layout and no
    accessible text. Nothing on the page moves when it arrives, and if the
@@ -1501,11 +1537,6 @@ html.no-js .board-tile{opacity:1}
    else, and a pattern behind 36px type is a legibility tax. */
 @media (max-width:979px){.plate > .board{display:none}}
 html.no-js .plate > .board{display:none}
-
-/* --------------------------------------------------------- ledger counter --- */
-/* The figures roll up to their value once. Tabular figures so the cell does
-   not jitter in width while the digits change. */
-.ledger-cell b{font-variant-numeric:tabular-nums}
 
 /* ----------------------------------------------------------- filter chips --- */
 /* Twenty-nine plates is a wall. The chips turn it into four short boards, and
@@ -1859,16 +1890,8 @@ html:not([lang="en"]) .tok{letter-spacing:.06em;padding:4px 7px}
 }
 .anim .plate-head.reveal.in .plate-no{animation:stamp-on .42s cubic-bezier(.3,.8,.4,1.2) both}
 
-/* The ledger figures land with a small settle once their count finishes. */
-@keyframes fig-settle{
-  0%  {transform:translateY(-3px)}
-  100%{transform:translateY(0)}
-}
-.ledger-cell b.settled{animation:fig-settle .3s cubic-bezier(.25,.9,.35,1.3)}
-
 @media (prefers-reduced-motion:reduce){
   .anim .plate-head.reveal.in .plate-no{animation:none}
-  .ledger-cell b.settled{animation:none}
   .eyebrow::before,
   .anim .reveal .eyebrow::before{transform:scaleX(1);transition:none}
   .nm{transition:none}
