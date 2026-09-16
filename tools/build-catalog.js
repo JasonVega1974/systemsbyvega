@@ -24,11 +24,17 @@
    Ruling R1 — one marker set per file. inject() throws on a marker a file
    does not declare, so each target below names exactly what it carries.
    index.html carries TOTAL/OPEN/SITES for its proof strip, SITES_STEP for
-   the one remaining prose "32" in #how, and — since R16 — CATALOG,
-   NICHE_SELECT and EXTRAS_SCRIPT, the three that came across from the
-   deleted sites/index.html when the board and the registry form moved onto
-   the landing page. SITES_ALL and SITES_GRID left with the #sites band they
-   fed, which was the second, flatter listing of the same thirty-two rows.
+   the one remaining prose "32" in #how, NICHE_SELECT and EXTRAS_SCRIPT (both
+   came across from the deleted sites/index.html with the registry form in
+   R16), and — since R18 — SITES_ALL and SITES_GRID again.
+
+   R18 SWAPPED WHICH LISTING `/` PRINTS. R16 had put the catalog BOARD on the
+   landing page through a CATALOG marker and dropped the flat contact-sheet
+   grid, because the two were the same thirty-two rows twice on one page.
+   R18 keeps that rule and reverses the choice: #catalog renders R.siteGrid()
+   through SITES_GRID, four across and small, and CATALOG is no longer
+   emitted anywhere — so it is off index.html's list below, which is what
+   keeps inject() from throwing on a marker the file no longer carries.
 
    Run:  node tools/build-catalog.js          (from the repo root)
          node tools/build-catalog.js --check  (verify, write nothing; CI-safe)
@@ -55,15 +61,16 @@ const CHECK = process.argv.includes('--check');
    missing marker, so each target names exactly what it carries. */
 const TARGETS = [
   /* R16 folded /sites/ into the landing page, so index.html carries the
-     catalog board's markers now — CATALOG, NICHE_SELECT and EXTRAS_SCRIPT all
-     moved here from the deleted sites/index.html target. SITES_GRID and
-     SITES_ALL went the other way: the flat #sites grid they fed WAS the
-     duplicate the board replaces, so both markers left the file and this
-     list with it. */
+     registry form's markers now — NICHE_SELECT and EXTRAS_SCRIPT both moved
+     here from the deleted sites/index.html target. R18 then swapped the
+     listing itself: SITES_GRID and SITES_ALL came back with the contact
+     sheet and CATALOG left with the board, so this list names the grid's two
+     markers and not the board's one. Exactly one listing of the thirty-two
+     is emitted onto this page, which is the rule R16 set and R18 keeps. */
   { file: path.join(ROOT, 'index.html'),
-    markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_STEP', 'HERO_DEMO_BTN',
-              'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT',
-              'INCLUDED', 'PATH_INCLUDED'] },
+    markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_ALL', 'SITES_STEP',
+              'HERO_DEMO_BTN', 'SITES_GRID', 'NICHE_SELECT', 'SEED_SCRIPT',
+              'EXTRAS_SCRIPT', 'INCLUDED', 'PATH_INCLUDED'] },
   { file: path.join(ROOT, 'platforms', 'index.html'),
     markers: ['SEED_SCRIPT', 'PLAT_INLINE'] },
   /* Finding 3 of the final whole-branch review: three more pages hand-typed
@@ -232,9 +239,11 @@ function main() {
     SITES:        String(fig.sites),
     /* Ruling R20 gave index.html distinct marker names for each prose spot
        that prints the site count, because inject() splices between the FIRST
-       open/close pair and so a name cannot repeat in one file. R16 deleted
-       the #sites band and SITES_ALL with it; SITES_STEP ("32 built and
-       live…" in #how) is the one that remains, still fed this same fig. */
+       open/close pair and so a name cannot repeat in one file. Two of them
+       are live again: SITES_ALL heads the contact sheet ("All 32 of them.")
+       and SITES_STEP ("32 built and live…" in #how). Same fig, two spots,
+       still never typed. */
+    SITES_ALL:    String(fig.sites),
     SITES_STEP:   String(fig.sites),
     /* Finding 3: services/index.html and work/index.html each print the
        site count once in prose; platforms/index.html prints the in-line
@@ -260,13 +269,20 @@ function main() {
        the full one below it has stopped shipping — see the function's own
        note in assets/catalog-render.js. */
     PATH_INCLUDED: '\n' + R.includedBrief(4) + '\n',
-    /* The catalog board — plates, cards, chips and all — now on `/`. It is
-       the ONLY listing of the thirty-two on that page: R16 deleted the flat
-       SITES_GRID band it used to sit alongside on /sites/, because the board
-       and the grid were the same thirty-two rows twice on one page.
-       Server-rendered for the same reason it always was: with JavaScript off
-       the board is still the whole board. */
-    CATALOG:      '\n' + R.catalog(seed.families, seed.niches, {}, extras) + '\n',
+    /* The contact sheet — thirty-two small cards, four across, and the ONLY
+       listing of the thirty-two on `/`. R18 put it back where R16's catalog
+       board stood; the board's CATALOG marker is not emitted by anything any
+       more, which is why there is no CATALOG entry in this map and no
+       CATALOG in index.html's list above.
+
+       `extras` is what carries the demo BRAND NAME onto each card. It is not
+       an sbv_niches column and must never become one (see brandLine in
+       assets/catalog-render.js), so it is resolved HERE, at build time, and
+       the grid is never re-rendered from live rows — see the skip in paint()
+       in assets/sbv.js. Server-rendered for the usual reason: with
+       JavaScript off, all thirty-two are still on the page and still link to
+       their demos. */
+    SITES_GRID:   '\n' + R.siteGrid(seed.niches, extras) + '\n',
     NICHE_SELECT: '\n' + R.nicheSelect(seed.niches) + '\n',
     SEED_SCRIPT:  seedScript,
     EXTRAS_SCRIPT: extrasScript

@@ -355,14 +355,20 @@
      stood here before: six cards chosen by a person, each carrying a second
      hover capture, and a button promising twenty-six more somewhere else.
 
+     IT IS THE ONLY LISTING ON `/` AGAIN AS OF R18. R16 dropped this grid for
+     the catalog board (catalog() above) when /sites/ was deleted; R18
+     reversed that choice and the board is what came out. One listing per page
+     either way — printing both would be the same thirty-two rows twice.
+
      WHY IT IS GENERATED AND NOT WRITTEN. Thirty-two hand-written cards would
      be the largest hand-kept copy of the catalog in the project, and the one
      most likely to go stale — the featured six already carried brand names,
      trade names and job lines typed out a second time beside the seed that
-     holds them. This reads the same rows /sites/ reads, so a niche added to
-     the seed joins this grid on the next build and one removed leaves it.
+     holds them. This reads the same seed rows every other surface reads, so a
+     niche added to the seed joins this grid on the next build and one removed
+     leaves it.
 
-     FLAT ON PURPOSE. No family plates: those are /sites/'s structure, and
+     FLAT ON PURPOSE. No family plates: those belong to catalog() above, and
      this grid's whole argument is "here is all of it at once". Sorted by the
      seed's own `sort`, which is the order the families themselves are in, so
      the grouping is still legible without headings asserting it.

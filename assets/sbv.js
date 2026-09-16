@@ -115,15 +115,22 @@
          (and therefore window.initClaim) is not loaded on every page. */
       if (window.initClaim && window.initClaim.loadCounts) window.initClaim.loadCounts();
     }
-    /* THE LANDING PAGE'S .sgrid IS DELIBERATELY NOT REPAINTED HERE. It is
-       build-time markup only, the same posture the hero photograph takes, and
-       for a concrete reason rather than an omission: each of its cards leads
-       with the DEMO BRAND NAME, which is not an sbv_niches column and never
-       will be (see brandLine in catalog-render.js). Those names reach the
-       build through SBV_EXTRAS, and `/` does not carry that payload — five
-       kilobytes of which the landing grid would use only the brand half.
-       Repainting from live rows without it would quietly replace thirty-two
-       brand names with thirty-two trade names.
+    /* #catalog-root IS GONE FROM `/` AS OF R18, so the branch above no longer
+       runs on any shipped page: the catalog board was replaced by the .sgrid
+       contact sheet, and the `if (root)` guard is what makes that a no-op
+       rather than a crash. The board renderer is still here and still correct;
+       nothing reaches it today.
+
+       AND THE .sgrid THAT REPLACED IT IS DELIBERATELY NOT REPAINTED EITHER.
+       It is build-time markup only, the same posture the hero photograph
+       takes, and for a concrete reason rather than an omission: each of its
+       cards leads with the DEMO BRAND NAME, which is not an sbv_niches column
+       and never will be (see brandLine in catalog-render.js). Those names are
+       resolved once, at build time, by tools/build-catalog.js. Repainting
+       from live rows would quietly replace thirty-two brand names with
+       thirty-two trade names — window.SBV_EXTRAS does ship on `/`, but a
+       repaint is still the wrong move when the markup it would produce is
+       byte-for-byte what is already on the page.
 
        Nothing is lost by leaving it: the grid shows a screenshot, a brand and
        a trade, and the live overlay carries status, price and waiting counts,
