@@ -537,6 +537,45 @@
       '</div>';
   }
 
+  /* THE SAME LIST, SHORTENED — for the self-serve card in #paths on `/`.
+
+     R15 puts a two-path choice between the comparison table and the catalog
+     board, and the left card has to say in four lines what the buyer gets
+     for the one price. Those four lines are the first four entries of
+     INCLUDED above, headline only, with the item's own icon.
+
+     WHY A FUNCTION AND NOT FOUR <li>s TYPED INTO index.html. The card sits
+     roughly two screens above #offer, which renders the full seven through
+     included(). Two hand-kept copies of the same promise on one page is the
+     exact drift this file exists to prevent — change a deliverable and the
+     card would go on advertising the old one, above the block that already
+     corrected itself. Taking the first n rows means the card can never name
+     something the full list does not, because it is not a second list.
+
+     THE QUALIFIER COMES WITH IT. An earlier cut printed the bold lead alone,
+     which read as a tighter list and was the wrong trade twice over: it left
+     a card-height hole above the CTA that the sibling card's form filled with
+     real content, and — worse — a bare "Your site, on your own subdomain"
+     promises more than the full list does, because the sentence that follows
+     it in INCLUDED is the one saying it opens with example content. A
+     shortened list must never be a bigger claim than the list it shortens, so
+     this takes both halves of each row and shortens by COUNT only. */
+  function includedBrief(n) {
+    var rows = INCLUDED.slice(0, n || 4);
+    return '<ul class="path-list">' +
+      rows.map(function (row) {
+        return '<li class="path-item">' +
+          '<span class="path-ico" aria-hidden="true">' +
+            '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+                 'stroke-linecap="round" stroke-linejoin="round">' +
+              INCL_ICONS[row[0]] +
+            '</svg></span>' +
+          '<span class="path-txt"><b>' + esc(row[1]) + '</b> ' + esc(row[2]) + '</span>' +
+        '</li>';
+      }).join('') +
+    '</ul>';
+  }
+
   function nicheSelect(niches) {
     var open = [], line = [];
     niches.forEach(function (n) {
@@ -592,6 +631,7 @@
     nicheSelect: nicheSelect,
     heroDemoBtn: heroDemoBtn,
     included: included,
+    includedBrief: includedBrief,
     figures: figures,
     numWord: numWord,
     thesisOpen: thesisOpen,

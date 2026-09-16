@@ -1,7 +1,10 @@
 /* ============================================================================
    POST /api/submit-inquiry
    ----------------------------------------------------------------------------
-   A custom-work inquiry from /services/, recorded in sbv_inquiries.
+   A custom-work inquiry, recorded in sbv_inquiries. Two surfaces post here:
+   the full form on /services/ and the custom card in #paths on `/`. Which
+   one is recorded in the source column — see SOURCES below for why that is
+   an allow-list and not the caller's string.
 
    WHY service_role AND NOT anon. The caller is an anonymous visitor, not an
    authenticated operator, so there is no JWT to scope with. sbv_inquiries has
@@ -78,6 +81,29 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i;
    never cost a buyer a 400-word project description. */
 const BUDGET_RANGES = new Set(['under-5k', '5k-15k', '15k-40k', '40k-plus', 'not-sure']);
 
+/* WHICH FORM SENT THIS — AN ALLOW-LIST, NEVER THE CALLER'S STRING.
+   Two surfaces post here now: the full inquiry form on /services/ and the
+   custom-work card in #paths on the landing page. The row has to say which,
+   or the inbox cannot tell a considered brief from a one-line landing-page
+   ask, and the two want different replies.
+
+   The obvious implementation — write body.source straight into the column —
+   is the one thing this route must not do. It is public and unauthenticated,
+   the column is free text the owner reads, and sbv_inquiries_lengths_ck caps
+   source at 40 characters but says nothing about its CONTENT. A caller could
+   therefore park 40 characters of anything in an operator-facing field on
+   every request. The set below is the whole vocabulary; anything else — a
+   typo, a stale deploy, a probe — falls back to DEFAULT_SOURCE rather than
+   being rejected, for the same reason budget_range does: a source the server
+   does not recognise is our problem to notice in the data, never a reason to
+   throw away a buyer's project description.
+
+   Adding a surface means adding its literal HERE first. That is deliberate:
+   it keeps the column's vocabulary reviewable in one place instead of being
+   whatever some page happened to post. */
+const SOURCES = new Set(['services', 'landing-custom']);
+const DEFAULT_SOURCE = 'services';
+
 const str = (v) => (typeof v === 'string' ? v.trim() : '');
 
 /* Ruling R15: the rate limit needs a stable per-client bucket that survives
@@ -153,6 +179,10 @@ export default {
     const rawBudget = str(body.budget_range);
     const budgetRange = BUDGET_RANGES.has(rawBudget) ? rawBudget : null;
 
+    /* Allow-listed, never passed through. See SOURCES above. */
+    const rawSource = str(body.source);
+    const source = SOURCES.has(rawSource) ? rawSource : DEFAULT_SOURCE;
+
     const bucket = ipHash(request);
 
     try {
@@ -181,7 +211,7 @@ export default {
         company: company || null,
         project,
         budget_range: budgetRange,
-        source: 'services',
+        source,
         ip_hash: bucket,
       }, { minimal: true });
 

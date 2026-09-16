@@ -117,11 +117,16 @@
    Task 9 rebuilt `/` as the landing page and retired the diagram above — the
    catalog, #line, #registry, #faq and #founder all moved to /sites/ (Task 10).
    R16 BROUGHT MOST OF THEM BACK AND DELETED /sites/ ENTIRELY. `/`'s rhythm
-   now: nav dark, hero dark (.plate), #compare white, #catalog paper, #line
-   white, #platforms paper, #offer dark, #how white, #proof paper, #registry
-   white, #contact dark, #questions white, #close dark, footer dark. Thirteen
-   bands and not one tone repeat except the two deliberate seams against the
-   chrome at either end.
+   now: nav dark, hero dark (.plate), #compare white, #paths dark, #catalog
+   paper, #line white, #platforms paper, #offer dark, #how white, #proof paper,
+   #registry white, #contact dark, #questions white, #close dark, footer dark.
+   Fourteen bands and not one tone repeat except the two deliberate seams
+   against the chrome at either end.
+
+   R15 ADDED #paths, the two-path choice, and dark was the only tone left: it
+   sits between #compare white and #catalog paper. The two cards it carries
+   read band tokens like every other component here, so the pair needed no
+   dark variant — the same reason .incl survived moving bands in R6.
 
    TWO IDS CHANGED TONE IN R16 AND ONLY TWO. #sites is GONE — the flat grid
    it toned was the same thirty-two rows the catalog board renders, so R16
@@ -243,7 +248,7 @@
    seam at that band's transition (the two lists are a pair, not a coincidence).
 */
 .plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next,
-#offer, #close{
+#offer, #close, #paths{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -568,7 +573,7 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #platforms, #included, #compare, #questions, #close, .gfoot{border-top:0}
+#offer, #platforms, #included, #compare, #questions, #close, #paths, .gfoot{border-top:0}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -941,6 +946,78 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
 .incl-txt{font-size:14.5px;line-height:1.5;color:var(--tx-2)}
 .incl-txt b{display:block;color:var(--tx);font-weight:700;font-size:15px;margin-bottom:2px}
 .incl-note{margin-top:24px;font-size:13px;color:var(--tx-3)}
+
+/* ----------------------------------------------------------- the two paths ---
+   #paths on `/`: the self-serve $99 site on the left, custom work on the
+   right. R15.
+
+   EQUAL WEIGHT IS THE WHOLE SPECIFICATION, so it is expressed as sameness
+   rather than as balance. One .pathcard rule draws both: same surface, same
+   1px --rule border, same 15px radius, same padding, same shadow, and
+   `repeat(2,minmax(0,1fr))` gives them the same width at every desktop size.
+   There is no `.pathcard.feat`, no accent border, no "most popular" ribbon —
+   the moment one card gets a device the other does not, the page has made the
+   choice for the reader, which is exactly what this section exists NOT to do.
+   minmax(0,1fr) rather than 1fr because the right card holds a form: a grid
+   item's min-content is its widest child, and an <input> would otherwise push
+   its column past its share and take the left card's width with it.
+
+   THE ACTIONS LINE UP because .pathcard-act is margin-top:auto in a column
+   flexbox. The two cards carry different amounts of copy, and without this
+   the $99 button would float somewhere in the middle of its card while the
+   form sat at the foot of the other — two actions at two heights read as two
+   levels of importance even when nothing else differs.
+
+   STACKING AT 920px, not at the usual 760: the breakpoint that matters is the
+   one where the form column stops being wide enough to type in, and that
+   arrives sooner than a text column's does.
+
+   Inputs take --surface-2 rather than --surface here. On a dark band the
+   card IS --surface, so a field drawn in the same token vanishes into it; the
+   half-step darker token is what the .incl icon chips already use on this
+   ground for the same reason. */
+.paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;align-items:stretch}
+@media(max-width:920px){.paths{grid-template-columns:1fr;gap:22px}}
+.pathcard{display:flex;flex-direction:column;background:var(--surface);
+  border:1px solid var(--rule);border-radius:15px;padding:30px 30px 32px;
+  box-shadow:var(--elev-2)}
+@media(max-width:520px){.pathcard{padding:24px 20px 26px}}
+.pathcard-tag{align-self:flex-start;font-family:var(--mono);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--acc-tx);
+  border:1px solid var(--rule-2);border-radius:20px;padding:5px 12px}
+.pathcard h3{font-family:var(--display);font-weight:800;font-size:clamp(21px,2.4vw,27px);
+  letter-spacing:-.02em;line-height:1.12;color:var(--tx);margin:16px 0 0}
+.pathcard-price{display:flex;align-items:baseline;gap:10px;margin-top:16px}
+.pathcard-price b{font-family:var(--display);font-weight:900;font-size:34px;line-height:1;
+  color:var(--acc-tx);font-variant-numeric:lining-nums tabular-nums}
+.pathcard-price span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tx-3)}
+.pathcard-lede{font-size:15px;line-height:1.6;color:var(--tx-2);margin-top:14px}
+.pathcard-act{margin-top:auto;padding-top:26px}
+.pathcard-act .fine{margin-top:14px}
+.pathcard-act .field:last-of-type{margin-bottom:20px}
+.pathcard-act .note{margin-top:16px}
+#paths .field input,#paths .field textarea{background:var(--surface-2)}
+/* The hint under the textarea is a description, not a caption for the next
+   field — it belongs to the box above it and is spaced to say so. */
+#cx-project-hint{margin-top:8px}
+
+/* The short list on the self-serve card: the first four rows of the same
+   INCLUDED array as .incl below, lead AND qualifier — see includedBrief() in
+   assets/catalog-render.js for why dropping the qualifier was the wrong cut.
+   Styled as its own thing rather than by reusing .incl-list only because that
+   list is a two-column grid, which does not fit half a card; the row inside
+   is deliberately the same shape, so the two readings of the same promise
+   look like one list shown twice rather than two lists. */
+.path-list{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:16px}
+.path-item{display:flex;align-items:flex-start;gap:12px}
+.path-txt{font-size:14px;line-height:1.5;color:var(--tx-2)}
+.path-txt b{display:block;color:var(--tx);font-weight:700;font-size:15px;margin-bottom:2px}
+/* Decorative: every row's meaning is in its text, so the SVG is aria-hidden
+   and the list reads correctly with images off. Same contract as .incl-ico. */
+.path-ico{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--rule-2);color:var(--acc-tx)}
+.path-ico svg{width:17px;height:17px;display:block}
 
 /* ------------------------------------------------------- platform cards ---
    The premier tier on `/`. These have to outweigh the four .entry cards in

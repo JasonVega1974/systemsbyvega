@@ -358,6 +358,144 @@
   </div>
 </section>
 
+<!-- ═══════════════════════ THE TWO PATHS ════════════════════════════════ -->
+<!-- R15. Section 3, between the comparison table and the catalog board.
+
+     WHY IT SITS HERE AND NOT HIGHER. #compare answers "why you at all" by
+     laying the four routes side by side. The moment that lands, the visitor
+     has exactly one question left — which of the two things on offer here is
+     theirs — and #catalog below is only useful to the half of them who wanted
+     the shelf. Putting the fork above the catalog means the custom buyer is
+     never asked to scroll thirty-two trade cards looking for the one that is
+     not there.
+
+     NEITHER CARD IS THE DEFAULT. Same grid column, same surface, same border,
+     same padding, same primary button at the foot of each. The only thing
+     that differs is what is inside, because the choice is genuinely between
+     two products and not between a recommendation and a fallback. If a future
+     edit gives one card a brighter border, a badge, or a wider column, that
+     is a decision to make the other path look like a consolation prize.
+
+     BAND: dark. #compare above is white and #catalog below is paper, so dark
+     is the one tone that repeats neither — see THE BAND SYSTEM in
+     assets/sbv.css, where #paths joins the dark selector group and the
+     border-top:0 list that Ruling R18 pairs with it.
+
+     THE LEFT CARD'S BULLETS ARE GENERATED. BUILD:PATH_INCLUDED is
+     R.includedBrief(4) — the first four rows of the same INCLUDED array that
+     renders the full seven in #offer further down this page. Nothing in that
+     block is typed here; editing it by hand is reverted by the next
+     `node tools/build-catalog.js`.
+
+     THE RIGHT CARD QUOTES NOTHING. No price, no range, no "projects typically
+     start at", no turnaround. Custom work is quoted after a conversation, and
+     a number printed next to a form is an anchor whether or not it is called
+     one. The card describes what the work covers; the reply covers the rest. -->
+<section class="section" id="paths">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Two ways in</span>
+      <h2>Take one off the shelf, <br>or have one built.</h2>
+      <p class="lede" style="margin-top:12px">
+        The catalog below is the shelf — pick a trade, claim your city, and the site is yours.
+        If the thing you need was never going to be on a shelf, describe it instead.
+      </p>
+    </div>
+
+    <div class="paths">
+
+      <!-- ── LEFT: the $99 catalog site ────────────────────────────────── -->
+      <div class="pathcard reveal">
+        <span class="pathcard-tag">Self-serve</span>
+        <h3>Pick your trade. <br>Claim your city.</h3>
+        <p class="pathcard-price"><b>$99</b> <span>one-time</span></p>
+        <p class="pathcard-lede">
+          One trade, one city, live on its own address with the admin behind it. You pick the
+          trade from the catalog below and the city when you claim it.
+        </p>
+
+        <!-- Generated — see the note at the top of this section. -->
+        <!-- BUILD:PATH_INCLUDED -->
+<ul class="path-list"><li class="path-item"><span class="path-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c2 2.4 3 4.9 3 7.5s-1 5.1-3 7.5c-2-2.4-3-4.9-3-7.5s1-5.1 3-7.5z"/></svg></span><span class="path-txt"><b>Your site, on your own subdomain</b> Live at yourbusiness.systemsbyvega.com from the moment you claim — carrying the example content until your first save.</span></li><li class="path-item"><span class="path-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h15M2.5 14h15"/><circle cx="7" cy="6" r="2.2"/><circle cx="13" cy="14" r="2.2"/></svg></span><span class="path-txt"><b>Your own operator admin</b> Business details, hours, service area, photos, pricing, reviews and social links — plus before/after shots where the niche uses them.</span></li><li class="path-item"><span class="path-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 11.5 5 4h10l2.5 7.5v4a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z"/><path d="M2.5 11.5h4l1 2h5l1-2h4"/></svg></span><span class="path-txt"><b>A leads inbox</b> Every enquiry your site receives lands in your admin as a running list, and in your email.</span></li><li class="path-item"><span class="path-ico" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="6" height="6" rx="1"/><rect x="11.5" y="2.5" width="6" height="6" rx="1"/><rect x="2.5" y="11.5" width="6" height="6" rx="1"/><path d="M11.5 11.5h2.5v2.5M17.5 11.5v6h-6"/></svg></span><span class="path-txt"><b>A marketing kit</b> A social image and a printable flyer, both carrying a QR code that points at your site.</span></li></ul>
+<!-- /BUILD:PATH_INCLUDED -->
+
+        <div class="pathcard-act">
+          <a class="btn btn-pri btn-block" href="/claim/">Get your site &mdash; $99</a>
+          <p class="fine">
+            One operator per city, per trade. What each line covers, in full, is in the
+            <a class="link" href="/legal/terms.html">Terms</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: custom work ────────────────────────────────────────── -->
+      <!-- Posts to the same /api/submit-inquiry as the full form on
+           /services/, with source:'landing-custom' so the inbox can tell a
+           landing-page ask from a considered brief. That string is not free
+           text on the wire — the route keeps an allow-list and falls back to
+           'services' for anything it does not recognise, because the column
+           is operator-facing and the endpoint is public. -->
+      <div class="pathcard reveal">
+        <span class="pathcard-tag">Custom</span>
+        <h3>Need something built <br>from scratch?</h3>
+        <p class="pathcard-lede">
+          Custom platforms, operator dashboards, internal tools, automation &mdash; software
+          shaped around the way the work already runs instead of a template you have to fit
+          yourself into.
+        </p>
+        <p class="pathcard-lede">
+          Tell me what you are trying to build. I read every one of these myself and reply
+          directly, with whether it is a fit and what a first conversation should cover.
+        </p>
+
+        <div class="pathcard-act">
+          <form id="customForm" novalidate>
+            <div class="field">
+              <label for="cx-name">Name</label>
+              <input id="cx-name" name="name" type="text" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+              <label for="cx-email">Email</label>
+              <input id="cx-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="field">
+              <label for="cx-project">What are you trying to build?</label>
+              <textarea id="cx-project" name="project" rows="4" aria-describedby="cx-project-hint" required></textarea>
+              <!-- The minimum is not decoration: sbv_inquiries_lengths_ck is
+                   "between 10 and 4000", so a two-word answer is rejected by
+                   the database as an opaque 400 with nothing to act on. Said
+                   here, checked in the handler below, enforced in the table —
+                   the buyer only ever meets the first one. -->
+              <p class="fine" id="cx-project-hint">A sentence or two is enough &mdash; at least 10 characters.</p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="cx-honey">Leave this empty</label>
+              <input id="cx-honey" name="_honey" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button class="btn btn-pri btn-block" id="cx-submit" type="submit">Ask for a quote</button>
+          </form>
+
+          <!-- role="status" so the result is ANNOUNCED, not only coloured:
+               .note-err is a red left border and nothing a screen reader
+               reports. Present and empty from first paint so the live region
+               is already registered when the first message arrives. -->
+          <p class="note" id="cx-out" role="status" aria-live="polite" hidden></p>
+
+          <p class="fine">
+            Nothing here is a quote or a commitment on either side. Your address is used to
+            reply to this message and for nothing else.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════ THE CATALOG ═══════════════════════════════ -->
 <!-- Section 3, and the product itself. R16 moved the whole catalog board here
      from /sites/ and DELETED that page; this section is the reason the move
@@ -1347,6 +1485,123 @@ window.SBV_CONFIG = {
   /* No auto-dismiss and no close control: while this bar is up it is the only
      thing on the page that matters, and every path above replaces the page
      within four seconds anyway. */
+})();
+</script>
+
+<!-- #paths — the custom-work card's form. Deliberately the SAME shape as the
+     handler at the foot of /services/: preventDefault, honeypot dropped in
+     silence, one client-side check, fetch, and a failure message that admits
+     the failure. Two forms posting to one endpoint with two different
+     behaviours is how one of them quietly rots, so this is that handler with
+     the fields this card actually has (no company, no budget) and the source
+     the route allow-lists. -->
+<script>
+(function () {
+  "use strict";
+  var form = document.getElementById('customForm');
+  if (!form) return;
+  var btn = document.getElementById('cx-submit');
+  var out = document.getElementById('cx-out');
+  var fName = document.getElementById('cx-name');
+  var fEmail = document.getElementById('cx-email');
+  var fProject = document.getElementById('cx-project');
+  var honey = document.getElementById('cx-honey');
+
+  /* The table's own floor, not a number picked here:
+     sbv_inquiries_lengths_ck is "between 10 and 4000" on btrim(project).
+     Checked client-side ONLY so the buyer gets a sentence they can act on
+     instead of the 400 the endpoint would otherwise have to answer with —
+     the constraint still lives in the database, and the route still enforces
+     it, because neither of those can trust a browser. */
+  var PROJECT_MIN = 10;
+  var LABEL = 'Ask for a quote';
+
+  function say(msg, isErr) {
+    out.className = 'note ' + (isErr ? 'note-err' : 'note-ok');
+    out.innerHTML = msg;
+    out.hidden = false;
+  }
+  function reset() { btn.disabled = false; btn.textContent = LABEL; }
+
+  /* aria-invalid as well as the message, and focus follows it: the note is
+     announced by its live region, but a screen-reader user who has heard
+     "give me at least a sentence" still has to be told WHICH box. Cleared on
+     every attempt so a fixed field stops reporting itself as broken. */
+  function mark(field) {
+    field.setAttribute('aria-invalid', 'true');
+    field.focus();
+  }
+  function clearMarks() {
+    fName.removeAttribute('aria-invalid');
+    fEmail.removeAttribute('aria-invalid');
+    fProject.removeAttribute('aria-invalid');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (honey && honey.value) return;             // honeypot: silently drop
+
+    clearMarks();
+
+    var name = fName.value.trim();
+    var email = fEmail.value.trim();
+    var project = fProject.value.trim();
+
+    if (!name) {
+      say('I need a name to reply to.', true);
+      mark(fName);
+      return;
+    }
+    if (!email) {
+      say('I need an email address to reply to.', true);
+      mark(fEmail);
+      return;
+    }
+    if (project.length < PROJECT_MIN) {
+      /* The specific failure, not "check your entries". This is the one that
+         would otherwise come back from the database as a bare 400. */
+      say('Tell me a little more about what you want built &mdash; at least ' +
+          PROJECT_MIN + ' characters, a sentence or two is plenty.', true);
+      mark(fProject);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch('/api/submit-inquiry', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        project: project,
+        /* Allow-listed at the route. Sending anything else would be stored
+           as 'services', not as the string sent — see SOURCES in
+           api/submit-inquiry.mjs. */
+        source: 'landing-custom',
+        _honey: honey ? honey.value : ''
+      })
+    }).then(function (r) {
+      return r.json().then(function (d) { return { status: r.status, d: d || {} }; });
+    }).then(function (res) {
+      if (res.d.ok) {
+        form.style.display = 'none';
+        say('Got it &mdash; thanks. I read these myself and reply directly.', false);
+        return;
+      }
+      throw new Error(res.d.error || ('http ' + res.status));
+    }).catch(function () {
+      /* Telling someone their message sent when it did not is worse than
+         telling them it failed. Same posture as /services/ and the #line
+         form on this page. */
+      say('That did not send. This is at our end, not yours &mdash; try again in a moment, or ' +
+          'email <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a> ' +
+          'directly.', true);
+      reset();
+    });
+  });
 })();
 </script>
 

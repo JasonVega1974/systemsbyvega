@@ -63,7 +63,7 @@ const TARGETS = [
   { file: path.join(ROOT, 'index.html'),
     markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_STEP', 'HERO_DEMO_BTN',
               'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT',
-              'INCLUDED'] },
+              'INCLUDED', 'PATH_INCLUDED'] },
   { file: path.join(ROOT, 'platforms', 'index.html'),
     markers: ['SEED_SCRIPT', 'PLAT_INLINE'] },
   /* Finding 3 of the final whole-branch review: three more pages hand-typed
@@ -254,6 +254,12 @@ function main() {
     /* The same list on `/` and `/sites/`, from one function, so the two
        cannot drift apart the way two hand-kept copies would. */
     INCLUDED:     '\n' + R.included() + '\n',
+    /* R15's self-serve card, two bands above #offer, names the first four of
+       that same list. Fed from the same INCLUDED array through
+       R.includedBrief() so the short version can never advertise something
+       the full one below it has stopped shipping — see the function's own
+       note in assets/catalog-render.js. */
+    PATH_INCLUDED: '\n' + R.includedBrief(4) + '\n',
     /* The catalog board — plates, cards, chips and all — now on `/`. It is
        the ONLY listing of the thirty-two on that page: R16 deleted the flat
        SITES_GRID band it used to sit alongside on /sites/, because the board
