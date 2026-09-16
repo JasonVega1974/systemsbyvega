@@ -42,8 +42,14 @@ function loadApp(htmlPath) {
 ;globalThis.__t = {
   get S() { return S; }, set S(v) { S = v; },
   get adminOn() { return adminOn; }, set adminOn(v) { adminOn = v; },
-  COURSES, ONBOARD_ITEMS, ONBOARD_V1_ORDER, SERVICES, MIN_SLOTS, MAX_SLOTS,
-  PASS_THRESHOLD, SCHEMA_VERSION,
+  get sb() { return sb; }, set sb(v) { sb = v; },
+  get currentUser() { return currentUser; }, set currentUser(v) { currentUser = v; },
+  get currentProfile() { return currentProfile; }, set currentProfile(v) { currentProfile = v; },
+  get curCourse() { return curCourse; }, set curCourse(v) { curCourse = v; },
+  get quizAnswers() { return quizAnswers; }, set quizAnswers(v) { quizAnswers = v; },
+  get quizSubmitted() { return quizSubmitted; }, set quizSubmitted(v) { quizSubmitted = v; },
+  get editingMemberId() { return editingMemberId; }, set editingMemberId(v) { editingMemberId = v; },
+  COURSES, ONBOARD_ITEMS, SERVICES, MIN_SLOTS, MAX_SLOTS, PASS_THRESHOLD,
   alertDialog, confirmDialog, promptDialog
 };`, ctx);
 
