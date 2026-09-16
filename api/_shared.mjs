@@ -85,8 +85,11 @@ export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || '';
    single $99 plan and `launch` is the only key. The retired `custom` tier was
    deliberately deleted rather than left pointing at an empty env var, because
    TIERS derives from these keys — leaving it here kept `custom` postable, and
-   STRIPE_PRICE_ID_CUSTOM still holding a value from the old pricing meant a
-   buyer could be charged $499 for the $99 product and provisioned cleanly.
+   the old tier's price id, if its env var still held a value from before the
+   reprice, meant a buyer could be charged $499 for the $99 product and
+   provisioned cleanly. That env var should be deleted from Vercel too — it
+   is unread by every path now — but the code no longer depends on that
+   cleanup happening, which is the actual fix.
    `sbv_intake.tier` keeps storing the string 'launch' (Jason's decision: no
    DDL), so this stays a map rather than collapsing to a bare constant. */
 export const TIER_PRICE_ID = {
