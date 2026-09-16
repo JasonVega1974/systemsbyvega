@@ -166,38 +166,18 @@ async function nicheFor(label) {
   }
 }
 
-export default async function middleware(request) {
-  const host = (request.headers.get('host') || '').toLowerCase().split(':')[0];
-
-  /* Apex, www, preview and local are the funnel, untouched. www is excluded
-     here in JS rather than in the matcher because Vercel's RE2 matcher has no
-     lookahead. */
-  if (host === APEX || host === 'www.' + APEX
-      || host.endsWith('.vercel.app') || host === 'localhost') {
-    return next();
-  }
-
-  if (!host.endsWith('.' + APEX)) return next();
-
-  const label = host.slice(0, -(APEX.length + 1));
-  if (!LABEL.test(label)) return next();
-
-  /* The storefront's own boot fetch. No tenant lookup needed here: the
-     endpoint validates the label and resolves the niche itself, and it already
-     answers non-2xx for an unknown tenant — which the page treats as "keep the
-     inlined defaults". Passing it through the lookup would just double the
-     database reads per page view. */
-  const path = new URL(request.url).pathname;
-  if (path === '/content.json') {
-    return rewrite(new URL('/api/operator-content?tenant=' + label, request.url));
-  }
-
-  const { niche, theme, hasContent } = await nicheFor(label);
-
-  /* NO DEFAULT TENANT, EVER. An unresolved hostname shows the funnel; it must
-     never fall back to some other operator's storefront. */
-  if (!niche) return next();
-
+/* ----------------------------------------------------------------------------
+   THE SHARED REWRITE TAIL — subdomain and custom-domain paths both end here.
+   ----------------------------------------------------------------------------
+   Everything below is unchanged behaviour, only pulled out of the subdomain
+   branch so a custom domain gets IDENTICAL path normalisation, theme
+   resolution and X-Robots-Tag logic rather than a second hand-kept copy that
+   can drift from this one. `tenantId` is the value written to the `x-tenant`
+   header — the subdomain label when called from the subdomain path, the
+   resolved client_id when called from the custom-domain path (a custom
+   domain's host is never a valid tenant id, so the caller must resolve it
+   first and hand this function the real one). */
+function storefrontRewrite(request, path, tenantId, niche, theme, hasContent) {
   /* The headers are for reading routing decisions with `curl -I`, nothing more.
      The page itself cannot see them — a document's own response headers are not
      exposed to its JavaScript — so the storefront resolves its tenant from
@@ -235,7 +215,7 @@ export default async function middleware(request) {
                            + legal + '.html', request.url), {
       headers: {
         'x-niche-slug': niche,
-        'x-tenant': label,
+        'x-tenant': tenantId,
         'X-Robots-Tag': 'noindex',
       },
     });
@@ -244,8 +224,139 @@ export default async function middleware(request) {
   return rewrite(new URL('/sites/' + niche + themeSegment(niche, theme) + '/', request.url), {
     headers: {
       'x-niche-slug': niche,
-      'x-tenant': label,
+      'x-tenant': tenantId,
       'X-Robots-Tag': hasContent ? 'all' : 'noindex',
     },
   });
+}
+
+/* ----------------------------------------------------------------------------
+   CUSTOM DOMAIN LOOKUP — mirrors nicheFor()'s shape exactly.
+   ----------------------------------------------------------------------------
+   Deliberately reuses THAT SAME `cache` Map rather than a second one: a raw
+   domain host always contains a dot (sbv_tenants_custom_domain_ck requires at
+   least one label separator) and a subdomain label never does (LABEL's regex
+   has no '.'), so the two key spaces cannot collide in one Map — one cache
+   slot per hostname either way, no extra bookkeeping needed to keep them
+   apart.
+
+   ONE RPC, NOT TWO. A subdomain's client_id IS the label, so nicheFor() can
+   fetch niche/theme and hasContent in parallel with no dependency between
+   them. A custom domain's client_id is only known AFTER this lookup
+   resolves it, so hasContent cannot be parallelised the same way —
+   sql/CUSTOM-DOMAIN-2.sql folds has_content into sbv_public_tenant_by_domain's
+   own row for exactly this reason, keeping this to one round trip. */
+async function tenantForDomain(host) {
+  const hit = cache.get(host);
+  if (hit && hit.at + TTL_MS > Date.now()) return hit;
+
+  /* Same hard 1.5s ceiling as nicheFor(). */
+  const stop = new AbortController();
+  const timer = setTimeout(function () { stop.abort(); }, 1500);
+  const authHeaders = { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON };
+
+  try {
+    /* sbv_public_tenant_by_domain(p_domain) is SECURITY DEFINER, anon-granted,
+       and answers ONLY for a VERIFIED domain (custom_domain_verified_at not
+       null) — an operator's unverified claim never routes, by construction in
+       the SQL, not by anything checked here. */
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/rpc/sbv_public_tenant_by_domain'
+        + '?p_domain=' + encodeURIComponent(host),
+      { headers: authHeaders, signal: stop.signal }
+    );
+
+    /* Fail OPEN on the whole lookup, same as nicheFor()'s niche answer: a
+       non-2xx/aborted/rejected response returns uncached, so the caller falls
+       through to the funnel and the next request gets a fresh try. */
+    if (!res.ok) return { clientId: null, niche: null, theme: null, hasContent: false };
+
+    const rows = await res.json();
+    const row = (Array.isArray(rows) && rows.length) ? rows[0] : null;
+
+    /* hasContent fails CLOSED, independently of the rest — a malformed body
+       or a missing column on an old function version leaves it false, i.e.
+       noindex, never "all" on an unknown answer. */
+    const result = {
+      clientId: row ? row.client_id : null,
+      niche: row ? row.niche_slug : null,
+      theme: row ? row.theme : null,
+      hasContent: row ? row.has_content === true : false,
+    };
+    cache.set(host, Object.assign({}, result, { at: Date.now() }));
+    return result;
+  } catch (e) {
+    return { clientId: null, niche: null, theme: null, hasContent: false };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/* The custom-domain counterpart of the subdomain branch in middleware()
+   below. Only reached for a host that does NOT end in '.' + APEX — see the
+   host-shape-disjointness note at that call site for why this and the
+   subdomain path can never both match the same request. */
+async function customDomainRewrite(request, host) {
+  const { clientId, niche, theme, hasContent } = await tenantForDomain(host);
+
+  /* NO DEFAULT TENANT, EVER — same rule as the subdomain path. An unresolved
+     or unverified hostname shows the funnel; it must never fall back to some
+     other operator's storefront. */
+  if (!clientId || !niche) return next();
+
+  const path = new URL(request.url).pathname;
+  if (path === '/content.json') {
+    /* NOT the raw host — /content.json needs the actual tenant label, which
+       only this lookup knows on a custom domain (unlike the subdomain path,
+       where the label already IS the client_id). */
+    return rewrite(new URL('/api/operator-content?tenant=' + clientId, request.url));
+  }
+
+  return storefrontRewrite(request, path, clientId, niche, theme, hasContent);
+}
+
+export default async function middleware(request) {
+  const host = (request.headers.get('host') || '').toLowerCase().split(':')[0];
+
+  /* Apex, www, preview and local are the funnel, untouched. www is excluded
+     here in JS rather than in the matcher because Vercel's RE2 matcher has no
+     lookahead. */
+  if (host === APEX || host === 'www.' + APEX
+      || host.endsWith('.vercel.app') || host === 'localhost') {
+    return next();
+  }
+
+  /* HOST-SHAPE DISJOINTNESS. Every one of the 32 live tenants' hosts ends in
+     '.' + APEX by construction (that IS what a tenant subdomain is), so this
+     branch and the subdomain branch below can never both match the same
+     request — a request either ends in '.systemsbyvega.com' and takes the
+     subdomain path, or it does not and takes this one. A custom domain can
+     never end in '.systemsbyvega.com' either: sbv_tenants_custom_domain_ck
+     rejects any value ending '.systemsbyvega.(com|app)' or '.vercel.(com|app)'
+     at the database layer, before this code ever runs. primetest.
+     systemsbyvega.com is exactly such a subdomain host, so it is structurally
+     incapable of reaching customDomainRewrite() — not merely untested against
+     it. */
+  if (!host.endsWith('.' + APEX)) return customDomainRewrite(request, host);
+
+  const label = host.slice(0, -(APEX.length + 1));
+  if (!LABEL.test(label)) return next();
+
+  /* The storefront's own boot fetch. No tenant lookup needed here: the
+     endpoint validates the label and resolves the niche itself, and it already
+     answers non-2xx for an unknown tenant — which the page treats as "keep the
+     inlined defaults". Passing it through the lookup would just double the
+     database reads per page view. */
+  const path = new URL(request.url).pathname;
+  if (path === '/content.json') {
+    return rewrite(new URL('/api/operator-content?tenant=' + label, request.url));
+  }
+
+  const { niche, theme, hasContent } = await nicheFor(label);
+
+  /* NO DEFAULT TENANT, EVER. An unresolved hostname shows the funnel; it must
+     never fall back to some other operator's storefront. */
+  if (!niche) return next();
+
+  return storefrontRewrite(request, path, label, niche, theme, hasContent);
 }

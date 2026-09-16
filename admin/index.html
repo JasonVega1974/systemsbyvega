@@ -128,6 +128,12 @@
      so setValidity() below needs no per-field lookup table. */
   .field-err{margin:4px 0 0;font-size:12.5px;color:var(--adm-bad)}
   input.invalid,textarea.invalid{border-color:var(--adm-bad)}
+  /* Separate from .invalid on purpose: the custom-domain field is validated
+     and saved through its own button/endpoint, not the main Save flow, and
+     anyInvalid() (which gates Save) queries '#panel .invalid' — sharing that
+     class would let a bad domain the operator hasn't fixed yet block an
+     unrelated save of their other fields. */
+  input.dom-invalid{border-color:var(--adm-bad)}
   p.hint{font-size:13px;color:var(--adm-ink-soft);margin:6px 0 16px}
 
   .go{background:var(--adm-accent);color:var(--adm-on-accent);border:0;border-radius:9px;
@@ -489,6 +495,16 @@
           <textarea id="bio" maxlength="2000"></textarea></label>
         <p class="hint">Owner photo is uploaded in the Photos section above.</p>
       </div>
+
+      <p class="sec-h" style="margin-top:26px">Custom domain</p>
+      <p class="hint" id="domainStatus" hidden></p>
+      <label><span>Your own domain <span class="hint">&mdash; optional</span></span>
+        <input type="text" id="custom_domain" maxlength="253" placeholder="yourdomain.com">
+        <p class="field-err" hidden></p></label>
+      <p class="hint">Point your domain's CNAME record to <code>cname.vercel-dns.com</code>,
+        then save. After saving, allow up to 24 hours for DNS to propagate globally.</p>
+      <p class="msg" id="domainMsg" role="status"></p>
+      <button type="button" class="add-row" id="connectDomain">Connect domain</button>
 
       <p class="sec-h">Social links</p>
       <p class="jd-caption" id="socialHiddenCaption" hidden>Social links aren't part of this site's design yet.</p>
@@ -884,6 +900,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   function validateSocialUrl(v) { return v === '' || HTTPS_RE.test(v) ? null : 'Must start with https://'; }
 
+  /* Shape only, matching sbv_tenants_custom_domain_ck in sql/CUSTOM-DOMAIN.sql
+     and the same check api/connect-domain.mjs runs server-side — NOT a DNS
+     lookup, which is the server's job (this is the button's own click
+     handler doing an obvious-junk check before it spends a network round
+     trip). Empty is always valid: it means "clear this domain". */
+  var DOMAIN_SHAPE_RE = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/;
+  function validateDomainShape(v) {
+    if (v === '') return null;
+    var s = v.toLowerCase();
+    if (s.length < 4 || s.length > 253 || !DOMAIN_SHAPE_RE.test(s)) {
+      return 'That does not look like a domain. Example: yourbusiness.com';
+    }
+    return null;
+  }
+
   /* Review row validation: quote is required if rating or author is present.
      Fully-empty rows are valid (silently dropped on save). Author alone is
      valid (quote can be empty). */
@@ -925,6 +956,24 @@ document.addEventListener('DOMContentLoaded', function () {
   function bindBlurValidation(id, validateFn) {
     var input = $(id);
     input.addEventListener('blur', function () { setValidity(input, validateFn(input.value.trim())); });
+  }
+
+  /* setValidity()'s own twin, deliberately NOT setValidity itself. The
+     custom-domain field is saved through its own button and endpoint, never
+     through the main "Save changes" flow, and setValidity() toggles the
+     SAME '.invalid' class anyInvalid() (which gates Save) scans for across
+     all of #panel. Reusing it would let a domain the operator hasn't fixed
+     yet — or hasn't even tried to save — block an unrelated save of their
+     other fields. '.dom-invalid' is a separate class with the same look, and
+     this never calls refreshSaveDisabled(). */
+  function setDomainValidity(msg) {
+    var input = $('custom_domain');
+    input.classList.toggle('dom-invalid', !!msg);
+    var box = input.nextElementSibling;
+    if (box && box.classList.contains('field-err')) {
+      box.textContent = msg || '';
+      box.hidden = !msg;
+    }
   }
 
   /* ---------------------------------------------------------------- theme */
@@ -1671,10 +1720,34 @@ document.addEventListener('DOMContentLoaded', function () {
        "manifest absent" path as a genuinely unmapped niche. */
     var manifestFetch = getManifestIndex();
 
-    Promise.all([rowFetch, tenantFetch, manifestFetch]).then(function (results) {
+    /* custom_domain / custom_domain_verified_at live on sbv_tenants, not the
+       operator-content row, and are read here rather than folded into
+       sbv_public_tenants() — that RPC is anon-granted and public, so adding a
+       private field to it would leak every tenant's custom domain to anyone.
+       This is a direct table read instead: RLS (sbv_tenants_own_read) already
+       scopes it to the operator's own row, and `authenticated` already holds
+       table-level SELECT, so it needs zero new grants. Same
+       Promise.resolve()-first + .catch() shape as tenantFetch above, for the
+       same reason (a thenable-only builder has no .catch of its own); a
+       failure here just leaves the domain field blank, same as a fresh tenant. */
+    var domainFetch = Promise.resolve(
+      sb.from('sbv_tenants').select('custom_domain,custom_domain_verified_at')
+        .eq('client_id', clientId).maybeSingle()
+    ).catch(function () { return { data: null }; });
+
+    Promise.all([rowFetch, tenantFetch, manifestFetch, domainFetch]).then(function (results) {
       var r = results[0];
       var rt = results[1];
       var manifestIndex = results[2] || {};
+      var dom = results[3] && results[3].data;
+
+      $('custom_domain').value = (dom && dom.custom_domain) || '';
+      setDomainValidity('');
+      var domainVerified = !!(dom && dom.custom_domain_verified_at);
+      show('domainStatus', !!(dom && dom.custom_domain));
+      $('domainStatus').textContent = !(dom && dom.custom_domain) ? ''
+        : (domainVerified ? 'Connected — ' + dom.custom_domain : 'Not connected yet — DNS not verified');
+      say('domainMsg', '');
 
       say('panelMsg', ''); /* clear any stale message from a prior load() in this session */
 
@@ -2629,6 +2702,92 @@ document.addEventListener('DOMContentLoaded', function () {
   bindBlurValidation('postal_code', validatePostal);
   bindBlurValidation('phone', validatePhone);
   bindBlurValidation('booking_url', validateBookingUrl);
+
+  /* Blur validation for the domain field, using setDomainValidity() (not
+     bindBlurValidation/setValidity — see setDomainValidity's own comment for
+     why) so a bad domain here never disables the unrelated main Save button. */
+  $('custom_domain').addEventListener('blur', function () {
+    setDomainValidity(validateDomainShape($('custom_domain').value.trim()));
+  });
+
+  /* ==================================================== custom domain (details)
+     A SEPARATE action from the main "Save changes" button: it hits its own
+     authenticated endpoint (/api/connect-domain, which needs the service key
+     and a live DNS lookup) rather than the client's direct
+     sbv_operator_content upsert. Button/status/auth-forwarding modelled
+     exactly on the Marketing tab's "Generate downloads" flow (mkGenerate()
+     below): sb.auth.getSession() -> bearer token -> fetch('/api/...'). */
+  function connectDomain() {
+    var btn = $('connectDomain');
+    if (!clientId) return;
+
+    var raw = $('custom_domain').value.trim().toLowerCase();
+    /* Client-side shape check BEFORE the endpoint is ever called — empty is
+       always allowed (it clears the domain); a DNS lookup is the server's
+       job, not this button's. */
+    var shapeMsg = validateDomainShape(raw);
+    if (shapeMsg) { setDomainValidity(shapeMsg); return; }
+    setDomainValidity('');
+
+    btn.disabled = true;
+    btn.textContent = raw ? 'Connecting…' : 'Clearing…';
+    say('domainMsg', '');
+
+    var settled = false;
+    var done = function (msg, cls) {
+      if (settled) return; /* first outcome wins; the watchdog cannot double-report */
+      settled = true;
+      btn.disabled = false;
+      btn.textContent = 'Connect domain';
+      if (msg) say('domainMsg', msg, cls);
+    };
+    /* Same watchdog SHAPE as mkGenerate() — abort the fetch AND release the
+       button from one timer, so a stall anywhere (including a getSession()
+       token refresh) cannot pin the button forever — just a shorter budget:
+       a DNS lookup plus one Vercel call is nowhere near mkGenerate's
+       cold-chromium render. */
+    var stop = new AbortController();
+    var timer = setTimeout(function () {
+      stop.abort();
+      done('That took too long and was cancelled. Give it a minute and try again.', 'bad');
+    }, 30000);
+
+    Promise.resolve(sb.auth.getSession()).then(function (res) {
+      var s = res && res.data && res.data.session;
+      if (!s || !s.access_token) { done('Your sign-in expired. Reload and sign in again.', 'bad'); return null; }
+      return Promise.resolve(fetch('/api/connect-domain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + s.access_token },
+        body: JSON.stringify({ tenant: clientId, domain: raw }),
+        signal: stop.signal
+      })).then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); });
+    }).then(function (r) {
+      clearTimeout(timer);
+      if (!r) return; /* session path already reported */
+      var j = r.body || {};
+      if (j.ok !== true) {
+        var msg = j.message || ('That did not work (' + (j.error || r.status) + '). Try again.');
+        if (j.hint) msg += ' ' + j.hint;
+        done(msg, 'bad');
+        return;
+      }
+      if (j.domain === '') {
+        show('domainStatus', false);
+        done('Domain cleared.', 'ok');
+        return;
+      }
+      show('domainStatus', true);
+      $('domainStatus').textContent = 'Connected — ' + j.domain;
+      done(j.vercelRegistered
+        ? 'Connected. Allow up to 24 hours for DNS to fully propagate.'
+        : 'Saved, but not live yet (' + (j.vercelReason || 'try again shortly') + ').', 'ok');
+    }).catch(function (e) {
+      clearTimeout(timer);
+      console.error('[admin] connect-domain:', e);
+      done('That did not work. Try again in a minute.', 'bad');
+    });
+  }
+  $('connectDomain').addEventListener('click', connectDomain);
 
   /* ============================================================ marketing
      Read-only tab. Previews are built from the tenant's MERGED content —

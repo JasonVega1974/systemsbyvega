@@ -505,6 +505,8 @@
      'Put the site back to its example content and start over, whenever you want.'],
     ['calendar', 'Connect a booking link',
      'Paste your Calendly, Google Calendar or Square link and a Book Now button appears in your header and footer automatically.'],
+    ['link', 'Connect your own domain',
+     'Point your CNAME at ours and your site answers to yourdomain.com instead of the subdomain.'],
   ];
 
   /* 20x20 stroke icons, currentColor, no icon font and no sprite file. */
@@ -517,6 +519,7 @@
     shield: '<path d="M10 2.5 16.5 5v5c0 4-2.7 6.7-6.5 8-3.8-1.3-6.5-4-6.5-8V5z"/><path d="M7.3 10.2 9.2 12l3.5-3.6"/>',
     undo:   '<path d="M3.5 5v5h5"/><path d="M4.4 12.2a6.8 6.8 0 1 0 .6-5.2"/>',
     calendar: '<rect x="3" y="4.5" width="14" height="13" rx="1.5"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/>',
+    link: '<path d="M8 12a3 3 0 0 0 4.24 0l2-2a3 3 0 0 0-4.24-4.24l-.5.5"/><path d="M12 8a3 3 0 0 0-4.24 0l-2 2a3 3 0 0 0 4.24 4.24l.5-.5"/>',
   };
 
   function included(opts) {
