@@ -1,16 +1,19 @@
-/* Storage failure paths. v1 swallowed every one of these in `catch (e) {}`,
-   so the app kept showing data as if it had been saved. These assert that a
-   failure is both visible and non-destructive. */
+/* Failure paths for the Supabase-backed data layer. v1 swallowed localStorage
+   failures in `catch (e) {}`, so the app kept showing data as if it had been
+   saved; that principle now applies to network/RLS failures instead — see
+   dbWrite()'s comment in index.html. These assert that a failure is loud
+   (the #storageAlert banner) and never silently overwrites what was on
+   screen with something the database doesn't actually have. */
 const fs = require('fs'), vm = require('vm');
-const { runner } = require('./harness');
-const { check, group, done } = runner();
+const { createFakeSupabase } = require('./fakeSupabase');
+const { check, group, done } = require('./harness').runner();
 
 const htmlPath = process.argv[2];
 const js = fs.readFileSync(htmlPath, 'utf8').match(/<script>\n([\s\S]*)\n<\/script>/)[1];
 
 /* A DOM stub that actually records what gets written to #storageAlert, since
    the whole point of these fixes is that something becomes visible. */
-function build(storage) {
+function build() {
   const alertEl = { innerHTML: '', style: { display: 'none' } };
   const generic = new Proxy({}, {
     get(t, k) {
@@ -18,6 +21,7 @@ function build(storage) {
       if (k === 'style') return {};
       if (k === 'files') return [];
       if (['insertAdjacentHTML','appendChild','click','remove','addEventListener','focus','setAttribute','querySelector'].includes(k)) return () => {};
+      if (k === 'querySelectorAll') return () => [];
       if (k === 'value' || k === 'textContent' || k === 'innerHTML') return '';
       return undefined;
     },
@@ -25,7 +29,6 @@ function build(storage) {
   });
   const ctx = {
     console,
-    localStorage: storage,
     document: {
       getElementById: id => (id === 'storageAlert' ? alertEl : generic),
       querySelectorAll: () => [],
@@ -41,75 +44,95 @@ function build(storage) {
   vm.createContext(ctx);
   vm.runInContext(js + `
 ;globalThis.__t = { get S(){return S}, set S(v){S=v},
-  get storageLocked(){return storageLocked}, get loadWarning(){return loadWarning} };`, ctx);
+  get sb(){return sb}, set sb(v){sb=v},
+  get currentUser(){return currentUser}, set currentUser(v){currentUser=v},
+  get currentProfile(){return currentProfile}, set currentProfile(v){currentProfile=v} };`, ctx);
   return { ctx, T: ctx.__t, alertEl };
 }
 
-const GOOD = JSON.stringify({ schemaVersion: 2, pin: '2121', team: [{ id: 'tm1', first: 'A', last: 'B', phone: '', role: 'Team Lead' }],
-  leaders: [], meetings: [], schedule: {}, progress: {}, activeId: 'guest', activity: [] });
+const ADMIN = { id: 'admin-1', role: 'admin', team_member_id: null };
+const ADMIN_USER = { id: 'admin-1', email: 'admin@example.com' };
 
 (async () => {
 
-group('healthy storage stays quiet');
+group('a healthy loadAllData() populates S and leaves the banner alone');
 {
-  const { T, alertEl } = build({ _v: GOOD, getItem(){ return this._v; }, setItem(k, v){ this._v = v; }, removeItem(){ this._v = null; } });
-  check('no warning raised', T.loadWarning === null, T.loadWarning);
-  check('not locked', T.storageLocked === false);
-  check('alert banner hidden', alertEl.style.display === 'none', alertEl.style.display);
-  check('data actually loaded', T.S.team.length === 1, T.S.team.length);
+  const { ctx, T, alertEl } = build();
+  T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
+  T.sb = createFakeSupabase({
+    cc_team: [{ id: 'tm1', first_name: 'A', last_name: 'B', phone: '', email: '', specialty: 'General / Trained Volunteer', team_role: 'Team Lead' }]
+  });
+  await ctx.loadAllData();
+  check('team loaded', T.S.team.length === 1 && T.S.team[0].first === 'A', T.S.team);
+  check('banner stays hidden', alertEl.style.display === 'none', alertEl.style.display);
 }
 
-group('unreadable saved data is reported, NOT overwritten');
+group('a failed table fetch is reported loudly, and degrades to empty rather than stale');
 {
-  const store = { _v: '{ this is not json', getItem(){ return this._v; }, setItem(k, v){ this._v = v; }, removeItem(){ this._v = null; } };
-  const { ctx, T, alertEl } = build(store);
-  check('load did not throw and app still started', !!T.S);
-  check('storageLocked is set', T.storageLocked === true, T.storageLocked);
-  check('a warning was produced', /could not be read/i.test(T.loadWarning || ''), T.loadWarning);
-
-  const wrote = ctx.save();
-  check('save() refuses to run', wrote === false, wrote);
-  check('the unreadable data is STILL THERE, untouched', store._v === '{ this is not json', store._v);
-  check('the banner is now visible', alertEl.style.display === '', alertEl.style.display);
-  check('the banner explains why', /Not saving/i.test(alertEl.innerHTML), alertEl.innerHTML.slice(0, 80));
-  check('and offers a way out', /discardUnreadableData|Restore/i.test(alertEl.innerHTML));
-
-  /* The confirm is an in-page dialog now, so the test drives it rather than
-     stubbing past it — that way it exercises the real settle path. */
-  const cancelled = ctx.discardUnreadableData();
-  ctx.dialogCancel();
-  await cancelled;
-  check('CANCELLING the discard leaves the data alone', store._v === '{ this is not json' && T.storageLocked === true, store._v);
-
-  const discarded = ctx.discardUnreadableData();
-  ctx.dialogOk();
-  await discarded;
-  check('confirming clears the lock', T.storageLocked === false);
-  check('and writing works again', store._v !== '{ this is not json' && (store._v || '').length > 2, (store._v || '').slice(0, 40));
+  const { ctx, T, alertEl } = build();
+  T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
+  T.sb = createFakeSupabase({ cc_team: [{ id: 'tm1', first_name: 'A', last_name: 'B' }] });
+  T.sb.__forceNextError('cc_team', { message: 'network unreachable' });
+  await ctx.loadAllData();
+  check('the failed table loads empty rather than throwing', Array.isArray(T.S.team) && T.S.team.length === 0, T.S.team);
+  check('the banner is visible', alertEl.style.display === '', alertEl.style.display);
+  check('the banner names what failed', /roster/i.test(alertEl.innerHTML), alertEl.innerHTML);
+  check('the banner names the underlying error', /network unreachable/.test(alertEl.innerHTML), alertEl.innerHTML);
 }
 
-group('a write that throws (quota full / blocked) is surfaced');
+group('a failed write does not pretend to have succeeded');
 {
-  const store = { _v: GOOD, getItem(){ return this._v; },
-    setItem(){ const e = new Error('exceeded'); e.name = 'QuotaExceededError'; throw e; },
-    removeItem(){ this._v = null; } };
-  const { ctx, alertEl } = build(store);
-  const wrote = ctx.save();
-  check('save() reports failure rather than pretending', wrote === false, wrote);
-  check('banner visible', alertEl.style.display === '', alertEl.style.display);
-  check('banner says changes are not being saved', /NOT being saved/i.test(alertEl.innerHTML), alertEl.innerHTML.slice(0, 90));
-  check('banner names the cause', /QuotaExceededError/.test(alertEl.innerHTML));
-  check('banner points at Export Backup', /Export Backup/i.test(alertEl.innerHTML));
+  const { ctx, T, alertEl } = build();
+  T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
+  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+  T.sb = createFakeSupabase({ cc_leaders: [] });
+  T.sb.__forceNextError('cc_leaders', { message: 'permission denied for table cc_leaders' });
+
+  const el = { value: '' };
+  ctx.document.getElementById = id => {
+    if (id === 'storageAlert') return alertEl;
+    if (id === 'lName') return { value: 'Pastor Roger' };
+    if (id === 'lTitle') return { value: 'Senior Pastor' };
+    if (id === 'lNotes') return { value: '' };
+    return el;
+  };
+  await ctx.saveLeader();
+  check('the leader was NOT added locally', T.S.leaders.length === 0, T.S.leaders);
+  check('the database was not touched either', T.sb._store.cc_leaders.length === 0, T.sb._store.cc_leaders);
+  check('the banner explains the RLS failure', /permission denied/.test(alertEl.innerHTML), alertEl.innerHTML);
 }
 
-group('storage blocked entirely (private browsing / kiosk)');
+group('dbWrite never auto-clears the banner on a later, unrelated success');
 {
-  const store = { getItem(){ throw new Error('denied'); }, setItem(){ throw new Error('denied'); }, removeItem(){} };
-  const { T, alertEl } = build(store);
-  check('app still starts on defaults', !!T.S && Array.isArray(T.S.team), T.S && T.S.team);
-  check('warning produced', /blocking local storage/i.test(T.loadWarning || ''), T.loadWarning);
-  check('NOT marked locked — there is nothing to protect', T.storageLocked === false, T.storageLocked);
-  check('banner shown at startup', alertEl.style.display === '', alertEl.style.display);
+  /* If dbWrite() cleared on every success, a second (successful) call
+     running concurrently with a failing one could erase that failure's
+     warning before the user ever saw it. dbWrite() deliberately never
+     clears anything on success — only a fresh loadAllData() does, at the
+     one point "everything is being re-read from scratch" is actually true. */
+  const { ctx, T, alertEl } = build();
+  T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
+  T.sb = createFakeSupabase({ cc_leaders: [], cc_meetings: [{ id: 'mt1', meeting_date: '2026-01-01', meeting_time: null, title: 'x', notes: '' }] });
+  T.sb.__forceNextError('cc_leaders', { message: 'boom' });
+
+  await ctx.dbWrite(T.sb.from('cc_leaders').select('*'), 'Could not load leadership');
+  check('the failure is visible', alertEl.style.display === '', alertEl.style.display);
+  await ctx.dbWrite(T.sb.from('cc_meetings').select('*'), 'Could not load meetings');
+  check('a later, unrelated success does not erase it', alertEl.style.display === '', alertEl.style.display);
+}
+
+group('loadAllData() clears a stale banner from a previous failed load');
+{
+  const { ctx, T, alertEl } = build();
+  T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
+  T.sb = createFakeSupabase({ cc_team: [] });
+  T.sb.__forceNextError('cc_team', { message: 'first attempt fails' });
+  await ctx.loadAllData();
+  check('the first, failing load leaves the banner up', alertEl.style.display === '', alertEl.style.display);
+
+  T.sb = createFakeSupabase({ cc_team: [{ id: 'tm1', first_name: 'A', last_name: 'B' }] });
+  await ctx.loadAllData();
+  check('a fresh successful load clears it', alertEl.style.display === 'none', alertEl.style.display);
+  check('and the data is actually there this time', T.S.team.length === 1, T.S.team);
 }
 
 done();

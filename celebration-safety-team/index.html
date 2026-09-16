@@ -351,7 +351,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .svc-warn-box.ok { background: rgba(34,197,94,.1); color: var(--gr); border: 1px solid rgba(34,197,94,.25); }
 .svc-warn-box.bad { background: rgba(204,51,51,.1); color: #f87171; border: 1px solid rgba(204,51,51,.25); }
 
-/* ── PIN GATE / MODALS ── */
+/* ── AUTH GATE / MODALS ── */
 .pin-gate-overlay, .modal-overlay {
   position: fixed; inset: 0; background: rgba(5,8,12,.85); backdrop-filter: blur(4px);
   display: none; align-items: center; justify-content: center; z-index: 500; padding: 1rem;
@@ -502,6 +502,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 </head>
 <body>
 
+<div id="appShell" style="display:none;">
 <header class="header">
   <div class="logo-mark"><img src="data:image/png;base64,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78vavth3FfscAWM7hpibR00eLjr56XQamUxGivHee+/FxRdfjAcffBDbtm2D4ziyz0cFAuK76TvofD2J//r3PT/9fW+hpZAVzntj4+oC6nX4rRw1Len3srIyAEBDQwMWLlyIK664Ag888AC4MtxD/T2KSjGUULH+7nXukvDooe77wvei5vmivEH4jy2WOsKflwdstsF9K01R34GExBiD4zjSwbJlyxZcf/31+OY3v4klS5YUmpw+N7ba72PKXgMEiUFNpUDHtHsG8lEwGaPJlbwGK3z+BY+sW1DFA9F3o2uEqNwyYi1LW2w688c//hHf+973cNNNN6Gurk7uw0fNT/W90HtSvyMI//uWzycAf76OUin4jw06vkvC259pbm5GMplEQ0MDrr32WsyZMweLFy/GZ599Bk8srERNIip4qoj7msJL51JwjPXeDhKm2BgkJ6KC6N7z+bwMWt+zZw8eeeQRfPvb38Ztt92Gd999FxALVlHM7P6AFl6J0BACRbj8/e9/x89//nNcccUVeOaZZ7Bz507ZJGptbW3XTEIIi+oWalz6V+nWtRj+Gp2LMU9L7GzU3Nwsm+mmaaKtrQ1LlizB97//fVxzzTV48cUX0dTUJNc/MQwj9GXV+xItvBLhInaQJlrSZMxXXnkFl1xyCb7//e/j3nvvxfvvvw/btqXjhQRIXjl/6j0KFg8odPMYo0VXuodfdFxsDkIBCoMHDwYA1NfX495778W5556La6+9FitWrJBWUG1OemI4YX+hSxtTbtz4of+jfkNQjc8D2uAokpfG7wi1v2WIAfZEIoGqqipMnz4dF154IU444QS5r53ab1ExS9jamK6LCjwAMBScEZs2bcLZZ59dmIldsHEYPXoU/vrkk5g6ZSo4OEzTUDuFXSKosiCL19bWhv/7v//DE088gffffx+ff/45stmsXFCWWg1qX7jYcymVnjhHX9Al4fXFjrD9ESpUJMZ8Pg/btnHEEUfgO9/5Dr761a+iuroaVVVVgGh20ngUF948KFsuk7DovPQ3+p0KGf10XQ91dR/hvHPPw8ebN8MwCgI94IAD8NRTT2H69OlwlQmidG76nSoP9ZyF8xbGLm3LBkf7jR49sWjUnj17sGPHDrz22mv485//jDfffFOOveWVgW8iqFLbn9DC60FIcJRIJGQFq6urMWHCBJx44ok44YQTMHnyZCSTSSmAdCoNZjAkk0lAmV9G5yO4x2HZe/eGgCKcjz76COeccw62bNkijxs+fDiefPJJTJs2DVw0d1XU85AFouR5HuLxuJyxEY/H5TW1tbWhrq4Or7/+OpYuXYqGhgY0NDSgtbVVjolS81ELrz1aeD0MWQyIqSoZMWs6mUzKGESIpuXhhx+OU045BVOnTsXMmTNRUVGBRCIhrRKNZ3Ex9sXEID/BRCRNNpuVTo1169bh29/+Nurr66W1GT16NJ588klMnToVXASFkzDgm0BK3lj6bk94Y1OpFDzPQ2NjI959913U1tbipZdewjvvvAPHcWCJjUFpQJwC0NXnQWKma9+f0cLrRZjS9MyL9R39//ZE+NPBBx+ML33pSzj66KMxbdo0DB8+HIMGDUJVVRUGDx4s3fNkbai/ZFkWTGWV7PXr12P27Nmor6+Xn9fU1OCvf/0rJk6cCC6atJ5wbNA1QRGg67pIp9PYtWsXPv/8czQ1NeGdd97Be++9h7q6OtTX18t74IrDCEpTmCoIVdSavWjh9SKJRAKZTEYWdkME+lrKxpn5fF5GcVBzzhRB2KNGjcLEiRNx6KGH4rDDDsPkyZNRU1MDwzBk3CIUh08ul8PGjRvxT//0T6ivr5f9r5EjR+Lxxx/HwQcf3E4QEFYom82itbUVTU1NqK+vx3vvvYe3334ba9euxfbt28FFM5ExJhcBpt14yatLXltLLKenim1/t25BaOH1ASQMf81PhZYKNTlUSBT+AmvbNhKJBEaPHo0RI0Zg2LBhiMViUgye56G1tRXLly9HW1sbmOivxWIxnHbaaRg0aJA8l+M4SKfT2LNnDxoaGrB9+3ak02nZJyPxQzQ/ybJBmc3h77PR99G/g+5ZU0ALLyL4RVbsM/j6SmpBD8pPn3VGBEHHf9ExKkHHo8Rz7C/oAfQI0xMFlgTXE+fqCmF9b9TRwosIqkD8Fs2fiuHPxzsZWEz4j+3ou4LwH1vq8fsTWngRwV9gO0pB+PP48xY7TsV/bGeOUfEf25Vz7C9o4Wk0IdBt4flrt45qOH++jlIQ/jwdpWL48/VU3iD8x3Z0PDlH1FQM9TxflFelJ6+hu/ifS0epGP58xfL683SUtxj+YztKQfjzdFt4Go2mdLTwNJoQ0MLTaEJAC0+jCQEduaLRhIC2eBpNCGjhaTQhoIWn0YSAFp5GEwJaeBpNCHTJq9mfl/fTaKKAtngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCWngaTQho4Wk0IaCFp9GEgBaeRhMCXdqYsr6+1v+RRqMpAW3xNJoQ0MLTaEJAC0+jCQEtPI0mBLrkXNm48UP/RxqNpgT+P/trZjxV7sFMAAAAAElFTkSuQmCC" alt="Celebration Church logo"></div>
   <div class="header-text">
@@ -513,7 +514,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div class="hstat"><div class="hstat-val" id="hs-team">0</div><div class="hstat-lbl">Team</div></div>
     <div class="hstat"><div class="hstat-val">3</div><div class="hstat-lbl">Services</div></div>
   </div>
-  <button class="user-chip" id="adminChip" onclick="toggleAdmin()">🔒 Admin</button>
+  <button class="user-chip" id="adminChip" onclick="signOutPrompt()">🔒 Admin</button>
 </header>
 
 <div class="app">
@@ -595,7 +596,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
       </div>
       <div class="stats-row" style="margin-bottom:1rem;">
-        <div class="stat-pill">👤 Training as: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong> <button class="btn btn-ghost" style="padding:.1rem .5rem;font-size:.68rem;margin-left:.4rem;" onclick="openWhoModal()">change</button></div>
+        <div class="stat-pill">👤 Training as: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong></div>
         <div class="stat-pill" style="border-color:rgba(34,197,94,.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/<span id="certTotal">6</span></div>
       </div>
       <div class="course-grid" id="courseGrid"></div>
@@ -1202,27 +1203,23 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div class="card" id="adminToolsCard" style="margin-top:1rem;display:none;">
         <div class="card-title">&#128295; ADMIN TOOLS</div>
         <div style="font-size:.8rem;color:var(--tx2);line-height:1.6;margin-bottom:.7rem;">
-          All team data &mdash; roster, schedule, meetings, training records and onboarding progress &mdash; currently lives in
-          <strong>this browser only</strong>. Clearing browser data erases it. <strong style="color:var(--c);">Export a backup regularly</strong>,
-          and keep the file somewhere the team can find it.
+          Roster, schedule and meetings are shared, live data in Supabase &mdash; every signed-in device sees the same copy.
+          <strong style="color:var(--c);">Export a backup</strong> now and then anyway, as a portable snapshot you can keep outside the app.
         </div>
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
           <button class="btn btn-primary" onclick="exportData()">&#11015;&#65039; Export Backup (.json)</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">&#11014;&#65039; Restore from Backup</button>
-          <button class="btn btn-ghost" onclick="changePin()">&#128273; Change Admin PIN</button>
         </div>
         <div style="border-top:1px solid var(--bd);margin-top:.9rem;padding-top:.8rem;">
           <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:.5rem;">Recertification</div>
           <div style="font-size:.78rem;color:var(--tx2);line-height:1.6;margin-bottom:.6rem;">
             Clears certificates and lesson progress so a module has to be worked through again. Affects training records only &mdash;
-            the roster, schedule and meetings are untouched. <strong style="color:var(--c);">Export a backup first.</strong>
+            the roster, schedule and meetings are untouched.
           </div>
           <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-            <button class="btn btn-ghost" onclick="adminResetPerson()">Reset the selected person</button>
+            <button class="btn btn-ghost" onclick="adminResetPerson()">Reset my training</button>
             <button class="btn btn-danger" onclick="adminResetEveryone()">Annual reset &mdash; everyone</button>
           </div>
         </div>
-        <input type="file" id="importFile" accept="application/json,.json" style="display:none;" onchange="importData(this)">
         <div id="backupStatus" style="font-size:.75rem;color:var(--tx3);margin-top:.6rem;"></div>
       </div>
     </section>
@@ -1312,22 +1309,35 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 
   </main>
 </div>
+</div>
 
-<!-- ══ ADMIN PIN GATE ══ -->
-<div class="pin-gate-overlay" id="adminGate">
+<!-- ══ LOGIN GATE — replaces the PIN gate. See OPEN-ITEMS.md §4 "Auth and
+     roles (Phase 4)": the PIN is retired entirely; magic-link auth is the
+     only way in from here on. ══ -->
+<div class="pin-gate-overlay" id="loginGate">
   <div class="pin-gate-box">
-    <div class="pin-gate-icon">🔐</div>
-    <div class="pin-gate-title">ADMIN ACCESS</div>
-    <div class="pin-gate-sub" id="pinGateSub">Enter the 4-digit admin PIN.</div>
-    <div class="pin-dots"><div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div><div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div></div>
-    <div class="pin-keypad">
-      <button class="pin-key" onclick="pinKey('1')">1</button><button class="pin-key" onclick="pinKey('2')">2</button><button class="pin-key" onclick="pinKey('3')">3</button>
-      <button class="pin-key" onclick="pinKey('4')">4</button><button class="pin-key" onclick="pinKey('5')">5</button><button class="pin-key" onclick="pinKey('6')">6</button>
-      <button class="pin-key" onclick="pinKey('7')">7</button><button class="pin-key" onclick="pinKey('8')">8</button><button class="pin-key" onclick="pinKey('9')">9</button>
-      <button class="pin-key" onclick="pinKey('clear')">C</button><button class="pin-key" onclick="pinKey('0')">0</button><button class="pin-key" onclick="pinKey('back')">⌫</button>
+    <div class="pin-gate-icon">🛡️</div>
+    <div class="pin-gate-title">SIGN IN</div>
+    <div class="pin-gate-sub">Celebration Church Safety &amp; Security Team. Enter your email and we'll send you a one-time sign-in link — no password needed.</div>
+    <div class="form-row" style="margin-top:.9rem;text-align:left;">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
     </div>
-    <div class="pin-error" id="pinError"></div>
-    <button class="btn btn-ghost" onclick="closeAdminGate()" style="width:100%;margin-top:.5rem;font-size:.75rem;">Cancel</button>
+    <button class="btn btn-primary" id="loginSendBtn" style="width:100%;margin-top:.8rem;" onclick="sendMagicLink()">Email me a sign-in link</button>
+    <div class="pin-error" id="loginMsg" style="min-height:1.4rem;"></div>
+    <div style="font-size:.68rem;color:var(--tx3);margin-top:.6rem;">Not on the team yet, or no invite? Contact an admin.</div>
+  </div>
+</div>
+
+<!-- ══ NO ACCESS — authenticated, but no cc_profiles row exists. Should not
+     happen in normal use (every invited sign-in gets one automatically); this
+     is the fail-closed fallback rather than silently granting or crashing. ══ -->
+<div class="pin-gate-overlay" id="noAccessGate">
+  <div class="pin-gate-box">
+    <div class="pin-gate-icon">🚫</div>
+    <div class="pin-gate-title">NO ACCESS</div>
+    <div class="pin-gate-sub">You're signed in, but there's no team profile for this account yet. Contact an admin.</div>
+    <button class="btn btn-ghost" style="width:100%;margin-top:.8rem;" onclick="signOutPrompt()">Sign out</button>
   </div>
 </div>
 
@@ -1344,25 +1354,6 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.6rem;">
       <button class="btn btn-ghost" id="dlgCancel" onclick="dialogCancel()">Cancel</button>
       <button class="btn btn-primary" id="dlgOk" onclick="dialogOk()">OK</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ WHO IS USING THIS DEVICE ══ -->
-<div class="modal-overlay" id="whoModal">
-  <div class="admin-modal-box">
-    <div class="admin-modal-title">&#128100; WHO IS TRAINING?</div>
-    <div style="font-size:.8rem;color:var(--tx2);line-height:1.6;margin-bottom:.9rem;">
-      Certificates, quiz results and the onboarding checklist are kept <strong>per person</strong>. Pick your name so your
-      progress is saved to you, and so a Team Lead can see who is cleared to serve.
-      <span style="color:var(--tx3);">This is not a login &mdash; it only decides whose record this device is writing to.</span>
-    </div>
-    <div id="whoList"></div>
-    <div class="form-row" style="margin-top:.8rem;"><label>Not on the roster yet</label>
-      <input type="text" id="whoGuest" placeholder="Type your name"></div>
-    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
-      <button class="btn btn-ghost" onclick="closeModalEl('whoModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveGuestName()">Use this name</button>
     </div>
   </div>
 </div>
@@ -1457,6 +1448,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     </div>
   </div>
 </div>
+<script src="vendor/supabase-2.114.0.js"></script>
 <script>
 // ════════════════════════════════════════════════════════════════
 // ACADEMY DATA — 6 modules. Content based on published guidance:
@@ -1633,17 +1625,6 @@ const COURSES = [
   }
 ];
 
-/* The v1 onboarding order, frozen forever. v1 stored completion as array
-   indices, so the migration has to know what index 7 MEANT in v1 — it cannot
-   read that from the live list, because the live list is allowed to change.
-   Deriving it from ONBOARD_ITEMS would silently re-map every v1 record the
-   first time a step was inserted, which is exactly the bug stable ids exist to
-   prevent. Never reorder or edit this array; it is a historical record. */
-const ONBOARD_V1_ORDER = [
-  'manual', 'meet-lead', 'walk-site', 'maps', 'directory', 'mod-ss101',
-  'mod-ss102', 'mod-rest', 'procedures', 'numbers', 'shadow', 'signoff'
-];
-
 /* Each step carries a STABLE id. v1 stored completion as array indices, so
    reordering or inserting a step silently re-mapped every volunteer's finished
    work onto different steps — on a compliance checklist that gates whether
@@ -1667,150 +1648,49 @@ const ONBOARD_ITEMS = [
 // ════════════════════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════════════════════
-const LS_KEY = 'ccssta_v1';
-/* Bumped whenever the shape of S changes. load() migrates forward; it never
-   silently accepts a shape it does not understand, because a half-understood
-   roster is worse than a visible failure. */
-const SCHEMA_VERSION = 2;
+/* S mirrors the Supabase tables in memory — same shape the render functions
+   always read, so swapping the backend didn't mean rewriting every render
+   function. It starts empty; loadAllData() (in the AUTH section, called from
+   paintAuth's 'ok' branch) fills it from cc_team/cc_leaders/cc_meetings/
+   cc_schedule_slots/cc_training_records/cc_onboarding_steps/cc_activity. There
+   is no client-side schema migration any more — the database IS the schema,
+   and SQL migrations (see CELEBRATION-SAFETY-PHASE4.sql) are how it changes. */
+let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
 
-/* Declared BEFORE the load() call below, not beside their functions. `let` is
-   in a temporal dead zone until its declaration is evaluated, and load() runs
-   on the very first line of this script — so declaring these further down made
-   the corrupt-data path throw ReferenceError instead of reporting the problem,
-   which is the exact opposite of the point. */
-let storageLocked = false;   // existing data could not be read; refuse to overwrite it
-let loadWarning = null;      // shown once the DOM exists
+/* Row <-> app-object field mapping. DB columns are snake_case and match the
+   schema file; the app object shape (first/last/spec/role/...) is unchanged
+   from the localStorage era so every render function stayed the same. */
+function teamRowToJs(r) { return { id: r.id, first: r.first_name, last: r.last_name, phone: r.phone || '', email: r.email || '', spec: r.specialty, role: r.team_role }; }
+function leaderRowToJs(r) { return { id: r.id, name: r.name, title: r.title, notes: r.notes || '' }; }
+function meetingRowToJs(r) { return { id: r.id, date: r.meeting_date, time: r.meeting_time || '', title: r.title, notes: r.notes || '' }; }
+function activityRowToJs(r) { return { t: new Date(r.occurred_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }), msg: r.message }; }
 
-let S = load();
-function defaults() {
-  return {
-    schemaVersion: SCHEMA_VERSION,
-    pin: '2121',
-    team: [
-      { id: 'tm1', first: 'Tyson', last: 'Garten', phone: '208-941-3306', email: '', spec: 'Security Professional', role: 'Team Lead' },
-      { id: 'tm2', first: 'Ryan', last: 'Putnam', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm3', first: 'Kristin', last: 'Elam', phone: '208-880-2759', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm4', first: 'Claude', last: 'Demesmin', phone: '208-409-4444', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
-      { id: 'tm5', first: 'Allen', last: 'Taylor', phone: '208-571-8677', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm6', first: 'Austin', last: 'Agosta', phone: '714-924-6993', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
-      { id: 'tm7', first: 'Jason', last: 'Vega', phone: '925-698-4057', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
-      { id: 'tm8', first: 'Benjamin', last: 'Stacy', phone: '208-739-0966', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm9', first: 'Rick', last: 'Rowe', phone: '661-609-8578', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
-      { id: 'tm10', first: 'Patrick', last: 'Brown', phone: '208-504-5106', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm11', first: 'Taylor', last: 'Sherman', phone: '209-456-3499', email: '', spec: 'Police / Law Enforcement', role: 'Team Lead' },
-      { id: 'tm12', first: 'Colton', last: 'Watson', phone: '971-344-3733', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm13', first: 'Jimmy', last: 'Jobkar', phone: '816-377-9488', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm14', first: 'Ryan', last: 'Hein', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm15', first: 'Andrew', last: 'Elam', phone: '360-269-6440', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm16', first: 'Jimmy', last: 'Federico', phone: '', email: '', spec: 'Police / Law Enforcement', role: 'Team Lead' },
-      { id: 'tm17', first: 'Jon', last: 'Deputy', phone: '208-541-9990', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm18', first: 'Richard', last: 'Ingram', phone: '208-703-6051', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm19', first: 'Jay', last: 'Coulter', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm20', first: 'Rudy', last: 'Rudan', phone: '208-863-2968', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm21', first: 'Doug', last: 'Troudeau', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
-      { id: 'tm22', first: 'Austin', last: 'Stevenson', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' }
-    ],
-    leaders: [
-      { id: 'ld1', name: 'Roger Yadon', title: 'Senior Pastor', notes: 'Verified from thecelebration.church/our-team' }
-    ],
-    meetings: [],
-    schedule: {},   // { '2026-09-20': { s0:{lead:'',members:[]}, s1:{...}, s2:{...} } }
-    /* Training and onboarding are PER PERSON, keyed by roster member id.
-       'guest' holds anyone training before they have been added to the roster.
-       { '<memberId>': { name, training: { courseId: {...} }, onboard: [stepId] } } */
-    progress: {},
-    activeId: 'guest',     // who is using this browser. Not auth — see the PIN note.
-    activity: []
-  };
-}
-
-/* v1 kept ONE trainee name, ONE training record and ONE onboarding list for the
-   whole browser, while team/schedule/meetings were shared org data in the same
-   blob. Two volunteers on the church's foyer tablet overwrote each other's
-   certifications, and a Team Lead had no way to see who was actually cleared to
-   serve. This migration is what makes the Phase 3 completion matrix possible. */
-function migrate(raw) {
-  const from = raw.schemaVersion || 1;
-  const d = Object.assign(defaults(), raw);
-  d.schemaVersion = from;
-
-  if (d.schemaVersion < 2) {
-    d.progress = d.progress || {};
-    const oldTraining = d.training || {};
-    const oldOnboard = Array.isArray(d.onboard) ? d.onboard : [];
-    const oldName = (d.trainee || '').trim();
-
-    if (Object.keys(oldTraining).length || oldOnboard.length || oldName) {
-      /* Attach the orphaned record to the roster member whose name matches it.
-         Failing that it becomes the guest record, which stays visible and
-         reassignable rather than being dropped. */
-      const match = (d.team || []).find(m =>
-        (m.first + ' ' + m.last).trim().toLowerCase() === oldName.toLowerCase() && oldName);
-      const id = match ? match.id : 'guest';
-      const bucket = d.progress[id] || (d.progress[id] = { name: oldName, training: {}, onboard: [] });
-      if (!bucket.name) bucket.name = oldName;
-
-      Object.keys(oldTraining).forEach(cid => {
-        const rec = oldTraining[cid];
-        /* Every v1 module had exactly five questions, so that is what these
-           scores were measured against. Stamping it keeps an existing
-           certificate reading correctly now that ss202 has six. */
-        if (rec && rec.quizScore != null && !rec.quizTotal) rec.quizTotal = 5;
-        bucket.training[cid] = rec;
-      });
-      /* Indices -> stable ids, using the v1 order, which is unchanged. */
-        bucket.onboard = oldOnboard.map(i => ONBOARD_V1_ORDER[i]).filter(Boolean);
-      d.activeId = id;
+/* Every mutating call in this app goes through here. supabase-js query
+   builders are thenables with only a `.then` (no `.catch`), so a raw `await`
+   plus try/catch is what actually surfaces a rejected fetch — see the same
+   note in admin/index.html. Returns the full {data,error,...} result on
+   success, or null on failure, after flagging a loud, specific banner: this
+   app keeps the "a loud failure is the only honest option" rule the old
+   localStorage code was built around, now aimed at network/RLS failures
+   instead of quota/corruption ones. Never auto-clears the banner — several
+   of these can run concurrently (see loadAllData()), and a later SUCCESS
+   racing a real FAILURE must not silently erase the warning. The banner
+   clears only at the start of a fresh loadAllData() run. */
+async function dbWrite(thenable, failMsg) {
+  try {
+    const r = await Promise.resolve(thenable);
+    if (r && r.error) {
+      console.error('[db]', r.error);
+      flagStorage('🛑 <strong>' + esc(failMsg || 'Something went wrong') + '.</strong> (' + esc(r.error.message || 'unknown error') + ') Try again, or reload the page.');
+      return null;
     }
-    delete d.training; delete d.onboard; delete d.trainee;
-    d.schemaVersion = 2;
-  }
-  /* Sweep out empty day records, including any v1 left behind by browsing. */
-  Object.keys(d.schedule || {}).forEach(k => {
-    const day = d.schedule[k];
-    if (!day || !day.s0 || !day.s1 || !day.s2) { delete d.schedule[k]; return; }
-    const empty = ['s0', 's1', 's2'].every(key =>
-      !day[key].lead && (day[key].members || []).every(x => !x));
-    if (empty) delete d.schedule[k];
-  });
-  return d;
-}
-function load() {
-  let raw = null;
-  try { raw = localStorage.getItem(LS_KEY); }
-  catch (e) {
-    loadWarning = '⚠️ <strong>This browser is blocking local storage.</strong> Nothing you enter will be saved. ' +
-      'You can still read every procedure and work through the Academy, but progress will not persist.';
-    return defaults();
-  }
-  if (!raw) return defaults();
-  try { return migrate(JSON.parse(raw)); }
-  catch (e) {
-    storageLocked = true;
-    loadWarning = '🛑 <strong>Saved data could not be read</strong> (' + (e.name || 'parse error') + '). It has <strong>not</strong> been overwritten. ' +
-      'Restore from a backup file in <strong>Team → Admin Tools</strong>, or ' +
-      '<button type="button" class="btn btn-danger" style="padding:.2rem .6rem;font-size:.72rem;" onclick="discardUnreadableData()">discard it and start fresh</button>.';
-    return defaults();
+    return r;
+  } catch (e) {
+    console.error('[db]', e);
+    flagStorage('🛑 <strong>' + esc(failMsg || 'Something went wrong') + '.</strong> Could not reach the server — check your connection and try again.');
+    return null;
   }
 }
-
-// ── Who is using this browser ──
-function getProgress(id) {
-  if (!S.progress[id]) S.progress[id] = { name: '', training: {}, onboard: [] };
-  return S.progress[id];
-}
-function activeProgress() { return getProgress(S.activeId || 'guest'); }
-function activeName() {
-  const m = S.team.find(x => x.id === S.activeId);
-  if (m) return (m.first + ' ' + m.last).trim();
-  return (activeProgress().name || '').trim();
-}
-/* v1 wrapped both save() and load() in `catch (e) {}`. If the quota filled, or
-   storage was blocked (private browsing, a locked-down kiosk), every write
-   failed silently: the UI went on showing the roster and the schedule exactly
-   as if they had been saved, and the whole lot vanished on reload with no
-   warning. For a team that keeps its only copy of the roster here, a loud
-   failure is the only honest option. */
 function flagStorage(html) {
   const el = document.getElementById('storageAlert');
   if (!el) return;
@@ -1821,55 +1701,68 @@ function clearStorageFlag() {
   const el = document.getElementById('storageAlert');
   if (el) { el.style.display = 'none'; el.innerHTML = ''; }
 }
-function save() {
-  /* Refuse to overwrite data we failed to parse. It may still be recoverable
-     by hand from devtools, and blowing it away would end that. */
-  if (storageLocked) {
-    flagStorage('🛑 <strong>Not saving.</strong> The data already in this browser could not be read, and overwriting it would destroy anything still recoverable from it. ' +
-      'Use <strong>Team → Admin Tools → Export Backup</strong> to save what is on screen, then <strong>Restore from Backup</strong>, or ' +
-      '<button type="button" class="btn btn-danger" style="padding:.2rem .6rem;font-size:.72rem;" onclick="discardUnreadableData()">discard the unreadable data and start fresh</button>.');
-    return false;
-  }
-  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); return true; }
-  catch (e) {
-    flagStorage('⚠️ <strong>Changes are NOT being saved.</strong> This browser refused to write to local storage (' + esc(e.name || 'error') + '). ' +
-      'Everything entered since you opened this page will be lost when you close it. ' +
-      'Use <strong>Team → Admin Tools → Export Backup</strong> now to save it to a file, and tell your Team Lead.');
-    return false;
-  }
-}
-async function discardUnreadableData() {
-  if (!await confirmDialog('Discard the unreadable data?',
-    'The app will start from empty.\n\nIf you have not exported a backup, anything still recoverable from the damaged data is gone for good.',
-    { okLabel: 'Discard and start fresh', danger: true })) return;
-  storageLocked = false;
-  try { localStorage.removeItem(LS_KEY); } catch (e) {}
-  S = defaults();
-  clearStorageFlag();
-  save();
-  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard(); renderCourses(); applyAdmin(); refreshDash();
-  addActivity('Discarded unreadable data and started fresh');
-}
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+/* Fire-and-forget on purpose — an activity-log line is a nice-to-have audit
+   trail, not data worth blocking every other action on. Updates the local
+   feed instantly (every call site already expects that) and lets the insert
+   land in the background; a failure here only prints to console. */
 function addActivity(msg) {
   S.activity.unshift({ t: new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }), msg });
   S.activity = S.activity.slice(0, 12);
-  save(); renderActivity();
+  renderActivity();
+  Promise.resolve(sb.from('cc_activity').insert({ message: msg, actor_profile_id: currentProfile ? currentProfile.id : null }))
+    .then(r => { if (r && r.error) console.error('[activity]', r.error); })
+    .catch(e => console.error('[activity]', e));
 }
-function getCS(id, memberId) {
-  const t = getProgress(memberId || S.activeId || 'guest').training;
-  if (!t[id]) t[id] = { doneLessons: [], quizScore: null, quizTotal: null, quizPassed: false, certName: '' };
-  return t[id];
+
+// ── Academy progress, tied to the real login (no more freely-picked "who am
+//    I" — see the AUTH section for why that retired the guest-bucket logic) ──
+function activeProgress() {
+  const id = currentProfile.id;
+  if (!S.progress[id]) S.progress[id] = { training: {}, onboard: [] };
+  return S.progress[id];
+}
+/* Always resolves once logged in — the roster link if an admin has set one,
+   the login email otherwise. Unlike the old picker, this can never be blank,
+   which is what let submitQuiz() drop its "who is taking this quiz?" prompt. */
+function activeName() {
+  if (currentProfile && currentProfile.team_member_id) {
+    const m = S.team.find(x => x.id === currentProfile.team_member_id);
+    if (m) return (m.first + ' ' + m.last).trim();
+  }
+  return currentUser ? currentUser.email : '';
+}
+function getCS(courseId) {
+  const t = activeProgress().training;
+  if (!t[courseId]) t[courseId] = { doneLessons: [], quizScore: null, quizTotal: null, quizPassed: false, certName: '' };
+  return t[courseId];
+}
+/* Upserts a full training row from the in-memory record plus a patch, WITHOUT
+   mutating the in-memory `cs` — callers only apply the patch to `cs` after
+   this confirms the write succeeded, so a failed save never shows progress
+   on screen that the database does not actually have. */
+async function persistTrainingPatch(courseId, patch) {
+  const merged = Object.assign({}, getCS(courseId), patch);
+  const r = await dbWrite(sb.from('cc_training_records').upsert({
+    profile_id: currentProfile.id, course_id: courseId,
+    done_lessons: merged.doneLessons, quiz_score: merged.quizScore, quiz_total: merged.quizTotal,
+    quiz_passed: merged.quizPassed, cert_name: merged.certName || null
+  }, { onConflict: 'profile_id,course_id' }), 'Could not save your progress');
+  return !!r;
 }
 
 // ════════════════════════════════════════════════════════════════
-// BACKUP / RESTORE
+// BACKUP
 //
-// localStorage is per-browser and one "clear browsing data" away from losing
-// the entire roster, schedule and every training record. Until Phase 4 puts
-// this behind a real shared backend, an exported JSON file IS the backup
-// strategy, so it ships before anything else.
-// ════════════════════════════════════════════════════════════════
+// Supabase is now the real store — Restore-from-backup was retired with the
+// swap (2026-09-16): restoring a JSON snapshot correctly now means a bulk
+// delete-and-reinsert across six RLS-protected tables, which is real,
+// separate-review-worthy scope, not a byproduct of this one. Export stays as
+// a read-only admin safety net; Supabase's own backups are the real recovery
+// path underneath it. The export covers shared org data only (team, leaders,
+// meetings, schedule) — training/onboarding are scoped per login by RLS, so
+// even an Admin's browser can only ever read their OWN training records, not
+// the whole team's, and a partial export would be worse than none. */
 function backupStatus(msg, color) {
   const el = document.getElementById('backupStatus');
   if (el) { el.textContent = msg; el.style.color = color || 'var(--tx3)'; }
@@ -1877,10 +1770,9 @@ function backupStatus(msg, color) {
 function exportData() {
   const payload = {
     app: 'ccssta',
-    schemaVersion: SCHEMA_VERSION,
     exportedAt: new Date().toISOString(),
     church: 'Celebration Church — Safety & Security Team',
-    data: S
+    data: { team: S.team, leaders: S.leaders, meetings: S.meetings, schedule: S.schedule }
   };
   const stamp = new Date();
   const name = 'celebration-safety-backup-' +
@@ -1900,55 +1792,6 @@ function exportData() {
   } catch (e) {
     backupStatus('❌ Export failed: ' + e.message, '#f87171');
   }
-}
-function importData(input) {
-  const file = input.files && input.files[0];
-  input.value = '';               // so re-picking the same file fires onchange again
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onerror = () => backupStatus('❌ Could not read that file.', '#f87171');
-  reader.onload = async () => {
-    let payload;
-    try { payload = JSON.parse(reader.result); }
-    catch (e) { backupStatus('❌ That file is not valid JSON.', '#f87171'); return; }
-
-    /* Validate before touching anything. Restoring garbage over a live roster is
-       the one mistake this feature could make that is worse than not having it. */
-    if (!payload || payload.app !== 'ccssta' || !payload.data || typeof payload.data !== 'object') {
-      backupStatus('❌ Not a Celebration Safety Team backup file.', '#f87171'); return;
-    }
-    const d = payload.data;
-    const missing = ['team', 'leaders', 'meetings', 'schedule'].filter(k => !(k in d));
-    if (missing.length) {
-      backupStatus('❌ Backup is missing: ' + missing.join(', ') + '. Not restored.', '#f87171'); return;
-    }
-    if ((payload.schemaVersion || 1) > SCHEMA_VERSION) {
-      backupStatus('❌ That backup was made by a newer version of this app. Update first.', '#f87171'); return;
-    }
-
-    const when = payload.exportedAt ? new Date(payload.exportedAt).toLocaleString('en-US') : 'an unknown date';
-    const summary = (d.team || []).length + ' team members, ' +
-      Object.keys(d.schedule || {}).length + ' scheduled Sundays, ' +
-      (d.meetings || []).length + ' meetings, ' + (d.leaders || []).length + ' staff entries';
-    if (!await confirmDialog('Restore this backup?',
-      'From: ' + when + '\nContains: ' + summary +
-      '\n\nThis REPLACES everything currently in this browser:\n' +
-      S.team.length + ' team members, ' + Object.keys(S.schedule).length + ' scheduled Sundays, ' +
-      S.meetings.length + ' meetings.\n\nThis cannot be undone.',
-      { okLabel: 'Replace everything', danger: true })) {
-      backupStatus('Restore cancelled — nothing changed.'); return;
-    }
-
-    storageLocked = false;
-    clearStorageFlag();
-    S = migrate(d);
-    save();
-    renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard();
-    renderCourses(); refreshDash(); applyAdmin();
-    backupStatus('✅ Restored backup from ' + when + '.', 'var(--gr)');
-    addActivity('Restored data from backup (' + summary + ')');
-  };
-  reader.readAsText(file);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -1970,63 +1813,172 @@ function showSection(key) {
 function navTo(key) { showSection(key); window.scrollTo({ top: 0 }); }
 
 // ════════════════════════════════════════════════════════════════
-// ADMIN PIN
+// AUTH — magic link, no password. Replaces the PIN entirely (decision 1,
+// approved 2026-09-16). adminOn is still the flag every render function
+// below checks; it is now DERIVED from cc_profiles.role instead of a PIN
+// match, so nothing downstream of applyAdmin() had to change.
+//
+// The DB side (tables, RLS, cc_is_admin()) is CELEBRATION-SAFETY-PHASE4.sql.
+// Public signup must be OFF in the Supabase dashboard — every account comes
+// from an Admin invite — see that file's AUTH PREREQUISITE note. This page
+// still adds shouldCreateUser:false as a second, independent lock: even if
+// the dashboard setting were ever left on by mistake, this page would not be
+// the thing that lets a stranger create an account.
 // ════════════════════════════════════════════════════════════════
-let adminOn = false, pinBuf = '';
-async function toggleAdmin() {
-  if (adminOn) {
-    if (await confirmDialog('Lock admin mode?',
-      'Editing will be switched off until the PIN is entered again.\n\nTo change the PIN, stay unlocked and use Team → Admin Tools.',
-      { okLabel: 'Lock admin' })) {
-      adminOn = false; applyAdmin(); addActivity('Admin locked');
-    }
+const SUPABASE_URL = 'https://newjbexmvltvtmxollca.supabase.co';
+/* Anon key — public by design, same as every other SystemsByVega page. RLS
+   (see the migration file) is the actual boundary, not this key's secrecy. */
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ld2piZXhtdmx0dnRteG9sbGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxODg5ODksImV4cCI6MjEwMjc2NDk4OX0.uSllffcf0WJVbFKv0bwA2-XcabjYeM7N0_nuk8IRUUw';
+let sb = null;
+let adminOn = false, currentUser = null, currentProfile = null;
+
+/* Structured state, never a bare boolean — a failed profile read and a
+   genuinely missing profile look identical to a caller that only gets
+   false, and telling someone they have no access because Supabase hiccuped
+   is a support ticket, not a status. Mirrors the resolve()/paint() shape
+   already used elsewhere in this family (see admin/index.html). */
+function resolveAuth() {
+  return Promise.resolve(sb.auth.getSession()).then(res => {
+    const session = res && res.data && res.data.session;
+    if (!session) return { state: 'no_session' };
+    return Promise.resolve(
+      sb.from('cc_profiles').select('id,email,role,team_member_id').eq('id', session.user.id).maybeSingle()
+    ).then(r => {
+      if (r.error) return { state: 'read_error', detail: r.error.message, user: session.user };
+      if (!r.data) return { state: 'no_profile', user: session.user };
+      return { state: 'ok', user: session.user, profile: r.data };
+    });
+  }).catch(e => ({ state: 'read_error', detail: e.message }));
+}
+function showAppShell() {
+  document.getElementById('loginGate').classList.remove('open');
+  document.getElementById('noAccessGate').classList.remove('open');
+  document.getElementById('appShell').style.display = '';
+}
+function showLoginGate(msg) {
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('noAccessGate').classList.remove('open');
+  openModalEl('loginGate');
+  document.getElementById('loginMsg').style.color = '';
+  document.getElementById('loginMsg').textContent = msg || '';
+}
+function showNoAccessGate() {
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('loginGate').classList.remove('open');
+  openModalEl('noAccessGate');
+}
+/* Renders whichever state resolveAuth() found. Only the 'ok' branch ever
+   populates the app from local data — an unauthenticated visitor's DOM never
+   gets the roster/schedule written into it in the first place, not just a
+   gate drawn on top of it. */
+async function paintAuth(r) {
+  currentUser = r.user || null;
+  currentProfile = r.profile || null;
+  adminOn = !!(currentProfile && currentProfile.role === 'admin');
+
+  if (r.state === 'no_session') { showLoginGate(); return; }
+  if (r.state === 'read_error') {
+    console.error('[auth] read_error:', r.detail);
+    showLoginGate('We could not reach the sign-in server. Try again in a moment.');
+    document.getElementById('loginMsg').style.color = '#f87171';
     return;
   }
-  pinBuf = ''; updateDots(); updatePinHint();
-  document.getElementById('pinError').textContent = '';
-  openModalEl('adminGate');
+  if (r.state === 'no_profile') { showNoAccessGate(); return; }
+
+  await loadAllData();
+  showAppShell();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard();
+  applyAdmin(); refreshDash();
 }
-function pinKey(k) {
-  if (k === 'back') pinBuf = pinBuf.slice(0, -1);
-  else if (k === 'clear') pinBuf = '';
-  else if (pinBuf.length < 4) pinBuf += k;
-  updateDots();
-  if (pinBuf.length === 4) {
-    if (pinBuf === S.pin) {
-      adminOn = true; closeModalEl('adminGate');
-      applyAdmin(); addActivity('Admin unlocked');
-    } else {
-      document.getElementById('pinError').textContent = 'Incorrect PIN';
-      pinBuf = ''; setTimeout(updateDots, 350);
+/* The one full fetch of everything this login can see, run once per auth
+   resolution (fresh load, or whenever onAuthStateChange fires again). Clears
+   the db-error banner first — see dbWrite()'s comment on why it never
+   auto-clears itself: a full reload here is the one point where "everything
+   is being re-read from scratch" is actually true. */
+async function loadAllData() {
+  clearStorageFlag();
+  const [teamR, leadersR, meetingsR, trainingR, onboardR, activityR] = await Promise.all([
+    dbWrite(sb.from('cc_team').select('*').order('last_name'), 'Could not load the roster'),
+    dbWrite(sb.from('cc_leaders').select('*').order('name'), 'Could not load leadership'),
+    dbWrite(sb.from('cc_meetings').select('*').order('meeting_date', { ascending: false }), 'Could not load meetings'),
+    dbWrite(sb.from('cc_training_records').select('*').eq('profile_id', currentProfile.id), 'Could not load your training'),
+    dbWrite(sb.from('cc_onboarding_steps').select('step_id').eq('profile_id', currentProfile.id), 'Could not load your onboarding'),
+    dbWrite(sb.from('cc_activity').select('*').order('occurred_at', { ascending: false }).limit(12), 'Could not load activity')
+  ]);
+  S.team = (teamR ? teamR.data : []).map(teamRowToJs);
+  S.leaders = (leadersR ? leadersR.data : []).map(leaderRowToJs);
+  S.meetings = (meetingsR ? meetingsR.data : []).map(meetingRowToJs);
+  S.progress = {};
+  const bucket = activeProgress();
+  (trainingR ? trainingR.data : []).forEach(row => {
+    bucket.training[row.course_id] = { doneLessons: row.done_lessons || [], quizScore: row.quiz_score, quizTotal: row.quiz_total, quizPassed: row.quiz_passed, certName: row.cert_name || '' };
+  });
+  bucket.onboard = (onboardR ? onboardR.data : []).map(row => row.step_id);
+  S.activity = (activityR ? activityR.data : []).map(activityRowToJs);
+  await loadSchedule();
+}
+
+/* GoTrue's answer to signInWithOtp({shouldCreateUser:false}) for an address
+   with no account is a 422 that reads as "signups not allowed" (exact
+   wording has moved between GoTrue releases, hence matching on message text
+   too, not just code). Treated as the SAME neutral success as a real send —
+   see the block comment on sendMagicLink() for why folding this in matters. */
+function isOtpDisabled(err) {
+  if (!err) return false;
+  if (err.code === 'otp_disabled') return true;
+  const msg = String(err.message || '').toLowerCase();
+  return msg.indexOf('otp_disabled') !== -1 ||
+    msg.indexOf('signups not allowed') !== -1 ||
+    msg.indexOf('signup not allowed') !== -1;
+}
+/* shouldCreateUser:false and the isOtpDisabled() fold-in are ONE fix, not
+   two independent ones:
+     - Without shouldCreateUser:false, this becomes a public gate that lets
+       anyone type any address and have GoTrue mint them an account.
+     - shouldCreateUser:false ALONE creates a different hole: an unknown
+       address gets a distinct error an invited address does not, which is a
+       visible enumeration oracle against the team roster. So that specific
+       rejection is folded back into the same neutral "check your email"
+       message; only a genuine transport failure gets the red one. */
+async function sendMagicLink() {
+  const btn = document.getElementById('loginSendBtn');
+  const msgEl = document.getElementById('loginMsg');
+  const email = document.getElementById('loginEmail').value.trim();
+  msgEl.style.color = ''; msgEl.textContent = '';
+  if (!email) { msgEl.style.color = '#f87171'; msgEl.textContent = 'Enter your email first.'; return; }
+
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const redirectTo = location.origin + location.pathname;
+  const NEUTRAL_OK = 'If that address has an invite, a sign-in link is on its way — check your email.';
+  try {
+    const r = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo, shouldCreateUser: false } });
+    btn.disabled = false; btn.textContent = 'Email me a sign-in link';
+    if (r.error && !isOtpDisabled(r.error)) {
+      msgEl.style.color = '#f87171';
+      msgEl.textContent = 'We could not send that right now. Try again in a moment.';
+      return;
     }
+    msgEl.style.color = 'var(--gr)';
+    msgEl.textContent = NEUTRAL_OK;
+  } catch (e) {
+    btn.disabled = false; btn.textContent = 'Email me a sign-in link';
+    msgEl.style.color = '#f87171';
+    msgEl.textContent = 'We could not reach the sign-in server. Try again in a moment.';
   }
 }
-/* The default-PIN hint is a bootstrap aid, not a permanent label. v1 printed
-   "Default is 2121" to every visitor forever, including long after the PIN had
-   been changed — handing out a credential hint that was no longer even true. */
-function updatePinHint() {
-  const el = document.getElementById('pinGateSub');
-  if (!el) return;
-  el.innerHTML = S.pin === '2121'
-    ? 'Enter the 4-digit admin PIN. Default is <strong style="color:var(--c);">2121</strong> — <strong style="color:var(--c);">change it after first use.</strong>'
-    : 'Enter the 4-digit admin PIN.';
+document.getElementById('loginEmail').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendMagicLink(); } });
+
+async function signOutPrompt() {
+  if (!(await confirmDialog('Sign out?', 'You will need to request a new sign-in link to get back in.', { okLabel: 'Sign out' }))) return;
+  await sb.auth.signOut();
+  location.reload();
 }
-function updateDots() { for (let i = 0; i < 4; i++) document.getElementById('pd' + i).classList.toggle('filled', i < pinBuf.length); }
-function closeAdminGate() { closeModalEl('adminGate'); }
-async function changePin() {
-  const np = await promptDialog('🔑 Change admin PIN',
-    'Pick a 4-digit PIN the team will remember. This is a convenience gate, not security — anyone with browser developer tools can read it.',
-    { inputLabel: 'New 4-digit PIN', inputType: 'password', inputMode: 'numeric', placeholder: '••••',
-      okLabel: 'Update PIN',
-      validate: v => /^\d{4}$/.test(v) ? null : 'The PIN must be exactly 4 digits.' });
-  if (np === null) return;
-  S.pin = np; save(); updatePinHint();
-  addActivity('Admin PIN changed');
-  await alertDialog('✅ PIN updated', 'The admin PIN has been changed. Make sure the Team Leads who need it know.');
-}
+
 function applyAdmin() {
   const chip = document.getElementById('adminChip');
-  chip.textContent = adminOn ? '🔓 Admin ON' : '🔒 Admin';
+  const role = currentProfile ? currentProfile.role : null;
+  chip.textContent = role === 'admin' ? '🛡️ Admin' : role === 'team_lead' ? '⭐ Team Lead' : '👤 Member';
+  chip.title = currentUser ? (currentUser.email + ' — click to sign out') : '';
   chip.style.background = adminOn ? 'rgba(34,197,94,.12)' : '';
   chip.style.borderColor = adminOn ? 'rgba(34,197,94,.4)' : '';
   chip.style.color = adminOn ? 'var(--gr)' : '';
@@ -2065,10 +2017,18 @@ async function saveMember() {
   const phone = document.getElementById('mPhone').value.trim();
   const email = document.getElementById('mEmail').value.trim();
   if (!first || !last) { await alertDialog('Missing name', 'A first and last name are both required.'); return; }
-  const data = { first, last, phone, email, spec: document.getElementById('mSpec').value, role: document.getElementById('mRole').value };
-  if (editingMemberId) Object.assign(S.team.find(x => x.id === editingMemberId), data);
-  else S.team.push(Object.assign({ id: 'tm' + Date.now() }, data));
-  save(); closeModalEl('memberModal'); renderTeam(); renderSchedule(); renderCourses(); refreshDash();
+  const spec = document.getElementById('mSpec').value, role = document.getElementById('mRole').value;
+  const row = { first_name: first, last_name: last, phone, email, specialty: spec, team_role: role };
+  if (editingMemberId) {
+    const r = await dbWrite(sb.from('cc_team').update(row).eq('id', editingMemberId), 'Could not save changes');
+    if (!r) return;
+    Object.assign(S.team.find(x => x.id === editingMemberId), { first, last, phone, email, spec, role });
+  } else {
+    const r = await dbWrite(sb.from('cc_team').insert(row).select().single(), 'Could not add this member');
+    if (!r) return;
+    S.team.push({ id: r.data.id, first, last, phone, email, spec, role });
+  }
+  closeModalEl('memberModal'); renderTeam(); renderSchedule(); renderCourses(); refreshDash();
   addActivity((editingMemberId ? 'Updated' : 'Added') + ' team member: ' + first + ' ' + last);
   editingMemberId = null;
 }
@@ -2077,12 +2037,17 @@ async function deleteMember(id) {
   if (!await confirmDialog('Remove ' + m.first + ' ' + m.last + '?',
     'They will be taken off the roster and removed from every service they are scheduled for.\n\nTheir training records are kept.',
     { okLabel: 'Remove from roster', danger: true })) return;
+  /* cc_schedule_slots.team_member_id is ON DELETE SET NULL, so the database
+     itself clears every slot this person held — this mirrors that exact
+     effect in the local mirror rather than re-fetching the whole schedule. */
+  const r = await dbWrite(sb.from('cc_team').delete().eq('id', id), 'Could not remove ' + m.first + ' ' + m.last);
+  if (!r) return;
   S.team = S.team.filter(x => x.id !== id);
   Object.values(S.schedule).forEach(day => Object.values(day).forEach(svc => {
     if (svc.lead === id) svc.lead = '';
     svc.members = svc.members.map(x => x === id ? '' : x);
   }));
-  save(); renderTeam(); renderSchedule(); refreshDash(); addActivity('Removed team member: ' + m.first + ' ' + m.last);
+  renderTeam(); renderSchedule(); refreshDash(); addActivity('Removed team member: ' + m.first + ' ' + m.last);
 }
 function renderTeam() {
   const tb = document.getElementById('teamBody');
@@ -2117,10 +2082,17 @@ async function saveLeader() {
   const name = document.getElementById('lName').value.trim();
   const title = document.getElementById('lTitle').value.trim();
   if (!name || !title) { await alertDialog('Missing details', 'A name and a title or role are both required.'); return; }
-  const data = { name, title, notes: document.getElementById('lNotes').value.trim() };
-  if (editingLeaderId) Object.assign(S.leaders.find(x => x.id === editingLeaderId), data);
-  else S.leaders.push(Object.assign({ id: 'ld' + Date.now() }, data));
-  save(); closeModalEl('leaderModal'); renderLeaders();
+  const notes = document.getElementById('lNotes').value.trim();
+  if (editingLeaderId) {
+    const r = await dbWrite(sb.from('cc_leaders').update({ name, title, notes }).eq('id', editingLeaderId), 'Could not save changes');
+    if (!r) return;
+    Object.assign(S.leaders.find(x => x.id === editingLeaderId), { name, title, notes });
+  } else {
+    const r = await dbWrite(sb.from('cc_leaders').insert({ name, title, notes }).select().single(), 'Could not add this entry');
+    if (!r) return;
+    S.leaders.push({ id: r.data.id, name, title, notes });
+  }
+  closeModalEl('leaderModal'); renderLeaders();
   addActivity((editingLeaderId ? 'Updated' : 'Added') + ' staff entry: ' + name);
   editingLeaderId = null;
 }
@@ -2128,8 +2100,10 @@ async function deleteLeader(id) {
   const l = S.leaders.find(x => x.id === id);
   if (!await confirmDialog('Remove ' + l.name + '?', 'This removes the entry from the Leadership / Staff directory.',
     { okLabel: 'Remove', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_leaders').delete().eq('id', id), 'Could not remove this entry');
+  if (!r) return;
   S.leaders = S.leaders.filter(x => x.id !== id);
-  save(); renderLeaders(); addActivity('Removed staff entry: ' + l.name);
+  renderLeaders(); addActivity('Removed staff entry: ' + l.name);
 }
 function renderLeaders() {
   document.getElementById('leaderGrid').innerHTML = S.leaders.map(l => `
@@ -2153,15 +2127,20 @@ function openMeetingModal() {
 async function saveMeeting() {
   const date = document.getElementById('mtDate').value, title = document.getElementById('mtTitle').value.trim();
   if (!date || !title) { await alertDialog('Missing details', 'A date and a topic are both required.'); return; }
-  S.meetings.push({ id: 'mt' + Date.now(), date, time: document.getElementById('mtTime').value, title, notes: document.getElementById('mtNotes').value.trim() });
+  const time = document.getElementById('mtTime').value, notes = document.getElementById('mtNotes').value.trim();
+  const r = await dbWrite(sb.from('cc_meetings').insert({ meeting_date: date, meeting_time: time || null, title, notes }).select().single(), 'Could not log this meeting');
+  if (!r) return;
+  S.meetings.push({ id: r.data.id, date, time, title, notes });
   S.meetings.sort((a, b) => b.date.localeCompare(a.date));
-  save(); closeModalEl('meetingModal'); renderMeetings(); addActivity('Meeting logged: ' + title);
+  closeModalEl('meetingModal'); renderMeetings(); addActivity('Meeting logged: ' + title);
 }
 async function deleteMeeting(id) {
   if (!await confirmDialog('Delete this meeting record?', 'The agenda and notes will be deleted. This cannot be undone.',
     { okLabel: 'Delete', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_meetings').delete().eq('id', id), 'Could not delete this meeting');
+  if (!r) return;
   S.meetings = S.meetings.filter(m => m.id !== id);
-  save(); renderMeetings();
+  renderMeetings();
 }
 function renderMeetings() {
   document.getElementById('meetingEmpty').style.display = S.meetings.length ? 'none' : '';
@@ -2200,41 +2179,104 @@ const MAX_SLOTS = 11;     // lead + 11 = 12 people on a service, enough for East
 function blankSvc() { return { lead: '', members: new Array(MIN_SLOTS).fill('') }; }
 function blankDay() { return { s0: blankSvc(), s1: blankSvc(), s2: blankSvc() }; }
 
-/* READ-ONLY. v1's getDay() created and stored a full day object as a side
-   effect of being read, and it is read on every render and every dashboard
-   refresh. Browsing the calendar therefore wrote a permanent empty record for
-   every Sunday you looked at — measured at 29 empty days out of 31, making up
-   58% of the saved payload, flushed to localStorage by the next unrelated
-   save(). Reading a day you have never scheduled now costs nothing. */
-function getDay(dateIso) { return S.schedule[dateIso] || blankDay(); }
-function ensureDay(dateIso) {
-  if (!S.schedule[dateIso]) S.schedule[dateIso] = blankDay();
-  return S.schedule[dateIso];
+/* S.schedule[date][svcKey] holds only member ids, exactly like the old
+   localStorage blob — every render function keeps reading it that way.
+   scheduleSlotIds mirrors the same shape with the underlying cc_schedule_slots
+   row ids instead, so writes know which row to UPDATE without the render-
+   facing shape ever needing to carry that detail. */
+let scheduleSlotIds = {};
+
+/* READ-ONLY, still. v1's getDay() created and stored a full day object as a
+   side effect of being read, which cost 58% of the saved payload in empty
+   Sundays nobody ever scheduled. That guarantee carries over: a date with no
+   cc_schedule_slots rows at all, or with rows for only SOME of its three
+   services, still renders as a complete blank day — merging onto a fresh
+   blankDay() rather than assuming every service was created together. */
+function getDay(dateIso) {
+  const day = S.schedule[dateIso];
+  return day ? Object.assign(blankDay(), day) : blankDay();
 }
-function dayIsEmpty(day) {
-  return SERVICES.every(sv => !day[sv.key].lead && day[sv.key].members.every(x => !x));
+function svcIsEmpty(svc) { return !svc.lead && svc.members.every(x => !x); }
+
+/* Creates the 1 lead + MIN_SLOTS member rows for ONE service the first time
+   any of its slots is touched — not all three services at once the way the
+   old blankDay() did, since that would write 15 rows for services nobody has
+   assigned anything to yet. Rendering an untouched service still shows the
+   full set of empty positions regardless, via getDay()'s blankDay() merge
+   above; row creation is a pure persistence-layer concern. */
+async function ensureService(dateIso, svcKey) {
+  if (S.schedule[dateIso] && S.schedule[dateIso][svcKey]) return true;
+  const rows = [{ service_date: dateIso, service_key: svcKey, slot_type: 'lead', slot_position: 0 }]
+    .concat(Array.from({ length: MIN_SLOTS }, (_, i) => ({ service_date: dateIso, service_key: svcKey, slot_type: 'member', slot_position: i })));
+  const r = await dbWrite(sb.from('cc_schedule_slots').insert(rows).select(), 'Could not open this service for scheduling');
+  if (!r) return false;
+  if (!S.schedule[dateIso]) S.schedule[dateIso] = {};
+  if (!scheduleSlotIds[dateIso]) scheduleSlotIds[dateIso] = {};
+  const leadRow = r.data.find(x => x.slot_type === 'lead');
+  const memberRows = r.data.filter(x => x.slot_type === 'member').sort((a, b) => a.slot_position - b.slot_position);
+  S.schedule[dateIso][svcKey] = { lead: '', members: memberRows.map(() => '') };
+  scheduleSlotIds[dateIso][svcKey] = { lead: leadRow.id, members: memberRows.map(x => x.id) };
+  return true;
 }
-/* Clears days that hold nothing, including any left behind by v1. */
-function pruneSchedule() {
-  Object.keys(S.schedule).forEach(k => {
-    const d = S.schedule[k];
-    if (!d || !d.s0 || dayIsEmpty(d)) delete S.schedule[k];
-  });
+/* The relational analog of the old day-level pruning: once a specific
+   service's rows are all unassigned, delete them so an untouched Sunday
+   costs nothing to store, same guarantee as before at service instead of
+   day granularity (this app now creates rows per-service, not per-day). */
+async function pruneServiceIfEmpty(dateIso, svcKey) {
+  const svc = S.schedule[dateIso] && S.schedule[dateIso][svcKey];
+  if (!svc || !svcIsEmpty(svc)) return;
+  const ids = scheduleSlotIds[dateIso][svcKey];
+  await dbWrite(sb.from('cc_schedule_slots').delete().in('id', [ids.lead, ...ids.members]), 'Could not clean up an empty service');
+  delete S.schedule[dateIso][svcKey];
+  delete scheduleSlotIds[dateIso][svcKey];
+  if (!Object.keys(S.schedule[dateIso]).length) { delete S.schedule[dateIso]; delete scheduleSlotIds[dateIso]; }
 }
-function setAssign(dateIso, svcKey, slot, val) {
-  const day = ensureDay(dateIso);
+async function setAssign(dateIso, svcKey, slot, val) {
+  const ok = await ensureService(dateIso, svcKey);
+  if (!ok) { renderSchedule(); return; }
+  const ids = scheduleSlotIds[dateIso][svcKey];
+  const rowId = slot === 'lead' ? ids.lead : ids.members[slot];
+  const r = await dbWrite(sb.from('cc_schedule_slots').update({ team_member_id: val || null }).eq('id', rowId), 'Could not update the schedule');
+  if (!r) { renderSchedule(); return; }
+  const day = S.schedule[dateIso];
   if (slot === 'lead') day[svcKey].lead = val; else day[svcKey].members[slot] = val;
-  if (dayIsEmpty(day)) delete S.schedule[dateIso];
-  save(); renderSchedule(); refreshDash();
+  await pruneServiceIfEmpty(dateIso, svcKey);
+  renderSchedule(); refreshDash();
 }
 /* Adding a position IS a deliberate admin action, so unlike getDay() it is
-   allowed to create the day record. The guarantee being protected is narrower
-   and more important: merely LOOKING at a Sunday must never write one. */
-function addSlot(dateIso, svcKey) {
-  const svc = ensureDay(dateIso)[svcKey];
+   allowed to create rows. The guarantee being protected is narrower and more
+   important: merely LOOKING at a Sunday must never write one. */
+async function addSlot(dateIso, svcKey) {
+  const ok = await ensureService(dateIso, svcKey);
+  if (!ok) { renderSchedule(); return; }
+  const svc = S.schedule[dateIso][svcKey];
   if (svc.members.length >= MAX_SLOTS) return;
+  const nextPos = svc.members.length;
+  const r = await dbWrite(sb.from('cc_schedule_slots').insert({ service_date: dateIso, service_key: svcKey, slot_type: 'member', slot_position: nextPos }).select().single(), 'Could not add a position');
+  if (!r) { renderSchedule(); return; }
   svc.members.push('');
-  save(); renderSchedule();
+  scheduleSlotIds[dateIso][svcKey].members.push(r.data.id);
+  renderSchedule();
+}
+/* Full-table fetch — a church's schedule table is a few thousand rows at
+   most even after years, so one query at load time beats fetching per Sunday
+   browsed. Ordered by slot_position so grouping preserves position order
+   without needing to index into a possibly-sparse array. */
+async function loadSchedule() {
+  const r = await dbWrite(sb.from('cc_schedule_slots').select('*').order('slot_position'), 'Could not load the schedule');
+  S.schedule = {}; scheduleSlotIds = {};
+  if (!r) return;
+  const byService = {};
+  r.data.forEach(row => {
+    const key = row.service_date + '|' + row.service_key;
+    if (!byService[key]) byService[key] = { date: row.service_date, svcKey: row.service_key, lead: null, members: [] };
+    if (row.slot_type === 'lead') byService[key].lead = row; else byService[key].members.push(row);
+  });
+  Object.values(byService).forEach(g => {
+    if (!S.schedule[g.date]) { S.schedule[g.date] = {}; scheduleSlotIds[g.date] = {}; }
+    S.schedule[g.date][g.svcKey] = { lead: (g.lead && g.lead.team_member_id) || '', members: g.members.map(m => m.team_member_id || '') };
+    scheduleSlotIds[g.date][g.svcKey] = { lead: g.lead ? g.lead.id : null, members: g.members.map(m => m.id) };
+  });
 }
 function memberName(id) {
   const m = S.team.find(x => x.id === id);
@@ -2298,10 +2340,7 @@ function renderSchedule() {
 // ════════════════════════════════════════════════════════════════
 function renderOnboard() {
   const p = activeProgress();
-  const who = activeName();
-  document.getElementById('onboardWho').innerHTML = who
-    ? 'Checklist for <strong style="color:var(--tx);">' + esc(who) + '</strong>'
-    : '<strong style="color:var(--c);">No one selected.</strong> Pick who you are in the Academy tab so this checklist is saved to a person.';
+  document.getElementById('onboardWho').innerHTML = 'Checklist for <strong style="color:var(--tx);">' + esc(activeName()) + '</strong>';
   document.getElementById('onboardChecklist').innerHTML = ONBOARD_ITEMS.map(item => {
     const done = p.onboard.includes(item.id);
     return `<label style="display:flex;gap:.55rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.8rem;color:${done ? 'var(--gr)' : 'var(--tx2)'};">
@@ -2310,16 +2349,26 @@ function renderOnboard() {
     </label>`;
   }).join('') + `<div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">${p.onboard.length}/${ONBOARD_ITEMS.length} complete</div>`;
 }
-function toggleOnboard(stepId) {
+/* Toggling a step is an insert-or-delete against cc_onboarding_steps, not an
+   upsert — step completion has no fields beyond its own existence. */
+async function toggleOnboard(stepId) {
   const p = activeProgress();
-  if (p.onboard.includes(stepId)) p.onboard = p.onboard.filter(x => x !== stepId);
-  else p.onboard.push(stepId);
-  save(); renderOnboard();
+  const isDone = p.onboard.includes(stepId);
+  if (isDone) {
+    const r = await dbWrite(sb.from('cc_onboarding_steps').delete().eq('profile_id', currentProfile.id).eq('step_id', stepId), 'Could not update onboarding');
+    if (!r) return;
+    p.onboard = p.onboard.filter(x => x !== stepId);
+  } else {
+    const r = await dbWrite(sb.from('cc_onboarding_steps').insert({ profile_id: currentProfile.id, step_id: stepId }), 'Could not update onboarding');
+    if (!r) return;
+    p.onboard.push(stepId);
+  }
+  renderOnboard();
   /* renderOnboard() rebuilds all twelve rows, so put focus back where it was. */
   const boxes = document.querySelectorAll('#onboardChecklist input[type=checkbox]');
   const idx = ONBOARD_ITEMS.findIndex(it => it.id === stepId);
   if (boxes[idx]) boxes[idx].focus();
-  refreshDash();   // v1 never did this, so the dashboard counter sat stale until an unrelated action
+  refreshDash();
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -2384,57 +2433,7 @@ function renderCourses() {
   document.getElementById('certTotal').textContent = COURSES.length;
   document.getElementById('hs-modules').textContent = certs;
   document.getElementById('academyPct').textContent = Math.round((certs / COURSES.length) * 100) + '%';
-  document.getElementById('traineeName').textContent = activeName() || 'not set — tap change';
-}
-function openWhoModal() {
-  renderWhoList();
-  document.getElementById('whoGuest').value = S.activeId === 'guest' ? (getProgress('guest').name || '') : '';
-  openModalEl('whoModal');
-}
-function renderWhoList() {
-  const el = document.getElementById('whoList');
-  if (!S.team.length) {
-    el.innerHTML = '<div class="empty-note" style="padding:.9rem;">No roster yet. Type your name below — an admin can link your record to the roster once you are added.</div>';
-    return;
-  }
-  el.innerHTML = S.team.map(m => {
-    const p = S.progress[m.id];
-    const certs = p ? Object.values(p.training).filter(t => t.quizPassed).length : 0;
-    const on = S.activeId === m.id;
-    return `<button class="quiz-opt ${on ? 'selected' : ''}" style="width:100%;margin-bottom:.35rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem;" onclick="setActiveMember('${m.id}')">
-      <span>${esc(m.first + ' ' + m.last)}${m.role === 'Team Lead' ? ' <span class="lead-tag">★ LEAD</span>' : ''}</span>
-      <span style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${certs}/${COURSES.length} certified</span>
-    </button>`;
-  }).join('');
-}
-async function setActiveMember(id) {
-  /* The realistic path is: a volunteer trains first, and gets added to the
-     roster afterwards. Offer to carry the guest record across rather than
-     stranding it, but never overwrite a record the member already has. */
-  const guest = S.progress.guest;
-  const guestHasWork = guest && (Object.keys(guest.training).length || guest.onboard.length);
-  const target = S.progress[id];
-  const targetHasWork = target && (Object.keys(target.training).length || target.onboard.length);
-  if (S.activeId === 'guest' && guestHasWork && !targetHasWork) {
-    const m = S.team.find(x => x.id === id);
-    if (await confirmDialog('Move the unassigned training record?',
-      'There is training progress' + (guest.name ? ' recorded under "' + guest.name + '"' : '') +
-      ' that is not linked to anyone on the roster.\n\nMove it to ' + m.first + ' ' + m.last + '?',
-      { okLabel: 'Move it across', cancelLabel: 'Just switch' })) {
-      S.progress[id] = { name: '', training: guest.training, onboard: guest.onboard };
-      delete S.progress.guest;
-      addActivity('Linked training record to ' + m.first + ' ' + m.last);
-    }
-  }
-  S.activeId = id;
-  save(); closeModalEl('whoModal'); renderCourses(); renderOnboard(); refreshDash();
-}
-async function saveGuestName() {
-  const n = document.getElementById('whoGuest').value.trim();
-  if (!n) { await alertDialog('No name entered', 'Type a name, or pick someone from the roster above.'); return; }
-  S.activeId = 'guest';
-  getProgress('guest').name = n;
-  save(); closeModalEl('whoModal'); renderCourses(); renderOnboard(); refreshDash();
+  document.getElementById('traineeName').textContent = activeName();
 }
 function openCourse(id) {
   curCourse = COURSES.find(c => c.id === id);
@@ -2479,10 +2478,12 @@ function renderLessons() {
     </div>`;
   }).join('');
 }
-function markDone(i) {
+async function markDone(i) {
   const cs = getCS(curCourse.id);
-  if (!cs.doneLessons.includes(i)) cs.doneLessons.push(i);
-  save();
+  if (cs.doneLessons.includes(i)) return;
+  const ok = await persistTrainingPatch(curCourse.id, { doneLessons: [...cs.doneLessons, i] });
+  if (!ok) return;
+  cs.doneLessons.push(i);
   /* renderLessons() rebuilds the whole list, which collapsed the lesson the
      person was in the middle of reading and dumped them back to the top. */
   const wasOpen = [...document.querySelectorAll('.lesson-item.expanded')].map(el => el.id);
@@ -2504,7 +2505,7 @@ function renderQuiz() {
   if (cs.quizPassed) {
     el.innerHTML = `<div class="quiz-result"><div class="quiz-score-big pass">🏆</div>
       <div style="font-size:1rem;font-weight:800;color:var(--gr);margin:.4rem 0;">Already Certified!</div>
-      <div style="font-size:.8rem;color:var(--tx2);">${esc(activeName() || 'You')} passed with ${scorePct(cs, curCourse)}%. The certificate is available.</div>
+      <div style="font-size:.8rem;color:var(--tx2);">${esc(activeName())} passed with ${scorePct(cs, curCourse)}%. The certificate is available.</div>
       <div style="margin-top:1.1rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
         <button class="btn btn-ghost" onclick="retakeModule()">🔁 Retake this module</button>
       </div>
@@ -2535,30 +2536,18 @@ async function submitQuiz() {
       missing + ' of ' + quizTotal(curCourse) + ' question' + (missing === 1 ? ' is' : 's are') + ' still unanswered.');
     return;
   }
-  /* v1 would happily issue "This certifies that Team Member". A Team Lead
-     auditing who is cleared to serve cannot use an anonymous certificate, and
-     the whole point of keying training to people was to make that audit
-     possible. Ask before scoring, not after. */
-  if (!activeName()) {
-    const who = await promptDialog('Who is taking this quiz?',
-      'Certificates are issued to a person, and Team Leads use these records to see who is cleared to serve. An unnamed certificate is no use to anyone.',
-      { inputLabel: 'Your name', okLabel: 'Continue',
-        validate: v => v.trim() ? null : 'Please enter your name.' });
-    if (who === null) return;
-    activeProgress().name = who.trim();
-    save(); renderCourses(); refreshDash();
-  }
-
-  quizSubmitted = true;
   let correct = 0;
   curCourse.quiz.forEach((q, qi) => { if (quizAnswers[qi] === q.ans) correct++; });
   const total = quizTotal(curCourse);
   const passed = correct >= passMark(curCourse);
   const pct = Math.round((correct / total) * 100);
   const cs = getCS(curCourse.id);
-  cs.quizScore = correct; cs.quizTotal = total; cs.quizPassed = passed;
-  if (passed && !cs.certName) cs.certName = activeName();
-  save();
+  const patch = { quizScore: correct, quizTotal: total, quizPassed: passed };
+  if (passed && !cs.certName) patch.certName = activeName();
+  const ok = await persistTrainingPatch(curCourse.id, patch);
+  if (!ok) return;
+  Object.assign(cs, patch);
+  quizSubmitted = true;
   let html = '';
   curCourse.quiz.forEach((q, qi) => {
     html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
@@ -2591,7 +2580,7 @@ async function retakeModule() {
   if (!await confirmDialog('Retake this module?',
     '"' + curCourse.title + '"\n\nThe certificate is cleared until you pass again. Lesson progress is kept.',
     { okLabel: 'Start retake' })) return;
-  retryQuiz();
+  if (!await retryQuiz()) return;
   renderCourses(); refreshDash();
   addActivity('Retake started: ' + curCourse.title);
 }
@@ -2600,54 +2589,75 @@ async function retakeModule() {
    actually means. */
 async function adminResetModule() {
   if (!adminOn) return;
-  const who = activeName() || 'this person';
+  const who = activeName();
   if (!await confirmDialog('Reset this module for ' + who + '?',
     '"' + curCourse.title + '"\n\nClears the certificate AND all lesson progress. They will work through the whole module again.\n\nThis cannot be undone.',
     { okLabel: 'Reset module', danger: true })) return;
+  const ok = await persistTrainingPatch(curCourse.id, { doneLessons: [], quizScore: null, quizTotal: null, quizPassed: false });
+  if (!ok) return;
   const cs = getCS(curCourse.id);
   cs.doneLessons = []; cs.quizScore = null; cs.quizTotal = null; cs.quizPassed = false;
   quizAnswers = {}; quizSubmitted = false;
-  save(); renderLessons(); renderQuiz(); renderCert();
+  renderLessons(); renderQuiz(); renderCert();
   document.getElementById('footerCertBtn').style.display = 'none';
   document.getElementById('footerQuizBtn').style.display = 'none';
   renderCourses(); refreshDash();
   addActivity('Admin reset module "' + curCourse.title + '" for ' + who);
 }
+/* No more "pick a person to reset" — the picker that used to let an admin
+   choose whose training this acted on retired along with real auth (see the
+   AUTH section). This now only resets the signed-in admin's own record;
+   resetting SOMEONE ELSE's training needs a per-person admin picker, which
+   belongs with the role-assignment screen (next) since both need the same
+   "list every profile" access only Admin has under RLS. */
 async function adminResetPerson() {
   const who = activeName();
-  if (!who) { backupStatus('Pick who you are in the Academy tab first.', '#f87171'); return; }
-  if (!await confirmDialog('Reset all training for ' + who + '?',
-    'Clears every certificate and all lesson progress across all ' + COURSES.length + ' modules, for this one person.\n\nThis cannot be undone. Export a backup first if you are unsure.',
-    { okLabel: 'Reset ' + who, danger: true })) return;
+  if (!await confirmDialog('Reset all your training?',
+    'Clears every certificate and all lesson progress across all ' + COURSES.length + ' modules, for your own account.\n\nThis cannot be undone.',
+    { okLabel: 'Reset my training', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_training_records').delete().eq('profile_id', currentProfile.id), 'Could not reset your training');
+  if (!r) return;
   activeProgress().training = {};
-  save(); renderCourses(); refreshDash();
-  backupStatus('Reset all certifications for ' + who + '.', 'var(--c)');
-  addActivity('Admin reset all certifications for ' + who);
+  renderCourses(); refreshDash();
+  backupStatus('Reset all your certifications.', 'var(--c)');
+  addActivity('Reset all certifications for ' + who);
 }
 async function adminResetEveryone() {
-  const n = Object.keys(S.progress).length;
+  const listR = await dbWrite(sb.from('cc_training_records').select('profile_id'), 'Could not check training records');
+  if (!listR) return;
+  const n = new Set(listR.data.map(row => row.profile_id)).size;
   if (!n) { backupStatus('No training records to reset.', '#f87171'); return; }
   if (!await confirmDialog('Annual recertification',
-    'Clear every certificate and all lesson progress for ALL ' + n + ' people with a training record?\n\nEveryone starts the Academy again from zero. The roster, schedule and meetings are NOT affected.\n\nThis cannot be undone. Export a backup first.',
+    'Clear every certificate and all lesson progress for ALL ' + n + ' ' + (n === 1 ? 'person' : 'people') + ' with a training record?\n\nEveryone starts the Academy again from zero. The roster, schedule and meetings are NOT affected.\n\nThis cannot be undone.',
     { okLabel: 'Continue', danger: true })) return;
   if (!await confirmDialog('Last check',
     'This wipes training for ' + n + ' ' + (n === 1 ? 'person' : 'people') + '. There is no undo.',
     { okLabel: 'Reset everyone', danger: true })) return;
-  Object.keys(S.progress).forEach(id => { S.progress[id].training = {}; });
-  save(); renderCourses(); refreshDash();
+  /* Delete-all: an always-true filter rather than relying on a bare
+     .delete() with no clause, which some PostgREST/client versions refuse. */
+  const r = await dbWrite(sb.from('cc_training_records').delete().neq('id', '00000000-0000-0000-0000-000000000000'), 'Could not complete the reset');
+  if (!r) return;
+  /* Only the acting admin's OWN local cache needs clearing — S.progress never
+     holds anyone else's record client-side (see activeProgress()). Onboarding
+     is untouched, matching the original: this resets training only. */
+  if (S.progress[currentProfile.id]) S.progress[currentProfile.id].training = {};
+  renderCourses(); refreshDash();
   backupStatus('Annual recertification: cleared training for ' + n + ' people.', 'var(--c)');
   addActivity('Admin started annual recertification (' + n + ' people reset)');
 }
-function retryQuiz() {
+async function retryQuiz() {
+  const ok = await persistTrainingPatch(curCourse.id, { quizScore: null, quizTotal: null, quizPassed: false });
+  if (!ok) return false;
   quizAnswers = {}; quizSubmitted = false;
   buildQuizOrder(curCourse);            // a retake gets a fresh order
   const cs = getCS(curCourse.id);
   cs.quizScore = null; cs.quizTotal = null; cs.quizPassed = false;
-  save(); renderQuiz(); renderCert();
+  renderQuiz(); renderCert();
   /* The footer kept offering "View Certificate" for a certificate that had
      just been revoked, until the next submission re-rendered it. */
   document.getElementById('footerCertBtn').style.display = 'none';
   document.getElementById('footerQuizBtn').style.display = '';
+  return true;
 }
 function renderCert() {
   const el = document.getElementById('certContent');
@@ -2682,10 +2692,20 @@ function printCertificate() {
   });
   window.print();
 }
+/* The only optimistic write in the app, deliberately: this fires on every
+   keystroke (oninput), and awaiting a network round trip per character would
+   make typing a name laggy and could land out of order. Debounced instead —
+   instant locally, persisted 600ms after typing pauses. Low-stakes (a
+   cosmetic label on a certificate), unlike every other training write in
+   this file, which is why it alone breaks the "confirm before showing"
+   pattern used everywhere else. */
+let certNameSaveTimer = null;
 function updateCertName(v) {
   const cs = getCS(curCourse.id);
-  cs.certName = v; save();
+  cs.certName = v;
   document.querySelector('#certDocument .cert-recipient').textContent = v || 'Team Member';
+  clearTimeout(certNameSaveTimer);
+  certNameSaveTimer = setTimeout(() => { persistTrainingPatch(curCourse.id, { certName: v }); }, 600);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -2694,7 +2714,7 @@ function updateCertName(v) {
 function refreshDash() {
   const certs = COURSES.filter(c => getCS(c.id).quizPassed).length;
   document.getElementById('dashTraining').innerHTML =
-    `<div>Training as: <strong style="color:var(--tx);">${esc(activeName() || 'not set')}</strong></div>
+    `<div>Training as: <strong style="color:var(--tx);">${esc(activeName())}</strong></div>
      <div>Certificates: <strong style="color:var(--gr);">${certs}/${COURSES.length}</strong></div>
      <div>Onboarding: <strong style="color:var(--c);">${activeProgress().onboard.length}/${ONBOARD_ITEMS.length}</strong> steps</div>`;
   const dateIso = iso(nextSunday(new Date()));
@@ -2825,12 +2845,13 @@ function closeModalEl(id) {
   lastFocused = null;
 }
 /* Returns the overlay a user would consider "on top", which is the one Escape
-   must dismiss. v1 used querySelector, i.e. DOM order — and #adminGate sits
-   before #appDialog in the document, so a dialog raised while the PIN gate was
-   open would have had Escape close the GATE and strand the dialog's promise.
-   No current flow does that (the PIN pad raises no dialogs), but it is the same
-   stacking-order assumption that made the dialog render behind modals, and
-   leaving one half of it fixed invites the other half back.
+   must dismiss. v1 used querySelector, i.e. DOM order — and the auth gate (now
+   #loginGate/#noAccessGate) sits before #appDialog in the document, so a
+   dialog raised while it was open would have had Escape close the GATE and
+   strand the dialog's promise. No current flow does that (the auth gates
+   raise no dialogs of their own), but it is the same stacking-order
+   assumption that made the dialog render behind modals, and leaving one half
+   of it fixed invites the other half back.
    Compare z-index, falling back to DOM order on a tie, which is what the
    painter does. */
 function openOverlay() {
@@ -2846,20 +2867,18 @@ function dismissOverlay(o) {
   if (o.id === 'courseModal') closeCourseModal();
   else closeModalEl(o.id);
 }
-document.querySelectorAll('.modal-overlay, .pin-gate-overlay').forEach(o =>
+/* loginGate and noAccessGate are excluded here on purpose — they are not
+   cancellable modals. There is no "go back" state for either: you are either
+   authenticated or you are looking at one of these two. */
+document.querySelectorAll('.modal-overlay, .pin-gate-overlay:not(#loginGate):not(#noAccessGate)').forEach(o =>
   o.addEventListener('click', e => { if (e.target === o) dismissOverlay(o); }));
 
 document.addEventListener('keydown', e => {
   const overlay = openOverlay();
 
-  /* The PIN pad was click-only. Typing 2121 on a desktop keyboard — the
-     obvious thing to do — did nothing at all and gave no feedback. */
-  if (overlay && overlay.id === 'adminGate') {
-    if (/^[0-9]$/.test(e.key)) { e.preventDefault(); pinKey(e.key); return; }
-    if (e.key === 'Backspace')  { e.preventDefault(); pinKey('back'); return; }
+  if (e.key === 'Escape' && overlay && overlay.id !== 'loginGate' && overlay.id !== 'noAccessGate') {
+    e.preventDefault(); dismissOverlay(overlay); return;
   }
-
-  if (e.key === 'Escape' && overlay) { e.preventDefault(); dismissOverlay(overlay); return; }
 
   /* Keep Tab inside an open dialog. v1 let it wander onto the schedule arrows
      sitting behind the overlay. */
@@ -2883,9 +2902,20 @@ document.addEventListener('keydown', e => {
     }
   }
 });
-if (loadWarning) flagStorage(loadWarning);
 document.querySelectorAll('.proc-card.open > .proc-head').forEach(h => h.setAttribute('aria-expanded', 'true'));
-renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderOnboard(); applyAdmin(); refreshDash();
+
+// ── Boot: resolve auth before anything from local data reaches the DOM ──
+if (!window.supabase || !window.supabase.createClient) {
+  showLoginGate('Sign-in could not load. Reload the page, or contact an admin.');
+} else {
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  resolveAuth().then(paintAuth);
+  /* Covers both the redirect landing (magic-link click sets the session
+     asynchronously via detectSessionInUrl) and a long-lived tab's session
+     expiring or refreshing mid-service — repaint whenever GoTrue's own idea
+     of the session changes, not just once at load. */
+  sb.auth.onAuthStateChange(() => { resolveAuth().then(paintAuth); });
+}
 </script>
 </body>
 </html>
