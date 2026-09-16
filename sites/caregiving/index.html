@@ -1399,8 +1399,16 @@ var DEFAULT_CONTENT = {
       a.href = url;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.textContent = 'Book now';
-      a.setAttribute('aria-label', 'Book now (opens in a new tab)');
+      /* "Book online", not "Book now": 27 of 32 niches already say some
+         form of "book" somewhere on the page, and dj's own nav has a
+         same-page anchor literally labelled "Book Now" that scrolls to
+         its own inquiry form. Two buttons with identical text doing two
+         different things — one an in-page scroll, one an external link
+         in a new tab — is confusing precisely where it would sit, right
+         next to the phone button in the header. Distinct wording costs
+         nothing and applies uniformly rather than special-casing dj. */
+      a.textContent = 'Book online';
+      a.setAttribute('aria-label', 'Book online (opens in a new tab)');
       /* Inline styles built from CSS custom properties, with fallbacks:
          31/32 niches define --accent/--accent-ink at :root (SITELAB_TEMPLATE.md
          §5.1's token contract), but dj (themed, niches/dj/themes/<theme>/) has
