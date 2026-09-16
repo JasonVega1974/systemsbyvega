@@ -503,6 +503,8 @@
      'Pre-filled with your business name, city, contact details and service area.'],
     ['undo',    'Reset to defaults',
      'Put the site back to its example content and start over, whenever you want.'],
+    ['calendar', 'Connect a booking link',
+     'Paste your Calendly, Google Calendar or Square link and a Book Now button appears in your header and footer automatically.'],
   ];
 
   /* 20x20 stroke icons, currentColor, no icon font and no sprite file. */
@@ -514,6 +516,7 @@
     book:   '<path d="M3 3.5h4.5A2.5 2.5 0 0 1 10 6v11a2 2 0 0 0-2-2H3z"/><path d="M17 3.5h-4.5A2.5 2.5 0 0 0 10 6v11a2 2 0 0 1 2-2h5z"/>',
     shield: '<path d="M10 2.5 16.5 5v5c0 4-2.7 6.7-6.5 8-3.8-1.3-6.5-4-6.5-8V5z"/><path d="M7.3 10.2 9.2 12l3.5-3.6"/>',
     undo:   '<path d="M3.5 5v5h5"/><path d="M4.4 12.2a6.8 6.8 0 1 0 .6-5.2"/>',
+    calendar: '<rect x="3" y="4.5" width="14" height="13" rx="1.5"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/>',
   };
 
   function included(opts) {

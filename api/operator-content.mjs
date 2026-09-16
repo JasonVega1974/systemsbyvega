@@ -410,6 +410,7 @@ function applyOperator(base, op, manifest) {
   set(out.brand, 'name',  op.business_name);
   set(out.brand, 'phone', op.phone);
   set(out.brand, 'email', op.email);
+  set(out.brand, 'bookingUrl', op.booking_url);
 
   /* Editable-prototype additions (spec 2026-09-05). All skip-empty, so a
      tenant that has set only a logo keeps the demo's photos and prices. */

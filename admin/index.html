@@ -411,6 +411,10 @@
           <p class="field-err" hidden></p></label>
       </div>
 
+      <label style="margin-top:14px"><span>Booking link <span class="hint">&mdash; Calendly, Google Calendar, Square, or any booking page</span></span>
+        <input type="url" id="booking_url" maxlength="2048" placeholder="https://calendly.com/your-name">
+        <p class="field-err" hidden></p></label>
+
       <label><span>Street address</span>
         <input type="text" id="address_line" maxlength="200" autocomplete="street-address"></label>
 
@@ -675,7 +679,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var CFG = window.SBV_CONFIG;
   var FIELDS = ['business_name', 'phone', 'email', 'address_line', 'city',
-                'state_code', 'postal_code', 'hours', 'owner_name', 'bio'];
+                'state_code', 'postal_code', 'hours', 'owner_name', 'bio',
+                'booking_url'];
   /* The public-email input is id="email_pub" so it cannot collide with the
      sign-in field above it. Everything else maps 1:1 to a column. */
   var INPUT_ID = { email: 'email_pub' };
@@ -869,6 +874,14 @@ document.addEventListener('DOMContentLoaded', function () {
   function validateState(v) { return v === '' || STATE_RE.test(v.toUpperCase()) ? null : 'Use 2 letters, e.g. CA.'; }
   function validatePostal(v) { return v === '' || POSTAL_RE.test(v) ? null : 'Use 5 or 9 digits.'; }
   function validatePhone(v) { return v.length <= 40 ? null : 'Keep it to 40 characters or fewer.'; }
+  function validateBookingUrl(v) {
+    if (v === '') return null;
+    try {
+      var u = new URL(v);
+      if (u.protocol !== 'https:') return 'Must be a link starting with https://';
+      return null;
+    } catch (e) { return 'Must be a link starting with https://'; }
+  }
   function validateSocialUrl(v) { return v === '' || HTTPS_RE.test(v) ? null : 'Must start with https://'; }
 
   /* Review row validation: quote is required if rating or author is present.
@@ -2615,6 +2628,7 @@ document.addEventListener('DOMContentLoaded', function () {
   bindBlurValidation('state_code', validateState);
   bindBlurValidation('postal_code', validatePostal);
   bindBlurValidation('phone', validatePhone);
+  bindBlurValidation('booking_url', validateBookingUrl);
 
   /* ============================================================ marketing
      Read-only tab. Previews are built from the tenant's MERGED content —

@@ -1876,6 +1876,64 @@ var DEFAULT_CONTENT = {
   function smsHref(p, body) { return 'sms:' + telDigits(p) + '?&body=' + encodeURIComponent(body || ''); }
   function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
 
+  /* Injects (or removes) a "Book now" button in the header nav and the
+     footer, on every niche uniformly — there is no shared per-niche
+     renderer to hook this into (window.renderContent is defined separately
+     in each niches/<slug>/niche.js), so it is DOM-injected here instead,
+     anchored on the two markup points verified present on all 32 niches:
+     id="nav" and <footer>. Idempotent: always clears any prior button
+     first, so a re-render after content.json loads never duplicates or
+     strands a stale one. */
+  function applyBooking(brand) {
+    var old = document.querySelectorAll('.sl-booknow');
+    for (var i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+
+    var url = brand && brand.bookingUrl;
+    if (!url) return;
+    /* Defense in depth — the DB CHECK is the real gate, this is
+       belt-and-suspenders against a stale cached CONTENT blob predating
+       the constraint. */
+    try {
+      var u = new URL(url);
+      if (u.protocol !== 'https:') return;
+    } catch (e) { return; }
+
+    function makeBtn() {
+      var a = document.createElement('a');
+      a.className = 'sl-booknow';
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = 'Book now';
+      a.setAttribute('aria-label', 'Book now (opens in a new tab)');
+      /* Inline styles built from CSS custom properties, with fallbacks:
+         31/32 niches define --accent/--accent-ink at :root (SITELAB_TEMPLATE.md
+         §5.1's token contract), but dj (themed, niches/dj/themes/<theme>/) has
+         no flat niche.css, so the fallback values are what make this render
+         correctly there too. Not cloning .nav__call — that class does not
+         exist on 13 of 32 niches. */
+      a.style.cssText = 'display:inline-flex;align-items:center;gap:.4em;' +
+        'padding:.5em 1em;border-radius:6px;text-decoration:none;font-weight:600;' +
+        'background:var(--accent,#C69648);color:var(--accent-ink,#fff);' +
+        'font-size:.85em;white-space:nowrap';
+      return a;
+    }
+
+    var nav = document.getElementById('nav');
+    if (nav) {
+      /* Inner flex wrapper class is inconsistent across niches — 11/32 use
+         .nav-in, 19/32 use .nav__in (verified: grep across every niche's
+         sections.html) — so both are tried before falling back to <nav>
+         itself (dj, which has no wrapper div at all). Appending straight to
+         <nav> when a wrapper exists would land the button outside the
+         centered/flex row and off in the corner. */
+      var navHost = nav.querySelector('.nav-in') || nav.querySelector('.nav__in') || nav;
+      navHost.appendChild(makeBtn());
+    }
+    var foot = document.querySelector('footer');
+    if (foot) foot.appendChild(makeBtn());
+  }
+
   /* reveal-on-scroll. Under reduced motion everything is revealed at once. */
   function initReveal() {
     var els = [].slice.call(document.querySelectorAll('.reveal'));
@@ -2062,6 +2120,7 @@ var DEFAULT_CONTENT = {
     var CONTENT = SLflat(window.DEFAULT_CONTENT);
     window.CONTENT = CONTENT;
     if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+    applyBooking(CONTENT.brand);
     initReveal();
     if (typeof window.initScene === 'function') window.initScene(reduce);
 
@@ -2072,6 +2131,7 @@ var DEFAULT_CONTENT = {
         CONTENT = SLflat(Object.assign({}, window.DEFAULT_CONTENT, d));
         window.CONTENT = CONTENT;
         if (typeof window.renderContent === 'function') window.renderContent(CONTENT);
+        applyBooking(CONTENT.brand);
       })
       .catch(function () { /* offline or 404: the inlined defaults stand */ });
   }
@@ -2080,7 +2140,8 @@ var DEFAULT_CONTENT = {
      defines its own with a different signature. Sharing them would be a
      silent behaviour change, not a saving. */
   window.SL = { esc: esc, num: num, telHref: telHref, telDigits: telDigits,
-                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce };
+                smsHref: smsHref, val: val, postForm: postForm, reduce: reduce,
+                applyBooking: applyBooking };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
