@@ -168,9 +168,32 @@ function buildExtras(seed) {
       .map(k => SECTION_LABEL[k]);
     if (n.website_offer) chips.push('Owner admin panel (live CMS)');
 
-    if (brand || chips.length) extras[n.slug] = {};
+    /* R12 — the accent-gradient placeholder's colour data, straight off the
+       SAME manifests object already loaded above for `sections`. Never a
+       second read, never a hand-copied hex: catalog-render.js's shotBg()
+       only ever sees what lands in this lookup. A niche whose manifest has
+       no theme (or an incomplete one) simply gets no ground/accent/text
+       here, and shotBg() falls back to the existing neutral placeholder --
+       it is never handed the literal string "undefined". */
+    const theme = manifests[dirSlug] && manifests[dirSlug].theme;
+    /* The exact path shot() in catalog-render.js emits for this niche. If it
+       is not on disk, the build must not emit an <img> pointing at it -- a
+       missing file is caught here, at build time, not as a 404 a visitor
+       causes. */
+    const shotPath = path.join(ROOT, 'assets', 'shots', 'rotator', n.slug + '.jpg');
+    const noShot = !fs.existsSync(shotPath);
+
+    if (brand || chips.length || (theme && theme.ground && theme.accent) || noShot) {
+      extras[n.slug] = {};
+    }
     if (brand) extras[n.slug].brand = brand;
     if (chips.length) extras[n.slug].chips = chips;
+    if (theme && theme.ground && theme.accent) {
+      extras[n.slug].ground = theme.ground;
+      extras[n.slug].accent = theme.accent;
+      if (theme.text) extras[n.slug].text = theme.text;
+    }
+    if (noShot) extras[n.slug].noShot = true;
   });
   return extras;
 }
@@ -222,7 +245,7 @@ function main() {
        screenshots tools/build-shots.js captures. Generated, not typed: a
        niche given a demo_path in the seed joins the hero on the next build,
        the same way it joins the catalog. */
-    HERO_ROTATOR: '\n' + R.heroRotator(seed.niches) + '\n',
+    HERO_ROTATOR: '\n' + R.heroRotator(seed.niches, extras) + '\n',
     /* The same list on `/` and `/sites/`, from one function, so the two
        cannot drift apart the way two hand-kept copies would. */
     INCLUDED:     '\n' + R.included() + '\n',

@@ -80,6 +80,42 @@
     return fam + ' · N° ' + pad3(idx);
   }
 
+  /* R12 — never a broken image. Jason's ruling: a gradient placeholder built
+     from the niche's OWN accent colour, painted on the CONTAINER behind the
+     <img>, never an onerror handler. One background then covers every
+     failure mode: the image loads and hides it; the image 404s at runtime
+     and the gradient is already there; the build finds no file at all and
+     never emits an <img> in the first place (see the noShot check below).
+
+     The colour values are NEVER hand-copied here. They arrive through the
+     extras lookup (window.SBV_EXTRAS at runtime, the same object
+     tools/build-catalog.js's buildExtras() builds from
+     assets/data/manifests.json at build time) exactly the way brandLine()
+     and chips() already read that lookup. A slug the manifest does not cover
+     gets no style attribute at all -- the container's own CSS background
+     (var(--surface-2) / var(--fam)) is the fallback, never the literal
+     string "undefined".
+
+     THE GRADIENT STOPS AT 62% ON PURPOSE. The 32 manifest accents range from
+     violet (#8177F2) to crimson (#B02E58) against grounds that are sometimes
+     near-black and sometimes near-white -- there is no single label colour
+     that clears 4.5:1 against every accent. Holding the ground colour solid
+     through 62% of the diagonal keeps the centred label (place-items:center)
+     inside the ground-only zone, so its contrast is always text-vs-ground,
+     never text-vs-accent -- verified at a minimum of 11.15:1 across all 32
+     manifests (assets/data/manifests.json, "caregiving"), comfortably past
+     4.5:1. The accent only shows as a flare in the far corner, which is also
+     why this reads as "subdued" rather than a decorative panel. --ph-text
+     carries the manifest's own theme.text, which .card-shot-label reads with
+     a fallback to the pre-existing var(--tx-3) so a slug with no manifest is
+     visually unchanged. */
+  function shotBg(x) {
+    if (!x || !x.ground || !x.accent) return '';
+    return ' style="background:linear-gradient(135deg,' + esc(x.ground) + ' 0%,' +
+           esc(x.ground) + ' 62%,' + esc(x.accent) + ' 100%)' +
+           (x.text ? ';--ph-text:' + esc(x.text) : '') + '"';
+  }
+
   /* THE THUMBNAIL SOURCE IS DERIVED, never a new seed field — the constraint
      at the top of this file applies to it exactly like everything else.
 
@@ -110,15 +146,21 @@
   /* 16:10 either way — the placeholder holds the same box the image would, so
      a family containing one of the three undemoed niches does not get a short
      card sitting beside tall ones. */
-  function thumb(n) {
+  function thumb(n, lookup) {
+    var x = (lookup && lookup[n.slug]) || {};
     var src = shot(n);
-    if (!src) {
-      return '<div class="card-shot card-shot-none">' +
+    /* A demo_path with no file on disk yet (the 33rd-niche gap this ruling
+       insures against) is a BUILD-TIME fact, not a visitor's problem -- so no
+       <img> is emitted at all, only the accent placeholder. See shotBg()
+       above and buildExtras() in tools/build-catalog.js, which sets
+       x.noShot from fs.existsSync() on the exact path shot() returns. */
+    if (!src || x.noShot) {
+      return '<div class="card-shot card-shot-none"' + shotBg(x) + '>' +
                '<span class="card-shot-mark" aria-hidden="true"></span>' +
                '<span class="card-shot-label">No demo built yet</span>' +
              '</div>';
     }
-    return '<div class="card-shot">' +
+    return '<div class="card-shot"' + shotBg(x) + '>' +
              '<img src="' + src + '" width="1280" height="800" loading="lazy" ' +
                   'decoding="async" alt="A screenshot of the ' + esc(n.name) + ' site.">' +
            '</div>';
@@ -255,7 +297,7 @@
     var cls = 'entry sheet reveal is-' + n.status.replace(/_/g, '-');
 
     return '<article class="' + cls + '" data-fam="' + esc(n.family) + '" id="n-' + esc(n.slug) + '">' +
-             thumb(n) +
+             thumb(n, extrasLookup) +
              '<div class="card-body">' +
                '<span class="card-meta">' +
                  '<span class="fam-dot" aria-hidden="true"></span>' +
@@ -337,12 +379,14 @@
       .sort(function (a, b) { return (a.sort || 0) - (b.sort || 0); })
       .map(function (n) {
         var x = (extrasLookup && extrasLookup[n.slug]) || {};
+        /* Same build-time noShot rule as thumb() above: a missing file never
+           becomes a failed request, only the gradient standing alone. */
+        var img = x.noShot ? '' :
+          '<img src="' + shot(n) + '" width="1280" height="800" loading="lazy" ' +
+               'decoding="async" alt="A screenshot of the ' + esc(n.name) + ' demo site.">';
         return '<a class="scard reveal js-preview" data-slug="' + esc(n.slug) + '" href="' +
                  esc(n.demo_path) + '">' +
-                 '<span class="scard-shot">' +
-                   '<img src="' + shot(n) + '" width="1280" height="800" loading="lazy" ' +
-                        'decoding="async" alt="A screenshot of the ' + esc(n.name) + ' demo site.">' +
-                 '</span>' +
+                 '<span class="scard-shot"' + shotBg(x) + '>' + img + '</span>' +
                  '<span class="scard-body">' +
                    '<span class="scard-brand">' + esc(x.brand || n.name) + '</span>' +
                    '<span class="scard-trade">' + esc(n.name) + '</span>' +
@@ -400,18 +444,30 @@
      overhanging a fixed box — and so the '+N more' link is tabbed after the
      hero's own CTAs rather than before them. */
   var CHIP_CAP = 11;
-  function heroRotator(niches) {
+  function heroRotator(niches, extrasLookup) {
     var frames = niches.filter(function (n) { return n.demo_path; });
     if (!frames.length) return '';
     var first = frames[0];
+    var x = (extrasLookup && extrasLookup[first.slug]) || {};
     var shot = function (n) { return '/assets/shots/rotator/' + esc(n.slug) + '.jpg'; };
+    /* R12: the gradient goes on .seq itself, BEFORE the two <img> layers and
+       the three scrim divs that follow them in the markup below -- an
+       element's own background always paints behind its children, so this
+       sits under the scrim exactly the way the brief requires without
+       touching the scrim's own layers. Only frame 1 can carry this at build
+       time (frames 2..32 are fetched by assets/sbv.js at runtime, one ahead
+       of the one showing), and only frame 1's file is ever checked for
+       existence here -- same noShot rule as thumb()/siteGrid() above. */
+    var frame1Img = x.noShot
+      ? '<img class="seq-layer is-on" width="1280" height="800" decoding="async" alt="">'
+      : '<img class="seq-layer is-on" src="' + shot(first) + '" width="1280" height="800" ' +
+             'fetchpriority="high" decoding="async" alt="">';
 
     return '' +
       '<div class="hero-media">' +
         '<div class="seq" data-rotator data-slug="' + esc(first.slug) + '" role="img" ' +
-             'aria-label="The ' + esc(first.name) + ' demo storefront.">' +
-          '<img class="seq-layer is-on" src="' + shot(first) + '" width="1280" height="800" ' +
-               'fetchpriority="high" decoding="async" alt="">' +
+             'aria-label="The ' + esc(first.name) + ' demo storefront."' + shotBg(x) + '>' +
+          frame1Img +
           '<img class="seq-layer" width="1280" height="800" decoding="async" alt="">' +
           '<div class="seq-scrim seq-scrim-base" aria-hidden="true"></div>' +
           '<div class="seq-scrim seq-scrim-extra" aria-hidden="true"></div>' +

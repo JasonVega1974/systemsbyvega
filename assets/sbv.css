@@ -527,7 +527,39 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
 .seq-scrim{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to right,
     var(--con) 0, var(--con) var(--scrim-stop), rgba(20,24,33,0) 100%)}
-.seq-scrim-base{opacity:var(--scrim-base,.34)}
+
+/* JASON'S SPEC, 2026-09-15, and it SUPERSEDES the measured base below.
+   The reported symptom was the demo's own headline and buttons reading
+   through ours. The measured stack bottomed out around 0.59 on the text side
+   and fell to fully transparent at the right edge, which is why a busy frame
+   (delivery, yellow-on-green) still showed its own type.
+
+   Two gradients on one element, painted bottom-first:
+     - to top   0.85 -> 0 : kills the demo's button row, which sits low in
+                            every screenshot because that is where a real
+                            site puts its CTAs
+     - to right 0.85 -> 0.30 : full strength across the headline, easing to a
+                            deliberate 0.30 floor under the offer card so the
+                            frame still reads as a photograph rather than
+                            going fully clear and letting type through
+
+   Opacity is 1 here: the alphas ARE the design, so they live in the colour
+   stops where they can be read, not multiplied by a second opacity nobody
+   remembers to check. Black rather than --con #141821 because Jason named
+   rgba(0,0,0,...) and a 0.85 tint of near-black is indistinguishable anyway.
+
+   This only ever ADDS darkness over what build-scrim measured, so every
+   per-frame 4.5:1 guarantee it published still holds — verified after the
+   change, not assumed. --scrim-floor drops to 0 because this replaces the
+   job R3's floor was invented to do. */
+.seq-scrim-base{
+  opacity:1;
+  background:
+    linear-gradient(to top,
+      rgba(0,0,0,.85) 0, rgba(0,0,0,.42) 34%, rgba(0,0,0,0) 68%),
+    linear-gradient(to right,
+      rgba(0,0,0,.85) 0, rgba(0,0,0,.85) var(--scrim-stop), rgba(0,0,0,.30) 100%);
+}
 /* max(), not +: --scrim-hold carries the OUTGOING frame's alpha for the length
    of the crossfade, so the heavier of the two frames' scrims is the one on
    screen while both images are. */
@@ -575,7 +607,12 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
    sample the band the text occupies rather than the whole left 55%, and publish
    a per-frame number for it. Until it does, this constant is the floor, and it
    is measured. */
-.hero-full{--scrim-floor:0.38}
+/* Was 0.38. Now 0: the base layer above carries 0.85 across the whole text
+   side, which is far heavier than the floor this constant was invented to
+   provide. Kept as a variable rather than deleted so the machinery, the
+   generated per-frame --scrim-extra and the tests around it all stay intact
+   if the design ever eases back. */
+.hero-full{--scrim-floor:0}
 .seq-scrim-floor{opacity:max(0, calc(var(--scrim-floor) - var(--scrim-extra, 0)))}
 
 .hero-grid{position:relative;z-index:1;display:grid;
@@ -845,8 +882,14 @@ a.seq-step-more:hover{border-color:var(--acc);color:var(--acc)}
    leaving a grey rectangle to read as a failed image load. */
 .card-shot-none{display:grid;place-items:center;align-content:center;gap:9px}
 .card-shot-mark{width:24px;height:24px;border-radius:50%;border:2px dashed var(--fam);opacity:.6}
+/* R12: --ph-text is set inline (assets/catalog-render.js's shotBg()) only
+   when a manifest supplied one -- the niche's own theme.text, which the
+   generator already verified clears 4.5:1 against theme.ground for all 32
+   manifests (minimum 11.15:1). A slug with no manifest data leaves --ph-text
+   undefined and this falls back to the pre-existing var(--tx-3), so nothing
+   changes for the true no-demo cards. */
 .card-shot-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--tx-3)}
+  text-transform:uppercase;color:var(--ph-text,var(--tx-3))}
 
 /* The text half stretches; the screenshot above it does not. Without this the
    CTA lands at a different height in every card of a row — the exact defect

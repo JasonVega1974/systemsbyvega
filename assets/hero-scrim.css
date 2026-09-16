@@ -64,37 +64,37 @@
  *
  *   slug                   p90 lum   bare    extra   eff a   ratio
  *   --------------------   -------   -----   -----   -----   -----
- *   auto-body               0.0121   16.92       0    0.34   17.23
+ *   auto-body               0.0117   17.02       0    0.34   17.32
  *   auto-repair             0.8587    1.16    0.40    0.60    5.19
- *   bbq-food-truck          0.3299    2.76       0    0.34    5.13
- *   bin-cleaning            0.2529    3.47       0    0.34    6.02
- *   car-detailing           0.3472    2.64       0    0.34    4.91
- *   caregiving              0.8898    1.12    0.41    0.61    5.19
- *   child-care              0.9655    1.03    0.44    0.63    5.27
- *   christmas-lights        0.1260    5.97       0    0.34    8.90
- *   commercial-cleaning     0.1174    6.27       0    0.34    9.21
- *   contracting             0.3062    2.95       0    0.34    5.35
- *   delivery                0.0161   15.89       0    0.34   16.56
- *   dj                      0.0385   11.86       0    0.34   14.11
- *   dog-walking             0.9333    1.07    0.43    0.62    5.26
- *   dumpster-rental         0.2338    3.70       0    0.34    6.32
- *   electrician             0.0834    7.87       0    0.34   10.72
- *   estate-sale             0.0959    7.20       0    0.34   10.11
- *   garage-sale             0.9336    1.07    0.43    0.62    5.26
+ *   bbq-food-truck          0.3322    2.75       0    0.34    5.10
+ *   bin-cleaning            0.2556    3.44       0    0.34    5.97
+ *   car-detailing           0.3486    2.63       0    0.34    4.87
+ *   caregiving              0.8906    1.12    0.41    0.61    5.18
+ *   child-care              0.9634    1.04    0.44    0.63    5.27
+ *   christmas-lights        0.1246    6.01       0    0.34    8.96
+ *   commercial-cleaning     0.1180    6.25       0    0.34    9.19
+ *   contracting             0.3066    2.94       0    0.34    5.35
+ *   delivery                0.0160   15.91       0    0.34   16.58
+ *   dj                      0.0379   11.95       0    0.34   14.15
+ *   dog-walking             0.9322    1.07    0.43    0.62    5.26
+ *   dumpster-rental         0.2349    3.69       0    0.34    6.30
+ *   electrician             0.0824    7.93       0    0.34   10.76
+ *   estate-sale             0.0951    7.24       0    0.34   10.14
+ *   garage-sale             0.9311    1.07    0.43    0.62    5.27
  *   hvac                    0.9634    1.04    0.44    0.63    5.27
- *   landscaping             0.1422    5.46       0    0.34    8.39
- *   mechanic                0.1579    5.05       0    0.34    7.95
- *   metal-fabrication       0.3145    2.88       0    0.34    5.36
+ *   landscaping             0.1428    5.45       0    0.34    8.38
+ *   mechanic                0.1584    5.04       0    0.34    7.93
+ *   metal-fabrication       0.3156    2.87       0    0.34    5.34
  *   moving                  0.7561    1.30    0.35    0.57    5.08
- *   painting                0.1613    4.97       0    0.34    7.89
+ *   painting                0.1614    4.97       0    0.34    7.88
  *   personal-assistant      0.9289    1.07    0.43    0.62    5.27
- *   personal-trainer        0.1467    5.34       0    0.34    8.40
- *   plumbing                0.0250   14.01       0    0.34   15.37
- *   pressure-washing        0.1325    5.75       0    0.34    8.68
+ *   personal-trainer        0.1460    5.36       0    0.34    8.41
+ *   plumbing                0.0245   14.10       0    0.34   15.42
+ *   pressure-washing        0.2414    3.60       0    0.34    6.21
  *   residential-cleaning    0.9453    1.06    0.43    0.62    5.22
- *   roofing                 0.2201    3.89       0    0.34    6.59
- *   sprinkler               0.1728    4.71       0    0.34    7.56
- *   tattoo-studio           0.0106   17.31       0    0.34   17.47
+ *   roofing                 0.2239    3.83       0    0.34    6.51
+ *   sprinkler               0.1728    4.71       0    0.34    7.55
+ *   tattoo-studio           0.0105   17.34       0    0.34   17.51
  *   window-cleaning         0.9434    1.06    0.43    0.62    5.22
  *
  *   bare  = contrast of white on the unscrimmed p90 pixel
