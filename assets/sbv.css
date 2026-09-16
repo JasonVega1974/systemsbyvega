@@ -325,7 +325,17 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+/* scroll-padding-top, on the scroll container, because .gnav is position:sticky
+   and therefore still covers whatever an anchor scrolls to. R16 turned the nav
+   items and several CTAs into same-page fragments (/#catalog, /#line), so a
+   heading landing UNDER the nav went from an edge case to the main navigation
+   path. One declaration here covers every fragment target, now and later —
+   preferable to scroll-margin-top scattered across each section, which is the
+   version that gets forgotten the next time a section is added.
+   Slightly more than the nav's own height so the heading clears it rather than
+   touching it. */
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:88px}
+@media (max-width:899px){html{scroll-padding-top:82px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 body{
