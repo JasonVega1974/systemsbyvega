@@ -504,7 +504,7 @@
     ['undo',    'Reset to defaults',
      'Put the site back to its example content and start over, whenever you want.'],
     ['calendar', 'Connect a booking link',
-     'Paste your Calendly, Google Calendar or Square link and a Book Now button appears in your header and footer automatically.'],
+     'Paste your Calendly, Google Calendar or Square link and a Book online button appears in your header and footer automatically.'],
     ['link', 'Connect your own domain',
      'Point your CNAME at ours and your site answers to yourdomain.com instead of the subdomain.'],
   ];
