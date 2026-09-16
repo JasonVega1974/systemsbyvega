@@ -1194,7 +1194,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
       <div id="teamAdminNote" class="tip-box" style="display:none;">🔒 Unlock <strong>Admin</strong> (top-right) to add or edit team members.</div>
       <div class="table-scroll"><table class="data-table">
-        <thead><tr><th>First Name</th><th>Last Name</th><th>Phone</th><th>Specialty</th><th>Role</th><th id="teamActionsHead" style="display:none;">Actions</th></tr></thead>
+        <thead><tr><th>First Name</th><th>Last Name</th><th>Phone</th><th>Email</th><th>Specialty</th><th>Role</th><th id="teamActionsHead" style="display:none;">Actions</th></tr></thead>
         <tbody id="teamBody"></tbody>
       </table></div>
       <div class="empty-note" id="teamEmpty" style="margin-top:.8rem;">No team members yet. Unlock Admin and select "+ Add Member" to build the roster.</div>
@@ -1375,6 +1375,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div class="form-row"><label>First Name</label><input type="text" id="mFirst"></div>
       <div class="form-row"><label>Last Name</label><input type="text" id="mLast"></div>
       <div class="form-row"><label>Phone</label><input type="tel" id="mPhone" placeholder="208-xxx-xxxx"></div>
+      <div class="form-row"><label>Email</label><input type="email" id="mEmail" placeholder="name@example.com"></div>
       <div class="form-row"><label>Specialty</label>
         <select id="mSpec">
           <option>Police / Law Enforcement</option>
@@ -1685,7 +1686,30 @@ function defaults() {
   return {
     schemaVersion: SCHEMA_VERSION,
     pin: '2121',
-    team: [],
+    team: [
+      { id: 'tm1', first: 'Tyson', last: 'Garten', phone: '208-941-3306', email: '', spec: 'Security Professional', role: 'Team Lead' },
+      { id: 'tm2', first: 'Ryan', last: 'Putnam', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm3', first: 'Kristin', last: 'Elam', phone: '208-880-2759', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm4', first: 'Claude', last: 'Demesmin', phone: '208-409-4444', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
+      { id: 'tm5', first: 'Allen', last: 'Taylor', phone: '208-571-8677', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm6', first: 'Austin', last: 'Agosta', phone: '714-924-6993', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
+      { id: 'tm7', first: 'Jason', last: 'Vega', phone: '925-698-4057', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
+      { id: 'tm8', first: 'Benjamin', last: 'Stacy', phone: '208-739-0966', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm9', first: 'Rick', last: 'Rowe', phone: '661-609-8578', email: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
+      { id: 'tm10', first: 'Patrick', last: 'Brown', phone: '208-504-5106', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm11', first: 'Taylor', last: 'Sherman', phone: '209-456-3499', email: '', spec: 'Police / Law Enforcement', role: 'Team Lead' },
+      { id: 'tm12', first: 'Colton', last: 'Watson', phone: '971-344-3733', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm13', first: 'Jimmy', last: 'Jobkar', phone: '816-377-9488', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm14', first: 'Ryan', last: 'Hein', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm15', first: 'Andrew', last: 'Elam', phone: '360-269-6440', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm16', first: 'Jimmy', last: 'Federico', phone: '', email: '', spec: 'Police / Law Enforcement', role: 'Team Lead' },
+      { id: 'tm17', first: 'Jon', last: 'Deputy', phone: '208-541-9990', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm18', first: 'Richard', last: 'Ingram', phone: '208-703-6051', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm19', first: 'Jay', last: 'Coulter', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm20', first: 'Rudy', last: 'Rudan', phone: '208-863-2968', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm21', first: 'Doug', last: 'Troudeau', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' },
+      { id: 'tm22', first: 'Austin', last: 'Stevenson', phone: '', email: '', spec: 'General / Trained Volunteer', role: 'Team Member' }
+    ],
     leaders: [
       { id: 'ld1', name: 'Roger Yadon', title: 'Senior Pastor', notes: 'Verified from thecelebration.church/our-team' }
     ],
@@ -2030,6 +2054,7 @@ function openMemberModal(id) {
   document.getElementById('mFirst').value = m ? m.first : '';
   document.getElementById('mLast').value = m ? m.last : '';
   document.getElementById('mPhone').value = m ? (m.phone || '') : '';
+  document.getElementById('mEmail').value = m ? (m.email || '') : '';
   document.getElementById('mSpec').value = m ? m.spec : 'General / Trained Volunteer';
   document.getElementById('mRole').value = m ? m.role : 'Team Member';
   openModalEl('memberModal');
@@ -2038,8 +2063,9 @@ async function saveMember() {
   const first = document.getElementById('mFirst').value.trim();
   const last = document.getElementById('mLast').value.trim();
   const phone = document.getElementById('mPhone').value.trim();
+  const email = document.getElementById('mEmail').value.trim();
   if (!first || !last) { await alertDialog('Missing name', 'A first and last name are both required.'); return; }
-  const data = { first, last, phone, spec: document.getElementById('mSpec').value, role: document.getElementById('mRole').value };
+  const data = { first, last, phone, email, spec: document.getElementById('mSpec').value, role: document.getElementById('mRole').value };
   if (editingMemberId) Object.assign(S.team.find(x => x.id === editingMemberId), data);
   else S.team.push(Object.assign({ id: 'tm' + Date.now() }, data));
   save(); closeModalEl('memberModal'); renderTeam(); renderSchedule(); renderCourses(); refreshDash();
@@ -2067,6 +2093,7 @@ function renderTeam() {
       <td style="font-weight:700;color:var(--tx);">${esc(m.first)}</td>
       <td style="font-weight:700;color:var(--tx);">${esc(m.last)}</td>
       <td>${m.phone ? `<a href="tel:${esc(String(m.phone).replace(/\D/g,''))}" style="color:var(--bl);">${esc(m.phone)}</a>` : '<span style="color:var(--tx3);">—</span>'}</td>
+      <td>${m.email ? `<a href="mailto:${esc(m.email)}" style="color:var(--bl);">${esc(m.email)}</a>` : '<span style="color:var(--tx3);">—</span>'}</td>
       <td><span class="spec-tag ${SPEC_CLASS[m.spec] || 'spec-general'}">${esc(m.spec)}</span></td>
       <td>${m.role === 'Team Lead' ? '<span class="lead-tag">★ TEAM LEAD</span>' : '<span style="color:var(--tx2);">Team Member</span>'}</td>
       ${adminOn ? `<td><button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;" onclick="openMemberModal('${m.id}')">Edit</button> <button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:#f87171;" onclick="deleteMember('${m.id}')">✕</button></td>` : ''}
