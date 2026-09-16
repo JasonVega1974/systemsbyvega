@@ -427,7 +427,7 @@
        A stale cached claim.js sends nothing here; a correct one prints the
        redirect. What Supabase then DOES with the value is a separate question
        — see the Network tab entry for /auth/v1/signup. */
-    var redirectTo = location.origin + '/sites/?confirmed=1';
+    var redirectTo = location.origin + '/?confirmed=1';
     if (authMode === 'up') console.log('[claim] signUp emailRedirectTo =', redirectTo);
 
     /* Sign-UP only, and only here. Saving on every availability check would

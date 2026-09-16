@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /* ============================================================================
-   build-catalog.js — pre-render the catalog into sites/index.html (and hand
+   build-catalog.js — pre-render the catalog into index.html (and hand
    its figures to every page that still needs one)
    ----------------------------------------------------------------------------
    Reads assets/data/niches.seed.json and writes the finished catalog markup,
    the niche <select>, the inline seed, and every masthead figure between
-   BUILD: markers. The catalog board itself lives on sites/index.html now
-   (Task 10 moved it off the root); index.html and platforms/index.html each
-   still need a subset of the same figures, so this file targets all three.
+   BUILD: markers. R16 moved the catalog board back onto index.html and
+   deleted sites/index.html; platforms/, services/, work/ and claim/ each
+   still need a subset of the same figures, so this file targets them too.
 
    WHY THIS EXISTS. The catalog is the product; it must be in the HTML. If the
    page drew itself from JavaScript, a visitor with JS disabled or a script that
@@ -21,15 +21,14 @@
    because both numbers were written out by a person. This removes that class
    of error entirely.
 
-   Ruling R1 — three files, three marker sets. inject() throws on a marker a
-   file does not declare, so each target below names exactly what it carries.
-   index.html carries TOTAL/OPEN/SITES for its proof strip, plus (Ruling R20)
-   SITES_ALL/SITES_STEP for the two other places that page says "32" in prose
-   — inject() cannot reuse one marker name twice in a file, so each spot gets
-   its own name, all fed the same fig.sites value. R6 replaced the featured
-   six with SITES_GRID, all thirty-two cards, and the two prose markers that
-   lived inside the sections R6 deleted (SITES_OFFER in the "two more ways"
-   strip, SITES_LINK in the featured band's All-32 button) went with them.
+   Ruling R1 — one marker set per file. inject() throws on a marker a file
+   does not declare, so each target below names exactly what it carries.
+   index.html carries TOTAL/OPEN/SITES for its proof strip, SITES_STEP for
+   the one remaining prose "32" in #how, and — since R16 — CATALOG,
+   NICHE_SELECT and EXTRAS_SCRIPT, the three that came across from the
+   deleted sites/index.html when the board and the registry form moved onto
+   the landing page. SITES_ALL and SITES_GRID left with the #sites band they
+   fed, which was the second, flatter listing of the same thirty-two rows.
 
    Run:  node tools/build-catalog.js          (from the repo root)
          node tools/build-catalog.js --check  (verify, write nothing; CI-safe)
@@ -47,20 +46,24 @@ const { inject } = require('./lib/inject');
 
 const CHECK = process.argv.includes('--check');
 
-/* Two files, different marker sets, and now a third. The catalog lives on
-   /sites/ now, but the landing page's proof strip still needs its three
+/* Several files, different marker sets. The catalog is back on `/` after
+   R16, and the landing page's proof strip still needs its three
    figures — and those figures must come from the same R.figures() call as
    everything else, or the landing page becomes a fourth place a count is
    written down. platforms/index.html only ever needed the seed script, which
    it used to carry by hand (see the removed TODO there). inject() throws on a
    missing marker, so each target names exactly what it carries. */
 const TARGETS = [
+  /* R16 folded /sites/ into the landing page, so index.html carries the
+     catalog board's markers now — CATALOG, NICHE_SELECT and EXTRAS_SCRIPT all
+     moved here from the deleted sites/index.html target. SITES_GRID and
+     SITES_ALL went the other way: the flat #sites grid they fed WAS the
+     duplicate the board replaces, so both markers left the file and this
+     list with it. */
   { file: path.join(ROOT, 'index.html'),
-    markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_ALL', 'SITES_STEP',
-               'HERO_DEMO_BTN', 'SITES_GRID', 'SEED_SCRIPT', 'INCLUDED'] },
-  { file: path.join(ROOT, 'sites', 'index.html'),
-    markers: ['TOTAL', 'OPEN', 'SITES', 'THESIS_OPEN',
-              'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT', 'INCLUDED'] },
+    markers: ['TOTAL', 'OPEN', 'SITES', 'SITES_STEP', 'HERO_DEMO_BTN',
+              'CATALOG', 'NICHE_SELECT', 'SEED_SCRIPT', 'EXTRAS_SCRIPT',
+              'INCLUDED'] },
   { file: path.join(ROOT, 'platforms', 'index.html'),
     markers: ['SEED_SCRIPT', 'PLAT_INLINE'] },
   /* Finding 3 of the final whole-branch review: three more pages hand-typed
@@ -219,7 +222,7 @@ function main() {
     '\n<script>window.SBV_EXTRAS=' + JSON.stringify(extras) + ';</script>\n';
 
   /* Every value ANY target might ask for, built once from the one R.figures()
-     call — so index.html, sites/index.html and platforms/index.html cannot
+     call — so index.html and platforms/index.html cannot
      print three different counts for the same seed. Each target's own
      `markers` list decides which of these it actually receives. */
   const VALUES = {
@@ -227,12 +230,11 @@ function main() {
     TOTAL:        String(fig.total),
     OPEN:         String(fig.open),
     SITES:        String(fig.sites),
-    /* Ruling R20: two more spots on index.html print the same site count in
-       prose ("All 32 of them.", "32 built and live…"). inject() splices
-       between the FIRST open/close pair for a marker name, so one name
-       cannot appear twice in a file — hence distinct marker names, all fed
-       this same fig.sites value, never typed by hand a second time. */
-    SITES_ALL:    String(fig.sites),
+    /* Ruling R20 gave index.html distinct marker names for each prose spot
+       that prints the site count, because inject() splices between the FIRST
+       open/close pair and so a name cannot repeat in one file. R16 deleted
+       the #sites band and SITES_ALL with it; SITES_STEP ("32 built and
+       live…" in #how) is the one that remains, still fed this same fig. */
     SITES_STEP:   String(fig.sites),
     /* Finding 3: services/index.html and work/index.html each print the
        site count once in prose; platforms/index.html prints the in-line
@@ -252,12 +254,12 @@ function main() {
     /* The same list on `/` and `/sites/`, from one function, so the two
        cannot drift apart the way two hand-kept copies would. */
     INCLUDED:     '\n' + R.included() + '\n',
-    /* The landing page's flat grid of all thirty-two turnkey sites. Same
-       seed rows and same SBV_EXTRAS lookup the catalog board reads, so the
-       two surfaces cannot disagree about which sites exist or what the demo
-       on each one is called. Server-rendered for the same reason the catalog
-       is: with JavaScript off, the grid is still the whole grid. */
-    SITES_GRID:   '\n' + R.siteGrid(seed.niches, extras) + '\n',
+    /* The catalog board — plates, cards, chips and all — now on `/`. It is
+       the ONLY listing of the thirty-two on that page: R16 deleted the flat
+       SITES_GRID band it used to sit alongside on /sites/, because the board
+       and the grid were the same thirty-two rows twice on one page.
+       Server-rendered for the same reason it always was: with JavaScript off
+       the board is still the whole board. */
     CATALOG:      '\n' + R.catalog(seed.families, seed.niches, {}, extras) + '\n',
     NICHE_SELECT: '\n' + R.nicheSelect(seed.niches) + '\n',
     SEED_SCRIPT:  seedScript,

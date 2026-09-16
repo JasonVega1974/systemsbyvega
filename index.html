@@ -56,9 +56,10 @@
      blocks a first paint. Root-relative so the one tag works on the apex
      and on every tenant subdomain without knowing which it is on. -->
 <script>
-/* Top frame only. This page embeds no iframes (Task 10 moved the catalog,
-   and with it the last hand-authored preview cards, to /sites/), but the
-   guard costs nothing to keep and matches every other page's tag verbatim. */
+/* Top frame only, and no longer merely defensive: R16 brought the catalog
+   board back onto this page, and the preview overlay opens /sites/<slug>/ in
+   a full-screen iframe from here. Those demo pages carry this same guard, so
+   a demo viewed in the overlay is not counted as a second pageview. */
 (function () {
   if (window.self !== window.top) return;
   var s = document.createElement("script");
@@ -69,14 +70,16 @@
 </script>
 <script>
 /* Ad creatives still carry /#catalog, /#websites, /#line and /#founder from
-   when this page was the catalog. All four anchors moved off this page —
-   the first two to /sites/ in general, #line to the registry form that still
-   exists at that same id on /sites/, and #founder to the bio content that
-   now lives on /about/. Retire this once the creatives stop pointing here. */
+   when this page was the catalog. R16 made it the catalog again, so #catalog
+   and #line are REAL SECTIONS on this page now and must not be bridged
+   anywhere: sending them to /sites/ would hit R16's new 301 and come
+   straight back here, which is a redirect loop dressed up as a bridge. Only
+   two anchors still need a hop — #websites, which was never an id on this
+   page and means the board, and #founder, whose bio now lives on /about/.
+   Retire this once the creatives stop pointing here. */
 (function () {
   var h = location.hash;
-  if (h === '#catalog' || h === '#websites') location.replace('/sites/');
-  else if (h === '#line') location.replace('/sites/#line');
+  if (h === '#websites') location.replace('/#catalog');
   else if (h === '#founder') location.replace('/about/');
 }());
 </script>
@@ -92,17 +95,17 @@
 <nav class="gnav" aria-label="Main">
   <div class="gnav-in">
     <a class="gnav-brand" href="/"><img class="sq" src="/assets/logo-mark.png" srcset="/assets/logo-mark.png 1x, /assets/logo-mark@2x.png 2x, /assets/logo-mark@3x.png 3x" width="24" height="24" alt="" decoding="async"> Systems by Vega</a>
-    <div class="gnav-links"><a class="gnav-link" href="/sites/">Sites</a><a class="gnav-link" href="/platforms/">Platforms</a><a class="gnav-link" href="/services/">Services</a><a class="gnav-link" href="/work/">Work</a><a class="gnav-link" href="/about/">About</a></div>
+    <div class="gnav-links"><a class="gnav-link is-active" href="/#catalog" aria-current="page">Sites</a><a class="gnav-link" href="/platforms/">Platforms</a><a class="gnav-link" href="/services/">Services</a><a class="gnav-link" href="/work/">Work</a><a class="gnav-link" href="/about/">About</a></div>
     <div class="gnav-tools">
-      <a class="btn btn-pri gnav-cta" href="/sites/#line">Get in line</a>
+      <a class="btn btn-pri gnav-cta" href="/#line">Get in line</a>
       <button type="button" class="gnav-burger" id="gnav-burger"
               aria-expanded="false" aria-controls="gnav-drawer" aria-label="Menu">
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
       </button>
     </div>
   </div>
-  <div class="gnav-drawer" id="gnav-drawer" hidden><a class="gnav-link" href="/sites/">Sites</a><a class="gnav-link" href="/platforms/">Platforms</a><a class="gnav-link" href="/services/">Services</a><a class="gnav-link" href="/work/">Work</a><a class="gnav-link" href="/about/">About</a>
-    <a class="btn btn-pri" href="/sites/#line">Get in line</a>
+  <div class="gnav-drawer" id="gnav-drawer" hidden><a class="gnav-link is-active" href="/#catalog" aria-current="page">Sites</a><a class="gnav-link" href="/platforms/">Platforms</a><a class="gnav-link" href="/services/">Services</a><a class="gnav-link" href="/work/">Work</a><a class="gnav-link" href="/about/">About</a>
+    <a class="btn btn-pri" href="/#line">Get in line</a>
   </div>
 </nav><!-- /BUILD:NAV -->
 <main>
@@ -144,7 +147,7 @@
       <!-- The two CTAs, side by side, and the ONLY place the price appears in
            the hero now that the offer card is gone. -->
       <div class="plate-cta">
-        <a class="btn btn-pri" href="/sites/">Get your site &mdash; $99</a>
+        <a class="btn btn-pri" href="#catalog">Get your site &mdash; $99</a>
         <!-- The trigger for the preview overlay, GENERATED — see
              R.heroDemoBtn() in assets/catalog-render.js. Only the data-slug
              needs generating, and it is the whole reason this is a marker: it
@@ -355,70 +358,192 @@
   </div>
 </section>
 
-<!-- ══════════════════════════ THE SITES ══════════════════════════════════ -->
-<!-- Section 3. The whole shop, at once — it replaces the "featured six plus a
-     button promising twenty-six more" band that stood here before.
+<!-- ══════════════════════════ THE CATALOG ═══════════════════════════════ -->
+<!-- Section 3, and the product itself. R16 moved the whole catalog board here
+     from /sites/ and DELETED that page; this section is the reason the move
+     happened, and /sites/ now 301s to this page.
 
-     WHY ALL OF THEM. The six were chosen by hand, and choosing implies the
-     other twenty-six are the ones that were not good enough to show. The
-     product's actual claim is the opposite: thirty-two finished sites, any of
-     which can be running under a buyer's name today. A grid that shows them
-     all makes that claim visually instead of asserting it in a button, and it
-     removes the extra click between "I am interested" and "show me mine".
+     IT REPLACED #sites, IT DOES NOT JOIN IT. The band that stood here was a
+     flat grid of the same thirty-two rows, rendered by R.siteGrid() through a
+     BUILD:SITES_GRID marker. Keeping both would have printed every niche
+     twice on one page, so the grid and its marker are gone and the board —
+     the richer surface, with family plates, status tokens, prices, the filter
+     chips, the ledger numbering and the live database repaint — is the only
+     listing of the thirty-two on this site.
 
-     NO FILTER CHIPS, DELIBERATELY. /sites/ is where filtering belongs, and it
-     already has chips — wireFilters() in assets/sbv.js binds to #filterbar and
-     drives #catalog-root, and both of those ids are that page's. Reusing them
-     here would hand this grid to the live catalog repaint, which renders
-     FAMILY PLATES; this grid is flat by design. Giving `/` its own second
-     filter system instead would be two implementations of one idea, for a
-     grid whose entire argument is that you can see all of it without filtering.
+     THE CHIPS AND THE LIVE REPAINT CAME WITH IT. wireFilters()/applyFilter()
+     in assets/sbv.js bind #filterbar and drive #catalog-root, and paint()
+     re-renders #catalog-root from live sbv_niches rows after loadLive()
+     resolves, then re-runs observe(), applyFilter(), enhanceCards() and the
+     claim badges over the new cards. Every one of those ids is on THIS page
+     now; none of them moved or changed name, which is why none of that code
+     needed rewriting for a new host page.
 
-     NO FAMILY PLATES either, for the same reason: the grouping is /sites/'s
-     structure. Seed `sort` order keeps the families adjacent anyway, so the
-     shape is still legible without headings asserting it.
-
-     BAND: dark. #compare above is white and #platforms below is paper, so
-     dark is the only ground that repeats neither (see THE BAND SYSTEM in
-     sbv.css). It also happens to be the right ground for thirty-two bright
-     screenshots, which is the same reason the demo pages frame their own
-     galleries this way. Ruling R18: #sites joins the border-top:0 list too. -->
-<section class="section" id="sites">
+     BAND: paper, unchanged from /sites/. The card is a white surface on a
+     paper ground — "white" is what --surface resolves to on paper, and the
+     .nm modal joins the same token group so "the modal is that card,
+     enlarged" stays true (see THE BAND SYSTEM in assets/sbv.css). #compare
+     above is white and #line below is white, so paper repeats neither. -->
+<section class="section" id="catalog">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">The whole shop</span>
-      <h2>Every site I have built. <br>All <!-- BUILD:SITES_ALL -->32<!-- /BUILD:SITES_ALL --> of them.</h2>
+      <span class="eyebrow">The gallery</span>
+      <h2>Click into any demo. <br>It's the real, live site.</h2>
       <p class="lede" style="margin-top:12px">
-        Screenshots, not renderings. Open any one of them and the real site loads right here
-        on this page &mdash; the same site that would be running under your name.
+        These aren't mockups — every card below is a fully functional site running its own booking
+        form, pricing logic, and signature interaction. Explore one, then tell me which business
+        it's for.
       </p>
     </div>
 
-    <!-- Generated. The wrapper is hand-kept and the cards are not: the same
-         seed rows /sites/ renders, through R.siteGrid(), so a niche added to
-         the seed joins this grid on the next build and one removed leaves it.
-
-         BUILD-TIME ONLY, unlike #catalog-root on /sites/ — paint() in
-         assets/sbv.js deliberately does not re-render this grid from live
-         database rows, because the demo brand on each card is not a database
-         column. The reasoning is written out at that skip in sbv.js. -->
-    <div class="sgrid">
-<!-- BUILD:SITES_GRID -->
-<a class="scard reveal js-preview" data-slug="estate-sale" href="/sites/estate-sale/"><span class="scard-shot" style="background:linear-gradient(135deg,#0C1614 0%,#0C1614 62%,#C89A3F 100%);--ph-text:#F2EDE0"><img src="/assets/shots/rotator/estate-sale.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Estate Sales demo site."></span><span class="scard-body"><span class="scard-brand">Magpie &amp; Mantel Estate Sales</span><span class="scard-trade">Estate Sales</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="garage-sale" href="/sites/garage-sale/"><span class="scard-shot" style="background:linear-gradient(135deg,#FFF6E9 0%,#FFF6E9 62%,#EF8A1F 100%);--ph-text:#33241A"><img src="/assets/shots/rotator/garage-sale.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Garage Sales demo site."></span><span class="scard-body"><span class="scard-brand">Sunup Garage Sales</span><span class="scard-trade">Garage Sales</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="delivery" href="/sites/delivery/"><span class="scard-shot" style="background:linear-gradient(135deg,#0B0E14 0%,#0B0E14 62%,#C8F31D 100%);--ph-text:#F2F5F9"><img src="/assets/shots/rotator/delivery.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Delivery &amp; Courier demo site."></span><span class="scard-body"><span class="scard-brand">Swiftwater Courier Co.</span><span class="scard-trade">Delivery &amp; Courier</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="dumpster-rental" href="/sites/dumpster-rental/"><span class="scard-shot" style="background:linear-gradient(135deg,#0e1f18 0%,#0e1f18 62%,#FFC400 100%);--ph-text:#F2E9D8"><img src="/assets/shots/rotator/dumpster-rental.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Dumpster Rental demo site."></span><span class="scard-body"><span class="scard-brand">Sawtooth Dumpster Co.</span><span class="scard-trade">Dumpster Rental</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="moving" href="/sites/moving/"><span class="scard-shot" style="background:linear-gradient(135deg,#F0E7D8 0%,#F0E7D8 62%,#2F6B4F 100%);--ph-text:#2E2A24"><img src="/assets/shots/rotator/moving.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Moving demo site."></span><span class="scard-body"><span class="scard-brand">Osprey Moving Co.</span><span class="scard-trade">Moving</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="pressure-washing" href="/sites/pressure-washing/"><span class="scard-shot" style="background:linear-gradient(135deg,#071e29 0%,#071e29 62%,#22D3EE 100%);--ph-text:#EAF7FB"><img src="/assets/shots/rotator/pressure-washing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Pressure Washing demo site."></span><span class="scard-body"><span class="scard-brand">Grit &amp; Gleam Powerwashing</span><span class="scard-trade">Pressure Washing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="bin-cleaning" href="/sites/bin-cleaning/"><span class="scard-shot" style="background:linear-gradient(135deg,#050f1c 0%,#050f1c 62%,#4ea4e6 100%);--ph-text:#e6f4ff"><img src="/assets/shots/rotator/bin-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Bin Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Prime Bin Cleaning</span><span class="scard-trade">Bin Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="landscaping" href="/sites/landscaping/"><span class="scard-shot" style="background:linear-gradient(135deg,#101A13 0%,#101A13 62%,#8177F2 100%);--ph-text:#F2F0E6"><img src="/assets/shots/rotator/landscaping.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Landscaping demo site."></span><span class="scard-body"><span class="scard-brand">Larkspur &amp; Ledge Landscape Co.</span><span class="scard-trade">Landscaping</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="painting" href="/sites/painting/"><span class="scard-shot" style="background:linear-gradient(135deg,#131110 0%,#131110 62%,#C97B63 100%);--ph-text:#F4EDE3"><img src="/assets/shots/rotator/painting.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Painting demo site."></span><span class="scard-body"><span class="scard-brand">Bristlecone Paint Co.</span><span class="scard-trade">Painting</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="roofing" href="/sites/roofing/"><span class="scard-shot" style="background:linear-gradient(135deg,#0A0F14 0%,#0A0F14 62%,#B85B28 100%);--ph-text:#EDF2F6"><img src="/assets/shots/rotator/roofing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Roofing demo site."></span><span class="scard-body"><span class="scard-brand">Storm Ridge Roofing</span><span class="scard-trade">Roofing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="residential-cleaning" href="/sites/residential-cleaning/"><span class="scard-shot" style="background:linear-gradient(135deg,#F2FAF6 0%,#F2FAF6 62%,#08694A 100%);--ph-text:#10251D"><img src="/assets/shots/rotator/residential-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the House Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Yarrow &amp; Broom Cleaning Co.</span><span class="scard-trade">House Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="commercial-cleaning" href="/sites/commercial-cleaning/"><span class="scard-shot" style="background:linear-gradient(135deg,#0E1519 0%,#0E1519 62%,#2F9AAC 100%);--ph-text:#E8EDF0"><img src="/assets/shots/rotator/commercial-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Office Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Keyholder Facility Care</span><span class="scard-trade">Office Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="window-cleaning" href="/sites/window-cleaning/"><span class="scard-shot" style="background:linear-gradient(135deg,#F3F9FB 0%,#F3F9FB 62%,#22ACC4 100%);--ph-text:#16272E"><img src="/assets/shots/rotator/window-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Window Cleaning demo site."></span><span class="scard-body"><span class="scard-brand">Pane &amp; Prairie Window Co.</span><span class="scard-trade">Window Cleaning</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="sprinkler" href="/sites/sprinkler/"><span class="scard-shot" style="background:linear-gradient(135deg,#081419 0%,#081419 62%,#2FB37A 100%);--ph-text:#EAF4F1"><img src="/assets/shots/rotator/sprinkler.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Sprinkler &amp; Irrigation demo site."></span><span class="scard-body"><span class="scard-brand">Riserline Irrigation Co.</span><span class="scard-trade">Sprinkler &amp; Irrigation</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="christmas-lights" href="/sites/christmas-lights/"><span class="scard-shot" style="background:linear-gradient(135deg,#0C1A20 0%,#0C1A20 62%,#E8B04B 100%);--ph-text:#EAF2F5"><img src="/assets/shots/rotator/christmas-lights.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Christmas Lights demo site."></span><span class="scard-body"><span class="scard-brand">Cedar &amp; Filament Holiday Lighting</span><span class="scard-trade">Christmas Lights</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="car-detailing" href="/sites/car-detailing/"><span class="scard-shot" style="background:linear-gradient(135deg,#0E131A 0%,#0E131A 62%,#2DD4CE 100%);--ph-text:#D9E6EF"><img src="/assets/shots/rotator/car-detailing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Car Detailing demo site."></span><span class="scard-body"><span class="scard-brand">Kestrel Detail Co.</span><span class="scard-trade">Car Detailing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="auto-repair" href="/sites/auto-repair/"><span class="scard-shot" style="background:linear-gradient(135deg,#F5EFE2 0%,#F5EFE2 62%,#B3271E 100%);--ph-text:#2A2118"><img src="/assets/shots/rotator/auto-repair.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Auto Repair demo site."></span><span class="scard-body"><span class="scard-brand">Rimrock Garage</span><span class="scard-trade">Auto Repair</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="auto-body" href="/sites/auto-body/"><span class="scard-shot" style="background:linear-gradient(135deg,#16121A 0%,#16121A 62%,#B02E58 100%);--ph-text:#F2EDF6"><img src="/assets/shots/rotator/auto-body.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Auto Body demo site."></span><span class="scard-body"><span class="scard-brand">Ironwood Collision Co.</span><span class="scard-trade">Auto Body</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="mechanic" href="/sites/mechanic/"><span class="scard-shot" style="background:linear-gradient(135deg,#0D1110 0%,#0D1110 62%,#2FA85D 100%);--ph-text:#EFF3F0"><img src="/assets/shots/rotator/mechanic.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Mobile Mechanic demo site."></span><span class="scard-body"><span class="scard-brand">Gravel &amp; Gasket Mobile Mechanic</span><span class="scard-trade">Mobile Mechanic</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="plumbing" href="/sites/plumbing/"><span class="scard-shot" style="background:linear-gradient(135deg,#080B12 0%,#080B12 62%,#2E6FF2 100%);--ph-text:#EAF0FB"><img src="/assets/shots/rotator/plumbing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Plumbing demo site."></span><span class="scard-body"><span class="scard-brand">Cascade &amp; Copper Plumbing</span><span class="scard-trade">Plumbing</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="electrician" href="/sites/electrician/"><span class="scard-shot" style="background:linear-gradient(135deg,#0A0D1C 0%,#0A0D1C 62%,#6C63FF 100%);--ph-text:#EAF0FF"><img src="/assets/shots/rotator/electrician.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Electrician demo site."></span><span class="scard-body"><span class="scard-brand">Voltridge Electric</span><span class="scard-trade">Electrician</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="hvac" href="/sites/hvac/"><span class="scard-shot" style="background:linear-gradient(135deg,#F2F7FB 0%,#F2F7FB 62%,#1E6FB0 100%);--ph-text:#152435"><img src="/assets/shots/rotator/hvac.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Heating &amp; Air demo site."></span><span class="scard-body"><span class="scard-brand">Whitecloud Heating &amp; Air</span><span class="scard-trade">Heating &amp; Air</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="contracting" href="/sites/contracting/"><span class="scard-shot" style="background:linear-gradient(135deg,#151109 0%,#151109 62%,#f5a623 100%);--ph-text:#f5efe3"><img src="/assets/shots/rotator/contracting.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Contracting demo site."></span><span class="scard-body"><span class="scard-brand">Summit &amp; Stone Contracting</span><span class="scard-trade">Contracting</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="metal-fabrication" href="/sites/metal-fabrication/"><span class="scard-shot" style="background:linear-gradient(135deg,#14181d 0%,#14181d 62%,#FF6B1A 100%);--ph-text:#EDF1F5"><img src="/assets/shots/rotator/metal-fabrication.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Metal Fabrication demo site."></span><span class="scard-body"><span class="scard-brand">Black Anvil Fabrication</span><span class="scard-trade">Metal Fabrication</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="dog-walking" href="/sites/dog-walking/"><span class="scard-shot" style="background:linear-gradient(135deg,#F7FAFD 0%,#F7FAFD 62%,#3B9AE1 100%);--ph-text:#22364A"><img src="/assets/shots/rotator/dog-walking.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Dog Walking demo site."></span><span class="scard-body"><span class="scard-brand">Bluebird &amp; Biscuit Pet Care</span><span class="scard-trade">Dog Walking</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="child-care" href="/sites/child-care/"><span class="scard-shot" style="background:linear-gradient(135deg,#FDF7EF 0%,#FDF7EF 62%,#7A5BA6 100%);--ph-text:#3A3128"><img src="/assets/shots/rotator/child-care.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Child Care demo site."></span><span class="scard-body"><span class="scard-brand">Huckleberry Sitters</span><span class="scard-trade">Child Care</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="caregiving" href="/sites/caregiving/"><span class="scard-shot" style="background:linear-gradient(135deg,#FAF3E7 0%,#FAF3E7 62%,#7C9473 100%);--ph-text:#3A342C"><img src="/assets/shots/rotator/caregiving.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Caregiving demo site."></span><span class="scard-body"><span class="scard-brand">Hearth &amp; Home Companion Care</span><span class="scard-trade">Caregiving</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="personal-trainer" href="/sites/personal-trainer/"><span class="scard-shot" style="background:linear-gradient(135deg,#14181c 0%,#14181c 62%,#FF5A2E 100%);--ph-text:#EDEDE6"><img src="/assets/shots/rotator/personal-trainer.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Personal Trainer demo site."></span><span class="scard-body"><span class="scard-brand">Cora Vale Fitness</span><span class="scard-trade">Personal Trainer</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="tattoo-studio" href="/sites/tattoo-studio/"><span class="scard-shot" style="background:linear-gradient(135deg,#0a0a0d 0%,#0a0a0d 62%,#c42b3d 100%);--ph-text:#ede4d3"><img src="/assets/shots/rotator/tattoo-studio.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Tattoo Studio demo site."></span><span class="scard-body"><span class="scard-brand">Static Rose Tattoo</span><span class="scard-trade">Tattoo Studio</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="dj" href="/sites/dj/"><span class="scard-shot" style="background:linear-gradient(135deg,#000000 0%,#000000 62%,#3D8BFF 100%);--ph-text:#EAF2FF"><img src="/assets/shots/rotator/dj.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the DJ demo site."></span><span class="scard-body"><span class="scard-brand">DJ Nova</span><span class="scard-trade">DJ</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="bbq-food-truck" href="/sites/bbq-food-truck/"><span class="scard-shot" style="background:linear-gradient(135deg,#171310 0%,#171310 62%,#E8590C 100%);--ph-text:#F6EBD9"><img src="/assets/shots/rotator/bbq-food-truck.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the BBQ Food Truck demo site."></span><span class="scard-body"><span class="scard-brand">Cinder Hog BBQ</span><span class="scard-trade">BBQ Food Truck</span><span class="scard-go">Preview →</span></span></a><a class="scard reveal js-preview" data-slug="personal-assistant" href="/sites/personal-assistant/"><span class="scard-shot" style="background:linear-gradient(135deg,#F4F2EC 0%,#F4F2EC 62%,#1C5E59 100%);--ph-text:#22201C"><img src="/assets/shots/rotator/personal-assistant.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Personal Assistant demo site."></span><span class="scard-body"><span class="scard-brand">Wrenfield &amp; Co.</span><span class="scard-trade">Personal Assistant</span><span class="scard-go">Preview →</span></span></a>
-<!-- /BUILD:SITES_GRID -->
+    <div class="example-note reveal" role="note">
+      <span class="example-note__badge">Example names only</span>
+      <p>The business names, logos, and photos on every card and demo below are placeholders used
+        to show each template in a real-feeling context. Nearly all of these are placeholders, not
+        actual businesses — the one exception is noted above. Pick the template closest to your
+        trade and I'll rebuild it with <strong>your</strong> business name, branding, service area,
+        and pricing.</p>
     </div>
 
-    <p class="fine reveal" style="margin-top:26px;max-width:70ch">
-      <strong>Nearly every business name above is an example</strong> &mdash; a demo built to show the
-      template in action, not a real company. One exception: Prime Bin Cleaning is a real operator
-      running on this exact template.
-    </p>
-
-    <div class="catalog-cta reveal">
-      <p class="catalog-cta-lead">Pick the one closest to your trade, claim your city, and it is
-        yours the same day &mdash; rebuilt under your name, with your admin behind it.</p>
-      <a class="btn btn-pri" href="/sites/">Pick your trade &rarr;</a>
+    <!-- Thirty-eight plates is a wall to a first-time visitor. These cut it to
+         four short boards. Rendered in the HTML rather than injected; the bar
+         starts hidden and applyFilter() in sbv.js recomputes every count from
+         the DOM before it unhides, so the numbers below are inert fallbacks a
+         visitor never sees. They are kept in sync anyway. -->
+    <div class="filterbar" id="filterbar" hidden>
+      <div class="chips" role="group" aria-label="Filter the catalog">
+        <button type="button" class="chip" data-filter="" aria-pressed="true">
+          <span>Everything</span><b class="chip-n" data-count="">38</b>
+        </button>
+        <button type="button" class="chip" data-filter="is-open" aria-pressed="false">
+          <i class="dot" aria-hidden="true"></i>
+          <span>Open now</span><b class="chip-n" data-count="is-open">3</b>
+        </button>
+        <button type="button" class="chip" data-filter="is-in-line" aria-pressed="false">
+          <i class="dot" aria-hidden="true"></i>
+          <span>In line</span><b class="chip-n" data-count="is-in-line">10</b>
+        </button>
+        <button type="button" class="chip" data-filter="is-website-only" aria-pressed="false">
+          <i class="dot" aria-hidden="true"></i>
+          <span>Website only</span><b class="chip-n" data-count="is-website-only">25</b>
+        </button>
+      </div>
+      <p class="filter-count" id="filter-count" role="status" aria-live="polite">
+        <span>On the board:</span> <b id="fc-n">38</b>/<b id="fc-t">38</b>
+      </p>
     </div>
+
+    <div id="catalog-root">
+      <!-- BUILD:CATALOG -->
+<div class="family" data-fam="sale-resale" style="--fam:var(--fam-sale-resale)"><div class="plate-head reveal"><span class="plate-no">Plate SR</span><h2 class="plate-title">Sale &amp; Resale</h2></div><p class="plate-note">Businesses that run on other people&#39;s things — the sale, the lot, the booth.</p><div class="grid"><article class="entry sheet reveal is-open" data-fam="sale-resale" id="n-estate-sales"><div class="card-shot"><img src="/assets/shots/platforms/estatesalebiz.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the EstateSaleBiz site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 001</span><span class="tok open">Open now</span></span><h3>EstateSaleBiz</h3><p class="job">Run the whole sale when a household has to be emptied — pricing, staffing, and the day itself.</p><div class="entry-foot"><p class="card-price">$497 + $39/mo · 3 cities</p><a class="card-go" href="https://estatesalebiz.com"><span>See the deal</span><span class="go-arrow" aria-hidden="true">→</span></a><p class="card-note">estatesalebiz.com</p></div></div></article><article class="entry sheet reveal is-open" data-fam="sale-resale" id="n-garage-sales"><div class="card-shot"><img src="/assets/shots/platforms/garagesalebiz.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the GarageSaleBiz site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 002</span><span class="tok open">Open now</span></span><h3>GarageSaleBiz</h3><p class="job">Run other people&#39;s garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.</p><div class="entry-foot"><p class="card-price">$249 once · 3 cities</p><a class="card-go" href="https://garagesalebiz.com"><span>See the deal</span><span class="go-arrow" aria-hidden="true">→</span></a><p class="card-note">garagesalebiz.com</p></div></div></article><article class="entry sheet reveal is-in-line" data-fam="sale-resale" id="n-local-auctions"><div class="card-shot card-shot-none"><span class="card-shot-mark" aria-hidden="true"></span><span class="card-shot-label">No demo built yet</span></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 003</span><span class="tok wait">In line</span></span><h3>Local Auctions</h3><p class="job">Run the bidding for estates, farms, and storage lots — catalog, consignors, gavel.</p><p class="caveat">Auctioneer licensing varies by state. Check yours before you get in line.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="local-auctions"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a></div></div></article><article class="entry sheet reveal is-open" data-fam="sale-resale" id="n-consignment-vintage"><div class="card-shot"><img src="/assets/shots/platforms/consignmentbiz.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the ConsignmentBiz site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 004</span><span class="tok open">Open now</span></span><h3>ConsignmentBiz</h3><p class="job">Sell other people&#39;s furniture and finds on a split, without owning the inventory.</p><div class="entry-foot"><p class="card-price">$197 once · 1 city</p><a class="card-go" href="https://consignmentbiz.com"><span>See the deal</span><span class="go-arrow" aria-hidden="true">→</span></a><p class="card-note">consignmentbiz.com</p></div></div></article><article class="entry sheet reveal is-in-line" data-fam="sale-resale" id="n-market-vendors"><div class="card-shot card-shot-none"><span class="card-shot-mark" aria-hidden="true"></span><span class="card-shot-label">No demo built yet</span></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 005</span><span class="tok wait">In line</span></span><h3>Market Vendors</h3><p class="job">Be the booth directory and sign-up desk for the markets in your county.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="market-vendors"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="sale-resale" id="n-estate-sale"><div class="card-shot" style="background:linear-gradient(135deg,#0C1614 0%,#0C1614 62%,#C89A3F 100%);--ph-text:#F2EDE0"><img src="/assets/shots/rotator/estate-sale.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Estate Sales site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 006</span><span class="tok site">Website only</span></span><h3>Estate Sales</h3><p class="card-brand">Magpie &amp; Mantel Estate Sales</p><p class="job">Run the sale when a whole household has to be cleared — priced, staffed, and handed back broom-clean.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="estate-sale" data-name="Estate Sales"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="estate-sale" hidden></p><a class="card-alt js-preview" data-slug="estate-sale" href="/sites/estate-sale/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="sale-resale" id="n-garage-sale"><div class="card-shot" style="background:linear-gradient(135deg,#FFF6E9 0%,#FFF6E9 62%,#EF8A1F 100%);--ph-text:#33241A"><img src="/assets/shots/rotator/garage-sale.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Garage Sales site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">SR · N° 007</span><span class="tok site">Website only</span></span><h3>Garage Sales</h3><p class="card-brand">Sunup Garage Sales</p><p class="job">Run other people&#39;s garage sales for them — sorted, priced, signed, staffed, and cleared by Sunday night.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="garage-sale" data-name="Garage Sales"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="garage-sale" hidden></p><a class="card-alt js-preview" data-slug="garage-sale" href="/sites/garage-sale/">See the demo →</a></div></div></article></div></div><div class="family" data-fam="haul-clear" style="--fam:var(--fam-haul-clear)"><div class="plate-head reveal"><span class="plate-no">Plate HC</span><h2 class="plate-title">Haul &amp; Clear</h2></div><p class="plate-note">Something needs to leave the property, and someone has to come get it.</p><div class="grid"><article class="entry sheet reveal is-in-line" data-fam="haul-clear" id="n-junk-removal"><div class="card-shot card-shot-none"><span class="card-shot-mark" aria-hidden="true"></span><span class="card-shot-label">No demo built yet</span></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HC · N° 008</span><span class="tok wait">In line</span></span><h3>Junk Removal</h3><p class="job">Take the cleanout calls — garages, estates, and the stuff nobody wants to load.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="junk-removal"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a></div></div></article><article class="entry sheet reveal is-in-line" data-fam="haul-clear" id="n-delivery"><div class="card-shot" style="background:linear-gradient(135deg,#0B0E14 0%,#0B0E14 62%,#C8F31D 100%);--ph-text:#F2F5F9"><img src="/assets/shots/rotator/delivery.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Delivery &amp; Courier site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HC · N° 009</span><span class="tok wait">In line</span></span><h3>Delivery &amp; Courier</h3><p class="card-brand">Swiftwater Courier Co.</p><p class="job">Move packages across town same-day, on a zone map you set.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="delivery"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="delivery" href="/sites/delivery/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="delivery" data-name="Delivery &amp; Courier"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="delivery" hidden></p></div></div></article><article class="entry sheet reveal is-website-only" data-fam="haul-clear" id="n-dumpster-rental"><div class="card-shot" style="background:linear-gradient(135deg,#0e1f18 0%,#0e1f18 62%,#FFC400 100%);--ph-text:#F2E9D8"><img src="/assets/shots/rotator/dumpster-rental.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Dumpster Rental site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HC · N° 010</span><span class="tok site">Website only</span></span><h3>Dumpster Rental</h3><p class="card-brand">Sawtooth Dumpster Co.</p><p class="job">Drop the container, haul it off, bill a flat rate.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="dumpster-rental" data-name="Dumpster Rental"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="dumpster-rental" hidden></p><a class="card-alt js-preview" data-slug="dumpster-rental" href="/sites/dumpster-rental/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="haul-clear" id="n-moving"><div class="card-shot" style="background:linear-gradient(135deg,#F0E7D8 0%,#F0E7D8 62%,#2F6B4F 100%);--ph-text:#2E2A24"><img src="/assets/shots/rotator/moving.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Moving site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HC · N° 011</span><span class="tok site">Website only</span></span><h3>Moving</h3><p class="card-brand">Osprey Moving Co.</p><p class="job">Load, drive, unload — local moves priced before the truck arrives.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="moving" data-name="Moving"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="moving" hidden></p><a class="card-alt js-preview" data-slug="moving" href="/sites/moving/">See the demo →</a></div></div></article></div></div><div class="family" data-fam="curb-exterior" style="--fam:var(--fam-curb-exterior)"><div class="plate-head reveal"><span class="plate-no">Plate CE</span><h2 class="plate-title">Curb &amp; Exterior</h2></div><p class="plate-note">Work that happens outside the house, on a route, on a schedule.</p><div class="grid"><article class="entry sheet reveal is-in-line" data-fam="curb-exterior" id="n-pressure-washing"><div class="card-shot" style="background:linear-gradient(135deg,#071e29 0%,#071e29 62%,#22D3EE 100%);--ph-text:#EAF7FB"><img src="/assets/shots/rotator/pressure-washing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Pressure Washing site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 012</span><span class="tok wait">In line</span></span><h3>Pressure Washing</h3><p class="card-brand">Grit &amp; Gleam Powerwashing</p><p class="job">Take the grime off driveways, siding, and decks, quoted from a photo.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="pressure-washing"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="pressure-washing" href="/sites/pressure-washing/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="pressure-washing" data-name="Pressure Washing"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="pressure-washing" hidden></p></div></div></article><article class="entry sheet reveal is-in-line" data-fam="curb-exterior" id="n-bin-cleaning"><div class="card-shot" style="background:linear-gradient(135deg,#050f1c 0%,#050f1c 62%,#4ea4e6 100%);--ph-text:#e6f4ff"><img src="/assets/shots/rotator/bin-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Bin Cleaning site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 013</span><span class="tok wait">In line</span></span><h3>Bin Cleaning</h3><p class="card-brand">Prime Bin Cleaning</p><p class="job">Clean the trash bins on a route, on a schedule, every month.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="bin-cleaning"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="bin-cleaning" href="/sites/bin-cleaning/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="bin-cleaning" data-name="Bin Cleaning"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="bin-cleaning" hidden></p></div></div></article><article class="entry sheet reveal is-in-line" data-fam="curb-exterior" id="n-landscaping"><div class="card-shot" style="background:linear-gradient(135deg,#101A13 0%,#101A13 62%,#8177F2 100%);--ph-text:#F2F0E6"><img src="/assets/shots/rotator/landscaping.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Landscaping site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 014</span><span class="tok wait">In line</span></span><h3>Landscaping</h3><p class="card-brand">Larkspur &amp; Ledge Landscape Co.</p><p class="job">Keep yards cut, edged, and planted through all four seasons.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="landscaping"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="landscaping" href="/sites/landscaping/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="landscaping" data-name="Landscaping"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="landscaping" hidden></p></div></div></article><article class="entry sheet reveal is-in-line" data-fam="curb-exterior" id="n-painting"><div class="card-shot" style="background:linear-gradient(135deg,#131110 0%,#131110 62%,#C97B63 100%);--ph-text:#F4EDE3"><img src="/assets/shots/rotator/painting.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Painting site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 015</span><span class="tok wait">In line</span></span><h3>Painting</h3><p class="card-brand">Bristlecone Paint Co.</p><p class="job">Repaint rooms and exteriors — colour picked before the first coat.</p><p class="caveat">Homes built before 1978 need EPA RRP certification for lead-safe work.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="painting"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="painting" href="/sites/painting/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="painting" data-name="Painting"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="painting" hidden></p></div></div></article><article class="entry sheet reveal is-website-only" data-fam="curb-exterior" id="n-roofing"><div class="card-shot" style="background:linear-gradient(135deg,#0A0F14 0%,#0A0F14 62%,#B85B28 100%);--ph-text:#EDF2F6"><img src="/assets/shots/rotator/roofing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Roofing site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 016</span><span class="tok site">Website only</span></span><h3>Roofing</h3><p class="card-brand">Storm Ridge Roofing</p><p class="job">Repair and replace roofs, and handle the storm-damage paperwork.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="roofing" data-name="Roofing"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="roofing" hidden></p><a class="card-alt js-preview" data-slug="roofing" href="/sites/roofing/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="curb-exterior" id="n-residential-cleaning"><div class="card-shot" style="background:linear-gradient(135deg,#F2FAF6 0%,#F2FAF6 62%,#08694A 100%);--ph-text:#10251D"><img src="/assets/shots/rotator/residential-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the House Cleaning site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 017</span><span class="tok site">Website only</span></span><h3>House Cleaning</h3><p class="card-brand">Yarrow &amp; Broom Cleaning Co.</p><p class="job">Clean the same houses on the same days every week, on a route you build.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="residential-cleaning" data-name="House Cleaning"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="residential-cleaning" hidden></p><a class="card-alt js-preview" data-slug="residential-cleaning" href="/sites/residential-cleaning/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="curb-exterior" id="n-commercial-cleaning"><div class="card-shot" style="background:linear-gradient(135deg,#0E1519 0%,#0E1519 62%,#2F9AAC 100%);--ph-text:#E8EDF0"><img src="/assets/shots/rotator/commercial-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Office Cleaning site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 018</span><span class="tok site">Website only</span></span><h3>Office Cleaning</h3><p class="card-brand">Keyholder Facility Care</p><p class="job">Hold the keys to a handful of offices and clean them after everyone goes home.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="commercial-cleaning" data-name="Office Cleaning"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="commercial-cleaning" hidden></p><a class="card-alt js-preview" data-slug="commercial-cleaning" href="/sites/commercial-cleaning/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="curb-exterior" id="n-window-cleaning"><div class="card-shot" style="background:linear-gradient(135deg,#F3F9FB 0%,#F3F9FB 62%,#22ACC4 100%);--ph-text:#16272E"><img src="/assets/shots/rotator/window-cleaning.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Window Cleaning site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 019</span><span class="tok site">Website only</span></span><h3>Window Cleaning</h3><p class="card-brand">Pane &amp; Prairie Window Co.</p><p class="job">Inside and out, screens and tracks — priced by the pane or by the house.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="window-cleaning" data-name="Window Cleaning"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="window-cleaning" hidden></p><a class="card-alt js-preview" data-slug="window-cleaning" href="/sites/window-cleaning/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="curb-exterior" id="n-sprinkler"><div class="card-shot" style="background:linear-gradient(135deg,#081419 0%,#081419 62%,#2FB37A 100%);--ph-text:#EAF4F1"><img src="/assets/shots/rotator/sprinkler.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Sprinkler &amp; Irrigation site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 020</span><span class="tok site">Website only</span></span><h3>Sprinkler &amp; Irrigation</h3><p class="card-brand">Riserline Irrigation Co.</p><p class="job">Install and repair the system that keeps a lawn alive — zones, heads, valves, controllers.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="sprinkler" data-name="Sprinkler &amp; Irrigation"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="sprinkler" hidden></p><a class="card-alt js-preview" data-slug="sprinkler" href="/sites/sprinkler/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="curb-exterior" id="n-christmas-lights"><div class="card-shot" style="background:linear-gradient(135deg,#0C1A20 0%,#0C1A20 62%,#E8B04B 100%);--ph-text:#EAF2F5"><img src="/assets/shots/rotator/christmas-lights.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Christmas Lights site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">CE · N° 021</span><span class="tok site">Website only</span></span><h3>Christmas Lights</h3><p class="card-brand">Cedar &amp; Filament Holiday Lighting</p><p class="job">Hang the lights in November, service them through December, and take them down in January.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="christmas-lights" data-name="Christmas Lights"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="christmas-lights" hidden></p><a class="card-alt js-preview" data-slug="christmas-lights" href="/sites/christmas-lights/">See the demo →</a></div></div></article></div></div><div class="family" data-fam="auto" style="--fam:var(--fam-auto)"><div class="plate-head reveal"><span class="plate-no">Plate AU</span><h2 class="plate-title">Auto</h2></div><p class="plate-note">The vehicle in the driveway or the bay.</p><div class="grid"><article class="entry sheet reveal is-in-line" data-fam="auto" id="n-car-detailing"><div class="card-shot" style="background:linear-gradient(135deg,#0E131A 0%,#0E131A 62%,#2DD4CE 100%);--ph-text:#D9E6EF"><img src="/assets/shots/rotator/car-detailing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Car Detailing site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">AU · N° 022</span><span class="tok wait">In line</span></span><h3>Car Detailing</h3><p class="card-brand">Kestrel Detail Co.</p><p class="job">Bring cars back to showroom condition in the customer&#39;s driveway.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="car-detailing"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="car-detailing" href="/sites/car-detailing/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="car-detailing" data-name="Car Detailing"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="car-detailing" hidden></p></div></div></article><article class="entry sheet reveal is-website-only" data-fam="auto" id="n-auto-repair"><div class="card-shot" style="background:linear-gradient(135deg,#F5EFE2 0%,#F5EFE2 62%,#B3271E 100%);--ph-text:#2A2118"><img src="/assets/shots/rotator/auto-repair.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Auto Repair site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">AU · N° 023</span><span class="tok site">Website only</span></span><h3>Auto Repair</h3><p class="card-brand">Rimrock Garage</p><p class="job">Diagnose it, fix it, and explain it before the work starts.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="auto-repair" data-name="Auto Repair"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="auto-repair" hidden></p><a class="card-alt js-preview" data-slug="auto-repair" href="/sites/auto-repair/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="auto" id="n-auto-body"><div class="card-shot" style="background:linear-gradient(135deg,#16121A 0%,#16121A 62%,#B02E58 100%);--ph-text:#F2EDF6"><img src="/assets/shots/rotator/auto-body.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Auto Body site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">AU · N° 024</span><span class="tok site">Website only</span></span><h3>Auto Body</h3><p class="card-brand">Ironwood Collision Co.</p><p class="job">Put collision-damaged panels back to factory shape.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="auto-body" data-name="Auto Body"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="auto-body" hidden></p><a class="card-alt js-preview" data-slug="auto-body" href="/sites/auto-body/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="auto" id="n-mechanic"><div class="card-shot" style="background:linear-gradient(135deg,#0D1110 0%,#0D1110 62%,#2FA85D 100%);--ph-text:#EFF3F0"><img src="/assets/shots/rotator/mechanic.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Mobile Mechanic site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">AU · N° 025</span><span class="tok site">Website only</span></span><h3>Mobile Mechanic</h3><p class="card-brand">Gravel &amp; Gasket Mobile Mechanic</p><p class="job">Drive the shop to the driveway — the repairs that never needed a lift.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="mechanic" data-name="Mobile Mechanic"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="mechanic" hidden></p><a class="card-alt js-preview" data-slug="mechanic" href="/sites/mechanic/">See the demo →</a></div></div></article></div></div><div class="family" data-fam="home-trade" style="--fam:var(--fam-home-trade)"><div class="plate-head reveal"><span class="plate-no">Plate HT</span><h2 class="plate-title">Home &amp; Trade</h2></div><p class="plate-note">Licensed trades. These are websites, not territories — the licence is already the moat.</p><div class="grid"><article class="entry sheet reveal is-website-only" data-fam="home-trade" id="n-plumbing"><div class="card-shot" style="background:linear-gradient(135deg,#080B12 0%,#080B12 62%,#2E6FF2 100%);--ph-text:#EAF0FB"><img src="/assets/shots/rotator/plumbing.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Plumbing site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HT · N° 026</span><span class="tok site">Website only</span></span><h3>Plumbing</h3><p class="card-brand">Cascade &amp; Copper Plumbing</p><p class="job">Fix the leak, clear the drain, replace the water heater.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="plumbing" data-name="Plumbing"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="plumbing" hidden></p><a class="card-alt js-preview" data-slug="plumbing" href="/sites/plumbing/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="home-trade" id="n-electrician"><div class="card-shot" style="background:linear-gradient(135deg,#0A0D1C 0%,#0A0D1C 62%,#6C63FF 100%);--ph-text:#EAF0FF"><img src="/assets/shots/rotator/electrician.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Electrician site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HT · N° 027</span><span class="tok site">Website only</span></span><h3>Electrician</h3><p class="card-brand">Voltridge Electric</p><p class="job">Run wire, upgrade panels, and pull the permits.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="electrician" data-name="Electrician"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="electrician" hidden></p><a class="card-alt js-preview" data-slug="electrician" href="/sites/electrician/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="home-trade" id="n-hvac"><div class="card-shot" style="background:linear-gradient(135deg,#F2F7FB 0%,#F2F7FB 62%,#1E6FB0 100%);--ph-text:#152435"><img src="/assets/shots/rotator/hvac.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Heating &amp; Air site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HT · N° 028</span><span class="tok site">Website only</span></span><h3>Heating &amp; Air</h3><p class="card-brand">Whitecloud Heating &amp; Air</p><p class="job">Keep the heat on in January and the air cold in July.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="hvac" data-name="Heating &amp; Air"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="hvac" hidden></p><a class="card-alt js-preview" data-slug="hvac" href="/sites/hvac/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="home-trade" id="n-contracting"><div class="card-shot" style="background:linear-gradient(135deg,#151109 0%,#151109 62%,#f5a623 100%);--ph-text:#f5efe3"><img src="/assets/shots/rotator/contracting.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Contracting site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HT · N° 029</span><span class="tok site">Website only</span></span><h3>Contracting</h3><p class="card-brand">Summit &amp; Stone Contracting</p><p class="job">Take a remodel from first sketch to final walkthrough.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="contracting" data-name="Contracting"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="contracting" hidden></p><a class="card-alt js-preview" data-slug="contracting" href="/sites/contracting/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="home-trade" id="n-metal-fabrication"><div class="card-shot" style="background:linear-gradient(135deg,#14181d 0%,#14181d 62%,#FF6B1A 100%);--ph-text:#EDF1F5"><img src="/assets/shots/rotator/metal-fabrication.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Metal Fabrication site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">HT · N° 030</span><span class="tok site">Website only</span></span><h3>Metal Fabrication</h3><p class="card-brand">Black Anvil Fabrication</p><p class="job">Cut, weld, and build it in steel from a drawing.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="metal-fabrication" data-name="Metal Fabrication"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="metal-fabrication" hidden></p><a class="card-alt js-preview" data-slug="metal-fabrication" href="/sites/metal-fabrication/">See the demo →</a></div></div></article></div></div><div class="family" data-fam="people-pets" style="--fam:var(--fam-people-pets)"><div class="plate-head reveal"><span class="plate-no">Plate PP</span><h2 class="plate-title">People &amp; Pets</h2></div><p class="plate-note">Work built on trust with a person, a child, or an animal.</p><div class="grid"><article class="entry sheet reveal is-in-line" data-fam="people-pets" id="n-dog-walking"><div class="card-shot" style="background:linear-gradient(135deg,#F7FAFD 0%,#F7FAFD 62%,#3B9AE1 100%);--ph-text:#22364A"><img src="/assets/shots/rotator/dog-walking.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Dog Walking site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 031</span><span class="tok wait">In line</span></span><h3>Dog Walking</h3><p class="card-brand">Bluebird &amp; Biscuit Pet Care</p><p class="job">Walk the dogs on a weekly rhythm their owners can count on.</p><div class="entry-foot"><a class="card-go js-line" href="#line" data-niche="dog-walking"><span>Claim a spot</span><span class="go-arrow" aria-hidden="true">→</span></a><a class="card-alt js-preview" data-slug="dog-walking" href="/sites/dog-walking/">See the demo →</a><button type="button" class="card-go claim-btn" data-slug="dog-walking" data-name="Dog Walking"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="dog-walking" hidden></p></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-child-care"><div class="card-shot" style="background:linear-gradient(135deg,#FDF7EF 0%,#FDF7EF 62%,#7A5BA6 100%);--ph-text:#3A3128"><img src="/assets/shots/rotator/child-care.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Child Care site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 032</span><span class="tok site">Website only</span></span><h3>Child Care</h3><p class="card-brand">Huckleberry Sitters</p><p class="job">Watch the kids so the parents can have the evening.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="child-care" data-name="Child Care"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="child-care" hidden></p><a class="card-alt js-preview" data-slug="child-care" href="/sites/child-care/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-caregiving"><div class="card-shot" style="background:linear-gradient(135deg,#FAF3E7 0%,#FAF3E7 62%,#7C9473 100%);--ph-text:#3A342C"><img src="/assets/shots/rotator/caregiving.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Caregiving site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 033</span><span class="tok site">Website only</span></span><h3>Caregiving</h3><p class="card-brand">Hearth &amp; Home Companion Care</p><p class="job">Keep someone company and safe in their own home.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="caregiving" data-name="Caregiving"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="caregiving" hidden></p><a class="card-alt js-preview" data-slug="caregiving" href="/sites/caregiving/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-personal-trainer"><div class="card-shot" style="background:linear-gradient(135deg,#14181c 0%,#14181c 62%,#FF5A2E 100%);--ph-text:#EDEDE6"><img src="/assets/shots/rotator/personal-trainer.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Personal Trainer site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 034</span><span class="tok site">Website only</span></span><h3>Personal Trainer</h3><p class="card-brand">Cora Vale Fitness</p><p class="job">Coach lifters and runners toward one specific goal.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="personal-trainer" data-name="Personal Trainer"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="personal-trainer" hidden></p><a class="card-alt js-preview" data-slug="personal-trainer" href="/sites/personal-trainer/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-tattoo-studio"><div class="card-shot" style="background:linear-gradient(135deg,#0a0a0d 0%,#0a0a0d 62%,#c42b3d 100%);--ph-text:#ede4d3"><img src="/assets/shots/rotator/tattoo-studio.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Tattoo Studio site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 035</span><span class="tok site">Website only</span></span><h3>Tattoo Studio</h3><p class="card-brand">Static Rose Tattoo</p><p class="job">Draw it, book it, and tattoo it in a private studio.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="tattoo-studio" data-name="Tattoo Studio"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="tattoo-studio" hidden></p><a class="card-alt js-preview" data-slug="tattoo-studio" href="/sites/tattoo-studio/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-dj"><div class="card-shot" style="background:linear-gradient(135deg,#000000 0%,#000000 62%,#3D8BFF 100%);--ph-text:#EAF2FF"><img src="/assets/shots/rotator/dj.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the DJ site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 036</span><span class="tok site">Website only</span></span><h3>DJ</h3><p class="card-brand">DJ Nova</p><p class="job">Play the room — weddings, clubs, and anywhere with a dance floor.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="dj" data-name="DJ"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="dj" hidden></p><a class="card-alt js-preview" data-slug="dj" href="/sites/dj/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-bbq-food-truck"><div class="card-shot" style="background:linear-gradient(135deg,#171310 0%,#171310 62%,#E8590C 100%);--ph-text:#F6EBD9"><img src="/assets/shots/rotator/bbq-food-truck.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the BBQ Food Truck site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 037</span><span class="tok site">Website only</span></span><h3>BBQ Food Truck</h3><p class="card-brand">Cinder Hog BBQ</p><p class="job">Smoke it overnight and park where the crowd is.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="bbq-food-truck" data-name="BBQ Food Truck"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="bbq-food-truck" hidden></p><a class="card-alt js-preview" data-slug="bbq-food-truck" href="/sites/bbq-food-truck/">See the demo →</a></div></div></article><article class="entry sheet reveal is-website-only" data-fam="people-pets" id="n-personal-assistant"><div class="card-shot" style="background:linear-gradient(135deg,#F4F2EC 0%,#F4F2EC 62%,#1C5E59 100%);--ph-text:#22201C"><img src="/assets/shots/rotator/personal-assistant.jpg" width="1280" height="800" loading="lazy" decoding="async" alt="A screenshot of the Personal Assistant site."></div><div class="card-body"><span class="card-meta"><span class="fam-dot" aria-hidden="true"></span><span class="code">PP · N° 038</span><span class="tok site">Website only</span></span><h3>Personal Assistant</h3><p class="card-brand">Wrenfield &amp; Co.</p><p class="job">Take the errands, the calendar and the chasing off a busy person&#39;s plate.</p><div class="entry-foot"><p class="card-price">$99 one-time</p><button type="button" class="card-go claim-btn" data-slug="personal-assistant" data-name="Personal Assistant"><span>Claim this territory</span><span class="go-arrow" aria-hidden="true">→</span></button><p class="card-claimed" data-claimed="personal-assistant" hidden></p><a class="card-alt js-preview" data-slug="personal-assistant" href="/sites/personal-assistant/">See the demo →</a></div></div></article></div></div>
+<!-- /BUILD:CATALOG -->
+    </div>
+
+    <p class="filter-empty" id="filter-empty" hidden>Nothing on the board matches that filter.</p>
+
+    <div class="legend reveal">
+      <span><i>▌</i> Open now — buy today</span>
+      <span>In line — recorded, not promised</span>
+      <span>Website only — you already run it</span>
+    </div>
+
+    <!-- Related products. Hand-authored and deliberately OUTSIDE the BUILD:
+         markers above — tools/build-catalog.js rewrites everything between
+         them from the seed, and these three are not territory niches. -->
+    <section class="related reveal" aria-labelledby="related-h">
+      <p class="related-head">Also from Systems by Vega</p>
+      <h2 id="related-h">Looking for more than a website?</h2>
+      <p class="related-note">These are full platforms, not territory sites. You run the
+        whole operation; the website is only one part of what comes with it.</p>
+      <div class="related-grid">
+        <a class="related-card" href="https://estatesalebiz.com" rel="noopener"><b>EstateSaleBiz</b><span>Run estate sales as the business itself — the training, the pricing data, the contracts and the buyer-side tooling, not just a website for it.</span><em>estatesalebiz.com &rarr;</em></a>
+        <a class="related-card" href="https://garagesalebiz.com" rel="noopener"><b>GarageSaleBiz</b><span>The whole garage-sale operation: the course, the checklists and the map every shopper in town checks on Saturday morning.</span><em>garagesalebiz.com &rarr;</em></a>
+        <a class="related-card" href="https://consignmentbiz.com" rel="noopener"><b>ConsignmentBiz</b><span>Sell other people&rsquo;s furniture and finds on a split, without owning the inventory — the system behind the booth.</span><em>consignmentbiz.com &rarr;</em></a>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- ══════════════════════════ GET IN LINE ═══════════════════════════════ -->
+<!-- THE SITE-WIDE PRIMARY CTA LANDS HERE. Every page's nav carries "Get in
+     line" and it points at #line — tools/build-chrome.js generates that link
+     into pages this task never otherwise touched, so this section existing at
+     this id on this page is what keeps that button working everywhere. It was
+     /sites/#line until R16; it is /#line now.
+
+     Directly under the board on purpose: the card CTA for an in-line business
+     is .js-line, which prefills #f-niche from data-niche and scrolls here.
+
+     BAND: white — #catalog above is paper and #platforms below is paper. -->
+<section class="section" id="line">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Get in line</span>
+      <h2>Tell me which one, <br>and which town.</h2>
+      <p class="lede" style="margin-top:12px">
+        This records that you want a specific business in a specific city. It is not a purchase,
+        not a deposit, and not a reservation — nothing is charged and there is nothing to cancel.
+      </p>
+    </div>
+
+    <form id="lineForm" novalidate>
+      <div class="field">
+        <label for="f-niche">Which business</label>
+        <select id="f-niche" name="niche" required>
+          <!-- BUILD:NICHE_SELECT -->
+<option value="">Pick a business…</option><optgroup label="In line — tell me you want this one"><option value="local-auctions">Local Auctions</option><option value="market-vendors">Market Vendors</option><option value="junk-removal">Junk Removal</option><option value="delivery">Delivery &amp; Courier</option><option value="pressure-washing">Pressure Washing</option><option value="bin-cleaning">Bin Cleaning</option><option value="landscaping">Landscaping</option><option value="painting">Painting</option><option value="car-detailing">Car Detailing</option><option value="dog-walking">Dog Walking</option></optgroup><optgroup label="Open today — go straight to the site"><option value="estate-sales" data-open="https://estatesalebiz.com">EstateSaleBiz</option><option value="garage-sales" data-open="https://garagesalebiz.com">GarageSaleBiz</option><option value="consignment-vintage" data-open="https://consignmentbiz.com">ConsignmentBiz</option></optgroup>
+<!-- /BUILD:NICHE_SELECT -->
+        </select>
+      </div>
+
+      <p class="note note-ok" id="f-open-warn" hidden></p>
+
+      <div class="field">
+        <label for="f-city">Your city</label>
+        <div class="row-2">
+          <input id="f-city" name="city" type="text" autocomplete="address-level2" placeholder="Nampa" required>
+          <select id="f-state" name="state" aria-label="State" required>
+            <option value="">State</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+            <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+            <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+            <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+            <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+            <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+            <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+            <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+            <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+            <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+            <option>DC</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-email">Email</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="field">
+        <label for="f-name">Name <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input id="f-name" name="name" type="text" autocomplete="name">
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="f-hp">Leave this empty</label>
+        <input id="f-hp" name="company_website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button class="btn btn-pri btn-block" id="f-submit" type="submit">Get in line</button>
+
+      <p class="fine" style="margin-top:14px">
+        One email, once, to confirm. We use your address to tell you if this business gets built
+        in your city and for nothing else. We do not sell it and we will not add you to a
+        marketing list.
+      </p>
+    </form>
+
+    <p class="note" id="f-out" hidden></p>
   </div>
 </section>
 
@@ -634,6 +759,105 @@
       No operator count, no revenue figure, no testimonial. What runs is pictured; what doesn't
       isn't.
     </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ REGISTRY ══════════════════════════════════ -->
+<!-- Moved off /sites/ by R16. It is the evidence behind the headline row of
+     the comparison table at the top of this page — the one clean sweep, where
+     no competitor grants territory exclusivity — so it belongs directly after
+     #proof, which counts "1 operator per city" without saying how that is
+     enforced. This section is the how.
+
+     BAND: white. It was paper on /sites/; #proof above is paper, so it takes
+     the one tone neither #proof nor #contact (dark, below) is using. -->
+<section class="section" id="registry">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">The registry</span>
+      <h2>One operator per city. <br>Recorded, not promised.</h2>
+    </div>
+
+    <div class="reg-grid">
+      <div class="reveal">
+        <div class="reg-card">
+          <div class="reg-card-head">Territory registry</div>
+          <div class="reg-card-body">
+            <p>A city is one row.</p>
+            <p>A row is written once.</p>
+            <p>It cannot be written twice.</p>
+            <p>The checker reads that row.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reg-body">
+        <p>Exclusivity is only worth something if it is written down somewhere you can check. When
+        you claim a city, the row is written the moment your payment clears, and the availability
+        checker reads that same row. Two people can both see a city as free; only one of them gets
+        the row. That is the whole mechanism — there is no bidding, no renewal auction, and no tier
+        that buys you more of the map.</p>
+
+        <p>For the businesses in the catalog that are not built yet, there is no row to claim. So
+        instead we write down who asked, and for which town. When enough people ask for the same
+        business, that is the one that gets built next — and the people who asked get the first
+        offer on their own city before it is listed publicly.</p>
+
+        <p>It does not mean you would be the only person in town allowed to do the work. We cannot
+        grant that and nobody can. Anyone is free to run their own sales, and other companies may
+        operate near you. What you get is exclusivity within the platform, and the tools and
+        training that come with it.</p>
+
+        <p class="fine">Waiting counts appear only above three. A registry that says one person is
+        waiting argues against the thing it is meant to evidence, and an invented number would be
+        worse than either. Below that, this section carries the mechanism on its own.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FINAL ASK ═════════════════════════════════ -->
+<!-- The other form R16 moved off /sites/, and the only open-ended lead capture
+     on the site — #line records a niche and a city against a fixed list,
+     this one takes a sentence. Web3Forms, wired by the inline script at the
+     foot of this file, not by assets/sbv.js.
+
+     BAND: dark. #registry above is white and #questions below is white. -->
+<section class="section" id="contact">
+  <div class="wrap-narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow">Want one of these?</span>
+      <h2>Tell me which site — <br>I'll take it from there.</h2>
+      <p class="lede" style="margin-top:12px">
+        Send a line about your business and which demo caught your eye. I'll reply within one
+        business day with pricing and what customizing it would look like for you.
+      </p>
+    </div>
+
+    <form id="contactForm">
+      <input type="hidden" name="access_key" value="4d5cdfe7-f9bc-45dd-ac8e-d5e266810da3">
+      <input type="hidden" name="subject" value="Systems by Vega — Site Shop inquiry">
+      <input type="hidden" name="from_name" value="Systems by Vega — Site Shop">
+      <div class="field">
+        <label for="cfName">Name</label>
+        <input type="text" id="cfName" name="name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="cfEmail">Email</label>
+        <input type="email" id="cfEmail" name="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="cfPhone">Phone <span style="text-transform:none;letter-spacing:0">(optional — I'll text you back faster)</span></label>
+        <input type="tel" id="cfPhone" name="phone" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="cfMessage">Which site, and what's your business?</label>
+        <textarea id="cfMessage" name="message" rows="4" required placeholder="e.g. I run a pressure-washing business in Boise and like the Grit &amp; Gleam demo."></textarea>
+      </div>
+      <button type="submit" class="btn btn-pri btn-block" id="cfSubmit">Send it &rarr;</button>
+      <p class="note note-err" id="cfStatus" hidden></p>
+    </form>
+    <p class="note note-ok" id="cfSuccess" hidden>Got it — I'll be in touch within one business day.</p>
   </div>
 </section>
 
@@ -885,7 +1109,7 @@
     <h2 class="cta-close-h">$99 once. Live today.</h2>
     <p class="cta-close-p">Pick your trade, claim your city, and the site answers on your
       subdomain the moment your payment clears.</p>
-    <a class="btn btn-pri cta-close-go" href="/sites/">Get your site &mdash; $99</a>
+    <a class="btn btn-pri cta-close-go" href="#catalog">Get your site &mdash; $99</a>
     <p class="fine cta-close-fine">One operator per city, per category. What the price covers,
       in full, is in the <a class="link" href="/legal/terms.html">Terms</a>.</p>
   </div>
@@ -898,7 +1122,7 @@
   <div class="wrap">
     <p><b>Systems by Vega</b> · A Kingdom Creatives LLC company · Nampa, Idaho ·
       <a class="link" href="mailto:info@kingdom-creatives.com">info@kingdom-creatives.com</a></p>
-    <p style="margin-top:10px"><a class="link" href="/sites/">Sites</a> · <a class="link" href="/platforms/">Platforms</a> · <a class="link" href="/services/">Services</a> · <a class="link" href="/work/">Work</a> · <a class="link" href="/about/">About</a></p>
+    <p style="margin-top:10px"><a class="link" href="/#catalog">Sites</a> · <a class="link" href="/platforms/">Platforms</a> · <a class="link" href="/services/">Services</a> · <a class="link" href="/work/">Work</a> · <a class="link" href="/about/">About</a></p>
     <p style="margin-top:10px"><a class="link" href="/legal/terms.html">Terms</a> · <a class="link" href="/legal/privacy.html">Privacy</a> · <a class="link" href="/legal/refund.html">Refund</a> · <a class="link" href="/legal/operator-agreement.html">Operator Agreement</a></p>
     <!-- data-i18n-skip: never translated. A disclaimer that says something
          slightly different in another language is worse than one a reader has
@@ -908,9 +1132,56 @@
   </div>
 </footer><!-- /BUILD:FOOTER -->
 
+<!-- THE CARD-DETAIL MODAL AND THE EXIT CARD, both moved off /sites/ by R16
+     with the board they belong to. #nm is not optional furniture: sbv.js's
+     wireModal() promotes every card h3 in #catalog-root into a button that
+     opens it, so a board without this shell has thirty-eight dead headings.
+     Both shells are static only so the dialogs can carry stable ids for
+     aria-labelledby; sbv.js fills the bodies. -->
+<!-- The plate, opened. Every field in here is either lifted from the card that
+     was clicked or derived from that card's status — nothing is authored per
+     business, so the modal cannot claim something the catalog does not. The
+     body is filled by sbv.js; the shell is static only so the dialog can carry
+     stable ids for aria-labelledby. -->
+<div class="nm" id="nm" data-open="0" role="dialog" aria-modal="true" aria-labelledby="nm-title" hidden>
+  <div class="nm-card" id="nm-card">
+    <button type="button" class="nm-close" id="nm-close" aria-label="Close">&times;</button>
+    <span class="card-meta">
+      <span class="code" id="nm-code"></span>
+      <span class="tok" id="nm-tok"></span>
+    </span>
+    <h3 id="nm-title"></h3>
+    <p class="nm-fam" id="nm-fam"></p>
+    <p class="nm-note" id="nm-note"></p>
+    <div class="nm-rows" id="nm-rows"></div>
+    <div class="nm-foot" id="nm-foot"></div>
+  </div>
+</div>
+
+<!-- Exit card. Desktop only, once per session, and never in the first twenty
+     seconds — so it cannot fire on a bounce, which is the behaviour that makes
+     these things hated. It offers the thing that is already free on this page
+     and says plainly that it costs nothing. -->
+<div class="exit" id="exit" data-open="0" role="dialog" aria-modal="true"
+     aria-labelledby="exit-h" hidden>
+  <div class="exit-card">
+    <button type="button" class="exit-close" id="exit-close" aria-label="Close">&times;</button>
+    <h3 id="exit-h">Before you close the tab.</h3>
+    <p>You do not have to decide anything today. You can put your town
+      down for a business that is not built yet, and that is the whole action.</p>
+    <p class="fine">Nothing is charged, there is nothing to cancel, and one
+      email confirms it. If it gets built, you get the first offer on your city before it is
+      listed publicly.</p>
+    <div class="exit-cta">
+      <a class="btn btn-pri" href="#line" id="exit-go">Get in line</a>
+      <button type="button" class="btn btn-sec" id="exit-no">Keep browsing</button>
+    </div>
+  </div>
+</div>
+
 <div class="mcta">
   <a class="btn btn-sec" href="/work/">See what I build</a>
-  <a class="btn btn-pri" href="/sites/">Browse the catalog</a>
+  <a class="btn btn-pri" href="#catalog">Browse the catalog</a>
 </div>
 
 <script>
@@ -932,6 +1203,29 @@ window.SBV_CONFIG = {
 <!-- BUILD:SEED_SCRIPT -->
 <script>window.SBV_SEED={"families":[{"key":"sale-resale","code":"SR","name":"Sale & Resale","note":"Businesses that run on other people's things — the sale, the lot, the booth."},{"key":"haul-clear","code":"HC","name":"Haul & Clear","note":"Something needs to leave the property, and someone has to come get it."},{"key":"curb-exterior","code":"CE","name":"Curb & Exterior","note":"Work that happens outside the house, on a route, on a schedule."},{"key":"auto","code":"AU","name":"Auto","note":"The vehicle in the driveway or the bay."},{"key":"home-trade","code":"HT","name":"Home & Trade","note":"Licensed trades. These are websites, not territories — the licence is already the moat."},{"key":"people-pets","code":"PP","name":"People & Pets","note":"Work built on trust with a person, a child, or an animal."}],"niches":[{"slug":"estate-sales","catalog_no":"SR-01","name":"EstateSaleBiz","family":"sale-resale","sort":1,"status":"open","open_url":"https://estatesalebiz.com","price_label":"$497 + $39/mo · 3 cities","job_line":"Run the whole sale when a household has to be emptied — pricing, staffing, and the day itself.","demo_path":null,"website_offer":false},{"slug":"garage-sales","catalog_no":"SR-02","name":"GarageSaleBiz","family":"sale-resale","sort":2,"status":"open","open_url":"https://garagesalebiz.com","price_label":"$249 once · 3 cities","job_line":"Run other people's garage sales in your three cities — and be the map every shopper in town checks on Saturday morning.","demo_path":null,"website_offer":false},{"slug":"local-auctions","catalog_no":"SR-03","name":"Local Auctions","family":"sale-resale","sort":3,"status":"in_line","open_url":null,"price_label":null,"job_line":"Run the bidding for estates, farms, and storage lots — catalog, consignors, gavel.","demo_path":null,"website_offer":false,"caveat":"Auctioneer licensing varies by state. Check yours before you get in line."},{"slug":"consignment-vintage","catalog_no":"SR-04","name":"ConsignmentBiz","family":"sale-resale","sort":4,"status":"open","open_url":"https://consignmentbiz.com","price_label":"$197 once · 1 city","job_line":"Sell other people's furniture and finds on a split, without owning the inventory.","demo_path":null,"website_offer":false},{"slug":"market-vendors","catalog_no":"SR-05","name":"Market Vendors","family":"sale-resale","sort":5,"status":"in_line","open_url":null,"price_label":null,"job_line":"Be the booth directory and sign-up desk for the markets in your county.","demo_path":null,"website_offer":false},{"slug":"estate-sale","catalog_no":"SR-06","name":"Estate Sales","family":"sale-resale","sort":6,"status":"website_only","open_url":null,"price_label":null,"job_line":"Run the sale when a whole household has to be cleared — priced, staffed, and handed back broom-clean.","demo_path":"/sites/estate-sale/","website_offer":true},{"slug":"garage-sale","catalog_no":"SR-07","name":"Garage Sales","family":"sale-resale","sort":7,"status":"website_only","open_url":null,"price_label":null,"job_line":"Run other people's garage sales for them — sorted, priced, signed, staffed, and cleared by Sunday night.","demo_path":"/sites/garage-sale/","website_offer":true},{"slug":"junk-removal","catalog_no":"HC-01","name":"Junk Removal","family":"haul-clear","sort":10,"status":"in_line","open_url":null,"price_label":null,"job_line":"Take the cleanout calls — garages, estates, and the stuff nobody wants to load.","demo_path":null,"website_offer":false},{"slug":"delivery","catalog_no":"HC-02","name":"Delivery & Courier","family":"haul-clear","sort":11,"status":"in_line","open_url":null,"price_label":null,"job_line":"Move packages across town same-day, on a zone map you set.","demo_path":"/sites/delivery/","website_offer":true},{"slug":"dumpster-rental","catalog_no":"HC-03","name":"Dumpster Rental","family":"haul-clear","sort":12,"status":"website_only","open_url":null,"price_label":null,"job_line":"Drop the container, haul it off, bill a flat rate.","demo_path":"/sites/dumpster-rental/","website_offer":true},{"slug":"moving","catalog_no":"HC-04","name":"Moving","family":"haul-clear","sort":13,"status":"website_only","open_url":null,"price_label":null,"job_line":"Load, drive, unload — local moves priced before the truck arrives.","demo_path":"/sites/moving/","website_offer":true},{"slug":"pressure-washing","catalog_no":"CE-01","name":"Pressure Washing","family":"curb-exterior","sort":20,"status":"in_line","open_url":null,"price_label":null,"job_line":"Take the grime off driveways, siding, and decks, quoted from a photo.","demo_path":"/sites/pressure-washing/","website_offer":true},{"slug":"bin-cleaning","catalog_no":"CE-02","name":"Bin Cleaning","family":"curb-exterior","sort":21,"status":"in_line","open_url":null,"price_label":null,"job_line":"Clean the trash bins on a route, on a schedule, every month.","demo_path":"/sites/bin-cleaning/","website_offer":true},{"slug":"landscaping","catalog_no":"CE-03","name":"Landscaping","family":"curb-exterior","sort":22,"status":"in_line","open_url":null,"price_label":null,"job_line":"Keep yards cut, edged, and planted through all four seasons.","demo_path":"/sites/landscaping/","website_offer":true},{"slug":"painting","catalog_no":"CE-04","name":"Painting","family":"curb-exterior","sort":23,"status":"in_line","open_url":null,"price_label":null,"job_line":"Repaint rooms and exteriors — colour picked before the first coat.","demo_path":"/sites/painting/","website_offer":true,"caveat":"Homes built before 1978 need EPA RRP certification for lead-safe work."},{"slug":"roofing","catalog_no":"CE-05","name":"Roofing","family":"curb-exterior","sort":24,"status":"website_only","open_url":null,"price_label":null,"job_line":"Repair and replace roofs, and handle the storm-damage paperwork.","demo_path":"/sites/roofing/","website_offer":true},{"slug":"residential-cleaning","catalog_no":"CE-06","name":"House Cleaning","family":"curb-exterior","sort":25,"status":"website_only","open_url":null,"price_label":null,"job_line":"Clean the same houses on the same days every week, on a route you build.","demo_path":"/sites/residential-cleaning/","website_offer":true},{"slug":"commercial-cleaning","catalog_no":"CE-07","name":"Office Cleaning","family":"curb-exterior","sort":26,"status":"website_only","open_url":null,"price_label":null,"job_line":"Hold the keys to a handful of offices and clean them after everyone goes home.","demo_path":"/sites/commercial-cleaning/","website_offer":true},{"slug":"window-cleaning","catalog_no":"CE-08","name":"Window Cleaning","family":"curb-exterior","sort":27,"status":"website_only","open_url":null,"price_label":null,"job_line":"Inside and out, screens and tracks — priced by the pane or by the house.","demo_path":"/sites/window-cleaning/","website_offer":true},{"slug":"sprinkler","catalog_no":"CE-09","name":"Sprinkler & Irrigation","family":"curb-exterior","sort":28,"status":"website_only","open_url":null,"price_label":null,"job_line":"Install and repair the system that keeps a lawn alive — zones, heads, valves, controllers.","demo_path":"/sites/sprinkler/","website_offer":true},{"slug":"christmas-lights","catalog_no":"CE-10","name":"Christmas Lights","family":"curb-exterior","sort":29,"status":"website_only","open_url":null,"price_label":null,"job_line":"Hang the lights in November, service them through December, and take them down in January.","demo_path":"/sites/christmas-lights/","website_offer":true},{"slug":"car-detailing","catalog_no":"AU-01","name":"Car Detailing","family":"auto","sort":30,"status":"in_line","open_url":null,"price_label":null,"job_line":"Bring cars back to showroom condition in the customer's driveway.","demo_path":"/sites/car-detailing/","website_offer":true},{"slug":"auto-repair","catalog_no":"AU-02","name":"Auto Repair","family":"auto","sort":31,"status":"website_only","open_url":null,"price_label":null,"job_line":"Diagnose it, fix it, and explain it before the work starts.","demo_path":"/sites/auto-repair/","website_offer":true},{"slug":"auto-body","catalog_no":"AU-03","name":"Auto Body","family":"auto","sort":32,"status":"website_only","open_url":null,"price_label":null,"job_line":"Put collision-damaged panels back to factory shape.","demo_path":"/sites/auto-body/","website_offer":true},{"slug":"mechanic","catalog_no":"AU-04","name":"Mobile Mechanic","family":"auto","sort":33,"status":"website_only","open_url":null,"price_label":null,"job_line":"Drive the shop to the driveway — the repairs that never needed a lift.","demo_path":"/sites/mechanic/","website_offer":true},{"slug":"plumbing","catalog_no":"HT-01","name":"Plumbing","family":"home-trade","sort":40,"status":"website_only","open_url":null,"price_label":null,"job_line":"Fix the leak, clear the drain, replace the water heater.","demo_path":"/sites/plumbing/","website_offer":true},{"slug":"electrician","catalog_no":"HT-02","name":"Electrician","family":"home-trade","sort":41,"status":"website_only","open_url":null,"price_label":null,"job_line":"Run wire, upgrade panels, and pull the permits.","demo_path":"/sites/electrician/","website_offer":true},{"slug":"hvac","catalog_no":"HT-03","name":"Heating & Air","family":"home-trade","sort":42,"status":"website_only","open_url":null,"price_label":null,"job_line":"Keep the heat on in January and the air cold in July.","demo_path":"/sites/hvac/","website_offer":true},{"slug":"contracting","catalog_no":"HT-04","name":"Contracting","family":"home-trade","sort":43,"status":"website_only","open_url":null,"price_label":null,"job_line":"Take a remodel from first sketch to final walkthrough.","demo_path":"/sites/contracting/","website_offer":true},{"slug":"metal-fabrication","catalog_no":"HT-05","name":"Metal Fabrication","family":"home-trade","sort":44,"status":"website_only","open_url":null,"price_label":null,"job_line":"Cut, weld, and build it in steel from a drawing.","demo_path":"/sites/metal-fabrication/","website_offer":true},{"slug":"dog-walking","catalog_no":"PP-01","name":"Dog Walking","family":"people-pets","sort":50,"status":"in_line","open_url":null,"price_label":null,"job_line":"Walk the dogs on a weekly rhythm their owners can count on.","demo_path":"/sites/dog-walking/","website_offer":true},{"slug":"child-care","catalog_no":"PP-02","name":"Child Care","family":"people-pets","sort":51,"status":"website_only","open_url":null,"price_label":null,"job_line":"Watch the kids so the parents can have the evening.","demo_path":"/sites/child-care/","website_offer":true},{"slug":"caregiving","catalog_no":"PP-03","name":"Caregiving","family":"people-pets","sort":52,"status":"website_only","open_url":null,"price_label":null,"job_line":"Keep someone company and safe in their own home.","demo_path":"/sites/caregiving/","website_offer":true},{"slug":"personal-trainer","catalog_no":"PP-04","name":"Personal Trainer","family":"people-pets","sort":53,"status":"website_only","open_url":null,"price_label":null,"job_line":"Coach lifters and runners toward one specific goal.","demo_path":"/sites/personal-trainer/","website_offer":true},{"slug":"tattoo-studio","catalog_no":"PP-05","name":"Tattoo Studio","family":"people-pets","sort":54,"status":"website_only","open_url":null,"price_label":null,"job_line":"Draw it, book it, and tattoo it in a private studio.","demo_path":"/sites/tattoo-studio/","website_offer":true},{"slug":"dj","catalog_no":"PP-06","name":"DJ","family":"people-pets","sort":55,"status":"website_only","open_url":null,"price_label":null,"job_line":"Play the room — weddings, clubs, and anywhere with a dance floor.","demo_path":"/sites/dj/","website_offer":true},{"slug":"bbq-food-truck","catalog_no":"PP-07","name":"BBQ Food Truck","family":"people-pets","sort":56,"status":"website_only","open_url":null,"price_label":null,"job_line":"Smoke it overnight and park where the crowd is.","demo_path":"/sites/bbq-food-truck/","website_offer":true},{"slug":"personal-assistant","catalog_no":"PP-08","name":"Personal Assistant","family":"people-pets","sort":57,"status":"website_only","open_url":null,"price_label":null,"job_line":"Take the errands, the calendar and the chasing off a busy person's plate.","demo_path":"/sites/personal-assistant/","website_offer":true}]};</script>
 <!-- /BUILD:SEED_SCRIPT -->
+<!-- window.SBV_EXTRAS below — the slug-keyed demo-brand/chip/theme lookup. It
+     came to this page with the catalog board (R16): the board's cards print
+     the demo brand and the feature chips, and neither is an sbv_niches
+     column, so paint() would replace thirty-two brand names with trade names
+     on the live repaint without this payload. -->
+<!-- BUILD:EXTRAS_SCRIPT -->
+<script>window.SBV_EXTRAS={"estate-sale":{"brand":"Magpie & Mantel Estate Sales","chips":["Pricing tiers","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#0C1614","accent":"#C89A3F","text":"#F2EDE0"},"garage-sale":{"brand":"Sunup Garage Sales","chips":["Pricing tiers","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#FFF6E9","accent":"#EF8A1F","text":"#33241A"},"delivery":{"brand":"Swiftwater Courier Co.","chips":["Pricing tiers","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#0B0E14","accent":"#C8F31D","text":"#F2F5F9"},"dumpster-rental":{"brand":"Sawtooth Dumpster Co.","chips":["Pricing tiers","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#0e1f18","accent":"#FFC400","text":"#F2E9D8"},"moving":{"brand":"Osprey Moving Co.","chips":["Pricing tiers","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#F0E7D8","accent":"#2F6B4F","text":"#2E2A24"},"pressure-washing":{"brand":"Grit & Gleam Powerwashing","chips":["Pricing tiers","Reviews","Social links","Owner profile","Owner admin panel (live CMS)"],"ground":"#071e29","accent":"#22D3EE","text":"#EAF7FB"},"bin-cleaning":{"brand":"Prime Bin Cleaning","chips":["Pricing tiers","Before/after gallery","Job detail cards","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#050f1c","accent":"#4ea4e6","text":"#e6f4ff"},"landscaping":{"brand":"Larkspur & Ledge Landscape Co.","chips":["Pricing tiers","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#101A13","accent":"#8177F2","text":"#F2F0E6"},"painting":{"brand":"Bristlecone Paint Co.","chips":["Pricing tiers","Reviews","Social links","Owner profile","Owner admin panel (live CMS)"],"ground":"#131110","accent":"#C97B63","text":"#F4EDE3"},"roofing":{"brand":"Storm Ridge Roofing","chips":["Pricing tiers","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#0A0F14","accent":"#B85B28","text":"#EDF2F6"},"residential-cleaning":{"brand":"Yarrow & Broom Cleaning Co.","chips":["Pricing tiers","Before/after gallery","Job detail cards","Reviews","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#F2FAF6","accent":"#08694A","text":"#10251D"},"commercial-cleaning":{"brand":"Keyholder Facility Care","chips":["Pricing tiers","Before/after gallery","Job detail cards","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#0E1519","accent":"#2F9AAC","text":"#E8EDF0"},"window-cleaning":{"brand":"Pane & Prairie Window Co.","chips":["Pricing tiers","Before/after gallery","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#F3F9FB","accent":"#22ACC4","text":"#16272E"},"sprinkler":{"brand":"Riserline Irrigation Co.","chips":["Pricing tiers","Before/after gallery","Job detail cards","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#081419","accent":"#2FB37A","text":"#EAF4F1"},"christmas-lights":{"brand":"Cedar & Filament Holiday Lighting","chips":["Pricing tiers","Job detail cards","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#0C1A20","accent":"#E8B04B","text":"#EAF2F5"},"car-detailing":{"brand":"Kestrel Detail Co.","chips":["Pricing tiers","Before/after gallery","Reviews","Social links","Owner profile","Owner admin panel (live CMS)"],"ground":"#0E131A","accent":"#2DD4CE","text":"#D9E6EF"},"auto-repair":{"brand":"Rimrock Garage","chips":["Pricing tiers","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#F5EFE2","accent":"#B3271E","text":"#2A2118"},"auto-body":{"brand":"Ironwood Collision Co.","chips":["Before/after gallery","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#16121A","accent":"#B02E58","text":"#F2EDF6"},"mechanic":{"brand":"Gravel & Gasket Mobile Mechanic","chips":["Pricing tiers","Before/after gallery","Reviews","Social links","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#0D1110","accent":"#2FA85D","text":"#EFF3F0"},"plumbing":{"brand":"Cascade & Copper Plumbing","chips":["Pricing tiers","Job detail cards","Reviews","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#080B12","accent":"#2E6FF2","text":"#EAF0FB"},"electrician":{"brand":"Voltridge Electric","chips":["Pricing tiers","Reviews","Social links","Owner profile","Owner admin panel (live CMS)"],"ground":"#0A0D1C","accent":"#6C63FF","text":"#EAF0FF"},"hvac":{"brand":"Whitecloud Heating & Air","chips":["Pricing tiers","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#F2F7FB","accent":"#1E6FB0","text":"#152435"},"contracting":{"brand":"Summit & Stone Contracting","chips":["Pricing tiers","Before/after gallery","Reviews","Owner profile","Owner admin panel (live CMS)"],"ground":"#151109","accent":"#f5a623","text":"#f5efe3"},"metal-fabrication":{"brand":"Black Anvil Fabrication","chips":["Pricing tiers","Owner profile","Owner admin panel (live CMS)"],"ground":"#14181d","accent":"#FF6B1A","text":"#EDF1F5"},"dog-walking":{"brand":"Bluebird & Biscuit Pet Care","chips":["Pricing tiers","Job detail cards","Reviews","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#F7FAFD","accent":"#3B9AE1","text":"#22364A"},"child-care":{"brand":"Huckleberry Sitters","chips":["Pricing tiers","Job detail cards","Reviews","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#FDF7EF","accent":"#7A5BA6","text":"#3A3128"},"caregiving":{"brand":"Hearth & Home Companion Care","chips":["Pricing tiers","Job detail cards","Reviews","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#FAF3E7","accent":"#7C9473","text":"#3A342C"},"personal-trainer":{"brand":"Cora Vale Fitness","chips":["Pricing tiers","Job detail cards","Reviews","Social links","Contact footer","Owner admin panel (live CMS)"],"ground":"#14181c","accent":"#FF5A2E","text":"#EDEDE6"},"tattoo-studio":{"brand":"Static Rose Tattoo","chips":["Pricing tiers","Social links","Owner admin panel (live CMS)"],"ground":"#0a0a0d","accent":"#c42b3d","text":"#ede4d3"},"dj":{"brand":"DJ Nova","chips":["Social links","Contact footer","Owner admin panel (live CMS)"],"ground":"#000000","accent":"#3D8BFF","text":"#EAF2FF"},"bbq-food-truck":{"brand":"Cinder Hog BBQ","chips":["Pricing tiers","Social links","Owner admin panel (live CMS)"],"ground":"#171310","accent":"#E8590C","text":"#F6EBD9"},"personal-assistant":{"brand":"Wrenfield & Co.","chips":["Pricing tiers","Reviews","Owner profile","Contact footer","Owner admin panel (live CMS)"],"ground":"#F4F2EC","accent":"#1C5E59","text":"#22201C"}};</script>
+<!-- /BUILD:EXTRAS_SCRIPT -->
+
+<!-- Vendored, not a CDN: no third party on the path to a purchase, and the
+     version is pinned absolutely. Auth only — every other call in claim.js is
+     plain fetch. Loaded here since R16 because the catalog board on this page
+     renders .claim-btn on every turnkey card, and claim.js is what those
+     buttons open. -->
+<script src="/assets/vendor/supabase-2.114.0.js" defer></script>
+<!-- The modal markup is injected by claim.js; it is not in this file. -->
+<script src="/claim/claim.js" defer></script>
+<script>
+  /* DOMContentLoaded, not a bare call: deferred scripts run before that
+     event but AFTER this inline block parses, so initClaim would not yet
+     exist. */
+  document.addEventListener('DOMContentLoaded', function () { window.initClaim(); });
+</script>
 
 <!-- Email-confirmation return.
      Supabase sends buyers to the project Site URL after they confirm, with the
@@ -939,21 +1233,24 @@ window.SBV_CONFIG = {
      forwards the buyer to the catalog signed in; the bar below is the fallback
      for when that cannot be done, not the normal path.
 
-     STILL A BRIDGE. Once emailRedirectTo reaches /sites/ directly (claim.js
-     already sends it correctly — the missing piece is the Redirect URLs
-     allowlist entry), this whole block is dead code and should be deleted. -->
+     R16 CHANGED WHAT "FORWARD" MEANS HERE. This used to hop the buyer to
+     /sites/, which had the SDK and claim.js; that page is gone and this one
+     carries both, so every branch now lands on THIS page with ?confirmed=1 —
+     a real query-string change, so a real navigation, and the shape claim.js
+     already watches for. -->
 <div id="confirmBar" class="cbar" role="status" hidden>
   <span class="cbar-tick" aria-hidden="true">&#10003;</span>
   <span class="cbar-text" id="confirmText"><b>Email confirmed</b> &mdash; signing you in&hellip;</span>
-  <a class="cbar-go" id="confirmGo" href="/sites/" hidden>Continue to catalog &rarr;</a>
+  <a class="cbar-go" id="confirmGo" href="/?confirmed=1" hidden>Continue to catalog &rarr;</a>
 </div>
 <script>
 (function () {
   /* THE ONE RULE: never leave the buyer standing on this page.
-     Every branch below ends at /sites/, which loads the SDK and claim.js and
-     can finish the job even when this page cannot. The visible button is the
-     last resort for "JavaScript stopped entirely", not the plan. Landing here
-     and stalling is the failure this block exists to remove. */
+     Every branch below ends at /?confirmed=1 — this page, reloaded with the
+     query claim.js watches for. It loads the SDK and claim.js itself now, so
+     there is nowhere better to send anyone. The visible button is the last
+     resort for "JavaScript stopped entirely", not the plan. Landing here and
+     stalling is the failure this block exists to remove. */
   var h = location.hash || '';
   var q = location.search || '';
 
@@ -978,10 +1275,15 @@ window.SBV_CONFIG = {
   var text = document.getElementById('confirmText');
   var go   = document.getElementById('confirmGo');
 
-  /* Carrying the fragment is what lets supabase-js on /sites/ establish the
-     session if it is still unspent; a bare href would sign them straight back
-     out, one click after confirming. claim.js accepts either shape. */
-  var onward = '/sites/' + (h || q || '?confirmed=1');
+  /* THE FRAGMENT IS NO LONGER CARRIED FORWARD, and that is the R16 change
+     that matters. It was carried because the hop crossed to a different page
+     whose supabase-js had to read it. The destination is this page now, and
+     location.replace() to a URL differing from the current one only by hash
+     is a SAME-DOCUMENT navigation: nothing reloads, this script never runs
+     again, and the bar would sit reading "signing you in…" forever. Nothing
+     is lost — createClient below reads the CURRENT page's fragment in place
+     (detectSessionInUrl), and ?confirmed=1 is a real navigation. */
+  var onward = '/?confirmed=1';
   go.setAttribute('href', onward);
   go.hidden = false;
   bar.hidden = false;
@@ -997,7 +1299,7 @@ window.SBV_CONFIG = {
   }
 
   /* Nothing below is allowed to strand anyone. If the SDK is slow, blocked by
-     an extension, or never answers, /sites/ gets the attempt instead. */
+     an extension, or never answers, ?confirmed=1 gets the attempt instead. */
   var watchdog = setTimeout(function () { forward('timed out waiting for the SDK'); }, 4000);
   function give(why) { clearTimeout(watchdog); forward(why); }
 
@@ -1030,14 +1332,14 @@ window.SBV_CONFIG = {
       var sess = res && res.data && res.data.session;
       if (!sess) {
         /* Usually a link that was already spent — clicked twice, or prefetched
-           by a mail scanner. /sites/ still has claim.js, which puts them on the
-           sign-in step with their city intact rather than nowhere. */
+           by a mail scanner. This page still has claim.js, which puts them on
+           the sign-in step with their city intact rather than nowhere. */
         return give('no session from the fragment');
       }
-      /* Session is in localStorage now, same origin as /sites/, so the token
-         never has to travel in a URL again. ?confirmed=1 is what claim.js
-         watches for and matches the emailRedirectTo it sends. */
-      onward = '/sites/?confirmed=1';
+      /* Session is in localStorage now, same origin, so the token never has
+         to travel in a URL again. ?confirmed=1 is what claim.js watches for
+         and matches the emailRedirectTo it sends. */
+      onward = '/?confirmed=1';
       give('session established');
     }).catch(function () { give('getSession threw'); });
   }
@@ -1046,6 +1348,40 @@ window.SBV_CONFIG = {
      thing on the page that matters, and every path above replaces the page
      within four seconds anyway. */
 })();
+</script>
+
+<script>
+  // contact form (Web3Forms)
+  (function(){
+    var form = document.getElementById('contactForm');
+    if(!form) return;
+    var status = document.getElementById('cfStatus');
+    var success = document.getElementById('cfSuccess');
+    var btn = document.getElementById('cfSubmit');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      status.hidden = true;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      }).then(function(r){ return r.json(); }).then(function(data){
+        if(data.success){
+          form.hidden = true;
+          success.hidden = false;
+        } else {
+          throw new Error(data.message || 'error');
+        }
+      }).catch(function(){
+        status.textContent = 'Something went wrong — email me directly at info@kingdom-creatives.com';
+        status.hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'Send it →';
+      });
+    });
+  })();
 </script>
 
 </body>

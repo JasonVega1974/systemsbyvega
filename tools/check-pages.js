@@ -22,7 +22,6 @@ const ROOT = path.resolve(__dirname, '..');
    here and this file exits 0. */
 const PAGES = [
   { route: '/',       file: 'index.html',       sharedAssets: true },
-  { route: '/sites/', file: 'sites/index.html', sharedAssets: true },
   { route: '/platforms/', file: 'platforms/index.html', sharedAssets: true },
   { route: '/services/', file: 'services/index.html', sharedAssets: true },
   { route: '/work/', file: 'work/index.html', sharedAssets: true },
@@ -193,7 +192,7 @@ const ALLOWED_PRICES = [
    consents to, and it went a whole reprice reading $299/$499 because this list
    stopped at pages and shared assets. Anything under claim/ belongs here. */
 const PRICE_PAGES = [
-  'index.html', 'sites/index.html', 'platforms/index.html',
+  'index.html', 'platforms/index.html',
   'services/index.html', 'work/index.html', 'about/index.html',
   'legal/terms.html', 'legal/refund.html', 'legal/privacy.html',
   'legal/operator-agreement.html',
@@ -203,7 +202,7 @@ const PRICE_PAGES = [
 
 /* Pages that must actually STATE the price. Without this the guard would be
    satisfied by deleting every mention, which is not the same as being right. */
-const MUST_STATE_PRICE = ['index.html', 'sites/index.html', 'legal/terms.html'];
+const MUST_STATE_PRICE = ['index.html', 'legal/terms.html'];
 
 const AMOUNT_RE = /\$\d[\d,]*(?:\.\d{2})?(?![\d.,]|\s*[kKmM]\b)/g;
 

@@ -19,17 +19,17 @@
     },
     {
       "source": "/pricing/",
-      "destination": "/sites/",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/pricing",
-      "destination": "/sites/",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/pricing/:path*",
-      "destination": "/sites/",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -39,7 +39,17 @@
     },
     {
       "source": "/niche-landing.html",
-      "destination": "/sites/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sites/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sites/index.html",
+      "destination": "/",
       "permanent": true
     },
     {

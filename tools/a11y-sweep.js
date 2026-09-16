@@ -89,7 +89,7 @@ function serve(root) {
 
 /* The six marketing pages. pages() previously enumerated niches/ only, so
    every page a visitor actually lands on first went unswept. */
-const MARKETING = ['/', '/sites/', '/platforms/', '/services/', '/work/', '/about/'];
+const MARKETING = ['/', '/platforms/', '/services/', '/work/', '/about/'];
 
 /* Every built page: a plain niche is one, a themed niche is one per theme,
    plus the six marketing routes above — unless `only` narrows to specific

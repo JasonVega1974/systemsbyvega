@@ -116,9 +116,22 @@
 
    Task 9 rebuilt `/` as the landing page and retired the diagram above — the
    catalog, #line, #registry, #faq and #founder all moved to /sites/ (Task 10).
-   `/`'s rhythm now: nav dark, hero dark (.plate), #compare white, #sites dark,
-   #platforms paper, #offer dark, #how white, #proof paper, #questions white,
-   #close dark, footer dark.
+   R16 BROUGHT MOST OF THEM BACK AND DELETED /sites/ ENTIRELY. `/`'s rhythm
+   now: nav dark, hero dark (.plate), #compare white, #catalog paper, #line
+   white, #platforms paper, #offer dark, #how white, #proof paper, #registry
+   white, #contact dark, #questions white, #close dark, footer dark. Thirteen
+   bands and not one tone repeat except the two deliberate seams against the
+   chrome at either end.
+
+   TWO IDS CHANGED TONE IN R16 AND ONLY TWO. #sites is GONE — the flat grid
+   it toned was the same thirty-two rows the catalog board renders, so R16
+   deleted the band rather than print the catalog twice, and the id left both
+   selector lists below with it. #registry moved PAPER -> WHITE because it now
+   follows #proof, which is paper; it is the one tone neither #proof above nor
+   #contact below is using. #catalog stayed PAPER deliberately — see the note
+   further down about why the catalog card cannot simply be told to be white —
+   and paper repeats neither #compare above nor #line below, so nothing about
+   the card or the .nm modal that shares its token group had to change.
 
    R6b ADDED #questions AND #close, the FAQ and the closing ask, into the gap
    R6 left between #proof and the footer. #questions is WHITE because it is
@@ -197,12 +210,12 @@
    (.plate), #story paper, #boundaries white, footer dark — the same
    dark/paper/white progression as everywhere else, and no neighbour repeats.
 
-   /sites/ (Task 10) reuses the same three rules too, and reuses the SAME ids
-   index.html's catalog already uses for #how/#catalog/#line/#registry/#faq —
-   a different file, so no collision, and the alternation stays proven. Its
-   rhythm: nav dark, hero dark (.plate), #how white, #included dark,
-   #catalog paper, #line white, #registry paper, #contact dark (the final ask,
-   same job #proof and #founder do on the homepage), #faq paper, footer dark.
+   /sites/ IS GONE (R16). It used to reuse these same three rules with its own
+   rhythm — #how white, #included dark, #catalog paper, #line white, #registry
+   paper, #contact dark, #faq paper. Four of those sections moved onto `/` and
+   the rest were duplicates of bands `/` already had; the ids that came across
+   kept their names, which is why the selector lists below needed two edits
+   and not a rewrite.
 
    #catalog AND #included SWAPPED TONES when the board was rebuilt on clean
    cards. The catalog card is now the landing page's card — white surface,
@@ -223,14 +236,14 @@
    (#how white above, #catalog paper below) is using. .incl reads band tokens
    for every colour it draws, so it needed no change to survive the move.
 
-   Both ids are on /sites/ and on no other page, so nothing else re-tones.
+   Both ids are on `/` and on no other page, so nothing else re-tones.
 
    Ruling R18: every id added to a band selector list above MUST also join
    the border-top:0 exception list below, or the page shows a stray hairline
    seam at that band's transition (the two lists are a pair, not a coincidence).
 */
 .plate, #included, #founder, #contact, .foot, .gfoot, .gnav, .gnav-drawer, #answers, #next,
-#sites, #offer, #close{
+#offer, #close{
   --bg:      var(--con);
   --surface: var(--con-2);
   --surface-2:#171C26;
@@ -263,7 +276,7 @@
   color:var(--tx);
 }
 #how, #line, #websites, #build, #inquiry, #gsb, #roster, #boundaries,
-#compare, #questions{
+#compare, #questions, #registry{
   --bg:      var(--panel);
   --surface: var(--paper);
   --surface-2:var(--panel);
@@ -282,7 +295,7 @@
   background:var(--bg);
   color:var(--tx);
 }
-#registry, #faq, #problem, #process, #esb, #csb, #story, #proof, #platforms,
+#faq, #problem, #process, #esb, #csb, #story, #proof, #platforms,
 #catalog,
 /* .nm is the card-detail modal. It hangs off <body>, outside every band, so
    without this line --surface and --tx are undefined inside it and it has to
@@ -545,7 +558,7 @@ h3{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01
 #proof, #registry, #catalog, #how, #line, #websites, #faq, #founder,
 #esb, #gsb, #csb, #next, #roster, #story, #boundaries, #contact,
 #problem, #build, #process, #answers, #inquiry,
-#offer, #sites, #platforms, #included, #compare, #questions, #close, .gfoot{border-top:0}
+#offer, #platforms, #included, #compare, #questions, #close, .gfoot{border-top:0}
 .section-head{margin-bottom:30px}
 .section-head h2{margin:12px 0 16px}
 
@@ -1274,7 +1287,7 @@ a.proof-shot:hover{transform:translateY(-3px);border-color:var(--acc)}
    load-bearing for the reveal and must keep its place. transform is the only
    property named, so each card's own :hover rule still owns its shadow and
    its border. transform is also the only property that MAY be named —
-   .family>.grid on /sites/ is CSS multi-column masonry, and a margin, height
+   .family>.grid (the catalog board, on `/`) is CSS multi-column masonry, and a margin, height
    or top change here would repack the columns under the pointer.
 
    :focus-within for the two cards with focusable children, :focus-visible for

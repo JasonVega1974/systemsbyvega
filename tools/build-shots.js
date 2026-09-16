@@ -135,7 +135,7 @@ const TARGETS = [
   { group:'work', name:'estatesalebiz',    url:'https://estatesalebiz.com' },
   { group:'work', name:'garagesalebiz',    url:'https://garagesalebiz.com' },
   { group:'work', name:'consignmentbiz',   url:'https://consignmentbiz.com' },
-  { group:'work', name:'sitelab',          url:'/sites/' },
+  { group:'work', name:'sitelab',          url:'/#catalog' },
   { group:'work', name:'yourlifecc',       url:'https://yourlifecc.com' },
   { group:'work', name:'churchfortruckers',url:'https://churchfortruckers.org' },
   { group:'work', name:'primebincleaning', url:'https://primebincleaning.com' },

@@ -21,9 +21,13 @@ const ROOT = path.resolve(__dirname, '..');
 const CHECK = process.argv.includes('--check');
 const ORIGIN = 'https://systemsbyvega.com';
 
-/* The five rooms. Order is the visitor's likely journey, not alphabetical. */
+/* The five rooms. Order is the visitor's likely journey, not alphabetical.
+   R16 folded the Site Shop into the landing page: /sites/ is gone as a page
+   and 301s to /, so "Sites" now points at the catalog board's anchor on the
+   one page. `match` is the ROUTE that link belongs to, used only to decide
+   is-active — `href` carries a fragment and could never equal a route. */
 const NAV = [
-  { href: '/sites/',     label: 'Sites'     },
+  { href: '/#catalog',   label: 'Sites', match: '/' },
   { href: '/platforms/', label: 'Platforms' },
   { href: '/services/',  label: 'Services'  },
   { href: '/work/',      label: 'Work'      },
@@ -31,10 +35,11 @@ const NAV = [
 ];
 
 /* Every page that gets chrome. `indexable` drives robots.txt and sitemap.xml.
-   Add a route here in the same commit that creates its file. */
+   Add a route here in the same commit that creates its file.
+   R16 removed /sites/ — the file no longer exists, and the redirect to / is
+   why it must not appear in the sitemap either. */
 const PAGES = [
   { route: '/',         file: 'index.html',         indexable: true },
-  { route: '/sites/',   file: 'sites/index.html',   indexable: true },
   { route: '/platforms/', file: 'platforms/index.html', indexable: true },
   { route: '/services/', file: 'services/index.html', indexable: true },
   { route: '/work/', file: 'work/index.html', indexable: true },
@@ -55,9 +60,11 @@ const DISCLAIMER =
   'tax, or insurance advice.';
 
 function nav(active) {
-  const links = NAV.map(n =>
-    `<a class="gnav-link${n.href === active ? ' is-active' : ''}" href="${n.href}"` +
-    `${n.href === active ? ' aria-current="page"' : ''}>${n.label}</a>`).join('');
+  const links = NAV.map(n => {
+    const on = (n.match || n.href) === active;
+    return `<a class="gnav-link${on ? ' is-active' : ''}" href="${n.href}"` +
+      `${on ? ' aria-current="page"' : ''}>${n.label}</a>`;
+  }).join('');
   return `
 <a class="skip" href="#main">Skip to content</a>
 <nav class="gnav" aria-label="Main">
@@ -65,7 +72,7 @@ function nav(active) {
     <a class="gnav-brand" href="/"><img class="sq" src="/assets/logo-mark.png" srcset="/assets/logo-mark.png 1x, /assets/logo-mark@2x.png 2x, /assets/logo-mark@3x.png 3x" width="24" height="24" alt="" decoding="async"> Systems by Vega</a>
     <div class="gnav-links">${links}</div>
     <div class="gnav-tools">
-      <a class="btn btn-pri gnav-cta" href="/sites/#line">Get in line</a>
+      <a class="btn btn-pri gnav-cta" href="/#line">Get in line</a>
       <button type="button" class="gnav-burger" id="gnav-burger"
               aria-expanded="false" aria-controls="gnav-drawer" aria-label="Menu">
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
@@ -73,7 +80,7 @@ function nav(active) {
     </div>
   </div>
   <div class="gnav-drawer" id="gnav-drawer" hidden>${links}
-    <a class="btn btn-pri" href="/sites/#line">Get in line</a>
+    <a class="btn btn-pri" href="/#line">Get in line</a>
   </div>
 </nav>`;
 }
@@ -106,14 +113,12 @@ function robots() {
     '# vercel.json sends X-Robots-Tag: noindex for /sites/<slug>/ on the apex;',
     '# middleware.js flips it to `all` per tenant. This mirrors that.',
     '#',
-    '# Ruling R6: the Allow comes FIRST and is anchored with $. A bare',
-    '# "Disallow: /sites/*/" is not safe here — a robots wildcard may match the',
-    '# empty string, so it can swallow /sites/ itself. That is precisely the bug',
-    '# commit 10f1035 just fixed in vercel.json, and re-introducing it through a',
-    '# different file would drop the primary revenue page out of search.',
-    '# Longest-match-wins makes the anchored Allow beat the Disallow for exactly',
-    '# one path, and nothing else.',
-    'Allow: /sites/$',
+    '# R16 removed the anchored "Allow: /sites/$" that used to sit above this.',
+    '# It existed to keep ONE path — the Site Shop page at /sites/ — indexable',
+    '# despite the Disallow beneath it. That page is gone; its catalog is on /',
+    '# and /sites/ 301s there. An Allow for a URL that only redirects tells a',
+    '# crawler nothing. The Disallow STAYS, and is the whole point: it is what',
+    '# keeps the 32 near-identical storefronts out of search.',
     'Disallow: /sites/',
     '', `Sitemap: ${ORIGIN}/sitemap.xml`, ''].join('\n');
 }

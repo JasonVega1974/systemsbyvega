@@ -112,7 +112,7 @@
       /* The repaint just destroyed every [data-claimed] badge claim.js's
          loadCounts() wrote at boot; re-run it so a fourth real claim does
          not silently lose the catalog's scarcity signal. Guarded: claim.js
-         (and therefore window.initClaim) only loads on /sites/. */
+         (and therefore window.initClaim) is not loaded on every page. */
       if (window.initClaim && window.initClaim.loadCounts) window.initClaim.loadCounts();
     }
     /* THE LANDING PAGE'S .sgrid IS DELIBERATELY NOT REPAINTED HERE. It is
@@ -933,7 +933,7 @@
 
      ONE DELEGATED LISTENER ON document, not a handler per trigger. The hero
      button is the only trigger today; the sites grid on / and the cards on
-     /sites/ add many more, and those are REPAINTED by the live database
+     the catalog board on the same page adds many more, and those are
      overlay in loadLive(). A listener bound to the nodes themselves would be
      thrown away with the nodes it was bound to. Delegation survives that, and
      costs one listener no matter how many triggers ship later.
@@ -1060,7 +1060,11 @@
           '<p class="pv-note"><b>Demo</b> — built on Systems by Vega ' +
             '<span class="pv-dot">·</span> this site is for sale</p>' +
           '<div class="pv-acts">' +
-            '<a class="pv-act" id="pv-tab" href="/sites/" target="_blank" rel="noopener" ' +
+            /* Placeholder only: open() overwrites this with the seed row's own
+               demo_path before the overlay is ever shown. It reads '/' rather
+               than '/sites/' since R16 — that URL is a 301 to '/' now, and a
+               link that never fires should still not be a redirect. */
+            '<a class="pv-act" id="pv-tab" href="/" target="_blank" rel="noopener" ' +
               'aria-label="Open this demo in a new tab">' +
               '<span class="pv-wide">Open in new tab</span> ↗</a>' +
             '<button type="button" class="pv-act" id="pv-close" aria-label="Close preview">' +
@@ -1272,7 +1276,7 @@
     if (next) {
       next.innerHTML = state.niches.filter(function (n) { return n.status === 'in_line'; })
         .map(function (n) {
-          return '<a class="chip" href="/sites/#line" data-niche="' + n.slug + '">' + n.name + '</a>';
+          return '<a class="chip" href="/#line" data-niche="' + n.slug + '">' + n.name + '</a>';
         }).join('');
     }
   }

@@ -38,7 +38,6 @@ const ROOT = path.resolve(__dirname, '..');
    its route is here. */
 const FILES = [
   'index.html',
-  'sites/index.html',
   'platforms/index.html',
   'services/index.html',
   'work/index.html',
