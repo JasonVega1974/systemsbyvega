@@ -643,7 +643,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div class="hstat"><div class="hstat-val">3</div><div class="hstat-lbl">Services</div></div>
   </div>
   <button class="user-chip" id="themeToggle" onclick="toggleTheme()" title="Switch between dark and light mode" aria-label="Switch between dark and light mode">🌙 Dark</button>
-  <button class="user-chip" id="adminChip" onclick="signOutPrompt()">🔒 Admin</button>
+  <button class="user-chip" id="adminChip" onclick="openAccountModal()">🔒 Admin</button>
 </header>
 
 <div class="app">
@@ -1582,7 +1582,24 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <input type="password" id="newPassword2" autocomplete="new-password">
     </div>
     <button class="btn btn-primary" id="setPasswordBtn" style="width:100%;margin-top:.8rem;" onclick="submitNewPassword()">Set Password</button>
+    <button type="button" class="btn btn-ghost" id="setPasswordCancelBtn" style="width:100%;margin-top:.5rem;display:none;" onclick="closeModalEl('setPasswordGate')">Cancel</button>
     <div class="pin-error" id="setPasswordMsg" style="min-height:1.4rem;"></div>
+  </div>
+</div>
+
+<!-- ══ ACCOUNT — opened from the header chip. Any signed-in user's own
+     account actions; nothing here needs adminOn. ══ -->
+<div class="modal-overlay" id="accountModal">
+  <div class="admin-modal-box" style="max-width:380px;">
+    <div class="admin-modal-title">👤 ACCOUNT</div>
+    <div id="accountEmail" style="font-size:.82rem;color:var(--tx2);margin-bottom:1rem;word-break:break-all;"></div>
+    <div style="display:flex;flex-direction:column;gap:.5rem;">
+      <button type="button" class="btn btn-ghost" style="width:100%;" onclick="closeModalEl('accountModal');openSetPasswordModal('change')">🔑 Change Password</button>
+      <button type="button" class="btn btn-ghost" style="width:100%;color:var(--red-text);" onclick="closeModalEl('accountModal');signOutPrompt()">🚪 Sign Out</button>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('accountModal')">Close</button>
+    </div>
   </div>
 </div>
 
@@ -2966,12 +2983,16 @@ document.getElementById('loginPassword').addEventListener('keydown', e => { if (
 let setPasswordContext = null;
 function openSetPasswordModal(context) {
   setPasswordContext = context;
-  document.getElementById('setPasswordSub').textContent = context === 'recovery'
-    ? 'Choose a new password to finish resetting your account.'
-    : 'Your account was created with a temporary password. Choose your own before continuing.';
+  document.getElementById('setPasswordSub').textContent =
+    context === 'recovery' ? 'Choose a new password to finish resetting your account.' :
+    context === 'change' ? 'Choose a new password for your account.' :
+    'Your account was created with a temporary password. Choose your own before continuing.';
   document.getElementById('newPassword1').value = '';
   document.getElementById('newPassword2').value = '';
   document.getElementById('setPasswordMsg').textContent = '';
+  /* Only the voluntary path gets a way out — see dismissOverlay()'s comment
+     on why 'recovery'/'must-change' must not be cancellable. */
+  document.getElementById('setPasswordCancelBtn').style.display = context === 'change' ? '' : 'none';
   openModalEl('setPasswordGate');
 }
 async function submitNewPassword() {
@@ -3003,7 +3024,14 @@ async function submitNewPassword() {
   }
   btn.disabled = false; btn.textContent = 'Set Password';
   closeModalEl('setPasswordGate');
-  resolveAuth().then(paintAuth);
+  if (setPasswordContext === 'change') {
+    /* Already fully signed in and nothing about the profile changed — a full
+       resolveAuth()/loadAllData()/repaint would just reset whatever section
+       or scroll position the person was on for no reason. */
+    alertDialog('Password updated', 'Your password has been changed.');
+  } else {
+    resolveAuth().then(paintAuth);
+  }
 }
 
 /* Calls the one server endpoint this static app has — api/auth-admin.js,
@@ -3066,6 +3094,11 @@ async function createPasswordAccount() {
   }
 }
 
+function openAccountModal() {
+  document.getElementById('accountEmail').textContent = currentUser ? currentUser.email : '';
+  openModalEl('accountModal');
+}
+
 async function signOutPrompt() {
   if (!(await confirmDialog('Sign out?', 'You will need to sign in again to get back in.', { okLabel: 'Sign out' }))) return;
   await sb.auth.signOut();
@@ -3076,7 +3109,7 @@ function applyAdmin() {
   const chip = document.getElementById('adminChip');
   const role = currentProfile ? currentProfile.role : null;
   chip.textContent = role === 'admin' ? '🛡️ Admin' : role === 'team_lead' ? '⭐ Team Leader' : '👤 Member';
-  chip.title = currentUser ? (currentUser.email + ' — click to sign out') : '';
+  chip.title = currentUser ? (currentUser.email + ' — click for account options') : '';
   chip.style.background = adminOn ? 'rgba(var(--gr-rgb),.12)' : '';
   chip.style.borderColor = adminOn ? 'rgba(var(--gr-rgb),.4)' : '';
   chip.style.color = adminOn ? 'var(--gr)' : '';
@@ -4820,8 +4853,17 @@ function dismissOverlay(o) {
   /* Escape or a backdrop click on the dialog must SETTLE its promise. Closing
      the element alone would leave every awaiting caller hanging forever. */
   if (o.id === 'appDialog') { dialogCancel(); return; }
-  if (o.id === 'courseModal') closeCourseModal();
-  else closeModalEl(o.id);
+  if (o.id === 'courseModal') { closeCourseModal(); return; }
+  /* setPasswordGate is the same gate for two different situations: a
+     mandatory recovery-link/temp-password flow (context 'recovery' or
+     'must-change' — not cancellable, same as loginGate/noAccessGate below)
+     and a voluntary password change opened from Account → Change Password
+     (context 'change' — an ordinary dismissable modal). Centralized here
+     rather than in the Escape handler above so a backdrop click gets the
+     exact same rule — a stray click on the backdrop wasn't blocked before
+     this, only Escape was. */
+  if (o.id === 'setPasswordGate' && setPasswordContext !== 'change') return;
+  closeModalEl(o.id);
 }
 /* loginGate and noAccessGate are excluded here on purpose — they are not
    cancellable modals. There is no "go back" state for either: you are either
@@ -4832,7 +4874,11 @@ document.querySelectorAll('.modal-overlay, .pin-gate-overlay:not(#loginGate):not
 document.addEventListener('keydown', e => {
   const overlay = openOverlay();
 
-  if (e.key === 'Escape' && overlay && overlay.id !== 'loginGate' && overlay.id !== 'noAccessGate' && overlay.id !== 'setPasswordGate') {
+  /* setPasswordGate's own cancellability is contextual (see dismissOverlay())
+     rather than a flat exemption here, since it's the same gate for a
+     mandatory recovery/temp-password flow and a voluntary "Change Password"
+     from the Account modal — only the latter should be Escapable. */
+  if (e.key === 'Escape' && overlay && overlay.id !== 'loginGate' && overlay.id !== 'noAccessGate') {
     e.preventDefault(); dismissOverlay(overlay); return;
   }
 
