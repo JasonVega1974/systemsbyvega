@@ -30,11 +30,18 @@ function loadApp(htmlPath) {
     set() { return true; }
   });
 
+  /* No `serviceWorker` property — 'serviceWorker' in navigator reads false,
+     so the app's registration branch is skipped entirely rather than needing
+     a fake register() to satisfy. userAgent/platform/maxTouchPoints are
+     plain desktop-Chrome-shaped defaults; iOS-detection tests (if any) can
+     override ctx.navigator's fields directly on the returned ctx. */
+  const navigatorStub = { userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', platform: 'Win32', maxTouchPoints: 0, onLine: true, standalone: undefined };
   const ctx = {
     console,
     localStorage: { _v: null, getItem(){ return this._v; }, setItem(k,v){ this._v = v; }, removeItem(){ this._v = null; } },
     document: { getElementById: () => el, querySelectorAll: () => [], createElement: () => el, body: el, documentElement: el, addEventListener: () => {} },
-    window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){} },
+    window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){}, matchMedia: () => ({ matches: false }), navigator: navigatorStub },
+    navigator: navigatorStub,
     alert: () => {}, confirm: () => true, prompt: () => null,
     Blob: function(){}, URL: { createObjectURL: () => '', revokeObjectURL(){} },
     FileReader: function(){}, setTimeout, Date, Math, JSON, Object, Array, String, Number, Set, isNaN, parseInt

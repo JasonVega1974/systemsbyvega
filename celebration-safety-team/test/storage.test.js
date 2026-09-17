@@ -36,6 +36,7 @@ function build() {
     },
     set() { return true; }
   });
+  const navigatorStub = { userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', platform: 'Win32', maxTouchPoints: 0, onLine: true, standalone: undefined };
   const ctx = {
     console,
     document: {
@@ -46,7 +47,9 @@ function build() {
       documentElement: generic,
       addEventListener: () => {}
     },
-    window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){} },
+    window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){}, matchMedia: () => ({ matches: false }), navigator: navigatorStub },
+    navigator: navigatorStub,
+    localStorage: { _v: null, getItem(){ return this._v; }, setItem(k,v){ this._v = v; }, removeItem(){ this._v = null; } },
     Blob: function(){}, URL: { createObjectURL: () => '', revokeObjectURL(){} },
     FileReader: function(){}, setTimeout, Date, Math, JSON, Object, Array, String, Number, Set, isNaN, parseInt, Promise
   };

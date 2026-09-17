@@ -13,6 +13,18 @@
 <meta name="theme-color" content="#0a0e14">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;7&#39; fill=&#39;%230a0e14&#39;/%3E%3Ctext x=&#39;16&#39; y=&#39;23&#39; font-family=&#39;sans-serif&#39; font-size=&#39;20&#39; font-weight=&#39;bold&#39; fill=&#39;%23e8a020&#39; text-anchor=&#39;middle&#39;%3EC%3C/text%3E%3C/svg%3E">
 <title>Celebration Church Safety &amp; Security Team Operations Center</title>
+<!-- ══ PWA — manifest + iOS install metadata. Android reads the manifest
+     directly (icons, theme/background color, display mode) to build its own
+     automatic install banner; iOS Safari does NOT read most of this — it
+     only honors apple-touch-icon and the apple-mobile-web-app-* meta tags
+     below, which is why both are present rather than relying on the
+     manifest alone. See sw.js for the service worker and its scope. ══ -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CCST Ops">
+<meta name="mobile-web-app-capable" content="yes">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
 <script>
 /* Runs before any CSS paints, so a returning visitor's cached theme applies
@@ -641,6 +653,29 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 </style>
 </head>
 <body>
+
+<!-- ══ OFFLINE BANNER — outside #appShell on purpose: someone offline on the
+     login gate (magic link / password both need network) should see this
+     too, not just once they're already signed in. Toggled by
+     setOfflineBanner() via the window 'online'/'offline' events. ══ -->
+<div id="offlineBanner" style="display:none;background:rgba(var(--c-rgb),.14);border-bottom:1px solid rgba(var(--c-rgb),.35);color:var(--tx);text-align:center;font-size:.78rem;font-weight:700;padding:.5rem 1rem;letter-spacing:.3px;">
+  📡 <span style="color:var(--c);">You're offline</span> — showing cached content. Roster, scheduling, incidents, and notes won't update until you're back online.
+</div>
+
+<!-- ══ iOS INSTALL TIP — Apple gives no automatic install prompt the way
+     Android/Chrome does, so this is the one-time nudge instead. z-index 600
+     so it shows above the login gate/modals (z-index 500) — first visit
+     usually IS the login gate, so anything lower would render invisible
+     behind its backdrop. See maybeShowIosInstallTip()/dismissIosInstallTip(). ══ -->
+<div id="iosInstallTip" style="display:none;position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:600;max-width:420px;margin:0 auto;background:var(--s2);border:1px solid var(--bd2);border-radius:12px;padding:.9rem 1rem;box-shadow:0 8px 30px rgba(0,0,0,.4);">
+  <div style="display:flex;gap:.7rem;align-items:flex-start;">
+    <div style="font-size:1.3rem;">📲</div>
+    <div style="flex:1;font-size:.82rem;color:var(--tx2);line-height:1.5;">
+      <strong style="color:var(--tx);">Install this app:</strong> tap <strong>Share</strong> then <strong>Add to Home Screen</strong>.
+    </div>
+    <button type="button" onclick="dismissIosInstallTip()" style="background:none;border:none;color:var(--tx3);font-size:1.1rem;cursor:pointer;line-height:1;padding:0;" aria-label="Dismiss">✕</button>
+  </div>
+</div>
 
 <div id="appShell" style="display:none;">
 <header class="header">
@@ -5083,6 +5118,75 @@ if (!window.supabase || !window.supabase.createClient) {
     resolveAuth().then(paintAuth);
   });
 }
+
+// ════════════════════════════════════════════════════════════════
+// PWA — service worker registration, offline banner, iOS install tip.
+// Entirely independent of the auth boot above: none of this should ever be
+// able to block or interfere with sign-in, so it runs unconditionally.
+// ════════════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  /* Registered after 'load' — standard practice, keeps the SW registration
+     network request from competing with the page's own initial fetches.
+     Scope defaults to '/' for a root-level sw.js anyway; passed explicitly
+     since every other origin-sensitive path in this app is also literal,
+     never computed (see APP_URL's comment). */
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .catch(e => console.error('[sw] registration failed:', e));
+  });
+}
+
+function setOfflineBanner(offline) {
+  const el = document.getElementById('offlineBanner');
+  if (el) el.style.display = offline ? '' : 'none';
+}
+window.addEventListener('online', () => setOfflineBanner(false));
+window.addEventListener('offline', () => setOfflineBanner(true));
+setOfflineBanner(!navigator.onLine);
+
+/* iPadOS 13+ reports "Macintosh" in the user-agent string by default (Apple's
+   desktop-class UA for tablets) — maxTouchPoints is what actually tells a
+   real Mac (0) apart from an iPad pretending to be one (>1). */
+function isIOSDevice() {
+  const ua = navigator.userAgent;
+  return (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+/* "Safari" alone isn't enough — Chrome's UA string (on every platform,
+   Android and desktop included, not just CriOS on iOS) ALSO contains
+   "Safari" for legacy compatibility, so /Safari/ with no exclusions would
+   false-positive on plain Chrome too. In today's only call site this is
+   caught anyway (isIOSDevice() already excludes Android/desktop before this
+   ever runs), but the function's name promises "real Safari," so it has to
+   actually mean that on its own rather than relying on a caller to save it.
+   Chrome-on-iOS (CriOS), Firefox-on-iOS (FxiOS), Edge-on-iOS (EdgiOS) and
+   Opera-on-iOS (OPiOS) all still use Apple's required WebKit and all still
+   carry "Safari" too, hence the explicit exclusions — not that it would
+   change the install steps either way (every iOS browser shares the same
+   Safari-only "Add to Home Screen" mechanism), just to honor "on first visit
+   in Safari" precisely as asked rather than firing in every iOS browser. */
+function isIOSSafari() {
+  const ua = navigator.userAgent;
+  return /Safari/.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
+}
+function isStandaloneMode() {
+  return window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+}
+function dismissIosInstallTip() {
+  document.getElementById('iosInstallTip').style.display = 'none';
+  try { localStorage.setItem('ccstIosTipShown', '1'); } catch (e) {}
+}
+(function maybeShowIosInstallTip() {
+  if (!isIOSDevice() || !isIOSSafari() || isStandaloneMode()) return;
+  let alreadyShown = false;
+  try { alreadyShown = !!localStorage.getItem('ccstIosTipShown'); } catch (e) {}
+  if (alreadyShown) return;
+  document.getElementById('iosInstallTip').style.display = '';
+  /* Marked as shown the moment it displays, not only on explicit dismissal —
+     "one-time" means it doesn't come back on the next visit either way, not
+     that leaving it unread keeps re-showing it. */
+  try { localStorage.setItem('ccstIosTipShown', '1'); } catch (e) {}
+})();
 </script>
 </body>
 </html>
