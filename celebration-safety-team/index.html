@@ -1371,10 +1371,10 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <input type="email" id="inviteEmail" placeholder="volunteer@example.com" autocomplete="off">
         </div>
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem;">
-          <button class="btn btn-primary" onclick="sendInviteLink()">📧 Send Invite Link</button>
+          <button class="btn btn-primary" onclick="sendInviteLink()">🔗 Generate Invite Link</button>
           <button class="btn btn-ghost" onclick="createPasswordAccount()">🔑 Create With Temp Password</button>
         </div>
-        <div style="font-size:.7rem;color:var(--tx3);margin-top:.4rem;">Invite Link emails a one-time sign-in link. Temp Password creates the account immediately — you relay the password directly (call/text); they set their own on first sign-in.</div>
+        <div style="font-size:.7rem;color:var(--tx3);margin-top:.4rem;">Invite Link gives you a one-time sign-in link to send yourself — not auto-emailed, since Supabase's own invite mailer has sent this to the wrong site before. Temp Password creates the account immediately — you relay the password directly (call/text); they set their own on first sign-in.</div>
         <div id="inviteResult" style="margin-top:.7rem;"></div>
       </div>
 
@@ -3024,14 +3024,25 @@ async function callAuthAdmin(action, extra) {
   return body;
 }
 
+/* api/auth-admin.js mints this link with generateLink() rather than emailing
+   it automatically via inviteUserByEmail — that method's own mailer sent an
+   earlier invite to the shared project's Site URL (systemsbyvega.com)
+   instead of this app, even with redirectTo set correctly. Server-side
+   generateLink() returns the actual link and the server itself verifies its
+   redirect before handing it back, so what's shown here is guaranteed to
+   point at this app — send it yourself (text, email, however).  */
 async function sendInviteLink() {
   const email = document.getElementById('inviteEmail').value.trim();
   const resultEl = document.getElementById('inviteResult');
   if (!email) { resultEl.innerHTML = '<div style="color:var(--red-text);font-size:.8rem;">Enter an email first.</div>'; return; }
-  resultEl.innerHTML = '<div style="color:var(--tx3);font-size:.8rem;">Sending…</div>';
+  resultEl.innerHTML = '<div style="color:var(--tx3);font-size:.8rem;">Generating…</div>';
   try {
-    await callAuthAdmin('invite', { email });
-    resultEl.innerHTML = '<div style="color:var(--gr);font-size:.8rem;">✅ Invite sent to ' + esc(email) + '.</div>';
+    const r = await callAuthAdmin('invite', { email });
+    resultEl.innerHTML = `<div style="background:rgba(var(--gr-rgb),.1);border:1px solid rgba(var(--gr-rgb),.3);border-radius:8px;padding:.6rem .8rem;font-size:.8rem;">
+      ✅ Invite link ready for <strong>${esc(email)}</strong>.<br>
+      <code style="background:var(--s3);padding:.1rem .4rem;border-radius:4px;font-size:.78rem;word-break:break-all;user-select:all;">${esc(r.inviteLink)}</code><br>
+      <span style="color:var(--tx3);">Copy this and send it to them yourself (text, email, whatever's easiest) — it's a one-time link, and it expires.</span>
+    </div>`;
     document.getElementById('inviteEmail').value = '';
   } catch (e) {
     resultEl.innerHTML = '<div style="color:var(--red-text);font-size:.8rem;">' + esc(e.message) + '</div>';
