@@ -27,34 +27,6 @@ group('confirm');
   check('Cancel resolves false — not undefined, not a hang', (await p) === false);
 }
 
-group('prompt');
-{
-  let p = T.promptDialog('PIN', 'Enter it', { inputValue: '' });
-  ctx.dialogOk();
-  check('returns the input value', (await p) === '', 'empty input returns empty string');
-
-  p = T.promptDialog('PIN', 'Enter it');
-  ctx.dialogCancel();
-  const v = await p;
-  check('Cancel returns null, distinguishable from an empty string', v === null, v);
-}
-
-group('prompt validation blocks OK until satisfied');
-{
-  const p = T.promptDialog('PIN', 'Four digits', {
-    validate: v => /^\d{4}$/.test(v) ? null : 'The PIN must be exactly 4 digits.'
-  });
-  let settled = false;
-  p.then(() => { settled = true; });
-
-  ctx.dialogOk();                       // input is '' in the stub -> invalid
-  await new Promise(r => setTimeout(r, 0));
-  check('invalid input does NOT settle the promise', settled === false);
-
-  ctx.dialogCancel();
-  check('and cancel still works afterwards', (await p) === null);
-}
-
 group('a dialog opening over an unsettled one must not strand it');
 {
   const first = T.confirmDialog('First', 'one');

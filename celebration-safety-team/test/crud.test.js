@@ -15,7 +15,7 @@ const ADMIN_USER = { id: 'admin-1', email: 'admin@example.com' };
    throwaway element so unrelated getElementById calls (modals, chip, etc.)
    don't throw. */
 function stubFields(fields) {
-  const blank = { value: '', textContent: '', innerHTML: '', style: {}, classList: { add(){}, remove(){}, toggle(){}, contains: () => false }, addEventListener(){}, querySelectorAll: () => [] };
+  const blank = { value: '', textContent: '', innerHTML: '', style: {}, classList: { add(){}, remove(){}, toggle(){}, contains: () => false }, addEventListener(){}, querySelectorAll: () => [], setAttribute(){}, removeAttribute(){} };
   ctx.document.getElementById = id => (id in fields) ? fields[id] : blank;
 }
 
