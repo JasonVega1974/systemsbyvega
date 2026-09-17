@@ -84,7 +84,7 @@ group('a failed write does not pretend to have succeeded');
 {
   const { ctx, T, alertEl } = build();
   T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
-  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
   T.sb = createFakeSupabase({ cc_leaders: [] });
   T.sb.__forceNextError('cc_leaders', { message: 'permission denied for table cc_leaders' });
 

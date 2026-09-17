@@ -9,7 +9,7 @@ const { ctx, T } = loadApp(process.argv[2]);
 const { check, group, done } = runner();
 
 function freshTeam() {
-  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
   T.S.team = [
     { id: 'tmA', first: 'Ann',  last: 'Lee',   phone: '', spec: 'General / Trained Volunteer', role: 'Team Lead' },
     { id: 'tmB', first: 'Ben',  last: 'Ortiz', phone: '', spec: 'General / Trained Volunteer', role: 'Team Member' },

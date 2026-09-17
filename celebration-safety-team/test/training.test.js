@@ -12,7 +12,7 @@ const { check, group, done } = runner();
 const ADMIN = { id: 'admin-1', role: 'admin', team_member_id: null };
 const ADMIN_USER = { id: 'admin-1', email: 'admin@example.com' };
 function fresh() {
-  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
   T.sb = createFakeSupabase({ cc_training_records: [] });
   T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
 }

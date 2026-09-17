@@ -10,7 +10,7 @@ const { check, group, done } = runner();
 (async () => {
 
 group('per-person onboarding still isolates, now keyed to the real login');
-T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
 T.sb = createFakeSupabase({ cc_onboarding_steps: [] });
 T.currentUser = { id: 'ann', email: 'ann@example.com' };
 T.currentProfile = { id: 'ann', role: 'member', team_member_id: null };
@@ -44,7 +44,7 @@ check('every answer key indexes a real option', med.quiz.every(q => q.opts[q.ans
 check('no answer key is out of range', med.quiz.every(q => q.ans >= 0 && q.ans < q.opts.length));
 check('Academy is ordered by likelihood — Medical is second',
       T.COURSES[1].id === 'ss205', T.COURSES.map(c => c.id));
-check('there are 7 modules', T.COURSES.length === 7, T.COURSES.length);
+check('there are 17 modules', T.COURSES.length === 17, T.COURSES.length);
 
 group('every module still has a usable quiz');
 T.COURSES.forEach(c => {

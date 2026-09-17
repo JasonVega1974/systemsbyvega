@@ -24,7 +24,7 @@ function stubFields(fields) {
 T.currentUser = ADMIN_USER; T.currentProfile = ADMIN;
 
 group('saveMember() adds a new team member');
-T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
 T.sb = createFakeSupabase({ cc_team: [] });
 stubFields({
   mFirst: { value: 'Dana' }, mLast: { value: 'Reed' }, mPhone: { value: '208-555-0199' },

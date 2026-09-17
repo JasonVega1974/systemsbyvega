@@ -73,7 +73,7 @@ group('Escape and backdrop settle the promise');
 
 group('real call sites are async and actually awaitable');
 {
-  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
   T.S.team = [{ id: 'tmA', first: 'Ann', last: 'Lee', phone: '208-555-0100', spec: 'General / Trained Volunteer', role: 'Team Lead' }];
   T.sb = createFakeSupabase({ cc_team: [{ id: 'tmA', first_name: 'Ann', last_name: 'Lee', phone: '208-555-0100', email: '', specialty: 'General / Trained Volunteer', team_role: 'Team Lead' }] });
   T.currentProfile = { id: 'admin-1', role: 'admin', team_member_id: null };
@@ -94,7 +94,7 @@ group('real call sites are async and actually awaitable');
 
 group('a cancelled recertification changes nothing');
 {
-  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [] };
+  T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {} };
   T.currentProfile = { id: 'admin-1', role: 'admin', team_member_id: null };
   T.currentUser = { id: 'admin-1', email: 'admin@example.com' };
   /* adminResetEveryone() counts DISTINCT profile_ids in cc_training_records
