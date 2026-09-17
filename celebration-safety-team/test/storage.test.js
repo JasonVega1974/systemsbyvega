@@ -9,7 +9,15 @@ const { createFakeSupabase } = require('./fakeSupabase');
 const { check, group, done } = require('./harness').runner();
 
 const htmlPath = process.argv[2];
-const js = fs.readFileSync(htmlPath, 'utf8').match(/<script>\n([\s\S]*)\n<\/script>/)[1];
+/* Same extraction as harness.js's loadApp() — the app now has more than one
+   <script> tag (a pre-paint theme script in <head>, the vendor bundle, the
+   app's own logic), so a naive first-<script>-to-last-</script> match would
+   swallow the raw HTML in between as "JS". The app's own logic is always the
+   LAST <script> block, right after the vendor <script src=...> tag. */
+const html = fs.readFileSync(htmlPath, 'utf8');
+const lastOpen = html.lastIndexOf('<script>');
+const lastClose = html.lastIndexOf('</script>');
+const js = html.slice(lastOpen + '<script>'.length, lastClose);
 
 /* A DOM stub that actually records what gets written to #storageAlert, since
    the whole point of these fixes is that something becomes visible. */
@@ -20,8 +28,9 @@ function build() {
       if (k === 'classList') return { add(){}, remove(){}, toggle(){}, contains(){ return false; } };
       if (k === 'style') return {};
       if (k === 'files') return [];
-      if (['insertAdjacentHTML','appendChild','click','remove','addEventListener','focus','setAttribute','querySelector'].includes(k)) return () => {};
+      if (['insertAdjacentHTML','appendChild','click','remove','addEventListener','focus','setAttribute','removeAttribute','querySelector'].includes(k)) return () => {};
       if (k === 'querySelectorAll') return () => [];
+      if (k === 'getAttribute' || k === 'hasAttribute') return () => null;
       if (k === 'value' || k === 'textContent' || k === 'innerHTML') return '';
       return undefined;
     },
@@ -34,6 +43,7 @@ function build() {
       querySelectorAll: () => [],
       createElement: () => generic,
       body: generic,
+      documentElement: generic,
       addEventListener: () => {}
     },
     window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){} },

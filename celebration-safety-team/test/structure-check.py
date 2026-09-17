@@ -5,11 +5,17 @@ import io, re, subprocess, sys, os
 p = sys.argv[1]
 s = io.open(p, encoding='utf-8').read()
 
-m = re.search(r'<script>\n(.*)\n</script>', s, re.S)
-if not m:
+# The app now has more than one <script> tag (a small pre-paint theme script
+# in <head>, the vendor bundle, the app's own logic) — the first-to-last
+# match used here previously would swallow the raw HTML in between as "JS".
+# The app's own logic is always the LAST <script> block, right after the
+# vendor <script src=...> tag (mirrors test/harness.js's loadApp()).
+last_open = s.rfind('<script>')
+last_close = s.rfind('</script>')
+if last_open == -1 or last_close == -1 or last_close <= last_open:
     print("FAIL: could not locate the inline <script> block")
     sys.exit(1)
-js = m.group(1)
+js = s[last_open + len('<script>'):last_close]
 
 tmp = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_extracted.js')
 io.open(tmp, 'w', encoding='utf-8', newline='\n').write(js)

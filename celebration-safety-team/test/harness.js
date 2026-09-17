@@ -5,7 +5,14 @@ const fs = require('fs'), vm = require('vm');
 
 function loadApp(htmlPath) {
   const html = fs.readFileSync(htmlPath, 'utf8');
-  const js = html.match(/<script>\n([\s\S]*)\n<\/script>/)[1];
+  /* The app has more than one <script> tag (a small pre-paint theme script in
+     <head>, the vendor bundle, the app's own logic) — a naive first-<script>
+     to last-</script> match would swallow everything in between, including
+     raw HTML, as "JS". The app's own inline logic is always the LAST <script>
+     block in the file, immediately after the vendor <script src=...> tag. */
+  const lastOpen = html.lastIndexOf('<script>');
+  const lastClose = html.lastIndexOf('</script>');
+  const js = html.slice(lastOpen + '<script>'.length, lastClose);
 
   const el = new Proxy({}, {
     get(t, k) {
@@ -26,7 +33,7 @@ function loadApp(htmlPath) {
   const ctx = {
     console,
     localStorage: { _v: null, getItem(){ return this._v; }, setItem(k,v){ this._v = v; }, removeItem(){ this._v = null; } },
-    document: { getElementById: () => el, querySelectorAll: () => [], createElement: () => el, body: el, addEventListener: () => {} },
+    document: { getElementById: () => el, querySelectorAll: () => [], createElement: () => el, body: el, documentElement: el, addEventListener: () => {} },
     window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){} },
     alert: () => {}, confirm: () => true, prompt: () => null,
     Blob: function(){}, URL: { createObjectURL: () => '', revokeObjectURL(){} },
