@@ -721,6 +721,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <button type="button" class="nav-item" data-section="maps" onclick="showSection('maps')"><span class="nav-icon" aria-hidden="true">🗺️</span><span class="nav-text">Facility Maps</span></button>
     <button type="button" class="nav-item" data-section="scheduling" onclick="showSection('scheduling')"><span class="nav-icon" aria-hidden="true">📅</span><span class="nav-text">Scheduling</span></button>
     <button type="button" class="nav-item" data-section="incidents" onclick="showSection('incidents')"><span class="nav-icon" aria-hidden="true">🚔</span><span class="nav-text">Incident Reports</span></button>
+    <button type="button" class="nav-item" data-section="news" onclick="showSection('news')"><span class="nav-icon" aria-hidden="true">📰</span><span class="nav-text">News</span></button>
     <div class="sidebar-label">People</div>
     <button type="button" class="nav-item" data-section="team" onclick="showSection('team')"><span class="nav-icon" aria-hidden="true">🛡️</span><span class="nav-text">Team</span></button>
     <button type="button" class="nav-item" data-section="meetings" onclick="showSection('meetings')"><span class="nav-icon" aria-hidden="true">🗣️</span><span class="nav-text">Team Meetings</span></button>
@@ -1550,6 +1551,20 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
     </section>
 
+    <!-- ══ NEWS ══ -->
+    <section id="sec-news" class="section">
+      <div class="sec-header">
+        <div class="sec-icon amber">📰</div>
+        <div>
+          <div class="sec-title">NEWS</div>
+          <div class="sec-desc">Announcements and links the church wants the team to see — a Facebook post, a news article, anything worth passing along.</div>
+        </div>
+        <button class="btn btn-primary" id="addNewsBtn" style="margin-left:auto;display:none;" onclick="openNewsModal()">+ Post News</button>
+      </div>
+      <div id="newsList"></div>
+      <div class="empty-note" id="newsEmpty" style="display:none;">No news posted yet.</div>
+    </section>
+
     <!-- ══ TEAM MEETINGS ══ -->
     <section id="sec-meetings" class="section">
       <div class="sec-header">
@@ -1943,6 +1958,21 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 <!-- ══ BOLO DETAIL ══ -->
 <div class="modal-overlay" id="boloDetailModal">
   <div class="admin-modal-box" style="max-width:560px;" id="boloDetailBox"></div>
+</div>
+
+<!-- ══ POST NEWS (admin only) ══ -->
+<div class="modal-overlay" id="newsModal">
+  <div class="admin-modal-box" style="max-width:520px;">
+    <div class="admin-modal-title">📰 POST NEWS</div>
+    <div class="form-row"><label>Title</label><input type="text" id="newsTitle" placeholder="e.g. Fall Festival volunteer sign-up"></div>
+    <div class="form-row"><label>URL</label><input type="url" id="newsUrl" placeholder="https://..."></div>
+    <div class="form-row"><label>Summary (optional)</label><textarea id="newsSummary" rows="3"></textarea></div>
+    <div class="form-row"><label>Posted Date</label><input type="date" id="newsPostedDate"></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('newsModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNews()">Post</button>
+    </div>
+  </div>
 </div>
 
 <!-- ══ COURSE MODAL ══ -->
@@ -2673,7 +2703,7 @@ const ONBOARD_ITEMS = [
    cc_schedule_slots/cc_training_records/cc_onboarding_steps/cc_activity. There
    is no client-side schema migration any more — the database IS the schema,
    and SQL migrations (see CELEBRATION-SAFETY-PHASE4.sql) are how it changes. */
-let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} }, bolos: [] };
+let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} }, bolos: [], news: [] };
 
 /* Row <-> app-object field mapping. DB columns are snake_case and match the
    schema file; the app object shape (first/last/spec/role/...) is unchanged
@@ -3019,7 +3049,7 @@ async function paintAuth(r) {
   showAppShell();
   populateIncidentCategorySelects();
   applySectionVisibility();
-  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews();
   applyAdmin(); refreshDash();
 }
 /* The one full fetch of everything this login can see, run once per auth
@@ -3046,7 +3076,8 @@ async function loadAllData() {
     loadSchedule(),
     loadIncidents(),
     loadFacilityMaps(),
-    loadBolos()
+    loadBolos(),
+    loadNews()
   ]);
   S.team = (teamR ? teamR.data : []).map(teamRowToJs);
   S.leaders = (leadersR ? leadersR.data : []).map(leaderRowToJs);
@@ -4390,6 +4421,74 @@ function renderBoloBanner() {
     ${active.map(b => `<div class="bolo-banner-item"><strong>${esc(truncate(b.subjectDescription, 90))}</strong> <span style="opacity:.75;">— issued by ${esc(b.issuedByName)}</span></div>`).join('')}
     <button class="btn btn-ghost" style="margin-top:.5rem;" onclick="navTo('incidents')">View in Incident Reports →</button>
   </div>`;
+}
+
+// ════════════════════════════════════════════════════════════════
+// NEWS — admin-curated link cards (cc_news). No scraping, no iframe embeds:
+// exactly the title/URL/summary/date the admin typed, shown as a plain card
+// with the source domain surfaced for context. Admin-only post and remove;
+// everyone else views. See sql/NEWS.sql.
+// ════════════════════════════════════════════════════════════════
+function newsRowToJs(r) { return { id: r.id, title: r.title, url: r.url, summary: r.summary || '', postedDate: r.posted_date, postedBy: r.posted_by }; }
+/* A manual parse rather than `new URL(...)` — no behavioral difference for
+   the well-formed http(s) links this form collects, and it keeps this
+   function testable in the plain-Node harness the same way it runs in a
+   browser, instead of depending on a global URL constructor. */
+function sourceDomain(url) {
+  const m = String(url || '').match(/^[a-z][a-z0-9+.-]*:\/\/(?:[^/?#]*@)?([^/?#:]+)/i);
+  return m ? m[1].replace(/^www\./i, '') : String(url || '');
+}
+async function loadNews() {
+  const r = await dbWrite(sb.from('cc_news').select('*').order('posted_date', { ascending: false }), 'Could not load news');
+  S.news = r ? r.data.map(newsRowToJs) : [];
+}
+function renderNews() {
+  document.getElementById('addNewsBtn').style.display = adminOn ? '' : 'none';
+  const rows = S.news.slice().sort((a, b) => b.postedDate.localeCompare(a.postedDate));
+  document.getElementById('newsEmpty').style.display = rows.length ? 'none' : '';
+  document.getElementById('newsList').innerHTML = rows.map(n => `
+    <div class="card" style="margin-bottom:.8rem;">
+      <div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
+        <div style="font-weight:700;color:var(--tx);font-size:.95rem;">${esc(n.title)}</div>
+        <div style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${esc(n.postedDate)}</div>
+      </div>
+      <div style="font-size:.72rem;color:var(--tx3);margin-top:.2rem;">${esc(sourceDomain(n.url))}</div>
+      ${n.summary ? `<div style="margin-top:.5rem;font-size:.85rem;color:var(--tx2);white-space:pre-wrap;">${esc(n.summary)}</div>` : ''}
+      <div style="margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
+        <a href="${esc(n.url)}" target="_blank" rel="noopener" class="btn btn-ghost" style="width:auto;">Read More →</a>
+        ${adminOn ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNews('${n.id}')">Remove</button>` : ''}
+      </div>
+    </div>`).join('');
+}
+function openNewsModal() {
+  document.getElementById('newsTitle').value = '';
+  document.getElementById('newsUrl').value = '';
+  document.getElementById('newsSummary').value = '';
+  document.getElementById('newsPostedDate').value = iso(new Date());
+  openModalEl('newsModal');
+}
+async function saveNews() {
+  const title = document.getElementById('newsTitle').value.trim();
+  const url = document.getElementById('newsUrl').value.trim();
+  const summary = document.getElementById('newsSummary').value.trim() || null;
+  const postedDate = document.getElementById('newsPostedDate').value || iso(new Date());
+  if (!title || !url) { await alertDialog('Missing details', 'A title and URL are both required.'); return; }
+  const row = { title, url, summary, posted_date: postedDate, posted_by: currentProfile.id };
+  const r = await dbWrite(sb.from('cc_news').insert(row).select().single(), 'Could not post this news item');
+  if (!r) return;
+  S.news.unshift(newsRowToJs(r.data));
+  closeModalEl('newsModal');
+  renderNews();
+  addActivity('Posted news: ' + title);
+}
+async function deleteNews(id) {
+  const n = S.news.find(x => x.id === id);
+  if (!await confirmDialog('Remove this news post?', '"' + (n ? n.title : 'This item') + '" will be removed for everyone. This cannot be undone.', { okLabel: 'Remove', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_news').delete().eq('id', id), 'Could not remove this news post');
+  if (!r) return;
+  S.news = S.news.filter(x => x.id !== id);
+  renderNews();
+  addActivity('Removed a news post');
 }
 
 /* ════════════════════════════════════════════════════════════════
