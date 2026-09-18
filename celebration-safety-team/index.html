@@ -790,6 +790,11 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:.6rem;">🙋 COVERAGE REQUESTS<button class="btn btn-primary" style="margin-left:auto;font-size:.68rem;padding:.3rem .6rem;" onclick="openCoverageRequestModal()">Request Coverage</button></div>
+        <div id="dashCoverageRequests" style="font-size:.82rem;color:var(--tx2);"></div>
+      </div>
+
+      <div class="card">
         <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
         <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
       </div>
@@ -1526,6 +1531,18 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="card-title">📋 COVERAGE SUMMARY — <span id="schedSummaryDate"></span></div>
         <div id="schedSummary" style="font-size:.8rem;color:var(--tx2);"></div>
       </div>
+
+      <div style="border-top:1px solid var(--bd);margin-top:1.3rem;padding-top:1rem;">
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem;">
+          <div>
+            <div class="card-title" style="margin-bottom:.2rem;">🙋 COVERAGE REQUESTS</div>
+            <div class="sec-desc">Any team member can request coverage for a shift they can't make, or pick up an open one. Picking up an open request goes live immediately — no approval needed.</div>
+          </div>
+          <button class="btn btn-primary" style="margin-left:auto;" onclick="openCoverageRequestModal()">Request Coverage</button>
+        </div>
+        <div id="coverageRequestsList"></div>
+        <div class="empty-note" id="coverageRequestsEmpty" style="display:none;">No coverage requests on record.</div>
+      </div>
     </section>
 
     <!-- ══ INCIDENT REPORTS ══ -->
@@ -1984,6 +2001,53 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('newsModal')">Cancel</button>
       <button class="btn btn-primary" id="postNewsBtn" onclick="saveNews()">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ REQUEST COVERAGE ══ -->
+<div class="modal-overlay" id="coverageRequestModal">
+  <div class="admin-modal-box" style="max-width:480px;">
+    <div class="admin-modal-title">🙋 REQUEST COVERAGE</div>
+    <div class="form-row"><label>Requested by</label><div id="coverageRequestedBy" style="font-size:.85rem;color:var(--tx2);padding:.4rem 0;"></div></div>
+    <div class="modal-grid-2">
+      <div class="form-row"><label>Service Date</label><input type="date" id="coverageDate"></div>
+      <div class="form-row"><label>Service Time</label>
+        <select id="coverageServiceKey"><option value="s0">8:00 AM</option><option value="s1">9:45 AM</option><option value="s2">11:30 AM</option></select>
+      </div>
+    </div>
+    <div class="form-row"><label>Reason (optional)</label><textarea id="coverageReason" rows="3" placeholder="Family conflict, illness, out of town..."></textarea></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('coverageRequestModal')">Cancel</button>
+      <button class="btn btn-primary" id="saveCoverageRequestBtn" onclick="saveCoverageRequest()">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ASSIGN COVERAGE (Team Lead / Admin) ══ -->
+<div class="modal-overlay" id="assignCoverageModal">
+  <div class="admin-modal-box" style="max-width:420px;">
+    <div class="admin-modal-title">🙋 ASSIGN COVERAGE</div>
+    <div class="form-row"><label>Assign to</label>
+      <select id="assignCoverageMember"></select>
+    </div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('assignCoverageModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAssignCoverage()">Assign</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PUSH NOTIFICATION PERMISSION PROMPT ══ -->
+<div class="modal-overlay" id="pushPromptModal">
+  <div class="admin-modal-box" style="max-width:440px;text-align:center;">
+    <div style="font-size:2rem;">🔔</div>
+    <div class="admin-modal-title" style="margin-top:.4rem;">STAY NOTIFIED</div>
+    <div style="font-size:.85rem;color:var(--tx2);line-height:1.6;margin-bottom:.9rem;">Enable push notifications to be alerted when coverage is needed or a new incident is reported.</div>
+    <div id="pushPromptIosNote" class="tip-box" style="display:none;text-align:left;margin-bottom:.9rem;">📱 On iPhone, you must add this app to your Home Screen first (Share → Add to Home Screen), then open it from there before notifications can work.</div>
+    <div style="display:flex;gap:.6rem;justify-content:center;">
+      <button class="btn btn-ghost" onclick="dismissPushPrompt()">Maybe Later</button>
+      <button class="btn btn-primary" id="enablePushBtn" onclick="enablePushNotifications()">Enable Notifications</button>
     </div>
   </div>
 </div>
@@ -2716,7 +2780,7 @@ const ONBOARD_ITEMS = [
    cc_schedule_slots/cc_training_records/cc_onboarding_steps/cc_activity. There
    is no client-side schema migration any more — the database IS the schema,
    and SQL migrations (see CELEBRATION-SAFETY-PHASE4.sql) are how it changes. */
-let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} }, bolos: [], news: [] };
+let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} }, bolos: [], news: [], coverageRequests: [] };
 
 /* Row <-> app-object field mapping. DB columns are snake_case and match the
    schema file; the app object shape (first/last/spec/role/...) is unchanged
@@ -2987,7 +3051,7 @@ function resolveAuth() {
     const session = res && res.data && res.data.session;
     if (!session) return { state: 'no_session' };
     return Promise.resolve(
-      sb.from('cc_profiles').select('id,email,role,team_member_id,theme').eq('id', session.user.id).maybeSingle()
+      sb.from('cc_profiles').select('id,email,role,team_member_id,theme,push_enabled').eq('id', session.user.id).maybeSingle()
     ).then(r => {
       if (r.error) return { state: 'read_error', detail: r.error.message, user: session.user };
       if (!r.data) return { state: 'no_profile', user: session.user };
@@ -3067,8 +3131,9 @@ async function paintAuth(r) {
   showAppShell();
   populateIncidentCategorySelects();
   applySectionVisibility();
-  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList();
   applyAdmin(); refreshDash();
+  maybeShowPushPrompt();
 }
 /* The one full fetch of everything this login can see, run once per auth
    resolution (fresh load, or whenever onAuthStateChange fires again). Clears
@@ -3095,7 +3160,8 @@ async function loadAllData() {
     loadIncidents(),
     loadFacilityMaps(),
     loadBolos(),
-    loadNews()
+    loadNews(),
+    loadCoverageRequests()
   ]);
   S.team = (teamR ? teamR.data : []).map(teamRowToJs);
   S.leaders = (leadersR ? leadersR.data : []).map(leaderRowToJs);
@@ -4190,6 +4256,7 @@ async function saveIncident() {
   await loadIncidents();
   renderIncidents();
   addActivity((wasCorrection ? 'Filed a correction to an' : 'Filed a new') + ' incident report: ' + categoryLabel(category) + ' — ' + location);
+  if (!wasCorrection) notifyPush('incident_filed', { incidentId: r.data.id, categoryLabel: categoryLabel(category) });
   openIncidentDetail(r.data.id);
 }
 async function openIncidentDetail(id) {
@@ -4372,6 +4439,7 @@ async function saveBolo() {
     if (!r) return;
     S.bolos.unshift(boloRowToJs(r.data));
     addActivity('Issued a new BOLO');
+    notifyPush('bolo_issued', { boloId: r.data.id, subjectDescription: subject });
   }
   closeModalEl('boloModal');
   editingBoloId = null; boloLinkedIncidentId = null;
@@ -4589,6 +4657,152 @@ async function deleteNews(id) {
   S.news = S.news.filter(x => x.id !== id);
   renderNews();
   addActivity('Removed a news post');
+}
+
+// ════════════════════════════════════════════════════════════════
+// COVERAGE REQUESTS (cc_coverage_requests) — any team member can flag a
+// shift they can't cover; any OTHER member can pick it up immediately, no
+// approval needed, or a Team Lead/Admin assigns someone directly. Both
+// resolution paths go through the cc_resolve_coverage_request() RPC (see
+// sql/COVERAGE-REQUESTS.sql), never a plain client update — covering
+// someone ELSE's shift has to swap cc_schedule_slots, a table only Admin
+// can write directly, and covered_by_name has to be resolved the same way
+// activeName() resolves it, which only the RPC (server-side) can do for a
+// covering member who isn't the viewer. Cancellation is the one action
+// that IS a plain client update, since ordinary RLS already expresses it.
+// ════════════════════════════════════════════════════════════════
+function coverageRequestRowToJs(r) {
+  return {
+    id: r.id, profileId: r.profile_id, profileName: r.profile_name,
+    serviceDate: r.service_date, serviceKey: r.service_key, reason: r.reason || '',
+    status: r.status, coveredByProfileId: r.covered_by_profile_id, coveredByName: r.covered_by_name || '',
+    resolvedAt: r.resolved_at, createdAt: r.created_at
+  };
+}
+function serviceKeyLabel(key) {
+  const sv = SERVICES.find(s => s.key === key);
+  return sv ? sv.label : key;
+}
+function fmtCoverageDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }); }
+async function loadCoverageRequests() {
+  const r = await dbWrite(sb.from('cc_coverage_requests').select('*').order('created_at', { ascending: false }), 'Could not load coverage requests');
+  S.coverageRequests = r ? r.data.map(coverageRequestRowToJs) : [];
+}
+/* (S.coverageRequests || []) — same reasoning as renderDashIncidentsBolos()'s
+   S.bolos guard: this can render before loadCoverageRequests() has resolved,
+   or (in tests) against a fixture object built before this feature existed. */
+function openCoverageRequests() { return (S.coverageRequests || []).filter(c => c.status === 'open'); }
+
+function openCoverageRequestModal() {
+  document.getElementById('coverageRequestedBy').textContent = activeName();
+  document.getElementById('coverageDate').value = iso(nextSunday(new Date()));
+  document.getElementById('coverageServiceKey').value = 's0';
+  document.getElementById('coverageReason').value = '';
+  openModalEl('coverageRequestModal');
+}
+async function saveCoverageRequest() {
+  const serviceDate = document.getElementById('coverageDate').value;
+  const serviceKey = document.getElementById('coverageServiceKey').value;
+  const reason = document.getElementById('coverageReason').value.trim() || null;
+  if (!serviceDate) { await alertDialog('Missing details', 'A service date is required.'); return; }
+  const btn = document.getElementById('saveCoverageRequestBtn');
+  btn.disabled = true; btn.textContent = 'Submitting…';
+  const row = { profile_id: currentProfile.id, profile_name: activeName(), service_date: serviceDate, service_key: serviceKey, reason };
+  const r = await dbWrite(sb.from('cc_coverage_requests').insert(row).select().single(), 'Could not submit this coverage request');
+  btn.disabled = false; btn.textContent = 'Submit Request';
+  if (!r) return;
+  S.coverageRequests.unshift(coverageRequestRowToJs(r.data));
+  closeModalEl('coverageRequestModal');
+  renderCoverageRequestsList(); renderDashCoverageRequests(); renderNotifications();
+  addActivity('Requested coverage for ' + fmtCoverageDate(serviceDate) + ' — ' + serviceKeyLabel(serviceKey));
+  notifyPush('coverage_requested', { serviceDate, serviceKey, requesterName: activeName() });
+}
+async function coverShift(id) {
+  const req = S.coverageRequests.find(x => x.id === id);
+  if (!req) return;
+  if (!await confirmDialog('Cover this shift?', 'You will be assigned to ' + esc(fmtCoverageDate(req.serviceDate)) + ' — ' + esc(serviceKeyLabel(req.serviceKey)) + ' in place of ' + esc(req.profileName) + '. This goes live immediately.', { okLabel: "I'll Cover This" })) return;
+  const { data, error } = await sb.rpc('cc_resolve_coverage_request', { p_request_id: id });
+  if (error) { await alertDialog('Could not cover this shift', error.message || 'Please try again.'); return; }
+  Object.assign(req, { status: 'resolved', coveredByProfileId: currentProfile.id, coveredByName: data.covered_by_name, resolvedAt: new Date().toISOString() });
+  if (!data.slot_updated) {
+    await alertDialog('Covered — schedule needs a manual check', "You're recorded as covering this shift, but no matching schedule slot was found to update automatically. An Admin may need to adjust the schedule directly.");
+  }
+  await loadSchedule(); renderSchedule();
+  renderCoverageRequestsList(); renderDashCoverageRequests(); renderNotifications();
+  addActivity('Covered a shift: ' + fmtCoverageDate(req.serviceDate) + ' — ' + serviceKeyLabel(req.serviceKey));
+  notifyPush('coverage_covered', { serviceDate: req.serviceDate, serviceKey: req.serviceKey, requesterProfileId: req.profileId, coveredByName: data.covered_by_name });
+}
+let assigningCoverageRequestId = null;
+function openAssignCoverageModal(id) {
+  assigningCoverageRequestId = id;
+  const sel = document.getElementById('assignCoverageMember');
+  sel.innerHTML = S.team.slice().sort((a, b) => (a.first + a.last).localeCompare(b.first + b.last))
+    .map(m => `<option value="${m.id}">${esc(m.first)} ${esc(m.last)}</option>`).join('');
+  openModalEl('assignCoverageModal');
+}
+async function confirmAssignCoverage() {
+  const memberId = document.getElementById('assignCoverageMember').value;
+  const req = S.coverageRequests.find(x => x.id === assigningCoverageRequestId);
+  if (!req || !memberId) return;
+  const { data, error } = await sb.rpc('cc_resolve_coverage_request', { p_request_id: req.id, p_assign_team_member_id: memberId });
+  if (error) { await alertDialog('Could not assign coverage', error.message || 'Please try again.'); return; }
+  Object.assign(req, { status: 'resolved', coveredByProfileId: null, coveredByName: data.covered_by_name, resolvedAt: new Date().toISOString() });
+  closeModalEl('assignCoverageModal');
+  if (!data.slot_updated) {
+    await alertDialog('Assigned — schedule needs a manual check', 'The request is marked covered, but no matching schedule slot was found to update automatically.');
+  }
+  await loadSchedule(); renderSchedule();
+  renderCoverageRequestsList(); renderDashCoverageRequests(); renderNotifications();
+  addActivity('Assigned coverage: ' + fmtCoverageDate(req.serviceDate) + ' — ' + serviceKeyLabel(req.serviceKey) + ' to ' + memberName(memberId));
+  notifyPush('coverage_covered', { serviceDate: req.serviceDate, serviceKey: req.serviceKey, requesterProfileId: req.profileId, coveredByName: data.covered_by_name });
+}
+async function cancelCoverageRequest(id) {
+  const req = S.coverageRequests.find(x => x.id === id);
+  if (!req) return;
+  if (!await confirmDialog('Cancel this coverage request?', 'This cannot be undone.', { okLabel: 'Cancel Request', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_coverage_requests').update({ status: 'cancelled' }).eq('id', id), 'Could not cancel this request');
+  if (!r) return;
+  req.status = 'cancelled';
+  renderCoverageRequestsList(); renderDashCoverageRequests(); renderNotifications();
+}
+function renderDashCoverageRequests() {
+  const box = document.getElementById('dashCoverageRequests');
+  if (!box) return;
+  const open = openCoverageRequests().slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 2);
+  if (!open.length) { box.innerHTML = '<div style="color:var(--tx3);">No coverage requests — team is fully staffed.</div>'; return; }
+  box.innerHTML = open.map(c => `
+    <div style="padding:.4rem 0;border-bottom:1px solid var(--bd);">
+      <strong style="color:var(--tx);">${esc(fmtCoverageDate(c.serviceDate))} — ${esc(serviceKeyLabel(c.serviceKey))}</strong>
+      <div style="font-size:.72rem;color:var(--tx3);">Requested by ${esc(c.profileName)}${c.reason ? ' — ' + esc(c.reason) : ''}</div>
+    </div>`).join('') + `<button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('scheduling')">View All →</button>`;
+}
+function renderCoverageRequestsList() {
+  const box = document.getElementById('coverageRequestsList');
+  const empty = document.getElementById('coverageRequestsEmpty');
+  if (!box) return;
+  const rows = S.coverageRequests.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  empty.style.display = rows.length ? 'none' : '';
+  const canManage = adminOn || (currentProfile && currentProfile.role === 'team_lead');
+  box.innerHTML = rows.map(c => {
+    const isOwn = currentProfile && c.profileId === currentProfile.id;
+    const canCancel = c.status === 'open' && (isOwn || adminOn);
+    const statusTag = c.status === 'open' ? '<span class="spec-tag spec-police">Open</span>'
+      : c.status === 'resolved' ? '<span class="spec-tag spec-general">Resolved</span>'
+      : '<span class="spec-tag spec-general" style="opacity:.55;">Cancelled</span>';
+    return `<div style="padding:.6rem 0;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;align-items:flex-start;">
+      <div>
+        ${statusTag}
+        <strong style="color:var(--tx);margin-left:.4rem;">${esc(fmtCoverageDate(c.serviceDate))} — ${esc(serviceKeyLabel(c.serviceKey))}</strong>
+        <div style="font-size:.72rem;color:var(--tx3);">Requested by ${esc(c.profileName)}${c.reason ? ' — ' + esc(c.reason) : ''}</div>
+        ${c.status === 'resolved' ? `<div style="font-size:.72rem;color:var(--gr);">Covered by ${esc(c.coveredByName)}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;">
+        ${c.status === 'open' && !isOwn ? `<button class="btn btn-primary" style="padding:.25rem .6rem;font-size:.7rem;" onclick="coverShift('${c.id}')">I'll Cover This</button>` : ''}
+        ${c.status === 'open' && canManage ? `<button class="btn btn-ghost" style="padding:.25rem .6rem;font-size:.7rem;" onclick="openAssignCoverageModal('${c.id}')">Assign…</button>` : ''}
+        ${canCancel ? `<button class="btn btn-ghost" style="padding:.25rem .6rem;font-size:.7rem;color:var(--red-text);" onclick="cancelCoverageRequest('${c.id}')">Cancel</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -4825,13 +5039,35 @@ function servicesWithIncompleteCoverage() {
 function membersWithUnassignedWeek() { return S.team.filter(m => !m.rotationWeek); }
 function membersInTraineeStatus() { return S.team.filter(m => m.role === 'Safety Team Trainee'); }
 
+/* Open coverage requests are an action item for EVERY member, not just
+   admin/team_lead — anyone can click "I'll Cover This" — so this is
+   excluded from the adminOn/team_lead gate below, unlike the roster-health
+   items it sits next to. A member's own open request is excluded from
+   their own list/count: you can't cover your own shift, so it isn't an
+   action item for you (it still shows on the Dashboard card and the
+   Scheduling tab for everyone, including yourself, just not here). */
+function openCoverageRequestsForOthers() {
+  return openCoverageRequests().filter(c => !currentProfile || c.profileId !== currentProfile.id);
+}
+/* Informational only (never adds to the badge count), and time-boxed to 7
+   days after resolution — same reasoning as Upcoming Sunday Assignments:
+   nothing left to click through, just worth knowing, and it shouldn't
+   linger in this list forever. */
+function myRecentlyCoveredRequests() {
+  if (!currentProfile) return [];
+  const cutoff = new Date(Date.now() - 7 * 864e5);
+  return (S.coverageRequests || []).filter(c =>
+    c.profileId === currentProfile.id && c.status === 'resolved' && c.resolvedAt && new Date(c.resolvedAt) >= cutoff
+  );
+}
+
 /* The badge counts only true action items — things with a next step to
    click through and resolve. Upcoming Sunday assignments are informational
    (nothing to do but show up), so they render on the page but never add to
    the count. */
 function notificationCount() {
   if (!currentProfile) return 0;
-  let n = myUnacknowledgedIncidents().length + myIncompleteOnboarding().length + myIncompleteAcademy().length;
+  let n = myUnacknowledgedIncidents().length + myIncompleteOnboarding().length + myIncompleteAcademy().length + openCoverageRequestsForOthers().length;
   if (adminOn || currentProfile.role === 'team_lead') {
     n += servicesWithIncompleteCoverage().length + membersWithUnassignedWeek().length + membersInTraineeStatus().length;
   }
@@ -4879,6 +5115,21 @@ function renderNotifications() {
   html += section('Your Upcoming Sunday Assignments', '🗓️', myUpcomingAssignments(),
     a => row(`${esc(fmtDate(a.date))} — ${esc(a.label)} — <strong>${esc(a.role)}</strong>`, `goToScheduleDate('${a.date}')`),
     currentProfile.team_member_id ? 'No upcoming Sundays on the schedule yet.' : 'Not linked to a roster entry — an admin sets this on your Team record.');
+
+  html += section('Open Coverage Requests', '🙋', openCoverageRequestsForOthers(),
+    c => row(`${esc(fmtDate(c.serviceDate))} — ${esc(serviceKeyLabel(c.serviceKey))} — requested by <strong>${esc(c.profileName)}</strong>`, `navTo('scheduling')`),
+    'No open coverage requests right now.');
+
+  /* Purely informational and often empty — unlike every section above,
+     this one disappears entirely rather than showing an empty-state card,
+     since "nothing to report" isn't reassuring the way "you're caught up
+     on X" is for an action-item list. */
+  const recentlyCovered = myRecentlyCoveredRequests();
+  if (recentlyCovered.length) {
+    html += section('Your Coverage Requests That Were Covered', '✅', recentlyCovered,
+      c => row(`${esc(fmtDate(c.serviceDate))} — ${esc(serviceKeyLabel(c.serviceKey))} — covered by <strong>${esc(c.coveredByName)}</strong>`),
+      '');
+  }
 
   if (adminOn || currentProfile.role === 'team_lead') {
     html += `<div class="card-title" style="margin:1.2rem 0 .3rem;font-size:.72rem;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;">Admin / Team Leader</div>`;
@@ -5428,6 +5679,7 @@ function refreshDash() {
   renderActivity();
   renderNotifications();
   renderDashIncidentsBolos();
+  renderDashCoverageRequests();
 }
 /* Replaces the old static "Service Coverage Rule" card. Unrestricted only —
    a restricted incident must never leak into this preview regardless of who
@@ -5738,6 +5990,94 @@ function dismissIosInstallTip() {
      that leaving it unread keeps re-showing it. */
   try { localStorage.setItem('ccstIosTipShown', '1'); } catch (e) {}
 })();
+
+// ════════════════════════════════════════════════════════════════
+// WEB PUSH — coverage requests, new BOLOs, and (Admin/Team Lead only) new
+// incident reports reach the team on their phones even when the app isn't
+// open. Graceful degradation throughout: a browser without push support, a
+// declined permission, or a failed subscribe leaves the rest of the app
+// completely unaffected — nothing here ever blocks or fails the action that
+// triggered it. See sql/PUSH-NOTIFICATIONS.sql and api/send-push.js.
+// ════════════════════════════════════════════════════════════════
+const VAPID_PUBLIC_KEY = 'BG4jrHbMywcBZAOi6kT6v4HjUeYj8c5xaLtL-Yeb23xw0vHK_hgymLyJTa5Kdh5-lfARCWyttcT7HiAhDWrxnuk';
+
+function pushSupported() {
+  return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+}
+/* Session-only flag, deliberately never persisted — "Maybe Later" is asked
+   again on the NEXT sign-in, per spec, which a plain in-memory variable
+   already gives for free (it resets on reload) without needing to also
+   distinguish it from the "never asked yet" case the way a localStorage
+   flag would require. */
+let pushPromptDismissedThisSession = false;
+/* push_enabled is checked for null/undefined, not falsiness — there is no
+   stored "declined" value (see PUSH-NOTIFICATIONS.sql), so the only way
+   this ever reads false is a value this app itself never writes. */
+function maybeShowPushPrompt() {
+  if (!pushSupported() || pushPromptDismissedThisSession) return;
+  if (!currentProfile || currentProfile.push_enabled != null) return;
+  document.getElementById('pushPromptIosNote').style.display = (isIOSDevice() && !isStandaloneMode()) ? '' : 'none';
+  openModalEl('pushPromptModal');
+}
+function dismissPushPrompt() {
+  pushPromptDismissedThisSession = true;
+  closeModalEl('pushPromptModal');
+}
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const raw = atob(base64);
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+}
+async function enablePushNotifications() {
+  const btn = document.getElementById('enablePushBtn');
+  if (isIOSDevice() && !isStandaloneMode()) {
+    await alertDialog('Add to Home Screen first', 'On iPhone, notifications only work once this app is added to your Home Screen. Tap Share → Add to Home Screen, then open it from there and try again.');
+    return;
+  }
+  btn.disabled = true; btn.textContent = 'Enabling…';
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      await alertDialog('Notifications not enabled', 'You can turn this on later from your browser or device settings.');
+      return;
+    }
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) });
+    const subJson = sub.toJSON();
+    const r = await dbWrite(sb.from('cc_push_subscriptions').insert({ profile_id: currentProfile.id, endpoint: subJson.endpoint, keys: subJson.keys }), 'Could not save your notification subscription');
+    if (!r) return;
+    const r2 = await dbWrite(sb.from('cc_profiles').update({ push_enabled: true }).eq('id', currentProfile.id), 'Could not save your notification preference');
+    if (!r2) return;
+    currentProfile.push_enabled = true;
+    closeModalEl('pushPromptModal');
+  } catch (e) {
+    console.error('[push] enable failed:', e);
+    await alertDialog('Could not enable notifications', 'Something went wrong turning this on. You can try again next time you sign in.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Enable Notifications';
+  }
+}
+/* Fire-and-forget, same philosophy as addActivity(): a push notification is
+   a nice-to-have alert, never something worth failing or even delaying the
+   triggering action over. Every call site awaits this only so a rejection
+   can't become unhandled, not because the caller needs the result — the
+   server (api/send-push.js) decides who actually gets notified and what
+   the notification says; this only reports that the event happened. */
+async function notifyPush(eventType, payload) {
+  try {
+    const { data } = await sb.auth.getSession();
+    const session = data && data.session;
+    if (!session) return;
+    await fetch('/api/send-push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ eventType, payload })
+    });
+  } catch (e) {
+    console.error('[push] notify failed:', e);
+  }
+}
 </script>
 </body>
 </html>

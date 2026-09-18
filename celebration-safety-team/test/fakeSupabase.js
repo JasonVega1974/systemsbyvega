@@ -120,12 +120,29 @@ class FakeQuery {
 function createFakeSupabase(seedTables) {
   const store = {};
   Object.keys(seedTables || {}).forEach(k => { store[k] = (seedTables[k] || []).map(r => Object.assign({}, r)); });
+  const rpcHandlers = {};
   return {
     _store: store,
     from(table) {
       if (!store[table]) store[table] = [];
       return new FakeQuery(store, table);
     },
+    /* No real Postgres function execution here — a test that needs to
+       exercise an RPC-calling client function (coverShift(), etc.) registers
+       a handler via __mockRpc() that does whatever a real SECURITY DEFINER
+       function would to the store, and this just dispatches to it. The SQL
+       function's own correctness is the migration file's concern, verified
+       by reading it, not by reimplementing its logic here. */
+    rpc(name, args) {
+      const handler = rpcHandlers[name];
+      if (!handler) return Promise.resolve({ data: null, error: { message: 'rpc not mocked in this test: ' + name } });
+      try {
+        return Promise.resolve({ data: handler(args, store), error: null });
+      } catch (e) {
+        return Promise.resolve({ data: null, error: { message: e.message } });
+      }
+    },
+    __mockRpc(name, handler) { rpcHandlers[name] = handler; },
     /* Test-only escape hatch: makes the NEXT query against `table` resolve
        with `{data:null, error}` instead of touching the store, so a test can
        assert what dbWrite() does when Supabase itself fails. One-shot. */
