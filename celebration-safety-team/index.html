@@ -350,6 +350,11 @@ body {
 .verse-content .verse-text { font-style: italic; font-size: 1.12rem; line-height: 1.8; color: var(--tx); }
 .verse-content .verse-ref { margin-top: .6rem; font-size: .8rem; color: var(--tx3); font-weight: 700; letter-spacing: .3px; }
 @media (prefers-reduced-motion: reduce) { .verse-content { animation: none; } }
+
+/* ── BOLO — prominent gold dashboard banner, above the verse ── */
+.bolo-banner { background: linear-gradient(135deg, rgba(var(--c-rgb),.18), rgba(var(--c-rgb),.06)); border: 1px solid rgba(var(--c-rgb),.45); border-radius: 12px; padding: .9rem 1.1rem; margin-bottom: .9rem; }
+.bolo-banner-title { font-family: var(--fh); font-size: 1rem; letter-spacing: 1.5px; color: var(--c); margin-bottom: .5rem; }
+.bolo-banner-item { font-size: .82rem; color: var(--tx); padding: .2rem 0; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
 @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
@@ -735,6 +740,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="sec-desc">Celebration Church · 2121 Caldwell Blvd, Nampa, ID 83651 · Sunday services 8:00 AM | 9:45 AM | 11:30 AM</div>
         </div>
       </div>
+
+      <div id="boloBanner" style="display:none;"></div>
 
       <div class="card verse-card">
         <div class="card-title">📖 VERSE OF THE WEEK</div>
@@ -1529,6 +1536,18 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <tbody id="incidentsBody"></tbody>
       </table></div>
       <div class="empty-note" id="incidentsEmpty" style="margin-top:.8rem;display:none;">No incident reports match the current filters.</div>
+
+      <div style="border-top:1px solid var(--bd);margin-top:1.3rem;padding-top:1rem;">
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem;">
+          <div>
+            <div class="card-title" style="margin-bottom:.2rem;">🔍 BOLO — BE ON THE LOOKOUT</div>
+            <div class="sec-desc">Admin and Team Lead can issue, edit and resolve a BOLO. Resolved BOLOs stay on record — they're never deleted.</div>
+          </div>
+          <button class="btn btn-primary" id="addBoloBtn" style="margin-left:auto;display:none;" onclick="openBoloModal()">+ New BOLO</button>
+        </div>
+        <div id="boloList"></div>
+        <div class="empty-note" id="boloEmpty" style="display:none;">No BOLOs on record.</div>
+      </div>
     </section>
 
     <!-- ══ TEAM MEETINGS ══ -->
@@ -1902,6 +1921,28 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 <!-- ══ INCIDENT DETAIL ══ -->
 <div class="modal-overlay" id="incidentDetailModal">
   <div class="admin-modal-box" style="max-width:620px;" id="incidentDetailBox"></div>
+</div>
+
+<!-- ══ NEW / EDIT BOLO ══ -->
+<div class="modal-overlay" id="boloModal">
+  <div class="admin-modal-box" style="max-width:560px;">
+    <div class="admin-modal-title" id="boloModalTitle">🔍 NEW BOLO</div>
+    <div id="boloLinkedIncidentNote" class="tip-box" style="display:none;margin-bottom:.9rem;"></div>
+    <div class="form-row"><label>Subject Description</label><textarea id="boloSubject" rows="3" placeholder="Height, build, clothing, distinguishing features..."></textarea></div>
+    <div class="form-row"><label>Status</label>
+      <select id="boloStatus"><option value="Active">Active</option><option value="Resolved">Resolved</option></select>
+    </div>
+    <div class="form-row"><label>Notes</label><textarea id="boloNotes" rows="3"></textarea></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('boloModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBolo()">Save BOLO</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BOLO DETAIL ══ -->
+<div class="modal-overlay" id="boloDetailModal">
+  <div class="admin-modal-box" style="max-width:560px;" id="boloDetailBox"></div>
 </div>
 
 <!-- ══ COURSE MODAL ══ -->
@@ -2632,7 +2673,7 @@ const ONBOARD_ITEMS = [
    cc_schedule_slots/cc_training_records/cc_onboarding_steps/cc_activity. There
    is no client-side schema migration any more — the database IS the schema,
    and SQL migrations (see CELEBRATION-SAFETY-PHASE4.sql) are how it changes. */
-let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} } };
+let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} }, bolos: [] };
 
 /* Row <-> app-object field mapping. DB columns are snake_case and match the
    schema file; the app object shape (first/last/spec/role/...) is unchanged
@@ -2978,7 +3019,7 @@ async function paintAuth(r) {
   showAppShell();
   populateIncidentCategorySelects();
   applySectionVisibility();
-  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner();
   applyAdmin(); refreshDash();
 }
 /* The one full fetch of everything this login can see, run once per auth
@@ -3004,7 +3045,8 @@ async function loadAllData() {
        after this Promise.all. */
     loadSchedule(),
     loadIncidents(),
-    loadFacilityMaps()
+    loadFacilityMaps(),
+    loadBolos()
   ]);
   S.team = (teamR ? teamR.data : []).map(teamRowToJs);
   S.leaders = (leadersR ? leadersR.data : []).map(leaderRowToJs);
@@ -4163,6 +4205,7 @@ function renderIncidentDetailContent(inc, photos) {
       <button class="btn btn-ghost" onclick="closeModalEl('incidentDetailModal')">Close</button>
       <button class="btn btn-ghost" onclick="printIncidentReport('${inc.id}')">🖨️ Print</button>
       ${canCorrect ? `<button class="btn btn-ghost" onclick="closeModalEl('incidentDetailModal');openIncidentModal('${inc.id}')">File a Correction</button>` : ''}
+      ${canIssueBolo() ? `<button class="btn btn-ghost" onclick="closeModalEl('incidentDetailModal');openBoloModal(null, '${inc.id}')">Create BOLO from this Report</button>` : ''}
       ${!iAcked ? `<button class="btn btn-primary" onclick="acknowledgeIncident('${inc.id}')">Acknowledge</button>` : `<span class="lead-tag" style="align-self:center;">✓ You acknowledged this</span>`}
     </div>
   `;
@@ -4188,6 +4231,167 @@ async function uploadIncidentPhoto(id, input) {
   addActivity('Added a photo to an incident report');
   openIncidentDetail(id);
 }
+
+// ════════════════════════════════════════════════════════════════
+// BOLO — Be On the LOokout. Lives inside Incident Reports as its own
+// subsection (see sql/BOLO.sql). Team Lead or Admin issue/edit/resolve;
+// everyone else views only. Photos reuse the cc-incident-photos bucket
+// under a bolo/{id}/{filename} prefix — storage.list() enumerates them
+// directly, no separate metadata table needed the way incident photos have
+// cc_incident_photos (that table also backs the acknowledgment gallery;
+// a BOLO has no such second reader that would need indexed rows).
+// ════════════════════════════════════════════════════════════════
+const BOLO_MAX_PHOTOS = 6;
+function canIssueBolo() { return adminOn || (currentProfile && currentProfile.role === 'team_lead'); }
+function boloRowToJs(r) {
+  return {
+    id: r.id, subjectDescription: r.subject_description, status: r.status, notes: r.notes || '',
+    linkedIncidentId: r.linked_incident_id, issuedBy: r.issued_by, issuedByName: r.issued_by_name,
+    issuedAt: r.issued_at, resolvedAt: r.resolved_at
+  };
+}
+/* Assembled from whichever Subject Description fields the source incident
+   actually has — an incident's subject fields are all optional, so this
+   skips anything blank rather than printing empty labels. Purely a starting
+   point: the BOLO form leaves it editable before saving. */
+function subjectSummaryFromIncident(inc) {
+  const parts = [];
+  if (inc.subjectSex) parts.push(inc.subjectSex);
+  if (inc.subjectApproxAge) parts.push('approx. ' + inc.subjectApproxAge + ' years old');
+  if (inc.subjectHeight) parts.push(inc.subjectHeight);
+  if (inc.subjectWeight) parts.push(inc.subjectWeight);
+  if (inc.subjectHairColor) parts.push(inc.subjectHairColor + ' hair');
+  if (inc.subjectClothing) parts.push('wearing ' + inc.subjectClothing);
+  if (inc.subjectMarks) parts.push(inc.subjectMarks);
+  return parts.join(', ');
+}
+async function loadBolos() {
+  const r = await dbWrite(sb.from('cc_bolos').select('*').order('issued_at', { ascending: false }), 'Could not load BOLOs');
+  S.bolos = r ? r.data.map(boloRowToJs) : [];
+}
+function renderBolos() {
+  document.getElementById('addBoloBtn').style.display = canIssueBolo() ? '' : 'none';
+  const rows = S.bolos.slice().sort((a, b) => b.issuedAt.localeCompare(a.issuedAt));
+  document.getElementById('boloEmpty').style.display = rows.length ? 'none' : '';
+  document.getElementById('boloList').innerHTML = rows.map(b => {
+    const issued = new Date(b.issuedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `<div style="padding:.6rem 0;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;align-items:flex-start;">
+      <div>
+        <span class="spec-tag ${b.status === 'Active' ? 'spec-police' : 'spec-general'}">${esc(b.status)}</span>
+        <strong style="color:var(--tx);margin-left:.4rem;">${esc(truncate(b.subjectDescription, 80))}</strong>
+        <div style="font-size:.7rem;color:var(--tx3);">Issued by ${esc(b.issuedByName)} · ${issued}</div>
+      </div>
+      <button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="openBoloDetail('${b.id}')">View</button>
+    </div>`;
+  }).join('');
+}
+let editingBoloId = null, boloLinkedIncidentId = null;
+function openBoloModal(id, prefillFromIncidentId) {
+  editingBoloId = id || null;
+  const b = id ? S.bolos.find(x => x.id === id) : null;
+  boloLinkedIncidentId = b ? b.linkedIncidentId : (prefillFromIncidentId || null);
+  document.getElementById('boloModalTitle').textContent = id ? '🔍 EDIT BOLO' : '🔍 NEW BOLO';
+  const prefillInc = prefillFromIncidentId ? S.incidents.find(x => x.id === prefillFromIncidentId) : null;
+  document.getElementById('boloSubject').value = b ? b.subjectDescription : (prefillInc ? subjectSummaryFromIncident(prefillInc) : '');
+  document.getElementById('boloStatus').value = b ? b.status : 'Active';
+  document.getElementById('boloNotes').value = b ? b.notes : '';
+  const linkNote = document.getElementById('boloLinkedIncidentNote');
+  const linkedInc = boloLinkedIncidentId ? S.incidents.find(x => x.id === boloLinkedIncidentId) : null;
+  if (linkedInc) {
+    linkNote.style.display = '';
+    linkNote.textContent = '🔗 Linked to incident report: ' + categoryLabel(linkedInc.category) + ' — ' + linkedInc.date;
+  } else {
+    linkNote.style.display = 'none';
+  }
+  openModalEl('boloModal');
+}
+async function saveBolo() {
+  const subject = document.getElementById('boloSubject').value.trim();
+  if (!subject) { await alertDialog('Missing details', 'A subject description is required.'); return; }
+  const status = document.getElementById('boloStatus').value;
+  const notes = document.getElementById('boloNotes').value.trim() || null;
+  if (editingBoloId) {
+    const patch = { subject_description: subject, status, notes };
+    if (status === 'Resolved') patch.resolved_at = new Date().toISOString();
+    const r = await dbWrite(sb.from('cc_bolos').update(patch).eq('id', editingBoloId).select().single(), 'Could not save this BOLO');
+    if (!r) return;
+    Object.assign(S.bolos.find(x => x.id === editingBoloId), boloRowToJs(r.data));
+    addActivity('Updated a BOLO' + (status === 'Resolved' ? ' — marked resolved' : ''));
+  } else {
+    const row = { subject_description: subject, status, notes, linked_incident_id: boloLinkedIncidentId, issued_by: currentProfile.id, issued_by_name: activeName() };
+    const r = await dbWrite(sb.from('cc_bolos').insert(row).select().single(), 'Could not issue this BOLO');
+    if (!r) return;
+    S.bolos.unshift(boloRowToJs(r.data));
+    addActivity('Issued a new BOLO');
+  }
+  closeModalEl('boloModal');
+  editingBoloId = null; boloLinkedIncidentId = null;
+  renderBolos(); renderDashIncidentsBolos(); renderBoloBanner();
+}
+async function resolveBolo(id) {
+  if (!await confirmDialog('Resolve this BOLO?', 'It will be marked resolved and will stop appearing on the dashboard banner and preview. The record itself is kept, never deleted.', { okLabel: 'Resolve' })) return;
+  const r = await dbWrite(sb.from('cc_bolos').update({ status: 'Resolved', resolved_at: new Date().toISOString() }).eq('id', id).select().single(), 'Could not resolve this BOLO');
+  if (!r) return;
+  Object.assign(S.bolos.find(x => x.id === id), boloRowToJs(r.data));
+  closeModalEl('boloDetailModal');
+  renderBolos(); renderDashIncidentsBolos(); renderBoloBanner();
+  addActivity('Resolved a BOLO');
+}
+async function openBoloDetail(id) {
+  const b = S.bolos.find(x => x.id === id);
+  if (!b) return;
+  const listR = await Promise.resolve(sb.storage.from('cc-incident-photos').list('bolo/' + id));
+  const files = (listR && listR.data) ? listR.data : [];
+  const photos = await Promise.all(files.map(async f => {
+    const path = 'bolo/' + id + '/' + f.name;
+    const signedR = await Promise.resolve(sb.storage.from('cc-incident-photos').createSignedUrl(path, 3600));
+    return { url: (signedR && signedR.data) ? signedR.data.signedUrl : '' };
+  }));
+  renderBoloDetailContent(b, photos);
+  openModalEl('boloDetailModal');
+}
+function renderBoloDetailContent(b, photos) {
+  const canManage = canIssueBolo();
+  const issued = new Date(b.issuedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const linkedInc = b.linkedIncidentId ? S.incidents.find(x => x.id === b.linkedIncidentId) : null;
+  document.getElementById('boloDetailBox').innerHTML = `
+    <div class="admin-modal-title">🔍 BOLO — ${esc(b.status)}</div>
+    <div style="font-size:.85rem;margin-bottom:.6rem;white-space:pre-wrap;">${esc(b.subjectDescription)}</div>
+    <div style="font-size:.72rem;color:var(--tx3);margin-bottom:.6rem;">Issued by ${esc(b.issuedByName)} · ${issued}${b.resolvedAt ? ' · resolved ' + new Date(b.resolvedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</div>
+    ${b.notes ? `<div style="margin-bottom:.6rem;"><div style="font-size:.66rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;">Notes</div><div style="font-size:.82rem;white-space:pre-wrap;">${esc(b.notes)}</div></div>` : ''}
+    ${linkedInc ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;margin-bottom:.6rem;" onclick="closeModalEl('boloDetailModal');openIncidentDetail('${linkedInc.id}')">View linked incident report</button>` : ''}
+    ${photos.length ? `<div class="inc-form-divider">Photos</div><div style="display:flex;gap:.5rem;flex-wrap:wrap;">${photos.map(p => `<img src="${esc(p.url)}" style="width:90px;height:90px;object-fit:cover;border-radius:8px;border:1px solid var(--bd2);">`).join('')}</div>` : ''}
+    ${canManage && photos.length < BOLO_MAX_PHOTOS ? `<div class="inc-form-divider">Add a Photo (${photos.length}/${BOLO_MAX_PHOTOS})</div><input type="file" accept="image/*" onchange="uploadBoloPhoto('${b.id}', this)">` : ''}
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;flex-wrap:wrap;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('boloDetailModal')">Close</button>
+      ${canManage ? `<button class="btn btn-ghost" onclick="closeModalEl('boloDetailModal');openBoloModal('${b.id}')">Edit</button>` : ''}
+      ${canManage && b.status === 'Active' ? `<button class="btn btn-danger" onclick="resolveBolo('${b.id}')">Mark Resolved</button>` : ''}
+    </div>
+  `;
+}
+async function uploadBoloPhoto(id, input) {
+  const file = input.files && input.files[0];
+  input.value = '';
+  if (!file) return;
+  const path = 'bolo/' + id + '/' + crypto.randomUUID() + '-' + file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+  const upR = await dbWrite(sb.storage.from('cc-incident-photos').upload(path, file), 'Could not upload the photo');
+  if (!upR) return;
+  addActivity('Added a photo to a BOLO');
+  openBoloDetail(id);
+}
+function renderBoloBanner() {
+  const active = (S.bolos || []).filter(b => b.status === 'Active');
+  const el = document.getElementById('boloBanner');
+  if (!el) return;
+  if (!active.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
+  el.style.display = '';
+  el.innerHTML = `<div class="bolo-banner">
+    <div class="bolo-banner-title">🔍 ${active.length} ACTIVE BOLO${active.length > 1 ? 'S' : ''}</div>
+    ${active.map(b => `<div class="bolo-banner-item"><strong>${esc(truncate(b.subjectDescription, 90))}</strong> <span style="opacity:.75;">— issued by ${esc(b.issuedByName)}</span></div>`).join('')}
+    <button class="btn btn-ghost" style="margin-top:.5rem;" onclick="navTo('incidents')">View in Incident Reports →</button>
+  </div>`;
+}
+
 /* ════════════════════════════════════════════════════════════════
    GENERIC PRINT DOCUMENT — the shared mechanism behind every printable view
    except the certificate (which has its own dedicated parchment styling
