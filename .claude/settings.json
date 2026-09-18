@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "ask": [
+      "Bash(psql*)",
+      "Bash(supabase db push*)",
+      "Bash(supabase migration*)",
+      "Bash(supabase db execute*)",
+      "Bash(supabase link*)",
+      "Bash(git push*)"
+    ]
+  }
+}
