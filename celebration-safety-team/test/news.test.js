@@ -36,6 +36,10 @@ check('the post is in S', T.S.news.length === 1 && T.S.news[0].title === 'Fall F
 check('posted_by is stamped from the acting admin', T.sb._store.cc_news[0].posted_by === 'admin-1', T.sb._store.cc_news);
 check('posted_date is stored as entered (admin sets it, not necessarily today)', T.sb._store.cc_news[0].posted_date === '2026-09-18');
 
+group('the fake Supabase client has no auth.getSession, so fetchOgPreview() fails closed and the post still succeeds with a plain card');
+check('og_fetched_at was never set — a preview fetch that cannot even start must not block posting', T.sb._store.cc_news[0].og_fetched_at == null, T.sb._store.cc_news[0]);
+check('no og_* fields were fabricated', T.sb._store.cc_news[0].og_image_url == null && T.sb._store.cc_news[0].og_title == null && T.sb._store.cc_news[0].og_description == null);
+
 group('a title or URL is required');
 T.S.news = [];
 stubFields({ newsTitle: { value: '' }, newsUrl: { value: 'https://example.com' }, newsSummary: { value: '' }, newsPostedDate: { value: '2026-09-18' } });
@@ -60,6 +64,31 @@ T.currentProfile = ADMIN; T.adminOn = true;
 ctx.renderNews();
 check('Remove button present for admin', els.newsList.innerHTML.includes('Remove'), els.newsList.innerHTML);
 check('addNewsBtn visible for admin', els.addNewsBtn.style.display === '');
+
+group('rendering: a fetched preview with an og:image shows a thumbnail and a subtitle');
+T.S.news = [{ id: 'n2', title: 'Community Update', url: 'https://example.com/post', summary: '', postedDate: '2026-09-18',
+  ogImage: 'https://example.com/hero.jpg', ogTitle: 'Example Site', ogDescription: 'A real, fetched description.', ogFetchedAt: '2026-09-18T12:00:00Z' }];
+ctx.renderNews();
+check('an <img> thumbnail is rendered', els.newsList.innerHTML.includes('news-thumb"') && els.newsList.innerHTML.includes('https://example.com/hero.jpg'), els.newsList.innerHTML);
+check('the subtitle prefers og:description over og:title', els.newsList.innerHTML.includes('A real, fetched description.') && !els.newsList.innerHTML.includes('>Example Site<'), els.newsList.innerHTML);
+check('no placeholder div is rendered when an image exists', !els.newsList.innerHTML.includes('news-thumb-placeholder'), els.newsList.innerHTML);
+check('a favicon for the source domain is included', els.newsList.innerHTML.includes('s2/favicons') && els.newsList.innerHTML.includes('example.com'), els.newsList.innerHTML);
+
+group('rendering: a fetched preview with NO og:image falls back to a lettered placeholder, subtitle still shows');
+T.S.news = [{ id: 'n3', title: 'No Image Post', url: 'https://thecelebration.church/news', summary: '', postedDate: '2026-09-18',
+  ogImage: null, ogTitle: 'Church Homepage', ogDescription: null, ogFetchedAt: '2026-09-18T12:00:00Z' }];
+ctx.renderNews();
+check('a placeholder div is rendered instead of an <img>', els.newsList.innerHTML.includes('news-thumb-placeholder') && !els.newsList.innerHTML.includes('<img src="https://thecelebration.church'), els.newsList.innerHTML);
+check('the placeholder shows the domain\'s first letter, uppercased', els.newsList.innerHTML.includes('>T<'), els.newsList.innerHTML);
+check('the subtitle falls back to og:title when og:description is absent', els.newsList.innerHTML.includes('Church Homepage'), els.newsList.innerHTML);
+
+group('rendering: a post whose preview fetch failed entirely (or predates this feature) renders exactly as a plain card — no thumbnail, no placeholder, no subtitle');
+T.S.news = [{ id: 'n4', title: 'Old Post', url: 'https://example.org/x', summary: 'Plain summary text.', postedDate: '2026-09-18',
+  ogImage: null, ogTitle: null, ogDescription: null, ogFetchedAt: null }];
+ctx.renderNews();
+check('no thumbnail class of any kind appears', !els.newsList.innerHTML.includes('news-thumb'), els.newsList.innerHTML);
+check('no news-card-sub subtitle block appears', !els.newsList.innerHTML.includes('news-card-sub'), els.newsList.innerHTML);
+check('the plain summary and Read More link still render', els.newsList.innerHTML.includes('Plain summary text.') && els.newsList.innerHTML.includes('Read More'), els.newsList.innerHTML);
 
 group('deleteNews() removes locally and from the database');
 T.S.news = [{ id: 'n1', title: 'Fall Festival', url: 'https://x.com', summary: '', postedDate: '2026-09-18' }];

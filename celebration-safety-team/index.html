@@ -355,6 +355,19 @@ body {
 .bolo-banner { background: linear-gradient(135deg, rgba(var(--c-rgb),.18), rgba(var(--c-rgb),.06)); border: 1px solid rgba(var(--c-rgb),.45); border-radius: 12px; padding: .9rem 1.1rem; margin-bottom: .9rem; }
 .bolo-banner-title { font-family: var(--fh); font-size: 1rem; letter-spacing: 1.5px; color: var(--c); margin-bottom: .5rem; }
 .bolo-banner-item { font-size: .82rem; color: var(--tx); padding: .2rem 0; }
+
+/* ── NEWS — link-preview cards. Thumbnail left, text right; the placeholder
+   reuses the app's own gold brand gradient (matches .btn-primary) rather
+   than anything scraped from the target page, since "brand color" here
+   means this app's, not the linked site's. ── */
+.news-card-body { display: flex; gap: .9rem; align-items: flex-start; }
+.news-thumb { width: 84px; height: 84px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: var(--s2); border: 1px solid var(--bd2); }
+.news-thumb-placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--fh); font-size: 1.9rem; font-weight: 800; color: #14100a; background: linear-gradient(135deg, var(--c), #c8881a); }
+.news-card-content { flex: 1; min-width: 0; }
+.news-card-sub { margin-top: .3rem; font-size: .8rem; color: var(--tx2); line-height: 1.5; }
+.news-card-source { margin-top: .4rem; font-size: .72rem; color: var(--tx3); display: flex; align-items: center; gap: .35rem; }
+.news-favicon { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+@media (max-width: 480px) { .news-thumb { width: 60px; height: 60px; } .news-thumb-placeholder { font-size: 1.4rem; } }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
 @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
@@ -1970,7 +1983,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div class="form-row"><label>Posted Date</label><input type="date" id="newsPostedDate"></div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('newsModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveNews()">Post</button>
+      <button class="btn btn-primary" id="postNewsBtn" onclick="saveNews()">Post</button>
     </div>
   </div>
 </div>
@@ -4429,12 +4442,21 @@ function renderBoloBanner() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// NEWS — admin-curated link cards (cc_news). No scraping, no iframe embeds:
-// exactly the title/URL/summary/date the admin typed, shown as a plain card
-// with the source domain surfaced for context. Admin-only post and remove;
-// everyone else views. See sql/NEWS.sql.
+// NEWS — admin-curated link cards (cc_news). No scraping, no iframe embeds
+// from the CLIENT: the enriched preview (thumbnail, title/description) is
+// fetched exactly once, server-side, at post time — see fetchOgPreview()
+// and /api/og-preview.js — and cached into cc_news. Members only ever read
+// what's already cached; they never trigger an outbound fetch by viewing
+// this tab. Admin-only post and remove; everyone else views. See
+// sql/NEWS.sql and sql/NEWS-OG-PREVIEW.sql.
 // ════════════════════════════════════════════════════════════════
-function newsRowToJs(r) { return { id: r.id, title: r.title, url: r.url, summary: r.summary || '', postedDate: r.posted_date, postedBy: r.posted_by }; }
+function newsRowToJs(r) {
+  return {
+    id: r.id, title: r.title, url: r.url, summary: r.summary || '', postedDate: r.posted_date, postedBy: r.posted_by,
+    ogImage: r.og_image_url || null, ogTitle: r.og_title || null, ogDescription: r.og_description || null,
+    ogFetchedAt: r.og_fetched_at || null
+  };
+}
 /* A manual parse rather than `new URL(...)` — no behavioral difference for
    the well-formed http(s) links this form collects, and it keeps this
    function testable in the plain-Node harness the same way it runs in a
@@ -4447,23 +4469,85 @@ async function loadNews() {
   const r = await dbWrite(sb.from('cc_news').select('*').order('posted_date', { ascending: false }), 'Could not load news');
   S.news = r ? r.data.map(newsRowToJs) : [];
 }
+/* Calls the server's Open Graph fetcher once, at post time. Returns null on
+   ANY failure — missing session, network error, timeout, non-2xx, or the
+   endpoint itself reporting it couldn't reach the page — so a slow or
+   broken external site never blocks the admin from posting the news item
+   at all. A null return leaves og_fetched_at unset, which is exactly the
+   "fetch failed entirely -> plain card" signal renderNews() reads. */
+async function fetchOgPreview(url) {
+  try {
+    const { data } = await sb.auth.getSession();
+    const session = data && data.session;
+    if (!session) return null;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    let res;
+    try {
+      res = await fetch('/api/og-preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+        body: JSON.stringify({ url }),
+        signal: controller.signal
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok || !body.ok) return null;
+    return { ogImage: body.ogImage || null, ogTitle: body.ogTitle || null, ogDescription: body.ogDescription || null };
+  } catch (e) {
+    console.error('[og-preview]', e);
+    return null;
+  }
+}
+/* A named handler (rather than an inline arrow in onerror="...") avoids the
+   quote-escaping mess of building a fallback element as an HTML string
+   inside an HTML attribute — the letter travels via a data attribute, and
+   the DOM swap happens in real JS. */
+function newsImgFallback(imgEl) {
+  const div = document.createElement('div');
+  div.className = 'news-thumb news-thumb-placeholder';
+  div.textContent = imgEl.dataset.fallbackLetter || '?';
+  imgEl.replaceWith(div);
+}
+function newsThumbHtml(n) {
+  const letter = esc((sourceDomain(n.url) || '?').charAt(0).toUpperCase());
+  if (!n.ogImage) return `<div class="news-thumb news-thumb-placeholder">${letter}</div>`;
+  return `<img src="${esc(n.ogImage)}" alt="" class="news-thumb" data-fallback-letter="${letter}" onerror="newsImgFallback(this)">`;
+}
 function renderNews() {
   document.getElementById('addNewsBtn').style.display = adminOn ? '' : 'none';
   const rows = S.news.slice().sort((a, b) => b.postedDate.localeCompare(a.postedDate));
   document.getElementById('newsEmpty').style.display = rows.length ? 'none' : '';
-  document.getElementById('newsList').innerHTML = rows.map(n => `
+  document.getElementById('newsList').innerHTML = rows.map(n => {
+    const domain = sourceDomain(n.url);
+    /* og_fetched_at is the only thing that gates showing a thumbnail/
+       placeholder/subtitle at all — a row where the fetch was never
+       attempted or failed outright renders exactly as it did before this
+       feature existed, per the "never a broken card" requirement. */
+    const hasPreview = !!n.ogFetchedAt;
+    const subtitle = hasPreview ? (n.ogDescription || n.ogTitle) : '';
+    return `
     <div class="card" style="margin-bottom:.8rem;">
-      <div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
-        <div style="font-weight:700;color:var(--tx);font-size:.95rem;">${esc(n.title)}</div>
-        <div style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${esc(n.postedDate)}</div>
+      <div class="news-card-body">
+        ${hasPreview ? newsThumbHtml(n) : ''}
+        <div class="news-card-content">
+          <div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
+            <div style="font-weight:700;color:var(--tx);font-size:.95rem;">${esc(n.title)}</div>
+            <div style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${esc(n.postedDate)}</div>
+          </div>
+          ${subtitle ? `<div class="news-card-sub">${esc(truncate(subtitle, 160))}</div>` : ''}
+          <div class="news-card-source"><img class="news-favicon" src="https://www.google.com/s2/favicons?sz=32&domain=${encodeURIComponent(domain)}" alt="" onerror="this.style.display='none'">${esc(domain)}</div>
+          ${n.summary ? `<div style="margin-top:.5rem;font-size:.85rem;color:var(--tx2);white-space:pre-wrap;">${esc(n.summary)}</div>` : ''}
+          <div style="margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
+            <a href="${esc(n.url)}" target="_blank" rel="noopener" class="btn btn-ghost" style="width:auto;">Read More →</a>
+            ${adminOn ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNews('${n.id}')">Remove</button>` : ''}
+          </div>
+        </div>
       </div>
-      <div style="font-size:.72rem;color:var(--tx3);margin-top:.2rem;">${esc(sourceDomain(n.url))}</div>
-      ${n.summary ? `<div style="margin-top:.5rem;font-size:.85rem;color:var(--tx2);white-space:pre-wrap;">${esc(n.summary)}</div>` : ''}
-      <div style="margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
-        <a href="${esc(n.url)}" target="_blank" rel="noopener" class="btn btn-ghost" style="width:auto;">Read More →</a>
-        ${adminOn ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNews('${n.id}')">Remove</button>` : ''}
-      </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function openNewsModal() {
   document.getElementById('newsTitle').value = '';
@@ -4478,8 +4562,19 @@ async function saveNews() {
   const summary = document.getElementById('newsSummary').value.trim() || null;
   const postedDate = document.getElementById('newsPostedDate').value || iso(new Date());
   if (!title || !url) { await alertDialog('Missing details', 'A title and URL are both required.'); return; }
-  const row = { title, url, summary, posted_date: postedDate, posted_by: currentProfile.id };
+  const btn = document.getElementById('postNewsBtn');
+  btn.disabled = true; btn.textContent = 'Fetching preview…';
+  const preview = await fetchOgPreview(url);
+  btn.textContent = 'Posting…';
+  const row = {
+    title, url, summary, posted_date: postedDate, posted_by: currentProfile.id,
+    og_image_url: preview ? preview.ogImage : null,
+    og_title: preview ? preview.ogTitle : null,
+    og_description: preview ? preview.ogDescription : null,
+    og_fetched_at: preview ? new Date().toISOString() : null
+  };
   const r = await dbWrite(sb.from('cc_news').insert(row).select().single(), 'Could not post this news item');
+  btn.disabled = false; btn.textContent = 'Post';
   if (!r) return;
   S.news.unshift(newsRowToJs(r.data));
   closeModalEl('newsModal');
