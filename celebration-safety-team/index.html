@@ -4537,20 +4537,23 @@ async function saveManagedVerse() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// TEAM NOTES — a simple bulletin board (cc_notes), not append-only like
-// incidents: the author or an Admin can edit or remove a note outright.
-// posted_by_name is a snapshot taken at post time — see sql/VERSES-AND-
-// NOTES.sql for why (cc_profiles has no general read access to resolve
-// someone else's name from their profile_id).
+// TEAM NOTES — a simple bulletin board (cc_notes), open to every
+// authenticated member to post. Not append-only like incidents: Admin and
+// Team Lead can edit or remove ANY note; a member can remove (never edit)
+// only their own — see sql/TEAM-NOTES-OPEN.sql. posted_by_name is a
+// snapshot taken at post time (cc_profiles has no general read access to
+// resolve someone else's name from their profile_id).
 // ════════════════════════════════════════════════════════════════
 function noteRowToJs(r) { return { id: r.id, title: r.title, body: r.body, postedBy: r.posted_by, postedByName: r.posted_by_name, postedAt: r.posted_at, expiresAt: r.expires_at }; }
 let editingNoteId = null;
 function renderNotes() {
   const today = iso(new Date());
   const active = S.notes.filter(n => !n.expiresAt || n.expiresAt >= today).slice().sort((a, b) => b.postedAt.localeCompare(a.postedAt));
-  document.getElementById('addNoteBtn').style.display = (adminOn || (currentProfile && currentProfile.role === 'team_lead')) ? '' : 'none';
+  document.getElementById('addNoteBtn').style.display = currentProfile ? '' : 'none';
+  const canEditAny = adminOn || (currentProfile && currentProfile.role === 'team_lead');
   document.getElementById('notesBox').innerHTML = active.length ? active.map(n => {
-    const canEdit = currentProfile && (n.postedBy === currentProfile.id || adminOn);
+    const isOwn = currentProfile && n.postedBy === currentProfile.id;
+    const canRemove = canEditAny || isOwn;
     const posted = new Date(n.postedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     return `<div style="padding:.7rem 0;border-bottom:1px solid var(--bd);">
       <div style="display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;">
@@ -4558,7 +4561,7 @@ function renderNotes() {
         <div style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${esc(n.postedByName)} · ${posted}${n.expiresAt ? ' · expires ' + esc(n.expiresAt) : ''}</div>
       </div>
       <div style="margin-top:.3rem;white-space:pre-wrap;">${esc(n.body)}</div>
-      ${canEdit ? `<div style="margin-top:.4rem;display:flex;gap:.5rem;"><button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="openNoteModal('${n.id}')">Edit</button><button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNote('${n.id}')">Remove</button></div>` : ''}
+      ${(canEditAny || canRemove) ? `<div style="margin-top:.4rem;display:flex;gap:.5rem;">${canEditAny ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="openNoteModal('${n.id}')">Edit</button>` : ''}${canRemove ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNote('${n.id}')">Remove</button>` : ''}</div>` : ''}
     </div>`;
   }).join('') : `<div style="color:var(--tx3);">No team notes right now.</div>`;
 }
