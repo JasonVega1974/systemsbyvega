@@ -757,10 +757,9 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </div>
         </div>
         <div class="card" style="margin-bottom:0;">
-          <div class="card-title">⏰ SERVICE COVERAGE RULE</div>
-          <div style="font-size:.82rem;color:var(--tx2);line-height:1.7;">Every service requires a minimum of <strong style="color:var(--c);">3 safety/security team members</strong>, including <strong style="color:var(--c);">1 Team Leader</strong>.</div>
-          <div style="margin-top:.6rem;font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;color:var(--tx);">8:00 AM · 9:45 AM · 11:30 AM</div>
-          <div id="dashCoverage" style="margin-top:.5rem;"></div>
+          <div class="card-title">🚨 RECENT INCIDENTS &amp; BOLOs</div>
+          <div id="dashIncidentsBolos" style="font-size:.82rem;color:var(--tx2);line-height:1.6;"></div>
+          <button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('incidents')">View All →</button>
         </div>
         <div class="card" style="margin-bottom:0;">
           <div class="card-title">🎓 MY TRAINING</div>
@@ -2686,6 +2685,7 @@ function clearStorageFlag() {
   if (el) { el.style.display = 'none'; el.innerHTML = ''; }
 }
 function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function truncate(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s; }
 /* Fire-and-forget on purpose — an activity-log line is a nice-to-have audit
    trail, not data worth blocking every other action on. Updates the local
    feed instantly (every call site already expects that) and lets the insert
@@ -5018,13 +5018,47 @@ function refreshDash() {
     const st = svcStatus(day[sv.key]);
     return `<span class="stat-pill" style="border-color:${st.ok ? 'rgba(var(--gr-rgb),.35)' : 'rgba(var(--cr-rgb),.35)'};color:${st.ok ? 'var(--gr)' : 'var(--red-text)'};">${sv.label}: ${st.ok ? '✅' : st.count + '/3'}</span>`;
   }).join(' ');
-  document.getElementById('dashCoverage').innerHTML = cov;
   document.getElementById('dashNextSunday').innerHTML =
     `<div style="font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;color:var(--tx);margin-bottom:.4rem;">${nextSunday(new Date()).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div>
      <div class="stats-row">${cov}</div>
      <button class="btn btn-ghost" style="margin-top:.7rem;" onclick="navTo('scheduling')">Open Scheduling →</button>`;
   renderActivity();
   renderNotifications();
+  renderDashIncidentsBolos();
+}
+/* Replaces the old static "Service Coverage Rule" card. Unrestricted only —
+   a restricted incident must never leak into this preview regardless of who
+   is viewing, so this reads S.incidents (already RLS/cc_incidents_current-
+   scoped) and additionally filters out restricted rows itself as a second,
+   belt-and-suspenders check. S.bolos may not exist yet on a page that hasn't
+   loaded the BOLO feature's data — treated as empty, not an error. */
+function renderDashIncidentsBolos() {
+  const recentIncidents = (S.incidents || [])
+    .filter(inc => !inc.restricted)
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 2);
+  const activeBolos = (S.bolos || []).filter(b => b.status === 'Active');
+  const box = document.getElementById('dashIncidentsBolos');
+  if (!box) return;
+  if (!recentIncidents.length && !activeBolos.length) {
+    box.innerHTML = '<div style="color:var(--tx3);">No incidents on record.</div>';
+    return;
+  }
+  const rows = [];
+  activeBolos.forEach(b => {
+    const issued = new Date(b.issuedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    rows.push(`<div style="padding:.35rem 0;border-bottom:1px solid var(--bd);"><span class="lead-tag" style="margin-right:.4rem;">BOLO</span><strong style="color:var(--tx);">${esc(truncate(b.subjectDescription, 60))}</strong><div style="font-size:.7rem;color:var(--tx3);">Active · issued ${issued}</div></div>`);
+  });
+  recentIncidents.forEach(inc => {
+    /* inc.date is a plain YYYY-MM-DD (a `date` column, no time component) —
+       shown verbatim, same as everywhere else this app displays an incident
+       date, rather than round-tripped through new Date(...) which parses a
+       bare date string as UTC midnight and can print the wrong calendar day
+       west of UTC. */
+    rows.push(`<div style="padding:.35rem 0;border-bottom:1px solid var(--bd);"><strong style="color:var(--tx);">${esc(categoryLabel(inc.category))}</strong><div style="font-size:.7rem;color:var(--tx3);">${esc(inc.date)}</div></div>`);
+  });
+  box.innerHTML = rows.join('');
 }
 function renderActivity() {
   document.getElementById('activityFeed').innerHTML = S.activity.length
