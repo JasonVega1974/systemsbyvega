@@ -25,16 +25,31 @@ group('Admin can post a news item');
 T.currentUser = ADMIN_USER; T.currentProfile = ADMIN; T.adminOn = true;
 T.S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} }, bolos: [], news: [] };
 T.sb = createFakeSupabase({ cc_news: [] });
+const dlgTitleEl = { value: '', textContent: '', innerHTML: '', style: {}, classList: { add(){}, remove(){}, toggle(){}, contains: () => false }, addEventListener(){}, querySelectorAll: () => [], setAttribute(){}, removeAttribute(){}, focus(){}, blur(){} };
 stubFields({
   newsTitle: { value: 'Fall Festival volunteer sign-up' },
   newsUrl: { value: 'https://www.facebook.com/celebrationchurch/posts/999' },
   newsSummary: { value: 'Sign up to help run a booth.' },
-  newsPostedDate: { value: '2026-09-18' }
+  newsPostedDate: { value: '2026-09-18' },
+  dlgTitle: dlgTitleEl
 });
-await ctx.saveNews();
+// The fake Supabase client has no auth.getSession, so fetchOgPreview() fails
+// closed and saveNews() surfaces the "link preview unavailable" alertDialog
+// (see the next group's checks) — resolve it so this await doesn't hang.
+// setTimeout(0), not an immediate dialogOk(), because fetchOgPreview()'s
+// catch and the insert's own promise chain both need to run first (several
+// microtask hops) before that alertDialog even opens.
+const saveNewsP = ctx.saveNews();
+await new Promise(r => setTimeout(r, 0));
+ctx.dialogOk();
+await saveNewsP;
 check('the post is in S', T.S.news.length === 1 && T.S.news[0].title === 'Fall Festival volunteer sign-up', T.S.news);
 check('posted_by is stamped from the acting admin', T.sb._store.cc_news[0].posted_by === 'admin-1', T.sb._store.cc_news);
 check('posted_date is stored as entered (admin sets it, not necessarily today)', T.sb._store.cc_news[0].posted_date === '2026-09-18');
+
+group('saveNews() tells the admin, in plain terms, when the preview fetch failed — not silent');
+check('og_fetched_at was never set for a preview that could not even start', T.sb._store.cc_news[0].og_fetched_at == null, T.sb._store.cc_news[0]);
+check('the failure alert was actually shown to the admin, not just logged to console', dlgTitleEl.textContent === 'Posted — link preview unavailable', dlgTitleEl.textContent);
 
 group('the fake Supabase client has no auth.getSession, so fetchOgPreview() fails closed and the post still succeeds with a plain card');
 check('og_fetched_at was never set — a preview fetch that cannot even start must not block posting', T.sb._store.cc_news[0].og_fetched_at == null, T.sb._store.cc_news[0]);
@@ -89,6 +104,32 @@ ctx.renderNews();
 check('no thumbnail class of any kind appears', !els.newsList.innerHTML.includes('news-thumb'), els.newsList.innerHTML);
 check('no news-card-sub subtitle block appears', !els.newsList.innerHTML.includes('news-card-sub'), els.newsList.innerHTML);
 check('the plain summary and Read More link still render', els.newsList.innerHTML.includes('Plain summary text.') && els.newsList.innerHTML.includes('Read More'), els.newsList.innerHTML);
+
+group('rendering: "Retry Preview" appears for admin only on a post with no preview yet, never once one exists');
+T.S.news = [
+  { id: 'n5', title: 'Needs Retry', url: 'https://example.org/blocked', summary: '', postedDate: '2026-09-18', ogImage: null, ogTitle: null, ogDescription: null, ogFetchedAt: null },
+  { id: 'n6', title: 'Already Has Preview', url: 'https://example.org/ok', summary: '', postedDate: '2026-09-18', ogImage: 'https://example.org/hero.jpg', ogTitle: 'OK', ogDescription: '', ogFetchedAt: '2026-09-18T12:00:00Z' }
+];
+T.adminOn = true; T.currentProfile = ADMIN;
+ctx.renderNews();
+check('Retry Preview is offered for the post with no preview', els.newsList.innerHTML.includes('Retry Preview'), els.newsList.innerHTML);
+T.adminOn = false; T.currentProfile = MEMBER;
+ctx.renderNews();
+check('a plain member never sees Retry Preview, even on a preview-less post', !els.newsList.innerHTML.includes('Retry Preview'), els.newsList.innerHTML);
+
+group('retryNewsPreview() saves a fetched preview onto the existing post via UPDATE, not a new row');
+T.S.news = [{ id: 'n7', title: 'Needs Retry', url: 'https://example.org/blocked', summary: '', postedDate: '2026-09-18', ogImage: null, ogTitle: null, ogDescription: null, ogFetchedAt: null }];
+T.currentProfile = ADMIN; T.adminOn = true;
+T.sb = createFakeSupabase({ cc_news: [{ id: 'n7', title: 'Needs Retry', url: 'https://example.org/blocked' }] });
+// Still no auth.getSession on the fake client, so this retry also fails
+// closed — proving retryNewsPreview() reports that failure too, rather than
+// only saveNews() knowing how. setTimeout(0) for the same reason as above.
+const retryP = ctx.retryNewsPreview('n7');
+await new Promise(r => setTimeout(r, 0));
+ctx.dialogOk();
+await retryP;
+check('a failed retry leaves og_fetched_at unset — never a false "fixed"', T.S.news[0].ogFetchedAt == null);
+check('a failed retry does not touch the database row at all', !('og_fetched_at' in T.sb._store.cc_news[0]), T.sb._store.cc_news[0]);
 
 group('deleteNews() removes locally and from the database');
 T.S.news = [{ id: 'n1', title: 'Fall Festival', url: 'https://x.com', summary: '', postedDate: '2026-09-18' }];

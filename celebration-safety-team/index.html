@@ -4610,6 +4610,7 @@ function renderNews() {
           ${n.summary ? `<div style="margin-top:.5rem;font-size:.85rem;color:var(--tx2);white-space:pre-wrap;">${esc(n.summary)}</div>` : ''}
           <div style="margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
             <a href="${esc(n.url)}" target="_blank" rel="noopener" class="btn btn-ghost" style="width:auto;">Read More →</a>
+            ${adminOn && !hasPreview ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="retryNewsPreview('${n.id}')">↻ Retry Preview</button>` : ''}
             ${adminOn ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNews('${n.id}')">Remove</button>` : ''}
           </div>
         </div>
@@ -4648,6 +4649,17 @@ async function saveNews() {
   closeModalEl('newsModal');
   renderNews();
   addActivity('Posted news: ' + title);
+  /* A failed preview fetch used to be silent — nothing but a console.error
+     the posting admin would never see, which is exactly what made this bug
+     invisible until someone happened to check every card by eye. Posting
+     itself still never blocks on this (see fetchOgPreview()'s own comment),
+     but the admin who just posted gets told, in plain terms, so a run of
+     genuinely-blocked sites (some hosts challenge/soft-block serverless
+     fetchers) shows up immediately instead of looking like "the feature
+     doesn't work." */
+  if (!preview) {
+    await alertDialog('Posted — link preview unavailable', 'The post is live, but a thumbnail/description could not be fetched from that link. Some sites block automated preview requests. The card will show a plain link until you post again or the site allows it.');
+  }
 }
 async function deleteNews(id) {
   const n = S.news.find(x => x.id === id);
@@ -4657,6 +4669,26 @@ async function deleteNews(id) {
   S.news = S.news.filter(x => x.id !== id);
   renderNews();
   addActivity('Removed a news post');
+}
+/* Only ever shown for a post whose preview never succeeded (see the
+   !hasPreview check in renderNews()) — a card that already has a
+   thumbnail/placeholder has nothing to retry. Only og_* columns are
+   writable here (see sql/NEWS-RETRY-PREVIEW.sql's column grant); title/
+   url/summary/posted_date still follow "remove and re-add" if they need
+   fixing. */
+async function retryNewsPreview(id) {
+  const n = S.news.find(x => x.id === id);
+  if (!n) return;
+  const preview = await fetchOgPreview(n.url);
+  if (!preview) {
+    await alertDialog('Still could not fetch a preview', 'That link may block automated preview requests, or it may not carry Open Graph tags at all. You can try again later.');
+    return;
+  }
+  const patch = { og_image_url: preview.ogImage, og_title: preview.ogTitle, og_description: preview.ogDescription, og_fetched_at: new Date().toISOString() };
+  const r = await dbWrite(sb.from('cc_news').update(patch).eq('id', id).select().single(), 'Could not save the retried preview');
+  if (!r) return;
+  Object.assign(n, newsRowToJs(r.data));
+  renderNews();
 }
 
 // ════════════════════════════════════════════════════════════════
