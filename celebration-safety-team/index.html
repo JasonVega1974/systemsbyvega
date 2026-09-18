@@ -1451,6 +1451,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
           <button class="btn btn-primary" onclick="exportData()">&#11015;&#65039; Export Backup (.json)</button>
+          <button class="btn btn-ghost" onclick="openVisibilityModal()">&#129513; Customize Visibility</button>
         </div>
         <div style="border-top:1px solid var(--bd);margin-top:.9rem;padding-top:.8rem;">
           <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:.5rem;">Recertification</div>
@@ -1791,6 +1792,23 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('verseManageModal')">Close</button>
       <button class="btn btn-primary" onclick="saveManagedVerse()">Save This Week</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CUSTOMIZE VISIBILITY MODAL (admin only) ══ -->
+<div class="modal-overlay" id="visibilityModal">
+  <div class="admin-modal-box" style="max-width:540px;">
+    <div class="admin-modal-title">&#129513; CUSTOMIZE VISIBILITY</div>
+    <div style="font-size:.78rem;color:var(--tx2);margin-bottom:.8rem;line-height:1.5;">Turn a section off to remove it from the sidebar and make its content inaccessible for every signed-in member &mdash; including you. Turn it back on any time; nothing is deleted.</div>
+    <div id="visibilitySectionList"></div>
+    <div style="border-top:1px solid var(--bd);margin:1rem 0 .7rem;padding-top:.8rem;">
+      <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:.5rem;">Academy Modules</div>
+      <div id="visibilityModuleList"></div>
+    </div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('visibilityModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveVisibilitySettings()">Save</button>
     </div>
   </div>
 </div>
@@ -2606,7 +2624,7 @@ const ONBOARD_ITEMS = [
    cc_schedule_slots/cc_training_records/cc_onboarding_steps/cc_activity. There
    is no client-side schema migration any more — the database IS the schema,
    and SQL migrations (see CELEBRATION-SAFETY-PHASE4.sql) are how it changes. */
-let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {} };
+let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activity: [], incidents: [], incidentAudience: {}, incidentAcks: {}, verses: [], notes: [], facilityMaps: {}, settings: { sections: {}, academyModules: {} } };
 
 /* Row <-> app-object field mapping. DB columns are snake_case and match the
    schema file; the app object shape (first/last/spec/role/...) is unchanged
@@ -2759,6 +2777,7 @@ function exportData() {
    substring test that lit up BOTH "Team" and "Team Meetings" for navTo('team').
    Each item now declares the section it owns. */
 function showSection(key) {
+  if (!isSectionVisible(key)) key = 'overview';
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   document.getElementById('sec-' + key).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => {
@@ -2768,6 +2787,77 @@ function showSection(key) {
   });
 }
 function navTo(key) { showSection(key); window.scrollTo({ top: 0 }); }
+
+// ════════════════════════════════════════════════════════════════
+// SECTION / MODULE VISIBILITY — admin-controlled, cc_settings-backed.
+// Only the sections in TOGGLEABLE_SECTIONS can ever be hidden: Dashboard,
+// Alerts and Team stay permanently available (Team hosts the admin tools
+// that manage this very feature). Absence of a key from S.settings means
+// visible, so a brand-new section or module needs no migration to show up.
+// Hidden means hidden for EVERYONE, admin included — "just gone," not a
+// placeholder — the admin reopens it from the Customize Visibility panel,
+// which itself lives outside the toggle list.
+// ════════════════════════════════════════════════════════════════
+const TOGGLEABLE_SECTIONS = [
+  { key: 'academy', label: 'Academy' },
+  { key: 'onboarding', label: 'Onboarding' },
+  { key: 'procedures', label: 'Emergency Procedures' },
+  { key: 'maps', label: 'Facility Maps' },
+  { key: 'scheduling', label: 'Scheduling' },
+  { key: 'incidents', label: 'Incident Reports' },
+  { key: 'meetings', label: 'Team Meetings' },
+  { key: 'leadership', label: 'Leadership / Staff' },
+  { key: 'resources', label: 'Training Resources' },
+  { key: 'news', label: 'News' }
+];
+function isSectionVisible(key) {
+  if (!TOGGLEABLE_SECTIONS.some(s => s.key === key)) return true;
+  const sections = (S.settings && S.settings.sections) || {};
+  return sections[key] !== false;
+}
+function isModuleVisible(id) {
+  const modules = (S.settings && S.settings.academyModules) || {};
+  return modules[id] !== false;
+}
+function applySectionVisibility() {
+  document.querySelectorAll('.nav-item[data-section]').forEach(n => {
+    const key = n.dataset.section;
+    n.style.display = isSectionVisible(key) ? '' : 'none';
+  });
+  const activeItem = document.querySelector('.nav-item.active');
+  if (activeItem && !isSectionVisible(activeItem.dataset.section)) navTo('overview');
+}
+function openVisibilityModal() {
+  document.getElementById('visibilitySectionList').innerHTML = TOGGLEABLE_SECTIONS.map(s =>
+    `<label style="display:flex;align-items:center;gap:.6rem;padding:.4rem 0;border-bottom:1px solid var(--bd);font-size:.85rem;">
+      <input type="checkbox" data-vis-section="${s.key}" ${isSectionVisible(s.key) ? 'checked' : ''}>
+      <span>${esc(s.label)}</span>
+    </label>`).join('');
+  document.getElementById('visibilityModuleList').innerHTML = COURSES.map(c =>
+    `<label style="display:flex;align-items:center;gap:.6rem;padding:.3rem 0;font-size:.8rem;color:var(--tx2);">
+      <input type="checkbox" data-vis-module="${c.id}" ${isModuleVisible(c.id) ? 'checked' : ''}>
+      <span>${c.icon} ${esc(c.title)}</span>
+    </label>`).join('');
+  openModalEl('visibilityModal');
+}
+async function saveVisibilitySettings() {
+  const sections = {};
+  document.querySelectorAll('[data-vis-section]').forEach(cb => { sections[cb.dataset.visSection] = cb.checked; });
+  const academyModules = {};
+  document.querySelectorAll('[data-vis-module]').forEach(cb => { academyModules[cb.dataset.visModule] = cb.checked; });
+  const rows = [
+    { key: 'section_visibility', value: sections, updated_by: currentProfile.id },
+    { key: 'academy_module_visibility', value: academyModules, updated_by: currentProfile.id }
+  ];
+  const r = await dbWrite(sb.from('cc_settings').upsert(rows, { onConflict: 'key' }), 'Could not save visibility settings');
+  if (!r) return;
+  S.settings.sections = sections;
+  S.settings.academyModules = academyModules;
+  closeModalEl('visibilityModal');
+  applySectionVisibility();
+  renderCourses();
+  addActivity('Updated section/module visibility settings');
+}
 
 // ════════════════════════════════════════════════════════════════
 // AUTH — magic link, no password. Replaces the PIN entirely (decision 1,
@@ -2878,6 +2968,7 @@ async function paintAuth(r) {
   await loadAllData();
   showAppShell();
   populateIncidentCategorySelects();
+  applySectionVisibility();
   renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps();
   applyAdmin(); refreshDash();
 }
@@ -2888,7 +2979,7 @@ async function paintAuth(r) {
    is being re-read from scratch" is actually true. */
 async function loadAllData() {
   clearStorageFlag();
-  const [teamR, leadersR, meetingsR, trainingR, onboardR, activityR, versesR, notesR] = await Promise.all([
+  const [teamR, leadersR, meetingsR, trainingR, onboardR, activityR, versesR, notesR, settingsR] = await Promise.all([
     dbWrite(sb.from('cc_team').select('*').order('last_name'), 'Could not load the roster'),
     dbWrite(sb.from('cc_leaders').select('*').order('name'), 'Could not load leadership'),
     dbWrite(sb.from('cc_meetings').select('*').order('meeting_date', { ascending: false }), 'Could not load meetings'),
@@ -2897,6 +2988,7 @@ async function loadAllData() {
     dbWrite(sb.from('cc_activity').select('*').order('occurred_at', { ascending: false }).limit(12), 'Could not load activity'),
     dbWrite(sb.from('cc_verses').select('*').order('week_number'), 'Could not load the weekly verse'),
     dbWrite(sb.from('cc_notes').select('*').order('posted_at', { ascending: false }), 'Could not load team notes'),
+    dbWrite(sb.from('cc_settings').select('*'), 'Could not load app settings'),
     /* Neither depends on the queries above or on each other — loadSchedule(),
        loadIncidents() and loadFacilityMaps() each own their own S.* keys, so
        they run in the same batch instead of extra sequential round trips
@@ -2917,6 +3009,11 @@ async function loadAllData() {
   S.activity = (activityR ? activityR.data : []).map(activityRowToJs);
   S.verses = (versesR ? versesR.data : []).map(verseRowToJs);
   S.notes = (notesR ? notesR.data : []).map(noteRowToJs);
+  S.settings = { sections: {}, academyModules: {} };
+  (settingsR ? settingsR.data : []).forEach(row => {
+    if (row.key === 'section_visibility') S.settings.sections = row.value || {};
+    if (row.key === 'academy_module_visibility') S.settings.academyModules = row.value || {};
+  });
 }
 
 /* GoTrue's answer to signInWithOtp({shouldCreateUser:false}) for an address
@@ -4584,7 +4681,8 @@ function scorePct(cs, course) {
 }
 function renderCourses() {
   let certs = 0;
-  document.getElementById('courseGrid').innerHTML = COURSES.map(c => {
+  const visibleCourses = COURSES.filter(c => isModuleVisible(c.id));
+  document.getElementById('courseGrid').innerHTML = visibleCourses.map(c => {
     const cs = getCS(c.id);
     const pct = Math.round((cs.doneLessons.length / c.lessons.length) * 100);
     if (cs.quizPassed) certs++;
@@ -4598,9 +4696,9 @@ function renderCourses() {
     </div>`;
   }).join('');
   document.getElementById('certCount').textContent = certs;
-  document.getElementById('certTotal').textContent = COURSES.length;
+  document.getElementById('certTotal').textContent = visibleCourses.length;
   document.getElementById('hs-modules').textContent = certs;
-  document.getElementById('academyPct').textContent = Math.round((certs / COURSES.length) * 100) + '%';
+  document.getElementById('academyPct').textContent = (visibleCourses.length ? Math.round((certs / visibleCourses.length) * 100) : 0) + '%';
   document.getElementById('traineeName').textContent = activeName();
 }
 function openCourse(id) {
