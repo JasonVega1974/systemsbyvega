@@ -2913,10 +2913,15 @@ function openVisibilityModal() {
       <input type="checkbox" data-vis-section="${s.key}" ${isSectionVisible(s.key) ? 'checked' : ''}>
       <span>${esc(s.label)}</span>
     </label>`).join('');
+  /* c.title is inserted raw, not esc()'d — some COURSES titles carry an
+     intentional &amp; entity for direct HTML insertion (matching how
+     renderCourses() and every other reader of COURSES.title already treats
+     it elsewhere); escaping here a second time turns it into a literal
+     "&amp;" on screen instead of an ampersand. */
   document.getElementById('visibilityModuleList').innerHTML = COURSES.map(c =>
     `<label style="display:flex;align-items:center;gap:.6rem;padding:.3rem 0;font-size:.8rem;color:var(--tx2);">
       <input type="checkbox" data-vis-module="${c.id}" ${isModuleVisible(c.id) ? 'checked' : ''}>
-      <span>${c.icon} ${esc(c.title)}</span>
+      <span>${c.icon} ${c.title}</span>
     </label>`).join('');
   openModalEl('visibilityModal');
 }
