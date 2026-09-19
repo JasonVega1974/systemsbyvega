@@ -330,6 +330,67 @@ the not_requested default.
 
 ---
 
+## 0g. Phase 9 — 2026-09-19: Service Log, Prayer Requests, Training
+     Resources library, certificate names
+
+**Volunteer Service Hours Log (Team tab, admin-only card; Academy header
+stat-pill for everyone).** Fully computed client-side from `S.schedule`
+(the same data `cc_schedule_slots` already feeds Scheduling with) — no new
+table, no manual entry. Counts a scheduled slot as "served" only once its
+date is today or in the past; a future assignment is scheduled, not yet
+served, and is excluded (same reasoning `drillComplianceFor()` already
+uses). Shows total / this-year / this-month per member and their most
+recent service date; admin can export the whole table as CSV. Every member
+sees their own running total on the Academy header, whether or not they're
+an admin.
+
+**Prayer Request Board (`cc_prayers`, new Dashboard card).** Any
+authenticated member can post; the poster or an Admin can mark a request
+answered or remove it — there is no edit path by design (remove and
+repost), enforced at the database level: the UPDATE column grant only
+covers `answered`/`answered_at`, so a client can't rewrite the request text
+even if it tried. Active requests sort newest-first; answered ones sink to
+the bottom, also newest-first. Dashboard card shows up to 3 active
+requests with a "View All / Add Request" link to the full board.
+**Migration `sql/PRAYER-REQUESTS.sql` has not been applied yet** — until it
+is, the board loads empty with a "could not load" banner; nothing else in
+the app is affected.
+
+**Training Resources expanded into a categorized library.** Reorganized
+into the six categories requested: Federal Resources, Certification &
+Training, Church Security Organizations, Idaho Law & Statutes,
+De-escalation & Verbal Skills, and FEMA Independent Study Courses (broken
+out into its 4 individual courses instead of one bundled link). Every
+entry now carries a cost indicator (Free / Paid / Free info+paid cert).
+Every URL was verified to actually resolve before being included — several
+(AHA Heartsaver, Stop the Bleed, Red Cross, Strategos International, and
+each individual FEMA IS course page) are new this phase. The Idaho
+mandatory-reporting hotline (DHW) was added with only its directly
+observable facts (the phone number and process) — a claimed "ordained
+minister" exemption surfaced in search results but was deliberately left
+out, per §4c: it's an interpretive legal claim from a secondary source,
+not something read confidently off the primary statute text, and this
+project has committed to never asserting that kind of claim without
+counsel review.
+
+**Training certificates now show a real name, not an email address.** A
+mid-batch request pointed out that a member with no roster link saw their
+raw login email printed on their certificate. Fix: a new
+`cc_profiles.display_name` column (set via a new "Your Name" field in the
+Account modal) is now the certificate's first choice, falling back to the
+email's local part — never the full email — as a last resort; a banner on
+the certificate view prompts anyone without a display name set to add one.
+**This surfaced a real bug before it shipped**: the request that asked for
+this said the `display_name` column "already exists" — pointing the app
+at the live database during the browser pass proved it did not
+(`resolveAuth()`'s own profile query failed outright), which would have
+broken sign-in for the entire team the moment this went live. Corrected
+with `sql/DISPLAY-NAME.sql`, which is a **hard blocker** — it must be
+applied before this deploy ships, not just whenever convenient like
+`PRAYER-REQUESTS.sql` above.
+
+---
+
 ## 1. Documents to upload (Phase 2 builds the slots)
 
 | Item | Status | Notes |

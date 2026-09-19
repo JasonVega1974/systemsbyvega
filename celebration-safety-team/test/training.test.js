@@ -48,7 +48,7 @@ T.quizAnswers = answers;
 await ctx.submitQuiz();
 const cs = ctx.getCS('ss101');
 check('quizPassed is true', cs.quizPassed === true, cs);
-check('a cert name was assigned from the logged-in identity', cs.certName === 'admin@example.com', cs.certName);
+check('a cert name was assigned via certDisplayName() — email local-part, since no display_name is set', cs.certName === 'admin', cs.certName);
 check('the passing result actually landed in the database', trainingRows()[0].quiz_passed === true, trainingRows());
 
 group('retryQuiz() clears the certificate but keeps lesson progress, and persists both');
@@ -87,6 +87,27 @@ ctx.dialogOk();
 await r;
 check('the admin’s own row is gone', !trainingRows().some(row => row.profile_id === 'admin-1'), trainingRows());
 check('someone else’s row was left completely alone', trainingRows().some(row => row.profile_id === 'someone-else'), trainingRows());
+
+group('certDisplayName(): prefers cc_profiles.display_name, falls back to the email local-part, never the full email');
+fresh();
+T.currentProfile = { id: 'admin-1', role: 'admin', team_member_id: null, display_name: 'Pastor Mike' };
+check('display_name wins when set', ctx.certDisplayName() === 'Pastor Mike');
+T.currentProfile = { id: 'admin-1', role: 'admin', team_member_id: null, display_name: '' };
+check('falls back to the email local-part when display_name is empty', ctx.certDisplayName() === 'admin', ctx.certDisplayName());
+T.currentProfile = { id: 'admin-1', role: 'admin', team_member_id: null, display_name: null };
+check('falls back to the email local-part when display_name is null', ctx.certDisplayName() === 'admin', ctx.certDisplayName());
+
+group('submitQuiz(): the auto-assigned cert name uses a set display_name, not the email');
+fresh();
+T.currentProfile = { id: 'admin-1', role: 'admin', team_member_id: null, display_name: 'Pastor Mike' };
+T.curCourse = SS101;
+SS101.lessons.forEach((_, i) => ctx.getCS('ss101').doneLessons.push(i));
+ctx.buildQuizOrder(SS101);
+const answers2 = {};
+SS101.quiz.forEach((q, qi) => { answers2[qi] = q.ans; });
+T.quizAnswers = answers2;
+await ctx.submitQuiz();
+check('cert name is the display name, not an email', ctx.getCS('ss101').certName === 'Pastor Mike', ctx.getCS('ss101').certName);
 
 done();
 })();

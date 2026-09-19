@@ -712,6 +712,10 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .linkish { background: none; border: none; padding: 0; color: var(--bl); font: inherit; cursor: pointer; text-decoration: underline; }
 .linkish:hover { color: var(--c2); }
 .res-org { font-size: .64rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); margin-top: .2rem; }
+.res-cost { display: inline-block; font-size: .6rem; font-weight: 800; letter-spacing: .3px; padding: .1rem .45rem; border-radius: 6px; vertical-align: middle; }
+.res-cost-free { background: rgba(var(--gr-rgb),.15); color: var(--gr); }
+.res-cost-paid { background: rgba(var(--c-rgb),.18); color: var(--c); }
+.res-cost-mixed { background: rgba(var(--c-rgb),.18); color: var(--c); }
 
 /* ── GUIDED TOUR — spotlight-and-tooltip mechanics adapted from the
    Roadee pattern (Roady's tool): a "hole" element uses the giant-box-
@@ -886,6 +890,15 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="card">
+        <div class="card-title">🙏 PRAYER REQUESTS</div>
+        <div id="dashPrayersBox" style="font-size:.82rem;color:var(--tx2);"></div>
+        <div style="margin-top:.6rem;display:flex;gap:.5rem;">
+          <button class="btn btn-ghost" style="flex:1;" onclick="openAllPrayersModal()">View All →</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="openPrayerModal()">+ Add Request</button>
+        </div>
+      </div>
+
+      <div class="card">
         <div class="card-title" style="display:flex;align-items:center;gap:.6rem;">🧯 DRILL COMPLIANCE<button type="button" class="linkish" style="margin-left:auto;font-size:.72rem;" onclick="navTo('meetings')">Drill Log & Schedule →</button></div>
         <div id="dashDrillCompliance" class="stats-row"></div>
       </div>
@@ -924,6 +937,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div class="stats-row" style="margin-bottom:1rem;">
         <div class="stat-pill">👤 Training as: <strong id="traineeName" style="color:var(--tx);margin-left:.2rem;">—</strong></div>
         <div class="stat-pill" style="border-color:rgba(var(--gr-rgb),.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/<span id="certTotal">6</span></div>
+        <div class="stat-pill" style="border-color:rgba(var(--bl-rgb),.3);color:var(--bl);">🗓️ Services Served: <strong id="servicesServedCount" style="margin-left:.2rem;">0</strong></div>
       </div>
       <div class="course-grid" id="courseGrid"></div>
     </section>
@@ -1568,6 +1582,19 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="empty-note" id="trainingMatrixEmpty" style="display:none;margin-top:.6rem;">No team members are linked to a login yet, so there's no training data to show.</div>
       </div>
 
+      <div class="card" id="serviceLogCard" style="margin-top:1rem;display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
+          <div class="card-title" style="margin-bottom:0;">📊 SERVICE LOG</div>
+          <button type="button" class="section-print-btn" onclick="exportServiceLogCsv()">⬇️ Export CSV</button>
+        </div>
+        <div style="font-size:.78rem;color:var(--tx2);margin:.5rem 0;">Calculated automatically from the Scheduling tab — every assigned slot on a Sunday that has already happened counts as one service. No manual entry.</div>
+        <div class="table-scroll"><table class="data-table">
+          <thead><tr><th>Member</th><th>Total Services</th><th>This Year</th><th>This Month</th><th>Last Service</th></tr></thead>
+          <tbody id="serviceLogBody"></tbody>
+        </table></div>
+        <div class="empty-note" id="serviceLogEmpty" style="display:none;margin-top:.6rem;">No completed service assignments yet.</div>
+      </div>
+
       <div class="card" id="adminToolsCard" style="margin-top:1rem;display:none;">
         <div class="card-title">&#128295; ADMIN TOOLS</div>
         <div style="font-size:.8rem;color:var(--tx2);line-height:1.6;margin-bottom:.7rem;">
@@ -1745,22 +1772,41 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
       </div>
 
-      <div class="card-title" style="margin:.4rem 0 .5rem;">🏛️ FEDERAL / GOVERNMENT</div>
-      <a class="res-link" href="https://www.cisa.gov/topics/physical-security/protecting-houses-worship" target="_blank" rel="noopener"><span class="res-icon">🛡️</span><span><span class="res-name">Protecting Houses of Worship — CISA</span><div class="res-desc">DHS/CISA hub: security guide, self-assessment tool, trainings, and exercises covering active shooter, bombing, vehicle ramming, and more.</div><div class="res-org">CISA.gov</div></span></a>
-      <a class="res-link" href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener"><span class="res-icon">📘</span><span><span class="res-name">Guide for Developing High-Quality Emergency Operations Plans for Houses of Worship</span><div class="res-desc">FEMA's foundational planning guide — the standard framework for building this team's Emergency Operations Plan. It mandates five functional annexes: Evacuation, Lockdown, Shelter-in-Place, Recovery and Security. Published June 2013 and not revised since, so pair it with current CISA material.</div><div class="res-org">FEMA</div></span></a>
-      <a class="res-link" href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener"><span class="res-icon">🚨</span><span><span class="res-name">Active Shooter Preparedness + Emergency Action Plan Templates</span><div class="res-desc">CISA's preparedness resources, EAP templates, and free instructor-led webinars.</div><div class="res-org">CISA.gov</div></span></a>
-      <a class="res-link" href="https://www.fbi.gov/how-we-can-help-you/active-shooter-safety-resources" target="_blank" rel="noopener"><span class="res-icon">🔎</span><span><span class="res-name">FBI Active Shooter Resources</span><div class="res-desc">Research, videos, and guidance from the FBI's Office of Partner Engagement.</div><div class="res-org">FBI.gov</div></span></a>
-      <a class="res-link" href="https://training.fema.gov/programs/independent-study/" target="_blank" rel="noopener"><span class="res-icon">🎓</span><span><span class="res-name">FEMA Independent Study Courses (free)</span><div class="res-desc">Recommended for this team: IS-907.A (Active Shooter: What You Can Do), IS-360 (Preparing for Mass Casualty Incidents), IS-366 (Planning for the Needs of Children in Disasters), IS-906 (Workplace Security Awareness).</div><div class="res-org">FEMA Emergency Management Institute</div></span></a>
-      <a class="res-link" href="https://www.ready.gov/" target="_blank" rel="noopener"><span class="res-icon">✅</span><span><span class="res-name">Ready.gov Hazard Guides</span><div class="res-desc">Plain-language response guides for fire, tornado, earthquake, flood, and winter weather — used throughout this site's Emergency Procedures.</div><div class="res-org">DHS / Ready.gov</div></span></a>
+      <div class="tip-box" style="margin-bottom:.9rem;">💲 <strong>Cost key:</strong> <span class="res-cost res-cost-free">FREE</span> no cost to use or complete · <span class="res-cost res-cost-mixed">FREE INFO / PAID CERT</span> the material is free, a hands-on certification class costs money · <span class="res-cost res-cost-paid">PAID</span> the course or program itself costs money.</div>
 
-      <div class="card-title" style="margin:1rem 0 .5rem;">⛪ CHURCH SAFETY ORGANIZATIONS</div>
-      <a class="res-link" href="https://sheepdogchurchsecurity.net/" target="_blank" rel="noopener"><span class="res-icon">🐑</span><span><span class="res-name">Sheepdog Church Security</span><div class="res-desc">Developed by law-enforcement personnel for volunteer church teams — free articles plus a Safety Member Certification covering verbal disruptions through active-shooter response.</div><div class="res-org">sheepdogchurchsecurity.net</div></span></a>
-      <a class="res-link" href="https://www.guidestone.org/ChurchSafety" target="_blank" rel="noopener"><span class="res-icon">🏫</span><span><span class="res-name">GuideStone Church Safety &amp; Security Training</span><div class="res-desc">Free church security training resources produced with Strategos International.</div><div class="res-org">GuideStone</div></span></a>
-      <a class="res-link" href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener"><span class="res-icon">🧒</span><span><span class="res-name">Code Adam Program — Free Kit</span><div class="res-desc">Official NCMEC missing-child protocol: poster, manager checklist, training video, and employee quiz — free to implement.</div><div class="res-org">National Center for Missing &amp; Exploited Children</div></span></a>
+      <div class="card-title" style="margin:.4rem 0 .5rem;">🏛️ FEDERAL RESOURCES</div>
+      <a class="res-link" href="https://www.cisa.gov/topics/physical-security/protecting-houses-worship" target="_blank" rel="noopener"><span class="res-icon">🛡️</span><span><span class="res-name">Protecting Houses of Worship</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">DHS/CISA hub: security guide, self-assessment tool, trainings, and exercises covering active shooter, bombing, vehicle ramming, and more.</div><div class="res-org">CISA.gov</div></span></a>
+      <a class="res-link" href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener"><span class="res-icon">📘</span><span><span class="res-name">Guide for Developing High-Quality Emergency Operations Plans for Houses of Worship</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">FEMA's foundational planning guide — the standard framework for building this team's Emergency Operations Plan. It mandates five functional annexes: Evacuation, Lockdown, Shelter-in-Place, Recovery and Security. Published June 2013 and not revised since, so pair it with current CISA material.</div><div class="res-org">FEMA</div></span></a>
+      <a class="res-link" href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener"><span class="res-icon">🚨</span><span><span class="res-name">Active Shooter Preparedness + Emergency Action Plan Templates</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">CISA's preparedness resources, EAP templates, and free instructor-led webinars.</div><div class="res-org">CISA.gov</div></span></a>
+      <a class="res-link" href="https://www.fbi.gov/how-we-can-help-you/active-shooter-safety-resources" target="_blank" rel="noopener"><span class="res-icon">🔎</span><span><span class="res-name">FBI Active Shooter Resources</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Research, videos, and guidance from the FBI's Office of Partner Engagement.</div><div class="res-org">FBI.gov</div></span></a>
+      <a class="res-link" href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener"><span class="res-icon">🧒</span><span><span class="res-name">Code Adam Program — Free Kit</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Official missing-child protocol: poster, manager checklist, training video, and employee quiz — free to implement.</div><div class="res-org">National Center for Missing &amp; Exploited Children (NCMEC)</div></span></a>
+      <a class="res-link" href="https://www.ready.gov/" target="_blank" rel="noopener"><span class="res-icon">✅</span><span><span class="res-name">Ready.gov Hazard Guides</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Plain-language response guides for fire, tornado, earthquake, flood, and winter weather — used throughout this site's Emergency Procedures.</div><div class="res-org">DHS / Ready.gov</div></span></a>
 
-      <div class="card-title" style="margin:1rem 0 .5rem;">🕊️ DE-ESCALATION</div>
-      <a class="res-link" href="https://www.crisisprevention.com/blog/general/cpi-s-top-10-de-escalation-tips-revisited/" target="_blank" rel="noopener"><span class="res-icon">🧠</span><span><span class="res-name">CPI Top 10 De-escalation Tips (free download)</span><div class="res-desc">Evidence-based verbal intervention guidance from the Crisis Prevention Institute — empathic listening, personal space, limit setting.</div><div class="res-org">Crisis Prevention Institute</div></span></a>
-      <a class="res-link" href="https://verbaljudo.com/de-escalation-training-for-church-security/" target="_blank" rel="noopener"><span class="res-icon">🗣️</span><span><span class="res-name">Verbal Judo — Church Security De-escalation Training</span><div class="res-desc">Tactical communication principles for greeters, ushers, and safety volunteers in a church culture of welcome. Note: this is the Institute's commercial training page (its own title targets New York), not a free article — useful as background on the method, not as a citation.</div><div class="res-org">Verbal Judo Institute</div></span></a>
+      <div class="card-title" style="margin:1rem 0 .5rem;">🎓 CERTIFICATION &amp; TRAINING</div>
+      <a class="res-link" href="https://cpr.heart.org/en/cpr-courses-and-kits/heartsaver" target="_blank" rel="noopener"><span class="res-icon">❤️</span><span><span class="res-name">Heartsaver CPR &amp; AED Course</span> <span class="res-cost res-cost-paid">PAID</span><div class="res-desc">Instructor-led, blended, or self-guided CPR/AED/First Aid certification for lay rescuers. Completion card valid 2 years. See Video Resources below for AHA's free awareness-only material.</div><div class="res-org">American Heart Association</div></span></a>
+      <a class="res-link" href="https://www.stopthebleed.org/get-trained/" target="_blank" rel="noopener"><span class="res-icon">🩹</span><span><span class="res-name">Stop the Bleed Training</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Hands-on bleeding-control course (direct pressure, wound packing, tourniquets) — find an in-person course or take it online. Typically free; instructors volunteer their time.</div><div class="res-org">American College of Surgeons</div></span></a>
+      <a class="res-link" href="https://www.redcross.org/take-a-class" target="_blank" rel="noopener"><span class="res-icon">➕</span><span><span class="res-name">CPR / AED / First Aid Classes</span> <span class="res-cost res-cost-paid">PAID</span><div class="res-desc">In-person, online, and blended CPR/AED/First Aid certification classes nationwide. 2-year certification with a verifiable digital certificate.</div><div class="res-org">American Red Cross</div></span></a>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">⛪ CHURCH SECURITY ORGANIZATIONS</div>
+      <a class="res-link" href="https://sheepdogchurchsecurity.net/" target="_blank" rel="noopener"><span class="res-icon">🐑</span><span><span class="res-name">Sheepdog Church Security</span> <span class="res-cost res-cost-mixed">FREE INFO / PAID CERT</span><div class="res-desc">Developed by law-enforcement personnel for volunteer church teams — free articles plus a paid Safety Member Certification covering verbal disruptions through active-shooter response.</div><div class="res-org">sheepdogchurchsecurity.net</div></span></a>
+      <a class="res-link" href="https://www.guidestone.org/ChurchSafety" target="_blank" rel="noopener"><span class="res-icon">🏫</span><span><span class="res-name">GuideStone Church Safety &amp; Security Training</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Free church security training resources produced with Strategos International.</div><div class="res-org">GuideStone</div></span></a>
+      <a class="res-link" href="https://www.strategosintl.com/church" target="_blank" rel="noopener"><span class="res-icon">🎯</span><span><span class="res-name">Strategos International — Church Security Training</span> <span class="res-cost res-cost-paid">PAID</span><div class="res-desc">Facility security assessments, in-person/e-learning preparedness training, and the multi-level Church Protection Specialist (CPS) certification for volunteer security teams. Contact them directly for pricing.</div><div class="res-org">Strategos International</div></span></a>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">⚖️ IDAHO LAW &amp; STATUTES</div>
+      <a class="res-link" href="https://legislature.idaho.gov/statutesrules/idstat/title16/t16ch16/sect16-1605/" target="_blank" rel="noopener"><span class="res-icon">📜</span><span><span class="res-name">Idaho Code § 16-1605 — Mandatory Reporting</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">The state statute on mandatory reporting of child abuse, abandonment, or neglect, and who must report.</div><div class="res-org">Idaho Legislature</div></span></a>
+      <a class="res-link" href="https://legislature.idaho.gov/statutesrules/idstat/Title05/T05CH3/SECT05-348/" target="_blank" rel="noopener"><span class="res-icon">📜</span><span><span class="res-name">Idaho Code § 5-348 — Volunteer Security Personnel Immunity</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">The state statute covering civil immunity for volunteer security personnel at religious organizations. Directly on point for this team.</div><div class="res-org">Idaho Legislature</div></span></a>
+      <a class="res-link" href="https://healthandwelfare.idaho.gov/services-programs/children-families-older-adults/child-and-family-services-and-foster-care-3" target="_blank" rel="noopener"><span class="res-icon">☎️</span><span><span class="res-name">Report Child Abuse, Neglect, or Abandonment</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Idaho's official reporting process and statewide hotline: 855-552-KIDS (5437). Callers may remain anonymous.</div><div class="res-org">Idaho Dept. of Health &amp; Welfare</div></span></a>
+      <div class="tip-box">⚖️ <strong>Nothing here is legal advice.</strong> Statute numbers and section links move — see OPEN-ITEMS.md §4c for citations that have already changed once, and have this reviewed by the church's own counsel.</div>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">🕊️ DE-ESCALATION &amp; VERBAL SKILLS</div>
+      <a class="res-link" href="https://www.crisisprevention.com/blog/general/cpi-s-top-10-de-escalation-tips-revisited/" target="_blank" rel="noopener"><span class="res-icon">🧠</span><span><span class="res-name">CPI Top 10 De-escalation Tips</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Evidence-based verbal intervention guidance from the Crisis Prevention Institute — empathic listening, personal space, limit setting.</div><div class="res-org">Crisis Prevention Institute</div></span></a>
+      <a class="res-link" href="https://verbaljudo.com/de-escalation-training-for-church-security/" target="_blank" rel="noopener"><span class="res-icon">🗣️</span><span><span class="res-name">Verbal Judo — Church Security De-escalation Training</span> <span class="res-cost res-cost-paid">PAID</span><div class="res-desc">Tactical communication principles for greeters, ushers, and safety volunteers in a church culture of welcome. This is the Institute's commercial training page, not a free article — useful as background on the method, not as a citation.</div><div class="res-org">Verbal Judo Institute</div></span></a>
+
+      <div class="card-title" style="margin:1rem 0 .5rem;">🎓 FEMA INDEPENDENT STUDY COURSES</div>
+      <a class="res-link" href="https://training.fema.gov/is/courseoverview.aspx?code=is-907.a&amp;lang=en" target="_blank" rel="noopener"><span class="res-icon">🚨</span><span><span class="res-name">IS-907.A: Active Shooter — What You Can Do</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Recognizing potential workplace violence, options for responding to an active shooter, and how to help survivors after an event. ~1 hour, 0.1 CEU.</div><div class="res-org">FEMA Emergency Management Institute</div></span></a>
+      <a class="res-link" href="https://training.fema.gov/is/courseoverview.aspx?code=is-360&amp;lang=en" target="_blank" rel="noopener"><span class="res-icon">🏥</span><span><span class="res-name">IS-360: Preparing for Mass Casualty Incidents</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">A guide for schools, higher education, and houses of worship on planning for and responding to mass casualty emergencies.</div><div class="res-org">FEMA Emergency Management Institute</div></span></a>
+      <a class="res-link" href="https://training.fema.gov/is/courseoverview.aspx?code=is-366.a&amp;lang=en" target="_blank" rel="noopener"><span class="res-icon">🧒</span><span><span class="res-name">IS-366.A: Planning for the Needs of Children in Disasters</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">Guidance for meeting children's unique needs during and after a disaster or emergency. ~6 hours, 0.6 CEU.</div><div class="res-org">FEMA Emergency Management Institute</div></span></a>
+      <a class="res-link" href="https://training.fema.gov/is/courseoverview.aspx?code=is-906&amp;lang=en" target="_blank" rel="noopener"><span class="res-icon">🏢</span><span><span class="res-name">IS-906: Workplace Security Awareness</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">How to improve security awareness in your workplace — no prerequisites. ~1 hour, 0.1 CEU.</div><div class="res-org">FEMA Emergency Management Institute</div></span></a>
 
       <div class="card-title" style="margin:1rem 0 .5rem;">📍 LOCAL</div>
       <a class="res-link" href="https://www.cityofnampa.us/1451/Police" target="_blank" rel="noopener"><span class="res-icon">👮</span><span><span class="res-name">Nampa Police Department</span><div class="res-desc">Non-emergency: (208) 465-2257. Ask about facility walk-throughs, security assessments, and community liaison programs for houses of worship.</div><div class="res-org">City of Nampa</div></span></a>
@@ -1855,6 +1901,14 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   <div class="admin-modal-box" style="max-width:380px;">
     <div class="admin-modal-title">👤 ACCOUNT</div>
     <div id="accountEmail" style="font-size:.82rem;color:var(--tx2);margin-bottom:1rem;word-break:break-all;"></div>
+    <div style="margin-bottom:1rem;">
+      <label style="font-size:.72rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);display:block;margin-bottom:.3rem;">Your Name</label>
+      <div style="display:flex;gap:.5rem;">
+        <input type="text" id="acctDisplayName" placeholder="e.g. Jane Smith" style="flex:1;min-width:0;padding:.5rem .7rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);">
+        <button type="button" class="btn btn-primary" onclick="saveDisplayName()">Save</button>
+      </div>
+      <div style="font-size:.68rem;color:var(--tx3);margin-top:.3rem;">Used on your training certificates and anywhere your name is shown to the team.</div>
+    </div>
     <div style="display:flex;flex-direction:column;gap:.5rem;">
       <button type="button" class="btn btn-ghost" style="width:100%;" onclick="closeModalEl('accountModal');openSetPasswordModal('change')">🔑 Change Password</button>
       <button type="button" class="btn btn-ghost" style="width:100%;color:var(--red-text);" onclick="closeModalEl('accountModal');signOutPrompt()">🚪 Sign Out</button>
@@ -2052,6 +2106,29 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div id="allNotesBox" style="font-size:.82rem;color:var(--tx2);"></div>
     <div style="display:flex;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('allNotesModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD PRAYER REQUEST ══ -->
+<div class="modal-overlay" id="prayerModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title">🙏 ADD PRAYER REQUEST</div>
+    <div class="form-row"><label>Request</label><textarea id="prayerText" rows="4" placeholder="Share what's on your heart..."></textarea></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('prayerModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePrayer()">Post Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ALL PRAYER REQUESTS ══ -->
+<div class="modal-overlay" id="allPrayersModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title" style="display:flex;align-items:center;gap:.6rem;">🙏 PRAYER REQUESTS<button class="btn btn-primary" style="margin-left:auto;font-size:.68rem;padding:.3rem .6rem;" onclick="closeModalEl('allPrayersModal');openPrayerModal()">+ Add Request</button></div>
+    <div id="allPrayersBox" style="font-size:.82rem;color:var(--tx2);"></div>
+    <div style="display:flex;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('allPrayersModal')">Close</button>
     </div>
   </div>
 </div>
@@ -3164,6 +3241,19 @@ function activeName() {
   }
   return currentUser ? currentUser.email : '';
 }
+/* Certificate-specific name resolution: cc_profiles.display_name is a
+   user-chosen preference set in Account settings, so it outranks
+   activeName()'s admin-set roster link here — a member with no
+   display_name should never see their raw login email printed on a
+   certificate, so this falls to the email's local part instead, per spec.
+   Scoped to certificates only; other features (prayer posts, drill logs)
+   keep using activeName()'s roster-link-first behavior unchanged. */
+function certDisplayName() {
+  const dn = currentProfile && currentProfile.display_name ? String(currentProfile.display_name).trim() : '';
+  if (dn) return dn;
+  if (currentUser && currentUser.email) return currentUser.email.split('@')[0];
+  return '';
+}
 function getCS(courseId) {
   const t = activeProgress().training;
   if (!t[courseId]) t[courseId] = { doneLessons: [], quizScore: null, quizTotal: null, quizPassed: false, certName: '' };
@@ -3352,7 +3442,7 @@ function resolveAuth() {
     const session = res && res.data && res.data.session;
     if (!session) return { state: 'no_session' };
     return Promise.resolve(
-      sb.from('cc_profiles').select('id,email,role,team_member_id,theme,push_enabled,tour_completed').eq('id', session.user.id).maybeSingle()
+      sb.from('cc_profiles').select('id,email,role,team_member_id,theme,push_enabled,tour_completed,display_name').eq('id', session.user.id).maybeSingle()
     ).then(r => {
       if (r.error) return { state: 'read_error', detail: r.error.message, user: session.user };
       if (!r.data) return { state: 'no_profile', user: session.user };
@@ -3432,7 +3522,7 @@ async function paintAuth(r) {
   showAppShell();
   populateIncidentCategorySelects();
   applySectionVisibility();
-  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList(); renderDocuments(); renderDrillCompliance(); renderDrillLog();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList(); renderDocuments(); renderDrillCompliance(); renderDrillLog(); renderServiceLog(); renderAllPrayers();
   applyAdmin(); refreshDash();
   maybeStartTour();
 }
@@ -3464,7 +3554,8 @@ async function loadAllData() {
     loadNews(),
     loadCoverageRequests(),
     loadDocuments(),
-    loadDrills()
+    loadDrills(),
+    loadPrayers()
   ]);
   S.team = (teamR ? teamR.data : []).map(teamRowToJs);
   S.leaders = (leadersR ? leadersR.data : []).map(leaderRowToJs);
@@ -3726,7 +3817,16 @@ async function createPasswordAccount() {
 
 function openAccountModal() {
   document.getElementById('accountEmail').textContent = currentUser ? currentUser.email : '';
+  document.getElementById('acctDisplayName').value = (currentProfile && currentProfile.display_name) || '';
   openModalEl('accountModal');
+}
+async function saveDisplayName() {
+  const v = document.getElementById('acctDisplayName').value.trim();
+  const r = await dbWrite(sb.from('cc_profiles').update({ display_name: v || null }).eq('id', currentProfile.id), 'Could not save your name');
+  if (!r) return;
+  currentProfile.display_name = v || null;
+  if (curCourse) renderCert();
+  await alertDialog('Saved', 'Your name has been updated.');
 }
 
 async function signOutPrompt() {
@@ -3756,7 +3856,8 @@ function applyAdmin() {
   document.getElementById('adminToolsCard').style.display = adminOn ? '' : 'none';
   document.getElementById('manageLoginsCard').style.display = adminOn ? '' : 'none';
   document.getElementById('trainingMatrixCard').style.display = adminOn ? '' : 'none';
-  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderFacilityMaps(); renderDocuments(); renderDrillLog();
+  document.getElementById('serviceLogCard').style.display = adminOn ? '' : 'none';
+  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderFacilityMaps(); renderDocuments(); renderDrillLog(); renderServiceLog();
   if (adminOn) loadTrainingMatrix();
 }
 
@@ -3890,6 +3991,80 @@ function printRoster() {
       <tbody>${rows}</tbody>
     </table>`;
   printDocument('TEAM ROSTER', body, { subtitle: S.team.length + ' team members' });
+}
+
+// ════════════════════════════════════════════════════════════════
+// SERVICE LOG — auto-calculated from S.schedule (cc_schedule_slots), no
+// separate table. A "service" is one assigned slot (lead or member) on a
+// Sunday that has already happened — a future date already scheduled is
+// not yet "served," so it is deliberately excluded from every count here,
+// the same way svcStatus() elsewhere only ever describes coverage, never
+// attendance history.
+// ════════════════════════════════════════════════════════════════
+function computeServiceLog() {
+  const today = iso(new Date());
+  const nowYear = today.slice(0, 4), nowMonth = today.slice(0, 7);
+  const counts = {};
+  const bump = (id, dateIso) => {
+    if (!id) return;
+    if (!counts[id]) counts[id] = { total: 0, thisYear: 0, thisMonth: 0, lastDate: null };
+    const c = counts[id];
+    c.total++;
+    if (dateIso.slice(0, 4) === nowYear) c.thisYear++;
+    if (dateIso.slice(0, 7) === nowMonth) c.thisMonth++;
+    if (!c.lastDate || dateIso > c.lastDate) c.lastDate = dateIso;
+  };
+  Object.keys(S.schedule).filter(dateIso => dateIso <= today).forEach(dateIso => {
+    Object.values(S.schedule[dateIso]).forEach(svc => {
+      bump(svc.lead, dateIso);
+      svc.members.forEach(id => bump(id, dateIso));
+    });
+  });
+  return counts;
+}
+/* Renders the admin-only Team-tab table AND the current user's own
+   "Services Served" stat-pill on the Academy header — one computation,
+   two display surfaces, so they can never drift apart. */
+function renderServiceLog() {
+  const counts = computeServiceLog();
+  const meId = currentProfile && currentProfile.team_member_id;
+  const el = document.getElementById('servicesServedCount');
+  if (el) el.textContent = (meId && counts[meId] ? counts[meId].total : 0);
+
+  const tb = document.getElementById('serviceLogBody');
+  if (!tb) return;
+  const rows = S.team.map(m => ({ m, c: counts[m.id] || { total: 0, thisYear: 0, thisMonth: 0, lastDate: null } }))
+    .filter(r => r.c.total > 0)
+    .sort((a, b) => b.c.total - a.c.total);
+  const emptyEl = document.getElementById('serviceLogEmpty');
+  if (emptyEl) emptyEl.style.display = rows.length ? 'none' : '';
+  tb.innerHTML = rows.map(({ m, c }) => {
+    const lastLabel = c.lastDate ? new Date(c.lastDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+    return `<tr>
+      <td style="font-weight:700;color:var(--tx);">${esc(m.first)} ${esc(m.last)}</td>
+      <td>${c.total}</td>
+      <td>${c.thisYear}</td>
+      <td>${c.thisMonth}</td>
+      <td>${esc(lastLabel)}</td>
+    </tr>`;
+  }).join('');
+}
+function exportServiceLogCsv() {
+  const counts = computeServiceLog();
+  const rows = S.team.map(m => ({ m, c: counts[m.id] || { total: 0, thisYear: 0, thisMonth: 0, lastDate: null } }))
+    .sort((a, b) => b.c.total - a.c.total);
+  const csvEscape = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const lines = [['Last Name', 'First Name', 'Total Services', 'This Year', 'This Month', 'Last Service Date'].map(csvEscape).join(',')]
+    .concat(rows.map(({ m, c }) => [m.last, m.first, c.total, c.thisYear, c.thisMonth, c.lastDate || ''].map(csvEscape).join(',')));
+  const stamp = iso(new Date());
+  const name = 'celebration-safety-service-log-' + stamp + '.csv';
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  addActivity('Exported the service log as CSV');
 }
 
 /* TRAINING COMPLETION MATRIX — admin-only, member x module. cc_training_records
@@ -4322,7 +4497,7 @@ async function setAssign(dateIso, svcKey, slot, val) {
   const day = S.schedule[dateIso];
   if (slot === 'lead') day[svcKey].lead = val; else day[svcKey].members[slot] = val;
   await pruneServiceIfEmpty(dateIso, svcKey);
-  renderSchedule(); refreshDash();
+  renderSchedule(); refreshDash(); renderServiceLog();
 }
 /* Adding a position IS a deliberate admin action, so unlike getDay() it is
    allowed to create rows. The guarantee being protected is narrower and more
@@ -5939,6 +6114,98 @@ async function deleteNote(id) {
 }
 
 // ════════════════════════════════════════════════════════════════
+// PRAYER REQUEST BOARD (cc_prayers) — any authenticated member posts;
+// the poster or Admin can mark it answered or remove it. postedByName is a
+// denormalized snapshot, same reasoning as cc_notes.postedByName — cc_
+// profiles has no general cross-profile SELECT, so a plain member viewing
+// someone else's request could never resolve profile_id to a name
+// otherwise. No editing the request text — sql/PRAYER-REQUESTS.sql's
+// column-level GRANT restricts UPDATE to (answered, answered_at) only, so
+// this isn't just a UI convention the client could bypass.
+// ════════════════════════════════════════════════════════════════
+function prayerRowToJs(r) {
+  return { id: r.id, profileId: r.profile_id, postedByName: r.posted_by_name, requestText: r.request_text, postedAt: r.posted_at, answered: r.answered, answeredAt: r.answered_at };
+}
+async function loadPrayers() {
+  const r = await dbWrite(sb.from('cc_prayers').select('*').order('posted_at', { ascending: false }), 'Could not load prayer requests');
+  S.prayers = r ? r.data.map(prayerRowToJs) : [];
+}
+/* Active requests newest-first, then answered ones (also newest-first)
+   pushed to the bottom — a stable partition-then-sort, not a status change
+   re-sorting the whole list out from under someone mid-read. */
+function sortedPrayers() {
+  return (S.prayers || []).slice().sort((a, b) => {
+    if (a.answered !== b.answered) return a.answered ? 1 : -1;
+    return b.postedAt.localeCompare(a.postedAt);
+  });
+}
+function renderDashPrayers() {
+  const box = document.getElementById('dashPrayersBox');
+  if (!box) return;
+  const active = (S.prayers || []).filter(p => !p.answered).slice().sort((a, b) => b.postedAt.localeCompare(a.postedAt)).slice(0, 3);
+  if (!active.length) { box.innerHTML = '<div style="color:var(--tx3);">No active prayer requests.</div>'; return; }
+  box.innerHTML = active.map(p => `<div style="padding:.35rem 0;border-bottom:1px solid var(--bd);">
+      <div style="color:var(--tx);">${esc(truncate(p.requestText, 90))}</div>
+      <div style="font-size:.7rem;color:var(--tx3);margin-top:.2rem;">${esc(p.postedByName)}</div>
+    </div>`).join('');
+}
+function renderAllPrayers() {
+  const box = document.getElementById('allPrayersBox');
+  if (box) {
+    const prayers = sortedPrayers();
+    box.innerHTML = prayers.length ? prayers.map(p => {
+      const posted = new Date(p.postedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const canManage = (currentProfile && p.profileId === currentProfile.id) || adminOn;
+      return `<div style="padding:.7rem 0;border-bottom:1px solid var(--bd);${p.answered ? 'opacity:.6;' : ''}">
+        <div style="display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;">
+          <div style="color:var(--tx);white-space:pre-wrap;">${p.answered ? '✅ ' : ''}${esc(p.requestText)}</div>
+          <div style="font-size:.68rem;color:var(--tx3);white-space:nowrap;">${esc(p.postedByName)} · ${posted}</div>
+        </div>
+        ${canManage ? `<div style="margin-top:.4rem;display:flex;gap:.5rem;">
+          ${!p.answered ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="markPrayerAnswered('${p.id}')">Mark Answered</button>` : ''}
+          <button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deletePrayer('${p.id}')">Remove</button>
+        </div>` : ''}
+      </div>`;
+    }).join('') : `<div style="color:var(--tx3);">No prayer requests yet.</div>`;
+  }
+  renderDashPrayers();
+}
+function openPrayerModal() {
+  document.getElementById('prayerText').value = '';
+  openModalEl('prayerModal');
+}
+async function savePrayer() {
+  const requestText = document.getElementById('prayerText').value.trim();
+  if (!requestText) { await alertDialog('Missing request', 'Enter what you would like the team to pray for.'); return; }
+  const row = { profile_id: currentProfile.id, posted_by_name: activeName(), request_text: requestText };
+  const r = await dbWrite(sb.from('cc_prayers').insert(row).select().single(), 'Could not post this prayer request');
+  if (!r) return;
+  S.prayers.unshift(prayerRowToJs(r.data));
+  closeModalEl('prayerModal');
+  renderAllPrayers();
+  addActivity('Posted a prayer request');
+}
+async function markPrayerAnswered(id) {
+  const p = S.prayers.find(x => x.id === id);
+  if (!p) return;
+  const nowIso = new Date().toISOString();
+  const r = await dbWrite(sb.from('cc_prayers').update({ answered: true, answered_at: nowIso }).eq('id', id), 'Could not update this prayer request');
+  if (!r) return;
+  p.answered = true; p.answeredAt = nowIso;
+  renderAllPrayers();
+}
+async function deletePrayer(id) {
+  const p = S.prayers.find(x => x.id === id);
+  if (!p) return;
+  if (!await confirmDialog('Remove this prayer request?', 'This cannot be undone.', { okLabel: 'Remove', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_prayers').delete().eq('id', id), 'Could not remove this prayer request');
+  if (!r) return;
+  S.prayers = S.prayers.filter(x => x.id !== id);
+  renderAllPrayers();
+}
+function openAllPrayersModal() { renderAllPrayers(); openModalEl('allPrayersModal'); }
+
+// ════════════════════════════════════════════════════════════════
 // ONBOARDING CHECKLIST
 // ════════════════════════════════════════════════════════════════
 function renderOnboard() {
@@ -6166,7 +6433,7 @@ async function submitQuiz() {
   const pct = Math.round((correct / total) * 100);
   const cs = getCS(curCourse.id);
   const patch = { quizScore: correct, quizTotal: total, quizPassed: passed };
-  if (passed && !cs.certName) patch.certName = activeName();
+  if (passed && !cs.certName) patch.certName = certDisplayName();
   const ok = await persistTrainingPatch(curCourse.id, patch);
   if (!ok) return;
   Object.assign(cs, patch);
@@ -6290,19 +6557,22 @@ function renderCert() {
     return;
   }
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const namePrompt = (currentProfile && currentProfile.display_name) ? '' :
+    `<div class="tip-box" style="max-width:520px;margin:0 auto 1rem;">✏️ Set your name in <button class="linkish" onclick="openAccountModal()">Account settings</button> so your certificate shows your full name.</div>`;
   el.innerHTML = `<div class="cert-wrap">
+    ${namePrompt}
     <div class="certificate" id="certDocument">
       <div class="cert-brand">CELEBRATION CHURCH — SAFETY &amp; SECURITY TEAM OPERATIONS CENTER</div>
       <div class="cert-title-main">CERTIFICATE OF COMPLETION</div>
       <div class="cert-course-name">${curCourse.title}</div>
       <div class="cert-name-line">This certifies that</div><br>
-      <div class="cert-recipient">${esc(cs.certName || activeName() || 'Team Member')}</div>
+      <div class="cert-recipient">${esc(cs.certName || certDisplayName() || 'Team Member')}</div>
       <div class="cert-score">Score: ${scorePct(cs, curCourse)}% · ${cs.quizScore}/${cs.quizTotal || quizTotal(curCourse)} correct</div>
       <div class="cert-date">Issued: ${date} · Nampa, Idaho</div>
       <div class="cert-seal">🏆</div>
     </div>
     <div style="margin-top:.75rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
-      <input type="text" placeholder="Name on certificate" value="${esc(cs.certName || activeName() || '')}" style="padding:.4rem .8rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);width:200px;" oninput="updateCertName(this.value)">
+      <input type="text" placeholder="Name on certificate" value="${esc(cs.certName || certDisplayName() || '')}" style="padding:.4rem .8rem;border-radius:8px;border:1px solid var(--bd2);background:var(--s1);color:var(--tx);width:200px;" oninput="updateCertName(this.value)">
       <button class="cert-print-btn" onclick="printCertificate()">🖨️ Print Certificate</button>
     </div>
   </div>`;
