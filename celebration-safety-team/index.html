@@ -342,14 +342,49 @@ body {
 }
 .card-title { font-family: var(--fh); font-size: .82rem; letter-spacing: 2px; color: var(--c); margin-bottom: .6rem; }
 
-/* ── VERSE OF THE WEEK — clean and reverent, not a banner ad: one accent
-   line, a slow settle-in on load, no motion after that. ── */
-.verse-card { border-left: 3px solid var(--c); background: linear-gradient(90deg, rgba(var(--c-rgb),.06), transparent 70%); }
+/* ── VERSE OF THE WEEK — a reading card, not an admin card. Deliberately a
+   fixed rich-dark palette independent of the light/dark theme toggle: this
+   one card keeps its own reverent identity either way, and is meant to be
+   the first thing the eye catches on the dashboard. One settle-in animation
+   on load, no motion after that. ── */
+.verse-card {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 16px;
+  padding: 2.6rem 2rem 2rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 50%, rgba(232,160,32,.16) 0%, rgba(232,160,32,.05) 40%, transparent 70%),
+    linear-gradient(160deg, #141b28 0%, #0a0e14 100%);
+}
+.verse-quote-mark {
+  position: absolute;
+  top: -1.6rem;
+  left: .6rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 8rem;
+  line-height: 1;
+  color: rgba(232,160,32,.22);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  animation: ccVerseQuoteFadeIn 1s ease-out .3s both;
+}
+.verse-kicker { position: relative; z-index: 1; font-family: var(--fh); font-size: .72rem; letter-spacing: 3px; color: rgba(232,160,32,.65); margin-bottom: 1.1rem; }
 @keyframes ccVerseFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.verse-content { animation: ccVerseFadeIn 1.1s ease-out both; }
-.verse-content .verse-text { font-style: italic; font-size: 1.12rem; line-height: 1.8; color: var(--tx); }
-.verse-content .verse-ref { margin-top: .6rem; font-size: .8rem; color: var(--tx3); font-weight: 700; letter-spacing: .3px; }
-@media (prefers-reduced-motion: reduce) { .verse-content { animation: none; } }
+@keyframes ccVerseQuoteFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.verse-content { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; animation: ccVerseFadeIn .8s ease-out both; }
+.verse-content .verse-text { font-style: italic; font-size: 1.55rem; line-height: 1.9; color: #f5ede0; font-family: var(--fb); }
+.verse-content .verse-ref { margin-top: 1.1rem; font-size: .82rem; color: var(--c); font-weight: 700; letter-spacing: .5px; }
+.verse-manage-btn { position: relative; z-index: 1; margin-top: 1.3rem; font-size: .68rem; padding: .32rem .75rem; opacity: .7; }
+.verse-manage-btn:hover { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .verse-content, .verse-quote-mark { animation: none; } }
+@media (max-width: 560px) {
+  .verse-card { padding: 2.2rem 1.2rem 1.7rem; border-radius: 14px; }
+  .verse-quote-mark { font-size: 5.5rem; top: -.8rem; left: .3rem; }
+  .verse-content .verse-text { font-size: 1.22rem; line-height: 1.8; }
+}
 
 /* ── BOLO — prominent gold dashboard banner, above the verse ── */
 .bolo-banner { background: linear-gradient(135deg, rgba(var(--c-rgb),.18), rgba(var(--c-rgb),.06)); border: 1px solid rgba(var(--c-rgb),.45); border-radius: 12px; padding: .9rem 1.1rem; margin-bottom: .9rem; }
@@ -791,9 +826,10 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div id="boloBanner" style="display:none;"></div>
 
       <div class="card verse-card">
-        <div class="card-title">📖 VERSE OF THE WEEK</div>
+        <span class="verse-quote-mark" aria-hidden="true">“</span>
+        <div class="verse-kicker">VERSE OF THE WEEK</div>
         <div id="verseBox"></div>
-        <button class="btn btn-ghost" id="manageVersesBtn" style="margin-top:.7rem;display:none;" onclick="openVerseManageModal()">✏️ Manage Verses</button>
+        <button class="btn btn-ghost verse-manage-btn" id="manageVersesBtn" style="display:none;" onclick="openVerseManageModal()">✏️ Manage Verses</button>
       </div>
 
       <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.7rem 1.1rem;">
@@ -5380,7 +5416,7 @@ function renderVerse() {
      of firing once and never again on an element the animation already
      finished on. */
   document.getElementById('verseBox').innerHTML = v
-    ? `<div class="verse-content"><div class="verse-text">“${esc(v.text)}”</div><div class="verse-ref">— ${esc(v.reference)} (${esc(v.translation)})</div></div>`
+    ? `<div class="verse-content"><div class="verse-text">“${esc(v.text)}”</div><div class="verse-ref">${esc(v.reference)} · ${esc(v.translation)}</div></div>`
     : `<div class="verse-content" style="color:var(--tx3);">No verse set for this week yet.</div>`;
   document.getElementById('manageVersesBtn').style.display = adminOn ? '' : 'none';
 }
