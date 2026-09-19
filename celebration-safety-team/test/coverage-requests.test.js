@@ -218,5 +218,12 @@ T.S.coverageRequests = [];
 ctx.renderDashCoverageRequests();
 check('a fully-staffed team shows the reassuring empty message', els3('dashCoverageRequests').innerHTML.includes('fully staffed'));
 
+group('Dashboard card: a long reason is truncated rather than expanding the card');
+T.S.coverageRequests = [
+  { id: 'd4', profileId: 'req-1', profileName: 'Req Uester', serviceDate: '2026-10-04', serviceKey: 's0', reason: 'R'.repeat(80), status: 'open', coveredByProfileId: null, coveredByName: '', resolvedAt: null, createdAt: '2026-09-21T00:00:00Z' }
+];
+ctx.renderDashCoverageRequests();
+check('reason is truncated with an ellipsis', els3('dashCoverageRequests').innerHTML.includes('…'), els3('dashCoverageRequests').innerHTML);
+
 done();
 })();

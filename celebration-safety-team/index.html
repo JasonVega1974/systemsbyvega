@@ -796,11 +796,6 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <button class="btn btn-ghost" id="manageVersesBtn" style="margin-top:.7rem;display:none;" onclick="openVerseManageModal()">✏️ Manage Verses</button>
       </div>
 
-      <div class="card">
-        <div class="card-title" style="display:flex;align-items:center;gap:.6rem;">📌 TEAM NOTES<button class="btn btn-primary" id="addNoteBtn" style="margin-left:auto;display:none;font-size:.68rem;padding:.3rem .6rem;" onclick="openNoteModal()">+ Post Note</button></div>
-        <div id="notesBox" style="font-size:.82rem;color:var(--tx2);"></div>
-      </div>
-
       <div class="grid-3" style="margin-bottom:.9rem;">
         <div class="card" style="margin-bottom:0;">
           <div class="card-title">📞 EMERGENCY CONTACTS</div>
@@ -822,14 +817,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title" style="display:flex;align-items:center;gap:.6rem;">🙋 COVERAGE REQUESTS<button class="btn btn-primary" style="margin-left:auto;font-size:.68rem;padding:.3rem .6rem;" onclick="openCoverageRequestModal()">Request Coverage</button></div>
-        <div id="dashCoverageRequests" style="font-size:.82rem;color:var(--tx2);"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
-        <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
+      <div class="grid-3" style="margin-bottom:.9rem;">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">📌 TEAM NOTES</div>
+          <div id="dashNotesBox" style="font-size:.82rem;color:var(--tx2);"></div>
+          <div style="margin-top:.6rem;display:flex;gap:.5rem;">
+            <button class="btn btn-ghost" style="flex:1;" onclick="openAllNotesModal()">View All →</button>
+            <button class="btn btn-primary" id="addNoteBtn" style="flex:1;" onclick="openNoteModal()">+ Post Note</button>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">🙋 COVERAGE REQUESTS</div>
+          <div id="dashCoverageRequests" style="font-size:.82rem;color:var(--tx2);"></div>
+          <div style="margin-top:.6rem;display:flex;gap:.5rem;">
+            <button class="btn btn-ghost" style="flex:1;" onclick="navTo('scheduling')">View All →</button>
+            <button class="btn btn-primary" style="flex:1;" onclick="openCoverageRequestModal()">Request Coverage</button>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
+          <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
+        </div>
       </div>
 
       <div class="card">
@@ -1899,6 +1907,17 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('noteModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveNote()">Post Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ALL TEAM NOTES ══ -->
+<div class="modal-overlay" id="allNotesModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title" style="display:flex;align-items:center;gap:.6rem;">📌 TEAM NOTES<button class="btn btn-primary" style="margin-left:auto;font-size:.68rem;padding:.3rem .6rem;" onclick="closeModalEl('allNotesModal');openNoteModal()">+ Post Note</button></div>
+    <div id="allNotesBox" style="font-size:.82rem;color:var(--tx2);"></div>
+    <div style="display:flex;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('allNotesModal')">Close</button>
     </div>
   </div>
 </div>
@@ -4857,8 +4876,8 @@ function renderDashCoverageRequests() {
   box.innerHTML = open.map(c => `
     <div style="padding:.4rem 0;border-bottom:1px solid var(--bd);">
       <strong style="color:var(--tx);">${esc(fmtCoverageDate(c.serviceDate))} — ${esc(serviceKeyLabel(c.serviceKey))}</strong>
-      <div style="font-size:.72rem;color:var(--tx3);">Requested by ${esc(c.profileName)}${c.reason ? ' — ' + esc(c.reason) : ''}</div>
-    </div>`).join('') + `<button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('scheduling')">View All →</button>`;
+      <div style="font-size:.72rem;color:var(--tx3);">Requested by ${esc(c.profileName)}${c.reason ? ' — ' + esc(truncate(c.reason, 50)) : ''}</div>
+    </div>`).join('');
 }
 function renderCoverageRequestsList() {
   const box = document.getElementById('coverageRequestsList');
@@ -5297,12 +5316,17 @@ async function saveManagedVerse() {
 // ════════════════════════════════════════════════════════════════
 function noteRowToJs(r) { return { id: r.id, title: r.title, body: r.body, postedBy: r.posted_by, postedByName: r.posted_by_name, postedAt: r.posted_at, expiresAt: r.expires_at }; }
 let editingNoteId = null;
+/* Full listing (View All modal, #allNotesBox) — every active note, with the
+   same Edit/Remove gating as before this became a dashboard card. The
+   compact dashboard preview is a separate function (renderDashNotes) so a
+   long note body can never make the 3-card dashboard row taller than its
+   siblings — see that function's truncation. */
 function renderNotes() {
   const today = iso(new Date());
   const active = S.notes.filter(n => !n.expiresAt || n.expiresAt >= today).slice().sort((a, b) => b.postedAt.localeCompare(a.postedAt));
   document.getElementById('addNoteBtn').style.display = currentProfile ? '' : 'none';
   const canEditAny = adminOn || (currentProfile && currentProfile.role === 'team_lead');
-  document.getElementById('notesBox').innerHTML = active.length ? active.map(n => {
+  document.getElementById('allNotesBox').innerHTML = active.length ? active.map(n => {
     const isOwn = currentProfile && n.postedBy === currentProfile.id;
     const canRemove = canEditAny || isOwn;
     const posted = new Date(n.postedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -5315,7 +5339,23 @@ function renderNotes() {
       ${(canEditAny || canRemove) ? `<div style="margin-top:.4rem;display:flex;gap:.5rem;">${canEditAny ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="openNoteModal('${n.id}')">Edit</button>` : ''}${canRemove ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteNote('${n.id}')">Remove</button>` : ''}</div>` : ''}
     </div>`;
   }).join('') : `<div style="color:var(--tx3);">No team notes right now.</div>`;
+  renderDashNotes();
 }
+function renderDashNotes() {
+  const box = document.getElementById('dashNotesBox');
+  if (!box) return;
+  const today = iso(new Date());
+  const recent = S.notes.filter(n => !n.expiresAt || n.expiresAt >= today).slice().sort((a, b) => b.postedAt.localeCompare(a.postedAt)).slice(0, 2);
+  if (!recent.length) { box.innerHTML = '<div style="color:var(--tx3);">No team notes right now.</div>'; return; }
+  box.innerHTML = recent.map(n => {
+    const posted = new Date(n.postedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `<div style="padding:.4rem 0;border-bottom:1px solid var(--bd);">
+      <strong style="color:var(--tx);">${esc(truncate(n.title, 40))}</strong>
+      <div style="font-size:.72rem;color:var(--tx3);">${esc(n.postedByName)} · ${posted}</div>
+    </div>`;
+  }).join('');
+}
+function openAllNotesModal() { renderNotes(); openModalEl('allNotesModal'); }
 function openNoteModal(id) {
   editingNoteId = id || null;
   const n = id ? S.notes.find(x => x.id === id) : null;
