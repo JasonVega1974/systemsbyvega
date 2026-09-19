@@ -7,7 +7,7 @@ renders a clearly labelled placeholder and the item is tracked here.
 
 **Church:** Celebration Church · 2121 Caldwell Blvd, Nampa, ID 83651
 **Services:** Sundays 8:00 AM · 9:45 AM · 11:30 AM
-**Coverage rule:** minimum 3 team members per service, including 1 Team Lead
+**Coverage rule:** minimum 3 team members per service, including 1 Team Leader
 
 ---
 
@@ -30,7 +30,7 @@ still open exactly as before.
 
 **Fire & Evacuation** now carries the sweep list from the church's own
 Evacuation Plan — Restrooms, Classrooms, Warehouse, Media Room — swept by the
-Team Lead after the building clears, sourced and attributed in the card.
+Team Leader after the building clears, sourced and attributed in the card.
 
 **Medical Emergency** gained two things not in the app before: the AED
 precautions from `7 Steps to follow.docx` (no contact during defibrillation,
@@ -97,13 +97,142 @@ word, not this app's judgement:**
   decision either way; the Reunification card still describes SRM, flagged
   with a pointer to this item.
 
-**What these documents did NOT answer** — every one of these stays exactly as
-open as before: AED locations, fire-extinguisher positions, team post
+**What these documents did NOT answer** — every one of these stayed open as of
+this 2026-09-15 pass: AED locations, fire-extinguisher positions, team post
 positions, severe-weather shelter rooms, HVAC control and who runs it, which
 interior doors lock and who holds keys/fobs, radio channel and how many
 radios exist, the admin PIN holder, Kim/Kimberly, a **named** bomb-threat
 decision maker with **written** criteria, and the reunification-card design.
+*(Updated 2026-09-18 — see §0d: AED locations, the reunification method, and
+a named bomb-threat decision maker are now answered by Tyson Garten, CCST
+Director. Fire-extinguisher/team-post positions, severe-weather shelter
+rooms, HVAC control, door locks/keys, radio channel/count, the admin PIN
+holder note (obsolete — see §3), Kim/Kimberly, and written bomb-threat
+criteria remain exactly as open as before.)*
 
+
+---
+
+## 0b. Phase 5 — 2026-09-16: role hierarchy, incident reporting, onboarding manual
+
+The team's Supabase project moved off hand-pasted SQL this session — migrations
+now live in `sql/` and apply via the Management API (`sql/apply-migration.mjs`),
+never the CLI's `db push`, because this project's migration history was never
+CLI-tracked and the project is shared with unrelated systemsbyvega/ESB/GSB
+objects. The script refuses to touch anything that isn't `cc_`-prefixed.
+
+**Shipped this session:**
+- **Role hierarchy** — `cc_team.team_role` now carries the document's real
+  5-tier structure (Director / Team Leader / Safety Team Operator / Safety
+  Team Trainee / Junior Safety Team Operator) instead of the old two-tier
+  Team Lead/Team Member. Tyson Garten is Director (and, per the church,
+  Team Leader too — see the Job Positions section of the manual embed).
+  Nobody was placed into Trainee or Junior Operator on migration; there was
+  no signal for who belongs in either.
+- **Week A/B rotation** — `cc_team.rotation_week`, nullable, admin-editable,
+  nobody preassigned. Week A serves the 1st/3rd/5th Sundays, Week B the
+  2nd/4th.
+- **Incident Reporting tab** — full `cc_incidents` schema (append-only,
+  correction-supersedes-original), RLS keyed on category sensitivity
+  (`child_related`/`medical`) and a per-report `restricted` override, photo
+  uploads to a private Storage bucket, and an acknowledgment model. The
+  child-abuse mandatory-reporting notice on the report form cites Idaho Code
+  § 16-1605 directly (24-hour reporting deadline, misdemeanor penalty) — see
+  §4c for this project's standing caution that nothing here is legal advice.
+- **Onboarding manual embed** — the actual CCST Safety Team Policy &
+  Procedures document (working copy, March 2025) is now rendered in full,
+  section by section, inside the Onboarding tab, gated behind an actual
+  scroll-to-the-end interaction before the "Read the manual" checklist item
+  can be checked. A new checklist item covers the background-check
+  disqualifiers (felony within 5 years, felony sex crime, misdemeanor moral
+  turpitude) directly from the document's own wording.
+- **Two gaps found while transcribing the document itself**, now Team
+  Questions 15–16: the document's own table of contents points to an
+  "Arrest/Detention Procedures" section that was never actually written
+  (broken bookmark, not a scanning error on this app's part), and the
+  document's telephone bomb-threat form has never been turned into a
+  printable copy for the phones — the same gap §1 already flagged from the
+  CISA-checklist angle, now confirmed from the church's own document too.
+
+---
+
+## 0c. Phase 5 — 2026-09-16: ten new Academy modules
+
+All ten built, each 3+ lessons and a quiz at the same 80% pass threshold as the
+existing seven: Roving & Sweeps, Facility Safety & Hazard Spotting,
+Communications & Escalation, Pastoral Coverage, Crowd Management, Suspicious
+Persons & Trespass, Church Animal Policy, HAZMAT & Utilities, Bomb Threat
+Response, and Shelter-in-Place (Academy version — the existing Bomb Threat and
+Shelter-in-Place items were previously reference-only Emergency Procedures
+cards; these are the training-with-a-quiz versions). Academy now totals 17
+modules. Sourced from the CCST policy document first, CISA/FEMA/OSHA/ADA/DOJ
+where the document is silent — no invented phone numbers, names, certification
+requirements, or facility-specific details.
+
+Two items surfaced during this build that are more than routine gaps:
+
+- **Church Animal Policy is ADA/DOJ-sourced in full** (the church's policy never
+  mentions animals) and deliberately does **not** invent any service-animal
+  certification, registration, or ID requirement — none exists under the ADA,
+  and inventing one would create real exposure. The two questions staff may
+  ask, and the list of things they may never require, come straight from
+  ADA.gov.
+- **The Shelter-in-Place module surfaced a naming collision that predates this
+  session**: the CCST policy's "Room Lock Down/In (Shelter-in-Place)" (an
+  intruder already inside — lock the room) and this app's earlier,
+  independently-built Shelter-in-Place procedure card (a hazard in the outside
+  air — seal the room, shut down HVAC) share one label for two different
+  physical actions. The new module explains the distinction rather than
+  picking a side; whether to rename one of them is Team Question 20.
+
+New open items from these ten modules are Team Questions 17–21 (patrol pattern
+for Roving & Sweeps; whether Pastoral Coverage needs a fuller curriculum;
+whether to add a house rule for ordinary pets; the Shelter-in-Place naming
+collision; utility shutoff locations and gas-provider confirmation).
+
+---
+
+## 0d. Phase 6 — 2026-09-18: four items answered by Tyson Garten, CCST Director
+
+**AED locations — ANSWERED.** Two AEDs: (1) the kids' hallway, and (2) the
+sanctuary, south wall, between the stage-left seating area and where you enter
+the risers from the floor. Added to the Medical Emergency procedure card and
+the Medical Emergency Response Academy module (ss205), both as confirmed
+information rather than an open item now. **Still not answered:** whether
+either AED is checked/maintained, and by whom (Team Question 1).
+
+**Annual recertification cadence — ANSWERED.** Confirmed as annually (every 12
+months). The app's Academy/Admin Tools language already said "annual" by
+default; that default is now the team's actual decision, not an assumption.
+
+**Reunification method — ANSWERED, and it is not SRM.** The team's actual
+practice is a clipboard sign-out sheet completed by the teacher; a parent must
+present a ticket (the check-in claim check) to pair with a child. The
+Reunification procedure card has been rewritten around this method and no
+longer references the "I Love U Guys" Foundation's Standard Reunification
+Method at all — see Team Question 14. Because SRM is no longer used anywhere
+in this app, the §4b obligation to notify the Foundation of SRM use no longer
+applies (SRP, used separately for lockdown terminology, is unaffected — see
+the terminology ruling in §4). **Still not answered:** the physical assembly
+area / parent check-in location (Team Question 2) — the method is decided,
+the place is not.
+
+**Bomb-threat Decision Maker — PARTIALLY ANSWERED.** Named as Pastor Roger
+Yadon and/or Tyson Garten (CCST Director) — both are named per Tyson Garten.
+Updated on the Bomb Threat & Suspicious Package procedure card and the Bomb
+Threat Response Academy module (ss309). **Still not answered:** the written
+evacuation criteria CISA recommends the Decision Maker work from — a named
+person now exists, written criteria still do not (Team Question 4).
+
+**Untouched — do not guess:** assembly area location, severe-weather shelter
+rooms, the kids'-wing evacuation route (West exit vs. classroom-side — Tyson
+is getting an updated drawing), radio channel, and Kim vs. Kimberly Yadon.
+
+**Facility diagram:** Tyson is sending an updated facility diagram when
+available. The current Full Site Schematic stays as the reference until the
+new one arrives; its caption now also notes that the children's auditorium
+does not appear on it at all, separate from the fire-extinguisher/team-post
+positions already flagged as unmarked.
 
 ---
 
@@ -111,7 +240,7 @@ decision maker with **written** criteria, and the reunification-card design.
 
 | Item | Status | Notes |
 |---|---|---|
-| Safety & Security Onboarding Manual (25 pages, PDF) | **NEEDED** | Onboarding step 1 is gated on reading it. |
+| Safety & Security Onboarding Manual | **SHIPPED 2026-09-16** | The actual CCST Safety Team Policy & Procedures document is embedded in full, section by section, behind a scroll-to-the-end gate. Onboarding step 1 is gated on it, as designed. See §0b. |
 | Full site schematic | **PARTIAL — received 2026-09-15** | The floor plan with entrances/exits and colour-coded evacuation routes is in the app (Facility Maps). Still missing from it: **AED positions, fire-extinguisher positions, and team post positions.** See §0. |
 | Foyer diagram | **NEEDED** | Greeter posts, main entry doors, guest services. |
 | Sanctuary diagram | **NEEDED** | Seating, stage, exits, team posts front/rear. |
@@ -122,15 +251,14 @@ decision maker with **written** criteria, and the reunification-card design.
 
 ## 2. Facility facts nobody has told us yet
 
-- [ ] **AED positions — how many, and where.** *Now blocking a shipped procedure:* the Medical Emergency card tells people to send someone for the nearest AED and cannot say where that is. Highest-value item on this list.
+- [x] **AED positions — how many, and where.** ANSWERED 2026-09-18 by Tyson Garten, CCST Director — two AEDs: (1) kids' hallway, (2) sanctuary, south wall, between the stage-left seating area and where you enter the risers from the floor. See §0d.
 - [ ] **Assembly area location.** Referenced by the Fire & Evacuation and Earthquake procedures, which still say "to be marked on the site schematic."
 - [ ] **Fire extinguisher positions.**
 - [ ] **Severe-weather shelter locations** — which specific interior, lowest-level rooms and hallways. NWS rules out the sanctuary and the fellowship hall (large open rooms with wide-span roofs), so this needs a real answer, not "move to the interior."
 - [ ] **Accessible evacuation routes and areas of refuge** for people with mobility needs.
 - [ ] **Radio channel and count.** The method itself is no longer a question — the church's own written policy confirms radios, with real call protocol (a "Medical Emergency" call is stated TWICE with location; "Code-4" clears the channel; "Code-5" is used to call out a contact with a suspicious person). What is still unknown: how many radios exist, which channel, and who holds them.
 - [ ] **Which exterior doors are monitored** during children's drop-off and dismissal.
-- [ ] **Reunification location and parent check-in point.** *Now blocking a shipped procedure — and now also a methodology conflict, see §0.* The church's own September 2025 plan names one location (the North West end of the parking lot) shared by parents and children in the same sightline; the app's SRM-based procedure requires two locations with children out of the parents' sight. Which method the team is actually running has to be decided before either the location or the reunification cards can be finalised.
-- [ ] **Reunification cards.** Do not exist yet. Needed before the procedure can be drilled.
+- [ ] **Reunification location and parent check-in point.** The method itself is answered (see §0d — clipboard sign-out, ticket-based pairing, per Tyson Garten). What is still unknown is where that check-in happens.
 - [ ] **Which interior doors actually lock, and who carries keys or a fob on a Sunday.** *Now blocking a shipped procedure:* the Lockdown annex is worth exactly as much as the locks behind it.
 - [ ] **Shelter-in-place rooms**, who can shut down or recirculate the HVAC, and whether plastic sheeting and duct tape are stocked anywhere in the building. Sealing a room is the one protective action here that needs supplies bought in advance.
 
@@ -139,8 +267,8 @@ decision maker with **written** criteria, and the reunification-card design.
 - [x] Roger Yadon — Senior Pastor. Verified from `thecelebration.church/our-team`.
 - [ ] All other leadership and staff. **Do not generate these.** An admin enters each one.
   - ⚠️ The church's team page carries both a heading "Pastor Roger & Kimberly Yadon" and a separate entry "Pastor Kim Yadon — Associate & Youth Pastor." **The site does not say whether Kim and Kimberly are the same person.** Ask the church before entering either — a safety callsheet that duplicates or merges a real person is a real error.
-- [ ] The safety/security team roster — names, phones, specialties, Team Lead flags.
-- [ ] **Who holds the admin PIN, and who the Team Leads are.**
+- [x] The safety/security team roster — names, phones, specialties, and the 5-tier role field (Director/Team Leader/Safety Team Operator/Safety Team Trainee/Junior Safety Team Operator) are entered and live.
+- [x] Who the Team Leaders are is now visible directly in the Team roster (role-hierarchy migration, 2026-09-16). PIN-based admin access was retired the same day in favor of magic-link auth — "who holds the admin PIN" no longer applies.
 - [ ] **A designated bomb-threat Decision Maker**, and written evacuation criteria. *Now blocking a shipped procedure:* CISA delegates the evacuate-or-search decision to a named person working from pre-written criteria, and the Bomb Threat card says outright that neither exists yet.
 
 *Useful context from the church's own footer: office hours are Tuesday & Thursday, 9am–3pm — so the office is unstaffed most of the week, including Sundays. Do not build any procedure that assumes someone answers (208) 466-5433.*
@@ -148,8 +276,8 @@ decision maker with **written** criteria, and the reunification-card design.
 ## 4. Decisions pending
 
 - [ ] **Hosting & deployment (Phase 4).** Decided: **do NOT deploy publicly.** Fenced three ways — `noindex` meta, a `robots.txt` Disallow, and a `.vercelignore` entry keeping the directory off the CDN entirely. Goes live only behind Vercel deployment protection or after Phase 4 authentication.
-- [ ] **Auth and roles (Phase 4).** Admin / Team Lead / Member. Roster and phone numbers behind login. Note: picking your name in the Academy is *not* auth — anyone can pick anyone.
-- [ ] **Annual recertification cadence.** The app now supports self-retake, per-person admin reset, and an all-team annual reset. How often should certification expire?
+- [x] **Auth and roles (Phase 4) — SHIPPED 2026-09-16.** Magic-link email auth replaced the PIN entirely. `cc_profiles.role` is `admin` / `team_lead` / `member` (displayed to users as Admin / Team Leader / Member) and gates roster and phone numbers behind login. Identity now comes from the real signed-in session, not a free-text name picker.
+- [x] **Annual recertification cadence.** ANSWERED 2026-09-18 by Tyson Garten, CCST Director — annually (every 12 months). See §0d.
 - [ ] **Single-file vs. build step.** Still single-file. Revisit at Phase 2, when file upload and IndexedDB land.
 - [ ] **Drill schedule.** Fire drills and Code Adam walkthroughs are recurring. How often? Phase 3 adds the drill log.
 - [ ] **The five FEMA annexes.** FEMA's houses-of-worship guide mandates five functional annexes — **Evacuation, Lockdown, Shelter-in-Place, Recovery, Security**. The app currently has Evacuation. Lockdown and Shelter-in-Place are approved and in progress. Recovery and Security are deferred until after the team meeting.
@@ -184,7 +312,7 @@ K12 wording differ; **this app uses BIZ throughout** and must not mix editions.
 
 ## 4b. Obligations we have taken on
 
-- [ ] **Notify the "I Love U Guys" Foundation of SRM use.** Their Terms of Use make this a condition, not a courtesy: email `srm@iloveuguys.org` or sign an MOU. SRP asks only that we let them know; SRM requires it. Both are otherwise free.
+- [x] **Notify the "I Love U Guys" Foundation of SRM use — NO LONGER APPLICABLE.** As of 2026-09-18 (see §0d), the Reunification procedure was rewritten around the church's actual clipboard/ticket method and no longer uses SRM at all, so this obligation does not apply. SRP (used separately for lockdown terminology) is unaffected — SRP only asks to be told, it does not require it, and that item below is unrelated to SRM.
 - [ ] **Do not reword SRP directives.** Terms of Use permit localising evacuation locations and shelter strategies, and adding a logo — nothing else. Recorded in the ruling above and in the procedure itself.
 
 ## 4c. For the church's legal counsel — not legal advice
@@ -242,10 +370,10 @@ from headers), and the exact address string on the Google Maps listing.*
 cards by the time this list was last edited — correcting the record rather
 than leaving them listed as missing.)*
 
-- [x] **Medical emergency** — cardiac arrest, AED, seizure, falls. Sourced from AHA, Red Cross, CDC and the Epilepsy Foundation. Placed first and open by default, because it is the likeliest emergency this congregation faces. *Blocked on AED locations.*
-- [x] **Bomb threat / suspicious package.** *Blocked on a named Decision Maker and written evacuation criteria — see §0.*
+- [x] **Medical emergency** — cardiac arrest, AED, seizure, falls. Sourced from AHA, Red Cross, CDC and the Epilepsy Foundation. Placed first and open by default, because it is the likeliest emergency this congregation faces. AED locations answered 2026-09-18 — see §0d.
+- [x] **Bomb threat / suspicious package.** Decision Maker named 2026-09-18 (Pastor Roger Yadon and/or Tyson Garten, CCST Director) — see §0d. *Still blocked on written evacuation criteria.*
 - [x] **Wildfire smoke / air quality.** Note: the EPA/AirNow activity table is written for schools and stops at Very Unhealthy, so the Hazardous (301+) tier is framed as a leadership call rather than given a fabricated threshold.
-- [x] **Reunification / child accountability during evacuation.** *Methodology conflict with the church's current practice — see §0.*
+- [x] **Reunification / child accountability during evacuation.** Method confirmed 2026-09-18 as a clipboard sign-out sheet with a ticket-based pairing — see §0d. No longer based on SRM. *Still blocked on the assembly area / parent check-in location.*
 - [x] **Lockdown / lockout / shelter-in-place**, built on SRP directive wording (see the terminology ruling above). *Blocked on which doors lock and who holds keys.*
 - [x] **Disruptive person, trespassing & suspicious person on campus** — added 2026-09-15 from the church's own March 2025 CCST policy.
 - [x] **Weapon seen in the building** (not yet an active shooter) — added 2026-09-15, same source.
@@ -268,15 +396,19 @@ than leaving them listed as missing.)*
 - [ ] Hostage / barricade — Colleyville (2022) was exactly this at a house of worship, and the response diverges sharply from Run-Hide-Fight.
 - [ ] Vehicle ramming. *Ranks last on intent* — CISA's own case-study research found only two vehicle rammings at U.S. houses of worship and zero VBIEDs. Worth a short annex only because the **unintentional** version (pedal confusion at the children's-wing drop-off) is far more likely, and the mitigation is identical.
 
-## 7. Academy modules
+## 7. Academy modules — CLOSED for now (17 modules)
 
-The Academy has six modules. Medical emergency response has a procedure card but
-**no training module**, which is a gap given it is the likeliest emergency. The
-eight procedure cards added 2026-09-15 (see §0/§6) have no training module either
-— same gap, now eight times over instead of once.
+Medical Emergency Response shipped as module ss205 (this closed the gap noted
+below the old count). The eight 2026-09-15 procedure cards, plus Bomb Threat
+and Shelter-in-Place, now all have training modules as of the 2026-09-16 build
+(see §0c): Roving & Sweeps, Facility Safety & Hazard Spotting, Communications
+& Escalation, Pastoral Coverage, Crowd Management, Suspicious Persons &
+Trespass, Church Animal Policy, HAZMAT & Utilities, Bomb Threat Response,
+Shelter-in-Place.
 
-- [ ] Decide whether to add a Medical Emergency module (CPR/AED/seizure/falls) as a seventh. The pass-mark logic is no longer tied to five questions, so a module of any length now works correctly.
-- [ ] Decide which, if any, of the new procedure cards need a training module of their own, or whether a shorter combined module ("Trespassing, Weapons & Mandatory Reporting," for instance) covers enough of them.
+- [x] Medical Emergency module (ss205) — CPR/AED/seizure/falls.
+- [x] Every 2026-09-15 procedure card now has a matching Academy module, either one-to-one or combined (Crowd Management and Suspicious Persons & Trespass both draw on "Disruptive Person, Trespassing & Suspicious Person"; Facility Safety & Hazard Spotting draws on the biohazard/electrical/hazmat cards).
+- [ ] Idaho's specific criminal-trespass and citizen's-arrest statute language is not cited in Suspicious Persons & Trespass — same pattern as the mandatory-reporting statute (§4c): needs counsel verification before it's added, not carried forward from an unverified source.
 
 ---
 
