@@ -389,6 +389,88 @@ with `sql/DISPLAY-NAME.sql`, which is a **hard blocker** — it must be
 applied before this deploy ships, not just whenever convenient like
 `PRAYER-REQUESTS.sql` above.
 
+**Display-name backfill.** `sql/BACKFILL-DISPLAY-NAME.sql` — a one-time,
+safely re-runnable `UPDATE...FROM` — fills `cc_profiles.display_name` from
+`cc_team.first_name`/`last_name` for every profile linked to a roster row
+(`team_member_id` set) whose display name is still null or blank. Anyone
+not linked to a roster row still has to set their own name in Account
+settings; there's no roster name to borrow for them.
+
+---
+
+## 0h. Phase 10 — 2026-09-19: Events Calendar, Communication Templates,
+     Spanish Emergency Procedures
+
+**Event & Webinar Calendar (`cc_events`, second view inside the News
+tab).** A "News | Events" toggle switches the tab's list; admin-curated,
+same shape as `cc_news` — nothing auto-populated. Each event has a title,
+optional date/time (a null date means "self-paced," never expiring —
+`splitEvents()` treats it as perpetually upcoming, sorted after every
+dated entry), description, URL, location, and category (Webinar /
+Training / Law Enforcement / Church / Other). Past events collapse behind
+a "Show past events (N)" toggle. Seeded with three verified entries: a
+real upcoming CISA webinar ("Strategies to Deter Targeted Violence,"
+2026-09-23, explicitly aimed in part at faith-based organizations), the
+FEMA Independent Study catalog (self-paced), and a note to contact Nampa
+PD's community-outreach program for a schedule (no fixed date available).
+**Migration `sql/EVENTS.sql` has not been applied yet** — until it is, the
+Events view shows a "could not load" banner; nothing else in the app is
+affected, same soft-fail shape as Prayer Requests before its migration
+landed.
+
+**Communication Templates (new "Templates" sidebar item).** Eight
+pre-written templates — Trespass Warning Letter, Verbal Trespass Warning
+Script, Incident Notification to Pastoral Staff, After-Action Review
+Agenda, New Volunteer Welcome Message, Insurance Incident Notification,
+Media Inquiry Response, Parent Notification (Code Adam Resolution) — each
+with Copy to Clipboard and Download as PDF (via the app's existing generic
+print mechanism). Static content, no database, readable by any signed-in
+member. Three carry a caution note (legal review before first use on the
+trespass letter; notify the insurance carrier immediately; one
+spokesperson only for media) — the note is a UI-only banner, deliberately
+never mixed into the copyable/printable template text itself. Reuses the
+app's existing generic `printDocument()` mechanism (the same one behind
+every other "Print"/"Download" button in the app) rather than a bespoke
+PDF path — no new dependency, and it's exactly how the browser's own
+"Save as PDF" print destination already works everywhere else here.
+
+**Spanish-language toggle for Emergency Procedures.** An "English |
+Español" toggle in the section header switches all 23 procedure cards'
+titles and bodies — content only, the procedures themselves don't change.
+Both languages live in the DOM at all times as `.lang-en`/`.lang-es`
+siblings (never re-rendered), so the toggle is a pure CSS class switch,
+and printing (`printProcedure()`/`printAllProcedures()`) reads only the
+currently active language so a print never concatenates both languages
+together. Defaults to English for everyone and persists to
+`localStorage`, not the database — a display preference, not user data.
+Translation flagged rather than guessed wherever a phrase carries legal or
+procedural weight that could shift in Spanish. Nothing here should be
+treated as a legal translation without counsel review, consistent with
+§4c. Specific items flagged during translation, for that review:
+
+- **Use-of-force / detention thresholds** — "reasonable, non-violent
+  efforts to delay their departure" (Code Adam), "confrontation... the
+  only way to protect life" (Robbery), "immediate threat to someone's
+  safety" (Weapon Seen) — each sets a legal boundary on what a volunteer
+  may do; confirm the Spanish phrasing doesn't narrow or widen it.
+- **"Decision Maker" (Bomb Threat)** — translated descriptively
+  ("Responsable de Decisión") since English has no fixed Spanish term of
+  art here either; the role itself (Pastor Roger Yadon and/or Tyson
+  Garten) and the fact that written evacuation criteria still don't exist
+  were both carried over unchanged.
+- **Idaho's mandatory-reporting statute (Child Abuse & Neglect)** —
+  deliberately not cited in English or Spanish, per this project's
+  practice of never carrying a statute citation forward from memory (see
+  the same policy already documented above and at §4c).
+- **"Imminent danger/threat"** (Active Shooter, Lockdown) and **"custody
+  dispute"** (Lockdown) — legal terms of art; confirm "inminente" and
+  "disputa de custodia" carry the same trigger scope under Idaho law.
+- **NWS terms** — "Watch"/"Warning" rendered as "Vigilancia"/"Advertencia"
+  (some U.S. Spanish-language broadcasts use "Aviso" for Warning instead)
+  and "Turn Around, Don't Drown" as "Dé la Vuelta, No se Ahogue" — confirm
+  against whatever Spanish-language materials, if any, the church already
+  distributes, so the app doesn't introduce a second, conflicting phrase.
+
 ---
 
 ## 1. Documents to upload (Phase 2 builds the slots)

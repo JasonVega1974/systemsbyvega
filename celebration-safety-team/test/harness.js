@@ -75,6 +75,7 @@ function loadApp(htmlPath) {
   get quizSubmitted() { return quizSubmitted; }, set quizSubmitted(v) { quizSubmitted = v; },
   get editingMemberId() { return editingMemberId; }, set editingMemberId(v) { editingMemberId = v; },
   COURSES, ONBOARD_ITEMS, SERVICES, MIN_SLOTS, MAX_SLOTS, PASS_THRESHOLD, TOUR_STEPS,
+  COMM_TEMPLATES, EVENT_CATEGORIES,
   alertDialog, confirmDialog
 };`, ctx);
 

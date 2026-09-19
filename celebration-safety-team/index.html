@@ -484,6 +484,16 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .proc-card.open .proc-arrow { transform: rotate(90deg); }
 .proc-body { display: none; padding: 0 1rem 1rem; font-size: .84rem; color: var(--tx2); line-height: 1.7; }
 .proc-card.open .proc-body { display: block; }
+/* Spanish-language toggle. Both languages live in the DOM at all times as
+   .lang-en/.lang-es siblings inside .proc-title and .proc-body — never
+   swapped or re-rendered — so the toggle is a pure CSS visibility switch,
+   scoped to #sec-procedures so it can never affect .lang-en/.lang-es
+   classes used elsewhere in the app. display:revert (not a hardcoded
+   inline/block) restores whatever the underlying tag's own default is —
+   inline for a title <span>, block for a body <div> — from the same rule. */
+#sec-procedures .lang-es { display: none; }
+#sec-procedures.lang-es .lang-en { display: none; }
+#sec-procedures.lang-es .lang-es { display: revert; }
 .proc-body ol, .proc-body ul { margin: .5rem 0 .5rem 1.3rem; }
 .proc-body li { margin-bottom: .3rem; }
 .proc-body strong { color: var(--tx); }
@@ -808,6 +818,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <button type="button" class="nav-item" data-section="incidents" onclick="showSection('incidents')"><span class="nav-icon" aria-hidden="true">🚔</span><span class="nav-text">Incident Reports</span></button>
     <button type="button" class="nav-item" data-section="news" onclick="showSection('news')"><span class="nav-icon" aria-hidden="true">📰</span><span class="nav-text">News</span></button>
     <button type="button" class="nav-item" data-section="documents" onclick="showSection('documents')"><span class="nav-icon" aria-hidden="true">🗂️</span><span class="nav-text">Documents</span></button>
+    <button type="button" class="nav-item" data-section="templates" onclick="showSection('templates')"><span class="nav-icon" aria-hidden="true">📝</span><span class="nav-text">Templates</span></button>
     <div class="sidebar-label">People</div>
     <button type="button" class="nav-item" data-section="team" onclick="showSection('team')"><span class="nav-icon" aria-hidden="true">🛡️</span><span class="nav-text">Team</span></button>
     <button type="button" class="nav-item" data-section="meetings" onclick="showSection('meetings')"><span class="nav-icon" aria-hidden="true">🗣️</span><span class="nav-text">Team Meetings</span></button>
@@ -1027,14 +1038,19 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="sec-title">EMERGENCY PROCEDURES</div>
           <div class="sec-desc">Quick-reference response protocols. Based on published guidance from CISA, FEMA, Ready.gov, NCMEC, the American Heart Association, the Red Cross and the CDC — adapt details to this facility with your Team Leader.</div>
         </div>
+        <div style="display:flex;gap:.4rem;">
+          <button type="button" class="btn btn-primary" id="procLangEnBtn" style="width:auto;padding:.35rem .8rem;" onclick="setProcLang('en')">English</button>
+          <button type="button" class="btn btn-ghost" id="procLangEsBtn" style="width:auto;padding:.35rem .8rem;" onclick="setProcLang('es')">Español</button>
+        </div>
         <button type="button" class="section-print-btn" onclick="printAllProcedures()">🖨️ Print All Procedures</button>
       </div>
 
-      <div class="alert-box">🚑 <strong>In any life-threatening emergency, call 911 first.</strong> Nampa Police non-emergency: <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Church office: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></div>
+      <div class="alert-box"><span class="lang-en">🚑 <strong>In any life-threatening emergency, call 911 first.</strong> Nampa Police non-emergency: <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Church office: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></span><span class="lang-es">🚑 <strong>En cualquier emergencia que ponga en riesgo la vida, llame primero al 911.</strong> Policía de Nampa (no emergencias): <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Oficina de la iglesia: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></span></div>
 
       <div class="proc-card green open">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🚑</span><span class="proc-title">Medical Emergency — Cardiac Arrest · AED · Seizure · Falls</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🚑</span><span class="proc-title"><span class="lang-en">Medical Emergency — Cardiac Arrest · AED · Seizure · Falls</span><span class="lang-es">Emergencia Médica — Paro Cardíaco · DEA · Convulsiones · Caídas</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>This is the emergency this team is most likely to face, and it is the one where minutes decide the outcome. <strong>Call 911 first, then send someone for the AED.</strong> Two people move: one calls, one fetches.</p>
 
           <div class="tip-box">📻 <strong>Calling it on the radio.</strong> State <strong>"I have a Medical Emergency"</strong> TWICE, followed by your location — e.g. <em>"I have a Medical Emergency in the Foyer, I have a Medical Emergency in the Foyer."</em> Non-emergency radio traffic stops until the team member who called it gives <strong>"Code-4"</strong> (all clear). No radio? Tell any team member and have them make the call. Source: the church's own Safety Team Policy.</div>
@@ -1089,12 +1105,70 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>Keep them warm, stay with them, and write the incident up the same day — including near-misses and the lot conditions.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.redcross.org/take-a-class/resources/learn-first-aid/head-neck-spinal-injury" target="_blank" rel="noopener">Red Cross — head, neck &amp; spinal injury</a> · <a href="https://www.cdc.gov/falls/prevention/index.html" target="_blank" rel="noopener">CDC — preventing falls</a>. Prevention is team work too: salted walkways, dry entry mats, no trailing cables, lights that work.</div>
+          </div>
+          <div class="lang-es">
+          <p>Esta es la emergencia que este equipo probablemente enfrentará con más frecuencia, y es aquella en la que los minutos determinan el resultado. <strong>Llame al 911 primero, luego envíe a alguien por el DEA.</strong> Dos personas se movilizan: una llama, la otra va por el desfibrilador.</p>
+
+          <div class="tip-box">📻 <strong>Cómo reportarlo por radio.</strong> Diga <strong>"Tengo una Emergencia Médica"</strong> DOS VECES, seguido de su ubicación — por ejemplo, <em>"Tengo una Emergencia Médica en el Vestíbulo, tengo una Emergencia Médica en el Vestíbulo."</em> El tráfico de radio que no sea de emergencia se detiene hasta que la persona que reportó la emergencia dé la señal de <strong>"Código 4"</strong> (todo despejado). ¿No tiene radio? Avise a cualquier miembro del equipo para que haga la llamada. Fuente: la propia Política de Seguridad de la iglesia.</div>
+
+          <div class="tip-box">📍 <strong>Ubicación de los DEA — dos en el sitio, según Tyson Garten, Director de CCST:</strong> (1) el pasillo de niños, y (2) el santuario, pared sur, entre el área de asientos al lado izquierdo del escenario y la entrada a las gradas desde el piso. Todo miembro del equipo debe poder llegar al más cercano sin pensarlo — camine hacia ambos.</div>
+
+          <p><strong>Alguien colapsa y no responde ni respira con normalidad — paro cardíaco</strong></p>
+          <ol>
+            <li><strong>¿No responde y no respira o solo jadea?</strong> Trátelo como un paro cardíaco. Jadear no es respirar — vea el recuadro abajo.</li>
+            <li><strong>Active el 911 y consiga el DEA — al mismo tiempo, no en secuencia.</strong> Si hay otras personas con usted, una llama mientras otra corre por el DEA. <strong>Si está solo: llame primero, luego comience la RCP.</strong> Con un teléfono, póngalo en altavoz y haga ambas cosas.</li>
+            <li><strong>Comience la RCP. "Presione fuerte. Presione rápido en el centro del pecho."</strong> No estar capacitado no es razón para quedarse atrás — no hacer nada es el único error seguro.</li>
+            <li><strong>Arrodíllese junto a la persona</strong> de modo que su pecho quede aproximadamente al nivel de sus rodillas, y <strong>trabaje donde está.</strong> No arrastre a alguien a un "mejor" lugar — moverlo cuesta más de lo que gana un piso más firme.</li>
+            <li><strong>Coloque los parches del DEA y siga las indicaciones.</strong> No dará una descarga a un corazón que no la necesita.</li>
+            <li><strong>Cambie de compresor cada 2 minutos aproximadamente</strong> si son suficientes personas. Las buenas compresiones se debilitan más rápido de lo que cualquiera espera.</li>
+            <li>Despeje un camino para los paramédicos, sostenga las puertas, y tenga a alguien esperándolos en el estacionamiento.</li>
+          </ol>
+          <div class="alert-box">🩺 <strong>"Todavía está respirando" es el error que mata.</strong> Las respiraciones lentas, irregulares, con ronquidos o jadeos son <strong>respiración agónica</strong> — una señal <em>de</em> paro cardíaco, no en contra. Aparece en el 40–60% de los paros cardíacos, y la AHA la señala como una razón común por la que los testigos deciden erróneamente que alguien no está en paro. Si tiene dudas, comprima: el riesgo de hacer RCP a alguien que resulta no necesitarla es bajo, y el beneficio para quien sí la necesita es enorme.</div>
+          <div class="tip-box"><strong>Técnica, para quien quiera los números.</strong> Talón de una mano en la <strong>mitad inferior o tercio inferior del esternón</strong>, la otra mano encima, dedos entrelazados. Ritmo de <strong>100–120 por minuto</strong>. Profundidad <strong>de al menos 2 pulgadas (5 cm)</strong>, <strong>no más de 2.4 pulgadas (6 cm)</strong>. Deje que el pecho regrese completamente entre compresiones — no se apoye sobre él. ¿Capacitado en RCP completa? Agregue respiraciones, 30 compresiones por 2 respiraciones. Fuente: <a href="https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines/adult-basic-life-support" target="_blank" rel="noopener">Guías AHA 2025, Parte 7: Soporte Vital Básico en Adultos</a>.</div>
+          <div class="tip-box">💊 <strong>Si se sospecha una sobredosis de opioides</strong>, el algoritmo 2025 para rescatistas legos agrega un paso: administre una dosis de <strong>naloxona si está disponible</strong>. No reemplaza la RCP — las compresiones continúan. Si esta iglesia cuenta con naloxona es una pregunta abierta para el liderazgo.</div>
+
+          <p><strong>Usando el DEA</strong> — pasos de la Cruz Roja. Aplican a un adulto, o a un niño de 8 años o más que pese más de 55 libras.</p>
+          <ol>
+            <li>Complete primero los pasos de REVISAR y LLAMAR.</li>
+            <li>Tan pronto como el DEA esté disponible, <strong>enciéndalo y siga las indicaciones de voz</strong>.</li>
+            <li>Descubra el pecho y séquelo si es necesario. Un parche en la parte superior derecha, el otro en la parte inferior izquierda, unas pulgadas debajo de la axila. Si los parches se tocarían, uno en el centro del pecho y otro en la espalda entre los omóplatos.</li>
+            <li>Conecte el cable del conector de los parches si aún no está conectado.</li>
+            <li>Deje que analice — <strong>nadie debe tocar a la persona.</strong> Diga "¡DESPEJEN!" en voz alta.</li>
+            <li>Si recomienda una descarga: asegúrese de nuevo de que nadie esté tocando a la persona, diga "¡DESPEJEN!", presione el botón de descarga.</li>
+            <li><strong>Reanude la RCP de inmediato</strong> después de la descarga, o de inmediato si no se recomienda ninguna descarga.</li>
+          </ol>
+          <div class="alert-box">👚 <strong>No deje que el pudor cueste una vida — y tampoco lo complique más de lo necesario.</strong> Las mujeres reciben desfibrilación por parte de testigos con menos frecuencia que los hombres, y la vacilación por la ropa es parte de la razón. La guía de la AHA de 2025 dice que <em>"podría ser razonable ajustar la posición de un sostén en lugar de quitarlo."</em> Muévalo fuera del camino de los parches y continúe. Cubra a la persona con cuerpos o un abrigo si puede prescindir de alguien — pero nunca retrase la descarga para arreglar la privacidad.</div>
+          <div class="tip-box">📚 <a href="https://www.redcross.org/take-a-class/aed/using-an-aed/aed-steps" target="_blank" rel="noopener">Cruz Roja — Pasos para usar un DEA</a></div>
+          <div class="alert-box">🚫 <strong>Precauciones con el DEA.</strong> Nunca toque a la persona mientras analiza o descarga · nunca use alcohol para secar el pecho (es inflamable) · nunca lo use en un vehículo en movimiento · nunca lo use en alguien en contacto con agua, ni sobre una superficie conductora — muévalo primero a algo seco y no metálico.</div>
+
+          <p><strong>Convulsión</strong> — la mayoría de las convulsiones no son emergencias, y la ayuda incorrecta es lo que causa lesiones. <em>Quédese. Seguro. De lado.</em></p>
+          <ol>
+            <li>Ayude a la persona a bajar al suelo si está cayendo. <strong>Tome el tiempo</strong> — el reloj es la decisión.</li>
+            <li>Gírela suavemente <strong>hacia un lado, con la boca hacia el suelo</strong>, para mantener la vía respiratoria despejada.</li>
+            <li>Retire objetos duros y sillas del espacio. Algo suave y plano bajo la cabeza. Quítele los lentes. Afloje cualquier cosa ajustada en el cuello.</li>
+            <li>Quédese con la persona, mantenga a la gente a distancia, y permanezca calmado hasta que esté completamente alerta.</li>
+          </ol>
+          <div class="alert-box"><strong>Llame al 911 si:</strong> la convulsión dura más de <strong>5 minutos</strong> · le sigue otra convulsión poco después · tiene dificultad para respirar o no despierta después · sufrió una lesión · ocurrió <strong>en el agua</strong> · es su <strong>primera</strong> convulsión · tiene diabetes y pierde el conocimiento · está embarazada. Un domingo, agregue una más: <strong>si es un visitante que no conoce y nadie está con él o ella.</strong></div>
+          <div class="alert-box">🚫 <strong>No</strong> la sujete ni intente detener los movimientos · <strong>no le ponga nada en la boca</strong> (rompe dientes y mandíbulas; no puede tragarse la lengua) · no le dé respiraciones de rescate durante la convulsión · no le ofrezca comida ni agua hasta que esté completamente alerta.</div>
+          <div class="tip-box">📚 <a href="https://www.cdc.gov/epilepsy/first-aid-for-seizures/index.html" target="_blank" rel="noopener">CDC — Primeros auxilios para convulsiones</a> · <a href="https://www.epilepsy.com/recognition/adapting-plans/first-aid-tonic-clonic" target="_blank" rel="noopener">Fundación de Epilepsia — primeros auxilios tónico-clónicos</a></div>
+
+          <p><strong>Caídas</strong> — la lesión más común un domingo, especialmente entre los miembros mayores, y peor en el estacionamiento de noviembre a marzo.</p>
+          <ol>
+            <li><strong>No la levante.</strong> El instinto es levantar a alguien del suelo, y así es como una fractura de cadera o una lesión de columna se vuelve permanente. Arrodíllese junto a la persona en su lugar.</li>
+            <li>Dígale que <strong>no se mueva</strong> y que responda sus preguntas en voz alta. Manténgala en la posición en que la encontró a menos que necesite hacer RCP o controlar sangrado.</li>
+            <li>Llame al 911 ante cualquiera de estos: una caída desde más arriba de su propia altura · dolor o lesión visible en cabeza, cuello o espalda · confusión o cambio en el estado de alerta · debilidad, hormigueo o entumecimiento · moretones alrededor de los ojos o detrás de las orejas · sangre o líquido de la nariz u oídos · dificultad para respirar, ver o mantener el equilibrio.</li>
+            <li>Si no está lesionada y quiere levantarse, déjela hacerlo lentamente y a su propio ritmo — rodar de lado, descansar, luego manos y rodillas, y ponerse de pie usando una silla firme. No la apresure.</li>
+            <li>Manténgala abrigada, quédese con ella, y redacte el reporte del incidente ese mismo día — incluyendo casi-incidentes y las condiciones del estacionamiento.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.redcross.org/take-a-class/resources/learn-first-aid/head-neck-spinal-injury" target="_blank" rel="noopener">Cruz Roja — lesiones de cabeza, cuello y columna</a> · <a href="https://www.cdc.gov/falls/prevention/index.html" target="_blank" rel="noopener">CDC — prevención de caídas</a>. La prevención también es trabajo en equipo: pasillos con sal, tapetes de entrada secos, sin cables sueltos, luces que funcionen.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card blue">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">📣</span><span class="proc-title">Emergency Actions — Hold · Secure · Lockdown · Evacuate · Shelter</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">📣</span><span class="proc-title"><span class="lang-en">Emergency Actions — Hold · Secure · Lockdown · Evacuate · Shelter</span><span class="lang-es">Acciones de Emergencia — Quédense · Asegurar · Confinamiento · Evacuar · Refugiarse</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Five words. Everyone in the building — team, staff, volunteers, congregation — reacts to the same five, and so do responding officers. That is the whole point: under pressure, nobody should have to interpret what was just shouted.</p>
           <p>This is the <strong>Standard Response Protocol</strong> from the "I Love U Guys" Foundation, business edition. It is free for a church to use, and the wording below is quoted exactly as published.</p>
           <div class="tip-box">✏️ <strong>Do not reword these lines.</strong> The Foundation permits us to localise <em>where</em> we evacuate to and <em>which</em> safety strategy a hazard calls for, and to add our logo. The action names and directives themselves must stay as written — a protocol whose words drift is no longer a shared protocol.</div>
@@ -1135,12 +1209,56 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 
           <div class="tip-box">⚠️ <strong>"Lockout" is dead language — never use it.</strong> It was replaced by <strong>Secure</strong> in 2020, for the reason that matters here: the Foundation found "Lockout vs. Lockdown was confusing, Secure vs. Lockdown is clear." Two words that sound alike and mean opposite directions of travel is exactly the mistake you cannot afford mid-incident.</div>
           <div class="tip-box">📚 <a href="https://iloveuguys.org/The-Standard-Response-Protocol.html" target="_blank" rel="noopener">The "I Love U Guys" Foundation — Standard Response Protocol</a>. Our procedures keep FEMA's annex names for planning; SRP is what we say out loud.</div>
+          </div>
+          <div class="lang-es">
+          <p>Cinco palabras. Todos en el edificio —el equipo, el personal, los voluntarios, la congregación— reaccionan a las mismas cinco, y lo mismo hacen los oficiales que responden. Ese es el punto central: bajo presión, nadie debería tener que interpretar lo que acaban de gritar.</p>
+          <p>Este es el <strong>Standard Response Protocol</strong> (Protocolo de Respuesta Estándar) de la Fundación "I Love U Guys", edición para negocios. Es gratuito para que una iglesia lo use, y las palabras a continuación se citan exactamente como fueron publicadas.</p>
+          <div class="tip-box">✏️ <strong>No reformule estas líneas.</strong> La Fundación nos permite adaptar <em>a dónde</em> evacuamos y <em>qué</em> estrategia de seguridad requiere un peligro determinado, además de agregar nuestro logotipo. Los nombres de las acciones y las directivas en sí deben permanecer tal como están escritos — un protocolo cuyas palabras cambian ya no es un protocolo compartido.</div>
+
+          <div class="alert-box" style="background:rgba(var(--bl-rgb),.08);border-color:rgba(var(--bl-rgb),.25);">
+          <strong>¡QUÉDENSE!</strong> — "En su salón, oficina o área. Despejen los pasillos."<br>
+          <span style="color:var(--tx2);">Se usa cuando los pasillos deben permanecer despejados: una emergencia médica en un pasillo, un altercado, un derrame. El ministerio continúa.</span><br>
+          <strong style="font-size:.78rem;">Todos:</strong> <span style="color:var(--tx2);font-size:.8rem;">Despejar los pasillos y permanecer en el salón o área hasta que se anuncie "Todo Despejado" · Continuar con las actividades normales</span><br>
+          <strong style="font-size:.78rem;">Personal:</strong> <span style="color:var(--tx2);font-size:.8rem;">Cerrar y asegurar la puerta con llave · Contabilizar a los ocupantes y al personal · Continuar con las actividades normales</span>
+          </div>
+
+          <div class="alert-box" style="background:rgba(var(--bl-rgb),.08);border-color:rgba(var(--bl-rgb),.25);">
+          <strong>¡ASEGURAR!</strong> — "Entren al edificio. Aseguren las puertas exteriores con llave."<br>
+          <span style="color:var(--tx2);">La amenaza está <strong>afuera</strong>: actividad policial en el vecindario, una persecución, un animal peligroso en el estacionamiento. La estructura del edificio es la protección. El ministerio continúa en el interior.</span><br>
+          <strong style="font-size:.78rem;">Todos:</strong> <span style="color:var(--tx2);font-size:.8rem;">Regresar al interior · Continuar con las actividades normales</span><br>
+          <strong style="font-size:.78rem;">Personal:</strong> <span style="color:var(--tx2);font-size:.8rem;">Llevar a todos al interior · Asegurar las puertas exteriores con llave · Aumentar la conciencia situacional · Contabilizar a los ocupantes y al personal · Continuar con las actividades normales</span>
+          </div>
+
+          <div class="alert-box">
+          <strong>¡CONFINAMIENTO!</strong> — "Cerraduras, luces, fuera de la vista."<br>
+          <span style="color:var(--tx2);">La amenaza está <strong>adentro</strong>. Vea la tarjeta de Confinamiento más abajo.</span><br>
+          <strong style="font-size:.78rem;">Todos:</strong> <span style="color:var(--tx2);font-size:.8rem;">Alejarse de la vista · Mantener silencio · No abrir la puerta · Prepararse para evadir o defenderse</span><br>
+          <strong style="font-size:.78rem;">Personal:</strong> <span style="color:var(--tx2);font-size:.8rem;">Asegurar las puertas interiores con llave · Apagar las luces · Alejarse de la vista · No abrir la puerta · Mantener silencio · Contabilizar a los ocupantes y al personal · Prepararse para evadir o defenderse</span>
+          </div>
+
+          <div class="alert-box" style="background:rgba(var(--gr-rgb),.08);border-color:rgba(var(--gr-rgb),.25);">
+          <strong>¡EVACUAR!</strong> — se indica una ubicación.<br>
+          <strong style="font-size:.78rem;">Todos:</strong> <span style="color:var(--tx2);font-size:.8rem;">Evacuar hacia la ubicación indicada · Llevar su teléfono · Puede que se den instrucciones sobre conservar o dejar sus pertenencias</span><br>
+          <strong style="font-size:.78rem;">Personal:</strong> <span style="color:var(--tx2);font-size:.8rem;">Dirigir la evacuación hacia la ubicación indicada · Contabilizar a los ocupantes y al personal · Notificar si hay personas desaparecidas, de más, o heridas</span>
+          </div>
+
+          <div class="alert-box" style="background:rgba(var(--c-rgb),.08);border-color:rgba(var(--c-rgb),.25);">
+          <strong>¡REFUGIARSE!</strong> — se indican tanto el peligro como la estrategia de seguridad.<br>
+          <strong style="font-size:.78rem;">Todos:</strong> <span style="color:var(--tx2);font-size:.8rem;">Usar la estrategia de seguridad adecuada para el peligro</span><br>
+          <strong style="font-size:.78rem;">Personal:</strong> <span style="color:var(--tx2);font-size:.8rem;">Dirigir la estrategia de seguridad · Contabilizar a los ocupantes y al personal · Notificar si hay personas desaparecidas, de más, o heridas</span><br>
+          <span style="color:var(--tx2);font-size:.8rem;">Tornado → evacuar al área de refugio · Materiales peligrosos → sellar la habitación · Terremoto → agacharse, cubrirse y sujetarse</span>
+          </div>
+
+          <div class="tip-box">⚠️ <strong>"Lockout" es un término en desuso — nunca lo use.</strong> Fue reemplazado por <strong>Asegurar</strong> en 2020, por la razón que aquí importa: la Fundación determinó que "Lockout vs. Lockdown era confuso; Secure vs. Lockdown es claro." Dos palabras que suenan parecido pero significan direcciones de movimiento opuestas son exactamente el error que no se puede permitir en medio de un incidente.</div>
+          <div class="tip-box">📚 <a href="https://iloveuguys.org/The-Standard-Response-Protocol.html" target="_blank" rel="noopener">The "I Love U Guys" Foundation — Standard Response Protocol</a>. Nuestros procedimientos conservan los nombres de los anexos de FEMA para la planificación; el SRP es lo que decimos en voz alta.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔫</span><span class="proc-title">Active Shooter — Run · Hide · Fight</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔫</span><span class="proc-title"><span class="lang-en">Active Shooter — Run · Hide · Fight</span><span class="lang-es">Tirador Activo — Correr · Esconderse · Pelear</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Federal guidance (DHS/CISA/FBI) gives three <strong>options to consider</strong>, listed here in the order they are generally preferred. CISA deliberately frames these as options rather than a fixed 1-2-3 sequence: you take the one the situation actually allows, and that decision belongs to whoever is in the room.</p>
           <ol>
             <li><strong>RUN</strong> — if there is an accessible escape path, evacuate. Leave belongings, help others if possible, keep hands visible, and get people moving away from the threat.</li>
@@ -1151,12 +1269,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <p><strong>Call 911 when safe.</strong> Give location, number/description of shooter(s), weapons, and number of potential victims.</p>
           <div class="alert-box">🧒 <strong>Children's classrooms are the exception to "Run."</strong> Per the church's own Emergency Evacuation Plan, children's areas <strong>lock down in place instead of evacuating</strong> during an imminent or active threat — moving children into a hallway or outdoors increases their exposure. See the <strong>Lockdown</strong> procedure.</div>
           <div class="tip-box">📚 Team standard: complete the Academy module "Active Shooter Response," review the <a href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener">CISA Active Shooter Preparedness</a> resources, and take free FEMA course <a href="https://training.fema.gov/programs/independent-study/courseoverview.aspx?code=is-907.a&amp;lang=en" target="_blank" rel="noopener">IS-907.A: Active Shooter — What You Can Do</a>.</div>
+          </div>
+          <div class="lang-es">
+          <p>La guía federal (DHS/CISA/FBI) ofrece tres <strong>opciones a considerar</strong>, enumeradas aquí en el orden en que generalmente se prefieren. CISA las presenta deliberadamente como opciones y no como una secuencia fija de 1-2-3: se toma la que la situación realmente permita, y esa decisión le corresponde a quien esté presente en el lugar.</p>
+          <ol>
+            <li><strong>CORRER</strong> — si hay una ruta de escape accesible, evacúe. Deje sus pertenencias, ayude a otros si es posible, mantenga las manos visibles y haga que la gente se aleje de la amenaza.</li>
+            <li><strong>ESCONDERSE</strong> — si la evacuación no es posible, aléjese de la vista del tirador. Cierre con llave o bloquee las puertas, silencie los teléfonos, permanezca en silencio y detrás de objetos sólidos.</li>
+            <li><strong>PELEAR</strong> — como último recurso y solo cuando su vida esté en peligro inminente, actúe con agresión física y armas improvisadas para incapacitar al tirador.</li>
+          </ol>
+          <p><strong>Cuando llegue la policía:</strong> mantenga las manos visibles y vacías, siga todas las órdenes de inmediato, evite señalar con el dedo o gritar, y no detenga a los oficiales para pedir ayuda — ellos se dirigirán primero hacia la amenaza.</p>
+          <p><strong>Llame al 911 cuando esté a salvo.</strong> Indique la ubicación, el número/descripción del o los tiradores, las armas, y el número de posibles víctimas.</p>
+          <div class="alert-box">🧒 <strong>Los salones de niños son la excepción a "Correr."</strong> Según el propio Plan de Evacuación de Emergencia de la iglesia, las áreas de niños <strong>entran en confinamiento en el lugar en vez de evacuar</strong> durante una amenaza inminente o activa — mover a los niños hacia un pasillo o al exterior aumenta su exposición. Vea el procedimiento de <strong>Confinamiento</strong>.</div>
+          <div class="tip-box">📚 Estándar del equipo: complete el módulo de la Academia "Active Shooter Response" (Respuesta ante un Tirador Activo), revise los recursos de <a href="https://www.cisa.gov/topics/physical-security/active-shooter-preparedness" target="_blank" rel="noopener">CISA Active Shooter Preparedness</a>, y tome el curso gratuito de FEMA <a href="https://training.fema.gov/programs/independent-study/courseoverview.aspx?code=is-907.a&amp;lang=en" target="_blank" rel="noopener">IS-907.A: Active Shooter — What You Can Do</a>.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔒</span><span class="proc-title">Lockdown — Threat Inside the Building</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔒</span><span class="proc-title"><span class="lang-en">Lockdown — Threat Inside the Building</span><span class="lang-es">Confinamiento — Amenaza Dentro del Edificio</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p><strong>LOCKDOWN! Locks, lights, out of sight.</strong> Called when the danger is <em>inside</em> — an intruder, a custody dispute turning aggressive, a violent person in the building. One of FEMA's five required functional annexes for a house of worship.</p>
           <p>Lockdown is not evacuation and it is not Secure. <strong>Secure</strong> means the threat is outside and the walls are protecting us, so ministry continues. <strong>Lockdown</strong> means the threat is inside and ministry stops.</p>
           <ol>
@@ -1171,12 +1303,30 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="alert-box">🚫 <strong>Do not evacuate children's classrooms during an imminent or active threat.</strong> Per the church's own Emergency Evacuation Plan: <em>"We would never evacuate during imminent or active threat because that puts the littles at higher exposure and targets."</em> Lockdown in place is the response — moving children into a hallway or outdoors during an active threat increases their exposure, it does not reduce it.</div>
           <div class="tip-box">📚 FEMA, <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">Guide for Developing High-Quality EOPs for Houses of Worship</a> (Lockdown annex) · directive wording from <a href="https://iloveuguys.org/The-Standard-Response-Protocol.html" target="_blank" rel="noopener">SRP, business edition</a>.</div>
           <div class="alert-box">📌 <strong>Open item:</strong> which interior doors actually lock, and who carries keys or a fob on a Sunday, has not been recorded. A lockdown procedure is only as good as the locks — this goes on the site schematic.</div>
+          </div>
+          <div class="lang-es">
+          <p><strong>¡CONFINAMIENTO! Cerraduras, luces, fuera de la vista.</strong> Se declara cuando el peligro está <em>adentro</em> — un intruso, una disputa de custodia que se vuelve agresiva, una persona violenta en el edificio. Es uno de los cinco anexos funcionales que FEMA exige para un lugar de culto.</p>
+          <p>El Confinamiento no es una evacuación ni es Asegurar. <strong>Asegurar</strong> significa que la amenaza está afuera y las paredes nos protegen, por lo que el ministerio continúa. <strong>Confinamiento</strong> significa que la amenaza está adentro y el ministerio se detiene.</p>
+          <ol>
+            <li><strong>Anúncielo con claridad</strong> por el canal del equipo y por el sistema de altavoces: "¡Confinamiento! Cerraduras, luces, fuera de la vista." Repítalo. No use números en código — los visitantes no los conocen, y los oficiales que lleguen tampoco.</li>
+            <li><strong>Asegure las puertas interiores con llave. Cierre las persianas. Apague las luces. Todos deben alejarse de las líneas de visión</strong> — lejos de los vidrios de las puertas y las ventanas, detrás de mobiliario sólido. Silencie los teléfonos por completo, no solo el tono de llamada.</li>
+            <li><strong>No abra la puerta.</strong> Ni por un golpe, ni por una voz, ni por alguien con uniforme. La policía abrirá las puertas por sí misma o se identificará a través de la puerta con confirmación del despachador. Esta regla es lo que hace que una puerta cerrada con llave tenga algún valor.</li>
+            <li><strong>Contabilice a las personas.</strong> Cada líder de salón cuenta a quienes están con él y reporta al Líder del Equipo si hay personas desaparecidas, de más, o heridas.</li>
+            <li><strong>Prepárese para evadir o defenderse.</strong> Si la amenaza entra al salón, el confinamiento ya ha fallado para ese salón y se aplican las opciones del procedimiento de Tirador Activo.</li>
+            <li><strong>Llame al 911.</strong> Indique la dirección del edificio, en qué parte del edificio se encuentra, lo que vio, y cuántas personas están con usted. Permanezca en la línea si es seguro hacerlo.</li>
+          </ol>
+          <div class="alert-box">🧒 <strong>Las áreas de niños entran en confinamiento primero y salen de él al final.</strong> Un niño que sale a un pasillo durante un confinamiento es precisamente el resultado que todo este procedimiento existe para evitar. Ningún niño sale de un salón, y ningún adulto recoge a uno, hasta que un Líder del Equipo o la policía dé la señal de "Todo Despejado" en persona.</div>
+          <div class="alert-box">🚫 <strong>No evacúe los salones de niños durante una amenaza inminente o activa.</strong> Según el propio Plan de Evacuación de Emergencia de la iglesia: <em>"Nunca evacuaríamos durante una amenaza inminente o activa, porque eso expone más a los pequeños y los convierte en blancos."</em> El confinamiento en el lugar es la respuesta — mover a los niños hacia un pasillo o al exterior durante una amenaza activa aumenta su exposición, no la reduce.</div>
+          <div class="tip-box">📚 FEMA, <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">Guide for Developing High-Quality EOPs for Houses of Worship</a> (anexo de Confinamiento) · texto de las directivas tomado del <a href="https://iloveuguys.org/The-Standard-Response-Protocol.html" target="_blank" rel="noopener">SRP, edición para negocios</a>.</div>
+          <div class="alert-box">📌 <strong>Asunto pendiente:</strong> aún no se ha documentado cuáles puertas interiores realmente cierran con llave, ni quién porta llaves o un llavero electrónico los domingos. Un procedimiento de confinamiento vale tanto como las cerraduras que lo respaldan — esto debe incluirse en el esquema del sitio.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🧒</span><span class="proc-title">Lost Child — Code Adam</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🧒</span><span class="proc-title"><span class="lang-en">Lost Child — Code Adam</span><span class="lang-es">Niño Desaparecido — Código Adán</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Code Adam is the National Center for Missing &amp; Exploited Children's free missing-child protocol. NCMEC reports it is in use in hundreds of thousands of locations nationwide. NCMEC's six steps, in order:</p>
           <ol>
             <li><strong>Get a description.</strong> Name, age, gender, hair and eye colour, height, weight, and what the child is wearing — <strong>including shoes</strong> (clothing can be changed quickly; shoes usually aren't). Get a photo if the guardian has one on their phone.</li>
@@ -1188,12 +1338,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </ol>
           <div class="alert-box">⏱️ <strong>There is no waiting period.</strong> NCMEC's instruction is "DON'T HESITATE, CALL 911 IMMEDIATELY." Any rule of thumb that sounds like "search for ten minutes first" is not part of Code Adam and must not be used here.</div>
           <div class="tip-box">📚 Free official Code Adam kit, poster, training video and employee quiz: <a href="https://www.missingkids.org/codeadam/resources" target="_blank" rel="noopener">missingkids.org — Code Adam resources</a> · <a href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener">program overview</a>. Children's check-in tag matching is the everyday version of this protection — enforce it at every pickup.</div>
+          </div>
+          <div class="lang-es">
+          <p>Código Adán es el protocolo gratuito para niños desaparecidos del National Center for Missing &amp; Exploited Children (NCMEC). NCMEC reporta que se utiliza en cientos de miles de ubicaciones en todo el país. Los seis pasos de NCMEC, en orden:</p>
+          <ol>
+            <li><strong>Obtenga una descripción.</strong> Nombre, edad, sexo, color de cabello y ojos, estatura, peso, y qué ropa lleva puesta el niño — <strong>incluyendo los zapatos</strong> (la ropa se puede cambiar rápidamente; los zapatos generalmente no). Consiga una foto si el padre, madre o tutor tiene una en su teléfono.</li>
+            <li><strong>Anuncie "Código Adán"</strong> junto con la descripción por el canal del equipo, dirigido a todos los miembros del equipo y al personal.</li>
+            <li><strong>Inicie la búsqueda.</strong> Los miembros del equipo asignados cubren <strong>todas las puertas exteriores</strong> y el estacionamiento — ningún niño sale sin acompañante — mientras otros revisan el edificio: el santuario, los salones de niños, los baños, los pasillos. <strong>Acompañe al padre, madre o tutor hasta la entrada principal</strong> para que pueda ayudar a identificar al niño a simple vista.</li>
+            <li><strong>Llame al 911 de inmediato.</strong> No espere, y no termine de buscar primero. La búsqueda y la llamada ocurren al mismo tiempo.</li>
+            <li><strong>Localice al niño.</strong> Si se encuentra a salvo e ileso, reúnalo con el padre, madre o tutor verificado y revise el boleto de reclamo. Si se encuentra con alguien que no sea el padre, madre o tutor, haga esfuerzos razonables y no violentos para demorar su salida, y anote la descripción, el vehículo y la dirección de desplazamiento para la policía.</li>
+            <li><strong>Concluya el incidente.</strong> Anuncie <strong>"Código Adán cancelado"</strong> para que el edificio vuelva a la normalidad, y luego reporte el incidente al liderazgo de la iglesia — <strong>incluyendo las falsas alarmas</strong>, que son la información de entrenamiento más económica que el equipo jamás obtendrá.</li>
+          </ol>
+          <div class="alert-box">⏱️ <strong>No existe un período de espera.</strong> La instrucción de NCMEC es "DON'T HESITATE, CALL 911 IMMEDIATELY" ("NO DUDE, LLAME AL 911 DE INMEDIATO"). Cualquier regla informal que suene como "buscar durante diez minutos primero" no forma parte de Código Adán y no debe usarse aquí.</div>
+          <div class="tip-box">📚 Kit oficial gratuito de Código Adán, cartel, video de capacitación y cuestionario para empleados: <a href="https://www.missingkids.org/codeadam/resources" target="_blank" rel="noopener">missingkids.org — Code Adam resources</a> · <a href="https://www.missingkids.org/education/training/codeadam" target="_blank" rel="noopener">program overview</a>. La verificación del boleto de reclamo en el registro de niños es la versión cotidiana de esta protección — hágala cumplir en cada recogida.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔥</span><span class="proc-title">Fire &amp; Evacuation</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🔥</span><span class="proc-title"><span class="lang-en">Fire &amp; Evacuation</span><span class="lang-es">Incendio y Evacuación</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <ol>
             <li>On alarm or visible fire/smoke: <strong>activate the alarm</strong> (if not already), begin evacuation immediately, and <strong>call 911</strong>.</li>
             <li>Team members move to assigned zones: sanctuary doors, foyer, children's auditorium, and children's check-in. Children's workers evacuate kids <strong>by class, with a head count taken as they exit</strong>. Parents do <strong>not</strong> collect children from classrooms or hallways — see the <strong>Reunification</strong> procedure below, which is what turns "reunite at the assembly area" into something that actually works.</li>
@@ -1205,12 +1370,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="alert-box">⚠️ <strong>Which exit the kids' wing uses is still unresolved, even after the updated 2026-09-18 site schematic.</strong> The written Evacuation Plan says the West exit; the site schematic's marked route for the classroom/Nursery wing runs out an exit on the classroom side of the building, and carries no compass marking to confirm or rule out that this is the same exit. This procedure states only what both sources agree on — see OPEN-ITEMS.md §0 and TEAM-QUESTIONS.md Q13 for the open question.</div>
           <div class="alert-box">🚫 <strong>Fire evacuation is not the response to an imminent or active threat.</strong> Per the church's own Emergency Evacuation Plan: <em>"We would never evacuate during imminent or active threat because that puts the littles at higher exposure and targets."</em> If the danger is a person, not smoke or fire, use the <strong>Lockdown</strong> procedure instead — see below.</div>
           <div class="tip-box">📚 <a href="https://www.usfa.fema.gov/prevention/workplace-fires/" target="_blank" rel="noopener">USFA — Workplace &amp; non-residential fires</a> · <a href="https://www.ready.gov/business/emergency-plans/emergency-response-plan" target="_blank" rel="noopener">Ready.gov — Emergency response plans for organisations</a> · <a href="https://www.usfa.fema.gov/" target="_blank" rel="noopener">U.S. Fire Administration</a>. <em>(v1 cited Ready.gov's home-fire page here. That page is written for a household — it has nothing to say about evacuating several hundred people from an assembly occupancy with a children's wing.)</em> Fire-extinguisher and team-post positions still need to be added to the site schematic.</div>
+          </div>
+          <div class="lang-es">
+          <ol>
+            <li>Ante una alarma o fuego/humo visible: <strong>active la alarma</strong> (si no se ha activado ya), inicie la evacuación de inmediato, y <strong>llame al 911</strong>.</li>
+            <li>Los miembros del equipo se dirigen a sus zonas asignadas: las puertas del santuario, el vestíbulo, el auditorio de niños y el registro de niños. Los trabajadores de niños evacúan a los niños <strong>por clase, tomando un conteo a medida que salen</strong>. Los padres <strong>no</strong> recogen a los niños en los salones ni en los pasillos — vea el procedimiento de <strong>Reunificación</strong> más abajo, que es lo que convierte "reunirse en el área de reunión" en algo que realmente funciona.</li>
+            <li>Dirija a las personas hacia la salida segura más cercana — nunca a través del humo. Ayude a quienes tengan necesidades de movilidad; conozca de antemano las rutas accesibles.</li>
+            <li>Diríjase al <strong>área de reunión</strong> designada — aproximadamente 75 yardas al frente de la iglesia, hacia el extremo izquierdo del estacionamiento, según el propio Plan de Evacuación de Emergencia de la iglesia — y mantenga los accesos despejados para los vehículos de bomberos.</li>
+            <li>Contabilice a las personas; reporte a cualquier persona desaparecida (junto con su última ubicación conocida) al personal de emergencia que vaya llegando. <strong>No vuelva a entrar</strong> hasta que los bomberos autoricen el edificio.</li>
+            <li><strong>Una vez que el edificio esté despejado, el Líder del Equipo de CCST lo revisa</strong> antes de salir: los baños, los salones, la bodega y la sala de medios. Fuente: el propio Plan de Evacuación de la iglesia (sept. 2025).</li>
+          </ol>
+          <div class="alert-box">⚠️ <strong>Todavía no está resuelto qué salida usa el ala de niños, incluso después del esquema del sitio actualizado del 2026-09-18.</strong> El Plan de Evacuación escrito indica la salida Oeste; la ruta marcada en el esquema del sitio para el ala de salones/guardería sale por una salida del lado de los salones del edificio, y no tiene ninguna indicación de orientación que confirme o descarte que se trate de la misma salida. Este procedimiento indica únicamente lo que ambas fuentes coinciden en afirmar — vea OPEN-ITEMS.md §0 y TEAM-QUESTIONS.md Q13 para conocer la pregunta pendiente.</div>
+          <div class="alert-box">🚫 <strong>La evacuación por incendio no es la respuesta ante una amenaza inminente o activa.</strong> Según el propio Plan de Evacuación de Emergencia de la iglesia: <em>"Nunca evacuaríamos durante una amenaza inminente o activa, porque eso expone más a los pequeños y los convierte en blancos."</em> Si el peligro es una persona, y no humo o fuego, use en su lugar el procedimiento de <strong>Confinamiento</strong> — vea más abajo.</div>
+          <div class="tip-box">📚 <a href="https://www.usfa.fema.gov/prevention/workplace-fires/" target="_blank" rel="noopener">USFA — Workplace &amp; non-residential fires</a> · <a href="https://www.ready.gov/business/emergency-plans/emergency-response-plan" target="_blank" rel="noopener">Ready.gov — Emergency response plans for organisations</a> · <a href="https://www.usfa.fema.gov/" target="_blank" rel="noopener">U.S. Fire Administration</a>. <em>(La versión 1 citaba aquí la página de incendios domésticos de Ready.gov. Esa página está escrita para un hogar — no dice nada sobre cómo evacuar a varios cientos de personas de una ocupación de reunión con un ala de niños.)</em> Aún falta agregar al esquema del sitio las posiciones de los extintores de incendios y los puestos del equipo.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card green">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">👨‍👩‍👧</span><span class="proc-title">Reunification — Returning Children to Parents After an Evacuation</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">👨‍👩‍👧</span><span class="proc-title"><span class="lang-en">Reunification — Returning Children to Parents After an Evacuation</span><span class="lang-es">Reunificación — Cómo Devolver a los Niños a sus Padres Después de una Evacuación</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>This is the procedure that runs <em>every single time</em> the building evacuates during children's ministry. Without it, a fire alarm ends with several hundred adults converging on the kids' wing looking for their own child, which blocks the evacuation route and makes accountability impossible.</p>
           <p>FEMA is direct about the risk: child release processes must exist <em>"to assure that no child is released to an unauthorized person, even if that person well meaning."</em></p>
 
@@ -1234,12 +1414,39 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="tip-box">🚗 <strong>Tell parents where to park, and that they must not abandon vehicles.</strong> A blocked fire lane during an evacuation is its own emergency. If a parent cannot come, the child is released only to someone already on that child's emergency contact list — otherwise we keep the child until a parent arrives. No exceptions, including for people we recognise.</div>
           <div class="tip-box">📍 <strong>Location, per the church's own Emergency Evacuation Plan:</strong> approximately 75 yards out front of the church, to the far left of the parking lot. Parents come out to that location to receive their children — the same place the children assemble.</div>
           <div class="tip-box">📚 Child-release principle and evacuation-annex requirements: <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">FEMA Houses of Worship EOP guide</a>, pp. 20 &amp; 31.</div>
+          </div>
+          <div class="lang-es">
+          <p>Este es el procedimiento que se activa <em>cada vez</em> que el edificio se evacúa durante el ministerio infantil. Sin él, una alarma de incendio termina con varios cientos de adultos convergiendo en el área de niños en busca de su propio hijo, lo cual bloquea la ruta de evacuación y hace imposible el control de asistencia.</p>
+          <p>FEMA es directa sobre el riesgo: deben existir procesos de entrega de niños <em>"para asegurar que ningún niño sea entregado a una persona no autorizada, incluso si esa persona tiene buenas intenciones."</em></p>
+
+          <div class="tip-box">🔑 <strong>La recogida normal y la reunificación de emergencia son cosas distintas.</strong> Las etiquetas de registro del domingo son un sistema de conveniencia. La reunificación es un cambio de custodia controlado y verificable, de la iglesia a un padre o tutor confirmado — esta iglesia lo maneja mediante una <strong>hoja de registro de salida</strong>, descrita a continuación.</div>
+
+          <p><strong>Lo único que no se puede negociar: 100% de control de asistencia.</strong></p>
+          <ul>
+            <li>Los líderes de clase hacen un conteo de cabeza <strong>al momento de salir</strong>, no en el área de reunión.</li>
+            <li>Los conteos se reportan a una sola persona, quien conoce el total de personas que estaban en el lugar.</li>
+            <li><strong>Algunas personas se irán por su cuenta.</strong> Es de esperarse, especialmente en un incidente violento. Ausente no significa herido — pero se debe poder <strong>nombrar</strong> a quién falta, no solo contarlo. "Nos faltan 6" no le sirve de nada a un oficial de bomberos; seis nombres sí.</li>
+          </ul>
+
+          <p><strong>El proceso — hoja de registro de salida, según Tyson Garten, Director de CCST.</strong></p>
+          <ol>
+            <li>El maestro de cada clase mantiene consigo la <strong>hoja de registro de salida</strong> de esa clase durante toda la evacuación — es a la vez el listado de asistencia y el registro de entrega.</li>
+            <li>Un padre presenta su <strong>boleto de reclamo</strong> — el comprobante correspondiente entregado durante el registro — al maestro.</li>
+            <li>El maestro compara el boleto de reclamo con el niño, <strong>registra la salida del niño en la hoja</strong> (nombre, hora, quién lo recogió), y entrega al niño.</li>
+            <li><strong>Sin boleto de reclamo, no hay entrega.</strong> Si un padre no puede presentar el boleto de reclamo, el niño permanece con el maestro hasta que se pueda confirmar la identidad del padre contra la hoja de registro de salida por otro medio — nunca se entrega basándose únicamente en el reconocimiento.</li>
+          </ol>
+          <div class="tip-box">👥 <strong>Tamaño del equipo:</strong> la regla general publicada es cinco personas más una adicional por cada cien niños. Vale la pena saber a cuál de nuestros tres servicios eso realmente cubre.</div>
+          <div class="tip-box">🚗 <strong>Indique a los padres dónde estacionarse, y que no deben abandonar sus vehículos.</strong> Un carril de bomberos bloqueado durante una evacuación es una emergencia en sí misma. Si un padre no puede venir, el niño solo se entrega a alguien que ya esté en la lista de contactos de emergencia de ese niño — de lo contrario, mantenemos al niño hasta que llegue un padre. Sin excepciones, incluso para personas que reconozcamos.</div>
+          <div class="tip-box">📍 <strong>Ubicación, según el propio Plan de Evacuación de Emergencia de la iglesia:</strong> aproximadamente 75 yardas frente a la iglesia, en el extremo izquierdo del estacionamiento. Los padres se dirigen a ese lugar para recibir a sus hijos — el mismo lugar donde se reúnen los niños.</div>
+          <div class="tip-box">📚 Principio de entrega de niños y requisitos del anexo de evacuación: <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">Guía de FEMA para Planes de Operaciones de Emergencia en Lugares de Culto</a>, págs. 20 y 31.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card blue">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌪️</span><span class="proc-title">Severe Weather — Tornado / Inclement Weather</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌪️</span><span class="proc-title"><span class="lang-en">Severe Weather — Tornado / Inclement Weather</span><span class="lang-es">Clima Severo — Tornado / Clima Inclemente</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <ol>
             <li>Monitor NWS alerts (the Boise office covers Nampa). A <strong>Watch</strong> = conditions are possible, be ready; a <strong>Warning</strong> = it is happening or imminent, act now.</li>
             <li>Tornado warning: move everyone to <strong>interior rooms and hallways on the lowest level, away from windows</strong>. Crouch low, cover heads.</li>
@@ -1248,24 +1455,46 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>For winter storms/ice: leadership decides on delays/cancellations early; team assists with parking-lot conditions, entrance safety, and communication.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.ready.gov/tornadoes" target="_blank" rel="noopener">Ready.gov — Tornadoes</a> · <a href="https://www.weather.gov/safety/tornado-during" target="_blank" rel="noopener">NWS — Tornado Safety (the large-room rule)</a> · <a href="https://www.weather.gov/boi/" target="_blank" rel="noopener">NWS Boise</a> · <a href="https://www.ready.gov/winter-weather" target="_blank" rel="noopener">Ready.gov — Winter Weather</a></div>
+          </div>
+          <div class="lang-es">
+          <ol>
+            <li>Monitorear las alertas del NWS (Servicio Meteorológico Nacional; la oficina de Boise cubre Nampa). Una <strong>Vigilancia</strong> significa que las condiciones son posibles, hay que estar preparados; una <strong>Advertencia</strong> significa que está ocurriendo o es inminente, hay que actuar de inmediato.</li>
+            <li>Advertencia de tornado: llevar a todos a <strong>salas interiores y pasillos en el nivel más bajo, lejos de las ventanas</strong>. Agacharse y cubrirse la cabeza.</li>
+            <li><strong>El santuario no es un refugio.</strong> El Servicio Meteorológico Nacional (NWS) es explícito: no ir a salones amplios y abiertos como cafeterías, gimnasios o auditorios — un techo de gran claro es lo primero que falla. Eso descarta el santuario y el salón de compañerismo, que es exactamente donde el instinto de la congregación es quedarse. Trasladarlos.</li>
+            <li>No <strong>refugiarse</strong> en los vehículos. (Si alguien ya está conduciendo, la indicación del NWS es dirigirse al refugio resistente más cercano en lugar de quedarse en el auto.)</li>
+            <li>Para tormentas de invierno o hielo: el liderazgo decide con anticipación sobre retrasos o cancelaciones; el equipo ayuda con las condiciones del estacionamiento, la seguridad en las entradas y la comunicación.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/tornadoes" target="_blank" rel="noopener">Ready.gov — Tornados</a> · <a href="https://www.weather.gov/safety/tornado-during" target="_blank" rel="noopener">NWS — Seguridad ante Tornados (la regla de las salas grandes)</a> · <a href="https://www.weather.gov/boi/" target="_blank" rel="noopener">NWS Boise</a> · <a href="https://www.ready.gov/winter-weather" target="_blank" rel="noopener">Ready.gov — Clima Invernal</a></div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card blue">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌍</span><span class="proc-title">Earthquake — Drop · Cover · Hold On</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌍</span><span class="proc-title"><span class="lang-en">Earthquake — Drop · Cover · Hold On</span><span class="lang-es">Terremoto — Agáchese, Cúbrase y Sujétese</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <ol>
             <li><strong>DROP</strong> to hands and knees, <strong>COVER</strong> head and neck (under sturdy furniture if possible), <strong>HOLD ON</strong> until shaking stops.</li>
             <li>Do not run outside during shaking; most injuries come from falling objects and glass. Stay away from windows and tall shelving.</li>
             <li>After shaking stops: check for injuries and hazards (gas smell, structural damage, fire), then evacuate calmly to the assembly area if the building is unsafe. Expect aftershocks.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.ready.gov/earthquakes" target="_blank" rel="noopener">Ready.gov — Earthquakes</a> · <a href="https://www.shakeout.org/dropcoverholdon/" target="_blank" rel="noopener">ShakeOut — Drop, Cover, Hold On</a>. <strong>Why this matters here:</strong> Idaho's damaging earthquakes have been in the <em>central</em> part of the state — Borah Peak (1983, M6.9) and near Stanley (2020, M6.5), both roughly 250–300 km from Nampa. Nampa sits in the western Snake River Plain, not on those faults. The realistic local exposure is strong <em>felt</em> shaking from a distant event during a service, which is enough to cause panic, falls and falling fixtures in a full sanctuary.</div>
+          </div>
+          <div class="lang-es">
+          <ol>
+            <li><strong>AGÁCHESE</strong> apoyándose en manos y rodillas, <strong>CÚBRASE</strong> la cabeza y el cuello (bajo un mueble resistente si es posible), y <strong>SUJÉTESE</strong> hasta que cese el movimiento.</li>
+            <li>No correr hacia afuera durante el sismo; la mayoría de las lesiones ocurren por objetos que caen y por vidrios rotos. Mantenerse alejado de las ventanas y de las estanterías altas.</li>
+            <li>Después de que cese el movimiento: revisar si hay heridos y peligros (olor a gas, daño estructural, incendio), y luego evacuar con calma hacia el área de reunión si el edificio no es seguro. Prever réplicas.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/earthquakes" target="_blank" rel="noopener">Ready.gov — Terremotos</a> · <a href="https://www.shakeout.org/dropcoverholdon/" target="_blank" rel="noopener">ShakeOut — Agáchese, Cúbrase y Sujétese</a>. <strong>Por qué esto importa aquí:</strong> los terremotos dañinos de Idaho han ocurrido en la parte <em>central</em> del estado — Borah Peak (1983, M6.9) y cerca de Stanley (2020, M6.5), ambos a unos 250–300 km de Nampa. Nampa se encuentra en la parte occidental de la llanura del río Snake, no sobre esas fallas. La exposición local realista es un temblor <em>fuertemente sentido</em> proveniente de un evento distante durante un servicio, lo cual es suficiente para causar pánico, caídas y la caída de objetos y accesorios en un santuario lleno.</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🏠</span><span class="proc-title">Shelter-in-Place — Sealing the Building Against Outside Air</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🏠</span><span class="proc-title"><span class="lang-en">Shelter-in-Place — Sealing the Building Against Outside Air</span><span class="lang-es">Refugiarse en el Lugar — Sellar el Edificio Contra el Aire Exterior</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>One of FEMA's five required annexes, and the one most often confused with the others. This is for a hazard in the <strong>outside air</strong> — a chemical release, a tanker or rail incident, heavy smoke. It is not the tornado procedure and not Secure.</p>
 
           <div class="tip-box"><strong>Three different things, three different actions:</strong><br>
@@ -1288,24 +1517,60 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </ol>
           <div class="alert-box">📌 <strong>Open items:</strong> nobody has recorded which interior rooms are suitable, who can shut down or recirculate the HVAC, or whether plastic sheeting and duct tape are stocked anywhere in the building. Sealing a room is the one protective action here that needs supplies bought in advance.</div>
           <div class="tip-box">📚 <a href="https://www.ready.gov/shelter" target="_blank" rel="noopener">Ready.gov — Shelter</a> · <a href="https://www.ready.gov/hazmat" target="_blank" rel="noopener">Ready.gov — Hazardous materials incidents</a> (the recirculation option and the above-ground guidance live here, not on the main shelter page) · <a href="https://www.fema.gov/cbrn-tools/key-planning-factors-chemical-incident/kpf4/4/4-1" target="_blank" rel="noopener">FEMA — Key Planning Factors, evacuation vs. sheltering</a></div>
+          </div>
+          <div class="lang-es">
+          <p>Uno de los cinco anexos obligatorios de FEMA, y el que más se confunde con los demás. Este procedimiento es para un peligro en el <strong>aire exterior</strong> — una fuga química, un incidente con camión cisterna o tren, humo denso. No es el procedimiento de tornado ni es el de Asegurar.</p>
+
+          <div class="tip-box"><strong>Tres cosas distintas, tres acciones distintas:</strong><br>
+          <strong>Asegurar (Secure)</strong> — amenaza afuera, puertas cerradas con llave, el ministerio continúa. El aire está bien.<br>
+          <strong>Refugio (tornado / terremoto)</strong> — peligro estructural; trasladarse a la sala correcta, protegerse.<br>
+          <strong>Refugiarse en el Lugar (esta tarjeta)</strong> — el <em>aire</em> es el peligro. Sellar la sala.</div>
+
+          <p><strong>¿Quedarse o irse?</strong> FEMA plantea la disyuntiva con claridad — <em>"refugiarse en el lugar es la mejor opción cuando evacuar al público causaría un riesgo mayor que permanecer donde están, o cuando una evacuación no puede realizarse por limitaciones de tiempo u otras razones."</em> Y en contra de esa opción: <em>"la evacuación puede ser preferible cuando la sustancia liberada incluye vapores inflamables, la sustancia permanecerá en el área por mucho tiempo, o los edificios no pueden cerrarse lo suficientemente bien como para ofrecer un refugio seguro."</em></p>
+          <p>En la práctica, seguir las indicaciones de los oficiales de emergencia. Cuando aún no hay instrucciones y la nube de contaminación está cerca, sellar una sala es mejor que conducir a través de ella.</p>
+
+          <p><strong>Sellar el edificio</strong></p>
+          <ol>
+            <li><strong>Todos adentro.</strong> Cerrar y asegurar con llave todas las puertas y ventanas exteriores.</li>
+            <li><strong>Apagar el sistema de climatización.</strong> Apagar el aire acondicionado y la ventilación, <strong>o configurar el sistema en 100% de recirculación para que no ingrese aire exterior</strong>. Cerrar las rejillas de ventilación y cualquier compuerta de chimenea. Alguien debe saber cómo hacer esto antes del día en que realmente importe.</li>
+            <li><strong>Trasladarse a una sala interior con la menor cantidad posible de aberturas, por encima del nivel del suelo.</strong> Muchos vapores químicos son más pesados que el aire, así que estar más arriba es mejor y los sótanos son peores.</li>
+            <li><strong>Sellarla.</strong> Colocar láminas de plástico y cinta adhesiva de tela sobre puertas, ventanas y rejillas de ventilación. Sellar también alrededor de las unidades de aire acondicionado, los extractores del baño y la cocina, y las salidas de la estufa y la secadora. Colocar toallas húmedas en la parte inferior de las puertas.</li>
+            <li>Si es posible que ya haya vapor adentro, <strong>respirar superficialmente a través de un paño o toalla.</strong></li>
+            <li><strong>No comer ni beber nada</strong> que pueda haber estado expuesto.</li>
+            <li>Monitorear la radio local o las alertas oficiales. <strong>Permanecer sellados hasta que los oficiales indiquen que terminó</strong> — salir de un refugio demasiado pronto es una causa conocida de que esto salga mal.</li>
+          </ol>
+          <div class="alert-box">📌 <strong>Pendientes:</strong> nadie ha registrado cuáles salas interiores son adecuadas, quién puede apagar o poner en recirculación el sistema de climatización (HVAC), ni si hay láminas de plástico y cinta adhesiva de tela almacenadas en algún lugar del edificio. Sellar una sala es la única acción de protección aquí que requiere suministros comprados con anticipación.</div>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/shelter" target="_blank" rel="noopener">Ready.gov — Refugio</a> · <a href="https://www.ready.gov/hazmat" target="_blank" rel="noopener">Ready.gov — Incidentes con materiales peligrosos</a> (la opción de recirculación y la indicación de permanecer por encima del nivel del suelo se encuentran aquí, no en la página principal de refugio) · <a href="https://www.fema.gov/cbrn-tools/key-planning-factors-chemical-incident/kpf4/4/4-1" target="_blank" rel="noopener">FEMA — Factores Clave de Planificación, evacuación frente a refugio</a></div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card blue">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌊</span><span class="proc-title">Flooding</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌊</span><span class="proc-title"><span class="lang-en">Flooding</span><span class="lang-es">Inundaciones</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <ol>
             <li>Move people away from flooded areas and to higher floors/ground as needed; shut off electricity to affected areas if safe to do so.</li>
             <li><strong>Turn Around, Don't Drown</strong> — never direct traffic or people through flooded sections of the parking lot or roadway. NWS figures: <strong>6 inches</strong> of fast-moving water knocks an adult over · <strong>12 inches</strong> carries away most cars · <strong>2 feet</strong> carries away SUVs and trucks. A church van is not an exception to this.</li>
             <li>Report facility flooding to leadership and, if hazardous, call 911 / utilities.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov — Floods</a> · <a href="https://www.weather.gov/safety/flood" target="_blank" rel="noopener">NWS Flood Safety</a></div>
+          </div>
+          <div class="lang-es">
+          <ol>
+            <li>Alejar a las personas de las áreas inundadas y trasladarlas a pisos o terrenos más altos según sea necesario; cortar la electricidad en las áreas afectadas si es seguro hacerlo.</li>
+            <li><strong>Dé la Vuelta, No se Ahogue</strong> — nunca dirigir el tráfico ni a las personas a través de secciones inundadas del estacionamiento o la vía. Cifras del NWS: <strong>6 pulgadas</strong> de agua en movimiento rápido pueden derribar a un adulto · <strong>12 pulgadas</strong> arrastran la mayoría de los autos · <strong>2 pies</strong> arrastran camionetas SUV y camiones. Una van de la iglesia no es una excepción a esto.</li>
+            <li>Reportar la inundación de las instalaciones al liderazgo y, si es peligrosa, llamar al 911 / a los servicios públicos.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov — Inundaciones</a> · <a href="https://www.weather.gov/safety/flood" target="_blank" rel="noopener">NWS — Seguridad ante Inundaciones</a></div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card green">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🕊️</span><span class="proc-title">De-escalation — Disruptive or Agitated Individuals</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🕊️</span><span class="proc-title"><span class="lang-en">De-escalation — Disruptive or Agitated Individuals</span><span class="lang-es">Desescalada — Personas Disruptivas o Agitadas</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Most incidents at churches are resolved with calm words, not force. Core principles taught by the Crisis Prevention Institute (CPI), Verbal Judo, and church-security trainers:</p>
           <ul>
             <li><strong>Be empathic and listen actively</strong> — let the person vent; acknowledge feelings without agreeing to demands ("I can hear that you're upset — let's figure this out").</li>
@@ -1316,12 +1581,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>If de-escalation fails or a weapon/threat appears, <strong>disengage to protect people and call 911</strong>. Safety over resolution — every time.</li>
           </ul>
           <div class="tip-box">📚 <a href="https://www.crisisprevention.com/blog/general/cpi-s-top-10-de-escalation-tips-revisited/" target="_blank" rel="noopener">CPI — Top 10 De-escalation Tips (free)</a> · <a href="https://verbaljudo.com/de-escalation-training-for-church-security/" target="_blank" rel="noopener">Verbal Judo — church security de-escalation</a> (the Institute's commercial training page — background reading, not a citation)</div>
+          </div>
+          <div class="lang-es">
+          <p>La mayoría de los incidentes en las iglesias se resuelven con palabras tranquilas, no con la fuerza. Estos son los principios fundamentales enseñados por el Crisis Prevention Institute (CPI), Verbal Judo y los capacitadores de seguridad para iglesias:</p>
+          <ul>
+            <li><strong>Sea empático y escuche activamente</strong> — deje que la persona se desahogue; reconozca sus sentimientos sin acceder a sus exigencias ("Puedo notar que está molesto — resolvamos esto juntos").</li>
+            <li><strong>Respete el espacio personal</strong> — el CPI recomienda mantenerse a una distancia de al menos 1.5 a 3 pies de una persona que se está agitando; invadir su espacio aumenta la ansiedad. Mantenga un lenguaje corporal no amenazante: manos visibles, postura relajada y un tono de voz calmado y bajo.</li>
+            <li><strong>Haga preguntas abiertas y ofrezca opciones</strong> ("¿Prefiere salir a hablar afuera, o sentarse aquí?") — las opciones restauran la sensación de control.</li>
+            <li><strong>Establezca límites claros y sencillos</strong> y permita silencios y tiempo para que la persona decida. Evite órdenes como "cálmese", discutir, o igualar su volumen de voz.</li>
+            <li>Trabaje en parejas; uno habla, el otro observa. Posiciónense entre la persona y la congregación, dejando una ruta de salida para ambos.</li>
+            <li>Si la desescalada falla o aparece un arma o una amenaza, <strong>retírese para proteger a las personas y llame al 911</strong>. La seguridad por encima de la resolución — siempre.</li>
+          </ul>
+          <div class="tip-box">📚 <a href="https://www.crisisprevention.com/blog/general/cpi-s-top-10-de-escalation-tips-revisited/" target="_blank" rel="noopener">CPI — Las 10 mejores estrategias de desescalada (gratis)</a> · <a href="https://verbaljudo.com/de-escalation-training-for-church-security/" target="_blank" rel="noopener">Verbal Judo — desescalada para seguridad en iglesias</a> (la página de capacitación comercial del instituto — lectura de referencia, no una cita normativa)</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">📞</span><span class="proc-title">Bomb Threat &amp; Suspicious Package</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">📞</span><span class="proc-title"><span class="lang-en">Bomb Threat &amp; Suspicious Package</span><span class="lang-es">Amenaza de Bomba y Paquete Sospechoso</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Most bomb threats arrive by phone, and most prove to be false — but CISA's guidance is that they are <strong>serious until proven otherwise</strong>, and that houses of worship are among the most commonly targeted places.</p>
 
           <div class="alert-box">⚠️ <strong>Do not assume "evacuate immediately".</strong> CISA does not say that, and evacuating blindly can move people toward a device. The response depends on an assessment of the threat, made by a <strong>designated Decision Maker</strong> against criteria written down in advance. <strong>The Decision Maker is Pastor Roger Yadon and/or Tyson Garten, CCST Director</strong> — named per Tyson Garten. <strong>Written evacuation criteria are not yet documented.</strong> That remains an open item, and this procedure is incomplete until it exists.</div>
@@ -1351,12 +1630,45 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>Move people away from the item, not past it, and keep the route clear for responders.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.cisa.gov/topics/physical-security/bombing-prevention/bomb-threats" target="_blank" rel="noopener">CISA — Bomb Threats</a> · Office for Bombing Prevention: OBP@cisa.dhs.gov</div>
+          </div>
+          <div class="lang-es">
+          <p>La mayoría de las amenazas de bomba llegan por teléfono, y la mayoría resultan ser falsas — pero la guía de CISA establece que deben tratarse como <strong>serias hasta que se demuestre lo contrario</strong>, y que los lugares de culto están entre los sitios más comúnmente atacados.</p>
+
+          <div class="alert-box">⚠️ <strong>No asuma que se debe "evacuar de inmediato".</strong> CISA no indica eso, y evacuar sin un plan puede acercar a las personas al dispositivo. La respuesta depende de una evaluación de la amenaza, realizada por un <strong>Responsable de Decisión designado</strong>, conforme a criterios establecidos por escrito de antemano. <strong>El Responsable de Decisión es el Pastor Roger Yadon y/o Tyson Garten, Director del CCST</strong> — designados según lo indicado por Tyson Garten. <strong>Los criterios de evacuación por escrito aún no están documentados.</strong> Ese punto sigue pendiente, y este procedimiento está incompleto hasta que exista.</div>
+
+          <p><strong>Si usted recibe la llamada</strong></p>
+          <ol>
+            <li><strong>Manténgase en la línea y siga hablando con la persona.</strong> No cuelgue, aunque la persona que llama lo haga.</li>
+            <li>Complete la <strong>lista de verificación de amenaza de bomba</strong> — dónde está, cuándo va a explotar, qué aspecto tiene, por qué. Escriba las <strong>palabras exactas</strong> de quien llama.</li>
+            <li>Observe la voz, los sonidos de fondo y el lenguaje utilizado. Anote el número desde el que llamaron.</li>
+            <li>Haga una señal a una segunda persona para que alerte al Líder del Equipo y <strong>llame al 911</strong> mientras usted permanece en la línea.</li>
+          </ol>
+          <div class="tip-box">🖨️ <strong>Imprima la lista de verificación y coloque una copia junto a cada teléfono que reciba llamadas externas</strong> — comenzando por los teléfonos de la oficina. Nadie logra formular buenas preguntas de memoria en medio de una amenaza. <a href="https://www.cisa.gov/sites/default/files/2025-08/Bomb_Threat_Checklist_082025_508.pdf" target="_blank" rel="noopener">Lista de verificación de amenaza de bomba de CISA (PDF, 1 página)</a> — <strong>la iglesia también cuenta con su propio guion, más antiguo, para quien recibe la llamada</strong>, incluido en la política del CCST de marzo de 2025, con preguntas específicas de la iglesia. El liderazgo debe decidir cuál se deja junto a los teléfonos, o conservar ambos.</div>
+
+          <p><strong>La evaluación determina la respuesta</strong> — los cuatro niveles de CISA:</p>
+          <ul>
+            <li><strong>Mínimo</strong> — evaluado y descartado con base en la experiencia (una persona que llama de manera repetida sin ningún detalle nuevo o específico). Se debe monitorear.</li>
+            <li><strong>Bajo</strong> — bloquear el acceso para que no ingrese nada nuevo. Si aparece un objeto sospechoso, la amenaza se eleva de nivel.</li>
+            <li><strong>Moderado</strong> — bloquear el acceso y realizar una búsqueda, total o parcial. De nuevo, un objeto sospechoso eleva el nivel.</li>
+            <li><strong>Alto</strong> — específica y realista. Evacuación parcial o total.</li>
+          </ul>
+
+          <p><strong>Si se encuentra un objeto sospechoso</strong></p>
+          <ol>
+            <li><strong>No lo toque. No lo mueva.</strong> Ni para revisarlo, ni para estar seguro.</li>
+            <li><strong>No use radio ni teléfono celular cerca del objeto.</strong> Aléjese bien primero, y luego haga la llamada.</li>
+            <li><strong>Llame al 911.</strong> Un objeto sospechoso ya no es un asunto de evaluación.</li>
+            <li>Aleje a las personas del objeto, no las haga pasar cerca de él, y mantenga despejada la ruta para el personal de emergencia.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.cisa.gov/topics/physical-security/bombing-prevention/bomb-threats" target="_blank" rel="noopener">CISA — Amenazas de Bomba</a> · Office for Bombing Prevention: OBP@cisa.dhs.gov</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌫️</span><span class="proc-title">Wildfire Smoke &amp; Air Quality</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🌫️</span><span class="proc-title"><span class="lang-en">Wildfire Smoke &amp; Air Quality</span><span class="lang-es">Humo de Incendios Forestales y Calidad del Aire</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Smoke days are a normal part of a Treasure Valley summer, and they are far more likely here than most of the hazards on this page. The people it hurts first are the ones already in the building: older members, anyone with asthma, COPD or heart failure, pregnant women, and children.</p>
           <p>Check the AQI before a smoke-season Sunday at <a href="https://www.airnow.gov/" target="_blank" rel="noopener">AirNow.gov</a>. The categories:</p>
           <ul>
@@ -1376,12 +1688,35 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>Anyone with asthma should have their reliever inhaler on them, not in the car.</li>
           </ol>
           <div class="tip-box">📚 <a href="https://www.airnow.gov/aqi/aqi-basics/" target="_blank" rel="noopener">AirNow — AQI basics</a> · <a href="https://document.airnow.gov/air-quality-and-outdoor-guidance-for-schools.pdf" target="_blank" rel="noopener">EPA/AirNow — outdoor activity guidance (PDF)</a>, written for schools and the closest published match for deciding about a kids' programme; it stops at Very Unhealthy · <a href="https://www.epa.gov/emergencies-iaq/create-clean-room-protect-indoor-air-quality-during-wildfire" target="_blank" rel="noopener">EPA — creating a clean room</a></div>
+          </div>
+          <div class="lang-es">
+          <p>Los días de humo son parte normal de un verano en el Treasure Valley, y son mucho más probables aquí que la mayoría de los peligros mencionados en esta página. Las personas a quienes afecta primero son las que ya están dentro del edificio: los miembros de mayor edad, cualquier persona con asma, EPOC o insuficiencia cardíaca, las mujeres embarazadas y los niños.</p>
+          <p>Revise el AQI (índice de calidad del aire) antes de un domingo en temporada de humo en <a href="https://www.airnow.gov/" target="_blank" rel="noopener">AirNow.gov</a>. Las categorías:</p>
+          <ul>
+            <li><strong style="color:var(--gr);">Buena, 0–50</strong> — no se requiere ninguna acción.</li>
+            <li><strong style="color:#d4d400;">Moderada, 51–100</strong> — adecuada para casi todas las personas; quienes son inusualmente sensibles pueden notar síntomas.</li>
+            <li><strong style="color:#e8a020;">No saludable para grupos sensibles, 101–150</strong> — la actividad al aire libre de corta duración está bien. Reduzca y modere la actividad al aire libre más prolongada, y tome más descansos.</li>
+            <li><strong style="color:var(--aqi-unhealthy);">No saludable, 151–200</strong> — traslade al interior o reprograme la actividad al aire libre más prolongada o intensa.</li>
+            <li><strong style="color:var(--aqi-vunhealthy);">Muy no saludable, 201–300</strong> — <strong>traslade todas las actividades al interior o reprográmelas.</strong></li>
+            <li><strong style="color:#b45309;">Peligrosa, 301+</strong> — condiciones de emergencia para todas las personas. No existe un umbral publicado de tipo escolar que llegue tan alto; esta es una decisión del liderazgo sobre si reunirse o no.</li>
+          </ul>
+          <p><strong>Qué hace el equipo en un día de humo</strong></p>
+          <ol>
+            <li>Traslade los puestos de bienvenida al aire libre y del estacionamiento <strong>al interior o bajo techo</strong>, y rote esos puestos con mayor frecuencia.</li>
+            <li>Mantenga las puertas exteriores cerradas entre los servicios en lugar de dejarlas sujetas abiertas — cada puerta abierta deja escapar el aire filtrado.</li>
+            <li>El interior solo es más limpio si el sistema de climatización (HVAC) realmente está filtrando el aire. Un filtro bien mantenido y correctamente instalado en un sistema de aire forzado reduce las partículas en el interior; una puerta sujeta abierta o un sistema sin filtro no lo logran.</li>
+            <li>Esté atento a personas con dificultades: tos, silbido al respirar, falta de aire, opresión en el pecho, fatiga inusual. Pregúnteles, siéntenlos, y trate cualquier problema respiratorio real como una emergencia médica.</li>
+            <li>Toda persona con asma debe llevar su inhalador de rescate consigo, no dejarlo en el auto.</li>
+          </ol>
+          <div class="tip-box">📚 <a href="https://www.airnow.gov/aqi/aqi-basics/" target="_blank" rel="noopener">AirNow — Conceptos básicos del AQI</a> · <a href="https://document.airnow.gov/air-quality-and-outdoor-guidance-for-schools.pdf" target="_blank" rel="noopener">EPA/AirNow — guía de actividad al aire libre (PDF)</a>, elaborada para escuelas y la referencia publicada más cercana para decidir sobre un programa infantil; llega solo hasta el nivel Muy no saludable · <a href="https://www.epa.gov/emergencies-iaq/create-clean-room-protect-indoor-air-quality-during-wildfire" target="_blank" rel="noopener">EPA — cómo crear una habitación limpia</a></div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🏛️</span><span class="proc-title">Church Continuity of Operations</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🏛️</span><span class="proc-title"><span class="lang-en">Church Continuity of Operations</span><span class="lang-es">Continuidad de Operaciones de la Iglesia</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Continuity planning keeps ministry running after an emergency (fire, flood, violence, loss of facility). Following FEMA's continuity guidance, the church plan should identify:</p>
           <ul>
             <li><strong>Essential functions</strong> — worship services, children's ministry, communications, giving/finance, pastoral care.</li>
@@ -1391,12 +1726,25 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li><strong>Vital records</strong> — insurance policies, member data, and financial records backed up off-site.</li>
           </ul>
           <div class="tip-box">📚 <a href="https://www.fema.gov/emergency-managers/national-preparedness/continuity" target="_blank" rel="noopener">FEMA — Continuity Resources</a> · <a href="https://www.ready.gov/business/emergency-plans/continuity-planning" target="_blank" rel="noopener">Ready.gov — Continuity Planning</a> · FEMA's <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">Guide for Developing High-Quality EOPs for Houses of Worship</a></div>
+          </div>
+          <div class="lang-es">
+          <p>La planificación de continuidad mantiene el ministerio en funcionamiento después de una emergencia (incendio, inundación, violencia, pérdida de las instalaciones). Siguiendo la guía de continuidad de FEMA, el plan de la iglesia debe identificar:</p>
+          <ul>
+            <li><strong>Funciones esenciales</strong> — los servicios de adoración, el ministerio infantil, las comunicaciones, la ofrenda/finanzas, el cuidado pastoral.</li>
+            <li><strong>Órdenes de sucesión y delegaciones</strong> — quién lidera si el Pastor Principal o un miembro clave del personal no está disponible.</li>
+            <li><strong>Instalaciones alternas</strong> — lugares de adoración/reunión previamente identificados y una opción de servicio en línea.</li>
+            <li><strong>Comunicaciones</strong> — cómo se notifica al personal, al equipo y a la congregación (cadena telefónica, mensajes de texto, correo electrónico, redes sociales).</li>
+            <li><strong>Registros vitales</strong> — pólizas de seguro, datos de los miembros y registros financieros respaldados fuera del sitio.</li>
+          </ul>
+          <div class="tip-box">📚 <a href="https://www.fema.gov/emergency-managers/national-preparedness/continuity" target="_blank" rel="noopener">FEMA — Recursos de Continuidad</a> · <a href="https://www.ready.gov/business/emergency-plans/continuity-planning" target="_blank" rel="noopener">Ready.gov — Planificación de Continuidad</a> · la <a href="https://www.fema.gov/sites/default/files/2020-03/fema_faith-communities_developing-emergency-operations_0.pdf" target="_blank" rel="noopener">Guía de FEMA para desarrollar planes de operaciones de emergencia de alta calidad para lugares de culto</a></div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🚷</span><span class="proc-title">Disruptive Person, Trespassing &amp; Suspicious Person</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🚷</span><span class="proc-title"><span class="lang-en">Disruptive Person, Trespassing &amp; Suspicious Person</span><span class="lang-es">Persona Disruptiva, Allanamiento y Persona Sospechosa</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Most of what this team does looks like this, not like the procedures above it. <strong>Never approach alone.</strong> Call for another team member and give your location and name before making contact.</p>
           <ul>
             <li><strong>Disruptive person in a service</strong> (verbal disagreement, standing and shouting): ushers notify the Safety Team, who escort the person out of the sanctuary. They may return only after meeting with pastoral staff.</li>
@@ -1407,12 +1755,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="alert-box">📻 <strong>"Code Five"</strong> is the church's own radio call for making contact with a person of interest — say who you are, your position, and a description as you approach: <em>"This is Tyson in the lobby, position 1. I'm going to make contact with Code Five, white male, blue jeans, black shirt, in parking lot, position 2, carrying a backpack."</em> Anyone available should confirm and move to cover.</div>
           <div class="tip-box">🚗 <strong>Describing a person or vehicle to police:</strong> race, sex, clothing, height/weight, distinguishing features (hair colour, scars, tattoos) · vehicle colour, make, year, body style, licence plate, direction of travel. Write it down — do not rely on memory.</div>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Disruptive Person at Church Function," "Trespassing on Church Property," "Confrontational Procedures," "Backpacks."</div>
+          </div>
+          <div class="lang-es">
+          <p>La mayor parte de lo que hace este equipo se parece a esto, no a los procedimientos anteriores. <strong>Nunca se acerque solo.</strong> Llame a otro miembro del equipo y proporcione su ubicación y su nombre antes de establecer contacto.</p>
+          <ul>
+            <li><strong>Persona disruptiva durante un servicio</strong> (desacuerdo verbal, ponerse de pie y gritar): los ujieres notifican al Equipo de Seguridad, quienes acompañan a la persona fuera del santuario. Solo puede regresar después de reunirse con personal pastoral.</li>
+            <li><strong>Un grupo genera un disturbio:</strong> los ujieres notifican al Equipo de Seguridad; el Líder del Equipo o un miembro del personal pastoral decide si se llama al 911. Los ujieres nunca se involucran físicamente con un grupo — la función del equipo es aislar el disturbio de los feligreses mientras se espera a la policía.</li>
+            <li><strong>Persona sospechosa o que "no encaja"</strong> merodeando en el campus o en el estacionamiento: una consulta amistosa y abierta resuelve la mayoría de estos casos. Si la persona se vuelve poco colaborativa, llame a miembros adicionales del equipo; el personal pastoral o el Líder del Equipo de turno le da una advertencia verbal de allanamiento, y solo se llama a la policía si la persona aún así se niega a retirarse.</li>
+            <li>Se les pide a las personas que dejen <strong>mochilas, maletines y otros contenedores grandes</strong> en su vehículo. Las excepciones habituales son los artículos médicos, los estuches de instrumentos del equipo de adoración y los bolsos para pañales. Si alguien insiste en ingresar uno, el miembro del equipo insiste en inspeccionar el contenido antes de continuar, y si no se inspecciona, nunca se guarda dentro del edificio.</li>
+          </ul>
+          <div class="alert-box">📻 <strong>"Código Cinco"</strong> es la clave de radio propia de la iglesia para establecer contacto con una persona de interés — indique quién es usted, su posición y una descripción mientras se acerca: <em>"Aquí Tyson en el vestíbulo, posición 1. Voy a hacer contacto con Código Cinco, hombre blanco, jeans azules, camisa negra, en el estacionamiento, posición 2, cargando una mochila."</em> Cualquier persona disponible debe confirmar y moverse a una posición de cobertura.</div>
+          <div class="tip-box">🚗 <strong>Cómo describir a una persona o vehículo a la policía:</strong> raza, sexo, vestimenta, estatura/peso, características distintivas (color de cabello, cicatrices, tatuajes) · color del vehículo, marca, año, tipo de carrocería, placa, dirección de desplazamiento. Anótelo — no confíe en la memoria.</div>
+          <div class="tip-box">📚 Fuente: Política y Procedimientos del Equipo de Seguridad de Celebration Church (copia de trabajo, marzo de 2025) — "Persona Disruptiva en un Evento de la Iglesia," "Allanamiento en la Propiedad de la Iglesia," "Procedimientos de Confrontación," "Mochilas."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔫</span><span class="proc-title">Weapon Seen in the Building — Not Yet an Active Shooter</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔫</span><span class="proc-title"><span class="lang-en">Weapon Seen in the Building — Not Yet an Active Shooter</span><span class="lang-es">Arma Vista en el Edificio — Aún No es un Tirador Activo</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Someone has a gun or other weapon and there is no attack underway. This is a different, quieter response than Active Shooter — the goal is to get help in place before anything happens, without triggering it yourself.</p>
           <ol>
             <li><strong>Contact other Safety Team operators immediately, without alerting the person or anyone with them</strong> if at all possible.</li>
@@ -1423,12 +1785,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </ol>
           <div class="alert-box">⚠️ <strong>The moment this becomes an attack, it is no longer this procedure.</strong> Move to Active Shooter — Run · Hide · Fight, above.</div>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Gun or Other Weapon in Building."</div>
+          </div>
+          <div class="lang-es">
+          <p>Alguien tiene un arma de fuego u otra arma y no hay un ataque en curso. Esta es una respuesta distinta, más discreta, que la de Tirador Activo — el objetivo es tener ayuda en posición antes de que algo ocurra, sin provocarlo usted mismo.</p>
+          <ol>
+            <li><strong>Contacte de inmediato a otros operadores del Equipo de Seguridad, sin alertar a la persona ni a nadie que esté con ella</strong>, si es posible.</li>
+            <li>Si un niño ve el arma, dígale que no la toque.</li>
+            <li>Pida ayuda de manera discreta si la persona que porta el arma no está presente para escucharlo.</li>
+            <li><strong>No confronte a la persona a menos que exista una amenaza inmediata a la seguridad de alguien.</strong> Use extrema precaución en todos los casos.</li>
+            <li><strong>Si la persona lo amenaza con el arma, siga sus instrucciones.</strong> La instrucción aquí es cooperar, no confrontar.</li>
+          </ol>
+          <div class="alert-box">⚠️ <strong>En el momento en que esto se convierte en un ataque, ya no aplica este procedimiento.</strong> Pase a Tirador Activo — Correr · Esconderse · Pelear, mencionado anteriormente.</div>
+          <div class="tip-box">📚 Fuente: Política y Procedimientos del Equipo de Seguridad de Celebration Church (copia de trabajo, marzo de 2025) — "Arma de Fuego u Otra Arma en el Edificio."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🧾</span><span class="proc-title">Child Abuse, Neglect &amp; Mandatory Reporting</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🧾</span><span class="proc-title"><span class="lang-en">Child Abuse, Neglect &amp; Mandatory Reporting</span><span class="lang-es">Abuso Infantil, Negligencia y Denuncia Obligatoria</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>The highest-consequence, most likely-to-recur exposure a church with children's ministry carries — and the one where the law, not church policy, sets the deadline.</p>
           <ul>
             <li><strong>Child abuse</strong> — a non-accidental physical or mental injury caused by a caretaker's acts or omissions.</li>
@@ -1444,12 +1820,31 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>Treat a custody dispute as a possible abduction, and report suspicious loitering or someone following children between the church and the parking lot to 911 immediately.</li>
           </ul>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Child Abuse – Sexual Assault Reporting," "Abduction."</div>
+          </div>
+          <div class="lang-es">
+          <p>El riesgo de mayor consecuencia y más probable de repetirse que enfrenta una iglesia con ministerio infantil — y aquel en el que la ley, no la política de la iglesia, establece el plazo.</p>
+          <ul>
+            <li><strong>Abuso infantil</strong> — una lesión física o mental no accidental causada por los actos u omisiones de un cuidador.</li>
+            <li><strong>Negligencia infantil</strong> — el hecho de que un cuidador no proporcione alimentación, vestimenta, vivienda, supervisión o tratamiento médico adecuados.</li>
+            <li><strong>Agresión sexual</strong> — cualquier contacto físico o ataque verbal de naturaleza sexual hacia un menor, con o sin uso de fuerza física.</li>
+          </ul>
+          <div class="alert-box">⚖️ <strong>Los empleados y voluntarios tienen la obligación legal de denunciar, o de asegurarse de que se presente una denuncia, ante cualquier sospecha o acusación de abuso. Nadie dentro de la iglesia tiene autoridad para vetar una denuncia.</strong> "Ante la duda, denuncie — es la ley", según la política escrita de la propia iglesia.</div>
+          <div class="tip-box">El estatuto específico de denuncia obligatoria de Idaho no se menciona en la política fuente y no se agrega aquí — la práctica de este proyecto es verificar cada cita de estatuto contra el código legal vigente antes de publicarla (véase OPEN-ITEMS.md §4c), en lugar de citarlo de memoria.</div>
+          <p><strong>Prevención de secuestros</strong> — la misma sección de la política cubre el riesgo de custodia y entrega de menores:</p>
+          <ul>
+            <li>No entregue a un niño a nadie que no sea el padre, madre o tutor designado que conste en el registro. No acepte a un sustituto sin prueba de aprobación previa — si tiene dudas, no entregue al niño.</li>
+            <li>Cualquier persona que retire a un niño de un salón debe mostrar una identificación válida mediante el procedimiento de <strong>registro de C-Kids</strong>, o estar acompañada por un miembro del personal administrativo que confirme que la oficina sabe que esa persona viene a recogerlo.</li>
+            <li>Trate cualquier disputa de custodia como un posible secuestro, y reporte de inmediato al 911 cualquier merodeo sospechoso o a alguien que siga a los niños entre la iglesia y el estacionamiento.</li>
+          </ul>
+          <div class="tip-box">📚 Fuente: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Child Abuse – Sexual Assault Reporting," "Abduction."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card amber">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">💰</span><span class="proc-title">Robbery &amp; Cash/Offering Handling</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">💰</span><span class="proc-title"><span class="lang-en">Robbery &amp; Cash/Offering Handling</span><span class="lang-es">Robo y Manejo de Efectivo/Ofrenda</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Policy names the offering itself as a target: "those who have custody of the offering receipts become prime targets ... when the money is being moved." Prevention here is mostly about never letting cash sit still or travel alone.</p>
           <p><strong>If a robbery is in progress</strong> — whether it targets the whole congregation, the offering specifically, or one person in the parking lot:</p>
           <ol>
@@ -1461,12 +1856,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </ol>
           <div class="tip-box">💵 <strong>Offering-handling prevention:</strong> those carrying offering receipts become the target the moment money moves, so counting and transport should never be a solo or predictable job. Individual robbery risk in the lot is reduced the same way as trespassing risk — situational awareness, and the team responds to any report of a suspicious person there.</div>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Robbery."</div>
+          </div>
+          <div class="lang-es">
+          <p>La política identifica la ofrenda misma como un blanco: "quienes tienen bajo su custodia los ingresos de la ofrenda se convierten en blancos principales ... cuando el dinero está siendo trasladado." La prevención aquí consiste principalmente en nunca dejar el efectivo quieto ni permitir que se traslade solo.</p>
+          <p><strong>Si un robo está en curso</strong> — ya sea que tenga como blanco a toda la congregación, específicamente la ofrenda, o a una sola persona en el estacionamiento:</p>
+          <ol>
+            <li><strong>La preservación de la vida es el objetivo principal.</strong> Nunca confronte físicamente a un sospechoso armado, a menos que la confrontación sea la única forma de proteger una vida.</li>
+            <li>Mantenga la calma — los asaltantes suelen estar alterados y pueden provocarse con facilidad, además de que podrían estar bajo el efecto de sustancias.</li>
+            <li>Observe detalles para la policía: apariencia, tatuajes/cicatrices, vestimenta, tipo y color del arma.</li>
+            <li>Anote en qué dirección se retira el sospechoso y, si hay un vehículo involucrado, su descripción y placa — <strong>escríbalo de inmediato</strong>, no confíe en la memoria.</li>
+            <li>No toque nada que el sospechoso haya podido tocar, para preservarlo para la toma de huellas dactilares.</li>
+          </ol>
+          <div class="tip-box">💵 <strong>Prevención en el manejo de la ofrenda:</strong> quienes transportan los ingresos de la ofrenda se convierten en el blanco en el momento en que el dinero se mueve, por lo que el conteo y el traslado nunca deben ser una tarea solitaria ni predecible. El riesgo de robo individual en el estacionamiento se reduce de la misma manera que el riesgo de intrusión — con conciencia situacional, y el equipo responde a cualquier reporte de una persona sospechosa en esa área.</div>
+          <div class="tip-box">📚 Fuente: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Robbery."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card blue">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔑</span><span class="proc-title">Facility Security — Doors, Alarms &amp; Burglary Response</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🔑</span><span class="proc-title"><span class="lang-en">Facility Security — Doors, Alarms &amp; Burglary Response</span><span class="lang-es">Seguridad de las Instalaciones — Puertas, Alarmas y Respuesta ante Robos</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Preventative, not reactive — most of this is patrol discipline that makes the building a harder target between services.</p>
           <ul>
             <li>Confirm exterior doors that should stay locked have not been propped open. Secure any ground-floor window left open in an unoccupied room.</li>
@@ -1478,12 +1888,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <p><strong>If a burglar is inadvertently confronted while entering:</strong> get out immediately and call police from a safe location — <strong>do not force a confrontation.</strong> Some burglars become violent when they perceive they are trapped. Notify the Church Administrator or Facilities Manager after.</p>
           <div class="alert-box">📌 <strong>Open item:</strong> which interior doors actually lock and who carries keys or a fob on a Sunday has not been recorded — see OPEN-ITEMS.md and TEAM-QUESTIONS.md Q10.</div>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Trespassing on Church Property," "Crimes that may occur on premises."</div>
+          </div>
+          <div class="lang-es">
+          <p>Preventivo, no reactivo — la mayor parte de esto es disciplina de rondas que hace que el edificio sea un blanco más difícil entre los servicios.</p>
+          <ul>
+            <li>Confirme que las puertas exteriores que deben permanecer cerradas con llave no hayan sido dejadas abiertas con algo que las sostenga. Asegure cualquier ventana de planta baja que haya quedado abierta en una habitación desocupada.</li>
+            <li>Todas las oficinas desocupadas permanecen cerradas con llave, incluso durante el horario laboral — cada empleado tiene una llave de su propia área de trabajo.</li>
+            <li>Todo edificio que cuente con alarma se activa cada noche.</li>
+            <li>Si las instalaciones se usan fuera del horario habitual, confirme que cada puerta y ventana quede cerrada con llave al desocuparlas.</li>
+          </ul>
+          <p><strong>Si se sospecha un robo al llegar</strong> (antes de que alguien entre): abandone el área de inmediato, notifique al 911, no toque nada, y avise al Administrador de la Iglesia o al Gerente de Instalaciones.</p>
+          <p><strong>Si accidentalmente se encuentra cara a cara con un ladrón al entrar:</strong> salga de inmediato y llame a la policía desde un lugar seguro — <strong>no fuerce una confrontación.</strong> Algunos ladrones se vuelven violentos cuando perciben que están atrapados. Después, avise al Administrador de la Iglesia o al Gerente de Instalaciones.</p>
+          <div class="alert-box">📌 <strong>Asunto pendiente:</strong> aún no se ha documentado cuáles puertas interiores realmente cierran con llave ni quién porta llaves o un llavero electrónico (fob) los domingos — véase OPEN-ITEMS.md y TEAM-QUESTIONS.md Q10.</div>
+          <div class="tip-box">📚 Fuente: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Trespassing on Church Property," "Crimes that may occur on premises."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card blue">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">⚡</span><span class="proc-title">Power/Utility Failure, Biohazard &amp; Hazardous Material</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">⚡</span><span class="proc-title"><span class="lang-en">Power/Utility Failure, Biohazard &amp; Hazardous Material</span><span class="lang-es">Falla Eléctrica/de Servicios, Biopeligro y Materiales Peligrosos</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p><strong>Electrical outage.</strong> Stay calm and reassure those around you. Remain in the area unless directed elsewhere. Use a flashlight, not candles or matches, to account for everyone present.</p>
           <p><strong>Spilled bodily fluids</strong> (blood, vomit, urine, feces, saliva). Treat all of it as a biohazard capable of carrying Hepatitis, HIV, or other serious illness — always wear gloves before any contact is required.</p>
           <p><strong>Hazardous material spill.</strong></p>
@@ -1496,12 +1921,28 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </ol>
           <div class="alert-box">📌 <strong>Open items:</strong> who can shut down or recirculate the HVAC, which rooms can be sealed, and whether plastic sheeting/duct tape are stocked anywhere — needed for a chemical release or heavy smoke, and not yet answered. See TEAM-QUESTIONS.md Q11.</div>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Electrical Outage," "Spilled Bodily Fluids," "Hazardous Material Spill."</div>
+          </div>
+          <div class="lang-es">
+          <p><strong>Falla eléctrica.</strong> Mantenga la calma y tranquilice a quienes lo rodean. Permanezca en el área a menos que se le indique ir a otro lugar. Use una linterna, no velas ni fósforos, para verificar que todos los presentes estén contados.</p>
+          <p><strong>Derrame de fluidos corporales</strong> (sangre, vómito, orina, heces, saliva). Trate todo derrame como un riesgo biológico capaz de transmitir Hepatitis, VIH u otras enfermedades graves — use siempre guantes antes de cualquier contacto necesario.</p>
+          <p><strong>Derrame de materiales peligrosos.</strong></p>
+          <ol>
+            <li><strong>No intente limpiarlo.</strong> Ordene el desalojo del salón y asegure el área.</li>
+            <li>Avise al Líder del Equipo de Seguridad y al personal pastoral.</li>
+            <li>Revise si alguien cercano presenta síntomas adversos (falta de aire, desmayo) y busque atención médica si es necesario.</li>
+            <li>Identifique y registre quién pudo haber estado expuesto.</li>
+            <li>Permanezca en el área designada hasta que el personal autorizado indique lo contrario.</li>
+          </ol>
+          <div class="alert-box">📌 <strong>Asuntos pendientes:</strong> quién puede apagar o recircular el sistema HVAC, qué habitaciones pueden sellarse, y si hay láminas de plástico/cinta adhesiva (duct tape) almacenadas en algún lugar — necesario para una fuga química o humo denso, y aún sin respuesta. Véase TEAM-QUESTIONS.md Q11.</div>
+          <div class="tip-box">📚 Fuente: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Electrical Outage," "Spilled Bodily Fluids," "Hazardous Material Spill."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card green">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🚌</span><span class="proc-title">Transportation &amp; Off-Site Ministry Emergency</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🚌</span><span class="proc-title"><span class="lang-en">Transportation &amp; Off-Site Ministry Emergency</span><span class="lang-es">Transporte y Emergencia en Ministerio Fuera de las Instalaciones</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Any accident, injury, or medical event on a ministry trip away from the building — bus, van, or an authorised personal vehicle.</p>
           <ol>
             <li>Evaluate first-aid needs immediately. <strong>Do not hesitate to call 911.</strong></li>
@@ -1512,12 +1953,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <li>Contact the person's emergency contact.</li>
           </ol>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Transportation or Off-Site Ministry Emergency."</div>
+          </div>
+          <div class="lang-es">
+          <p>Cualquier accidente, lesión o evento médico durante un viaje de ministerio fuera del edificio — en autobús, camioneta o un vehículo personal autorizado.</p>
+          <ol>
+            <li>Evalúe de inmediato las necesidades de primeros auxilios. <strong>No dude en llamar al 911.</strong></li>
+            <li>Avise al personal pastoral y al liderazgo del Equipo de Seguridad.</li>
+            <li>Permanezca con la persona lesionada.</li>
+            <li>Entregue a los estudiantes únicamente a un padre, madre, tutor o representante autorizado — registre a quién fueron entregados.</li>
+            <li>Si alguien es trasladado al hospital, registre su nombre y, si se conoce, la naturaleza de sus lesiones.</li>
+            <li>Contacte al contacto de emergencia de la persona.</li>
+          </ol>
+          <div class="tip-box">📚 Fuente: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Transportation or Off-Site Ministry Emergency."</div>
+          </div>
         </div>
       </div>
 
       <div class="proc-card">
-        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🆘</span><span class="proc-title">Suicide Threat or Attempt</span><span class="proc-arrow" aria-hidden="true">▶</span></button>
+        <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon" aria-hidden="true">🆘</span><span class="proc-title"><span class="lang-en">Suicide Threat or Attempt</span><span class="lang-es">Amenaza o Intento de Suicidio</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
         <div class="proc-body">
+          <div class="lang-en">
           <p>Never take a threat of suicide lightly, and never try to handle it without professional help. It can turn to real danger for the person and for anyone trying to help them.</p>
           <ol>
             <li>Issue a Room Evacuation to move others away from the scene.</li>
@@ -1528,6 +1983,19 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </ol>
           <div class="tip-box">The source policy does not mention the 988 Suicide &amp; Crisis Lifeline. Leadership may want it added to this card and to team training.</div>
           <div class="tip-box">📚 Source: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Suicide Threat or Attempt."</div>
+          </div>
+          <div class="lang-es">
+          <p>Nunca tome a la ligera una amenaza de suicidio, y nunca intente manejarla sin ayuda profesional. Puede convertirse en un peligro real tanto para la persona como para quien intente ayudarla.</p>
+          <ol>
+            <li>Ordene una Evacuación del Salón para alejar a los demás de la escena.</li>
+            <li>Avise de inmediato al personal pastoral — proporcione el nombre de la persona (si se conoce), la ubicación, su estado actual, y si hay un arma presente.</li>
+            <li>Mantenga la calma; tranquilice a todos los presentes asegurándoles que la situación está siendo atendida.</li>
+            <li><strong>No regrese al salón sin personal profesional o de apoyo.</strong></li>
+            <li>Una vez que llegue el Líder del Equipo de Seguridad, la policía o el personal médico, mantenga el área despejada y aleje a las personas no involucradas.</li>
+          </ol>
+          <div class="tip-box">La política fuente no menciona la Línea de Crisis y Suicidio 988. El liderazgo podría considerar agregarla a esta tarjeta y a la capacitación del equipo.</div>
+          <div class="tip-box">📚 Fuente: Celebration Church Safety Team Policy &amp; Procedures (working copy, March 2025) — "Suicide Threat or Attempt."</div>
+          </div>
         </div>
       </div>
 
@@ -1708,9 +2176,24 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <div class="sec-desc">Announcements and links the church wants the team to see — a Facebook post, a news article, anything worth passing along.</div>
         </div>
         <button class="btn btn-primary" id="addNewsBtn" style="margin-left:auto;display:none;" onclick="openNewsModal()">+ Post News</button>
+        <button class="btn btn-primary" id="addEventBtn" style="margin-left:auto;display:none;" onclick="openEventModal()">+ Add Event</button>
       </div>
-      <div id="newsList"></div>
-      <div class="empty-note" id="newsEmpty" style="display:none;">No news posted yet.</div>
+      <div style="display:flex;gap:.4rem;margin-bottom:.9rem;">
+        <button type="button" class="btn btn-primary" id="newsViewNewsBtn" style="width:auto;padding:.35rem .9rem;" onclick="setNewsView('news')">News</button>
+        <button type="button" class="btn btn-ghost" id="newsViewEventsBtn" style="width:auto;padding:.35rem .9rem;" onclick="setNewsView('events')">Events</button>
+      </div>
+
+      <div id="newsListWrap">
+        <div id="newsList"></div>
+        <div class="empty-note" id="newsEmpty" style="display:none;">No news posted yet.</div>
+      </div>
+
+      <div id="eventsListWrap" style="display:none;">
+        <div id="eventsUpcomingList"></div>
+        <div class="empty-note" id="eventsEmpty" style="display:none;">No upcoming events.</div>
+        <button type="button" class="btn btn-ghost" id="togglePastEventsBtn" style="width:auto;margin-top:.5rem;" onclick="togglePastEvents()">Show past events</button>
+        <div id="eventsPastList" style="display:none;margin-top:.7rem;"></div>
+      </div>
     </section>
 
     <!-- ══ DOCUMENTS ══ -->
@@ -1726,6 +2209,18 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem;" id="docCategoryFilters"></div>
       <div id="documentList"></div>
       <div class="empty-note" id="documentEmpty" style="display:none;">No documents in this category yet.</div>
+    </section>
+
+    <!-- ══ COMMUNICATION TEMPLATES ══ -->
+    <section id="sec-templates" class="section">
+      <div class="sec-header">
+        <div class="sec-icon amber">📝</div>
+        <div>
+          <div class="sec-title">COMMUNICATION TEMPLATES</div>
+          <div class="sec-desc">Pre-written templates the team can read, copy, and download as a PDF — trespass warnings, incident notifications, media response, and more.</div>
+        </div>
+      </div>
+      <div id="templateList"></div>
     </section>
 
     <!-- ══ TEAM MEETINGS ══ -->
@@ -2283,6 +2778,28 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('newsModal')">Cancel</button>
       <button class="btn btn-primary" id="postNewsBtn" onclick="saveNews()">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD/EDIT EVENT ══ -->
+<div class="modal-overlay" id="eventModal">
+  <div class="admin-modal-box" style="max-width:520px;">
+    <div class="admin-modal-title" id="eventModalTitle">📅 ADD EVENT</div>
+    <div class="form-row"><label>Title</label><input type="text" id="eventTitle" placeholder="e.g. Strategies to Deter Targeted Violence"></div>
+    <div class="modal-grid-2">
+      <div class="form-row"><label>Date (optional — leave blank for self-paced)</label><input type="date" id="eventDate"></div>
+      <div class="form-row"><label>Time (optional)</label><input type="text" id="eventTime" placeholder="e.g. 1:30 PM MT"></div>
+    </div>
+    <div class="form-row"><label>Description</label><textarea id="eventDescription" rows="3"></textarea></div>
+    <div class="form-row"><label>URL (optional)</label><input type="url" id="eventUrl" placeholder="https://..."></div>
+    <div class="modal-grid-2">
+      <div class="form-row"><label>Location</label><input type="text" id="eventLocation" placeholder="Online, or a physical address"></div>
+      <div class="form-row"><label>Category</label><select id="eventCategory"></select></div>
+    </div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('eventModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEvent()">Save</button>
     </div>
   </div>
 </div>
@@ -3356,7 +3873,8 @@ const TOGGLEABLE_SECTIONS = [
   { key: 'leadership', label: 'Leadership / Staff' },
   { key: 'resources', label: 'Training Resources' },
   { key: 'news', label: 'News' },
-  { key: 'documents', label: 'Documents' }
+  { key: 'documents', label: 'Documents' },
+  { key: 'templates', label: 'Templates' }
 ];
 function isSectionVisible(key) {
   if (!TOGGLEABLE_SECTIONS.some(s => s.key === key)) return true;
@@ -3522,7 +4040,8 @@ async function paintAuth(r) {
   showAppShell();
   populateIncidentCategorySelects();
   applySectionVisibility();
-  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList(); renderDocuments(); renderDrillCompliance(); renderDrillLog(); renderServiceLog(); renderAllPrayers();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderEvents(); renderCoverageRequestsList(); renderDocuments(); renderTemplates(); renderDrillCompliance(); renderDrillLog(); renderServiceLog(); renderAllPrayers();
+  setNewsView(newsViewMode);
   applyAdmin(); refreshDash();
   maybeStartTour();
 }
@@ -3552,6 +4071,7 @@ async function loadAllData() {
     loadFacilityMaps(),
     loadBolos(),
     loadNews(),
+    loadEvents(),
     loadCoverageRequests(),
     loadDocuments(),
     loadDrills(),
@@ -5266,7 +5786,7 @@ function newsThumbHtml(n) {
   return `<img src="${esc(n.ogImage)}" alt="" class="news-thumb" data-fallback-letter="${letter}" onerror="newsImgFallback(this)">`;
 }
 function renderNews() {
-  document.getElementById('addNewsBtn').style.display = adminOn ? '' : 'none';
+  document.getElementById('addNewsBtn').style.display = (adminOn && newsViewMode === 'news') ? '' : 'none';
   const rows = S.news.slice().sort((a, b) => b.postedDate.localeCompare(a.postedDate));
   document.getElementById('newsEmpty').style.display = rows.length ? 'none' : '';
   document.getElementById('newsList').innerHTML = rows.map(n => {
@@ -5350,6 +5870,141 @@ async function deleteNews(id) {
   S.news = S.news.filter(x => x.id !== id);
   renderNews();
   addActivity('Removed a news post');
+}
+
+// ════════════════════════════════════════════════════════════════
+// EVENT & WEBINAR CALENDAR (cc_events) — a second view inside the News tab,
+// not a new sidebar section: same admin-curated shape as cc_news (an admin
+// reads a real event page and types in what it found), just with more
+// fields. See setNewsView() for how the News/Events toggle drives which
+// list is on screen.
+// ════════════════════════════════════════════════════════════════
+let newsViewMode = 'news';
+let showPastEvents = false;
+let editingEventId = null;
+const EVENT_CATEGORIES = [
+  { key: 'webinar', label: 'Webinar' },
+  { key: 'training', label: 'Training' },
+  { key: 'law_enforcement', label: 'Law Enforcement' },
+  { key: 'church', label: 'Church' },
+  { key: 'other', label: 'Other' }
+];
+function eventCategoryLabel(key) { const c = EVENT_CATEGORIES.find(x => x.key === key); return c ? c.label : key; }
+function eventRowToJs(r) {
+  return { id: r.id, title: r.title, eventDate: r.event_date, eventTime: r.event_time || '', description: r.description || '', url: r.url || '', location: r.location || '', category: r.category, postedBy: r.posted_by, postedAt: r.posted_at };
+}
+async function loadEvents() {
+  const r = await dbWrite(sb.from('cc_events').select('*'), 'Could not load events');
+  S.events = r ? r.data.map(eventRowToJs) : [];
+}
+/* Switches which of the two News-tab lists is on screen and which of the
+   two admin "add" buttons applies to it — a single source of truth so the
+   buttons can never end up in a state that doesn't match the visible list. */
+function setNewsView(mode) {
+  newsViewMode = mode;
+  const newsBtn = document.getElementById('newsViewNewsBtn'), eventsBtn = document.getElementById('newsViewEventsBtn');
+  if (newsBtn) newsBtn.className = 'btn ' + (mode === 'news' ? 'btn-primary' : 'btn-ghost');
+  if (eventsBtn) eventsBtn.className = 'btn ' + (mode === 'events' ? 'btn-primary' : 'btn-ghost');
+  document.getElementById('newsListWrap').style.display = mode === 'news' ? '' : 'none';
+  document.getElementById('eventsListWrap').style.display = mode === 'events' ? '' : 'none';
+  document.getElementById('addNewsBtn').style.display = (mode === 'news' && adminOn) ? '' : 'none';
+  document.getElementById('addEventBtn').style.display = (mode === 'events' && adminOn) ? '' : 'none';
+}
+/* Splits into upcoming (an undated "self-paced" entry never expires, so it
+   always counts as upcoming) and past (a real date strictly before today).
+   Upcoming sorts soonest-first with undated entries pushed to the end —
+   they carry no urgency; past sorts most-recently-past first, since that's
+   what a reader scanning "what did we already do" wants to see on top. */
+function splitEvents() {
+  const today = iso(new Date());
+  const upcoming = [], past = [];
+  (S.events || []).forEach(e => { if (e.eventDate && e.eventDate < today) past.push(e); else upcoming.push(e); });
+  upcoming.sort((a, b) => {
+    if (!a.eventDate && !b.eventDate) return a.title.localeCompare(b.title);
+    if (!a.eventDate) return 1;
+    if (!b.eventDate) return -1;
+    return a.eventDate.localeCompare(b.eventDate);
+  });
+  past.sort((a, b) => b.eventDate.localeCompare(a.eventDate));
+  return { upcoming, past };
+}
+function eventCardHtml(e) {
+  const dateLabel = e.eventDate
+    ? new Date(e.eventDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + (e.eventTime ? ' · ' + e.eventTime : '')
+    : 'Self-paced';
+  return `<div class="card" style="margin-bottom:.8rem;">
+    <div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
+      <div style="font-weight:700;color:var(--tx);font-size:.95rem;">${esc(e.title)}</div>
+      <span class="res-cost res-cost-mixed">${esc(eventCategoryLabel(e.category))}</span>
+    </div>
+    <div style="font-size:.74rem;color:var(--tx3);margin-top:.2rem;">${esc(dateLabel)} · ${esc(e.location || 'Location TBD')}</div>
+    ${e.description ? `<div style="margin-top:.5rem;font-size:.85rem;color:var(--tx2);white-space:pre-wrap;">${esc(e.description)}</div>` : ''}
+    <div style="margin-top:.6rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
+      ${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener" class="btn btn-ghost" style="width:auto;">Learn More →</a>` : ''}
+      ${adminOn ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;" onclick="openEventModal('${e.id}')">Edit</button>
+      <button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteEvent('${e.id}')">Remove</button>` : ''}
+    </div>
+  </div>`;
+}
+function togglePastEvents() { showPastEvents = !showPastEvents; renderEvents(); }
+function renderEvents() {
+  const { upcoming, past } = splitEvents();
+  document.getElementById('eventsEmpty').style.display = upcoming.length ? 'none' : '';
+  document.getElementById('eventsUpcomingList').innerHTML = upcoming.map(eventCardHtml).join('');
+  const pastBtn = document.getElementById('togglePastEventsBtn');
+  pastBtn.style.display = past.length ? '' : 'none';
+  pastBtn.textContent = showPastEvents ? 'Hide past events' : 'Show past events (' + past.length + ')';
+  document.getElementById('eventsPastList').style.display = showPastEvents ? '' : 'none';
+  document.getElementById('eventsPastList').innerHTML = showPastEvents ? past.map(eventCardHtml).join('') : '';
+}
+function openEventModal(id) {
+  editingEventId = id || null;
+  const e = id ? (S.events || []).find(x => x.id === id) : null;
+  document.getElementById('eventModalTitle').textContent = id ? '📅 EDIT EVENT' : '📅 ADD EVENT';
+  document.getElementById('eventCategory').innerHTML = EVENT_CATEGORIES.map(c => `<option value="${c.key}">${esc(c.label)}</option>`).join('');
+  document.getElementById('eventTitle').value = e ? e.title : '';
+  document.getElementById('eventDate').value = e ? (e.eventDate || '') : '';
+  document.getElementById('eventTime').value = e ? e.eventTime : '';
+  document.getElementById('eventDescription').value = e ? e.description : '';
+  document.getElementById('eventUrl').value = e ? e.url : '';
+  document.getElementById('eventLocation').value = e ? e.location : '';
+  document.getElementById('eventCategory').value = e ? e.category : 'webinar';
+  openModalEl('eventModal');
+}
+async function saveEvent() {
+  const title = document.getElementById('eventTitle').value.trim();
+  if (!title) { await alertDialog('Missing title', 'Give this event a title.'); return; }
+  const row = {
+    title,
+    event_date: document.getElementById('eventDate').value || null,
+    event_time: document.getElementById('eventTime').value.trim() || null,
+    description: document.getElementById('eventDescription').value.trim() || null,
+    url: document.getElementById('eventUrl').value.trim() || null,
+    location: document.getElementById('eventLocation').value.trim() || null,
+    category: document.getElementById('eventCategory').value
+  };
+  if (editingEventId) {
+    const r = await dbWrite(sb.from('cc_events').update(row).eq('id', editingEventId).select().single(), 'Could not save this event');
+    if (!r) return;
+    const idx = S.events.findIndex(x => x.id === editingEventId);
+    if (idx !== -1) S.events[idx] = eventRowToJs(r.data);
+  } else {
+    row.posted_by = currentProfile.id;
+    const r = await dbWrite(sb.from('cc_events').insert(row).select().single(), 'Could not save this event');
+    if (!r) return;
+    S.events.push(eventRowToJs(r.data));
+  }
+  closeModalEl('eventModal');
+  renderEvents();
+  addActivity((editingEventId ? 'Updated event: ' : 'Added event: ') + title);
+}
+async function deleteEvent(id) {
+  const e = S.events.find(x => x.id === id);
+  if (!await confirmDialog('Remove this event?', '"' + (e ? e.title : 'This event') + '" will be removed for everyone. This cannot be undone.', { okLabel: 'Remove', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_events').delete().eq('id', id), 'Could not remove this event');
+  if (!r) return;
+  S.events = S.events.filter(x => x.id !== id);
+  renderEvents();
 }
 /* Only ever shown for a post whose preview never succeeded (see the
    !hasPreview check in renderNews()) — a card that already has a
@@ -5486,6 +6141,279 @@ async function deleteDocument(id) {
   S.documents = S.documents.filter(x => x.id !== id);
   renderDocuments();
   addActivity('Removed a document: ' + d.title);
+}
+
+// ════════════════════════════════════════════════════════════════
+// COMMUNICATION TEMPLATES — static content, no database. Read-only for
+// everyone (no admin gate, no roles) since these are reference material,
+// not records anyone posts or owns. `note` is UI-only guidance shown to
+// the team member using the template — it is never copied to the
+// clipboard or included in the printed/PDF output, since it would be
+// unprofessional (or actively wrong) to hand a trespasser a letter that
+// says "have this reviewed by legal counsel" at the bottom of it.
+// ════════════════════════════════════════════════════════════════
+const COMM_TEMPLATES = [
+  {
+    id: 'trespass-letter',
+    title: 'Trespass Warning Letter',
+    note: "Have this reviewed by the church's legal counsel before first use.",
+    body:
+`[DATE]
+
+VIA CERTIFIED MAIL, RETURN RECEIPT REQUESTED, AND HAND DELIVERY
+
+[RECIPIENT NAME]
+[RECIPIENT ADDRESS, IF KNOWN]
+
+RE: NOTICE OF TRESPASS — [PROPERTY NAME/ADDRESS]
+
+Dear [RECIPIENT NAME]:
+
+This letter serves as formal written notice, under Idaho Code § 18-7008, that you are no longer permitted to enter or remain on the property of Celebration Church located at [PROPERTY ADDRESS] ("the Property").
+
+Effective immediately, you are directed not to enter or remain on the Property, including its buildings, parking areas, and grounds, for any reason, at any time, unless you first obtain written permission from an authorized representative of Celebration Church.
+
+Under Idaho law, if you return to the Property without such written permission within one (1) year of the date of this notice — or any longer period designated below — you may be subject to arrest and prosecution for criminal trespass.
+
+This notice remains in effect until: [ONE YEAR FROM THE DATE ABOVE, OR ANOTHER DATE IF DESIGNATED].
+
+This action is being taken for the safety and security of our congregation, staff, and visitors. It is not a reflection of any judgment about you personally.
+
+If you believe this notice was issued in error, or you wish to request written permission to return to the Property for a specific purpose, contact [CHURCH CONTACT NAME] at [PHONE / EMAIL].
+
+Sincerely,
+
+[NAME]
+[TITLE]
+Celebration Church Safety & Security Team
+
+cc: [Pastoral staff contact]
+cc: [Local law enforcement, if notified]`
+  },
+  {
+    id: 'trespass-verbal',
+    title: 'Verbal Trespass Warning Script',
+    note: '',
+    body:
+`"[Name], my name is [Your Name] with Celebration Church's Safety Team.
+
+You're being asked to leave the property now. You are not permitted to be here.
+
+If you come back after today without permission from church leadership, you can be arrested for trespassing under Idaho law.
+
+[If applicable: Someone is going to walk with you to your car / to the exit now.]
+
+Do you understand?"
+
+If they refuse to leave:
+
+"I'm going to call the police now. You're welcome to wait outside if you're willing to — if not, that's your choice, but I am calling them."
+
+Then call the non-emergency line — (208) 465-2257 — unless there is an immediate danger, in which case call 911. State your name, your location, and that a subject has refused a verbal trespass warning.`
+  },
+  {
+    id: 'incident-pastoral',
+    title: 'Incident Notification to Pastoral Staff',
+    note: '',
+    body:
+`INCIDENT NOTIFICATION — FOR PASTORAL STAFF
+
+Date/time of incident: [DATE, TIME]
+Location on campus: [LOCATION]
+Reported by: [NAME, ROLE]
+
+What happened (facts only — no assumptions or conclusions):
+[2-4 sentence factual summary]
+
+Who was involved:
+[Names/descriptions, or "no names available"]
+
+Was law enforcement or EMS contacted? [YES/NO — agency and case # if yes]
+
+Was anyone injured? [YES/NO — details]
+
+Immediate action taken:
+[e.g., subject escorted off property, area secured, incident report filed]
+
+Is any follow-up needed from pastoral staff? [YES/NO — describe]
+
+Full incident report filed: [YES/NO — reference # in Incident Reports tab]
+
+Notified by: [NAME]   Notified to: [PASTOR NAME(S)]   Time notified: [TIME]`
+  },
+  {
+    id: 'after-action',
+    title: 'After-Action Review Agenda',
+    note: '',
+    body:
+`AFTER-ACTION REVIEW — [INCIDENT OR DRILL NAME], [DATE]
+
+Attendees: [LIST]
+Facilitator: [NAME]
+
+1. What was supposed to happen? (2 min)
+   Brief recap of the plan or procedure that applied.
+
+2. What actually happened? (10 min)
+   Walk the timeline in order. Facts only — no blame, no "should haves" yet.
+
+3. What went well? (10 min)
+   Specific actions, decisions, or systems that worked as intended.
+
+4. What didn't go as planned? (10 min)
+   Specific gaps — in communication, equipment, training, or procedure.
+   Focus on the system, not the person.
+
+5. Root causes (10 min)
+   For each gap above, ask "why" until you reach something fixable — a
+   procedure, a training gap, a missing resource — not "someone made a
+   mistake."
+
+6. Action items (10 min)
+   For each root cause: what will change, who owns it, and by when?
+   Action | Owner | Due Date
+
+7. Follow-up
+   Who reviews these action items, and when? [DATE]
+
+Notes taken by: [NAME]
+Distribute to: [Safety Team, Pastoral Staff, as applicable]`
+  },
+  {
+    id: 'volunteer-welcome',
+    title: 'New Volunteer Welcome Message',
+    note: '',
+    body:
+`Subject: Welcome to the Celebration Church Safety & Security Team!
+
+Hi [FIRST NAME],
+
+Welcome to the team! We're glad you're joining us in helping keep our church family safe on Sundays and during church events.
+
+Here's what to expect next:
+
+1. Onboarding checklist — log into the Operations Center app and complete the steps under "Onboarding." This covers background check paperwork, required reading, and your first training modules.
+
+2. Academy training — the "Academy" tab has your required courses. Most people finish the core modules within [TIMEFRAME].
+
+3. Your first shift — once onboarding is complete, [SCHEDULING CONTACT] will get you on the schedule alongside an experienced team member for your first couple of shifts.
+
+4. Questions — reach out to [TEAM LEAD NAME] at [PHONE/EMAIL] any time. No question is a dumb question — we'd all rather you ask than guess.
+
+Thank you for stepping up to serve in this way. It matters.
+
+[YOUR NAME]
+[YOUR ROLE]
+Celebration Church Safety & Security Team`
+  },
+  {
+    id: 'insurance-notification',
+    title: 'Insurance Incident Notification',
+    note: 'Contact your insurance carrier immediately — do not delay notification.',
+    body:
+`INSURANCE INCIDENT NOTIFICATION
+
+To: [INSURANCE CARRIER NAME] — Claims Department
+From: [CHURCH NAME], Policy #[POLICY NUMBER]
+Date of this notice: [DATE]
+
+Date/time of incident: [DATE, TIME]
+Location: [ADDRESS / LOCATION ON CAMPUS]
+
+Description of incident (facts only):
+[2-4 sentence factual summary — what happened, who/what was involved]
+
+Type of loss:  [ ] Property damage   [ ] Bodily injury   [ ] Other: ______
+
+Injured parties (if any): [NAME(S), CONTACT INFO]
+Was EMS or law enforcement called? [YES/NO — agency, case #]
+
+Photos/documentation available? [YES/NO]
+Internal incident report #: [REFERENCE from Incident Reports tab]
+
+Church contact for follow-up: [NAME, PHONE, EMAIL]
+
+Do not admit fault or discuss liability with any party. Provide facts only, to your carrier and to law enforcement.`
+  },
+  {
+    id: 'media-inquiry',
+    title: 'Media Inquiry Response',
+    note: 'Never elaborate. One spokesperson only.',
+    body:
+`If a reporter or media outlet contacts you — by phone, email, or in person — say exactly this, and nothing more:
+
+"We have no comment at this time. Please direct all media inquiries to [PASTOR/ADMINISTRATIVE CONTACT] at [PHONE/EMAIL]."
+
+Then:
+- Do not answer follow-up questions, "off the record" or otherwise.
+- Do not confirm or deny any details, even ones that seem obvious or already public.
+- Get the reporter's name, outlet, and contact information if they offer it.
+- Immediately notify [PASTOR/ADMINISTRATIVE CONTACT] that a media inquiry was made.
+
+This applies to every team member, regardless of role. Only [PASTOR/ADMINISTRATIVE CONTACT] speaks to media on behalf of the church.`
+  },
+  {
+    id: 'code-adam-parent',
+    title: 'Parent Notification — Code Adam Resolution',
+    note: '',
+    body:
+`Said in person, calmly, once the child has been located and confirmed safe:
+
+"[PARENT NAME], I want to let you know that [CHILD NAME] has been found and is safe. [He/She/They] [was in the sanctuary with a teacher / was located in the foyer / etc. — keep this brief and factual].
+
+Thank you for staying [in the check-in area / where you were] while our team searched — that's exactly what helped us find [CHILD NAME] quickly.
+
+[If applicable: We're going to walk you back to reunite with [CHILD NAME] now.]"
+
+Do not describe the search process, name any suspected cause, or speculate about what happened in front of the parent or other families. If the parent asks what happened, say:
+
+"I don't have all the details yet. What matters right now is that [CHILD NAME] is safe. [TEAM LEAD/PASTOR NAME] can follow up with you afterward if you'd like to talk more."
+
+Follow-up: file the full incident report in the Incident Reports tab, and note whether pastoral follow-up with the family was requested.`
+  }
+];
+function renderTemplates() {
+  const box = document.getElementById('templateList');
+  if (!box) return;
+  box.innerHTML = COMM_TEMPLATES.map(t => `
+    <div class="card" style="margin-bottom:1rem;">
+      <div style="font-weight:700;color:var(--tx);font-size:.95rem;margin-bottom:.5rem;">${esc(t.title)}</div>
+      ${t.note ? `<div class="tip-box">⚠️ <strong>${esc(t.note)}</strong></div>` : ''}
+      <div style="white-space:pre-wrap;font-size:.8rem;color:var(--tx2);background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:.8rem;max-height:280px;overflow-y:auto;margin-top:.6rem;">${esc(t.body)}</div>
+      <div style="margin-top:.6rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+        <button type="button" class="btn btn-ghost" style="width:auto;" onclick="copyTemplateToClipboard('${t.id}')">📋 Copy to Clipboard</button>
+        <button type="button" class="btn btn-ghost" style="width:auto;" onclick="downloadTemplatePdf('${t.id}')">🖨️ Download as PDF</button>
+      </div>
+    </div>`).join('');
+}
+/* Falls back to the classic textarea + execCommand('copy') path when the
+   async Clipboard API isn't available (older browsers, or a page not
+   served over https) — wrapped in one try/catch since either path can
+   fail for reasons outside this app's control (browser permission,
+   headless/test environments with neither API), and either failure gets
+   the same "copy it yourself" guidance rather than a silent no-op. */
+async function copyTemplateToClipboard(id) {
+  const t = COMM_TEMPLATES.find(x => x.id === id);
+  if (!t) return;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(t.body);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = t.body; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    await alertDialog('Copied', '"' + t.title + '" has been copied to your clipboard.');
+  } catch (e) {
+    await alertDialog('Could not copy', 'Your browser blocked clipboard access. Select the text above and copy it manually.');
+  }
+}
+function downloadTemplatePdf(id) {
+  const t = COMM_TEMPLATES.find(x => x.id === id);
+  if (!t) return;
+  printDocument(t.title.toUpperCase(), `<div class="print-doc-avoid-break" style="white-space:pre-wrap;">${esc(t.body)}</div>`);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -5670,6 +6598,27 @@ function printDocument(title, bodyHtml, opts) {
   window.print();
 }
 
+/* SPANISH LANGUAGE TOGGLE — Emergency Procedures only. Both languages live
+   in the DOM at all times as .lang-en/.lang-es siblings inside every
+   .proc-title and .proc-body (never re-rendered), so switching languages
+   is a pure CSS class toggle on the section itself; see the #sec-procedures
+   .lang-es rules near .proc-body in the stylesheet. Persisted to
+   localStorage as a display preference, not database data — every user
+   sees the toggle, not just admins, and it defaults to English. */
+function setProcLang(lang) {
+  const l = lang === 'es' ? 'es' : 'en';
+  try { localStorage.setItem('ccstProcLang', l); } catch (e) {}
+  document.getElementById('sec-procedures').classList.toggle('lang-es', l === 'es');
+  const enBtn = document.getElementById('procLangEnBtn'), esBtn = document.getElementById('procLangEsBtn');
+  if (enBtn) enBtn.className = 'btn ' + (l === 'en' ? 'btn-primary' : 'btn-ghost');
+  if (esBtn) esBtn.className = 'btn ' + (l === 'es' ? 'btn-primary' : 'btn-ghost');
+}
+function initProcLang() {
+  let saved = 'en';
+  try { saved = localStorage.getItem('ccstProcLang') || 'en'; } catch (e) {}
+  setProcLang(saved);
+}
+
 /* EMERGENCY PROCEDURES PRINTING. The 20-odd .proc-card blocks in the
    Emergency Procedures section are static markup, not JS-rendered — adding
    a print button to each by hand would mean editing every one of them. A
@@ -5696,17 +6645,33 @@ function initProcedurePrintButtons() {
     row.appendChild(btn);
   });
 }
+/* Both languages live in the DOM at all times (see the .lang-en/.lang-es
+   comment near setProcLang()) — a raw .proc-title/.proc-body innerHTML
+   grab would print BOTH languages concatenated together, so printing
+   always reads only the currently-active language's wrapper, matching
+   whatever the on-screen toggle is set to. */
+function activeProcLang() { return document.getElementById('sec-procedures').classList.contains('lang-es') ? 'es' : 'en'; }
+function procTitleText(card) {
+  const lang = activeProcLang();
+  const el = card.querySelector('.proc-title .lang-' + lang) || card.querySelector('.proc-title');
+  return el.textContent.trim();
+}
+function procBodyHtml(card) {
+  const lang = activeProcLang();
+  const el = card.querySelector('.proc-body > .lang-' + lang) || card.querySelector('.proc-body');
+  return el.innerHTML;
+}
 function printProcedure(card) {
-  const title = card.querySelector('.proc-title').textContent.trim();
-  const body = card.querySelector('.proc-body').innerHTML;
+  const title = procTitleText(card);
+  const body = procBodyHtml(card);
   printDocument(title.toUpperCase(), `<div class="print-doc-avoid-break">${body}</div>`,
     { subtitle: 'Emergency Procedure — Quick Reference' });
 }
 function printAllProcedures() {
   const cards = document.querySelectorAll('#sec-procedures .proc-card');
   const body = Array.from(cards).map(card => {
-    const title = card.querySelector('.proc-title').textContent.trim();
-    const inner = card.querySelector('.proc-body').innerHTML;
+    const title = procTitleText(card);
+    const inner = procBodyHtml(card);
     return `<div class="print-doc-avoid-break" style="margin-bottom:.4in;">
       <div style="font-family:var(--fh);font-size:1.05rem;font-weight:800;letter-spacing:.5px;border-bottom:1px solid #999;padding-bottom:.08in;margin-bottom:.12in;">${esc(title)}</div>
       ${inner}
@@ -6828,6 +7793,7 @@ document.addEventListener('keydown', e => {
 });
 document.querySelectorAll('.proc-card.open > .proc-head').forEach(h => h.setAttribute('aria-expanded', 'true'));
 initProcedurePrintButtons();
+initProcLang();
 setLoginMode('password');
 
 // ── Boot: resolve auth before anything from local data reaches the DOM ──
