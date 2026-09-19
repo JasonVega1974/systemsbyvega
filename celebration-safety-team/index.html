@@ -4178,7 +4178,11 @@ function renderSchematicSlot() {
   if (m) {
     capEl.style.display = 'none';
     const body = m.isPdf
-      ? `<div class="map-pdf-frame" style="height:520px;"><iframe src="${esc(m.url)}" title="Full Site Schematic"></iframe></div>`
+      /* The image lightbox (openLightbox) only knows how to zoom an <img> —
+         an <iframe> has no equivalent, so a PDF upload gets its own escape
+         hatch: open the same signed URL in a new tab, where the browser's
+         native PDF viewer already has pan/zoom/print built in. */
+      ? `<div class="map-pdf-frame" style="height:70vh;"><iframe src="${esc(m.url)}" title="Full Site Schematic"></iframe></div><button type="button" class="btn btn-ghost" style="margin-top:.6rem;" onclick="window.open('${esc(m.url)}','_blank')">🔍 View Full Screen</button>`
       : `<div style="border:1px solid var(--bd2);border-radius:12px;overflow:hidden;background:#fff;"><img src="${esc(m.url)}" alt="Full site schematic" class="map-image" onclick="openLightbox('${esc(m.url)}','Full Site Schematic')"></div>`;
     const uploadedDate = new Date(m.uploadedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     el.innerHTML = body + `<div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">Replacement uploaded ${uploadedDate}.</div>`;
