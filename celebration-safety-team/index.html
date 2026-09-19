@@ -677,6 +677,38 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .linkish { background: none; border: none; padding: 0; color: var(--bl); font: inherit; cursor: pointer; text-decoration: underline; }
 .linkish:hover { color: var(--c2); }
 .res-org { font-size: .64rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); margin-top: .2rem; }
+
+/* ── GUIDED TOUR — spotlight-and-tooltip mechanics adapted from the
+   Roadee pattern (Roady's tool): a "hole" element uses the giant-box-
+   shadow trick to punch a lit cutout through a dimmed backdrop, and the
+   tooltip box picks whichever side (below/above/right/left) actually
+   fits the viewport, clamped to its edges — same idea, just restyled to
+   this app's own dark card system instead of Roadee's cream/mascot
+   styling, and with no mascot at all per spec. ── */
+#tourOverlay { position: fixed; inset: 0; z-index: 4000; display: none; pointer-events: none; }
+#tourOverlay.open { display: block; }
+#tourDim { position: absolute; inset: 0; background: rgba(5,8,12,.82); pointer-events: auto; transition: background .2s; }
+#tourHole { position: absolute; border-radius: 12px; box-shadow: 0 0 0 9999px rgba(5,8,12,.82), 0 0 0 3px var(--c), 0 0 26px rgba(var(--c-rgb),.5); pointer-events: none; transition: all .3s cubic-bezier(.4,0,.2,1); display: none; }
+#tourHole.open { display: block; }
+#tourHole.open ~ #tourDim { background: transparent; }
+#tourBox { position: absolute; width: min(360px, calc(100vw - 32px)); max-height: min(70vh, 520px); display: flex; flex-direction: column; background: var(--s1); color: var(--tx); border: 1px solid var(--bd2); border-radius: 14px; padding: 1.1rem 1.2rem 1rem; pointer-events: auto; box-shadow: 0 14px 40px rgba(0,0,0,.55); transition: top .3s cubic-bezier(.4,0,.2,1), left .3s cubic-bezier(.4,0,.2,1); }
+#tourBox:after { content: ''; position: absolute; width: 14px; height: 14px; background: var(--s1); border-left: 1px solid var(--bd2); border-top: 1px solid var(--bd2); transform: rotate(45deg); display: none; }
+#tourBox.ar-top:after { display: block; top: -8px; left: 32px; }
+#tourBox.ar-bottom:after { display: block; bottom: -8px; left: 32px; transform: rotate(225deg); }
+#tourBox.ar-left:after { display: block; left: -8px; top: 26px; transform: rotate(315deg); }
+#tourBox.ar-right:after { display: block; right: -8px; top: 26px; transform: rotate(135deg); }
+#tourBox.ar-none:after { display: none; }
+.tour-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; flex: 0 0 auto; }
+#tourStepNo { margin-left: auto; font-family: var(--fh); font-size: .68rem; letter-spacing: .5px; background: rgba(var(--c-rgb),.14); color: var(--c); border-radius: 20px; padding: .15rem .6rem; white-space: nowrap; }
+#tourTitle { font-family: var(--fh); font-size: 1.05rem; letter-spacing: 1px; margin: 0; color: var(--c); flex: 0 0 auto; }
+#tourText { font-size: .85rem; line-height: 1.6; color: var(--tx2); margin: 0; overflow-y: auto; flex: 1 1 auto; min-height: 0; }
+#tourText b { color: var(--tx); }
+.tour-bar { display: flex; align-items: center; gap: .5rem; margin-top: .9rem; flex: 0 0 auto; }
+.tour-dots { display: flex; gap: .3rem; flex: 1; flex-wrap: wrap; }
+.tour-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--bd2); cursor: pointer; transition: all .2s; }
+.tour-dots i.on { background: var(--c); transform: scale(1.5); }
+.tour-dots i.done { background: rgba(var(--c-rgb),.5); }
+@media (max-width: 480px) { #tourBox { padding: .9rem 1rem .8rem; } .tour-dots { display: none; } }
 </style>
 </head>
 <body>
@@ -716,6 +748,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div class="hstat"><div class="hstat-val" id="hs-team">0</div><div class="hstat-lbl">Team</div></div>
     <div class="hstat"><div class="hstat-val">3</div><div class="hstat-lbl">Services</div></div>
   </div>
+  <button class="user-chip" id="helpTourBtn" onclick="startTour()" title="Take the guided tour" aria-label="Take the guided tour">?</button>
   <button class="user-chip" id="themeToggle" onclick="toggleTheme()" title="Switch between dark and light mode" aria-label="Switch between dark and light mode">🌙 Dark</button>
   <button class="user-chip" id="adminChip" onclick="openAccountModal()">🔒 Admin</button>
 </header>
@@ -1758,6 +1791,25 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.6rem;">
       <button class="btn btn-ghost" id="dlgCancel" onclick="dialogCancel()">Cancel</button>
       <button class="btn btn-primary" id="dlgOk" onclick="dialogOk()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GUIDED TOUR ══ -->
+<div id="tourOverlay" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
+  <div id="tourHole"></div>
+  <div id="tourDim" onclick="endTour()"></div>
+  <div id="tourBox">
+    <div class="tour-head">
+      <div id="tourTitle"></div>
+      <div id="tourStepNo"></div>
+    </div>
+    <div id="tourText"></div>
+    <div class="tour-bar">
+      <div class="tour-dots" id="tourDots"></div>
+      <button class="btn btn-ghost" id="tourSkip" onclick="endTour()">Skip</button>
+      <button class="btn btn-ghost" id="tourBack" onclick="showTourStep(tourStepIdx - 1)">Previous</button>
+      <button class="btn btn-primary" id="tourNext" onclick="tourStepIdx === TOUR_STEPS.length - 1 ? endTour() : showTourStep(tourStepIdx + 1)">Next</button>
     </div>
   </div>
 </div>
@@ -3051,7 +3103,7 @@ function resolveAuth() {
     const session = res && res.data && res.data.session;
     if (!session) return { state: 'no_session' };
     return Promise.resolve(
-      sb.from('cc_profiles').select('id,email,role,team_member_id,theme,push_enabled').eq('id', session.user.id).maybeSingle()
+      sb.from('cc_profiles').select('id,email,role,team_member_id,theme,push_enabled,tour_completed').eq('id', session.user.id).maybeSingle()
     ).then(r => {
       if (r.error) return { state: 'read_error', detail: r.error.message, user: session.user };
       if (!r.data) return { state: 'no_profile', user: session.user };
@@ -3133,7 +3185,7 @@ async function paintAuth(r) {
   applySectionVisibility();
   renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList();
   applyAdmin(); refreshDash();
-  maybeShowPushPrompt();
+  maybeStartTour();
 }
 /* The one full fetch of everything this login can see, run once per auth
    resolution (fresh load, or whenever onAuthStateChange fires again). Clears
@@ -6022,6 +6074,160 @@ function dismissIosInstallTip() {
      that leaving it unread keeps re-showing it. */
   try { localStorage.setItem('ccstIosTipShown', '1'); } catch (e) {}
 })();
+
+// ════════════════════════════════════════════════════════════════
+// GUIDED TOUR — spotlight-and-tooltip mechanics adapted from the Roadee
+// pattern (Roady's tool): a "hole" element highlights one sidebar nav
+// item at a time while navTo() actually switches to that section behind
+// it, so the step's description ("verse of the week, team notes,
+// coverage requests card...") is describing real content the member can
+// see, not just naming a tab. No mascot/avatar, restyled to this app's
+// own dark theme + gold accent — see the #tourOverlay CSS block.
+//
+// Completion is tracked server-side (cc_profiles.tour_completed, see
+// sql/HELP-TOUR.sql) so it follows the member across devices, unlike a
+// localStorage flag. Finishing OR skipping both set it true — there is
+// no "ask again," only "show automatically until answered once."
+// Re-launching from the "?" header button never touches this column.
+// ════════════════════════════════════════════════════════════════
+const TOUR_STEPS = [
+  { section: 'overview', navSel: '.nav-item[data-section="overview"]',
+    t: 'Dashboard',
+    h: 'This is home base. <b>Verse of the Week</b> and <b>Team Notes</b> sit at the top, followed by cards for recent incidents/BOLOs and any open <b>Coverage Requests</b>. If a BOLO is active, a gold banner appears above the verse so it\'s impossible to miss.' },
+  { section: 'notifications', navSel: '.nav-item[data-section="notifications"]',
+    t: 'Alerts',
+    h: 'Anything that needs your attention lands here — an incident awaiting your acknowledgment, an incomplete onboarding step, an open coverage request. The badge on this tab counts only items tied to your own account, never a team-wide total.' },
+  { section: 'academy', navSel: '.nav-item[data-section="academy"]',
+    t: 'Academy',
+    h: 'Work through a module\'s lessons, then take the quiz at the end. Pass it and you earn a certificate — your progress and certificates for every module are tracked here.' },
+  { section: 'procedures', navSel: '.nav-item[data-section="procedures"]',
+    t: 'Emergency Procedures',
+    h: 'Quick-reference cards for every emergency scenario — medical, fire, lockdown, severe weather, and more. These are written to be read fast on a Sunday morning, not studied in advance.' },
+  { section: 'scheduling', navSel: '.nav-item[data-section="scheduling"]',
+    t: 'Scheduling',
+    h: 'See which services you\'re assigned to each Sunday. Can\'t make a shift? Use <b>Request Coverage</b> right here — any teammate can pick it up immediately, no approval needed.' },
+  { section: 'incidents', navSel: '.nav-item[data-section="incidents"]',
+    t: 'Incident Reports',
+    h: 'File a report for anything that happens on campus — the form walks you through it. From an existing report, an Admin or Team Lead can also issue a <b>BOLO</b> directly, pre-filled from that report\'s details.' },
+  { section: 'team', navSel: '.nav-item[data-section="team"]',
+    t: 'Team',
+    h: 'The full safety &amp; security roster. Admins also manage team logins and use <b>Customize Visibility</b> from here to control which sections and Academy modules the rest of the team can see.' }
+];
+
+let tourStepIdx = 0;
+function tourEl(sel) { try { return sel ? document.querySelector(sel) : null; } catch (e) { return null; } }
+
+/* direction defaults to inferring from the index change, but callers that
+   jump more than one step (a skipped-hidden-section recursion, a dot
+   click from step 5 to step 1) pass it explicitly so the recursive skip
+   below keeps moving the same way instead of bouncing. */
+function showTourStep(i, direction) {
+  direction = direction || (i >= tourStepIdx ? 1 : -1);
+  if (i < 0 || i >= TOUR_STEPS.length) { endTour(); return; }
+  const step = TOUR_STEPS[i];
+  const target = tourEl(step.navSel);
+  /* A section an Admin has hidden via Customize Visibility has
+     display:none on its nav-item, so offsetParent is null — highlighting
+     an invisible element would float a tooltip pointing at nothing.
+     Skip it in whichever direction the tour was already moving, rather
+     than get stuck or show a step nobody can act on. */
+  if (!target || target.offsetParent === null) { showTourStep(i + direction, direction); return; }
+
+  tourStepIdx = i;
+  if (step.section) navTo(step.section);
+  document.getElementById('tourOverlay').classList.add('open');
+  document.getElementById('tourTitle').textContent = step.t;
+  document.getElementById('tourText').innerHTML = step.h;
+  document.getElementById('tourStepNo').textContent = (tourStepIdx + 1) + ' / ' + TOUR_STEPS.length;
+  document.getElementById('tourBack').style.visibility = tourStepIdx === 0 ? 'hidden' : 'visible';
+  document.getElementById('tourNext').textContent = tourStepIdx === TOUR_STEPS.length - 1 ? 'Got it' : 'Next';
+  document.getElementById('tourDots').innerHTML = TOUR_STEPS.map((_, k) =>
+    `<i class="${k === tourStepIdx ? 'on' : (k < tourStepIdx ? 'done' : '')}" onclick="showTourStep(${k})"></i>`).join('');
+
+  /* 'auto' (instant), not 'smooth' — a smooth scroll's animation duration
+     is unpredictable (distance- and device-dependent), and placeTourBox()
+     measuring mid-animation was exactly what put the spotlight on the
+     WRONG nav item on a phone's horizontally-scrolling sidebar strip: the
+     rect it read was mid-flight, not where the target actually settled.
+     Double requestAnimationFrame waits for the browser to actually finish
+     the resulting layout/paint before measuring — reliable regardless of
+     scroll distance, unlike a guessed millisecond delay. */
+  target.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+  requestAnimationFrame(() => requestAnimationFrame(() => placeTourBox(target)));
+}
+
+/* Below > above > right > left, whichever actually fits the viewport,
+   clamped to its edges — same algorithm Roadee uses, since it only needs
+   a bounding rect and has no assumptions about page layout baked in that
+   would need redoing for this app's sidebar-driven structure. */
+function placeTourBox(target) {
+  const hole = document.getElementById('tourHole');
+  const box = document.getElementById('tourBox');
+  const r = target.getBoundingClientRect();
+  if (!r.width && !r.height) {
+    hole.classList.remove('open');
+    box.className = 'ar-none';
+    box.style.transform = 'translate(-50%,-50%)';
+    box.style.top = '50%'; box.style.left = '50%';
+    return;
+  }
+  const pad = 6;
+  hole.classList.add('open');
+  hole.style.top = (r.top - pad) + 'px';
+  hole.style.left = (r.left - pad) + 'px';
+  hole.style.width = (r.width + pad * 2) + 'px';
+  hole.style.height = (r.height + pad * 2) + 'px';
+
+  box.style.transform = 'none';
+  const bw = box.offsetWidth || 340, bh = box.offsetHeight || 200;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let top, left, arrow;
+  if (r.bottom + bh + 24 < vh) { top = r.bottom + 16; left = r.left; arrow = 'ar-top'; }
+  else if (r.top - bh - 24 > 0) { top = r.top - bh - 16; left = r.left; arrow = 'ar-bottom'; }
+  else if (r.right + bw + 24 < vw) { top = Math.max(12, r.top); left = r.right + 16; arrow = 'ar-left'; }
+  else { top = Math.max(12, r.top); left = Math.max(12, r.left - bw - 16); arrow = 'ar-right'; }
+  left = Math.max(12, Math.min(left, vw - bw - 12));
+  top = Math.max(12, Math.min(top, vh - bh - 12));
+  box.className = arrow;
+  box.style.top = top + 'px';
+  box.style.left = left + 'px';
+}
+async function endTour() {
+  document.getElementById('tourOverlay').classList.remove('open');
+  document.getElementById('tourHole').classList.remove('open');
+  if (currentProfile && currentProfile.tour_completed !== true) {
+    currentProfile.tour_completed = true;
+    await dbWrite(sb.from('cc_profiles').update({ tour_completed: true }).eq('id', currentProfile.id), 'Could not save that the tour was completed');
+  }
+  maybeShowPushPrompt();
+}
+function startTour() { showTourStep(0, 1); }
+/* Called once per auth resolution (see paintAuth()). The tour and the
+   push-notification prompt both want to auto-show on a member's first
+   sign-in, and showing both at once would stack two full-screen overlays
+   — the tour takes priority (it orients a brand-new member to the app at
+   all), and endTour() chains into maybeShowPushPrompt() so the push
+   prompt still appears right after, on the same first visit, rather than
+   being skipped. If the tour is already done, this goes straight to the
+   push-prompt check instead. */
+function maybeStartTour() {
+  if (currentProfile && currentProfile.tour_completed !== true) {
+    setTimeout(() => startTour(), 500);
+  } else {
+    maybeShowPushPrompt();
+  }
+}
+window.addEventListener('resize', () => {
+  if (!document.getElementById('tourOverlay').classList.contains('open')) return;
+  const target = tourEl(TOUR_STEPS[tourStepIdx].navSel);
+  if (target) placeTourBox(target);
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('tourOverlay').classList.contains('open')) return;
+  if (e.key === 'Escape') endTour();
+  else if (e.key === 'ArrowRight') showTourStep(tourStepIdx + 1, 1);
+  else if (e.key === 'ArrowLeft') showTourStep(tourStepIdx - 1, -1);
+});
 
 // ════════════════════════════════════════════════════════════════
 // WEB PUSH — coverage requests, new BOLOs, and (Admin/Team Lead only) new

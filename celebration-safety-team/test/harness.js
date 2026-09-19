@@ -25,6 +25,14 @@ function loadApp(htmlPath) {
       if (k === 'querySelectorAll') return () => [];
       if (k === 'getAttribute' || k === 'hasAttribute') return () => null;
       if (k === 'value' || k === 'textContent' || k === 'innerHTML') return '';
+      /* Real layout has no meaning in this stub DOM — width/height/all
+         edges zero, same "there is nothing here" signal a genuinely
+         display:none element's rect would give in a real browser. Callers
+         that branch on a zero-sized rect (the guided tour's spotlight
+         positioning) get the same "nothing to highlight" path a test can
+         exercise without a real renderer. */
+      if (k === 'getBoundingClientRect') return () => ({ width: 0, height: 0, top: 0, left: 0, right: 0, bottom: 0 });
+      if (k === 'offsetParent') return null;
       return undefined;
     },
     set() { return true; }
@@ -39,12 +47,15 @@ function loadApp(htmlPath) {
   const ctx = {
     console,
     localStorage: { _v: null, getItem(){ return this._v; }, setItem(k,v){ this._v = v; }, removeItem(){ this._v = null; } },
-    document: { getElementById: () => el, querySelectorAll: () => [], createElement: () => el, body: el, documentElement: el, addEventListener: () => {} },
-    window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){}, matchMedia: () => ({ matches: false }), navigator: navigatorStub },
+    document: { getElementById: () => el, querySelector: () => el, querySelectorAll: () => [], createElement: () => el, body: el, documentElement: el, addEventListener: () => {} },
+    window: { addEventListener(){}, removeEventListener(){}, print(){}, scrollTo(){}, matchMedia: () => ({ matches: false }), navigator: navigatorStub, innerWidth: 1024, innerHeight: 768 },
     navigator: navigatorStub,
     alert: () => {}, confirm: () => true, prompt: () => null,
     Blob: function(){}, URL: { createObjectURL: () => '', revokeObjectURL(){} },
-    FileReader: function(){}, setTimeout, Date, Math, JSON, Object, Array, String, Number, Set, isNaN, parseInt
+    FileReader: function(){}, setTimeout, Date, Math, JSON, Object, Array, String, Number, Set, isNaN, parseInt,
+    /* No real frame to wait for in a stub DOM — resolving on the next tick
+       is close enough for anything that just needs "after this render". */
+    requestAnimationFrame: cb => setTimeout(cb, 0)
   };
   ctx.globalThis = ctx;
   vm.createContext(ctx);
@@ -63,7 +74,7 @@ function loadApp(htmlPath) {
   get quizAnswers() { return quizAnswers; }, set quizAnswers(v) { quizAnswers = v; },
   get quizSubmitted() { return quizSubmitted; }, set quizSubmitted(v) { quizSubmitted = v; },
   get editingMemberId() { return editingMemberId; }, set editingMemberId(v) { editingMemberId = v; },
-  COURSES, ONBOARD_ITEMS, SERVICES, MIN_SLOTS, MAX_SLOTS, PASS_THRESHOLD,
+  COURSES, ONBOARD_ITEMS, SERVICES, MIN_SLOTS, MAX_SLOTS, PASS_THRESHOLD, TOUR_STEPS,
   alertDialog, confirmDialog
 };`, ctx);
 
