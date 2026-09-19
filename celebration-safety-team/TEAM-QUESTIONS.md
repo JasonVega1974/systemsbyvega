@@ -38,17 +38,18 @@ Are they checked, and by whom? ________________________________________
 
 ---
 
-### 2. Where is the evacuation assembly area?
+### 2. Where is the evacuation assembly area? — KIDS'/REUNIFICATION POINT ANSWERED 2026-09-18
 
 *Fire and earthquake procedures both send people to "the assembly area." It needs to be far enough out to keep driveways clear for fire apparatus, and it is where parents will be told to reunite with their children.*
 
-**Partial answer on file:** the September 2025 Evacuation Plan names the North West end of the
-parking lot as where kids assemble. Please confirm this is still correct, and answer for the
-sanctuary/adult side, which the plan does not name:
+**Answered**, per the church's own Emergency Evacuation Plan document: approximately 75 yards out
+front of the church, to the far left of the parking lot — this is where parents come out to
+receive their children. Applied to the Fire & Evacuation and Reunification procedure cards as the
+general assembly area, since the document does not name any other location.
 
-Kids’ assembly point (confirm or correct): ___________________________________
+Kids’/reunification assembly point: **~75 yards out front of the church, far left of the parking lot** (per Emergency Evacuation Plan)
 
-Sanctuary/adult assembly point: _______________________________________________
+Sanctuary/adult assembly point (confirm this is the same location, or name a different one): _______________________________________________
 
 ---
 
@@ -84,11 +85,13 @@ Who else may make the call if both are away? __________________________
 
 ---
 
-### 6. How does the team communicate on a Sunday?
+### 6. How does the team communicate on a Sunday? — PARTIALLY ANSWERED 2026-09-18
 
 *Our own written policy confirms radios, with real call protocol already in the app — a "Medical Emergency" is called by stating it TWICE with location, and "Code-4" clears the channel. What is still unrecorded is the practical detail below.*
 
-☐ Radios (confirmed) — how many? ______  Channel: ______  Who holds them? _________
+☑ Radios (confirmed) — **classrooms/Nursery: 5 radios, channels 1 & 15** (per the church's own
+Emergency Evacuation Plan). **Still unknown:** how many radios the Safety Team itself carries
+(separate from the 5 classroom/Nursery units), and who holds them.
 
 ☐ Group text   ☐ Other: _______________________________________________
 
@@ -150,22 +153,27 @@ Do we stock plastic sheeting and duct tape?  ☐ Yes, where: ____________  ☐ N
 
 ---
 
-### 12. May we register with the "I Love U Guys" Foundation?
+### 12. May we register with the "I Love U Guys" Foundation? — NARROWED 2026-09-18
 
-*Our lockdown and reunification wording comes from their Standard Response Protocol and Standard Reunification Method. Both are free, but they ask to be told who is using the reunification method. It is one email.*
+*Our lockdown wording comes from their Standard Response Protocol (SRP). As of 2026-09-18, the
+Reunification procedure no longer uses their Standard Reunification Method (SRM) at all — it was
+rewritten around the church's actual clipboard/ticket practice, so the SRM notification obligation
+no longer applies. SRP notification is a courtesy, not a requirement, per their own Terms of Use.*
 
-☐ Yes, go ahead   ☐ Ask me again later   ☐ Who should send it: ___________
+☐ Yes, notify them of SRP use anyway (courtesy, not required)   ☐ Skip it   ☐ Who should send it: ___________
 
 ---
 
-### 13. Which evacuation route is correct for the kids' wing?
+### 13. Which evacuation route is correct for the kids' wing? — STILL OPEN as of the 2026-09-18 updated diagram
 
 *The September 2025 Evacuation Plan says, in writing, "Kids evacuate through the West exit." The
-floor-plan drawing you supplied shows the kids' classroom wing's own marked route running out an
-exit on the opposite side of the building from that — the same side the four classrooms and the
-small group room are on. The app currently states only what both documents agree on (children
-evacuate by class, separately from the sanctuary route) and does not print a direction until this
-is resolved.*
+original floor-plan drawing showed the kids' classroom wing's own marked route running out an exit
+on the opposite side of the building from that — the same side the four classrooms and the small
+group room are on. A new "Evacuation Map" diagram arrived 2026-09-18 and shows the same
+classroom-side exit corridor as before, but it carries no compass or "North" marking either, so it
+still cannot confirm or rule out a conflict with the written plan's "West exit." The app continues
+to state only what both documents agree on (children evacuate by class, separately from the
+sanctuary route) and does not print a direction until this is resolved.*
 
 Which document is correct?  ☐ The written plan (West)   ☐ The floor plan (classroom-side)   ☐ Neither — actual route is: _______________________________
 
@@ -192,8 +200,10 @@ card. These solve the same problem in incompatible ways — this is not a small 
 
 **Actual practice, as confirmed:** a clipboard sign-out sheet is completed by the teacher; parents
 must present a ticket to pair with a child. The app's Reunification procedure card has been rewritten
-to describe this method and no longer references SRM. The assembly-area / parent check-in location
-itself is still unconfirmed — see Question 2.
+to describe this method and no longer references SRM. **Update 2026-09-18:** the location question is
+now answered too — the church's own Emergency Evacuation Plan names it as approximately 75 yards out
+front of the church, to the far left of the parking lot. Whether that is also the general sanctuary/
+adult assembly point is still open — see Question 2.
 
 ---
 

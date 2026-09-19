@@ -236,12 +236,63 @@ positions already flagged as unmarked.
 
 ---
 
+## 0e. Phase 7 — 2026-09-18: new "Evacuation Map" diagram and "Emergency
+     Evacuation Plan" document received
+
+Two files arrived: `Evacuation Map.pdf` (an updated version of the floor-plan
+drawing — this is the diagram flagged as pending in §0d) and `Emergency
+Evacuation Plan.pdf` (a short, different document from the September 2025
+Evacuation Plan referenced elsewhere in this file — it does not repeat that
+document's "West exit" claim at all, it is simply silent on compass
+direction).
+
+**The Full Site Schematic has been replaced** with the new Evacuation Map —
+Facility Maps → Full Site Schematic, now click-to-expand full screen. It
+marks a route from every room/seating area to its nearest exterior exit,
+including the classroom/Nursery wing for the first time (the previous
+drawing didn't show that wing at all). **It still carries no compass or
+"North" marking**, so it does not resolve whether the classroom-side exit it
+shows is the same "West exit" the written Evacuation Plan names — see Team
+Question 13, still open.
+
+**Newly answered, from the Emergency Evacuation Plan document:**
+
+- **Assembly area / reunification point.** "Approximately 75 yards out front
+  of the church, to the far left of the parking lot" — this is where parents
+  come out to receive their children. Applied to the Fire & Evacuation and
+  Reunification procedure cards as the general assembly area, since the
+  document names no other location. Whether this is also specifically the
+  sanctuary/adult assembly point is a reasonable assumption, not a directly
+  confirmed one — see Team Question 2.
+- **Classroom/Nursery radios.** 5 radios, on the Safety Team's 2 channels (1
+  & 15) — turned on and checked by a Safety Team member before every
+  service, left on but turned down so classrooms don't pick up ordinary
+  Safety Team chatter. Added to the Communications & Escalation Academy
+  module. **Still not answered:** how many radios the Safety Team itself
+  carries (a separate count from these 5), and who holds them — see Team
+  Question 6.
+- **A safety principle not previously in this app:** *"We would never
+  evacuate during imminent or active threat because that puts the littles at
+  higher exposure and targets."* This is now stated explicitly on the
+  Lockdown, Active Shooter, and Fire & Evacuation procedure cards and the
+  Active Shooter Response Academy module (ss201) — fire/smoke evacuation is
+  not the response to a person-based threat; lockdown in place is. The
+  Lockdown card's step list also now includes "pull blinds," from the same
+  document's 4-step lockdown instructions (lock doors, pull blinds, lights
+  out, wait for police/Safety Team) — the other three steps already matched.
+
+**Still untouched — do not guess:** severe-weather shelter rooms, which
+exact exit the kids' wing uses relative to true compass direction, total
+Safety Team radio count and who holds them, and Kim vs. Kimberly Yadon.
+
+---
+
 ## 1. Documents to upload (Phase 2 builds the slots)
 
 | Item | Status | Notes |
 |---|---|---|
 | Safety & Security Onboarding Manual | **SHIPPED 2026-09-16** | The actual CCST Safety Team Policy & Procedures document is embedded in full, section by section, behind a scroll-to-the-end gate. Onboarding step 1 is gated on it, as designed. See §0b. |
-| Full site schematic | **PARTIAL — received 2026-09-15** | The floor plan with entrances/exits and colour-coded evacuation routes is in the app (Facility Maps). Still missing from it: **AED positions, fire-extinguisher positions, and team post positions.** See §0. |
+| Full site schematic | **PARTIAL — updated 2026-09-18** | The "Evacuation Map" (per-room routes to nearest exit, including the classroom/Nursery wing for the first time) replaces the 2026-09-15 floor plan in the app (Facility Maps), now with a full-screen click-to-expand view. Still missing from it: **fire-extinguisher positions, team post positions, and any compass/North marking.** See §0e. |
 | Foyer diagram | **NEEDED** | Greeter posts, main entry doors, guest services. |
 | Sanctuary diagram | **NEEDED** | Seating, stage, exits, team posts front/rear. |
 | Children's auditorium diagram | **NEEDED** | Kids' rooms, exits, secure hallway coverage. |
@@ -252,13 +303,13 @@ positions already flagged as unmarked.
 ## 2. Facility facts nobody has told us yet
 
 - [x] **AED positions — how many, and where.** ANSWERED 2026-09-18 by Tyson Garten, CCST Director — two AEDs: (1) kids' hallway, (2) sanctuary, south wall, between the stage-left seating area and where you enter the risers from the floor. See §0d.
-- [ ] **Assembly area location.** Referenced by the Fire & Evacuation and Earthquake procedures, which still say "to be marked on the site schematic."
+- [x] **Assembly area location.** ANSWERED 2026-09-18 via the church's Emergency Evacuation Plan — approximately 75 yards out front of the church, to the far left of the parking lot. See §0e. Whether this is also specifically the sanctuary/adult assembly point (vs. only the kids'/reunification point) is a reasonable assumption, not directly confirmed — Team Question 2.
 - [ ] **Fire extinguisher positions.**
 - [ ] **Severe-weather shelter locations** — which specific interior, lowest-level rooms and hallways. NWS rules out the sanctuary and the fellowship hall (large open rooms with wide-span roofs), so this needs a real answer, not "move to the interior."
 - [ ] **Accessible evacuation routes and areas of refuge** for people with mobility needs.
-- [ ] **Radio channel and count.** The method itself is no longer a question — the church's own written policy confirms radios, with real call protocol (a "Medical Emergency" call is stated TWICE with location; "Code-4" clears the channel; "Code-5" is used to call out a contact with a suspicious person). What is still unknown: how many radios exist, which channel, and who holds them.
+- [ ] **Radio channel and count — PARTIALLY ANSWERED 2026-09-18.** The classroom/Nursery side is now known: 5 radios, channels 1 & 15 (see §0e). Still unknown: how many radios the Safety Team itself carries, and who holds them.
 - [ ] **Which exterior doors are monitored** during children's drop-off and dismissal.
-- [ ] **Reunification location and parent check-in point.** The method itself is answered (see §0d — clipboard sign-out, ticket-based pairing, per Tyson Garten). What is still unknown is where that check-in happens.
+- [x] **Reunification location and parent check-in point.** ANSWERED 2026-09-18 — approximately 75 yards out front of the church, to the far left of the parking lot (same location as the general assembly area). See §0e.
 - [ ] **Which interior doors actually lock, and who carries keys or a fob on a Sunday.** *Now blocking a shipped procedure:* the Lockdown annex is worth exactly as much as the locks behind it.
 - [ ] **Shelter-in-place rooms**, who can shut down or recirculate the HVAC, and whether plastic sheeting and duct tape are stocked anywhere in the building. Sealing a room is the one protective action here that needs supplies bought in advance.
 
