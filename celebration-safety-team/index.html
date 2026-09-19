@@ -803,6 +803,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <button type="button" class="nav-item" data-section="scheduling" onclick="showSection('scheduling')"><span class="nav-icon" aria-hidden="true">📅</span><span class="nav-text">Scheduling</span></button>
     <button type="button" class="nav-item" data-section="incidents" onclick="showSection('incidents')"><span class="nav-icon" aria-hidden="true">🚔</span><span class="nav-text">Incident Reports</span></button>
     <button type="button" class="nav-item" data-section="news" onclick="showSection('news')"><span class="nav-icon" aria-hidden="true">📰</span><span class="nav-text">News</span></button>
+    <button type="button" class="nav-item" data-section="documents" onclick="showSection('documents')"><span class="nav-icon" aria-hidden="true">🗂️</span><span class="nav-text">Documents</span></button>
     <div class="sidebar-label">People</div>
     <button type="button" class="nav-item" data-section="team" onclick="showSection('team')"><span class="nav-icon" aria-hidden="true">🛡️</span><span class="nav-text">Team</span></button>
     <button type="button" class="nav-item" data-section="meetings" onclick="showSection('meetings')"><span class="nav-icon" aria-hidden="true">🗣️</span><span class="nav-text">Team Meetings</span></button>
@@ -882,6 +883,11 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
             <button class="btn btn-primary" style="flex:1;" onclick="openCoverageRequestModal()">Request Coverage</button>
           </div>
         </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:.6rem;">🧯 DRILL COMPLIANCE<button type="button" class="linkish" style="margin-left:auto;font-size:.72rem;" onclick="navTo('meetings')">Drill Log & Schedule →</button></div>
+        <div id="dashDrillCompliance" class="stats-row"></div>
       </div>
 
       <div class="card">
@@ -1526,7 +1532,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
       <div id="teamAdminNote" class="tip-box" style="display:none;">🔒 Unlock <strong>Admin</strong> (top-right) to add or edit team members.</div>
       <div class="table-scroll"><table class="data-table">
-        <thead><tr><th>First Name</th><th>Last Name</th><th>Phone</th><th>Email</th><th>Specialty</th><th>Role</th><th>Week</th><th id="teamActionsHead" style="display:none;">Actions</th></tr></thead>
+        <thead><tr><th>First Name</th><th>Last Name</th><th>Phone</th><th>Email</th><th>Specialty</th><th>Role</th><th>Week</th><th id="teamBgCheckHead" style="display:none;">Background Check</th><th id="teamActionsHead" style="display:none;">Actions</th></tr></thead>
         <tbody id="teamBody"></tbody>
       </table></div>
       <div class="empty-note" id="teamEmpty" style="margin-top:.8rem;">No team members yet. Unlock Admin and select "+ Add Member" to build the roster.</div>
@@ -1680,6 +1686,21 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div class="empty-note" id="newsEmpty" style="display:none;">No news posted yet.</div>
     </section>
 
+    <!-- ══ DOCUMENTS ══ -->
+    <section id="sec-documents" class="section">
+      <div class="sec-header">
+        <div class="sec-icon blue">🗂️</div>
+        <div>
+          <div class="sec-title">DOCUMENT LIBRARY</div>
+          <div class="sec-desc">Policy documents, forms, legal references, and training materials — every signed-in member can view and download. Uploads are private; downloads use a one-hour signed link.</div>
+        </div>
+        <button class="btn btn-primary" id="addDocumentBtn" style="margin-left:auto;display:none;" onclick="openDocumentModal()">+ Upload Document</button>
+      </div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem;" id="docCategoryFilters"></div>
+      <div id="documentList"></div>
+      <div class="empty-note" id="documentEmpty" style="display:none;">No documents in this category yet.</div>
+    </section>
+
     <!-- ══ TEAM MEETINGS ══ -->
     <section id="sec-meetings" class="section">
       <div class="sec-header">
@@ -1693,6 +1714,26 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <div id="meetAdminNote" class="tip-box" style="display:none;">🔒 Unlock <strong>Admin</strong> to add meetings and notes.</div>
       <div id="meetingList"></div>
       <div class="empty-note" id="meetingEmpty">No meetings logged yet.</div>
+
+      <div style="border-top:1px solid var(--bd);margin-top:1.3rem;padding-top:1rem;">
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem;">
+          <div>
+            <div class="card-title" style="margin-bottom:.2rem;">🧯 DRILL LOG &amp; SCHEDULE</div>
+            <div class="sec-desc">Fire quarterly · Code Adam every 6 months · Active Shooter/Lockdown, Severe Weather, and Medical Emergency annually.</div>
+          </div>
+          <button class="btn btn-primary" id="logDrillBtn" style="margin-left:auto;display:none;" onclick="openDrillModal()">+ Log a Drill</button>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Drill Type</th><th>Last Conducted</th><th>Next Due</th><th>Status</th><th>Participants (last drill)</th></tr></thead>
+            <tbody id="drillComplianceBody"></tbody>
+          </table>
+        </div>
+
+        <div class="card-title" style="margin:1.1rem 0 .5rem;">📋 DRILL HISTORY</div>
+        <div id="drillHistoryList"></div>
+        <div class="empty-note" id="drillHistoryEmpty" style="display:none;">No drills logged yet.</div>
+      </div>
     </section>
     <!-- ══ TRAINING RESOURCES ══ -->
     <section id="sec-resources" class="section">
@@ -1914,6 +1955,23 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </select>
       </div>
     </div>
+    <div style="border-top:1px solid var(--bd);margin-top:.9rem;padding-top:.8rem;">
+      <div style="font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:.5rem;">Background Check</div>
+      <div class="modal-grid-2">
+        <div class="form-row"><label>Status</label>
+          <select id="mBgStatus" onchange="onBgStatusChange()">
+            <option value="not_requested">Not Requested</option>
+            <option value="requested">Requested</option>
+            <option value="cleared">Cleared</option>
+            <option value="expired">Expired</option>
+            <option value="flagged">Flagged</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Check Date</label><input type="date" id="mBgDate" onchange="onBgStatusChange()"></div>
+      </div>
+      <div class="form-row"><label>Expiry Date</label><input type="date" id="mBgExpiry"></div>
+      <div style="font-size:.7rem;color:var(--tx3);">Set manually by an admin — no Ministry Safe / Checkr integration yet. Expiry defaults to 2 years from the check date when status is set to Cleared, but you can override it.</div>
+    </div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('memberModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveMember()">Save Member</button>
@@ -1948,6 +2006,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('meetingModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveMeeting()">Save Meeting</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOG A DRILL ══ -->
+<div class="modal-overlay" id="drillModal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title">🧯 LOG A DRILL</div>
+    <div class="modal-grid-2">
+      <div class="form-row"><label>Drill Type</label><select id="drillType"></select></div>
+      <div class="form-row"><label>Date Conducted</label><input type="date" id="drillDate"></div>
+    </div>
+    <div class="modal-grid-2">
+      <div class="form-row"><label>Duration (minutes)</label><input type="number" id="drillDuration" min="1" placeholder="e.g. 15"></div>
+      <div class="form-row"><label>Conducted By</label><input type="text" id="drillConductedBy" placeholder="Name"></div>
+    </div>
+    <div class="form-row"><label>Location / Notes</label><textarea id="drillNotes" rows="3" placeholder="What went well, what to improve, exit times..."></textarea></div>
+    <div class="form-row"><label>Participants</label><select id="drillParticipants" multiple size="6"></select></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('drillModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDrill()">Save Drill</button>
     </div>
   </div>
 </div>
@@ -2127,6 +2206,21 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
       <button class="btn btn-ghost" onclick="closeModalEl('newsModal')">Cancel</button>
       <button class="btn btn-primary" id="postNewsBtn" onclick="saveNews()">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ UPLOAD DOCUMENT ══ -->
+<div class="modal-overlay" id="documentModal">
+  <div class="admin-modal-box" style="max-width:520px;">
+    <div class="admin-modal-title">🗂️ UPLOAD DOCUMENT</div>
+    <div class="form-row"><label>Title</label><input type="text" id="docTitle" placeholder="e.g. CCST Safety Team Policy Manual"></div>
+    <div class="form-row"><label>Category</label><select id="docCategory"></select></div>
+    <div class="form-row"><label>Description (optional)</label><textarea id="docDescription" rows="3"></textarea></div>
+    <div class="form-row"><label>File (PDF, Word, or image)</label><input type="file" id="docFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png"></div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="closeModalEl('documentModal')">Cancel</button>
+      <button class="btn btn-primary" id="saveDocumentBtn" onclick="saveDocument()">Upload</button>
     </div>
   </div>
 </div>
@@ -2953,6 +3047,7 @@ function updateManualUnlockRow() {
 const ONBOARD_ITEMS = [
   { id: 'manual',     text: 'Read the CCST Safety Team Policy &amp; Procedures manual in full (embedded above)' },
   { id: 'bg-check',   text: 'Acknowledge the Safety Team background-check disqualifiers: a felony conviction in the last 5 years (or pending felony case), any felony conviction involving a sex crime, or a misdemeanor conviction involving moral turpitude (or pending misdemeanor case) — and confirm none apply to you' },
+  { id: 'bg-check-cleared', text: 'Complete your background check with the church office, and confirm it shows Cleared under your name on the Team roster' },
   { id: 'meet-lead',  text: 'Meet the Team Leader(s) and receive your service assignment' },
   { id: 'walk-site',  text: 'Walk the full facility: foyer, sanctuary, children\u2019s auditorium, children\u2019s check-in, all exits, perimeter' },
   { id: 'maps',       text: 'Review Facility Maps & the site schematic (routes, assembly area, AED/extinguishers)' },
@@ -2983,7 +3078,14 @@ let S = { team: [], leaders: [], meetings: [], schedule: {}, progress: {}, activ
 /* Row <-> app-object field mapping. DB columns are snake_case and match the
    schema file; the app object shape (first/last/spec/role/...) is unchanged
    from the localStorage era so every render function stayed the same. */
-function teamRowToJs(r) { return { id: r.id, first: r.first_name, last: r.last_name, phone: r.phone || '', email: r.email || '', spec: r.specialty, role: r.team_role, rotationWeek: r.rotation_week || '' }; }
+function teamRowToJs(r) {
+  return {
+    id: r.id, first: r.first_name, last: r.last_name, phone: r.phone || '', email: r.email || '',
+    spec: r.specialty, role: r.team_role, rotationWeek: r.rotation_week || '',
+    bgCheckStatus: r.background_check_status || 'not_requested',
+    bgCheckDate: r.background_check_date || '', bgCheckExpiry: r.background_check_expiry || ''
+  };
+}
 /* Director and Team Leader are both eligible for the schedule LEAD slot —
    Director sits above Team Leader in the church's 5-tier hierarchy (CCST
    policy doc, "Job Positions of the Safety Team") and subsumes it for
@@ -3163,7 +3265,8 @@ const TOGGLEABLE_SECTIONS = [
   { key: 'meetings', label: 'Team Meetings' },
   { key: 'leadership', label: 'Leadership / Staff' },
   { key: 'resources', label: 'Training Resources' },
-  { key: 'news', label: 'News' }
+  { key: 'news', label: 'News' },
+  { key: 'documents', label: 'Documents' }
 ];
 function isSectionVisible(key) {
   if (!TOGGLEABLE_SECTIONS.some(s => s.key === key)) return true;
@@ -3329,7 +3432,7 @@ async function paintAuth(r) {
   showAppShell();
   populateIncidentCategorySelects();
   applySectionVisibility();
-  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList();
+  renderCourses(); renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderManual(); renderOnboard(); renderIncidents(); renderVerse(); renderNotes(); renderFacilityMaps(); renderBolos(); renderBoloBanner(); renderNews(); renderCoverageRequestsList(); renderDocuments(); renderDrillCompliance(); renderDrillLog();
   applyAdmin(); refreshDash();
   maybeStartTour();
 }
@@ -3359,7 +3462,9 @@ async function loadAllData() {
     loadFacilityMaps(),
     loadBolos(),
     loadNews(),
-    loadCoverageRequests()
+    loadCoverageRequests(),
+    loadDocuments(),
+    loadDrills()
   ]);
   S.team = (teamR ? teamR.data : []).map(teamRowToJs);
   S.leaders = (leadersR ? leadersR.data : []).map(leaderRowToJs);
@@ -3642,6 +3747,8 @@ function applyAdmin() {
   document.getElementById('addLeaderBtn').style.display = adminOn ? '' : 'none';
   document.getElementById('addMeetingBtn').style.display = adminOn ? '' : 'none';
   document.getElementById('teamActionsHead').style.display = adminOn ? '' : 'none';
+  document.getElementById('teamBgCheckHead').style.display = adminOn ? '' : 'none';
+  document.getElementById('addDocumentBtn').style.display = adminOn ? '' : 'none';
   document.getElementById('teamAdminNote').style.display = adminOn ? 'none' : '';
   document.getElementById('meetAdminNote').style.display = adminOn ? 'none' : '';
   document.getElementById('leaderAdminNote').style.display = adminOn ? 'none' : '';
@@ -3649,7 +3756,7 @@ function applyAdmin() {
   document.getElementById('adminToolsCard').style.display = adminOn ? '' : 'none';
   document.getElementById('manageLoginsCard').style.display = adminOn ? '' : 'none';
   document.getElementById('trainingMatrixCard').style.display = adminOn ? '' : 'none';
-  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderFacilityMaps();
+  renderTeam(); renderLeaders(); renderMeetings(); renderSchedule(); renderFacilityMaps(); renderDocuments(); renderDrillLog();
   if (adminOn) loadTrainingMatrix();
 }
 
@@ -3669,7 +3776,23 @@ function openMemberModal(id) {
   document.getElementById('mSpec').value = m ? m.spec : 'General / Trained Volunteer';
   document.getElementById('mRole').value = m ? m.role : 'Safety Team Operator';
   document.getElementById('mRotationWeek').value = m ? (m.rotationWeek || '') : '';
+  document.getElementById('mBgStatus').value = m ? (m.bgCheckStatus || 'not_requested') : 'not_requested';
+  document.getElementById('mBgDate').value = m ? (m.bgCheckDate || '') : '';
+  document.getElementById('mBgExpiry').value = m ? (m.bgCheckExpiry || '') : '';
   openModalEl('memberModal');
+}
+/* Auto-fills expiry as check-date + 2 years the moment status becomes
+   Cleared (or the date changes while already Cleared) — a starting point,
+   not a lock; the admin can still hand-edit the expiry field afterward,
+   since it is never a generated column (see BACKGROUND-CHECK-STATUS.sql). */
+function onBgStatusChange() {
+  const status = document.getElementById('mBgStatus').value;
+  const dateVal = document.getElementById('mBgDate').value;
+  if (status === 'cleared' && dateVal) {
+    const d = new Date(dateVal + 'T12:00:00');
+    d.setFullYear(d.getFullYear() + 2);
+    document.getElementById('mBgExpiry').value = iso(d);
+  }
 }
 async function saveMember() {
   const first = document.getElementById('mFirst').value.trim();
@@ -3679,15 +3802,21 @@ async function saveMember() {
   if (!first || !last) { await alertDialog('Missing name', 'A first and last name are both required.'); return; }
   const spec = document.getElementById('mSpec').value, role = document.getElementById('mRole').value;
   const rotationWeek = document.getElementById('mRotationWeek').value;
-  const row = { first_name: first, last_name: last, phone, email, specialty: spec, team_role: role, rotation_week: rotationWeek || null };
+  const bgCheckStatus = document.getElementById('mBgStatus').value;
+  const bgCheckDate = document.getElementById('mBgDate').value || null;
+  const bgCheckExpiry = document.getElementById('mBgExpiry').value || null;
+  const row = {
+    first_name: first, last_name: last, phone, email, specialty: spec, team_role: role, rotation_week: rotationWeek || null,
+    background_check_status: bgCheckStatus, background_check_date: bgCheckDate, background_check_expiry: bgCheckExpiry
+  };
   if (editingMemberId) {
     const r = await dbWrite(sb.from('cc_team').update(row).eq('id', editingMemberId), 'Could not save changes');
     if (!r) return;
-    Object.assign(S.team.find(x => x.id === editingMemberId), { first, last, phone, email, spec, role, rotationWeek });
+    Object.assign(S.team.find(x => x.id === editingMemberId), { first, last, phone, email, spec, role, rotationWeek, bgCheckStatus, bgCheckDate, bgCheckExpiry });
   } else {
     const r = await dbWrite(sb.from('cc_team').insert(row).select().single(), 'Could not add this member');
     if (!r) return;
-    S.team.push({ id: r.data.id, first, last, phone, email, spec, role, rotationWeek });
+    S.team.push({ id: r.data.id, first, last, phone, email, spec, role, rotationWeek, bgCheckStatus, bgCheckDate, bgCheckExpiry });
   }
   closeModalEl('memberModal'); renderTeam(); renderSchedule(); renderCourses(); refreshDash();
   addActivity((editingMemberId ? 'Updated' : 'Added') + ' team member: ' + first + ' ' + last);
@@ -3723,8 +3852,22 @@ function renderTeam() {
       <td><span class="spec-tag ${SPEC_CLASS[m.spec] || 'spec-general'}">${esc(m.spec)}</span></td>
       <td>${roleBadge(m.role)}</td>
       <td>${m.rotationWeek ? `<span class="lead-tag" style="background:${m.rotationWeek === 'A' ? 'rgba(var(--bl-rgb),.12)' : 'rgba(var(--pu-rgb),.12)'};border-color:${m.rotationWeek === 'A' ? 'rgba(var(--bl-rgb),.35)' : 'rgba(var(--pu-rgb),.35)'};color:${m.rotationWeek === 'A' ? 'var(--bl)' : 'var(--pu)'};">WEEK ${m.rotationWeek}</span>` : '<span style="color:var(--tx3);">—</span>'}</td>
+      ${adminOn ? `<td>${bgCheckBadge(m)}</td>` : ''}
       ${adminOn ? `<td><button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;" onclick="openMemberModal('${m.id}')">Edit</button> <button class="btn btn-ghost" style="padding:.25rem .55rem;font-size:.68rem;color:var(--red-text);" onclick="deleteMember('${m.id}')">✕</button></td>` : ''}
     </tr>`).join('');
+}
+/* Flags anyone expired or not_requested in red so it reads as "needs
+   action" at a glance, not just a neutral status label. Expiry is shown
+   next to Cleared since that is the one status where a date is actually
+   meaningful to the viewer. */
+function bgCheckBadge(m) {
+  const status = m.bgCheckStatus || 'not_requested';
+  const labels = { not_requested: 'Not Requested', requested: 'Requested', cleared: 'Cleared', expired: 'Expired', flagged: 'Flagged' };
+  const needsAction = status === 'expired' || status === 'not_requested' || status === 'flagged';
+  const color = status === 'cleared' ? 'var(--gr)' : needsAction ? 'var(--red-text)' : 'var(--c)';
+  const borderRgb = status === 'cleared' ? 'var(--gr-rgb)' : needsAction ? 'var(--cr-rgb)' : 'var(--c-rgb)';
+  const expiry = m.bgCheckExpiry ? new Date(m.bgCheckExpiry + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+  return `<span class="lead-tag" style="background:rgba(${borderRgb},.12);border-color:rgba(${borderRgb},.4);color:${color};">${esc(labels[status] || status)}</span>${status === 'cleared' && expiry ? `<div style="font-size:.66rem;color:var(--tx3);margin-top:.2rem;">expires ${esc(expiry)}</div>` : ''}`;
 }
 function roleBadge(role) {
   if (role === 'Director') return '<span class="lead-tag" style="background:rgba(var(--c-rgb),.15);border-color:rgba(var(--c-rgb),.4);color:var(--c);">👑 DIRECTOR</span>';
@@ -3899,6 +4042,154 @@ function renderMeetings() {
       ${m.notes ? `<div style="font-size:.8rem;color:var(--tx2);margin-top:.6rem;line-height:1.6;white-space:pre-wrap;">${esc(m.notes)}</div>` : ''}
     </div>`;
   }).join('');
+}
+// ════════════════════════════════════════════════════════════════
+// DRILL LOG & COMPLIANCE (cc_drills) — Admin and Team Lead log drills;
+// compliance status (on track / due soon / overdue) is computed
+// client-side from the most recent conducted_date per drill type against a
+// fixed frequency table, the same way nextSunday()/currentVerseWeek()
+// compute dates rather than storing a redundant "next due" column.
+// ════════════════════════════════════════════════════════════════
+const DRILL_TYPES = [
+  { key: 'fire', label: 'Fire Drill', icon: '🔥', months: 3 },
+  { key: 'code_adam', label: 'Code Adam', icon: '🧒', months: 6 },
+  { key: 'active_shooter', label: 'Active Shooter / Lockdown', icon: '🔒', months: 12 },
+  { key: 'severe_weather', label: 'Severe Weather / Shelter-in-Place', icon: '🌪️', months: 12 },
+  { key: 'medical', label: 'Medical Emergency', icon: '🚑', months: 12 }
+];
+function drillTypeLabel(key) { const d = DRILL_TYPES.find(x => x.key === key); return d ? d.label : key; }
+function drillRowToJs(r) {
+  return {
+    id: r.id, drillType: r.drill_type, conductedDate: r.conducted_date,
+    durationMinutes: r.duration_minutes, locationNotes: r.location_notes || '',
+    participantIds: r.participant_ids || [], conductedBy: r.conducted_by,
+    conductedByName: r.conducted_by_name, createdAt: r.created_at
+  };
+}
+async function loadDrills() {
+  const r = await dbWrite(sb.from('cc_drills').select('*').order('conducted_date', { ascending: false }), 'Could not load the drill log');
+  S.drills = r ? r.data.map(drillRowToJs) : [];
+}
+function canLogDrills() { return adminOn || (currentProfile && currentProfile.role === 'team_lead'); }
+/* Next-due and status (on_track / due_soon / overdue) for one drill type,
+   from the most recent logged drill of that type. Never logged at all
+   reads as overdue outright — there is no grace period for "never done." */
+function drillComplianceFor(key) {
+  const def = DRILL_TYPES.find(d => d.key === key);
+  const entries = (S.drills || []).filter(d => d.drillType === key).slice().sort((a, b) => b.conductedDate.localeCompare(a.conductedDate));
+  const last = entries[0] || null;
+  if (!last) return { key, last: null, nextDue: null, status: 'overdue' };
+  const lastDate = new Date(last.conductedDate + 'T12:00:00');
+  const nextDue = new Date(lastDate);
+  nextDue.setMonth(nextDue.getMonth() + def.months);
+  const today = new Date(); today.setHours(12, 0, 0, 0);
+  const daysUntilDue = Math.round((nextDue - today) / 864e5);
+  const status = daysUntilDue < 0 ? 'overdue' : daysUntilDue <= 30 ? 'due_soon' : 'on_track';
+  return { key, last, nextDue: iso(nextDue), status };
+}
+function drillStatusBadge(status) {
+  if (status === 'on_track') return '<span class="lead-tag" style="background:rgba(var(--gr-rgb),.15);border-color:rgba(var(--gr-rgb),.4);color:var(--gr);">✅ ON TRACK</span>';
+  if (status === 'due_soon') return '<span class="lead-tag" style="background:rgba(var(--c-rgb),.15);border-color:rgba(var(--c-rgb),.4);color:var(--c);">⏳ DUE SOON</span>';
+  return '<span class="lead-tag" style="background:rgba(var(--cr-rgb),.15);border-color:rgba(var(--cr-rgb),.4);color:var(--red-text);">🚨 OVERDUE</span>';
+}
+function drillParticipantNames(ids) {
+  return (ids || []).map(id => { const m = S.team.find(x => x.id === id); return m ? (m.first + ' ' + m.last) : null; }).filter(Boolean);
+}
+function renderDrillLog() {
+  const bodyEl = document.getElementById('drillComplianceBody');
+  if (!bodyEl) return;
+  const logBtn = document.getElementById('logDrillBtn');
+  if (logBtn) logBtn.style.display = canLogDrills() ? '' : 'none';
+  bodyEl.innerHTML = DRILL_TYPES.map(def => {
+    const c = drillComplianceFor(def.key);
+    const lastLabel = c.last ? new Date(c.last.conductedDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Never';
+    const nextLabel = c.nextDue ? new Date(c.nextDue + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+    const names = c.last ? drillParticipantNames(c.last.participantIds) : [];
+    return `<tr>
+      <td style="font-weight:700;color:var(--tx);">${def.icon} ${esc(def.label)}</td>
+      <td>${esc(lastLabel)}</td>
+      <td>${esc(nextLabel)}</td>
+      <td>${drillStatusBadge(c.status)}</td>
+      <td style="font-size:.78rem;color:var(--tx2);">${names.length ? esc(names.join(', ')) : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  const historyEl = document.getElementById('drillHistoryList');
+  const emptyEl = document.getElementById('drillHistoryEmpty');
+  if (historyEl) {
+    const entries = (S.drills || []).slice().sort((a, b) => b.conductedDate.localeCompare(a.conductedDate));
+    if (emptyEl) emptyEl.style.display = entries.length ? 'none' : '';
+    historyEl.innerHTML = entries.map(d => {
+      const dateLabel = new Date(d.conductedDate + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      const names = drillParticipantNames(d.participantIds);
+      const def = DRILL_TYPES.find(x => x.key === d.drillType);
+      return `<div class="card" style="margin-bottom:.6rem;">
+        <div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;align-items:flex-start;">
+          <div>
+            <div style="font-weight:800;font-size:.9rem;">${def ? def.icon : '🧯'} ${esc(drillTypeLabel(d.drillType))}</div>
+            <div style="font-size:.72rem;color:var(--tx3);margin-top:.2rem;">${esc(dateLabel)}${d.durationMinutes ? ' · ' + d.durationMinutes + ' min' : ''} · Conducted by ${esc(d.conductedByName)}</div>
+          </div>
+          ${adminOn ? `<button class="btn btn-ghost" style="padding:.2rem .5rem;font-size:.68rem;color:var(--red-text);" onclick="deleteDrill('${d.id}')">Remove</button>` : ''}
+        </div>
+        ${names.length ? `<div style="font-size:.76rem;color:var(--tx2);margin-top:.5rem;"><strong>Participants:</strong> ${esc(names.join(', '))}</div>` : ''}
+        ${d.locationNotes ? `<div style="font-size:.8rem;color:var(--tx2);margin-top:.4rem;line-height:1.5;white-space:pre-wrap;">${esc(d.locationNotes)}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+}
+function openDrillModal() {
+  document.getElementById('drillType').innerHTML = DRILL_TYPES.map(d => `<option value="${d.key}">${d.icon} ${esc(d.label)}</option>`).join('');
+  document.getElementById('drillDate').value = iso(new Date());
+  document.getElementById('drillDuration').value = '';
+  document.getElementById('drillConductedBy').value = activeName();
+  document.getElementById('drillNotes').value = '';
+  document.getElementById('drillParticipants').innerHTML = S.team.slice().sort((a, b) => (a.first + a.last).localeCompare(b.first + b.last))
+    .map(m => `<option value="${m.id}">${esc(m.first)} ${esc(m.last)}</option>`).join('');
+  openModalEl('drillModal');
+}
+async function saveDrill() {
+  const drillType = document.getElementById('drillType').value;
+  const conductedDate = document.getElementById('drillDate').value;
+  const duration = document.getElementById('drillDuration').value;
+  const conductedByName = document.getElementById('drillConductedBy').value.trim();
+  const locationNotes = document.getElementById('drillNotes').value.trim();
+  const participantIds = Array.from(document.getElementById('drillParticipants').selectedOptions).map(o => o.value);
+  if (!conductedDate || !conductedByName) { await alertDialog('Missing details', 'A date and who conducted the drill are both required.'); return; }
+  const row = {
+    drill_type: drillType, conducted_date: conductedDate,
+    duration_minutes: duration ? parseInt(duration, 10) : null,
+    location_notes: locationNotes || null, participant_ids: participantIds,
+    conducted_by: currentProfile.id, conducted_by_name: conductedByName
+  };
+  const r = await dbWrite(sb.from('cc_drills').insert(row).select().single(), 'Could not save this drill');
+  if (!r) return;
+  S.drills.unshift(drillRowToJs(r.data));
+  closeModalEl('drillModal');
+  renderDrillLog(); renderDrillCompliance();
+  addActivity('Logged a drill: ' + drillTypeLabel(drillType) + ' — ' + conductedDate);
+}
+async function deleteDrill(id) {
+  const d = S.drills.find(x => x.id === id);
+  if (!d) return;
+  if (!await confirmDialog('Remove this drill record?', 'This cannot be undone.', { okLabel: 'Remove', danger: true })) return;
+  const r = await dbWrite(sb.from('cc_drills').delete().eq('id', id), 'Could not remove this drill record');
+  if (!r) return;
+  S.drills = S.drills.filter(x => x.id !== id);
+  renderDrillLog(); renderDrillCompliance();
+}
+/* Dashboard indicator — a compact row of the 5 drill types and their
+   current status colour, so "something needs attention" is visible without
+   opening Team Meetings. */
+function renderDrillCompliance() {
+  const box = document.getElementById('dashDrillCompliance');
+  if (!box) return;
+  box.innerHTML = DRILL_TYPES.map(def => {
+    const c = drillComplianceFor(def.key);
+    const color = c.status === 'overdue' ? 'var(--red-text)' : c.status === 'due_soon' ? 'var(--c)' : 'var(--gr)';
+    const borderRgb = c.status === 'overdue' ? 'var(--cr-rgb)' : c.status === 'due_soon' ? 'var(--c-rgb)' : 'var(--gr-rgb)';
+    const label = c.status === 'overdue' ? 'Overdue' : c.status === 'due_soon' ? 'Due Soon' : 'On Track';
+    return `<span class="stat-pill" style="border-color:rgba(${borderRgb},.4);color:${color};">${def.icon} ${esc(def.label)}: ${label}</span>`;
+  }).join(' ');
 }
 /* Dashboard preview — the next meeting dated today or later, not the most
    recently logged one (S.meetings is loaded newest-first for the Team
@@ -4904,6 +5195,122 @@ async function retryNewsPreview(id) {
   if (!r) return;
   Object.assign(n, newsRowToJs(r.data));
   renderNews();
+}
+
+// ════════════════════════════════════════════════════════════════
+// DOCUMENT LIBRARY (cc_documents) — admin uploads/removes, every
+// authenticated member downloads. A row is either a private upload
+// (storagePath set, resolved to a 1-hour signed URL) or a pre-populated
+// public reference link (externalUrl set directly) — see sql/
+// DOCUMENT-LIBRARY.sql for why those two are mutually exclusive at the
+// database level, not just a client-side convention.
+// ════════════════════════════════════════════════════════════════
+const DOCUMENT_CATEGORIES = [
+  { key: 'policy', label: 'Policy & Procedures' },
+  { key: 'forms', label: 'Forms & Templates' },
+  { key: 'legal', label: 'Legal & Compliance' },
+  { key: 'insurance', label: 'Insurance' },
+  { key: 'training', label: 'Training Materials' }
+];
+function documentCategoryLabel(key) { const c = DOCUMENT_CATEGORIES.find(x => x.key === key); return c ? c.label : key; }
+function documentRowToJs(r) {
+  return {
+    id: r.id, title: r.title, category: r.category, description: r.description || '',
+    storagePath: r.storage_path || '', externalUrl: r.external_url || '',
+    uploadedBy: r.uploaded_by, uploadedByName: r.uploaded_by_name, uploadedAt: r.uploaded_at,
+    url: r.external_url || ''
+  };
+}
+/* Every private upload's signed URL is resolved once here at load time, same
+   1-hour-expiry convention as cc-facility-maps and cc-incident-photos — a
+   member who leaves the Documents tab open past that hour re-loads (or
+   re-navigates) to get a fresh link rather than this app polling to renew
+   one nobody asked for yet. */
+async function loadDocuments() {
+  const r = await dbWrite(sb.from('cc_documents').select('*').order('uploaded_at', { ascending: false }), 'Could not load the document library');
+  const docs = r ? r.data.map(documentRowToJs) : [];
+  await Promise.all(docs.map(async d => {
+    if (d.externalUrl || !d.storagePath) return;
+    const signedR = await Promise.resolve(sb.storage.from('cc-documents').createSignedUrl(d.storagePath, 3600));
+    d.url = (signedR && signedR.data) ? signedR.data.signedUrl : '';
+  }));
+  S.documents = docs;
+}
+let docCategoryFilter = 'all';
+function setDocCategoryFilter(key) { docCategoryFilter = key; renderDocuments(); }
+function renderDocuments() {
+  const filtersEl = document.getElementById('docCategoryFilters');
+  if (filtersEl) {
+    const allBtn = `<button type="button" class="btn ${docCategoryFilter === 'all' ? 'btn-primary' : 'btn-ghost'}" style="padding:.3rem .7rem;font-size:.72rem;" onclick="setDocCategoryFilter('all')">All</button>`;
+    filtersEl.innerHTML = allBtn + DOCUMENT_CATEGORIES.map(c =>
+      `<button type="button" class="btn ${docCategoryFilter === c.key ? 'btn-primary' : 'btn-ghost'}" style="padding:.3rem .7rem;font-size:.72rem;" onclick="setDocCategoryFilter('${c.key}')">${esc(c.label)}</button>`
+    ).join('');
+  }
+  const docs = (S.documents || []).filter(d => docCategoryFilter === 'all' || d.category === docCategoryFilter);
+  const emptyEl = document.getElementById('documentEmpty');
+  if (emptyEl) emptyEl.style.display = docs.length ? 'none' : '';
+  document.getElementById('documentList').innerHTML = docs.map(d => {
+    const uploaded = new Date(d.uploadedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const isExternal = !!d.externalUrl;
+    return `<div class="card" style="margin-bottom:.7rem;">
+      <div style="display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;align-items:flex-start;">
+        <div style="min-width:0;">
+          <span class="lead-tag">${esc(documentCategoryLabel(d.category))}</span>
+          <div style="font-weight:800;font-size:.95rem;margin-top:.4rem;color:var(--tx);">${esc(d.title)}</div>
+          ${d.description ? `<div style="font-size:.8rem;color:var(--tx2);margin-top:.3rem;line-height:1.5;">${esc(d.description)}</div>` : ''}
+          <div style="font-size:.7rem;color:var(--tx3);margin-top:.5rem;">${esc(d.uploadedByName)} · ${uploaded}${isExternal ? ' · External link' : ''}</div>
+        </div>
+        <div style="display:flex;gap:.4rem;flex-shrink:0;flex-wrap:wrap;">
+          ${d.url ? `<a class="btn btn-primary" style="font-size:.72rem;padding:.35rem .8rem;" href="${esc(d.url)}" target="_blank" rel="noopener">${isExternal ? '🔗 Open Source' : '⬇️ Download'}</a>` : '<span style="font-size:.72rem;color:var(--tx3);">Link unavailable — try reloading</span>'}
+          ${adminOn ? `<button class="btn btn-ghost" style="font-size:.72rem;padding:.35rem .7rem;color:var(--red-text);" onclick="deleteDocument('${d.id}')">Remove</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function openDocumentModal() {
+  document.getElementById('docTitle').value = '';
+  document.getElementById('docCategory').innerHTML = DOCUMENT_CATEGORIES.map(c => `<option value="${c.key}">${esc(c.label)}</option>`).join('');
+  document.getElementById('docDescription').value = '';
+  document.getElementById('docFile').value = '';
+  openModalEl('documentModal');
+}
+async function saveDocument() {
+  const title = document.getElementById('docTitle').value.trim();
+  const category = document.getElementById('docCategory').value;
+  const description = document.getElementById('docDescription').value.trim();
+  const file = document.getElementById('docFile').files[0];
+  if (!title || !file) { await alertDialog('Missing details', 'A title and a file are both required.'); return; }
+  const btn = document.getElementById('saveDocumentBtn');
+  btn.disabled = true; btn.textContent = 'Uploading…';
+  const path = category + '/' + crypto.randomUUID() + '-' + file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+  const upR = await dbWrite(sb.storage.from('cc-documents').upload(path, file), 'Could not upload the file');
+  if (!upR) { btn.disabled = false; btn.textContent = 'Upload'; return; }
+  const row = { title, category, description: description || null, storage_path: path, uploaded_by: currentProfile.id, uploaded_by_name: activeName() };
+  const r = await dbWrite(sb.from('cc_documents').insert(row).select().single(), 'Could not save this document');
+  btn.disabled = false; btn.textContent = 'Upload';
+  if (!r) return;
+  const doc = documentRowToJs(r.data);
+  const signedR = await Promise.resolve(sb.storage.from('cc-documents').createSignedUrl(path, 3600));
+  doc.url = (signedR && signedR.data) ? signedR.data.signedUrl : '';
+  S.documents.unshift(doc);
+  closeModalEl('documentModal');
+  renderDocuments();
+  addActivity('Uploaded a document: ' + title);
+}
+async function deleteDocument(id) {
+  const d = S.documents.find(x => x.id === id);
+  if (!d) return;
+  if (!await confirmDialog('Remove this document?', '"' + d.title + '" will no longer be available to the team. This cannot be undone.', { okLabel: 'Remove', danger: true })) return;
+  if (d.storagePath) {
+    const rmR = await dbWrite(sb.storage.from('cc-documents').remove([d.storagePath]), 'Could not remove the uploaded file');
+    if (!rmR) return;
+  }
+  const r = await dbWrite(sb.from('cc_documents').delete().eq('id', id), 'Could not remove this document');
+  if (!r) return;
+  S.documents = S.documents.filter(x => x.id !== id);
+  renderDocuments();
+  addActivity('Removed a document: ' + d.title);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -5948,6 +6355,7 @@ function refreshDash() {
   renderDashIncidentsBolos();
   renderDashCoverageRequests();
   renderDashNextMeeting();
+  renderDrillCompliance();
 }
 /* Replaces the old static "Service Coverage Rule" card. Unrestricted only —
    a restricted incident must never leak into this preview regardless of who

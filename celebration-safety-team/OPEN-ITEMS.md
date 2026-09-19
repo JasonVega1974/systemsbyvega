@@ -287,6 +287,49 @@ Safety Team radio count and who holds them, and Kim vs. Kimberly Yadon.
 
 ---
 
+## 0f. Phase 8 — 2026-09-19: Document Library, Drill Tracking, background
+     check status
+
+**Document Library (new "Documents" tab, Operations group).** Admin uploads
+and removes; every authenticated member can browse and download. Five
+categories: Policy & Procedures, Forms & Templates, Legal & Compliance,
+Insurance, Training Materials. Pre-populated with three verified public
+reference links (no upload needed, no signed URL — these link straight to
+the official source): the CISA Bomb Threat Checklist, Idaho Code § 16-1605
+(Mandatory Reporting), and Idaho Code § 5-348 (Volunteer Security Personnel
+Immunity). Private uploads (policy manual, consent forms, agreements,
+templates, insurance certificate, etc.) go to the `cc-documents` bucket —
+same private-bucket, 1-hour-signed-URL pattern as facility maps and
+incident photos — nothing has actually been uploaded yet; an admin does
+that from the app whenever the files are ready.
+
+**Drill Log & Schedule (new subsection inside Team Meetings).** Logs fire
+drills, Code Adam, Active Shooter/Lockdown, Severe Weather/Shelter-in-Place,
+and Medical Emergency drills — date, duration, location/notes, participants
+(multi-select from the roster), and who conducted it. A compliance tracker
+shows each drill type's last-conducted date, next-due date, and status
+(On Track / Due Soon within 30 days / Overdue), computed client-side from a
+fixed frequency table, not stored. A Dashboard "Drill Compliance" row
+mirrors the same five statuses. Admin and Team Lead can log drills; only
+Admin can delete a mis-entered record. **No drills have actually been
+logged yet** — every drill type reads Overdue (never conducted) until the
+team logs its first real one of each kind.
+
+**Background check status (Team roster, admin-only column).** Manually set
+— not_requested / requested / cleared / expired / flagged — with a check
+date and an expiry date that defaults to 2 years from the check date when
+status is set to Cleared, but is editable afterward rather than a database-
+enforced formula. Flagged in red on the roster when Expired, Not Requested,
+or Flagged. A new Onboarding checklist step asks the member to confirm
+their own status shows Cleared. **No third-party integration** (Ministry
+Safe, Checkr) yet — deferred on purpose, see §4's decisions-pending list:
+background check integration is deferred until the church has a written
+policy for handling flagged results, reviewed by counsel. Nobody's actual
+background-check status has been entered yet; every roster row starts at
+the not_requested default.
+
+---
+
 ## 1. Documents to upload (Phase 2 builds the slots)
 
 | Item | Status | Notes |
@@ -330,7 +373,8 @@ Safety Team radio count and who holds them, and Kim vs. Kimberly Yadon.
 - [x] **Auth and roles (Phase 4) — SHIPPED 2026-09-16.** Magic-link email auth replaced the PIN entirely. `cc_profiles.role` is `admin` / `team_lead` / `member` (displayed to users as Admin / Team Leader / Member) and gates roster and phone numbers behind login. Identity now comes from the real signed-in session, not a free-text name picker.
 - [x] **Annual recertification cadence.** ANSWERED 2026-09-18 by Tyson Garten, CCST Director — annually (every 12 months). See §0d.
 - [ ] **Single-file vs. build step.** Still single-file. Revisit at Phase 2, when file upload and IndexedDB land.
-- [ ] **Drill schedule.** Fire drills and Code Adam walkthroughs are recurring. How often? Phase 3 adds the drill log.
+- [x] **Drill schedule — SHIPPED 2026-09-19.** Team Meetings → Drill Log & Schedule tracks fire drills (quarterly), Code Adam (every 6 months), Active Shooter/Lockdown, Severe Weather/Shelter-in-Place, and Medical Emergency (all annually), with a compliance tracker (On Track/Due Soon/Overdue) and a Dashboard indicator. Frequencies came from standard emergency-management practice, not a church-supplied cadence — leadership can revise any of them if they want something different.
+- [ ] **Background check policy for flagged results.** Background-check status (not_requested / requested / cleared / expired / flagged) is now tracked manually on the roster (Team tab, admin-only column) — see §0f. Background check integration with Ministry Safe or Checkr is deferred until the church has a written policy for handling flagged results, reviewed by counsel.
 - [ ] **The five FEMA annexes.** FEMA's houses-of-worship guide mandates five functional annexes — **Evacuation, Lockdown, Shelter-in-Place, Recovery, Security**. The app currently has Evacuation. Lockdown and Shelter-in-Place are approved and in progress. Recovery and Security are deferred until after the team meeting.
 
 ### RULING — emergency action terminology (decided)
