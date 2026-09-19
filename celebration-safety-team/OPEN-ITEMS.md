@@ -473,6 +473,71 @@ treated as a legal translation without counsel review, consistent with
 
 ---
 
+## 0i. Phase 11 — 2026-09-19: migration to a dedicated Supabase project
+
+**Moved off the shared systemsbyvega/ESB/GSB Supabase project** onto a new
+project (`oroollaijzvdduuvfmsr`) dedicated solely to this app. The old
+project (`newjbexmvltvtmxollca`) is unaffected and still holds the
+systemsbyvega catalog business's own tables — this app just no longer
+shares infrastructure with it. **A fresh start, by explicit choice**: no
+data was migrated (the team hasn't fully onboarded yet), so the new
+project starts with zero team members, zero accounts, and only the
+seed content that ships with the schema itself (52 weekly verses, 3
+Training Resources reference documents, 3 calendar events).
+
+**The schema had a real gap, found during the migration, not before.**
+`sql/` only ever contained *incremental* migrations — nothing in git
+actually created `cc_profiles`, `cc_team`, `cc_leaders`, `cc_meetings`,
+`cc_schedule_slots`, `cc_activity`, `cc_training_records`,
+`cc_onboarding_steps`, or the `cc_is_admin()`/`cc_is_team_lead_or_admin()`
+functions nearly every RLS policy in this app depends on. Those objects
+predate this project's migration-file convention and existed only live in
+the old database. Fixed by having the project owner export a full schema
+dump of the old project (`sql/OLD-SCHEMA-DUMP.sql`, not committed — it
+also contains the unrelated systemsbyvega/ESB/GSB schema and has no
+purpose once this migration is done), mechanically filtering it down to
+only `cc_`-prefixed objects with zero leakage (verified), and replaying
+that as `sql/000-FOUNDATION-FROM-OLD-PROJECT.sql` — now a permanent part
+of this app's migration history, and the new required first step for
+setting up any future fresh project. One object still needed hand
+reconstruction even after the dump: `cc_on_auth_user_created`, a trigger
+on `auth.users` that creates a member's `cc_profiles` row on signup —
+schema dumps of the `public` schema don't capture triggers defined on
+Supabase-managed schemas.
+
+**Three older migrations were deliberately skipped on the new project**
+(`VERSES-AND-NOTES.sql`, `THEME-PREFERENCE.sql`, `CC-PROFILES-GRANT-FIX.sql`)
+— not missed, skipped on purpose. Their entire content, including the
+*already-corrected* state that `CC-PROFILES-GRANT-FIX.sql` exists to
+produce, was already present in the foundation dump; replaying that fix
+verbatim on a database that was never in the broken state it corrects
+would have briefly revoked column grants added by later migrations before
+those same migrations restored them further down the sequence — safe
+either way, but replaying it added nothing but churn. Every other file in
+`sql/` ran in dependency order and is confirmed applied
+(`cc_schema_migrations` on the new project has exactly the 24 entries
+expected — 1 foundation + 23 feature migrations).
+
+**`apply-migration.mjs` now accepts `--project <ref>`** (or
+`SUPABASE_PROJECT_REF`), defaulting to this app's own project so nothing
+about the existing workflow changes — added specifically to make this
+migration possible without a one-off script.
+
+**What changed in code:** `index.html` and `api/_shared.js` now point at
+the new project's URL and anon key. `VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY`
+(Web Push) did not need to change — independent of Supabase.
+
+**What's still manual, before this can go live** — tracked as its own
+checklist since none of it can be scripted: the new project's Auth
+settings (Site URL, Redirect URLs, disable public signup, session
+lifetime to match the old project's 7-day/unlimited-inactivity choice),
+the `SUPABASE_SERVICE_ROLE_KEY` Vercel environment variable for the new
+project, and creating the very first admin account by hand (a fresh
+project has no users at all, and every other account can only be created
+by an existing Admin's invite — someone has to be the exception once).
+
+---
+
 ## 1. Documents to upload (Phase 2 builds the slots)
 
 | Item | Status | Notes |

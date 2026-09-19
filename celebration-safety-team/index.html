@@ -3943,10 +3943,14 @@ async function saveVisibilitySettings() {
 // the dashboard setting were ever left on by mistake, this page would not be
 // the thing that lets a stranger create an account.
 // ════════════════════════════════════════════════════════════════
-const SUPABASE_URL = 'https://newjbexmvltvtmxollca.supabase.co';
+/* Migrated 2026-09-19 from the old shared project (newjbexmvltvtmxollca) to
+   a new project dedicated solely to this app — see OPEN-ITEMS.md for the
+   migration record and sql/000-FOUNDATION-FROM-OLD-PROJECT.sql for how the
+   schema was carried over (fresh start, no data migrated on purpose). */
+const SUPABASE_URL = 'https://oroollaijzvdduuvfmsr.supabase.co';
 /* Anon key — public by design, same as every other SystemsByVega page. RLS
    (see the migration file) is the actual boundary, not this key's secrecy. */
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ld2piZXhtdmx0dnRteG9sbGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxODg5ODksImV4cCI6MjEwMjc2NDk4OX0.uSllffcf0WJVbFKv0bwA2-XcabjYeM7N0_nuk8IRUUw';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9yb29sbGFpanp2ZGR1dXZmbXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MzMyMjksImV4cCI6MjEwNTQwOTIyOX0.gKoZpSqYzWtuLFmfaD5GNWYfmh37QdTNgr0l8CGFZWg';
 let sb = null;
 let adminOn = false, currentUser = null, currentProfile = null;
 
