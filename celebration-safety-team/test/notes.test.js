@@ -53,17 +53,19 @@ T.currentProfile = MEMBER;
 ctx.renderNotes();
 check('addNoteBtn is visible for a plain member', els.addNoteBtn.style.display === '');
 
-group('Dashboard card: shows the 2 most recent notes, newest first, with poster name and date');
+group('Dashboard card: shows the 3 most recent notes, newest first, title and poster name only (no body, no date)');
 T.S.notes = [
-  { id: 'n1', title: 'Oldest note', body: 'body', postedBy: 'member-1', postedByName: 'Ann', postedAt: '2026-09-01T00:00:00Z', expiresAt: null },
+  { id: 'n0', title: 'Oldest of four', body: 'body', postedBy: 'member-1', postedByName: 'Amy', postedAt: '2026-08-25T00:00:00Z', expiresAt: null },
+  { id: 'n1', title: 'Oldest note', body: 'this body text must never appear on the dashboard card', postedBy: 'member-1', postedByName: 'Ann', postedAt: '2026-09-01T00:00:00Z', expiresAt: null },
   { id: 'n2', title: 'Middle note', body: 'body', postedBy: 'member-1', postedByName: 'Ben', postedAt: '2026-09-05T00:00:00Z', expiresAt: null },
   { id: 'n3', title: 'Newest note', body: 'body', postedBy: 'member-1', postedByName: 'Cy', postedAt: '2026-09-10T00:00:00Z', expiresAt: null }
 ];
 ctx.renderDashNotes();
-check('exactly 2 notes rendered', (els.dashNotesBox.innerHTML.match(/·/g) || []).length === 2, els.dashNotesBox.innerHTML);
-check('newest first', els.dashNotesBox.innerHTML.indexOf('Newest note') < els.dashNotesBox.innerHTML.indexOf('Middle note'), els.dashNotesBox.innerHTML);
-check('the oldest of the three is not shown', !els.dashNotesBox.innerHTML.includes('Oldest note'), els.dashNotesBox.innerHTML);
-check('poster name is shown', els.dashNotesBox.innerHTML.includes('Cy') && els.dashNotesBox.innerHTML.includes('Ben'), els.dashNotesBox.innerHTML);
+check('exactly 3 notes rendered', (els.dashNotesBox.innerHTML.match(/<strong/g) || []).length === 3, els.dashNotesBox.innerHTML);
+check('newest first', els.dashNotesBox.innerHTML.indexOf('Newest note') < els.dashNotesBox.innerHTML.indexOf('Middle note') && els.dashNotesBox.innerHTML.indexOf('Middle note') < els.dashNotesBox.innerHTML.indexOf('Oldest note'), els.dashNotesBox.innerHTML);
+check('the oldest of the four is not shown', !els.dashNotesBox.innerHTML.includes('Oldest of four'), els.dashNotesBox.innerHTML);
+check('poster name is shown for each', els.dashNotesBox.innerHTML.includes('Cy') && els.dashNotesBox.innerHTML.includes('Ben') && els.dashNotesBox.innerHTML.includes('Ann'), els.dashNotesBox.innerHTML);
+check('no note body text appears on the dashboard card', !els.dashNotesBox.innerHTML.includes('this body text must never appear'), els.dashNotesBox.innerHTML);
 
 group('Dashboard card: a long title is truncated rather than expanding the card');
 T.S.notes = [{ id: 'n4', title: 'A'.repeat(80), body: 'body', postedBy: 'member-1', postedByName: 'Ann', postedAt: '2026-09-12T00:00:00Z', expiresAt: null }];

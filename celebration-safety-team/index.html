@@ -796,6 +796,14 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <button class="btn btn-ghost" id="manageVersesBtn" style="margin-top:.7rem;display:none;" onclick="openVerseManageModal()">✏️ Manage Verses</button>
       </div>
 
+      <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.7rem 1.1rem;">
+        <div style="display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;">
+          <div class="card-title" style="margin-bottom:0;">🎓 MY TRAINING</div>
+          <div id="dashTraining" style="display:flex;gap:1.4rem;flex-wrap:wrap;font-size:.8rem;color:var(--tx2);"></div>
+        </div>
+        <button class="btn btn-primary" style="flex-shrink:0;" onclick="navTo('academy')">Go to Academy</button>
+      </div>
+
       <div class="grid-3" style="margin-bottom:.9rem;">
         <div class="card" style="margin-bottom:0;">
           <div class="card-title">📞 EMERGENCY CONTACTS</div>
@@ -811,9 +819,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           <button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('incidents')">View All →</button>
         </div>
         <div class="card" style="margin-bottom:0;">
-          <div class="card-title">🎓 MY TRAINING</div>
-          <div id="dashTraining" style="font-size:.8rem;color:var(--tx2);line-height:1.8;"></div>
-          <button class="btn btn-primary" style="margin-top:.6rem;" onclick="navTo('academy')">Go to Academy</button>
+          <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
+          <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
         </div>
       </div>
 
@@ -827,16 +834,17 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
           </div>
         </div>
         <div class="card" style="margin-bottom:0;">
+          <div class="card-title">🗣️ NEXT TEAM MEETING</div>
+          <div id="dashNextMeeting" style="font-size:.82rem;color:var(--tx2);"></div>
+          <button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('meetings')">View Team Meetings →</button>
+        </div>
+        <div class="card" style="margin-bottom:0;">
           <div class="card-title">🙋 COVERAGE REQUESTS</div>
           <div id="dashCoverageRequests" style="font-size:.82rem;color:var(--tx2);"></div>
           <div style="margin-top:.6rem;display:flex;gap:.5rem;">
             <button class="btn btn-ghost" style="flex:1;" onclick="navTo('scheduling')">View All →</button>
             <button class="btn btn-primary" style="flex:1;" onclick="openCoverageRequestModal()">Request Coverage</button>
           </div>
-        </div>
-        <div class="card" style="margin-bottom:0;">
-          <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
-          <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
         </div>
       </div>
 
@@ -3740,7 +3748,7 @@ async function saveMeeting() {
   if (!r) return;
   S.meetings.push({ id: r.data.id, date, time, title, notes });
   S.meetings.sort((a, b) => b.date.localeCompare(a.date));
-  closeModalEl('meetingModal'); renderMeetings(); addActivity('Meeting logged: ' + title);
+  closeModalEl('meetingModal'); renderMeetings(); renderDashNextMeeting(); addActivity('Meeting logged: ' + title);
 }
 async function deleteMeeting(id) {
   if (!await confirmDialog('Delete this meeting record?', 'The agenda and notes will be deleted. This cannot be undone.',
@@ -3748,7 +3756,7 @@ async function deleteMeeting(id) {
   const r = await dbWrite(sb.from('cc_meetings').delete().eq('id', id), 'Could not delete this meeting');
   if (!r) return;
   S.meetings = S.meetings.filter(m => m.id !== id);
-  renderMeetings();
+  renderMeetings(); renderDashNextMeeting();
 }
 function renderMeetings() {
   document.getElementById('meetingEmpty').style.display = S.meetings.length ? 'none' : '';
@@ -3769,6 +3777,19 @@ function renderMeetings() {
       ${m.notes ? `<div style="font-size:.8rem;color:var(--tx2);margin-top:.6rem;line-height:1.6;white-space:pre-wrap;">${esc(m.notes)}</div>` : ''}
     </div>`;
   }).join('');
+}
+/* Dashboard preview — the next meeting dated today or later, not the most
+   recently logged one (S.meetings is loaded newest-first for the Team
+   Meetings history log; "next" here means soonest upcoming). */
+function renderDashNextMeeting() {
+  const box = document.getElementById('dashNextMeeting');
+  if (!box) return;
+  const today = iso(new Date());
+  const upcoming = (S.meetings || []).filter(m => m.date >= today).slice().sort((a, b) => a.date.localeCompare(b.date));
+  const next = upcoming[0];
+  if (!next) { box.innerHTML = `<div style="color:var(--tx3);">No meeting scheduled — <button type="button" class="linkish" onclick="navTo('meetings')">add one in Team Meetings</button>.</div>`; return; }
+  const dateLabel = new Date(next.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  box.innerHTML = `<div style="font-weight:700;color:var(--tx);">${esc(dateLabel)}</div><div style="font-size:.72rem;color:var(--tx3);">${next.time ? esc(next.time) + (next.title ? ' · ' : '') : ''}${next.title ? esc(next.title) : ''}</div>`;
 }
 // ════════════════════════════════════════════════════════════════
 // SCHEDULING — Sundays, 3 services, min 3 incl 1 Team Leader
@@ -5342,15 +5363,9 @@ function renderDashNotes() {
   const box = document.getElementById('dashNotesBox');
   if (!box) return;
   const today = iso(new Date());
-  const recent = S.notes.filter(n => !n.expiresAt || n.expiresAt >= today).slice().sort((a, b) => b.postedAt.localeCompare(a.postedAt)).slice(0, 2);
+  const recent = S.notes.filter(n => !n.expiresAt || n.expiresAt >= today).slice().sort((a, b) => b.postedAt.localeCompare(a.postedAt)).slice(0, 3);
   if (!recent.length) { box.innerHTML = '<div style="color:var(--tx3);">No team notes right now.</div>'; return; }
-  box.innerHTML = recent.map(n => {
-    const posted = new Date(n.postedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    return `<div style="padding:.4rem 0;border-bottom:1px solid var(--bd);">
-      <strong style="color:var(--tx);">${esc(truncate(n.title, 40))}</strong>
-      <div style="font-size:.72rem;color:var(--tx3);">${esc(n.postedByName)} · ${posted}</div>
-    </div>`;
-  }).join('');
+  box.innerHTML = recent.map(n => `<div style="padding:.35rem 0;border-bottom:1px solid var(--bd);"><strong style="color:var(--tx);">${esc(truncate(n.title, 40))}</strong><div style="font-size:.7rem;color:var(--tx3);">${esc(n.postedByName)}</div></div>`).join('');
 }
 function openAllNotesModal() { renderNotes(); openModalEl('allNotesModal'); }
 function openNoteModal(id) {
@@ -5801,6 +5816,7 @@ function refreshDash() {
   renderNotifications();
   renderDashIncidentsBolos();
   renderDashCoverageRequests();
+  renderDashNextMeeting();
 }
 /* Replaces the old static "Service Coverage Rule" card. Unrestricted only —
    a restricted incident must never leak into this preview regardless of who
