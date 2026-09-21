@@ -10,8 +10,8 @@
      entirely until Phase 4 auth (or Vercel deployment protection) is in place. -->
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
 <meta name="description" content="Private training, onboarding and scheduling platform for the Celebration Church Safety &amp; Security Team.">
-<meta name="theme-color" content="#0a0e14">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;7&#39; fill=&#39;%230a0e14&#39;/%3E%3Ctext x=&#39;16&#39; y=&#39;23&#39; font-family=&#39;sans-serif&#39; font-size=&#39;20&#39; font-weight=&#39;bold&#39; fill=&#39;%23e8a020&#39; text-anchor=&#39;middle&#39;%3EC%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#15171b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;7&#39; fill=&#39;%2315171b&#39;/%3E%3Ctext x=&#39;16&#39; y=&#39;23&#39; font-family=&#39;sans-serif&#39; font-size=&#39;20&#39; font-weight=&#39;bold&#39; fill=&#39;%23c9a24b&#39; text-anchor=&#39;middle&#39;%3EC%3C/text%3E%3C/svg%3E">
 <title>Celebration Church Safety &amp; Security Team Operations Center</title>
 <!-- ══ PWA — manifest + iOS install metadata. Android reads the manifest
      directly (icons, theme/background color, display mode) to build its own
@@ -37,42 +37,42 @@ try {
 </script>
 <style>
 :root {
-  --bg:    #0a0e14;
-  --s1:    #111720;
-  --s2:    #182030;
-  --s3:    #1e2a3a;
+  --bg:    #15171b;
+  --s1:    #1b1e23;
+  --s2:    #23262d;
+  --s3:    #2b2f38;
   --bd:    rgba(255,255,255,.08);
   --bd2:   rgba(255,255,255,.13);
-  --tx:    #e8f0f8;
-  --tx2:   #8fa3bb;
-  --tx3:   #567090;
-  --c:     #e8a020;   /* accent gold */
-  --c2:    #f0b840;
-  --cr:    #cc3333;   /* alert red */
-  --gr:    #22c55e;
-  --bl:    #38bdf8;
-  --pu:    #8b5cf6;
+  --tx:    #ece8e1;
+  --tx2:   #a39d94;
+  --tx3:   #6f695f;
+  --c:     #c9a24b;   /* accent brass — muted, church-like gold */
+  --c2:    #d9ba6f;
+  --cr:    #b3492f;   /* alert — muted brick red */
+  --gr:    #5a8a6b;   /* muted sage green */
+  --bl:    #5b7c99;   /* muted slate blue */
+  --pu:    #7c6a94;   /* muted plum */
   /* Lighter on-dark-background text variants of red/purple, kept distinct
      from --cr/--pu (which double as border/background tints at low alpha).
      In light mode these collapse to the same value as --cr/--pu — once the
      base tokens are dark enough to read on white, a second lighter variant
      serves no purpose. */
-  --red-text:    #f87171;
-  --purple-text: #a78bfa;
+  --red-text:    #d98a72;
+  --purple-text: #a696c0;
   /* RGB triplets so every rgba(var(--x-rgb), alpha) tint/wash below only has
      to change in ONE place per theme, instead of re-deriving every alpha
      variant by hand. */
-  --c-rgb:  232,160,32;
-  --gr-rgb: 34,197,94;
-  --bl-rgb: 56,189,248;
-  --cr-rgb: 204,51,51;
-  --pu-rgb: 139,92,246;
+  --c-rgb:  201,162,75;
+  --gr-rgb: 90,138,107;
+  --bl-rgb: 91,124,153;
+  --cr-rgb: 179,73,47;
+  --pu-rgb: 124,106,148;
   /* Hover/tint overlays that lighten a dark surface need to instead DARKEN a
      light one — this flips direction per theme rather than just changing a
      color. */
   --overlay-rgb: 255,255,255;
-  --header-grad-1: #0d0f14;
-  --header-grad-2: #12181f;
+  --header-grad-1: #16181c;
+  --header-grad-2: #1b1e24;
   /* Wildfire Smoke AQI scale — a fixed 6-step severity ramp, independent of
      the semantic accent tokens above. */
   --aqi-good:       #22c55e;
@@ -92,31 +92,31 @@ try {
    dark palette — see the rgba(var(--x-rgb), alpha) pattern used throughout
    the rest of this stylesheet instead of literal rgba(R,G,B,alpha) calls. */
 :root[data-theme="light"] {
-  --bg:    #eef1f5;
+  --bg:    #f6f4ef;
   --s1:    #ffffff;
-  --s2:    #ffffff;
-  --s3:    #f4f6f8;
-  --bd:    rgba(15,23,42,.10);
-  --bd2:   rgba(15,23,42,.18);
-  --tx:    #0f172a;
-  --tx2:   #45566e;
-  --tx3:   #5b6b83;
-  --c:     #92400e;
-  --c2:    #b45309;
-  --cr:    #b91c1c;
-  --gr:    #15803d;
-  --bl:    #0369a1;
-  --pu:    #6d28d9;
+  --s2:    #fdfcfa;
+  --s3:    #f1ede5;
+  --bd:    rgba(41,34,23,.10);
+  --bd2:   rgba(41,34,23,.18);
+  --tx:    #2b2823;
+  --tx2:   #6b6459;
+  --tx3:   #8a8278;
+  --c:     #8a6a2f;
+  --c2:    #a17d3c;
+  --cr:    #9a3f2d;
+  --gr:    #3f6b4f;
+  --bl:    #3f5f78;
+  --pu:    #5f4f78;
   --red-text:    var(--cr);
   --purple-text: var(--pu);
-  --c-rgb:  146,64,14;
-  --gr-rgb: 21,128,61;
-  --bl-rgb: 3,105,161;
-  --cr-rgb: 185,28,28;
-  --pu-rgb: 109,40,217;
-  --overlay-rgb: 15,23,42;
+  --c-rgb:  138,106,47;
+  --gr-rgb: 63,107,79;
+  --bl-rgb: 63,95,120;
+  --cr-rgb: 154,63,45;
+  --pu-rgb: 95,79,120;
+  --overlay-rgb: 41,34,23;
   --header-grad-1: #ffffff;
-  --header-grad-2: #f1f3f6;
+  --header-grad-2: #f3efe7;
   --aqi-good:       #15803d;
   --aqi-moderate:   #854d0e;
   --aqi-usg:        #92400e;
@@ -432,6 +432,7 @@ body {
   font-family: var(--fb); font-weight: 700; font-size: .8rem;
   cursor: pointer; transition: filter .15s;
 }
+.btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
 .btn:hover { filter: brightness(1.12); }
 .btn-primary { background: linear-gradient(135deg, var(--c), #c8881a); color: #14100a; }
 .btn-success { background: linear-gradient(135deg, var(--gr), #15803d); color: #06130a; }
@@ -758,6 +759,120 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 .tour-dots i.on { background: var(--c); transform: scale(1.5); }
 .tour-dots i.done { background: rgba(var(--c-rgb),.5); }
 @media (max-width: 480px) { #tourBox { padding: .9rem 1rem .8rem; } .tour-dots { display: none; } }
+
+/* ── MODULE TILE GRID — shared by Academy, Onboarding, Emergency
+   Procedures and Training Resources. Deliberately separate from the older
+   .course-card/.cc-* rules above (still used by renderCourses() → no, by
+   the leadership directory card and left untouched) so nothing there is
+   at risk from this redesign. ── */
+.tile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+@media (max-width: 1100px) { .tile-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .tile-grid { grid-template-columns: 1fr; } }
+.module-tile {
+  background: var(--s2); border: 1px solid var(--bd); border-radius: 14px;
+  padding: 1.15rem 1.1rem; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; gap: .5rem; min-height: 44px;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+  position: relative; font-family: var(--fb); color: inherit;
+}
+.module-tile:hover, .module-tile:focus-visible { transform: translateY(-3px); border-color: rgba(var(--c-rgb),.4); box-shadow: 0 10px 26px rgba(0,0,0,.18); }
+.module-tile:active { transform: translateY(-1px); }
+.module-tile.certified { border-color: rgba(var(--gr-rgb),.35); }
+.mt-icon { font-size: 2rem; line-height: 1; }
+.mt-title { font-weight: 800; font-size: .95rem; line-height: 1.3; }
+.mt-desc { font-size: .76rem; color: var(--tx2); line-height: 1.5; flex: 1; }
+.mt-status { display: flex; align-items: center; gap: .35rem; font-size: .66rem; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; color: var(--tx3); margin-top: .1rem; }
+.mt-status.is-progress { color: var(--c); }
+.mt-status.is-done { color: var(--gr); }
+.mt-badge { position: absolute; top: .7rem; right: .7rem; width: 27px; height: 27px; border-radius: 50%; background: linear-gradient(135deg, var(--c), var(--c2)); color: #14100a; display: flex; align-items: center; justify-content: center; font-size: .9rem; font-weight: 900; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.mt-progress { height: 6px; border-radius: 4px; background: rgba(var(--overlay-rgb),.08); overflow: hidden; margin-top: .1rem; }
+.mt-progress-fill { height: 100%; background: linear-gradient(90deg, var(--c), var(--c2)); border-radius: 4px; transition: width .3s; }
+.mt-tag { display: inline-flex; align-items: center; gap: .3rem; font-size: .62rem; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; padding: .18rem .55rem; border-radius: 999px; width: fit-content; }
+.mt-tag.tag-red    { background: rgba(var(--cr-rgb),.14); color: var(--red-text); border: 1px solid rgba(var(--cr-rgb),.3); }
+.mt-tag.tag-amber  { background: rgba(var(--c-rgb),.16); color: var(--c); border: 1px solid rgba(var(--c-rgb),.32); }
+.mt-tag.tag-blue   { background: rgba(var(--bl-rgb),.14); color: var(--bl); border: 1px solid rgba(var(--bl-rgb),.3); }
+.mt-tag.tag-green  { background: rgba(var(--gr-rgb),.14); color: var(--gr); border: 1px solid rgba(var(--gr-rgb),.3); }
+
+/* ── FULL-SCREEN MODAL MODIFIER — opt-in via .modal-fullscreen on
+   .modal-box (+ .overlay-fullscreen on its .modal-overlay), used only by
+   the Academy/Onboarding/Emergency Procedures/Training Resources modals.
+   Every other modal in the app keeps its original 780px treatment. ── */
+.modal-box.modal-fullscreen { max-width: 900px; width: 100%; max-height: 92vh; }
+@media (max-width: 720px) {
+  .modal-overlay.overlay-fullscreen { padding: 0; }
+  .modal-box.modal-fullscreen { max-width: 100%; width: 100%; height: 100%; max-height: 100%; border-radius: 0; }
+}
+body.modal-open { overflow: hidden; }
+
+/* The moved-in procedure card keeps its original accordion .proc-head
+   button (toggleProc()) — harmless, but tapping it would collapse the only
+   content the modal shows. Force it open here regardless of the .open
+   class, and hide the now-meaningless collapse arrow. */
+#procModalBody .proc-body { display: block !important; }
+#procModalBody .proc-arrow { display: none; }
+#procModalBody .proc-head { cursor: default; }
+/* The moved-in group's own .card-title heading would repeat the modal's
+   own header title right above it — the modal header already carries it. */
+#resModalBody .card-title:first-child { display: none; }
+
+/* ── CONFETTI — one canvas-based component (see runConfetti() in the
+   script), reused for both quiz-pass and onboarding completion. A host
+   needs position:relative + real height for the canvas to fill. ── */
+.confetti-host { position: relative; }
+.confetti-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.celebrate-badge-static { font-size: 3.6rem; text-align: center; }
+.celebrate-title { font-family: var(--fh); font-size: 1.6rem; letter-spacing: 1.5px; color: var(--gr); margin: .5rem 0 .2rem; text-align: center; }
+.celebrate-sub { font-size: .9rem; color: var(--tx2); text-align: center; }
+.celebrate-score { font-family: var(--fh); font-size: 2rem; color: var(--c); text-align: center; margin-top: .3rem; }
+
+/* ── QUIZ FEEDBACK ANIMATIONS — fast (<400ms), reduced-motion aware. ── */
+@keyframes quizCorrectPulse { 0% { transform: scale(1); } 40% { transform: scale(1.04); } 100% { transform: scale(1); } }
+@keyframes quizWrongShake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
+@keyframes qoCheckIn { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
+.quiz-opt.flash-correct { animation: quizCorrectPulse .32s ease; }
+.quiz-opt.flash-wrong { animation: quizWrongShake .38s ease; }
+.quiz-opt .qo-check { display: inline-block; margin-left: .4rem; opacity: 0; animation: qoCheckIn .22s ease forwards .08s; }
+@media (prefers-reduced-motion: reduce) {
+  .quiz-opt.flash-correct, .quiz-opt.flash-wrong, .quiz-opt .qo-check, .module-tile, .ob-step.current .ob-step-node { animation: none !important; }
+}
+
+/* ── ONBOARDING STEPPER — vertical (mobile/default) → horizontal ≥900px. ── */
+.ob-progress-wrap { margin-bottom: 1rem; }
+.ob-progress-label { font-size: .78rem; color: var(--tx2); margin-bottom: .35rem; font-weight: 700; }
+.ob-progress-bar { height: 10px; border-radius: 6px; background: rgba(var(--overlay-rgb),.08); overflow: hidden; }
+.ob-progress-fill { height: 100%; background: linear-gradient(90deg, var(--c), var(--c2)); border-radius: 6px; transition: width .4s; }
+.ob-cleared-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(var(--gr-rgb),.13); color: var(--gr); border: 1px solid rgba(var(--gr-rgb),.3); border-radius: 999px; padding: .35rem .9rem; font-size: .78rem; font-weight: 800; margin-bottom: .8rem; }
+.ob-stepper { display: flex; flex-direction: column; gap: 0; }
+.ob-step { display: flex; align-items: flex-start; gap: .8rem; padding: 0; position: relative; cursor: pointer; background: none; border: none; text-align: left; width: 100%; font-family: var(--fb); color: inherit; }
+.ob-step-node { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .82rem; background: var(--s1); border: 2px solid var(--bd2); color: var(--tx3); flex-shrink: 0; z-index: 1; }
+.ob-step-rail { position: absolute; left: 16px; top: 34px; bottom: -.1rem; width: 2px; background: var(--bd2); }
+.ob-step:last-child .ob-step-rail { display: none; }
+.ob-step-body { padding: .6rem 0; flex: 1; min-width: 0; }
+.ob-step-text { font-size: .84rem; color: var(--tx2); line-height: 1.4; }
+.ob-step.done .ob-step-node { background: linear-gradient(135deg, var(--c), var(--c2)); border-color: var(--c); color: #14100a; }
+.ob-step.done .ob-step-rail { background: rgba(var(--c-rgb),.5); }
+.ob-step.done .ob-step-text { color: var(--tx3); }
+.ob-step.current .ob-step-node { border-color: var(--c); color: var(--c); animation: obPulse 2.2s ease-in-out infinite; }
+.ob-step.current .ob-step-text { color: var(--tx); font-weight: 700; }
+.ob-step:hover .ob-step-node { border-color: rgba(var(--c-rgb),.6); }
+@keyframes obPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(var(--c-rgb),.4); } 50% { box-shadow: 0 0 0 6px rgba(var(--c-rgb),0); } }
+@media (min-width: 900px) {
+  .ob-stepper { flex-direction: row; align-items: flex-start; }
+  .ob-stepper .ob-step { flex-direction: column; align-items: center; text-align: center; width: auto; flex: 1; min-width: 0; }
+  .ob-stepper .ob-step-rail { left: auto; top: 16px; right: -50%; width: 100%; height: 2px; bottom: auto; }
+  /* align-items:center above (for the circular node) un-stretches this flex
+     item by default, so its nowrap text loses its width constraint and
+     overflows instead of truncating — force it back to the column's width. */
+  .ob-stepper .ob-step-body { padding: .4rem .3rem; align-self: stretch; width: 100%; min-width: 0; }
+  .ob-stepper .ob-step-text { font-size: .66rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+}
+.ob-step-modal-locked { font-size: .78rem; color: var(--tx3); background: rgba(var(--overlay-rgb),.05); border: 1px dashed var(--bd2); border-radius: 9px; padding: .6rem .8rem; margin-top: .7rem; }
+
+/* ── EMPTY STATES — friendlier than the bare .empty-note used elsewhere. ── */
+.friendly-empty { text-align: center; padding: 2.2rem 1.2rem; color: var(--tx2); }
+.friendly-empty .fe-icon { font-size: 2.4rem; margin-bottom: .5rem; }
+.friendly-empty .fe-title { font-family: var(--fh); font-size: 1.05rem; letter-spacing: 1px; color: var(--tx); margin-bottom: .3rem; }
+.friendly-empty .fe-sub { font-size: .82rem; max-width: 380px; margin: 0 auto; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -938,7 +1053,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="sec-icon amber">🎓</div>
         <div>
           <div class="sec-title">SAFETY / SECURITY TEAM ACADEMY</div>
-          <div class="sec-desc">Complete each module's lessons, pass the quiz (80%+), and earn your certificate. Content is drawn from CISA, FEMA, NCMEC, and recognized church-security training organizations.</div>
+          <div class="sec-desc">Complete these modules to get certified to serve. Work through each module's lessons, pass a short quiz (80%+), and earn your certificate — content is drawn from CISA, FEMA, NCMEC, and recognized church-security training organizations.</div>
         </div>
         <div style="margin-left:auto;text-align:right;">
           <div style="font-family:var(--fh);font-size:1.4rem;color:var(--c);line-height:1;" id="academyPct">0%</div>
@@ -950,7 +1065,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="stat-pill" style="border-color:rgba(var(--gr-rgb),.3);color:var(--gr);">🏆 Certificates: <strong id="certCount" style="margin-left:.2rem;">0</strong>/<span id="certTotal">6</span></div>
         <div class="stat-pill" style="border-color:rgba(var(--bl-rgb),.3);color:var(--bl);">🗓️ Services Served: <strong id="servicesServedCount" style="margin-left:.2rem;">0</strong></div>
       </div>
-      <div class="course-grid" id="courseGrid"></div>
+      <div class="tile-grid" id="courseGrid"></div>
     </section>
 
     <!-- ══ ONBOARDING ══ -->
@@ -959,7 +1074,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="sec-icon blue">📋</div>
         <div>
           <div class="sec-title">NEW MEMBER ONBOARDING</div>
-          <div class="sec-desc">Required steps for every new safety/security team member before serving a service rotation.</div>
+          <div class="sec-desc">Your path to serving on the team — work through these steps in order, at your own pace. Every step below is required before your first service rotation.</div>
         </div>
       </div>
 
@@ -973,20 +1088,24 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div id="manualUnlockRow" style="margin-top:.6rem;font-size:.78rem;color:var(--tx3);"></div>
       </div>
 
-      <div class="grid-2">
-        <div class="card" style="margin-bottom:0;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
-            <div class="card-title" style="margin-bottom:0;">✅ ONBOARDING CHECKLIST</div>
-            <button type="button" class="section-print-btn" onclick="printOnboardingChecklist()">🖨️ Print</button>
-          </div>
-          <div id="onboardWho" style="font-size:.75rem;color:var(--tx2);margin:.5rem 0;"></div>
-          <div id="onboardChecklist"></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;">
+          <div class="card-title" style="margin-bottom:0;">✅ YOUR ONBOARDING PATH</div>
+          <button type="button" class="section-print-btn" onclick="printOnboardingChecklist()">🖨️ Print</button>
         </div>
-        <div class="card" style="margin-bottom:0;">
-          <div class="card-title">⛪ WHO'S WHO — KNOW YOUR CHURCH</div>
-          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:.6rem;">Every team member must be able to recognize church leadership and staff on sight. Review the <button type="button" class="linkish" onclick="navTo('leadership')">Leadership / Staff directory</button>, then walk the building with your Team Leader.</div>
-          <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;">You must also know the facility: foyer, sanctuary, children's auditorium, children's check-in, exits, and the perimeter. See <button type="button" class="linkish" onclick="navTo('maps')">Facility Maps</button>.</div>
+        <div id="onboardWho" style="font-size:.75rem;color:var(--tx2);margin:.5rem 0;"></div>
+        <div class="ob-progress-wrap">
+          <div class="ob-progress-label" id="obProgressLabel">0 of 0 complete</div>
+          <div class="ob-progress-bar"><div class="ob-progress-fill" id="obProgressFill" style="width:0%;"></div></div>
         </div>
+        <div id="obClearedBadgeSlot"></div>
+        <div id="onboardChecklist"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⛪ WHO'S WHO — KNOW YOUR CHURCH</div>
+        <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:.6rem;">Every team member must be able to recognize church leadership and staff on sight. Review the <button type="button" class="linkish" onclick="navTo('leadership')">Leadership / Staff directory</button>, then walk the building with your Team Leader.</div>
+        <div style="font-size:.8rem;color:var(--tx2);line-height:1.7;">You must also know the facility: foyer, sanctuary, children's auditorium, children's check-in, exits, and the perimeter. See <button type="button" class="linkish" onclick="navTo('maps')">Facility Maps</button>.</div>
       </div>
     </section>
 
@@ -1036,7 +1155,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="sec-icon red">🚨</div>
         <div>
           <div class="sec-title">EMERGENCY PROCEDURES</div>
-          <div class="sec-desc">Quick-reference response protocols. Based on published guidance from CISA, FEMA, Ready.gov, NCMEC, the American Heart Association, the Red Cross and the CDC — adapt details to this facility with your Team Leader.</div>
+          <div class="sec-desc">Quick-reference guides for what to do in an emergency — tap any card below. Based on published guidance from CISA, FEMA, Ready.gov, NCMEC, the American Heart Association, the Red Cross and the CDC — adapt details to this facility with your Team Leader.</div>
         </div>
         <div style="display:flex;gap:.4rem;">
           <button type="button" class="btn btn-primary" id="procLangEnBtn" style="width:auto;padding:.35rem .8rem;" onclick="setProcLang('en')">English</button>
@@ -1046,6 +1165,16 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="alert-box"><span class="lang-en">🚑 <strong>In any life-threatening emergency, call 911 first.</strong> Nampa Police non-emergency: <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Church office: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></span><span class="lang-es">🚑 <strong>En cualquier emergencia que ponga en riesgo la vida, llame primero al 911.</strong> Policía de Nampa (no emergencias): <a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a> · Oficina de la iglesia: <a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></span></div>
+
+      <div class="tile-grid" id="procTileGrid"></div>
+
+      <!-- The 23 procedure cards below are the real, unedited content — see
+           renderProcTiles()/openProcModal() in the script. They render as
+           the tile grid above; opening a tile moves the matching card here
+           into #procModal's body (still inside #sec-procedures, so the
+           #sec-procedures .lang-es CSS scoping and print helpers keep
+           working unchanged) and restores it to this list on close. -->
+      <div id="procCardList" style="display:none;">
 
       <div class="proc-card green open">
         <button type="button" class="proc-head" aria-expanded="false" onclick="toggleProc(this)"><span class="proc-icon">🚑</span><span class="proc-title"><span class="lang-en">Medical Emergency — Cardiac Arrest · AED · Seizure · Falls</span><span class="lang-es">Emergencia Médica — Paro Cardíaco · DEA · Convulsiones · Caídas</span></span><span class="proc-arrow" aria-hidden="true">▶</span></button>
@@ -1999,6 +2128,28 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         </div>
       </div>
 
+      </div><!-- /#procCardList -->
+
+      <!-- ══ PROCEDURE MODAL — lives inside #sec-procedures on purpose; see
+           the #procCardList comment above. ══ -->
+      <div class="modal-overlay overlay-fullscreen" id="procModal">
+        <div class="modal-box modal-fullscreen">
+          <div class="modal-header">
+            <div class="modal-top">
+              <div class="modal-course-icon" id="procModalIcon">🚨</div>
+              <div><div class="modal-title" id="procModalTitle">—</div><div class="modal-meta">Emergency Procedure</div></div>
+              <div style="display:flex;gap:.4rem;margin-left:auto;">
+                <button type="button" class="btn btn-primary" id="procModalEnBtn" style="width:auto;padding:.35rem .7rem;font-size:.72rem;" onclick="setProcLang('en')">EN</button>
+                <button type="button" class="btn btn-ghost" id="procModalEsBtn" style="width:auto;padding:.35rem .7rem;font-size:.72rem;" onclick="setProcLang('es')">ES</button>
+                <button type="button" class="proc-print-btn" style="border-radius:8px;border:1px solid var(--bd2);" onclick="printCurrentProcModal()" title="Print this procedure" aria-label="Print this procedure">🖨️</button>
+              </div>
+              <button class="modal-close" onclick="closeProcModal()">✕ Close</button>
+            </div>
+          </div>
+          <div class="modal-body" id="procModalBody"></div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ══ TEAM ══ -->
@@ -2263,11 +2414,19 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
         <div class="sec-icon blue">📚</div>
         <div>
           <div class="sec-title">TRAINING RESOURCES</div>
-          <div class="sec-desc">Vetted external resources used by churches and houses of worship nationwide. All links verified — nothing invented.</div>
+          <div class="sec-desc">A library of outside courses, videos and reference links worth knowing about. All links verified — nothing invented.</div>
         </div>
       </div>
 
       <div class="tip-box" style="margin-bottom:.9rem;">💲 <strong>Cost key:</strong> <span class="res-cost res-cost-free">FREE</span> no cost to use or complete · <span class="res-cost res-cost-mixed">FREE INFO / PAID CERT</span> the material is free, a hands-on certification class costs money · <span class="res-cost res-cost-paid">PAID</span> the course or program itself costs money.</div>
+
+      <div class="tile-grid" id="resTileGrid"></div>
+
+      <!-- The links below are the real, unedited content — see
+           renderResTiles()/openResModal() in the script, which groups them
+           by their existing "card-title" headings at runtime (a pure DOM
+           move, never a re-type) and renders the tile grid above. -->
+      <div id="resCardList" style="display:none;">
 
       <div class="card-title" style="margin:.4rem 0 .5rem;">🏛️ FEDERAL RESOURCES</div>
       <a class="res-link" href="https://www.cisa.gov/topics/physical-security/protecting-houses-worship" target="_blank" rel="noopener"><span class="res-icon">🛡️</span><span><span class="res-name">Protecting Houses of Worship</span> <span class="res-cost res-cost-free">FREE</span><div class="res-desc">DHS/CISA hub: security guide, self-assessment tool, trainings, and exercises covering active shooter, bombing, vehicle ramming, and more.</div><div class="res-org">CISA.gov</div></span></a>
@@ -2317,6 +2476,23 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       <a class="res-link" href="http://codeadam.missingkids.org" target="_blank" rel="noopener"><span class="res-icon">📦</span><span><span class="res-name">Code Adam Kit — Free to Order</span><div class="res-desc">Complete kit: training video, poster, and manager checklist. Free for the church to order.</div><div class="res-org">National Center for Missing &amp; Exploited Children</div></span></a>
       <div class="tip-box">💳 <strong>AHA CPR/AED certification courses cost money.</strong> The AHA links above are free awareness material only — not a substitute for hands-on certification.</div>
       <div class="tip-box">🚧 <strong>De-escalation:</strong> no verified free official video found yet. See the CPI and Verbal Judo resources above for in-person training options.</div>
+
+      </div><!-- /#resCardList -->
+
+      <!-- ══ RESOURCE CATEGORY MODAL — lives inside #sec-resources so a
+           moved category group stays easy to find/restore. ══ -->
+      <div class="modal-overlay overlay-fullscreen" id="resModal">
+        <div class="modal-box modal-fullscreen">
+          <div class="modal-header">
+            <div class="modal-top">
+              <div class="modal-course-icon" id="resModalIcon">📚</div>
+              <div><div class="modal-title" id="resModalTitle">—</div><div class="modal-meta">Training Resources</div></div>
+              <button class="modal-close" onclick="closeResModal()">✕ Close</button>
+            </div>
+          </div>
+          <div class="modal-body" id="resModalBody"></div>
+        </div>
+      </div>
     </section>
 
     <!-- ══ LEADERSHIP / STAFF ══ -->
@@ -2867,8 +3043,8 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
 </div>
 
 <!-- ══ COURSE MODAL ══ -->
-<div class="modal-overlay" id="courseModal">
-  <div class="modal-box">
+<div class="modal-overlay overlay-fullscreen" id="courseModal">
+  <div class="modal-box modal-fullscreen">
     <div class="modal-header">
       <div class="modal-top">
         <div class="modal-course-icon" id="mIcon"></div>
@@ -2888,11 +3064,48 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeCourseModal()">Close</button>
+      <button class="btn btn-ghost" id="footerPrevLessonBtn" onclick="stepLesson(-1)" style="display:none;">← Previous Lesson</button>
+      <button class="btn btn-ghost" id="footerNextLessonBtn" onclick="stepLesson(1)" style="display:none;">Next Lesson →</button>
       <button class="btn btn-ghost" onclick="printModule()">🖨️ Print Module</button>
       <button class="btn btn-ghost" id="footerResetBtn" onclick="adminResetModule()" style="display:none;color:var(--red-text);">🔁 Reset for this person</button>
       <button class="btn btn-primary" id="footerQuizBtn" onclick="switchTab('quiz')" style="display:none;">Take the Quiz →</button>
       <button class="btn btn-success" id="footerCertBtn" onclick="switchTab('cert')" style="display:none;">🏆 View Certificate</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ ONBOARDING STEP MODAL ══ -->
+<div class="modal-overlay overlay-fullscreen" id="onboardStepModal">
+  <div class="modal-box modal-fullscreen" style="max-width:640px;">
+    <div class="modal-header">
+      <div class="modal-top">
+        <div class="modal-course-icon" id="obStepIcon">📋</div>
+        <div><div class="modal-title" id="obStepTitle">—</div><div class="modal-meta" id="obStepMeta">—</div></div>
+        <button class="modal-close" onclick="closeOnboardStep()">✕ Close</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div id="obStepBody"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeOnboardStep()">Close</button>
+      <button class="btn btn-ghost" id="obStepPrevBtn" onclick="stepOnboardStep(-1)">← Previous Step</button>
+      <button class="btn btn-ghost" id="obStepNextBtn" onclick="stepOnboardStep(1)">Next Step →</button>
+      <button class="btn btn-success" id="obStepCompleteBtn" onclick="toggleOnboardFromModal()">Mark Complete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ONBOARDING COMPLETION CELEBRATION ══ -->
+<div class="modal-overlay overlay-fullscreen" id="onboardCelebrateModal">
+  <div class="modal-box modal-fullscreen" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-top">
+        <div style="margin-left:auto;"></div>
+        <button class="modal-close" onclick="closeOnboardCelebration()">✕ Close</button>
+      </div>
+    </div>
+    <div class="modal-body confetti-host" id="obCelebrateBody" style="min-height:360px;"></div>
   </div>
 </div>
 
@@ -3639,23 +3852,23 @@ function updateManualUnlockRow() {
    someone may serve. The ids below must never be reused or renamed; the text
    beside them can change freely. */
 const ONBOARD_ITEMS = [
-  { id: 'manual',     text: 'Read the CCST Safety Team Policy &amp; Procedures manual in full (embedded above)' },
-  { id: 'bg-check',   text: 'Acknowledge the Safety Team background-check disqualifiers: a felony conviction in the last 5 years (or pending felony case), any felony conviction involving a sex crime, or a misdemeanor conviction involving moral turpitude (or pending misdemeanor case) — and confirm none apply to you' },
-  { id: 'bg-check-cleared', text: 'Complete your background check with the church office, and confirm it shows Cleared under your name on the Team roster' },
-  { id: 'meet-lead',  text: 'Meet the Team Leader(s) and receive your service assignment' },
-  { id: 'walk-site',  text: 'Walk the full facility: foyer, sanctuary, children\u2019s auditorium, children\u2019s check-in, all exits, perimeter' },
-  { id: 'maps',       text: 'Review Facility Maps & the site schematic (routes, assembly area, AED/extinguishers)' },
-  { id: 'directory',  text: 'Review the Leadership/Staff directory — know who\u2019s who on sight' },
-  { id: 'mod-ss101',  text: 'Complete Academy module SS-101: Team Fundamentals' },
-  { id: 'mod-ss102',  text: 'Complete Academy module: De-escalation & Verbal Skills' },
-  { id: 'mod-rest',   text: 'Complete Academy modules: Active Shooter, Code Adam, Fire & Evacuation, Severe Weather' },
-  { id: 'mod-med',    text: 'Complete Academy module: Medical Emergency Response (CPR, AED, choking, stroke)' },
-  { id: 'mod-new1',   text: 'Complete Academy modules: Roving & Sweeps, Facility Safety & Hazard Spotting, Communications & Escalation, Suspicious Persons & Trespass' },
-  { id: 'mod-new2',   text: 'Complete Academy modules: Crowd Management, Pastoral Coverage, Church Animal Policy, HAZMAT & Utilities, Bomb Threat Response, Shelter-in-Place' },
-  { id: 'procedures', text: 'Review all Emergency Procedures incl. church continuity' },
-  { id: 'numbers',    text: 'Save key numbers: 911 · Nampa PD (208) 465-2257 · Church office (208) 466-5433' },
-  { id: 'shadow',     text: 'Shadow one full Sunday (all three services) with a Team Leader' },
-  { id: 'signoff',    text: 'Sign off with the Team Leader — cleared for the schedule' }
+  { id: 'manual',     icon: '📕', text: 'Read the CCST Safety Team Policy &amp; Procedures manual in full (embedded above)' },
+  { id: 'bg-check',   icon: '📝', text: 'Acknowledge the Safety Team background-check disqualifiers: a felony conviction in the last 5 years (or pending felony case), any felony conviction involving a sex crime, or a misdemeanor conviction involving moral turpitude (or pending misdemeanor case) — and confirm none apply to you' },
+  { id: 'bg-check-cleared', icon: '🔍', text: 'Complete your background check with the church office, and confirm it shows Cleared under your name on the Team roster' },
+  { id: 'meet-lead',  icon: '🤝', text: 'Meet the Team Leader(s) and receive your service assignment' },
+  { id: 'walk-site',  icon: '🚶', text: 'Walk the full facility: foyer, sanctuary, children\u2019s auditorium, children\u2019s check-in, all exits, perimeter' },
+  { id: 'maps',       icon: '🗺️', text: 'Review Facility Maps & the site schematic (routes, assembly area, AED/extinguishers)' },
+  { id: 'directory',  icon: '⛪', text: 'Review the Leadership/Staff directory — know who\u2019s who on sight' },
+  { id: 'mod-ss101',  icon: '🛡️', text: 'Complete Academy module SS-101: Team Fundamentals' },
+  { id: 'mod-ss102',  icon: '🕊️', text: 'Complete Academy module: De-escalation & Verbal Skills' },
+  { id: 'mod-rest',   icon: '🚨', text: 'Complete Academy modules: Active Shooter, Code Adam, Fire & Evacuation, Severe Weather' },
+  { id: 'mod-med',    icon: '🚑', text: 'Complete Academy module: Medical Emergency Response (CPR, AED, choking, stroke)' },
+  { id: 'mod-new1',   icon: '🔦', text: 'Complete Academy modules: Roving & Sweeps, Facility Safety & Hazard Spotting, Communications & Escalation, Suspicious Persons & Trespass' },
+  { id: 'mod-new2',   icon: '📻', text: 'Complete Academy modules: Crowd Management, Pastoral Coverage, Church Animal Policy, HAZMAT & Utilities, Bomb Threat Response, Shelter-in-Place' },
+  { id: 'procedures', icon: '📋', text: 'Review all Emergency Procedures incl. church continuity' },
+  { id: 'numbers',    icon: '☎️', text: 'Save key numbers: 911 · Nampa PD (208) 465-2257 · Church office (208) 466-5433' },
+  { id: 'shadow',     icon: '👥', text: 'Shadow one full Sunday (all three services) with a Team Leader' },
+  { id: 'signoff',    icon: '✍️', text: 'Sign off with the Team Leader — cleared for the schedule' }
 ];
 // ════════════════════════════════════════════════════════════════
 // STATE
@@ -6616,6 +6829,15 @@ function setProcLang(lang) {
   const enBtn = document.getElementById('procLangEnBtn'), esBtn = document.getElementById('procLangEsBtn');
   if (enBtn) enBtn.className = 'btn ' + (l === 'en' ? 'btn-primary' : 'btn-ghost');
   if (esBtn) esBtn.className = 'btn ' + (l === 'es' ? 'btn-primary' : 'btn-ghost');
+  /* The procedure modal's header carries its own EN/ES buttons + title, kept
+     in sync here rather than duplicating setProcLang()'s job. */
+  const mEnBtn = document.getElementById('procModalEnBtn'), mEsBtn = document.getElementById('procModalEsBtn');
+  if (mEnBtn) mEnBtn.className = 'btn ' + (l === 'en' ? 'btn-primary' : 'btn-ghost');
+  if (mEsBtn) mEsBtn.className = 'btn ' + (l === 'es' ? 'btn-primary' : 'btn-ghost');
+  if (typeof curProcCard !== 'undefined' && curProcCard) {
+    const t = document.getElementById('procModalTitle');
+    if (t) t.textContent = procTitleText(curProcCard);
+  }
 }
 function initProcLang() {
   let saved = 'en';
@@ -6682,6 +6904,132 @@ function printAllProcedures() {
     </div>`;
   }).join('');
   printDocument('EMERGENCY PROCEDURES', body, { subtitle: 'Complete Quick-Reference Set — for posting or carrying' });
+}
+
+// ════════════════════════════════════════════════════════════════
+// PROCEDURE TILE GRID + FULL-SCREEN MODAL. Reads the 23 existing static
+// .proc-card blocks once at boot (never re-typing their content — see the
+// #procCardList comment in the markup) and builds compact tiles from them.
+// Opening a tile MOVES the real card node into #procModal, still inside
+// #sec-procedures, so the #sec-procedures .lang-es CSS scoping and the
+// print helpers above keep working unchanged; closing moves it back.
+// ════════════════════════════════════════════════════════════════
+let PROC_CARDS = [];
+let curProcCard = null, curProcCardNextSibling = null;
+const PROC_TAG = { green: { cls: 'tag-green', label: 'Medical' }, blue: { cls: 'tag-blue', label: 'Protocol' }, amber: { cls: 'tag-amber', label: 'Caution' }, '': { cls: 'tag-red', label: 'Security' } };
+function procCategoryOf(card) {
+  if (card.classList.contains('green')) return 'green';
+  if (card.classList.contains('blue')) return 'blue';
+  if (card.classList.contains('amber')) return 'amber';
+  return '';
+}
+function procDescOf(card) {
+  const bodyEn = card.querySelector('.proc-body > .lang-en');
+  const text = (bodyEn ? bodyEn.textContent : '').replace(/\s+/g, ' ').trim();
+  return truncate(text, 92);
+}
+function renderProcTiles() {
+  PROC_CARDS = [...document.querySelectorAll('#procCardList .proc-card')];
+  document.getElementById('procTileGrid').innerHTML = PROC_CARDS.map((card, i) => {
+    const iconEl = card.querySelector('.proc-icon');
+    const tag = PROC_TAG[procCategoryOf(card)];
+    return `<button type="button" class="module-tile" onclick="openProcModal(${i})">
+      <span class="mt-tag ${tag.cls}">${tag.label}</span>
+      <div class="mt-icon">${iconEl ? iconEl.textContent : '🚨'}</div>
+      <div class="mt-title">${esc(procTitleText(card))}</div>
+      <div class="mt-desc">${esc(procDescOf(card))}</div>
+    </button>`;
+  }).join('');
+}
+function openProcModal(i) {
+  const card = PROC_CARDS[i];
+  if (!card) return;
+  curProcCard = card;
+  curProcCardNextSibling = card.nextSibling;
+  card.classList.add('open');
+  const head = card.querySelector('.proc-head');
+  if (head) head.setAttribute('aria-expanded', 'true');
+  document.getElementById('procModalIcon').textContent = (card.querySelector('.proc-icon') || {}).textContent || '🚨';
+  document.getElementById('procModalTitle').textContent = procTitleText(card);
+  document.getElementById('procModalBody').appendChild(card);
+  openModalEl('procModal');
+}
+function closeProcModal() {
+  if (curProcCard) {
+    const list = document.getElementById('procCardList');
+    if (curProcCardNextSibling && curProcCardNextSibling.parentNode === list) list.insertBefore(curProcCard, curProcCardNextSibling);
+    else list.appendChild(curProcCard);
+  }
+  curProcCard = null; curProcCardNextSibling = null;
+  closeModalEl('procModal');
+}
+function printCurrentProcModal() { if (curProcCard) printProcedure(curProcCard); }
+
+// ════════════════════════════════════════════════════════════════
+// TRAINING RESOURCE CATEGORY TILES + FULL-SCREEN MODAL. Groups the
+// existing static .res-link/.card-title content (already grouped visually
+// by heading) into real wrapper elements — a pure DOM move, run once at
+// boot, never a re-type of the links themselves.
+// ════════════════════════════════════════════════════════════════
+let RES_GROUPS = [];
+let curResGroup = null, curResGroupNextSibling = null;
+function groupResCategories() {
+  const list = document.getElementById('resCardList');
+  const groups = [];
+  let cur = null;
+  /* list.children is undefined under the node test harness's stub DOM (see
+     test/harness.js) — every getElementById() call there returns the same
+     generic proxy object, not a real element. Nothing to group in that
+     environment, so fall back to an empty list rather than throwing. */
+  const kids = list && list.children ? [...list.children] : [];
+  kids.forEach(node => {
+    if (node.classList && node.classList.contains('card-title')) {
+      cur = document.createElement('div');
+      cur.className = 'res-category-group';
+      groups.push(cur);
+    }
+    if (cur) cur.appendChild(node);
+  });
+  list.innerHTML = '';
+  groups.forEach(g => list.appendChild(g));
+  return groups;
+}
+function resGroupTitle(group) {
+  const t = group.querySelector('.card-title');
+  return t ? t.textContent.trim() : 'Resources';
+}
+function renderResTiles() {
+  RES_GROUPS = groupResCategories();
+  document.getElementById('resTileGrid').innerHTML = RES_GROUPS.map((g, i) => {
+    const title = resGroupTitle(g);
+    const icon = (title.match(/^\S+/) || ['📚'])[0];
+    const count = g.querySelectorAll('.res-link').length;
+    return `<button type="button" class="module-tile" onclick="openResModal(${i})">
+      <div class="mt-icon">${icon}</div>
+      <div class="mt-title">${esc(title.replace(/^\S+\s*/, ''))}</div>
+      <div class="mt-desc">${count} resource${count === 1 ? '' : 's'}</div>
+    </button>`;
+  }).join('');
+}
+function openResModal(i) {
+  const group = RES_GROUPS[i];
+  if (!group) return;
+  curResGroup = group;
+  curResGroupNextSibling = group.nextSibling;
+  const title = resGroupTitle(group);
+  document.getElementById('resModalIcon').textContent = (title.match(/^\S+/) || ['📚'])[0];
+  document.getElementById('resModalTitle').textContent = title.replace(/^\S+\s*/, '');
+  document.getElementById('resModalBody').appendChild(group);
+  openModalEl('resModal');
+}
+function closeResModal() {
+  if (curResGroup) {
+    const list = document.getElementById('resCardList');
+    if (curResGroupNextSibling && curResGroupNextSibling.parentNode === list) list.insertBefore(curResGroup, curResGroupNextSibling);
+    else list.appendChild(curResGroup);
+  }
+  curResGroup = null; curResGroupNextSibling = null;
+  closeModalEl('resModal');
 }
 
 /* MANUAL_SECTIONS.title already carries raw &amp; entities by convention
@@ -7175,19 +7523,87 @@ async function deletePrayer(id) {
 function openAllPrayersModal() { renderAllPrayers(); openModalEl('allPrayersModal'); }
 
 // ════════════════════════════════════════════════════════════════
+// CELEBRATION / CONFETTI — one component (runConfetti), reused by both
+// the quiz-pass screen and the onboarding-complete screen. Self-contained
+// canvas 2D, no external libraries. Respects prefers-reduced-motion: the
+// canvas is never even created, and the caller shows a static badge instead.
+// ════════════════════════════════════════════════════════════════
+function prefersReducedMotion() {
+  try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; }
+}
+function celebrationVisualHtml(idPrefix) {
+  return prefersReducedMotion()
+    ? `<div class="celebrate-badge-static">🏅</div>`
+    : `<canvas class="confetti-canvas" id="${idPrefix}Canvas"></canvas>`;
+}
+function fireCelebration(idPrefix) {
+  if (prefersReducedMotion()) return;
+  runConfetti(document.getElementById(idPrefix + 'Canvas'));
+}
+function runConfetti(canvas) {
+  if (!canvas || !canvas.getContext) return;
+  const ctx = canvas.getContext('2d');
+  const duration = 2600;
+  function resize() { canvas.width = canvas.offsetWidth || 300; canvas.height = canvas.offsetHeight || 300; }
+  resize();
+  window.addEventListener('resize', resize);
+  const colors = ['#c9a24b', '#d9ba6f', '#5a8a6b', '#5b7c99', '#b3492f', '#ece8e1'];
+  const particles = Array.from({ length: 140 }, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * canvas.height * 0.5,
+    r: 4 + Math.random() * 4,
+    c: colors[Math.floor(Math.random() * colors.length)],
+    vy: 2 + Math.random() * 3,
+    vx: -1.5 + Math.random() * 3,
+    rot: Math.random() * Math.PI * 2,
+    vr: -0.2 + Math.random() * 0.4,
+    shape: Math.random() < .5 ? 'rect' : 'circle'
+  }));
+  const start = Date.now();
+  function frame() {
+    const t = Date.now() - start;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.c;
+      if (p.shape === 'rect') ctx.fillRect(-p.r, -p.r * 0.6, p.r * 2, p.r * 1.2);
+      else { ctx.beginPath(); ctx.arc(0, 0, p.r, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+    });
+    if (t < duration) requestAnimationFrame(frame);
+    else { window.removeEventListener('resize', resize); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+  }
+  requestAnimationFrame(frame);
+}
+
+// ════════════════════════════════════════════════════════════════
 // ONBOARDING CHECKLIST
 // ════════════════════════════════════════════════════════════════
+/* Guided-path stepper. ONBOARD_ITEMS is rendered as-is, in order — "current"
+   is just the first not-yet-done item; anything done (even out of order)
+   still shows gold, so nothing here changes what toggleOnboard() persists. */
 function renderOnboard() {
   const p = activeProgress();
-  document.getElementById('onboardWho').innerHTML = 'Checklist for <strong style="color:var(--tx);">' + esc(activeName()) + '</strong>';
-  document.getElementById('onboardChecklist').innerHTML = ONBOARD_ITEMS.map(item => {
+  const total = ONBOARD_ITEMS.length;
+  const doneCount = p.onboard.length;
+  const firstOpenIdx = ONBOARD_ITEMS.findIndex(it => !p.onboard.includes(it.id));
+  document.getElementById('onboardWho').innerHTML = 'Path for <strong style="color:var(--tx);">' + esc(activeName()) + '</strong>';
+  document.getElementById('obProgressLabel').textContent = doneCount + ' of ' + total + ' complete';
+  document.getElementById('obProgressFill').style.width = Math.round((doneCount / total) * 100) + '%';
+  document.getElementById('obClearedBadgeSlot').innerHTML = doneCount === total
+    ? '<div class="ob-cleared-badge">✅ Cleared to Serve</div>' : '';
+  document.getElementById('onboardChecklist').innerHTML = `<div class="ob-stepper">` + ONBOARD_ITEMS.map((item, i) => {
     const done = p.onboard.includes(item.id);
-    const locked = item.id === 'manual' && !done && !manualRead;
-    return `<label style="display:flex;gap:.55rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid var(--bd);cursor:${locked ? 'not-allowed' : 'pointer'};font-size:.8rem;color:${done ? 'var(--gr)' : 'var(--tx2)'};">
-      <input type="checkbox" ${done ? 'checked' : ''} ${locked ? 'disabled' : ''} onchange="toggleOnboard('${item.id}')" style="margin-top:.2rem;accent-color:var(--gr);">
-      <span style="${done ? 'text-decoration:line-through;opacity:.75;' : ''}">${item.text}${locked ? ' <em style="color:var(--tx3);">(scroll to the end of the manual above to unlock)</em>' : ''}</span>
-    </label>`;
-  }).join('') + `<div style="font-size:.72rem;color:var(--tx3);margin-top:.5rem;">${p.onboard.length}/${ONBOARD_ITEMS.length} complete</div>`;
+    const isCurrent = !done && i === firstOpenIdx;
+    return `<button type="button" class="ob-step ${done ? 'done' : ''} ${isCurrent ? 'current' : ''}" onclick="openOnboardStep(${i})">
+      <div class="ob-step-node">${done ? '✓' : i + 1}</div>
+      <div class="ob-step-rail"></div>
+      <div class="ob-step-body"><div class="ob-step-text">${item.icon || '📋'} ${item.text}</div></div>
+    </button>`;
+  }).join('') + `</div>`;
 }
 /* Toggling a step is an insert-or-delete against cc_onboarding_steps, not an
    upsert — step completion has no fields beyond its own existence. */
@@ -7204,12 +7620,67 @@ async function toggleOnboard(stepId) {
     p.onboard.push(stepId);
   }
   renderOnboard();
-  /* renderOnboard() rebuilds all twelve rows, so put focus back where it was. */
-  const boxes = document.querySelectorAll('#onboardChecklist input[type=checkbox]');
+  /* renderOnboard() rebuilds every step node, so put focus back where it was. */
+  const nodes = document.querySelectorAll('#onboardChecklist .ob-step');
   const idx = ONBOARD_ITEMS.findIndex(it => it.id === stepId);
-  if (boxes[idx]) boxes[idx].focus();
+  if (nodes[idx]) nodes[idx].focus();
   refreshDash();
+  if (!isDone && p.onboard.length === ONBOARD_ITEMS.length) celebrateOnboardComplete();
 }
+
+// ── Onboarding step modal ──
+let curOnboardStepIdx = null;
+function openOnboardStep(idx) {
+  curOnboardStepIdx = idx;
+  renderOnboardStepModal();
+  openModalEl('onboardStepModal');
+}
+function renderOnboardStepModal() {
+  const item = ONBOARD_ITEMS[curOnboardStepIdx];
+  const p = activeProgress();
+  const done = p.onboard.includes(item.id);
+  const locked = item.id === 'manual' && !done && !manualRead;
+  document.getElementById('obStepIcon').textContent = item.icon || '📋';
+  document.getElementById('obStepTitle').textContent = 'Step ' + (curOnboardStepIdx + 1) + ' of ' + ONBOARD_ITEMS.length;
+  document.getElementById('obStepMeta').textContent = done ? 'Completed' : (locked ? 'Locked' : 'Not yet complete');
+  document.getElementById('obStepBody').innerHTML = `<p style="font-size:.9rem;line-height:1.6;">${item.text}</p>` +
+    (locked ? `<div class="ob-step-modal-locked">🔒 Scroll to the end of the manual above (in the card below this one) to unlock this step.</div>` : '');
+  const btn = document.getElementById('obStepCompleteBtn');
+  btn.textContent = done ? '↩️ Mark Not Done' : '✅ Mark Complete';
+  btn.disabled = locked;
+  btn.style.opacity = locked ? '.5' : '1';
+  btn.className = 'btn ' + (done ? 'btn-ghost' : 'btn-success');
+  document.getElementById('obStepPrevBtn').style.visibility = curOnboardStepIdx > 0 ? 'visible' : 'hidden';
+  document.getElementById('obStepNextBtn').style.visibility = curOnboardStepIdx < ONBOARD_ITEMS.length - 1 ? 'visible' : 'hidden';
+}
+async function toggleOnboardFromModal() {
+  await toggleOnboard(ONBOARD_ITEMS[curOnboardStepIdx].id);
+  if (document.getElementById('onboardStepModal').classList.contains('open')) renderOnboardStepModal();
+}
+function stepOnboardStep(dir) {
+  const next = curOnboardStepIdx + dir;
+  if (next < 0 || next >= ONBOARD_ITEMS.length) return;
+  curOnboardStepIdx = next;
+  renderOnboardStepModal();
+}
+function closeOnboardStep() { closeModalEl('onboardStepModal'); curOnboardStepIdx = null; }
+
+// ── Onboarding completion celebration — shares runConfetti() with the quiz. ──
+function celebrateOnboardComplete() {
+  const body = document.getElementById('obCelebrateBody');
+  body.innerHTML = `
+    ${celebrationVisualHtml('obCelebrate')}
+    <div style="position:relative;padding-top:1.5rem;">
+      <div class="celebrate-title">🎉 Cleared to Serve!</div>
+      <div class="celebrate-sub">${esc(activeName())} has completed all ${ONBOARD_ITEMS.length} onboarding steps.</div>
+      <div style="text-align:center;margin-top:1.3rem;">
+        <button class="btn btn-primary" onclick="closeOnboardCelebration()">Continue</button>
+      </div>
+    </div>`;
+  openModalEl('onboardCelebrateModal');
+  fireCelebration('obCelebrate');
+}
+function closeOnboardCelebration() { closeModalEl('onboardCelebrateModal'); }
 
 // ════════════════════════════════════════════════════════════════
 // ACADEMY — courses, lessons, quiz, certificate
@@ -7257,28 +7728,36 @@ function scorePct(cs, course) {
 function renderCourses() {
   let certs = 0;
   const visibleCourses = COURSES.filter(c => isModuleVisible(c.id));
-  document.getElementById('courseGrid').innerHTML = visibleCourses.map(c => {
-    const cs = getCS(c.id);
-    const pct = Math.round((cs.doneLessons.length / c.lessons.length) * 100);
-    if (cs.quizPassed) certs++;
-    return `<div class="course-card ${cs.quizPassed ? 'certified' : ''}" role="button" tabindex="0" onclick="openCourse('${c.id}')">
-      ${cs.quizPassed ? '<div class="cc-badge">🏆</div>' : ''}
-      <div class="cc-icon">${c.icon}</div>
-      <div class="cc-title">${c.title}</div>
-      <div class="cc-meta">${c.meta}</div>
-      <div class="cc-bar"><div class="cc-fill" style="width:${pct}%;"></div></div>
-      <div style="font-size:.66rem;color:var(--tx3);margin-top:.3rem;">${cs.quizPassed ? '✅ Certified — ' + scorePct(cs, c) + '%' : cs.doneLessons.length + '/' + c.lessons.length + ' lessons'}</div>
-    </div>`;
-  }).join('');
+  const grid = document.getElementById('courseGrid');
+  if (!visibleCourses.length) {
+    grid.innerHTML = `<div class="friendly-empty"><div class="fe-icon">🎓</div><div class="fe-title">No modules to show yet</div><div class="fe-sub">An admin has hidden the Academy modules for now — check back soon, or ask your Team Leader.</div></div>`;
+  } else {
+    grid.innerHTML = visibleCourses.map(c => {
+      const cs = getCS(c.id);
+      const pct = Math.round((cs.doneLessons.length / c.lessons.length) * 100);
+      if (cs.quizPassed) certs++;
+      const statusCls = cs.quizPassed ? 'is-done' : (cs.doneLessons.length ? 'is-progress' : '');
+      const statusText = cs.quizPassed ? '✅ Certified — ' + scorePct(cs, c) + '%' : (cs.doneLessons.length ? 'In Progress — ' + cs.doneLessons.length + '/' + c.lessons.length + ' lessons' : 'Not Started');
+      return `<button type="button" class="module-tile ${cs.quizPassed ? 'certified' : ''}" onclick="openCourse('${c.id}')">
+        ${cs.quizPassed ? '<div class="mt-badge">✓</div>' : ''}
+        <div class="mt-icon">${c.icon}</div>
+        <div class="mt-title">${c.title}</div>
+        <div class="mt-desc">${c.meta}</div>
+        <div class="mt-progress"><div class="mt-progress-fill" style="width:${pct}%;"></div></div>
+        <div class="mt-status ${statusCls}">${statusText}</div>
+      </button>`;
+    }).join('');
+  }
   document.getElementById('certCount').textContent = certs;
   document.getElementById('certTotal').textContent = visibleCourses.length;
   document.getElementById('hs-modules').textContent = certs;
   document.getElementById('academyPct').textContent = (visibleCourses.length ? Math.round((certs / visibleCourses.length) * 100) : 0) + '%';
   document.getElementById('traineeName').textContent = activeName();
 }
+let curLessonIdx = 0;
 function openCourse(id) {
   curCourse = COURSES.find(c => c.id === id);
-  quizAnswers = {}; quizSubmitted = false;
+  quizAnswers = {}; quizSubmitted = false; curLessonIdx = 0;
   buildQuizOrder(curCourse);
   document.getElementById('mIcon').textContent = curCourse.icon;
   document.getElementById('mTitle').textContent = curCourse.title.toUpperCase();
@@ -7302,6 +7781,32 @@ function switchTab(tab) {
     document.getElementById('mtab-' + t).classList.toggle('active', t === tab);
     document.getElementById('mpanel-' + t).classList.toggle('active', t === tab);
   });
+  const showLessonNav = tab === 'lessons' && curCourse && curCourse.lessons.length > 1;
+  document.getElementById('footerPrevLessonBtn').style.display = showLessonNav ? '' : 'none';
+  document.getElementById('footerNextLessonBtn').style.display = showLessonNav ? '' : 'none';
+  updateLessonNavButtons();
+}
+function updateLessonNavButtons() {
+  document.getElementById('footerPrevLessonBtn').disabled = curLessonIdx <= 0;
+  document.getElementById('footerNextLessonBtn').disabled = !curCourse || curLessonIdx >= curCourse.lessons.length - 1;
+}
+/* Sticky-footer Previous/Next Lesson — the lessons themselves still render
+   as the existing accordion (renderLessons() below is untouched), this just
+   collapses the current one and expands/scrolls to the adjacent one. */
+function stepLesson(dir) {
+  if (!curCourse) return;
+  const next = curLessonIdx + dir;
+  if (next < 0 || next >= curCourse.lessons.length) return;
+  const cur = document.getElementById('lesson-' + curLessonIdx);
+  if (cur) { cur.classList.remove('expanded'); const h = cur.querySelector('.li-header'); if (h) h.setAttribute('aria-expanded', 'false'); }
+  curLessonIdx = next;
+  const el = document.getElementById('lesson-' + curLessonIdx);
+  if (el) {
+    el.classList.add('expanded');
+    const h = el.querySelector('.li-header'); if (h) h.setAttribute('aria-expanded', 'true');
+    el.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  }
+  updateLessonNavButtons();
 }
 function renderLessons() {
   const cs = getCS(curCourse.id);
@@ -7408,22 +7913,50 @@ async function submitQuiz() {
   Object.assign(cs, patch);
   quizSubmitted = true;
   let html = '';
+  const missed = [];
   curCourse.quiz.forEach((q, qi) => {
+    if (quizAnswers[qi] !== q.ans) missed.push({ qi, q });
     html += `<div class="quiz-q"><div class="quiz-q-num">Question ${qi + 1}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-options">`;
     optionOrder(qi, q).forEach(oi => {
-      let cls = '';
-      if (oi === q.ans) cls = 'correct'; else if (oi === quizAnswers[qi]) cls = 'wrong';
-      html += `<button class="quiz-opt ${cls}" disabled>${q.opts[oi]}</button>`;
+      const wasSelected = oi === quizAnswers[qi];
+      let cls = '', extra = '';
+      if (oi === q.ans) { cls = wasSelected ? 'correct flash-correct' : 'correct'; if (wasSelected) extra = '<span class="qo-check">✓</span>'; }
+      else if (wasSelected) { cls = 'wrong flash-wrong'; }
+      html += `<button class="quiz-opt ${cls}" disabled>${q.opts[oi]}${extra}</button>`;
     });
     html += '</div></div>';
   });
-  html += `<div class="quiz-result"><div class="quiz-score-big ${passed ? 'pass' : 'fail'}">${correct}/${total}</div>
-    <div style="font-size:.9rem;font-weight:800;color:${passed ? 'var(--gr)' : 'var(--cr)'};margin:.4rem 0;">${passed ? '🎉 Passed! Certificate Earned!' : '❌ Not Passed — Try Again'}</div>
-    <div style="font-size:.78rem;color:var(--tx2);">${passed ? 'Your certificate is now available.' : 'You scored ' + pct + '%. You need ' + Math.round(PASS_THRESHOLD * 100) + '% (' + passMark(curCourse) + '/' + total + '). Review the lessons and retry.'}</div>
-    ${passed ? `<button class="btn btn-success" style="margin-top:.75rem;" onclick="renderCert();switchTab('cert')">🏆 View Certificate</button>` : `<button class="btn btn-primary" style="margin-top:.75rem;" onclick="retryQuiz()">Retry Quiz</button>`}
-  </div>`;
+  if (passed) {
+    html += `<div class="quiz-result confetti-host" id="quizPassHost" style="min-height:320px;">
+      ${celebrationVisualHtml('quizPass')}
+      <div style="position:relative;">
+        <div class="celebrate-title">Certified!</div>
+        <div class="celebrate-sub">${esc(curCourse.title)}</div>
+        <div class="celebrate-score">${correct}/${total} · ${pct}%</div>
+        <div style="margin-top:1.1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-success" onclick="renderCert();switchTab('cert')">🏆 View Certificate</button>
+          <button class="btn btn-ghost" onclick="closeCourseModal()">Back to Academy</button>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    html += `<div class="quiz-result">
+      <div class="quiz-score-big fail">${correct}/${total}</div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--cr);margin:.4rem 0;">Not quite there yet — that's okay!</div>
+      <div style="font-size:.78rem;color:var(--tx2);">You scored ${pct}%. You need ${Math.round(PASS_THRESHOLD * 100)}% (${passMark(curCourse)}/${total}) to pass. Take a look at what you missed below, review the lessons, and try again — you've got this.</div>
+      ${missed.length ? `<div style="text-align:left;max-width:460px;margin:.9rem auto 0;background:rgba(var(--overlay-rgb),.04);border:1px solid var(--bd);border-radius:10px;padding:.7rem .9rem;">
+        <div style="font-size:.7rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:.4rem;">Questions to review</div>
+        ${missed.map(m => `<div style="font-size:.78rem;color:var(--tx2);padding:.25rem 0;">Q${m.qi + 1}. ${m.q.q}</div>`).join('')}
+      </div>` : ''}
+      <button class="btn btn-primary" style="margin-top:.9rem;" onclick="retryQuiz()">🔁 Review &amp; Retry</button>
+    </div>`;
+  }
   document.getElementById('quizContent').innerHTML = html;
-  if (passed) { document.getElementById('footerCertBtn').style.display = ''; document.getElementById('footerQuizBtn').style.display = 'none'; renderCert(); addActivity('🏆 CERTIFIED: ' + curCourse.title); }
+  if (passed) {
+    document.getElementById('footerCertBtn').style.display = ''; document.getElementById('footerQuizBtn').style.display = 'none';
+    renderCert(); addActivity('🏆 CERTIFIED: ' + curCourse.title);
+    fireCelebration('quizPass');
+  }
   else addActivity('Quiz attempt (' + pct + '%): ' + curCourse.title);
   /* The header strip and dashboard are visible behind the overlay, so leaving
      them stale until the modal closes shows a wrong count on screen. Same class
@@ -7707,6 +8240,7 @@ function toggleLesson(i) {
   const item = document.getElementById('lesson-' + i);
   const open = item.classList.toggle('expanded');
   item.querySelector('.li-header').setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) curLessonIdx = i;
 }
 
 // ── Modal open/close with focus handling ──
@@ -7715,12 +8249,17 @@ function openModalEl(id) {
   lastFocused = document.activeElement;
   const box = document.getElementById(id);
   box.classList.add('open');
+  document.body.classList.add('modal-open');
   const first = [...box.querySelectorAll('input:not([type=file]), button, select, textarea, [tabindex]')]
     .find(el => el.offsetParent !== null);
   if (first) first.focus();
 }
 function closeModalEl(id) {
   document.getElementById(id).classList.remove('open');
+  /* Only drop the scroll lock once no other modal is still open — closing
+     one modal from within another (e.g. a confirm dialog raised over the
+     course modal) must not unlock scroll behind the one still showing. */
+  if (!document.querySelector('.modal-overlay.open, .pin-gate-overlay.open')) document.body.classList.remove('modal-open');
   if (lastFocused && lastFocused.focus) lastFocused.focus();
   lastFocused = null;
 }
@@ -7745,6 +8284,10 @@ function dismissOverlay(o) {
      the element alone would leave every awaiting caller hanging forever. */
   if (o.id === 'appDialog') { dialogCancel(); return; }
   if (o.id === 'courseModal') { closeCourseModal(); return; }
+  if (o.id === 'procModal') { closeProcModal(); return; }
+  if (o.id === 'resModal') { closeResModal(); return; }
+  if (o.id === 'onboardStepModal') { closeOnboardStep(); return; }
+  if (o.id === 'onboardCelebrateModal') { closeOnboardCelebration(); return; }
   /* setPasswordGate is the same gate for two different situations: a
      mandatory recovery-link/temp-password flow (context 'recovery' or
      'must-change' — not cancellable, same as loginGate/noAccessGate below)
@@ -7798,6 +8341,8 @@ document.addEventListener('keydown', e => {
 document.querySelectorAll('.proc-card.open > .proc-head').forEach(h => h.setAttribute('aria-expanded', 'true'));
 initProcedurePrintButtons();
 initProcLang();
+renderProcTiles();
+renderResTiles();
 setLoginMode('password');
 
 // ── Boot: resolve auth before anything from local data reaches the DOM ──
