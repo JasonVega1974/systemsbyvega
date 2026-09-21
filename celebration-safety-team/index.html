@@ -127,6 +127,14 @@ try {
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
+/* Screen-only — deliberately not an inline display:none on the element
+   itself. @media print's visibility:visible rules for #printRoot (see
+   .printing-doc / .printing-cert below) can only ever override visibility,
+   never an inline display:none, so hiding it here instead is what lets it
+   actually render when printing. */
+@media screen {
+  #printRoot { display: none; }
+}
 
 body {
   background: var(--bg);
@@ -686,14 +694,14 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   }
   /* Generic print document — the shared mechanism for every OTHER printable
      view (procedures, Academy modules, onboarding, the manual, the roster,
-     the schedule, the training matrix). One #printDocBox, populated by
+     the schedule, the training matrix). One #printRoot, populated by
      printDocument() right before window.print(), instead of a bespoke
      print path per feature. */
   body.printing-doc { background: #fff; }
   body.printing-doc * { visibility: hidden; }
-  body.printing-doc #printDocBox,
-  body.printing-doc #printDocBox * { visibility: visible; }
-  body.printing-doc #printDocBox {
+  body.printing-doc #printRoot,
+  body.printing-doc #printRoot * { visibility: visible; }
+  body.printing-doc #printRoot {
     position: absolute; inset: 0; margin: 0; width: auto; max-width: none;
     color: #111; background: #fff; box-shadow: none; padding: 0;
   }
@@ -802,7 +810,14 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   .modal-overlay.overlay-fullscreen { padding: 0; }
   .modal-box.modal-fullscreen { max-width: 100%; width: 100%; height: 100%; max-height: 100%; border-radius: 0; }
 }
-body.modal-open { overflow: hidden; }
+/* Screen-only: printing while a modal is open must not inherit a hidden
+   body overflow — some browsers render a blank print preview when the
+   body (or any ancestor of the print content) has overflow:hidden set
+   at print time. See #printRoot below for the actual print-safety fix;
+   this scoping just keeps the scroll lock from compounding it. */
+@media screen {
+  body.modal-open { overflow: hidden; }
+}
 
 /* The moved-in procedure card keeps its original accordion .proc-head
    button (toggleProc()) — harmless, but tapping it would collapse the only
@@ -3109,9 +3124,18 @@ body.modal-open { overflow: hidden; }
   </div>
 </div>
 
-<!-- ══ GENERIC PRINT DOCUMENT — see printDocument() and .printing-doc in
-     the stylesheet. Hidden on screen; only ever shown by @media print. ══ -->
-<div id="printDocBox" style="display:none;"></div>
+<!-- ══ PRINT ROOT — the one place print content actually renders from.
+     printDocument() and printCertificate() both clone/build their content
+     in here rather than printing content in place, because "in place" can
+     be inside a full-screen modal (overflow/clipping ancestors, scroll
+     locks) where some browsers render a blank print preview. #printRoot is
+     always a direct child of <body>, in normal flow, never inside a modal.
+     Hidden on screen (see the #printRoot screen-only rule near the top of
+     the stylesheet — deliberately NOT an inline display:none, which
+     visibility:visible in @media print can never override); only ever
+     shown by @media print. See .printing-doc / .printing-cert in the
+     stylesheet. ══ -->
+<div id="printRoot"></div>
 
 <script src="vendor/supabase-2.114.0.js"></script>
 <script>
@@ -4722,7 +4746,7 @@ function printRoster() {
       <td>${esc(m.role)}</td>
       <td>${m.rotationWeek ? 'Week ' + esc(m.rotationWeek) : '—'}</td>
     </tr>`).join('');
-  const body = `<style>#printDocBox table.roster-print td, #printDocBox table.roster-print th { padding: .12in .1in; text-align: left; } #printDocBox table.roster-print td { border-bottom: 1px solid #ccc; } #printDocBox table.roster-print th { border-bottom: 2px solid #333; }</style>
+  const body = `<style>#printRoot table.roster-print td, #printRoot table.roster-print th { padding: .12in .1in; text-align: left; } #printRoot table.roster-print td { border-bottom: 1px solid #ccc; } #printRoot table.roster-print th { border-bottom: 2px solid #333; }</style>
     <table class="roster-print" style="width:100%;border-collapse:collapse;font-size:.82rem;">
       <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Specialty</th><th>Role</th><th>Rotation</th></tr></thead>
       <tbody>${rows}</tbody>
@@ -4853,7 +4877,7 @@ function printTrainingMatrix() {
     <td style="font-weight:700;white-space:nowrap;">${esc(row.name)}</td>
     ${row.cells.map(done => `<td style="text-align:center;">${done ? '✔' : '—'}</td>`).join('')}
   </tr>`).join('');
-  const body = `<style>#printDocBox table.matrix-print td, #printDocBox table.matrix-print th { border: 1px solid #ccc; padding: .07in .05in; } #printDocBox table.matrix-print { border-collapse: collapse; font-size: .72rem; width: 100%; }</style>
+  const body = `<style>#printRoot table.matrix-print td, #printRoot table.matrix-print th { border: 1px solid #ccc; padding: .07in .05in; } #printRoot table.matrix-print { border-collapse: collapse; font-size: .72rem; width: 100%; }</style>
     <table class="matrix-print"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
   printDocument('TRAINING COMPLETION MATRIX', body, { subtitle: 'Who is cleared to serve — ' + trainingMatrixData.length + ' team members' });
 }
@@ -6783,11 +6807,14 @@ function renderCoverageRequestsList() {
    GENERIC PRINT DOCUMENT — the shared mechanism behind every printable view
    except the certificate (which has its own dedicated parchment styling
    that isn't tied to the dark/light toggle either way). Populates
-   #printDocBox with a standard letterhead + the caller's content + a
+   #printRoot with a standard letterhead + the caller's content + a
    generated-on footer, then prints. @media print forces every CSS token to
    a fixed light-safe value for anything under body.printing-doc — see the
    stylesheet — so this always comes out on white paper with dark text
    regardless of which theme is active on screen.
+   #printRoot is always a direct child of <body>, never inside a modal —
+   this builds fresh, detached markup (never reads a live modal subtree),
+   so it was never actually vulnerable to a modal's overflow/clipping.
    title/subtitle/bodyHtml are inserted RAW, not esc()'d: callers already
    escape any real user data themselves (see field() below), and some
    titles legitimately carry an intentional &amp; entity for direct HTML
@@ -6797,7 +6824,7 @@ function renderCoverageRequestsList() {
 function printDocument(title, bodyHtml, opts) {
   opts = opts || {};
   const now = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
-  document.getElementById('printDocBox').innerHTML = `
+  document.getElementById('printRoot').innerHTML = `
     <div class="print-doc-header">
       <div class="pdh-org">CELEBRATION CHURCH</div>
       <div class="pdh-sub">Celebration Church Safety Team (CCST) · 2121 Caldwell Blvd, Nampa, ID 83651</div>
@@ -8079,10 +8106,25 @@ function renderCert() {
     </div>
   </div>`;
 }
+/* The certificate lives inside #courseModal's .modal-body — a full-screen
+   modal that can have its own scroll/clipping context — so unlike
+   printDocument() above, this genuinely was printing a live in-place node.
+   Cloning it into #printRoot (a plain child of <body>, never inside a
+   modal) before printing removes that dependency entirely; the clone's id
+   is stripped so document.getElementById('certDocument') never resolves
+   to it instead of the real one still in the modal. */
 function printCertificate() {
+  const source = document.getElementById('certDocument');
+  if (!source) return;
+  const root = document.getElementById('printRoot');
+  root.innerHTML = '';
+  const clone = source.cloneNode(true);
+  clone.removeAttribute('id');
+  root.appendChild(clone);
   document.body.classList.add('printing-cert');
   window.addEventListener('afterprint', function off() {
     document.body.classList.remove('printing-cert');
+    root.innerHTML = '';
     window.removeEventListener('afterprint', off);
   });
   window.print();
