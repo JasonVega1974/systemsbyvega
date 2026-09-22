@@ -412,7 +412,21 @@ body {
 .news-favicon { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
 @media (max-width: 480px) { .news-thumb { width: 60px; height: 60px; } .news-thumb-placeholder { font-size: 1.4rem; } }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; align-items: stretch; }
+/* Dashboard row cards — stretched to equal height by .grid-3's own row
+   (the CSS Grid default, made explicit above), but a stretched .card whose
+   own content doesn't fill it left the footer button wherever the content
+   happened to end. .dash-card-body absorbs the extra height instead, so
+   the footer (if any) always sits flush at the bottom of the card. */
+.dash-card { display: flex; flex-direction: column; }
+.dash-card-body { flex: 1; }
+.dash-svc-block { margin-bottom: .65rem; }
+.dash-svc-block:last-child { margin-bottom: 0; }
+.dash-svc-time { font-weight: 800; color: var(--tx); font-size: .78rem; margin-bottom: .15rem; }
+.dash-svc-row { font-size: .78rem; color: var(--tx2); padding: .04rem 0; }
+.dash-svc-role { color: var(--tx3); font-size: .7rem; }
+.dash-svc-open { font-size: .74rem; color: var(--tx3); font-style: italic; padding: .1rem 0; }
+.dash-empty-note { font-size: .82rem; color: var(--tx3); padding: .3rem 0 .1rem; }
 @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
 .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: .8rem; }
@@ -987,42 +1001,43 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
       </div>
 
       <div class="grid-3" style="margin-bottom:.9rem;">
-        <div class="card" style="margin-bottom:0;">
+        <div class="card dash-card" style="margin-bottom:0;">
           <div class="card-title">📞 EMERGENCY CONTACTS</div>
-          <div style="font-size:.85rem;line-height:2;">
+          <div class="dash-card-body" style="font-size:.85rem;line-height:2;">
             <div><strong style="color:var(--red-text);">Emergency:</strong> <a href="tel:911" style="color:var(--tx);font-weight:800;">911</a></div>
             <div><strong>Nampa Police (non-emergency):</strong><br><a href="tel:2084652257" style="color:var(--bl);">(208) 465-2257</a></div>
             <div><strong>Church Office:</strong><br><a href="tel:2084665433" style="color:var(--bl);">(208) 466-5433</a></div>
           </div>
         </div>
-        <div class="card" style="margin-bottom:0;">
+        <div class="card dash-card" style="margin-bottom:0;">
           <div class="card-title">🚨 RECENT INCIDENTS &amp; BOLOs</div>
-          <div id="dashIncidentsBolos" style="font-size:.82rem;color:var(--tx2);line-height:1.6;"></div>
+          <div id="dashIncidentsBolos" class="dash-card-body" style="font-size:.82rem;color:var(--tx2);line-height:1.6;"></div>
           <button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('incidents')">View All →</button>
         </div>
-        <div class="card" style="margin-bottom:0;">
+        <div class="card dash-card" style="margin-bottom:0;">
           <div class="card-title">🗓️ NEXT SUNDAY AT A GLANCE</div>
-          <div id="dashNextSunday" style="font-size:.82rem;color:var(--tx2);"></div>
+          <div id="dashNextSunday" class="dash-card-body" style="font-size:.82rem;color:var(--tx2);"></div>
+          <button class="btn btn-ghost" style="margin-top:.7rem;" onclick="navTo('scheduling')">Open Scheduling →</button>
         </div>
       </div>
 
       <div class="grid-3" style="margin-bottom:.9rem;">
-        <div class="card" style="margin-bottom:0;">
+        <div class="card dash-card" style="margin-bottom:0;">
           <div class="card-title">📌 TEAM NOTES</div>
-          <div id="dashNotesBox" style="font-size:.82rem;color:var(--tx2);"></div>
+          <div id="dashNotesBox" class="dash-card-body" style="font-size:.82rem;color:var(--tx2);"></div>
           <div style="margin-top:.6rem;display:flex;gap:.5rem;">
             <button class="btn btn-ghost" style="flex:1;" onclick="openAllNotesModal()">View All →</button>
             <button class="btn btn-primary" id="addNoteBtn" style="flex:1;" onclick="openNoteModal()">+ Post Note</button>
           </div>
         </div>
-        <div class="card" style="margin-bottom:0;">
+        <div class="card dash-card" style="margin-bottom:0;">
           <div class="card-title">🗣️ NEXT TEAM MEETING</div>
-          <div id="dashNextMeeting" style="font-size:.82rem;color:var(--tx2);"></div>
+          <div id="dashNextMeeting" class="dash-card-body" style="font-size:.82rem;color:var(--tx2);"></div>
           <button class="btn btn-ghost" style="margin-top:.6rem;" onclick="navTo('meetings')">View Team Meetings →</button>
         </div>
-        <div class="card" style="margin-bottom:0;">
+        <div class="card dash-card" style="margin-bottom:0;">
           <div class="card-title">🙋 COVERAGE REQUESTS</div>
-          <div id="dashCoverageRequests" style="font-size:.82rem;color:var(--tx2);"></div>
+          <div id="dashCoverageRequests" class="dash-card-body" style="font-size:.82rem;color:var(--tx2);"></div>
           <div style="margin-top:.6rem;display:flex;gap:.5rem;">
             <button class="btn btn-ghost" style="flex:1;" onclick="navTo('scheduling')">View All →</button>
             <button class="btn btn-primary" style="flex:1;" onclick="openCoverageRequestModal()">Request Coverage</button>
@@ -8154,22 +8169,47 @@ function refreshDash() {
     `<div>Training as: <strong style="color:var(--tx);">${esc(activeName())}</strong></div>
      <div>Certificates: <strong style="color:var(--gr);">${certs}/${COURSES.length}</strong></div>
      <div>Onboarding: <strong style="color:var(--c);">${activeProgress().onboard.length}/${ONBOARD_ITEMS.length}</strong> steps</div>`;
-  const dateIso = iso(nextSunday(new Date()));
-  const day = getDay(dateIso);
-  const cov = SERVICES.map(sv => {
-    const st = svcStatus(day[sv.key]);
-    return `<span class="stat-pill" style="border-color:${st.ok ? 'rgba(var(--gr-rgb),.35)' : 'rgba(var(--cr-rgb),.35)'};color:${st.ok ? 'var(--gr)' : 'var(--red-text)'};">${sv.label}: ${st.ok ? '✅' : st.count + '/3'}</span>`;
-  }).join(' ');
-  document.getElementById('dashNextSunday').innerHTML =
-    `<div style="font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;color:var(--tx);margin-bottom:.4rem;">${nextSunday(new Date()).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</div>
-     <div class="stats-row">${cov}</div>
-     <button class="btn btn-ghost" style="margin-top:.7rem;" onclick="navTo('scheduling')">Open Scheduling →</button>`;
+  renderDashNextSunday();
   renderActivity();
   renderNotifications();
   renderDashIncidentsBolos();
   renderDashCoverageRequests();
   renderDashNextMeeting();
   renderDrillCompliance();
+}
+/* Who's actually serving next Sunday, not just a coverage-count pill.
+   S.schedule/S.team are already fully loaded (loadSchedule()/loadAllData()
+   at boot) — this reads the exact same in-memory shape the Scheduling page
+   itself renders from (getDay()/memberName()), no separate query needed.
+   "Under minimum coverage" reuses the app's own coverage rule (3 people
+   incl. 1 lead, see svcStatus()) rather than a locally-invented threshold. */
+function renderDashNextSunday() {
+  const nextDate = nextSunday(new Date());
+  const dateIso = iso(nextDate);
+  const day = getDay(dateIso);
+  const dateLabel = nextDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  const scheduled = SERVICES.some(sv => !svcIsEmpty(day[sv.key]));
+  let body;
+  if (!scheduled) {
+    body = `<div class="dash-empty-note">No schedule posted yet.</div>`;
+  } else {
+    body = SERVICES.map(sv => {
+      const svc = day[sv.key];
+      const filled = [];
+      if (svc.lead) filled.push({ id: svc.lead, role: 'Team Lead' });
+      svc.members.forEach(id => { if (id) filled.push({ id, role: 'Member' }); });
+      const rows = filled.map(f => `<div class="dash-svc-row">• ${esc(memberName(f.id) || 'Unknown')} <span class="dash-svc-role">(${f.role})</span></div>`).join('');
+      const need = Math.max(0, 3 - filled.length);
+      const openLine = need > 0 ? `<div class="dash-svc-open">— ${need} slot${need === 1 ? '' : 's'} open —</div>` : '';
+      return `<div class="dash-svc-block">
+        <div class="dash-svc-time">${esc(sv.label)}</div>
+        ${rows}${openLine}
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('dashNextSunday').innerHTML =
+    `<div style="font-family:var(--fh);font-size:1.05rem;letter-spacing:1px;color:var(--tx);margin-bottom:.5rem;">${esc(dateLabel)}</div>
+     <div class="dash-svc-list">${body}</div>`;
 }
 /* Replaces the old static "Service Coverage Rule" card. Unrestricted only —
    a restricted incident must never leak into this preview regardless of who
